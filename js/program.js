@@ -1,3 +1,4 @@
+// copyright 2022 taidalog
 function main() {
     $('#check_button').click(function () {
         const sourceRadix = 10;
