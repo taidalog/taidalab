@@ -13,10 +13,12 @@ function main() {
         console.log(bin);
         console.log(dec);
 
+        const outputArea = document.getElementById("output");
+
         if (dec == question) {
             const msg1 = "<span class =\"result-correct\">" + bin + "<sub>(" + destinationRadix + ")</sub> is " + dec + "<sub>(" + sourceRadix + ")</sub></span>";
-            const msg2 = concatinateStrings(msg1, $('#output').text());
-            $('#output').text(msg2);
+            const msg2 = concatinateStrings(msg1, outputArea.innerHTML);
+            $('#output').html(msg2);
             console.log(msg1);
             console.log(msg2);
             const nextNumber = getRandomByte();
@@ -25,8 +27,8 @@ function main() {
             nunmberBox.value = "";
         } else {
             const msg1 = "<span class =\"result-wrong\">" + bin + "<sub>(" + destinationRadix + ")</sub> is " + dec + "<sub>(" + sourceRadix + ")</sub></span>";
-            const msg2 = concatinateStrings(msg1, $('#output').text());
-            $('#output').text(msg2);
+            const msg2 = concatinateStrings(msg1, outputArea.innerHTML);
+            $('#output').html(msg2);
             console.log(msg1);
             console.log(msg2);
         }
