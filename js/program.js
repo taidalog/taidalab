@@ -1,19 +1,39 @@
 function main() {
     $('#check_button').click(function () {
-        var user_input2 = document.getElementById("nunmber_input");
-        var bin = user_input2.value
-        var dec = parseInt(bin, 2)
+        const sourceRadix = 10;
+        const destinationRadix = 2;
 
-        var question = $('#question').text()
+        const questionBox = $('#question');
+        const question = questionBox.text();
+
+        const nunmberBox = document.getElementById("nunmber_input");
+        const bin = nunmberBox.value;
+        const dec = parseInt(bin, destinationRadix);
 
         if (dec == question) {
-            $('#output').text("Right!");
+            const message = "Correct!";
+            $('#output').text(message);
+            const nextNumber = getRandomByte();
+            questionBox.value = nextNumber;
         } else {
-            $('#output').text("Wrong... " + bin + " is "+ dec);
+            const message = "Wrong...\<br\>" + bin + "<sub>(" + destinationRadix + ")</sub> is " + dec + "<sub>(" + sourceRadix + ")</sub>.";
+            $('#output').text(message);
         }
+
+
+        if (dec == question) {
+            questionBox.text(getRandomByte());
+        }
+        
+        nunmberBox.focus();
     });
 }
 
+function getRandomByte() {
+    return Math.floor(Math.random() * 256);
+}
+
 $(function () {
+    $('#question').text(getRandomByte());
     main();
 });
