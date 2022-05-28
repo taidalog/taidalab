@@ -1,0 +1,35 @@
+.main-content {
+    width: 90%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.inputarea {
+    margin-top: 20px;
+}
+
+.buttons {
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.result {
+    margin-top: 20px;
+}
+
+.result-indented {
+    margin-left: 20px;
+}
+
+.consolas {
+    font-family: Consolas;
+}
+
+.result-correct {
+    background-color: greenyellow;
+}
+
+.result-wrong {
+    background-color: lightpink;
+}
