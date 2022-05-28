@@ -6,23 +6,28 @@
         <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
-        <h1>Endless Dec2Bin</h1>
-        
-        <div>
-            Question: <span id="question"></span><sub>(10)</sub>
-        </div>
-
-        <div>
-            Input: <input type="text" id="nunmber_input"><br>
-        </div>
-
-        <div>
-            <button type="button" id="check_button">Check</button>
-            <button type="button" id="next_button">Next</button>
-        </div>
-        
-        <div>
-            Result: <span id="output"></span>
+        <div class="main-content">
+            <h1>Endless Dec2Bin</h1>
+            
+            <div class="question">
+                Question: <span id="question"></span><sub>(10)</sub>
+            </div>
+            
+            <div class="inputarea">
+                Input: <input type="text" id="nunmber_input" class="consolas"><sub>(2)</sub>
+            </div>
+            
+            <div class="buttons">
+                <button type="button" id="check_button">Check</button>
+                <button type="button" id="next_button">Next</button>
+            </div>
+            
+            <div class="result">
+                Result:
+                <div class="result-indented consolas">
+                    <span id="output"></span>
+                </div>
+            </div>
         </div>
 
         <script type="text/javascript" src="https:/code.jquery.com/jquery-3.4.1.min.js"></script>
