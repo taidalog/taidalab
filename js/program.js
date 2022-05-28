@@ -14,21 +14,21 @@ function main() {
         console.log(dec);
 
         if (dec == question) {
-            const message = "Correct!";
-            $('#output').text(message);
-            console.log(message);
+            const msg1 = "<span class =\"result-correct\">" + bin + "<sub>(" + destinationRadix + ")</sub> is " + dec + "<sub>(" + sourceRadix + ")</sub></span>";
+            const msg2 = concatinateStrings(msg1, $('#output').text());
+            $('#output').text(msg2);
+            console.log(msg1);
+            console.log(msg2);
             const nextNumber = getRandomByte();
-            questionBox.value = nextNumber;
-            console.log(nextNumber);
-        } else {
-            const message = "Wrong...\<br\>" + bin + "<sub>(" + destinationRadix + ")</sub> is " + dec + "<sub>(" + sourceRadix + ")</sub>.";
-            $('#output').text(message);
-            console.log(message);
-        }
-
-
-        if (dec == question) {
             questionBox.text(getRandomByte());
+            console.log(nextNumber);
+            nunmberBox.value = "";
+        } else {
+            const msg1 = "<span class =\"result-wrong\">" + bin + "<sub>(" + destinationRadix + ")</sub> is " + dec + "<sub>(" + sourceRadix + ")</sub></span>";
+            const msg2 = concatinateStrings(msg1, $('#output').text());
+            $('#output').text(msg2);
+            console.log(msg1);
+            console.log(msg2);
         }
         
         nunmberBox.focus();
