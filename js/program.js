@@ -39,6 +39,14 @@ function getRandomByte() {
     return Math.floor(Math.random() * 256);
 }
 
+function concatinateStrings (new_string, existing_string) {
+    if (new_string == "" || new_string == null) {
+        return new_string
+    } else {
+        return new_string + "<br>" + existing_string
+    }
+}
+
 $(function () {
     $('#question').text(getRandomByte());
     main();
