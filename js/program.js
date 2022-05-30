@@ -9,7 +9,7 @@ function main() {
         console.log(question);
 
         const nunmberBox = document.getElementById("nunmber_input");
-        const bin = nunmberBox.value;
+        const bin = escapeHtml(nunmberBox.value);
         const dec = parseInt(bin, destinationRadix);
         console.log(bin);
         console.log(dec);
