@@ -16,22 +16,24 @@ function main() {
 
         const outputArea = document.getElementById("output");
 
+        let resultClassName = ""
         if (dec == question) {
-            const msg1 = "<span class =\"result-correct\">" + bin + "<sub>(" + destinationRadix + ")</sub> is " + dec + "<sub>(" + sourceRadix + ")</sub></span>";
-            const msg2 = concatinateStrings(msg1, outputArea.innerHTML);
-            $('#output').html(msg2);
-            console.log(msg1);
-            console.log(msg2);
+            resultClassName = "result-correct"
+        } else {
+            resultClassName = "result-wrong"
+        }
+
+        const msg1 = "<span class =\"" + resultClassName + "\">" + bin + "<sub>(" + destinationRadix + ")</sub> is " + dec + "<sub>(" + sourceRadix + ")</sub></span>";
+        const msg2 = concatinateStrings(msg1, outputArea.innerHTML);
+        $('#output').html(msg2);
+        console.log(msg1);
+        console.log(msg2);
+
+        if (dec == question) {
             const nextNumber = getRandomByte();
             questionBox.text(getRandomByte());
             console.log(nextNumber);
             nunmberBox.value = "";
-        } else {
-            const msg1 = "<span class =\"result-wrong\">" + bin + "<sub>(" + destinationRadix + ")</sub> is " + dec + "<sub>(" + sourceRadix + ")</sub></span>";
-            const msg2 = concatinateStrings(msg1, outputArea.innerHTML);
-            $('#output').html(msg2);
-            console.log(msg1);
-            console.log(msg2);
         }
         
         nunmberBox.focus();
