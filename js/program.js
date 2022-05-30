@@ -3,6 +3,7 @@ function main() {
     $('#check_button').click(function () {
         const sourceRadix = 10;
         const destinationRadix = 2;
+        const digit = 8;
 
         const questionBox = $('#question');
         const question = questionBox.text();
@@ -10,14 +11,16 @@ function main() {
 
         const nunmberBox = document.getElementById("nunmber_input");
         const bin = nunmberBox.value;
+        const binWithLeadingZero = colorLeadingZero(putLeadingZero(bin, digit));
         const dec = parseInt(bin, destinationRadix);
         console.log(bin);
+        console.log(binWithLeadingZero);
         console.log(dec);
 
         const outputArea = document.getElementById("output");
 
         if (dec == question) {
-            const msg1 = "<span class =\"result-correct\">" + bin + "<sub>(" + destinationRadix + ")</sub> is " + dec + "<sub>(" + sourceRadix + ")</sub></span>";
+            const msg1 = "<span class =\"result-correct\">" + binWithLeadingZero + "<sub>(" + destinationRadix + ")</sub> is " + dec + "<sub>(" + sourceRadix + ")</sub></span>";
             const msg2 = concatinateStrings(msg1, outputArea.innerHTML);
             $('#output').html(msg2);
             console.log(msg1);
@@ -27,7 +30,7 @@ function main() {
             console.log(nextNumber);
             nunmberBox.value = "";
         } else {
-            const msg1 = "<span class =\"result-wrong\">" + bin + "<sub>(" + destinationRadix + ")</sub> is " + dec + "<sub>(" + sourceRadix + ")</sub></span>";
+            const msg1 = "<span class =\"result-wrong\">" + binWithLeadingZero + "<sub>(" + destinationRadix + ")</sub> is " + dec + "<sub>(" + sourceRadix + ")</sub></span>";
             const msg2 = concatinateStrings(msg1, outputArea.innerHTML);
             $('#output').html(msg2);
             console.log(msg1);
