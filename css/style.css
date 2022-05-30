@@ -34,3 +34,7 @@
 .result-wrong {
     background-color: lightpink;
 }
+
+.zero-grey {
+    color: gray;
+}
