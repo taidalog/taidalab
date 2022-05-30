@@ -50,6 +50,16 @@ function concatinateStrings (new_string, existing_string) {
     }
 }
 
+function escapeHtml (target_string) {
+    let result = target_string;
+    result = result.replace(/&/g, '&amp;');
+    result = result.replace(/</g, '&lt;');
+    result = result.replace(/>/g, '&gt;');
+    result = result.replace(/"/g, '&quot;');
+    result = result.replace(/'/g, '&#39;');
+    return result;
+}
+
 $(function () {
     $('#question').text(getRandomByte());
     main();
