@@ -26,7 +26,7 @@ function main() {
             resultClassName = "result-wrong"
         }
 
-        const msg1 = "<span class =\"" + resultClassName + "\">" + bin + "<sub>(" + destinationRadix + ")</sub> is " + dec + "<sub>(" + sourceRadix + ")</sub></span>";
+        const msg1 = "<span class =\"" + resultClassName + "\">" + binWithLeadingZero + "<sub>(" + destinationRadix + ")</sub> is " + dec + "<sub>(" + sourceRadix + ")</sub></span>";
         const msg2 = concatinateStrings(msg1, outputArea.innerHTML);
         $('#output').html(msg2);
         console.log(msg1);
