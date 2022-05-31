@@ -5,38 +5,48 @@ function main() {
         const destinationRadix = 2;
         const digit = 8;
 
+        $('#instruction').html(("<br>"));
+
         const questionBox = $('#question');
         const question = questionBox.text();
         console.log(question);
 
         const nunmberBox = document.getElementById("nunmber_input");
         const bin = escapeHtml(nunmberBox.value);
-        const binWithLeadingZero = colorLeadingZero(putLeadingZero(bin, digit));
-        const dec = parseInt(bin, destinationRadix);
         console.log(bin);
-        console.log(binWithLeadingZero);
-        console.log(dec);
 
-        const outputArea = document.getElementById("output");
-
-        let resultClassName = ""
-        if (dec == question) {
-            resultClassName = "result-correct"
+        if (bin == "") {
+            $('#instruction').html("<span class=\"result-wrong\">Enter the binary number of " + question + ".</span>");
+        } else if (testBinaryString(bin) == false) {
+            $('#instruction').html("<span class=\"result-wrong\">\"" + bin + "\" is not a binary number. Use only 0 or 1.</span>");
         } else {
-            resultClassName = "result-wrong"
-        }
 
-        const msg1 = "<span class =\"" + resultClassName + "\">" + binWithLeadingZero + "<sub>(" + destinationRadix + ")</sub> is " + dec + "<sub>(" + sourceRadix + ")</sub></span>";
-        const msg2 = concatinateStrings(msg1, outputArea.innerHTML);
-        $('#output').html(msg2);
-        console.log(msg1);
-        console.log(msg2);
-
-        if (dec == question) {
-            const nextNumber = getRandomByte();
-            questionBox.text(getRandomByte());
-            console.log(nextNumber);
-            nunmberBox.value = "";
+            const binWithLeadingZero = colorLeadingZero(putLeadingZero(bin, digit));
+            const dec = parseInt(bin, destinationRadix);
+            console.log(binWithLeadingZero);
+            console.log(dec);
+            
+            const outputArea = document.getElementById("output");
+            
+            let resultClassName = ""
+            if (dec == question) {
+                resultClassName = "result-correct"
+            } else {
+                resultClassName = "result-wrong"
+            }
+            
+            const msg1 = "<span class =\"" + resultClassName + "\">" + binWithLeadingZero + "<sub>(" + destinationRadix + ")</sub> is " + dec + "<sub>(" + sourceRadix + ")</sub></span>";
+            const msg2 = concatinateStrings(msg1, outputArea.innerHTML);
+            $('#output').html(msg2);
+            console.log(msg1);
+            console.log(msg2);
+            
+            if (dec == question) {
+                const nextNumber = getRandomByte();
+                questionBox.text(getRandomByte());
+                console.log(nextNumber);
+                nunmberBox.value = "";
+            }
         }
         
         nunmberBox.focus();
@@ -45,6 +55,11 @@ function main() {
 
 function getRandomByte() {
     return Math.floor(Math.random() * 256);
+}
+
+function testBinaryString (binary_string) {
+    const reCorrect = /^[01]+$/;
+    return reCorrect.test(binary_string)
 }
 
 function concatinateStrings (new_string, existing_string) {
