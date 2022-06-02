@@ -5,7 +5,8 @@ function main() {
         const destinationRadix = 2;
         const digit = 8;
 
-        $('#instruction').html(("<br>"));
+        const instruction =document.getElementById('instruction');
+        instruction.innerHTML = "<br>";
 
         const questionBox = $('#question');
         const question = questionBox.text();
@@ -16,9 +17,9 @@ function main() {
         console.log(bin);
 
         if (bin == "") {
-            $('#instruction').html("<span class=\"result-wrong\">Enter the binary number of " + question + ".</span>");
+            instruction.innerHTML = "<span class=\"result-wrong\">Enter the binary number of " + question + ".</span>";
         } else if (testBinaryString(bin) == false) {
-            $('#instruction').html("<span class=\"result-wrong\">\"" + bin + "\" is not a binary number. Use only 0 or 1.</span>");
+            instruction.innerHTML = "<span class=\"result-wrong\">\"" + bin + "\" is not a binary number. Use only 0 or 1.</span>";
         } else {
 
             const binWithLeadingZero = colorLeadingZero(putLeadingZero(bin, digit));
@@ -37,7 +38,7 @@ function main() {
             
             const msg1 = "<span class =\"" + resultClassName + "\">" + binWithLeadingZero + "<sub>(" + destinationRadix + ")</sub> is " + dec + "<sub>(" + sourceRadix + ")</sub></span>";
             const msg2 = concatinateStrings(msg1, outputArea.innerHTML);
-            $('#output').html(msg2);
+            document.getElementById('output').innerHTML = msg2;
             console.log(msg1);
             console.log(msg2);
             
