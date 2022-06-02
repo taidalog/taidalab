@@ -1,6 +1,6 @@
 // copyright 2022 taidalog
 function main() {
-    $('#check_button').click(function () {
+    document.getElementById('check_button').onclick = function () {
         const sourceRadix = 10;
         const destinationRadix = 2;
         const digit = 8;
@@ -51,7 +51,7 @@ function main() {
         }
         
         nunmberBox.focus();
-    });
+    };
 }
 
 function getRandomByte() {
