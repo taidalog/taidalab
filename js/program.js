@@ -101,7 +101,5 @@ function colorLeadingZero (str) {
     return str.replace(leadingZero, leadingZeroInTag);
 }
 
-$(function () {
-    document.getElementById('question').innerText = getRandomByte();
-    main();
-});
+document.getElementById('question').innerText = getRandomByte();
+main();
