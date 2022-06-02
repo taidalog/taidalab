@@ -44,7 +44,7 @@ function main() {
             
             if (dec == question) {
                 const nextNumber = getRandomByte();
-                questionBox.innerText = getRandomByte();
+                questionBox.innerText = nextNumber;
                 console.log(nextNumber);
                 nunmberBox.value = "";
             }
