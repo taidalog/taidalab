@@ -5,11 +5,11 @@ function main() {
         const destinationRadix = 2;
         const digit = 8;
 
-        const instruction =document.getElementById('instruction');
+        const instruction = document.getElementById('instruction');
         instruction.innerHTML = "<br>";
 
-        const questionBox = $('#question');
-        const question = questionBox.text();
+        const questionBox = document.getElementById('question');
+        const question = questionBox.innerText;
         console.log(question);
 
         const nunmberBox = document.getElementById("nunmber_input");
@@ -44,7 +44,7 @@ function main() {
             
             if (dec == question) {
                 const nextNumber = getRandomByte();
-                questionBox.text(getRandomByte());
+                questionBox.innerText = getRandomByte();
                 console.log(nextNumber);
                 nunmberBox.value = "";
             }
@@ -102,6 +102,6 @@ function colorLeadingZero (str) {
 }
 
 $(function () {
-    $('#question').text(getRandomByte());
+    document.getElementById('question').innerText = getRandomByte();
     main();
 });
