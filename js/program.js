@@ -17,9 +17,9 @@ function main() {
         console.log(bin);
 
         if (bin == "") {
-            instruction.innerHTML = "<span class=\"result-wrong\">Enter the binary number of " + question + ".</span>";
+            instruction.innerHTML = "<span class=\"result-wrong\">" + question + "の2進法表記を入力してください。</span>";
         } else if (testBinaryString(bin) == false) {
-            instruction.innerHTML = "<span class=\"result-wrong\">\"" + bin + "\" is not a binary number. Use only 0 or 1.</span>";
+            instruction.innerHTML = "<span class=\"result-wrong\">\"" + bin + "\" は2進数ではありません。使えるのは半角の 0 と 1 のみです。</span>";
         } else {
 
             const binWithLeadingZero = colorLeadingZero(putLeadingZero(bin, digit));
@@ -36,7 +36,7 @@ function main() {
                 resultClassName = "result-wrong"
             }
             
-            const msg1 = "<span class =\"" + resultClassName + "\">" + binWithLeadingZero + "<sub>(" + destinationRadix + ")</sub> is " + dec + "<sub>(" + sourceRadix + ")</sub></span>";
+            const msg1 = "<span class =\"" + resultClassName + "\">" + binWithLeadingZero + "<sub>(" + destinationRadix + ")</sub> = " + dec + "<sub>(" + sourceRadix + ")</sub></span>";
             const msg2 = concatinateStrings(msg1, outputArea.innerHTML);
             document.getElementById('output').innerHTML = msg2;
             console.log(msg1);
