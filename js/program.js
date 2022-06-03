@@ -11,7 +11,7 @@ function main() {
     const question = questionBox.innerText;
     console.log(question);
 
-    const nunmberBox = document.getElementById("nunmber_input");
+    const nunmberBox = document.getElementById("nunmber-input");
     const bin = escapeHtml(nunmberBox.value);
     console.log(bin);
 
