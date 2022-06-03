@@ -1,57 +1,55 @@
 // copyright 2022 taidalog
 function main() {
-    document.getElementById('check_button').onclick = function () {
-        const sourceRadix = 10;
-        const destinationRadix = 2;
-        const digit = 8;
+    const sourceRadix = 10;
+    const destinationRadix = 2;
+    const digit = 8;
 
-        const instruction = document.getElementById('instruction');
-        instruction.innerHTML = "<br>";
+    const instruction = document.getElementById('instruction');
+    instruction.innerHTML = "<br>";
 
-        const questionBox = document.getElementById('question');
-        const question = questionBox.innerText;
-        console.log(question);
+    const questionBox = document.getElementById('question');
+    const question = questionBox.innerText;
+    console.log(question);
 
-        const nunmberBox = document.getElementById("nunmber_input");
-        const bin = escapeHtml(nunmberBox.value);
-        console.log(bin);
+    const nunmberBox = document.getElementById("nunmber_input");
+    const bin = escapeHtml(nunmberBox.value);
+    console.log(bin);
 
-        if (bin == "") {
-            instruction.innerHTML = "<span class=\"result-wrong\">" + question + "の2進法表記を入力してください。</span>";
-        } else if (testBinaryString(bin) == false) {
-            instruction.innerHTML = "<span class=\"result-wrong\">\"" + bin + "\" は2進数ではありません。使えるのは半角の 0 と 1 のみです。</span>";
+    if (bin == "") {
+        instruction.innerHTML = "<span class=\"result-wrong\">" + question + "の2進法表記を入力してください。</span>";
+    } else if (testBinaryString(bin) == false) {
+        instruction.innerHTML = "<span class=\"result-wrong\">\"" + bin + "\" は2進数ではありません。使えるのは半角の 0 と 1 のみです。</span>";
+    } else {
+
+        const binWithLeadingZero = colorLeadingZero(putLeadingZero(bin, digit));
+        const dec = parseInt(bin, destinationRadix);
+        console.log(binWithLeadingZero);
+        console.log(dec);
+        
+        const outputArea = document.getElementById("output");
+        
+        let resultClassName = ""
+        if (dec == question) {
+            resultClassName = "result-correct"
         } else {
-
-            const binWithLeadingZero = colorLeadingZero(putLeadingZero(bin, digit));
-            const dec = parseInt(bin, destinationRadix);
-            console.log(binWithLeadingZero);
-            console.log(dec);
-            
-            const outputArea = document.getElementById("output");
-            
-            let resultClassName = ""
-            if (dec == question) {
-                resultClassName = "result-correct"
-            } else {
-                resultClassName = "result-wrong"
-            }
-            
-            const msg1 = "<span class =\"" + resultClassName + "\">" + binWithLeadingZero + "<sub>(" + destinationRadix + ")</sub> = " + dec + "<sub>(" + sourceRadix + ")</sub></span>";
-            const msg2 = concatinateStrings(msg1, outputArea.innerHTML);
-            document.getElementById('output').innerHTML = msg2;
-            console.log(msg1);
-            console.log(msg2);
-            
-            if (dec == question) {
-                const nextNumber = getRandomByte();
-                questionBox.innerText = nextNumber;
-                console.log(nextNumber);
-                nunmberBox.value = "";
-            }
+            resultClassName = "result-wrong"
         }
         
-        nunmberBox.focus();
-    };
+        const msg1 = "<span class =\"" + resultClassName + "\">" + binWithLeadingZero + "<sub>(" + destinationRadix + ")</sub> = " + dec + "<sub>(" + sourceRadix + ")</sub></span>";
+        const msg2 = concatinateStrings(msg1, outputArea.innerHTML);
+        document.getElementById('output').innerHTML = msg2;
+        console.log(msg1);
+        console.log(msg2);
+        
+        if (dec == question) {
+            const nextNumber = getRandomByte();
+            questionBox.innerText = nextNumber;
+            console.log(nextNumber);
+            nunmberBox.value = "";
+        }
+    }
+    
+    nunmberBox.focus();
 }
 
 function getRandomByte() {
@@ -102,4 +100,3 @@ function colorLeadingZero (str) {
 }
 
 document.getElementById('question').innerText = getRandomByte();
-main();
