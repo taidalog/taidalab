@@ -5,14 +5,29 @@
     margin: 0 auto;
 }
 
+.title-area {
+    padding: 5px 0;
+}
+
+.question {
+    padding: 5px 0;
+}
+
 .inputarea {
-    margin-top: 20px;
+    padding: 5px 0;
+}
+
+#nunmber_input {
+    font-size: 20px;
+    border: 2px solid;
+    border-radius: 4px;
+    margin: 0px 5px;
+    padding: 2px 5px;
 }
 
 .buttons {
-    margin-top: 20px;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 10px 0;
+    padding: 10px 0;
 }
 
 .button-check {
@@ -31,11 +46,11 @@
 }
 
 .result {
-    margin-top: 20px;
+    padding: 10px 0;
 }
 
 .result-indented {
-    margin-left: 20px;
+    margin-left: 2rem;
 }
 
 .consolas {
