@@ -68,3 +68,8 @@
 .zero-grey {
     color: gray;
 }
+
+.warning {
+    color: red;
+    margin-left: 2rem;
+}
