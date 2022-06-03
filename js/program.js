@@ -16,7 +16,7 @@ function main() {
     console.log(bin);
 
     if (bin == "") {
-        instruction.innerHTML = "<span class=\"warning\">" + question + "の2進法表記を入力してください。</span>";
+        instruction.innerHTML = "<span class=\"warning\">" + question + " の2進法表記を入力してください。</span>";
     } else if (testBinaryString(bin) == false) {
         instruction.innerHTML = "<span class=\"warning\">\"" + bin + "\" は2進数ではありません。使えるのは半角の 0 と 1 のみです。</span>";
     } else {
