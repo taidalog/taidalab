@@ -15,6 +15,21 @@
     margin-right: auto;
 }
 
+.button-check {
+    color: midnightblue;
+    background: powderblue;
+    border-radius: 4px;
+    margin: 0 auto;
+    padding: 10px 25px;
+    position: relative;
+    text-decoration: none;
+}
+
+.button-check:hover {
+    color: powderblue;
+    background-color: midnightblue;
+}
+
 .result {
     margin-top: 20px;
 }
