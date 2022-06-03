@@ -59,10 +59,12 @@
 
 .result-correct {
     background-color: greenyellow;
+    font-size: 18px;
 }
 
 .result-wrong {
     background-color: lightpink;
+    font-size: 18px;
 }
 
 .zero-grey {
