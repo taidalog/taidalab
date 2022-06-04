@@ -6,38 +6,44 @@
         <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
+        <header>
+            <div class="inside">
+                <h1>Endless-Dec2Bin</h1>
+            </div>
+        </header>
+
         <div class="main-content">
-            <div class="title-area">
-                <h1>Endless Dec2Bin</h1>
-            </div>
             
-            <div class="question">
-                <span id="question"></span><sub>(10)</sub> を2進法で表すと？
-            </div>
-            
-            <form class="input-area" onsubmit="main(); return false;">
-                -><input type="text" id="nunmber-input" class="consolas"><sub>(2)</sub><br>
-                <span id="instruction"><br></span>
-            </form>
-            
-            <div class="buttons">
-                <a href="javascript:void(0);" onclick="main();" class="button-check">確認</a>
-            </div>
-            
-            <div class="result">
-                結果:
-                <div class="result-indented consolas">
-                    <span id="output"></span>
+            <main>
+                <div class="question">
+                    <span id="question"></span><sub>(10)</sub> を2進法で表すと？
                 </div>
-            </div>
+                
+                <form class="input-area" onsubmit="main(); return false;">
+                    -><input type="text" id="nunmber-input" class="consolas"><sub>(2)</sub><br>
+                    <span id="instruction"><br></span>
+                </form>
+                
+                <div class="buttons">
+                    <a href="javascript:void(0);" onclick="main();" class="button-check">確認</a>
+                </div>
+                
+                <div class="result">
+                    結果:
+                    <div class="result-indented consolas">
+                        <span id="output"></span>
+                    </div>
+                </div>
+            </main>
             
-            <p>
+            <footer>
                 <small>
                     &copy; 2022 taidalog<br>
                     Version 0.3.0<br>
                     <a href="https://github.com/taidalog/Endless-Dec2Bin">Repository on GitHub</a>
                 </small>
-            </p>
+            </footer>
+            
         </div>
         
         <script type="text/javascript" src="js/program.js"></script>
