@@ -4,6 +4,10 @@ html {
     font-size: 100%;
 }
 
+body {
+    margin: 0;
+}
+
 header {
     background-color: #0085af;
     color: aliceblue;
