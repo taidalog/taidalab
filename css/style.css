@@ -1,4 +1,9 @@
 /* copyright 2022 taidalog */
+html {
+    font-family: sans-serif;
+    font-size: 100%;
+}
+
 header {
     background-color: #0085af;
     color: aliceblue;
@@ -23,7 +28,7 @@ main {
 }
 
 #question {
-    font-size: 20px;
+    font-size: 1.5rem;
     font-weight: bold;
 }
 
@@ -36,7 +41,7 @@ main {
 }
 
 #nunmber-input {
-    font-size: 20px;
+    font-size: 1.25rem;
     border: 2px solid;
     border-radius: 4px;
     margin: 0px 5px;
@@ -72,7 +77,7 @@ main {
 }
 
 .consolas {
-    font-family: Consolas;
+    font-family: Consolas, sans-serif;
 }
 
 .result-correct {
