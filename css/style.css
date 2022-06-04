@@ -102,3 +102,9 @@ main {
     color: red;
     margin-left: 2rem;
 }
+
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
