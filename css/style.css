@@ -72,6 +72,11 @@ main {
 }
 
 #button-check {
+    appearance: none;
+    border: none;
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
     color: midnightblue;
     font-size: 1rem;
     background: powderblue;
@@ -79,7 +84,7 @@ main {
     width: 200px;
     height: 40px;
     position: relative;
-    border: hidden;
+    cursor: pointer;
     order: 3;
 }
 
