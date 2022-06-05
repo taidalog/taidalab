@@ -44,6 +44,9 @@ main {
 
 .input-area {
     padding: 5px 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 #nunmber-input {
@@ -52,11 +55,13 @@ main {
     border-radius: 4px;
     padding: 2px 5px;
     height: 40px;
+    order: 1;
 }
 
 .binary-radix {
     margin: 0 5px;
     line-height: 40px;
+    order: 2;
 }
 
 .buttons {
@@ -73,6 +78,7 @@ main {
     height: 40px;
     position: relative;
     border: hidden;
+    order: 3;
 }
 
 #button-check:hover {
@@ -82,6 +88,7 @@ main {
 
 #instruction {
     width: 100%;
+    order: 4;
 }
 
 .result {
