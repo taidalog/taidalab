@@ -9,7 +9,7 @@ body {
 }
 
 header {
-    background-color: #0085af;
+    background-color: #65a2ac;
     color: aliceblue;
     padding: 1px;
 }
@@ -97,7 +97,7 @@ main {
 }
 
 .zero-grey {
-    color: gray;
+    color: rgba(0, 0, 0, 0.5);
 }
 
 .warning {
