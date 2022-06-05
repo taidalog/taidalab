@@ -151,8 +151,9 @@ footer a {
     
     main {
         width: 96%;
+        margin: 0 auto;
     }
-
+    
     #nunmber-input {
         width: 80%;
     }
