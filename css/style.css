@@ -146,6 +146,10 @@ footer a {
         width: 96%;
     }
 
+    #button-check {
+        width: 100%;
+    }
+
     .container {
         display: flex;
         flex-direction: column;
