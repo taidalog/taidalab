@@ -140,12 +140,12 @@ footer a {
 
 @media (max-width: 600px) {
     .inside {
-        max-width: 96%;
+        max-width: 94%;
         margin: 0 auto;
     }
     
     .main-content {
-        max-width: 96%;
+        max-width: 90%;
         margin: 0 auto;
     }
     
