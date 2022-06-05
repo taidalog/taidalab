@@ -2,6 +2,8 @@
 
 Version 4.0.0
 
+[Japanese README](README.ja.md)
+
 Really simple JavaScript application for repeated practice of decimal-to-binary conversion.
 
 ## Features

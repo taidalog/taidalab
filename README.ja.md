@@ -2,6 +2,8 @@
 
 Version 4.0.0
 
+[English README](README.md)
+
 10進数から2進数への変換の反復練習のための JavaScript アプリケーション
 
 ## 機能
