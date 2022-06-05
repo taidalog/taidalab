@@ -59,17 +59,19 @@ main {
     padding: 10px 0;
 }
 
-.button-check {
+#button-check {
     color: midnightblue;
+    font-size: 1rem;
     background: powderblue;
     border-radius: 4px;
     margin: 0 auto;
     padding: 10px 25px;
+    width: 300px;
     position: relative;
-    text-decoration: none;
+    border: hidden;
 }
 
-.button-check:hover {
+#button-check:hover {
     color: powderblue;
     background-color: midnightblue;
 }
