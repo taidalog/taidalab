@@ -51,10 +51,12 @@ main {
     border: 2px solid;
     border-radius: 4px;
     padding: 2px 5px;
+    height: 40px;
 }
 
 .binary-radix {
     margin: 0 5px;
+    line-height: 40px;
 }
 
 .buttons {
@@ -67,9 +69,8 @@ main {
     font-size: 1rem;
     background: powderblue;
     border-radius: 4px;
-    margin: 0 auto;
-    padding: 10px 25px;
-    width: 300px;
+    width: 200px;
+    height: 40px;
     position: relative;
     border: hidden;
 }
@@ -77,6 +78,10 @@ main {
 #button-check:hover {
     color: powderblue;
     background-color: midnightblue;
+}
+
+#instruction {
+    width: 100%;
 }
 
 .result {
@@ -107,7 +112,6 @@ main {
 
 .warning {
     color: red;
-    margin-left: 2rem;
 }
 
 footer a {
