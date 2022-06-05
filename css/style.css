@@ -105,6 +105,10 @@ main {
     margin-left: 2rem;
 }
 
+footer a {
+    text-decoration: none;
+}
+
 .container {
     display: flex;
     flex-direction: row;
