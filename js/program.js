@@ -7,11 +7,11 @@ function main() {
     const instruction = document.getElementById('instruction');
     instruction.innerHTML = "<br>";
 
-    const questionBox = document.getElementById('question');
+    const questionBox = document.getElementById('questionArea');
     const question = questionBox.innerText;
     console.log(question);
 
-    const nunmberBox = document.getElementById("nunmber-input");
+    const nunmberBox = document.getElementById("numberInput");
     const bin = escapeHtml(nunmberBox.value);
     console.log(bin);
 
@@ -99,4 +99,4 @@ function colorLeadingZero (str) {
     return str.replace(leadingZero, leadingZeroInTag);
 }
 
-document.getElementById('question').innerText = getRandomByte();
+document.getElementById('questionArea').innerText = getRandomByte();

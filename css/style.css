@@ -20,7 +20,7 @@ header h1 {
     max-height: 40px;
 }
 
-.inside {
+.header-container {
     max-width: 600px;
     margin: 0 auto;
 }
@@ -34,12 +34,12 @@ main {
     width: 100%;
 }
 
-#question {
+#questionArea {
     font-size: 1.5rem;
     font-weight: bold;
 }
 
-.question {
+.question-area {
     padding: 5px 0;
 }
 
@@ -50,7 +50,7 @@ main {
     flex-wrap: wrap;
 }
 
-#nunmber-input {
+#numberInput {
     font-size: 1.25rem;
     border: 2px solid;
     border-radius: 4px;
@@ -132,14 +132,14 @@ footer a {
     text-decoration: none;
 }
 
-.container {
+.footer-container {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
 
 @media (max-width: 600px) {
-    .inside {
+    .header-container {
         max-width: 94%;
         margin: 0 auto;
     }
@@ -153,7 +153,7 @@ footer a {
         margin: 0 auto;
     }
     
-    #nunmber-input {
+    #numberInput {
         width: 80%;
     }
     
@@ -161,7 +161,7 @@ footer a {
         width: 100%;
     }
 
-    .container {
+    .footer-container {
         display: flex;
         flex-direction: column;
     }
