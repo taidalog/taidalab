@@ -93,11 +93,11 @@ main, footer {
     color: red;
 }
 
-.result {
+.history-area {
     padding: 10px 0;
 }
 
-.result-indented {
+.history-indented {
     margin-left: 2rem;
 }
 
@@ -105,12 +105,12 @@ main, footer {
     font-family: Consolas, sans-serif;
 }
 
-.result-correct {
+.history-correct {
     background-color: greenyellow;
     font-size: 18px;
 }
 
-.result-wrong {
+.history-wrong {
     background-color: lightpink;
     font-size: 18px;
 }
