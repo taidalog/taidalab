@@ -1,6 +1,6 @@
 # Endless-Dec2Bin
 
-Version 0.4.2
+Version 0.4.3
 
 [English README](README.md)
 
