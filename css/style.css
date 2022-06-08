@@ -25,7 +25,7 @@ header h1 {
     margin: 0 auto;
 }
 
-.main-content {
+main, footer {
     max-width: 600px;
     margin: 0 auto;
 }
@@ -135,7 +135,7 @@ footer a {
         margin: 0 auto;
     }
     
-    .main-content {
+    main, footer {
         max-width: 90%;
         margin: 0 auto;
     }
