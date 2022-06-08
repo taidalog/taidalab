@@ -4,21 +4,21 @@ function main() {
     const destinationRadix = 2;
     const digit = 8;
 
-    const instruction = document.getElementById('instructionArea');
-    instruction.innerHTML = "<br>";
+    const instructionArea = document.getElementById('instructionArea');
+    instructionArea.innerHTML = "<br>";
 
-    const questionBox = document.getElementById('questionNumber');
-    const question = questionBox.innerText;
+    const questionSpan = document.getElementById('questionSpan');
+    const question = questionSpan.innerText;
     console.log(question);
 
-    const nunmberBox = document.getElementById("numberInput");
-    const bin = escapeHtml(nunmberBox.value);
+    const numberInput = document.getElementById("numberInput");
+    const bin = escapeHtml(numberInput.value);
     console.log(bin);
 
     if (bin == "") {
-        instruction.innerHTML = "<span class=\"warning\">" + question + " の2進法表記を入力してください。</span>";
+        instructionArea.innerHTML = "<span class=\"warning\">" + question + " の2進法表記を入力してください。</span>";
     } else if (testBinaryString(bin) == false) {
-        instruction.innerHTML = "<span class=\"warning\">\"" + bin + "\" は2進数ではありません。使えるのは半角の 0 と 1 のみです。</span>";
+        instructionArea.innerHTML = "<span class=\"warning\">\"" + bin + "\" は2進数ではありません。使えるのは半角の 0 と 1 のみです。</span>";
     } else {
 
         const binWithLeadingZero = colorLeadingZero(putLeadingZero(bin, digit));
@@ -26,30 +26,30 @@ function main() {
         console.log(binWithLeadingZero);
         console.log(dec);
         
-        const outputArea = document.getElementById("output");
+        const outputArea = document.getElementById("outputArea");
         
-        let resultClassName = ""
+        let historyClassName = ""
         if (dec == question) {
-            resultClassName = "result-correct"
+            historyClassName = "history-correct"
         } else {
-            resultClassName = "result-wrong"
+            historyClassName = "history-wrong"
         }
         
-        const msg1 = "<span class =\"" + resultClassName + "\">" + binWithLeadingZero + "<sub>(" + destinationRadix + ")</sub> = " + dec + "<sub>(" + sourceRadix + ")</sub></span>";
+        const msg1 = "<span class =\"" + historyClassName + "\">" + binWithLeadingZero + "<sub>(" + destinationRadix + ")</sub> = " + dec + "<sub>(" + sourceRadix + ")</sub></span>";
         const msg2 = concatinateStrings(msg1, outputArea.innerHTML);
-        document.getElementById('output').innerHTML = msg2;
+        outputArea.innerHTML = msg2;
         console.log(msg1);
         console.log(msg2);
         
         if (dec == question) {
             const nextNumber = getRandomByte();
-            questionBox.innerText = nextNumber;
+            questionSpan.innerText = nextNumber;
             console.log(nextNumber);
-            nunmberBox.value = "";
+            numberInput.value = "";
         }
     }
     
-    nunmberBox.focus();
+    numberInput.focus();
 }
 
 function getRandomByte() {
@@ -99,4 +99,4 @@ function colorLeadingZero (str) {
     return str.replace(leadingZero, leadingZeroInTag);
 }
 
-document.getElementById('questionNumber').innerText = getRandomByte();
+document.getElementById('questionSpan').innerText = getRandomByte();
