@@ -1,0 +1,143 @@
+/* copyright 2022 taidalog */
+@charset "UTF-8";
+html {
+    font-family: sans-serif;
+    font-size: 100%;
+}
+
+body {
+    margin: 0;
+}
+
+header {
+    background-color: #65a2ac;
+    color: aliceblue;
+    margin-bottom: 20px;
+    padding: 1px;
+}
+
+header h1 {
+    font-size: 1.5rem;
+    max-height: 40px;
+}
+
+.header-container {
+    max-width: 80%;
+    margin: 0 auto;
+}
+
+main, footer {
+    max-width: 80%;
+    margin: 0 auto;
+}
+
+.button-container {
+    padding: 5px 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 200px 200px 200px;
+    gap: 20px;
+}
+
+.btn {
+    appearance: none;
+    border: none;
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    color: white;
+    font-size: 1.25rem;
+    border-radius: 4px;
+    position: relative;
+    cursor: pointer;
+}
+
+.button-ed2b {
+    background-color: mediumaquamarine;
+    order: 1;
+}
+
+.button-ed2b:hover {
+    color: midnightblue;
+    background-color: #9ec9cf;
+}
+
+.button-eb2d {
+    background-color: mediumaquamarine;
+    order: 2;
+}
+
+.button-epot {
+    background-color: plum;
+    order: 3;
+}
+
+.button-epotex {
+    background-color: plum;
+    order: 4;
+}
+
+.button-ebad {
+    background-color: lightpink;
+    order: 5;
+}
+
+.button-ebadex {
+    background-color: lightpink;
+    order: 6;
+}
+
+.button-ebsb {
+    background-color: aquamarine;
+    order: 7;
+}
+
+.button-ebsbex {
+    background-color: aquamarine;
+    order: 8;
+}
+
+.button-esho {
+    background-color: firebrick;
+    order: 9;
+}
+
+footer {
+    margin-top: 20px;
+}
+
+footer a {
+    text-decoration: none;
+}
+
+.footer-container {
+    display: flex;
+    flex-direction: column;
+}
+
+@media (max-width: 600px) {
+    .header-container {
+        max-width: 94%;
+        margin: 0 auto;
+    }
+    
+    main, footer {
+        max-width: 90%;
+        margin: 0 auto;
+    }
+    
+    main {
+        margin: 0 auto;
+    }
+
+    .button-container {
+        padding: 5px 0;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .btn {
+        height: 60px;
+    }
+}
