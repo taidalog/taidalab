@@ -34,13 +34,13 @@ main {
     width: 100%;
 }
 
-#questionArea {
-    font-size: 1.5rem;
-    font-weight: bold;
-}
-
 .question-area {
     padding: 5px 0;
+}
+
+.question-number {
+    font-size: 1.5rem;
+    font-weight: bold;
 }
 
 .input-area {
@@ -50,7 +50,7 @@ main {
     flex-wrap: wrap;
 }
 
-#numberInput {
+.number-input {
     font-size: 1.25rem;
     border: 2px solid;
     border-radius: 4px;
@@ -71,7 +71,7 @@ main {
     padding: 10px 0;
 }
 
-#button-check {
+.submit-button {
     appearance: none;
     border: none;
     outline: none;
@@ -88,12 +88,12 @@ main {
     order: 3;
 }
 
-#button-check:hover {
+.submit-button:hover {
     color: midnightblue;
     background-color: #9ec9cf;
 }
 
-#instruction {
+.instruction-area {
     width: 100%;
     order: 4;
 }
@@ -153,11 +153,11 @@ footer a {
         margin: 0 auto;
     }
     
-    #numberInput {
+    .number-input {
         width: 80%;
     }
     
-    #button-check {
+    .submit-button {
         width: 100%;
     }
 

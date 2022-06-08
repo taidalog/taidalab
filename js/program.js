@@ -4,10 +4,10 @@ function main() {
     const destinationRadix = 2;
     const digit = 8;
 
-    const instruction = document.getElementById('instruction');
+    const instruction = document.getElementById('instructionArea');
     instruction.innerHTML = "<br>";
 
-    const questionBox = document.getElementById('questionArea');
+    const questionBox = document.getElementById('questionNumber');
     const question = questionBox.innerText;
     console.log(question);
 
@@ -99,4 +99,4 @@ function colorLeadingZero (str) {
     return str.replace(leadingZero, leadingZeroInTag);
 }
 
-document.getElementById('questionArea').innerText = getRandomByte();
+document.getElementById('questionNumber').innerText = getRandomByte();
