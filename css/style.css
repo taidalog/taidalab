@@ -30,10 +30,6 @@ header h1 {
     margin: 0 auto;
 }
 
-main {
-    width: 100%;
-}
-
 .question-area {
     padding: 5px 0;
 }
@@ -64,11 +60,6 @@ main {
     margin: 0 5px;
     line-height: 40px;
     order: 2;
-}
-
-.buttons {
-    margin: 10px 0;
-    padding: 10px 0;
 }
 
 .submit-button {
@@ -149,10 +140,6 @@ footer a {
         margin: 0 auto;
     }
     
-    main {
-        margin: 0 auto;
-    }
-    
     .number-input {
         width: 80%;
     }
@@ -162,7 +149,6 @@ footer a {
     }
 
     .footer-container {
-        display: flex;
         flex-direction: column;
     }
 }
