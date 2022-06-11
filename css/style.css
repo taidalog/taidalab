@@ -37,6 +37,10 @@ main, footer {
     margin: 0 auto;
 }
 
+footer {
+    margin-bottom: 20px;
+}
+
 .question-area {
     padding: 5px 0;
 }
