@@ -13,7 +13,7 @@ Really simple JavaScript application for repeated practice of decimal-to-binary 
 
 ## Usage
 
-1. Visit [taidalab](http://taidalog.html.xdomain.jp/endless-dec2bin/)
+1. Visit [taidalab](http://taidalog.html.xdomain.jp/)
 1. A decimal number will be shown.
 1. Enter the binary number of that number and press the button, or just press [Enter] or [return] key.
 1. The result will be shown. When your answer is correct, a next decimal number will be shown. When wrong, you can try again.

@@ -1,8 +1,8 @@
 // taidalab Version 0.5.0
-// https://github.com/taidalog/Endless-Dec2Bin
+// https://github.com/taidalog/taidalab
 // Copyright (c) 2022 taidalog
 // This software is licensed under the MIT License.
-// https://github.com/taidalog/Endless-Dec2Bin/blob/main/LICENSE
+// https://github.com/taidalog/taidalab/blob/main/LICENSE
 function main() {
     const sourceRadix = 10;
     const destinationRadix = 2;
