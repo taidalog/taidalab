@@ -19,6 +19,14 @@ Really simple JavaScript application for repeated practice of decimal-to-binary 
 1. The result will be shown. When your answer is correct, a next decimal number will be shown. When wrong, you can try again.
 
 
+## Terms of Service
+
+- The copyright is owned by the creator (I).
+- The communications charge required for use of this site will be borne by the user.
+- The creator is not responsible for any damage caused by computer viruses, data loss, or any other disadvantages caused by usinfg this site.
+- You can use the source code, but please keep the copyright notice and license notice when redistributing.
+
+
 ## Known Issue
 
 - 
