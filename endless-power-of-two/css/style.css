@@ -1,0 +1,36 @@
+/* 
+    Endless-Dec2Bin Version 0.5.0
+    https://github.com/taidalog/Endless-Dec2Bin
+    Copyright (c) 2022 taidalog
+    This software is licensed under the MIT License.
+    https://github.com/taidalog/Endless-Dec2Bin/blob/main/LICENSE
+ */
+@charset "UTF-8";
+header {
+    background-color: #a665ac;
+    color: #ffffff;
+    margin-bottom: 20px;
+    padding: 1px;
+}
+
+.submit-button {
+    appearance: none;
+    border: none;
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    color: indigo;
+    font-size: 1rem;
+    background: plum;
+    border-radius: 4px;
+    width: 200px;
+    height: 40px;
+    position: relative;
+    cursor: pointer;
+    order: 3;
+}
+
+.submit-button:hover {
+    color: indigo;
+    background-color: #c690c6;
+}
