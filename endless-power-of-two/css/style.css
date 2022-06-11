@@ -34,3 +34,9 @@ header {
     color: indigo;
     background-color: #c690c6;
 }
+
+@media (max-width: 600px) {   
+    .submit-button {
+        width: 100%;
+    }
+}
