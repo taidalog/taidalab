@@ -1,26 +1,5 @@
 /* copyright 2022 taidalog */
 @charset "UTF-8";
-html {
-    font-family: sans-serif;
-    font-size: 100%;
-}
-
-body {
-    margin: 0;
-}
-
-header {
-    background-color: #65a2ac;
-    color: aliceblue;
-    margin-bottom: 20px;
-    padding: 1px;
-}
-
-header h1 {
-    font-size: 1.5rem;
-    max-height: 40px;
-}
-
 .header-container {
     max-width: 80%;
     margin: 0 auto;
@@ -106,26 +85,12 @@ footer {
     margin-top: 20px;
 }
 
-footer a {
-    text-decoration: none;
-}
-
 .footer-container {
     display: flex;
     flex-direction: column;
 }
 
-@media (max-width: 600px) {
-    .header-container {
-        max-width: 94%;
-        margin: 0 auto;
-    }
-    
-    main, footer {
-        max-width: 90%;
-        margin: 0 auto;
-    }
-    
+@media (max-width: 600px) {    
     main {
         margin: 0 auto;
     }
