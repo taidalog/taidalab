@@ -31,7 +31,7 @@ main, footer {
     -webkit-appearance: none;
     -moz-appearance: none;
     color: white;
-    font-size: 1.25rem;
+    font-size: 1.75rem;
     border-radius: 4px;
     position: relative;
     cursor: pointer;
@@ -112,6 +112,7 @@ footer {
     }
     
     .btn {
+        font-size: 1.25rem;
         height: 60px;
     }
 }
