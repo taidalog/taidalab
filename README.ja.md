@@ -13,9 +13,9 @@ Version 0.4.3
 
 ## 使い方
 
-1. [Endless-Dec2Bin - taidalog](http://taidalog.html.xdomain.jp/) にアクセスしてください。
+1. [Endless-Dec2Bin - taidalog](http://taidalog.html.xdomain.jp/endless-dec2bin/) にアクセスしてください。
 1. 10進数が表示されます。
-1. その数の2進数を入力して、ボタンを押すか、[Enter] キーまたは [return] キーを押してください。
+1. その数の2進数を入力して、[確認] ボタンを押すか、[Enter] キーまたは [return] キーを押してください。
 1. 結果が表示されます。正解なら次の10進数が表示され、不正解なら再挑戦できます。
 
 
