@@ -31,23 +31,9 @@ main, footer {
     cursor: pointer;
 }
 
-.button-ed2b {
-    background-color: #65a2ac;
-    order: 1;
-}
-
-.button-ed2b:hover {
-    background-color: #5a919a;
-}
-
-.button-eb2d {
-    background-color: #65a2ac;
-    order: 2;
-}
-
 .button-epot {
     background-color: #a665ac;
-    order: 3;
+    order: 1;
 }
 
 .button-epot:hover {
@@ -56,6 +42,20 @@ main, footer {
 
 .button-epotex {
     background-color: #a665ac;
+    order: 2;
+}
+
+.button-ed2b {
+    background-color: #65a2ac;
+    order: 3;
+}
+
+.button-ed2b:hover {
+    background-color: #5a919a;
+}
+
+.button-eb2d {
+    background-color: #65a2ac;
     order: 4;
 }
 
