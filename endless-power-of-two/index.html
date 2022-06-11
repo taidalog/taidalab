@@ -1,0 +1,56 @@
+<!--
+    Endless-Power-of-Two Version 0.5.0
+    https://github.com/taidalog/Endless-Dec2Bin
+    Copyright (c) 2022 taidalog
+    This software is licensed under the MIT License.
+    https://github.com/taidalog/Endless-Dec2Bin/blob/main/LICENSE
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Endless Power of Two - taidalog</title>
+        <meta charset="utf-8">
+        <meta name="description" content="10進数から2進数への変換の練習サイト">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="../css/style.css">
+    </head>
+    <body>
+        <header>
+            <div class="header-container">
+                <h1>Endless-Power-of-Two</h1>
+            </div>
+        </header>
+        
+        <main>
+            <div class="question-area">
+                <span id="questionSpan" class="question-number"></span><sub>(10)</sub> を2進法で表すと？
+            </div>
+            
+            <form class="input-area">
+                <input type="text" id="numberInput" class="number-input consolas">
+                <span class="binary-radix"><sub>(2)</sub></span>
+                <input type="submit" onclick="main(); return false;" value ="確認" id="submitButton" class="submit-button">
+                <span id="instructionArea" class="instruction-area"><br></span>
+            </form>
+            
+            <div class="history-area">
+                結果:
+                <div class="history-indented consolas">
+                    <span id="outputArea"></span>
+                </div>
+            </div>
+        </main>
+        
+        <footer>
+            <small class="footer-container">
+                <div class="item">&copy; 2022 taidalog</div>
+                <div class="item">Version 0.5.0</div>
+                <div class="item"><a href="../">Home</a></div>
+                <div class="item"><a href="../terms.html">ご利用について</a></div>
+                <div class="item"><a href="https://github.com/taidalog/Endless-Dec2Bin">Repository on GitHub</a></div>
+            </small>
+        </footer>
+        
+        <script type="text/javascript" src="js/program.js"></script>
+    </body>
+</html>
