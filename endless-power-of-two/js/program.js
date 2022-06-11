@@ -19,10 +19,12 @@ function main() {
     const bin = escapeHtml(numberInput.value);
     console.log(bin);
 
+    const hint = newHintPowerOfTwo(question);
+
     if (bin == "") {
-        instructionArea.innerHTML = "<span class=\"warning\">" + question + " の2進法表記を入力してください。</span>";
+        instructionArea.innerHTML = hint + "<br><span class=\"warning\">" + question + " の2進法表記を入力してください。</span>";
     } else if (testBinaryString(bin) == false) {
-        instructionArea.innerHTML = "<span class=\"warning\">\"" + bin + "\" は2進数ではありません。使えるのは半角の 0 と 1 のみです。</span>";
+        instructionArea.innerHTML = hint + "<br><span class=\"warning\">\"" + bin + "\" は2進数ではありません。使えるのは半角の 0 と 1 のみです。</span>";
     } else {
 
         const binWithLeadingZero = colorLeadingZero(putLeadingZero(bin, digit));
@@ -53,12 +55,14 @@ function main() {
                 nextNumber = Math.pow(2, nextIndexNumber);
             } while (nextNumber == question)
             
-            const comment = "ヒント: <span>" + nextNumber + "<sub>(10)</sub> = 2<sup>" + nextIndexNumber + "</sup></span>";
+            const nextHint = newHintPowerOfTwo(nextNumber);
             questionSpan.innerText = nextNumber;
             console.log(nextNumber);
-            instructionArea.innerHTML = comment;
-            console.log(comment);
+            instructionArea.innerHTML = nextHint;
+            console.log(nextHint);
             numberInput.value = "";
+        } else {
+            instructionArea.innerHTML = hint;
         }
     }
     
@@ -112,8 +116,13 @@ function colorLeadingZero (str) {
     return str.replace(leadingZero, leadingZeroInTag);
 }
 
+function newHintPowerOfTwo (number) {
+    const indexNumber = Math.log(number) / Math.log(2);
+    return "<details><summary>ヒント</summary><span>" + number + "<sub>(10)</sub> = 2<sup>" + indexNumber + "</sup></span><br>10進法で2<sup>n</sup>になる数は、<br>2進法では1の後ろに0をn個つけます。</details>"
+}
+
 const initIndexNumber = getRandomBetween(0, 7);
 const initNumber = Math.pow(2, initIndexNumber);
-const comment = "ヒント: <span>" + initNumber + "<sub>(10)</sub> = 2<sup>" + initIndexNumber + "</sup></span>";
+const hint = newHintPowerOfTwo(initNumber);
 document.getElementById('questionSpan').innerText = initNumber;
-document.getElementById('instructionArea').innerHTML = comment;
+document.getElementById('instructionArea').innerHTML = hint;
