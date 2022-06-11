@@ -32,13 +32,12 @@ main, footer {
 }
 
 .button-ed2b {
-    background-color: mediumaquamarine;
+    background-color: #65a2ac;
     order: 1;
 }
 
 .button-ed2b:hover {
-    color: midnightblue;
-    background-color: #9ec9cf;
+    background-color: #5a919a;
 }
 
 .button-eb2d {
@@ -47,12 +46,16 @@ main, footer {
 }
 
 .button-epot {
-    background-color: plum;
+    background-color: #a665ac;
     order: 3;
 }
 
+.button-epot:hover {
+    background-color: #955a9a;
+}
+
 .button-epotex {
-    background-color: plum;
+    background-color: #a665ac;
     order: 4;
 }
 

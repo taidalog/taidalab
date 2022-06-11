@@ -96,6 +96,10 @@ main, footer {
     order: 4;
 }
 
+details:hover {
+    cursor: pointer;
+}
+
 .warning {
     color: red;
 }
