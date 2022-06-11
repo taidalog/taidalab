@@ -41,7 +41,7 @@ main, footer {
 }
 
 .button-eb2d {
-    background-color: mediumaquamarine;
+    background-color: #65a2ac;
     order: 2;
 }
 
@@ -60,12 +60,12 @@ main, footer {
 }
 
 .button-ebad {
-    background-color: lightpink;
+    background-color: #da959f;
     order: 5;
 }
 
 .button-ebadex {
-    background-color: lightpink;
+    background-color: #da959f;
     order: 6;
 }
 
