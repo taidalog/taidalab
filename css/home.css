@@ -15,7 +15,7 @@ main, .header-container, footer {
     padding: 5px 0;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: 200px 200px 200px;
+    grid-template-rows: 200px 200px;
     gap: 20px;
 }
 
