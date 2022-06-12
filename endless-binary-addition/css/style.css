@@ -1,0 +1,42 @@
+/* 
+    taidalab Version 0.6.1
+    https://github.com/taidalog/taidalab
+    Copyright (c) 2022 taidalog
+    This software is licensed under the MIT License.
+    https://github.com/taidalog/taidalab/blob/main/LICENSE
+ */
+@charset "UTF-8";
+header {
+    background-color: #da959f;
+    color: #ffffff;
+    margin-bottom: 20px;
+    padding: 1px;
+}
+
+.submit-button {
+    appearance: none;
+    border: none;
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    color: firebrick;
+    font-size: 1rem;
+    background: sienna;
+    border-radius: 4px;
+    width: 200px;
+    height: 40px;
+    position: relative;
+    cursor: pointer;
+    order: 3;
+}
+
+.submit-button:hover {
+    color: firebrick;
+    background-color: #c690c6;
+}
+
+@media (max-width: 600px) {   
+    .submit-button {
+        width: 100%;
+    }
+}
