@@ -69,53 +69,6 @@ function main() {
     numberInput.focus();
 }
 
-function getRandomBetween (min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min);
-}
-
-function testBinaryString (binary_string) {
-    const reCorrect = /^[01]+$/;
-    return reCorrect.test(binary_string)
-}
-
-function concatinateStrings (new_string, existing_string) {
-    if (new_string == "" || new_string == null) {
-        return new_string
-    } else {
-        return new_string + "<br>" + existing_string
-    }
-}
-
-function escapeHtml (target_string) {
-    let result = target_string;
-    result = result.replace(/&/g, '&amp;');
-    result = result.replace(/</g, '&lt;');
-    result = result.replace(/>/g, '&gt;');
-    result = result.replace(/"/g, '&quot;');
-    result = result.replace(/'/g, '&#39;');
-    return result;
-}
-
-function putLeadingZero (str, digit) {
-    const zeroCount = digit - str.length;
-    if (zeroCount >= 0) {
-        return '0'.repeat(digit - str.length) + str;
-    } else {
-        return str
-    }
-}
-
-function colorLeadingZero (str) {
-    const reLeadingZero = /^0+/;
-    if (str.match(reLeadingZero == false)) {
-        return str;
-    }
-    
-    const leadingZero = str.match(reLeadingZero);
-    const leadingZeroInTag = "<span class=\"zero-grey\">" + leadingZero + "</span>";
-    return str.replace(leadingZero, leadingZeroInTag);
-}
-
 function newHintPowerOfTwo (number) {
     const indexNumber = Math.log(number) / Math.log(2);
     return "<details><summary>ヒント: </summary><span class=\"history-indented\">" + number + "<sub>(10)</sub> = 2<sup>" + indexNumber + "</sup></span><br><span class=\"history-indented\">10進法で2<sup>n</sup>になる数は、</span><br><span class=\"history-indented\">2進法では1の後ろに0をn個つけます。</span></details>"

@@ -56,51 +56,9 @@ function main() {
     numberInput.focus();
 }
 
-function getRandomByte() {
-    return Math.floor(Math.random() * 256);
-}
-
 function tesDecimalString (decimal_string) {
     const reCorrect = /^[0-9]+$/;
     return reCorrect.test(decimal_string)
-}
-
-function concatinateStrings (new_string, existing_string) {
-    if (new_string == "" || new_string == null) {
-        return new_string
-    } else {
-        return new_string + "<br>" + existing_string
-    }
-}
-
-function escapeHtml (target_string) {
-    let result = target_string;
-    result = result.replace(/&/g, '&amp;');
-    result = result.replace(/</g, '&lt;');
-    result = result.replace(/>/g, '&gt;');
-    result = result.replace(/"/g, '&quot;');
-    result = result.replace(/'/g, '&#39;');
-    return result;
-}
-
-function putLeadingZero (str, digit) {
-    const zeroCount = digit - str.length;
-    if (zeroCount >= 0) {
-        return '0'.repeat(digit - str.length) + str;
-    } else {
-        return str
-    }
-}
-
-function colorLeadingZero (str) {
-    const reLeadingZero = /^0+/;
-    if (str.match(reLeadingZero == false)) {
-        return str;
-    }
-    
-    const leadingZero = str.match(reLeadingZero);
-    const leadingZeroInTag = "<span class=\"zero-grey\">" + leadingZero + "</span>";
-    return str.replace(leadingZero, leadingZeroInTag);
 }
 
 const initNumber = getRandomByte();
