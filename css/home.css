@@ -125,6 +125,10 @@ footer {
         height: 60px;
     }
 
+    footer {
+        max-width: 94%;
+    }
+
     .footer-container {
         flex-direction: column;
     }
