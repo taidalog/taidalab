@@ -53,3 +53,13 @@ function colorLeadingZero (str) {
     const leadingZeroInTag = "<span class=\"zero-grey\">" + leadingZero + "</span>";
     return str.replace(leadingZero, leadingZeroInTag);
 }
+
+function formatString (format, replacements) {
+    let acc= format;
+    let placeholder = new RegExp ("", "");
+    for (let i = 0; i < replacements.length; i++) {
+        placeholder = new RegExp ("\\{" + i + "\\}", "g");
+        acc = acc.replace(placeholder, replacements[i]);
+    }
+    return acc;
+}
