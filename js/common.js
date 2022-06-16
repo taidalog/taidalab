@@ -3,10 +3,6 @@
 // Copyright (c) 2022 taidalog
 // This software is licensed under the MIT License.
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
-function getRandomByte() {
-    return Math.floor(Math.random() * 256);
-}
-
 function getRandomBetween (min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
@@ -16,12 +12,27 @@ function testBinaryString (binary_string) {
     return reCorrect.test(binary_string)
 }
 
+function tesDecimalString (decimal_string) {
+    const reCorrect = /^[0-9]+$/;
+    return reCorrect.test(decimal_string)
+}
+
 function concatinateStrings (new_string, existing_string) {
     if (new_string == "" || new_string == null) {
         return new_string
     } else {
         return new_string + "<br>" + existing_string
     }
+}
+
+function formatString (format, replacements) {
+    let acc = format;
+    let placeholder = new RegExp ("", "");
+    for (let i = 0; i < replacements.length; i++) {
+        placeholder = new RegExp ("\\{" + i + "\\}", "g");
+        acc = acc.replace(placeholder, replacements[i]);
+    }
+    return acc;
 }
 
 function escapeHtml (target_string) {
@@ -52,14 +63,4 @@ function colorLeadingZero (str) {
     const leadingZero = str.match(reLeadingZero);
     const leadingZeroInTag = "<span class=\"zero-grey\">" + leadingZero + "</span>";
     return str.replace(leadingZero, leadingZeroInTag);
-}
-
-function formatString (format, replacements) {
-    let acc= format;
-    let placeholder = new RegExp ("", "");
-    for (let i = 0; i < replacements.length; i++) {
-        placeholder = new RegExp ("\\{" + i + "\\}", "g");
-        acc = acc.replace(placeholder, replacements[i]);
-    }
-    return acc;
 }

@@ -45,7 +45,7 @@ function main() {
         console.log(msg2);
         
         if (bin == question) {
-            const nextNumber = getRandomByte();
+            const nextNumber = getRandomBetween(0, 255);
             const nextBin = nextNumber.toString(sourceRadix);
             questionSpan.innerText = nextBin;
             console.log(nextBin);
@@ -56,12 +56,7 @@ function main() {
     numberInput.focus();
 }
 
-function tesDecimalString (decimal_string) {
-    const reCorrect = /^[0-9]+$/;
-    return reCorrect.test(decimal_string)
-}
-
-const initNumber = getRandomByte();
+const initNumber = getRandomBetween(0, 255);
 const initBin = initNumber.toString(2);
 console.log(initNumber);
 console.log(initBin);

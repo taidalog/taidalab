@@ -46,7 +46,7 @@ function main() {
         console.log(msg2);
         
         if (dec == question) {
-            const nextNumber = getRandomByte();
+            const nextNumber = getRandomBetween(0, 255);
             questionSpan.innerText = nextNumber;
             console.log(nextNumber);
             numberInput.value = "";
@@ -56,4 +56,4 @@ function main() {
     numberInput.focus();
 }
 
-document.getElementById('questionSpan').innerText = getRandomByte();
+document.getElementById('questionSpan').innerText = getRandomBetween(0, 255);
