@@ -18,7 +18,7 @@ function tesDecimalString (decimal_string) {
 }
 
 function concatinateStrings (new_string, existing_string) {
-    if (new_string == "" || new_string == null) {
+    if (existing_string == "" || existing_string == null) {
         return new_string
     } else {
         return new_string + "<br>" + existing_string
