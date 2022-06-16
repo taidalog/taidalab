@@ -15,11 +15,13 @@ function main() {
     const question = questionSpan.innerText;
     console.log(question);
 
+    
     const numberInput = document.getElementById("numberInput");
     const bin = escapeHtml(numberInput.value);
     console.log(bin);
-
-    const hint = newHintPowerOfTwo(question);
+    
+    const indexNumber = Math.log(question) / Math.log(2);
+    const hint = formatString(hintFormat, [question, indexNumber]);
 
     if (bin == "") {
         instructionArea.innerHTML = hint + "<br><span class=\"warning\">" + question + " の2進法表記を入力してください。</span>";
@@ -55,7 +57,7 @@ function main() {
                 nextNumber = Math.pow(2, nextIndexNumber);
             } while (nextNumber == question)
             
-            const nextHint = newHintPowerOfTwo(nextNumber);
+            const nextHint = formatString(hintFormat, [nextNumber, nextIndexNumber]);
             questionSpan.innerText = nextNumber;
             console.log(nextNumber);
             instructionArea.innerHTML = nextHint;
@@ -69,13 +71,9 @@ function main() {
     numberInput.focus();
 }
 
-function newHintPowerOfTwo (number) {
-    const indexNumber = Math.log(number) / Math.log(2);
-    return "<details><summary>ヒント: </summary><span class=\"history-indented\">" + number + "<sub>(10)</sub> = 2<sup>" + indexNumber + "</sup></span><br><span class=\"history-indented\">10進法で2<sup>n</sup>になる数は、</span><br><span class=\"history-indented\">2進法では1の後ろに0をn個つけます。</span></details>"
-}
-
 const initIndexNumber = getRandomBetween(0, 7);
 const initNumber = Math.pow(2, initIndexNumber);
-const hint = newHintPowerOfTwo(initNumber);
+const hintFormat = "<details><summary>ヒント: </summary><span class=\"history-indented\">{0}<sub>(10)</sub> = 2<sup>{1}</sup></span><br><span class=\"history-indented\">10進法で2<sup>n</sup>になる数は、</span><br><span class=\"history-indented\">2進法では1の後ろに0をn個つけます。</span></details>";
+const hint = formatString(hintFormat, [initNumber, initIndexNumber]);
 document.getElementById('questionSpan').innerText = initNumber;
 document.getElementById('instructionArea').innerHTML = hint;
