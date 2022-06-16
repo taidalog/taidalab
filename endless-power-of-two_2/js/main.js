@@ -19,7 +19,8 @@ function main() {
     const bin = escapeHtml(numberInput.value);
     console.log(bin);
 
-    const hint = newHintPowerOfTwo(question);
+    const indexNumber = Math.log(question + 1) / Math.log(2);
+    const hint = formatString(hintFormat, [question, question + 1, indexNumber]);
 
     if (bin == "") {
         instructionArea.innerHTML = hint + "<br><span class=\"warning\">" + question + " の2進法表記を入力してください。</span>";
@@ -55,7 +56,7 @@ function main() {
                 nextNumber = Math.pow(2, nextIndexNumber) - 1;
             } while (nextNumber == question)
             
-            const nextHint = newHintPowerOfTwo(nextNumber);
+            const nextHint = formatString(hintFormat, [nextNumber, nextNumber + 1, nextIndexNumber]);
             questionSpan.innerText = nextNumber;
             console.log(nextNumber);
             instructionArea.innerHTML = nextHint;
@@ -69,14 +70,9 @@ function main() {
     numberInput.focus();
 }
 
-function newHintPowerOfTwo (number) {
-    const numberPlusOne = number + 1;
-    const indexNumber = Math.log(numberPlusOne) / Math.log(2);
-    return "<details><summary>ヒント: </summary><span class=\"history-indented\">" + number + "<sub>(10)</sub> = " + numberPlusOne + "<sub>(10)</sub> - 1<sub>(10)</sub> = 2<sup>" + indexNumber + "</sup> - 1<sub>(10)</sub></span>";
-}
-
 const initIndexNumber = getRandomBetween(1, 8);
 const initNumber = Math.pow(2, initIndexNumber) - 1;
-const hint = newHintPowerOfTwo(initNumber);
+const hintFormat = "<details><summary>ヒント: </summary><span class=\"history-indented\">{0}<sub>(10)</sub> = {1}<sub>(10)</sub> - 1<sub>(10)</sub> = 2<sup>{2}</sup> - 1<sub>(10)</sub></span>";
+const hint = formatString(hintFormat, [initNumber, initNumber + 1, initIndexNumber]);
 document.getElementById('questionSpan').innerText = initNumber;
 document.getElementById('instructionArea').innerHTML = hint;
