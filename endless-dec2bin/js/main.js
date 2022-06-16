@@ -25,9 +25,10 @@ function main() {
         instructionArea.innerHTML = "<span class=\"warning\">\"" + bin + "\" は2進数ではありません。使えるのは半角の 0 と 1 のみです。</span>";
     } else {
 
-        const binWithLeadingZero = colorLeadingZero(putLeadingZero(bin, digit));
+        const zeroPaddedBin = bin.padStart(digit, '0');
+        const taggedBin = colorLeadingZero(zeroPaddedBin);
         const dec = parseInt(bin, destinationRadix);
-        console.log(binWithLeadingZero);
+        console.log(taggedBin);
         console.log(dec);
         
         const outputArea = document.getElementById("outputArea");
@@ -39,7 +40,7 @@ function main() {
             historyClassName = "history-wrong"
         }
         
-        const msg1 = "<span class =\"" + historyClassName + "\">" + binWithLeadingZero + "<sub>(" + destinationRadix + ")</sub> = " + dec + "<sub>(" + sourceRadix + ")</sub></span>";
+        const msg1 = "<span class =\"" + historyClassName + "\">" + taggedBin + "<sub>(" + destinationRadix + ")</sub> = " + dec + "<sub>(" + sourceRadix + ")</sub></span>";
         const msg2 = concatinateStrings(msg1, outputArea.innerHTML);
         outputArea.innerHTML = msg2;
         console.log(msg1);

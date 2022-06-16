@@ -45,15 +45,6 @@ function escapeHtml (target_string) {
     return result;
 }
 
-function putLeadingZero (str, digit) {
-    const zeroCount = digit - str.length;
-    if (zeroCount >= 0) {
-        return '0'.repeat(digit - str.length) + str;
-    } else {
-        return str
-    }
-}
-
 function colorLeadingZero (str) {
     const reLeadingZero = /^0+/;
     if (str.match(reLeadingZero == false)) {
