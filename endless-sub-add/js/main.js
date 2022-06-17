@@ -112,10 +112,8 @@ do {
     initBin = initNumber.toString(2);
 } while (countOneBit(initBin) != 2);
 
-const initIndexNumber = Math.log(initNumber) / Math.log(2);
 const powerOtTwos = devideIntoPowerOfTwo(initNumber);
 console.log(initNumber);
-console.log(initIndexNumber);
 console.log(powerOtTwos);
 
 const hintFormat01 = "<details><summary>ヒント: </summary>";
