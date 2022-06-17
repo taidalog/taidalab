@@ -20,8 +20,11 @@ function main() {
     const bin = escapeHtml(numberInput.value);
     console.log(bin);
     
-    const indexNumber = Math.log(question) / Math.log(2);
-    const hint = formatString(hintFormat, [question, indexNumber]);
+    const powerOtTwos = devideIntoPowerOfTwo(question);
+    console.log(powerOtTwos);
+
+    const hint = formatString(hintFormat, [question, powerOtTwos[0], question - powerOtTwos[0], powerOtTwos[1], question - powerOtTwos[0] - powerOtTwos[1]]);
+    console.log(hint);
 
     if (bin == "") {
         instructionArea.innerHTML = hint + "<br><span class=\"warning\">" + question + " の2進法表記を入力してください。</span>";
@@ -52,15 +55,20 @@ function main() {
         
         if (dec == question) {
             let nextNumber = 0;
-            let nextIndexNumber = 0;
+            let nextBin = 0;
             do {
-                nextIndexNumber = getRandomBetween(0, 7);
-                nextNumber = Math.pow(2, nextIndexNumber);
-            } while (nextNumber == question)
-            
-            const nextHint = formatString(hintFormat, [nextNumber, nextIndexNumber]);
-            questionSpan.innerText = nextNumber;
+                nextNumber = getRandomBetween(0, 192);
+                nextBin = nextNumber.toString(2);
+            } while (countOneBit(nextBin) != 2);
             console.log(nextNumber);
+            
+            const powerOtTwos = devideIntoPowerOfTwo(nextNumber);
+            console.log(powerOtTwos);
+            
+            const nextHint = formatString(hintFormat, [nextNumber, powerOtTwos[0], nextNumber - powerOtTwos[0], powerOtTwos[1], nextNumber - powerOtTwos[0] - powerOtTwos[1]]);
+            console.log(nextHint);
+            
+            questionSpan.innerText = nextNumber;
             instructionArea.innerHTML = nextHint;
             console.log(nextHint);
             numberInput.value = "";
