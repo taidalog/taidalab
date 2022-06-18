@@ -7,7 +7,7 @@
  */
 @charset "UTF-8";
 header {
-    background-color: #a665ac;
+    background-color: #65ac86;
     color: #ffffff;
     margin-bottom: 20px;
     padding: 1px;
@@ -19,9 +19,9 @@ header {
     outline: none;
     -webkit-appearance: none;
     -moz-appearance: none;
-    color: indigo;
+    color: #1e3328;
     font-size: 1rem;
-    background: plum;
+    background: #86e4b2;
     border-radius: 4px;
     width: 200px;
     height: 40px;
@@ -31,8 +31,7 @@ header {
 }
 
 .submit-button:hover {
-    color: indigo;
-    background-color: #c690c6;
+    background-color: #78cda0;
 }
 
 @media (max-width: 600px) {   
