@@ -75,8 +75,8 @@ const initNumber1 = getRandomBetween(0, 255);
 let initNumber2 = 0;
 
 do {
-    initNumber2 = getRandomBetween(0, 255);
-    console.log("band : " + (initNumber1 & initNumber2));
+    initNumber2 = getRandomBetween(0, 255 - initNumber1);
+//    console.log("band : " + (initNumber1 & initNumber2));
 } while ((initNumber1 == initNumber2) || ((initNumber1 & initNumber2) == 0) || (initNumber1 + initNumber2 > 255))
 
 const initBin1 = initNumber1.toString(2);
