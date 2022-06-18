@@ -13,6 +13,25 @@ header {
     padding: 1px;
 }
 
+.calculation-area {
+    width: 250px;
+    margin: 0px;
+    padding: 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.first-row, .second-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.digit-area {
+    width: 1rem;
+}
+
 .submit-button {
     appearance: none;
     border: none;

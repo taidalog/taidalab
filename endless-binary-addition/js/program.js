@@ -71,11 +71,29 @@ function main() {
     numberInput.focus();
 }
 
-const initIndexNumber = getRandomBetween(1, 8);
-const initNumber = Math.pow(2, initIndexNumber) - 1;
+const initNumber1 = getRandomBetween(0, 255);
+let initNumber2 = 0;
 
-const hintFormat = "<details><summary>ヒント: </summary><span class=\"history-indented\">{0}<sub>(10)</sub> = {1}<sub>(10)</sub> - 1<sub>(10)</sub> = 2<sup>{2}</sup> - 1<sub>(10)</sub></span>";
-const hint = formatString(hintFormat, [initNumber, initNumber + 1, initIndexNumber]);
+do {
+    initNumber2 = getRandomBetween(0, 255);
+    console.log("band : " + (initNumber1 & initNumber2));
+} while ((initNumber1 == initNumber2) || ((initNumber1 & initNumber2) == 0) || (initNumber1 + initNumber2 > 255))
 
-document.getElementById('questionSpan').innerText = initNumber;
-document.getElementById('instructionArea').innerHTML = hint;
+const initBin1 = initNumber1.toString(2);
+const initBin2 = initNumber2.toString(2);
+console.log(initNumber1);
+console.log(initBin1);
+console.log(initNumber2);
+console.log(initBin2);
+
+for (let i = 1; i<=initBin1.length; i++) {
+    document.getElementById('firstRowDigit' + i).innerText = initBin1[initBin1.length - i];
+}
+
+for (let i = 1; i<=initBin2.length; i++) {
+    document.getElementById('secondRowDigit' + i).innerText = initBin2[initBin2.length - i];
+}
+
+//const hintFormat = "<details><summary>ヒント: </summary><span class=\"history-indented\">{0}<sub>(10)</sub> = {1}<sub>(10)</sub> - 1<sub>(10)</sub> = 2<sup>{2}</sup> - 1<sub>(10)</sub></span>";
+//const hint = formatString(hintFormat, [initNumber, initNumber + 1, initIndexNumber]);
+//document.getElementById('instructionArea').innerHTML = hint;
