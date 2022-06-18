@@ -19,7 +19,8 @@ function main() {
     const bin = escapeHtml(numberInput.value);
     console.log(bin);
 
-    const hint = newHintPowerOfTwo(question);
+    const indexNumber = Math.log(question + 1) / Math.log(2);
+    const hint = formatString(hintFormat, [question, question + 1, indexNumber]);
 
     if (bin == "") {
         instructionArea.innerHTML = hint + "<br><span class=\"warning\">" + question + " の2進法表記を入力してください。</span>";
@@ -27,9 +28,10 @@ function main() {
         instructionArea.innerHTML = hint + "<br><span class=\"warning\">\"" + bin + "\" は2進数ではありません。使えるのは半角の 0 と 1 のみです。</span>";
     } else {
 
-        const binWithLeadingZero = colorLeadingZero(putLeadingZero(bin, digit));
+        const zeroPaddedBin = bin.padStart(digit, '0');
+        const taggedBin = colorLeadingZero(zeroPaddedBin);
         const dec = parseInt(bin, destinationRadix);
-        console.log(binWithLeadingZero);
+        console.log(taggedBin);
         console.log(dec);
         
         const outputArea = document.getElementById("outputArea");
@@ -41,7 +43,7 @@ function main() {
             historyClassName = "history-wrong"
         }
         
-        const msg1 = "<span class =\"" + historyClassName + "\">" + binWithLeadingZero + "<sub>(" + destinationRadix + ")</sub> = " + dec + "<sub>(" + sourceRadix + ")</sub></span>";
+        const msg1 = "<span class =\"" + historyClassName + "\">" + taggedBin + "<sub>(" + destinationRadix + ")</sub> = " + dec + "<sub>(" + sourceRadix + ")</sub></span>";
         const msg2 = concatinateStrings(msg1, outputArea.innerHTML);
         outputArea.innerHTML = msg2;
         console.log(msg1);
@@ -55,7 +57,7 @@ function main() {
                 nextNumber = Math.pow(2, nextIndexNumber) - 1;
             } while (nextNumber == question)
             
-            const nextHint = newHintPowerOfTwo(nextNumber);
+            const nextHint = formatString(hintFormat, [nextNumber, nextNumber + 1, nextIndexNumber]);
             questionSpan.innerText = nextNumber;
             console.log(nextNumber);
             instructionArea.innerHTML = nextHint;
@@ -69,61 +71,11 @@ function main() {
     numberInput.focus();
 }
 
-function getRandomBetween (min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min);
-}
-
-function testBinaryString (binary_string) {
-    const reCorrect = /^[01]+$/;
-    return reCorrect.test(binary_string)
-}
-
-function concatinateStrings (new_string, existing_string) {
-    if (new_string == "" || new_string == null) {
-        return new_string
-    } else {
-        return new_string + "<br>" + existing_string
-    }
-}
-
-function escapeHtml (target_string) {
-    let result = target_string;
-    result = result.replace(/&/g, '&amp;');
-    result = result.replace(/</g, '&lt;');
-    result = result.replace(/>/g, '&gt;');
-    result = result.replace(/"/g, '&quot;');
-    result = result.replace(/'/g, '&#39;');
-    return result;
-}
-
-function putLeadingZero (str, digit) {
-    const zeroCount = digit - str.length;
-    if (zeroCount >= 0) {
-        return '0'.repeat(digit - str.length) + str;
-    } else {
-        return str
-    }
-}
-
-function colorLeadingZero (str) {
-    const reLeadingZero = /^0+/;
-    if (str.match(reLeadingZero == false)) {
-        return str;
-    }
-    
-    const leadingZero = str.match(reLeadingZero);
-    const leadingZeroInTag = "<span class=\"zero-grey\">" + leadingZero + "</span>";
-    return str.replace(leadingZero, leadingZeroInTag);
-}
-
-function newHintPowerOfTwo (number) {
-    const numberPlusOne = number + 1;
-    const indexNumber = Math.log(numberPlusOne) / Math.log(2);
-    return "<details><summary>ヒント: </summary><span class=\"history-indented\">" + number + "<sub>(10)</sub> = " + numberPlusOne + "<sub>(10)</sub> - 1<sub>(10)</sub> = 2<sup>" + indexNumber + "</sup> - 1<sub>(10)</sub></span>";
-}
-
 const initIndexNumber = getRandomBetween(1, 8);
 const initNumber = Math.pow(2, initIndexNumber) - 1;
-const hint = newHintPowerOfTwo(initNumber);
+
+const hintFormat = "<details><summary>ヒント: </summary><span class=\"history-indented\">{0}<sub>(10)</sub> = {1}<sub>(10)</sub> - 1<sub>(10)</sub> = 2<sup>{2}</sup> - 1<sub>(10)</sub></span>";
+const hint = formatString(hintFormat, [initNumber, initNumber + 1, initIndexNumber]);
+
 document.getElementById('questionSpan').innerText = initNumber;
 document.getElementById('instructionArea').innerHTML = hint;
