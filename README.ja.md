@@ -1,6 +1,6 @@
 # taidalab
 
-Version 0.8.1
+Version 0.8.2
 
 [English README](README.md)
 
