@@ -21,7 +21,7 @@ header {
     -moz-appearance: none;
     color: #1e3328;
     font-size: 1rem;
-    background: #86e4b2;
+    background: #95fec6;
     border-radius: 4px;
     width: 200px;
     height: 40px;
@@ -31,7 +31,7 @@ header {
 }
 
 .submit-button:hover {
-    background-color: #78cda0;
+    background-color: #86e5b2;
 }
 
 @media (max-width: 600px) {   
