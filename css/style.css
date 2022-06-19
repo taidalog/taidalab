@@ -144,6 +144,10 @@ footer a {
     justify-content: space-between;
 }
 
+dd {
+    margin-bottom: 12px;
+}
+
 @media (max-width: 600px) {
     .header-container {
         max-width: 94%;
