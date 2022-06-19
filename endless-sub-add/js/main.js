@@ -23,7 +23,7 @@ function main() {
     const powerOtTwos = devideIntoPowerOfTwo(question);
     console.log(powerOtTwos);
 
-    const hint = formatString(hintFormat, [question, powerOtTwos[0], question - powerOtTwos[0], powerOtTwos[1], question - powerOtTwos[0] - powerOtTwos[1]]);
+    const hint = formatString(hintFormat, [question, powerOtTwos[0], question - powerOtTwos[0], powerOtTwos[1], question - powerOtTwos[0] - powerOtTwos[1], Math.floor(Math.log(powerOtTwos[0]) / Math.log(2)), Math.floor(Math.log(powerOtTwos[1]) / Math.log(2))]);
     console.log(hint);
 
     if (bin == "") {
@@ -65,7 +65,7 @@ function main() {
             const powerOtTwos = devideIntoPowerOfTwo(nextNumber);
             console.log(powerOtTwos);
             
-            const nextHint = formatString(hintFormat, [nextNumber, powerOtTwos[0], nextNumber - powerOtTwos[0], powerOtTwos[1], nextNumber - powerOtTwos[0] - powerOtTwos[1]]);
+            const nextHint = formatString(hintFormat, [nextNumber, powerOtTwos[0], nextNumber - powerOtTwos[0], powerOtTwos[1], nextNumber - powerOtTwos[0] - powerOtTwos[1], Math.floor(Math.log(powerOtTwos[0]) / Math.log(2)), Math.floor(Math.log(powerOtTwos[1]) / Math.log(2))]);
             console.log(nextHint);
             
             questionSpan.innerText = nextNumber;
