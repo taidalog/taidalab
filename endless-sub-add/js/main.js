@@ -129,9 +129,10 @@ const hintFormat02 = "<span class=\"history-indented\">{0}<sub>(10)</sub> 以下
 const hintFormat03 = "<span class=\"history-indented\">{0}<sub>(10)</sub> - {1}<sub>(10)</sub> = {2}<sub>(10)</sub></span><br>";
 const hintFormat04 = "<span class=\"history-indented\">{2}<sub>(10)</sub> 以下で最大の2の累乗は {3}<sub>(10)</sub></span><br>";
 const hintFormat05 = "<span class=\"history-indented\">{2}<sub>(10)</sub> - {3}<sub>(10)</sub> = {4}<sub>(10)</sub></span><br>";
-const hintFormat06 = "<span class=\"history-indented\">よって、{0}<sub>(10)</sub> = {1}<sub>(10)</sub> + {3}<sub>(10)</sub></span></details>";
-const hintFormat = hintFormat01 + hintFormat02 + hintFormat03 + hintFormat04 + hintFormat05 + hintFormat06;
-const hint = formatString(hintFormat, [initNumber, powerOtTwos[0], initNumber - powerOtTwos[0], powerOtTwos[1], initNumber - powerOtTwos[0] - powerOtTwos[1]]);
+const hintFormat06 = "<span class=\"history-indented\">よって、{0}<sub>(10)</sub> = {1}<sub>(10)</sub> + {3}<sub>(10)</sub></span><br>";
+const hintFormat07 = "<span class=\"history-indented\">または、{0}<sub>(10)</sub> = 2<sup>{5}</sup><sub>(10)</sub> + 2<sup>{6}</sup><sub>(10)</sub></span></details>";
+const hintFormat = hintFormat01 + hintFormat02 + hintFormat03 + hintFormat04 + hintFormat05 + hintFormat06 + hintFormat07;
+const hint = formatString(hintFormat, [initNumber, powerOtTwos[0], initNumber - powerOtTwos[0], powerOtTwos[1], initNumber - powerOtTwos[0] - powerOtTwos[1], Math.floor(Math.log(powerOtTwos[0]) / Math.log(2)), Math.floor(Math.log(powerOtTwos[1]) / Math.log(2))]);
 console.log(hint);
 
 document.getElementById('questionSpan').innerText = initNumber;
