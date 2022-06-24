@@ -16,8 +16,6 @@ body {
 }
 
 header {
-    background-color: #65a2ac;
-    color: aliceblue;
     margin-bottom: 20px;
     padding: 1px;
 }
@@ -25,6 +23,7 @@ header {
 header h1 {
     font-size: 1.5rem;
     max-height: 40px;
+    color: #ffffff;
 }
 
 .header-container {
@@ -79,9 +78,7 @@ footer {
     outline: none;
     -webkit-appearance: none;
     -moz-appearance: none;
-    color: midnightblue;
     font-size: 1rem;
-    background: powderblue;
     border-radius: 4px;
     width: 200px;
     height: 40px;
@@ -90,9 +87,44 @@ footer {
     order: 3;
 }
 
-.submit-button:hover {
+.pot-header {
+    background-color: #a665ac;
+}
+
+.pot-button {
+    color: indigo;
+    background: plum;
+}
+
+.pot-button:hover {
+    background-color: #c690c6;
+}
+
+.d2b-header {
+    background-color: #65a2ac;
+    color: aliceblue;
+}
+
+.d2b-button {
     color: midnightblue;
+    background: powderblue;
+}
+
+.d2b-button:hover {
     background-color: #9ec9cf;
+}
+
+.b2d-header {
+    background-color: #65ac86;
+}
+
+.b2d-button {
+    color: #1e3328;
+    background: #95fec6;
+}
+
+.b2d-button:hover {
+    background-color: #86e5b2;
 }
 
 .instruction-area {

@@ -7,8 +7,6 @@
  */
 @charset "UTF-8";
 header {
-    background-color: #65a2ac;
-    color: aliceblue;
     margin-bottom: 20px;
     padding: 1px;
 }
@@ -19,20 +17,13 @@ header {
     outline: none;
     -webkit-appearance: none;
     -moz-appearance: none;
-    color: midnightblue;
     font-size: 1rem;
-    background: powderblue;
     border-radius: 4px;
     width: 200px;
     height: 40px;
     position: relative;
     cursor: pointer;
     order: 3;
-}
-
-.submit-button:hover {
-    color: midnightblue;
-    background-color: #9ec9cf;
 }
 
 @media (max-width: 600px) {   
