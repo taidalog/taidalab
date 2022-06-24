@@ -55,9 +55,23 @@ footer {
     background-color: #955a9a;
 }
 
+.button-ebad {
+    background-color: #da959f;
+    order: 3;
+}
+
+.button-esad {
+    background-color: #65a2ac;
+    order: 4;
+}
+
+.button-esad:hover {
+    background-color: #5a919a;
+}
+
 .button-ed2b {
     background-color: #65a2ac;
-    order: 3;
+    order: 5;
 }
 
 .button-ed2b:hover {
@@ -65,26 +79,12 @@ footer {
 }
 
 .button-eb2d {
-    background-color: #65a2ac;
-    order: 4;
+    background-color: #65ac86;
+    order: 6;
 }
 
 .button-eb2d:hover {
-    background-color: #5a919a;
-}
-
-.button-esad {
-    background-color: #65ac86;
-    order: 5;
-}
-
-.button-esad:hover {
     background-color: #5a9a78;
-}
-
-.button-ebad {
-    background-color: #da959f;
-    order: 6;
 }
 
 .button-ebadex {
