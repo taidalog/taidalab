@@ -18,12 +18,12 @@ body {
 header {
     margin-bottom: 20px;
     padding: 1px;
+    color: #ffffff;
 }
 
 header h1 {
     font-size: 1.5rem;
     max-height: 40px;
-    color: #ffffff;
 }
 
 .header-container {
@@ -85,6 +85,11 @@ footer {
     position: relative;
     cursor: pointer;
     order: 3;
+}
+
+.home-header {
+    background-color: #65a2ac;
+    color: aliceblue;
 }
 
 .pot-header {
