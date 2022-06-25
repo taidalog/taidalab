@@ -6,7 +6,8 @@
 function main() {
     const sourceRadix = 10;
     const destinationRadix = 2;
-    const digit = 8;
+    const binaryDigit = 8;
+    const decimalDigit = 3;
 
     const instructionArea = document.getElementById('instructionArea');
     instructionArea.innerHTML = "<br>";
@@ -29,7 +30,7 @@ function main() {
         instructionArea.innerHTML = hint + "<br><span class=\"warning\">\"" + bin + "\" は2進数ではありません。使えるのは半角の 0 と 1 のみです。</span>";
     } else {
 
-        const zeroPaddedBin = bin.padStart(digit, '0');
+        const zeroPaddedBin = bin.padStart(binaryDigit, '0');
         const taggedBin = colorLeadingZero(zeroPaddedBin);
         const dec = parseInt(bin, destinationRadix);
         console.log(taggedBin);
@@ -44,7 +45,8 @@ function main() {
             historyClassName = "history-wrong"
         }
         
-        const msg1 = "<span class =\"" + historyClassName + "\">" + taggedBin + "<sub>(" + destinationRadix + ")</sub> = " + dec + "<sub>(" + sourceRadix + ")</sub></span>";
+        const spacePaddedDec = dec.toString().padStart(decimalDigit, ' ').replace(' ', '&nbsp;');
+        const msg1 = "<span class =\"" + historyClassName + "\">" + taggedBin + "<sub>(" + destinationRadix + ")</sub> = " + spacePaddedDec + "<sub>(" + sourceRadix + ")</sub></span>";
         const msg2 = concatinateStrings(msg1, outputArea.innerHTML);
         outputArea.innerHTML = msg2;
         console.log(msg1);

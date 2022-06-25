@@ -38,7 +38,8 @@ function main() {
             historyClassName = "history-wrong"
         }
         
-        const msg1 = "<span class =\"" + historyClassName + "\">" + inputValue + "<sub>(" + destinationRadix + ")</sub> = " + bin + "<sub>(" + sourceRadix + ")</sub></span>";
+        const spacePaddedInputValue = inputValue.padStart(digit, ' ').replace(' ', '&nbsp;');
+        const msg1 = "<span class =\"" + historyClassName + "\">" + spacePaddedInputValue + "<sub>(" + destinationRadix + ")</sub> = " + bin + "<sub>(" + sourceRadix + ")</sub></span>";
         const msg2 = concatinateStrings(msg1, outputArea.innerHTML);
         outputArea.innerHTML = msg2;
         console.log(msg1);
