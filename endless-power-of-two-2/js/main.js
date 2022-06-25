@@ -20,8 +20,9 @@ function main() {
     const bin = escapeHtml(numberInput.value);
     console.log(bin);
 
-    const indexNumber = Math.log(question + 1) / Math.log(2);
-    const hint = formatString(hintFormat, [question, question + 1, indexNumber]);
+    const questionAsInt = parseInt(question, 10);
+    const indexNumber = Math.log(questionAsInt + 1) / Math.log(2);
+    const hint = formatString(hintFormat, [question, questionAsInt + 1, indexNumber]);
 
     if (bin == "") {
         instructionArea.innerHTML = hint + "<br><span class=\"warning\">" + question + " の2進法表記を入力してください。</span>";
@@ -75,7 +76,7 @@ function main() {
 
 const initIndexNumber = getRandomBetween(1, 8);
 const initNumber = Math.pow(2, initIndexNumber) - 1;
-const hintFormat = "<details><summary>ヒント: </summary><span class=\"history-indented\">{0}<sub>(10)</sub> = {1}<sub>(10)</sub> - 1<sub>(10)</sub> = 2<sup>{2}</sup> - 1<sub>(10)</sub></span>";
+const hintFormat = "<details><summary>ヒント: </summary><span class=\"history-indented\">{0}<sub>(10)</sub> = {1}<sub>(10)</sub> - 1<sub>(10)</sub> = 2<sup>{2}</sup> - 1<sub>(10)</sub></span></details>";
 const hint = formatString(hintFormat, [initNumber, initNumber + 1, initIndexNumber]);
 document.getElementById('questionSpan').innerText = initNumber;
 document.getElementById('instructionArea').innerHTML = hint;
