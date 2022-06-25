@@ -101,13 +101,17 @@ console.log(splitBin);
 const addtionFormula = writeAdditionFormula(initBin);
 
 const hintFormat01 = "<details><summary>ヒント:</summary>";
-const hintFormat02 = "<span class=\"history-indented\">2進数のn桁目は</span><br>";
-const hintFormat03 = "<span class=\"history-indented\">10進数の2<sup>n-1</sup>に相当します。</span><br>";
-const hintFormat04 = "<span class=\"history-indented\">{0}<sub>(2)</sub>を10進数に変換するには、</span><br>";
-const hintFormat05 = "<span class=\"history-indented\">以下のように計算します。</span><br>";
-const hintFormat06 = "<span class=\"history-indented\">{1}</span><br>";
-const hintFormat07 = "</details>";
-const hintFormat = hintFormat01 + hintFormat02 + hintFormat03 + hintFormat04 + hintFormat05 + hintFormat06 + hintFormat07;
+const hintFormat02 = "<span class=\"history-indented\">10進数は、一番右の桁から</span><br>";
+const hintFormat03 = "<span class=\"history-indented\">1の位、10の位、100の位、1000の位...つまり、</span><br>";
+const hintFormat04 = "<span class=\"history-indented\">10<sup>0</sup>の位、10<sup>1</sup>の位、10<sup>2</sup>の位、10<sup>3</sup>の位...となっています。</span><br>";
+const hintFormat05 = "<span class=\"history-indented\">同様に、2進数は一番右の桁から</span><br>";
+const hintFormat06 = "<span class=\"history-indented\">1の位、2の位、4の位、8の位...つまり、</span><br>";
+const hintFormat07 = "<span class=\"history-indented\">2<sup>0</sup>の位、2<sup>1</sup>の位、2<sup>2</sup>の位、2<sup>3</sup>の位...となっています。</span><br>";
+const hintFormat08 = "<span class=\"history-indented\">ですので、{0}<sub>(2)</sub>を10進数に変換するには、</span><br>";
+const hintFormat09 = "<span class=\"history-indented\">以下のように計算します。</span><br>";
+const hintFormat10 = "<span class=\"history-indented\">{1}</span><br>";
+const hintFormat11 = "</details>";
+const hintFormat = hintFormat01 + hintFormat02 + hintFormat03 + hintFormat04 + hintFormat05 + hintFormat06 + hintFormat07 + hintFormat08 + hintFormat09 + hintFormat10 + hintFormat11;
 const hint = formatString(hintFormat, [initBin, addtionFormula]);
 
 document.getElementById('questionSpan').innerText = splitBin;
