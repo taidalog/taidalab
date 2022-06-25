@@ -21,10 +21,13 @@ function main() {
     const inputValue = escapeHtml(numberInput.value);
     console.log("inputValue : " + inputValue);
 
+    const addtionFormula = writeAdditionFormula(questionWithoutSpace);
+    const hint = formatString(hintFormat, [questionWithoutSpace, addtionFormula]);
+
     if (inputValue == "") {
-        instructionArea.innerHTML = "<span class=\"warning\">" + questionWithoutSpace + " の10進法表記を入力してください。</span>";
+        instructionArea.innerHTML = hint + "<span class=\"warning\">" + questionWithoutSpace + " の10進法表記を入力してください。</span>";
     } else if (tesDecimalString(inputValue) == false) {
-        instructionArea.innerHTML = "<span class=\"warning\">\"" + inputValue + "\" は10進数ではありません。使えるのは半角の 0123456789 のみです。</span>";
+        instructionArea.innerHTML = hint + "<span class=\"warning\">\"" + inputValue + "\" は10進数ではありません。使えるのは半角の 0123456789 のみです。</span>";
     } else {
 
         const inputValueAsInt = parseInt(inputValue);
@@ -55,11 +58,35 @@ function main() {
             questionSpan.innerText = splitBin;
             console.log(nextBin);
             console.log(splitBin);
+            
+            const nextAddtionFormula = writeAdditionFormula(nextBin);
+            const nextHint = formatString(hintFormat, [nextBin, nextAddtionFormula]);
+            console.log(nextHint);
+            
+            instructionArea.innerHTML = nextHint;
             numberInput.value = "";
+        } else {
+            instructionArea.innerHTML = hint;
         }
     }
     
     numberInput.focus();
+}
+
+function writeAdditionFormula (binary_string) {
+    let result = "";
+    let tmp ="";
+
+    for (let i = 0; i < binary_string.length; i++) {
+        tmp = formatString("(2<sup>{0}</sup> * {1})", [binary_string.length - 1 - i, binary_string[i]]);
+        if (result == "") {
+            result = tmp;
+        } else {
+            result = result + " + " + tmp;
+        }
+    }
+
+    return result;
 }
 
 const initIndexNumber = getRandomBetween(0, 7);
@@ -70,4 +97,18 @@ console.log(initIndexNumber);
 console.log(initNumber);
 console.log(initBin);
 console.log(splitBin);
+
+const addtionFormula = writeAdditionFormula(initBin);
+
+const hintFormat01 = "<details><summary>ヒント:</summary>";
+const hintFormat02 = "<span class=\"history-indented\">2進数のn桁目は</span><br>";
+const hintFormat03 = "<span class=\"history-indented\">10進数の2<sup>n-1</sup>に相当します。</span><br>";
+const hintFormat04 = "<span class=\"history-indented\">{0}<sub>(2)</sub>を10進数に変換するには、</span><br>";
+const hintFormat05 = "<span class=\"history-indented\">以下のように計算します。</span><br>";
+const hintFormat06 = "<span class=\"history-indented\">{1}</span><br>";
+const hintFormat07 = "</details>";
+const hintFormat = hintFormat01 + hintFormat02 + hintFormat03 + hintFormat04 + hintFormat05 + hintFormat06 + hintFormat07;
+const hint = formatString(hintFormat, [initBin, addtionFormula]);
+
 document.getElementById('questionSpan').innerText = splitBin;
+document.getElementById('instructionArea').innerHTML = hint;
