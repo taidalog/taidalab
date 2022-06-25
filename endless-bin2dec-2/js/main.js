@@ -13,14 +13,16 @@ function main() {
 
     const questionSpan = document.getElementById('questionSpan');
     const question = questionSpan.innerText;
+    const questionWithoutSpace = question.replace(' ', '');
     console.log(question);
+    console.log(questionWithoutSpace);
 
     const numberInput = document.getElementById("numberInput");
     const inputValue = escapeHtml(numberInput.value);
     console.log("inputValue : " + inputValue);
 
     if (inputValue == "") {
-        instructionArea.innerHTML = "<span class=\"warning\">" + question + " の10進法表記を入力してください。</span>";
+        instructionArea.innerHTML = "<span class=\"warning\">" + questionWithoutSpace + " の10進法表記を入力してください。</span>";
     } else if (tesDecimalString(inputValue) == false) {
         instructionArea.innerHTML = "<span class=\"warning\">\"" + inputValue + "\" は10進数ではありません。使えるのは半角の 0123456789 のみです。</span>";
     } else {
@@ -32,7 +34,7 @@ function main() {
         const outputArea = document.getElementById("outputArea");
         
         let historyClassName = ""
-        if (bin == question) {
+        if (bin == questionWithoutSpace) {
             historyClassName = "history-correct"
         } else {
             historyClassName = "history-wrong"
@@ -45,11 +47,13 @@ function main() {
         console.log(msg1);
         console.log(msg2);
         
-        if (bin == question) {
+        if (bin == questionWithoutSpace) {
             const nextNumber = getRandomBetween(0, 255);
             const nextBin = nextNumber.toString(sourceRadix);
-            questionSpan.innerText = nextBin;
+            const splitBin = splitBinaryStringBy(4, nextBin);
+            questionSpan.innerText = splitBin;
             console.log(nextBin);
+            console.log(splitBin);
             numberInput.value = "";
         }
     }
@@ -59,6 +63,8 @@ function main() {
 
 const initNumber = getRandomBetween(0, 255);
 const initBin = initNumber.toString(2);
+const splitBin = splitBinaryStringBy(4,initBin);
 console.log(initNumber);
 console.log(initBin);
-document.getElementById('questionSpan').innerText = initBin;
+console.log(splitBin);
+document.getElementById('questionSpan').innerText = splitBin;

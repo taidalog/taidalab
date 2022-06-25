@@ -55,3 +55,8 @@ function colorLeadingZero (str) {
     const leadingZeroInTag = "<span class=\"zero-grey\">" + leadingZero + "</span>";
     return str.replace(leadingZero, leadingZeroInTag);
 }
+
+function splitBinaryStringBy (digit, str) {
+    const regex = new RegExp ("([01])(?=([01]{" + digit + "})+(?![01]))", "g");
+    return str.replace(regex, '$1 ');
+}
