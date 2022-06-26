@@ -136,9 +136,14 @@ footer {
     background-color: #86e5b2;
 }
 
-.instruction-area {
+.hint-area {
     width: 100%;
     order: 4;
+}
+
+.error-area {
+    width: 100%;
+    order: 5;
 }
 
 details:hover {
