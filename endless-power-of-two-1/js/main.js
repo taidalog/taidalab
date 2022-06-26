@@ -25,9 +25,9 @@ function main() {
     const hint = formatString(hintFormat, [question, indexNumber]);
 
     if (bin == "") {
-        errorArea.innerHTML = "<br><span class=\"warning\">" + question + " の2進法表記を入力してください。</span>";
+        errorArea.innerHTML = "<span class=\"warning\">" + question + " の2進法表記を入力してください。</span>";
     } else if (testBinaryString(bin) == false) {
-        errorArea.innerHTML = "<br><span class=\"warning\">\"" + bin + "\" は2進数ではありません。使えるのは半角の 0 と 1 のみです。</span>";
+        errorArea.innerHTML = "<span class=\"warning\">\"" + bin + "\" は2進数ではありません。使えるのは半角の 0 と 1 のみです。</span>";
     } else {
 
         const zeroPaddedBin = bin.padStart(binaryDigit, '0');
