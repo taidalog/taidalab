@@ -4,48 +4,39 @@
 // This software is licensed under the MIT License.
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
 function checkNumber (index_number, number, hint_format) {
-    const sourceRadix = 10;
-    const destinationRadix = 2;
-    const binaryDigit = 8;
-    const decimalDigit = 3;
-
     const hintArea = document.getElementById('hintArea');
     const errorArea = document.getElementById('errorArea');
     errorArea.innerHTML = "";
-
+    
     const numberInput = document.getElementById("numberInput");
     const bin = escapeHtml(numberInput.value);
     console.log(bin);
-
+    
     const hint = formatString(hint_format, [number, index_number]);
-
+    
     if (bin == "") {
         errorArea.innerHTML = "<span class=\"warning\">" + question + " の2進法表記を入力してください。</span>";
     } else if (testBinaryString(bin) == false) {
         errorArea.innerHTML = "<span class=\"warning\">\"" + bin + "\" は2進数ではありません。使えるのは半角の 0 と 1 のみです。</span>";
     } else {
-
+        
+        const binaryDigit = 8;
         const zeroPaddedBin = bin.padStart(binaryDigit, '0');
         const taggedBin = colorLeadingZero(zeroPaddedBin);
-        const dec = parseInt(bin, destinationRadix);
         console.log(taggedBin);
+        
+        const destinationRadix = 2;
+        const dec = parseInt(bin, destinationRadix);
         console.log(dec);
         
         const outputArea = document.getElementById("outputArea");
         
-        let historyClassName = ""
-        if (dec == number) {
-            historyClassName = "history-correct"
-        } else {
-            historyClassName = "history-wrong"
-        }
-        
+        const decimalDigit = 3;
         const spacePaddedDec = dec.toString().padStart(decimalDigit, ' ').replace(' ', '&nbsp;');
-        const msg1 = "<span class =\"" + historyClassName + "\">" + taggedBin + "<sub>(" + destinationRadix + ")</sub> = " + spacePaddedDec + "<sub>(" + sourceRadix + ")</sub></span>";
-        const msg2 = concatinateStrings(msg1, outputArea.innerHTML);
-        outputArea.innerHTML = msg2;
-        console.log(msg1);
-        console.log(msg2);
+        
+        const sourceRadix = 10;
+        const historyMessage = newHistory((dec == number), taggedBin, sourceRadix, spacePaddedDec, destinationRadix, outputArea.innerHTML);
+        outputArea.innerHTML = historyMessage;
         
         if (dec == number) {
             let nextNumber = 0;
@@ -69,6 +60,21 @@ function checkNumber (index_number, number, hint_format) {
     }
     
     numberInput.focus();
+}
+
+function newHistory (is_correct, input, source_radix, converted_input, destination_radix, existing_results) {
+    let historyClassName = ""
+    if (is_correct) {
+        historyClassName = "history-correct"
+    } else {
+        historyClassName = "history-wrong"
+    }
+    
+    const msg1 = "<span class =\"" + historyClassName + "\">" + input + "<sub>(" + destination_radix + ")</sub> = " + converted_input + "<sub>(" + source_radix + ")</sub></span>";
+    const msg2 = concatinateStrings(msg1, existing_results);
+    console.log(msg1);
+    console.log(msg2);
+    return msg2;
 }
 
 const initIndexNumber = getRandomBetween(0, 7);
