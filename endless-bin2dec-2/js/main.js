@@ -8,8 +8,8 @@ function main() {
     const destinationRadix = 10;
     const digit = 3;
 
-    const instructionArea = document.getElementById('instructionArea');
-    instructionArea.innerHTML = "<br>";
+    const errorArea = document.getElementById('errorArea');
+    errorArea.innerHTML = "";
 
     const questionSpan = document.getElementById('questionSpan');
     const question = questionSpan.innerText;
@@ -22,9 +22,9 @@ function main() {
     console.log("inputValue : " + inputValue);
 
     if (inputValue == "") {
-        instructionArea.innerHTML = "<span class=\"warning\">" + questionWithoutSpace + " の10進法表記を入力してください。</span>";
+        errorArea.innerHTML = "<span class=\"warning\">" + questionWithoutSpace + " の10進法表記を入力してください。</span>";
     } else if (tesDecimalString(inputValue) == false) {
-        instructionArea.innerHTML = "<span class=\"warning\">\"" + inputValue + "\" は10進数ではありません。使えるのは半角の 0123456789 のみです。</span>";
+        errorArea.innerHTML = "<span class=\"warning\">\"" + inputValue + "\" は10進数ではありません。使えるのは半角の 0123456789 のみです。</span>";
     } else {
 
         const inputValueAsInt = parseInt(inputValue);

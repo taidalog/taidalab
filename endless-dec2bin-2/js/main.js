@@ -9,8 +9,8 @@ function main() {
     const binaryDigit = 8;
     const decimalDigit = 3;
 
-    const instructionArea = document.getElementById('instructionArea');
-    instructionArea.innerHTML = "<br>";
+    const errorArea = document.getElementById('errorArea');
+    errorArea.innerHTML = "";
 
     const questionSpan = document.getElementById('questionSpan');
     const question = questionSpan.innerText;
@@ -21,9 +21,9 @@ function main() {
     console.log(bin);
 
     if (bin == "") {
-        instructionArea.innerHTML = "<span class=\"warning\">" + question + " の2進法表記を入力してください。</span>";
+        errorArea.innerHTML = "<span class=\"warning\">" + question + " の2進法表記を入力してください。</span>";
     } else if (testBinaryString(bin) == false) {
-        instructionArea.innerHTML = "<span class=\"warning\">\"" + bin + "\" は2進数ではありません。使えるのは半角の 0 と 1 のみです。</span>";
+        errorArea.innerHTML = "<span class=\"warning\">\"" + bin + "\" は2進数ではありません。使えるのは半角の 0 と 1 のみです。</span>";
     } else {
 
         const zeroPaddedBin = bin.padStart(binaryDigit, '0');

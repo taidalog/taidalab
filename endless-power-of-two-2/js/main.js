@@ -9,8 +9,9 @@ function main() {
     const binaryDigit = 8;
     const decimalDigit = 3;
 
-    const instructionArea = document.getElementById('instructionArea');
-    instructionArea.innerHTML = "<br>";
+    const hintArea = document.getElementById('hintArea');
+    const errorArea = document.getElementById('errorArea');
+    errorArea.innerHTML = "";
 
     const questionSpan = document.getElementById('questionSpan');
     const question = questionSpan.innerText;
@@ -25,9 +26,9 @@ function main() {
     const hint = formatString(hintFormat, [question, questionAsInt + 1, indexNumber]);
 
     if (bin == "") {
-        instructionArea.innerHTML = hint + "<br><span class=\"warning\">" + question + " の2進法表記を入力してください。</span>";
+        errorArea.innerHTML = "<span class=\"warning\">" + question + " の2進法表記を入力してください。</span>";
     } else if (testBinaryString(bin) == false) {
-        instructionArea.innerHTML = hint + "<br><span class=\"warning\">\"" + bin + "\" は2進数ではありません。使えるのは半角の 0 と 1 のみです。</span>";
+        errorArea.innerHTML = "<span class=\"warning\">\"" + bin + "\" は2進数ではありません。使えるのは半角の 0 と 1 のみです。</span>";
     } else {
 
         const zeroPaddedBin = bin.padStart(binaryDigit, '0');
@@ -63,11 +64,11 @@ function main() {
             const nextHint = formatString(hintFormat, [nextNumber, nextNumber + 1, nextIndexNumber]);
             questionSpan.innerText = nextNumber;
             console.log(nextNumber);
-            instructionArea.innerHTML = nextHint;
+            hintArea.innerHTML = nextHint;
             console.log(nextHint);
             numberInput.value = "";
         } else {
-            instructionArea.innerHTML = hint;
+            hintArea.innerHTML = hint;
         }
     }
     
@@ -79,4 +80,4 @@ const initNumber = Math.pow(2, initIndexNumber) - 1;
 const hintFormat = "<details><summary>ヒント: </summary><span class=\"history-indented\">{0}<sub>(10)</sub> = {1}<sub>(10)</sub> - 1<sub>(10)</sub> = 2<sup>{2}</sup> - 1<sub>(10)</sub></span></details>";
 const hint = formatString(hintFormat, [initNumber, initNumber + 1, initIndexNumber]);
 document.getElementById('questionSpan').innerText = initNumber;
-document.getElementById('instructionArea').innerHTML = hint;
+document.getElementById('hintArea').innerHTML = hint;
