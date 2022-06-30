@@ -136,6 +136,19 @@ footer {
     background-color: #86e5b2;
 }
 
+.add-header {
+    background-color: #da959f;
+}
+
+.add-button {
+    color: firebrick;
+    background: sienna;
+}
+
+.add-button:hover {
+    background-color: #c690c6;
+}
+
 .hint-area {
     width: 100%;
     order: 4;
@@ -204,6 +217,25 @@ footer a {
 
 dd {
     margin-bottom: 12px;
+}
+
+.calculation-area {
+    width: 250px;
+    margin: 0px;
+    padding: 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.first-row, .second-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.digit-area {
+    width: 1rem;
 }
 
 @media (max-width: 600px) {
