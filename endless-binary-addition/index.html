@@ -8,17 +8,16 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Endless Binary Addition - taidalab</title>
+        <title>加算 - taidalab</title>
         <meta charset="utf-8">
         <meta name="description" content="2進数の加算の反復練習サイト">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="../css/style.css">
-        <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
-        <header>
+        <header class="add-header">
             <div class="header-container">
-                <h1>Endless-Binary-Addition</h1>
+                <h1>加算</h1>
             </div>
         </header>
         
@@ -54,8 +53,9 @@
             <form class="input-area">
                 <input type="text" id="numberInput" class="number-input consolas">
                 <span class="binary-radix"><sub>(2)</sub></span>
-                <input type="submit" onclick="main(); return false;" value ="確認" id="submitButton" class="submit-button">
-                <span id="instructionArea" class="instruction-area"><br></span>
+                <input type="submit" onclick="main(); return false;" value ="確認" id="submitButton" class="submit-button add-button">
+                <div id="hintArea" class="hint-area"></div>
+                <div id="errorArea" class="error-area"></div>
             </form>
             
             <div class="history-area">
@@ -71,6 +71,7 @@
                 <div class="item">&copy; 2022 taidalog</div>
                 <div class="item">Version 0.1.0</div>
                 <div class="item"><a href="../">Home</a></div>
+                <div class="item"><a href="../about.html">About</a></div>
                 <div class="item"><a href="../terms.html">ご利用について</a></div>
                 <div class="item"><a href="https://github.com/taidalog/taidalab">Repository on GitHub</a></div>
             </small>
