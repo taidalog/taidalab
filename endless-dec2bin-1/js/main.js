@@ -21,10 +21,13 @@ function main() {
     const bin = escapeHtml(numberInput.value);
     console.log(bin);
     
-    const powerOtTwos = devideIntoPowerOfTwo(question);
-    console.log(powerOtTwos);
+    const powerOfTwos = devideIntoPowerOfTwo(question);
+    console.log(powerOfTwos);
 
-    const hint = formatString(hintFormat, [question, powerOtTwos[0], question - powerOtTwos[0], powerOtTwos[1], question - powerOtTwos[0] - powerOtTwos[1], Math.floor(Math.log(powerOtTwos[0]) / Math.log(2)), Math.floor(Math.log(powerOtTwos[1]) / Math.log(2))]);
+    const quotientsAndRemainders = repeatDivision(question, 2);
+    console.log(quotientsAndRemainders);
+
+    const hint = newHint(question, quotientsAndRemainders, powerOfTwos);
     console.log(hint);
 
     if (bin == "") {
@@ -64,10 +67,13 @@ function main() {
             } while (countOneBit(nextBin) != 2);
             console.log(nextNumber);
             
-            const powerOtTwos = devideIntoPowerOfTwo(nextNumber);
-            console.log(powerOtTwos);
+            const powerOfTwos = devideIntoPowerOfTwo(nextNumber);
+            console.log(powerOfTwos);
             
-            const nextHint = formatString(hintFormat, [nextNumber, powerOtTwos[0], nextNumber - powerOtTwos[0], powerOtTwos[1], nextNumber - powerOtTwos[0] - powerOtTwos[1], Math.floor(Math.log(powerOtTwos[0]) / Math.log(2)), Math.floor(Math.log(powerOtTwos[1]) / Math.log(2))]);
+            const quotientsAndRemainders = repeatDivision(nextNumber, 2);
+            console.log(quotientsAndRemainders);
+
+            const nextHint = newHint(nextNumber, quotientsAndRemainders, powerOfTwos);
             console.log(nextHint);
             
             questionSpan.innerText = nextNumber;
@@ -125,13 +131,49 @@ function repeatDivision (dividend, divisor) {
 }
 
 
-function newColumnAddition (number, quotients_and_remainders) {
+function newColumnAddition (quotients_and_remainders) {
     const lengthMinusOne = quotients_and_remainders.length - 1;
-    const reducedMEssage =  quotients_and_remainders.slice(0, lengthMinusOne).reduceRight(
+    return quotients_and_remainders.slice(0, lengthMinusOne).reduceRight(
         (prev, curr) => "2<span class=\"column-addition-row\">" + curr[0].toString().padStart(3, " ").replace(" ", "&nbsp;") + "</span>..." + curr[1] + "<br>" + prev,
-        "<span class=\"column-addition-row-last\">" + quotients_and_remainders[lengthMinusOne][0].toString().padStart(5, " ").replace(" ", "&nbsp;") + "</span>..." + quotients_and_remainders[lengthMinusOne][1]
+        "<span class=\"column-addition-row-last\">" + quotients_and_remainders[lengthMinusOne][0].toString().padStart(5, " ").replace(/ /g, "&nbsp;") + "</span>..." + quotients_and_remainders[lengthMinusOne][1]
         );
-    return "<div class=\"history-indented column-addition-area\">" + "2<span class=\"column-addition-row\">" + number.toString().padStart(3, " ").replace(" ", "&nbsp;") + "</span><br>" + reducedMEssage + "</div>"
+}
+
+
+function newHint (number, quotients_and_remainders, power_of_twos) {
+    return "<details><summary>ヒント: </summary>" + "<h2>考え方 1</h2>" + newHint1(number, quotients_and_remainders) + "<h2>考え方 2</h2>" + newHint2(number, power_of_twos) + "</details>"
+}
+
+
+function newHint1 (number, quotients_and_remainders) {
+    const firstRow = "2<span class=\"column-addition-row\">" + number.toString().padStart(3, " ").replace(" ", "&nbsp;") + "</span>";
+    const columnAddition = newColumnAddition(quotients_and_remainders);
+
+    const msg01 = "<div class=\"history-indented\">";
+    const msg02 = "<p>10進数を、商が 1 になるまで 2 で割り続けます。<br>";
+    const msg03 = "この時、余りを商の右に書いておきます。<br>";
+    const msg04 = "商と余りを下から順に繋げると、2進数になります。</p>";
+    const msg05 = "</div>";
+    const msg06 = "<div class=\"history-indented column-addition-area\">";
+    const msg07 = "</div>";
+
+    return msg01 + msg02 + msg03 + msg04 + msg05 + msg06 + firstRow + "<br>" + columnAddition + msg07
+}
+
+
+function newHint2 (number, power_of_twos) {
+    const hintFormat01 = "<p class=\"history-indented\">";
+    const hintFormat02 = "{0}<sub>(10)</sub> 以下で最大の2の累乗は {1}<sub>(10)</sub><br>";
+    const hintFormat03 = "{0}<sub>(10)</sub> - {1}<sub>(10)</sub> = {2}<sub>(10)</sub><br>";
+    const hintFormat04 = "{2}<sub>(10)</sub> 以下で最大の2の累乗は {3}<sub>(10)</sub><br>";
+    const hintFormat05 = "{2}<sub>(10)</sub> - {3}<sub>(10)</sub> = {4}<sub>(10)</sub><br>";
+    const hintFormat06 = "よって、{0}<sub>(10)</sub> = {1}<sub>(10)</sub> + {3}<sub>(10)</sub><br>";
+    const hintFormat07 = "または、{0}<sub>(10)</sub> = 2<sup>{5}</sup><sub>(10)</sub> + 2<sup>{6}</sup><sub>(10)</sub>";
+    const hintFormat08 = "</p>";
+    const hintFormat = hintFormat01 + hintFormat02 + hintFormat03 + hintFormat04 + hintFormat05 + hintFormat06 + hintFormat07 + hintFormat08;
+    const hint = formatString(hintFormat, [number, power_of_twos[0], number - power_of_twos[0], power_of_twos[1], number - power_of_twos[0] - power_of_twos[1], Math.floor(Math.log(power_of_twos[0]) / Math.log(2)), Math.floor(Math.log(power_of_twos[1]) / Math.log(2))]);
+    console.log(hint);
+    return hint
 }
 
 
@@ -143,22 +185,11 @@ do {
     initBin = initNumber.toString(2);
 } while (countOneBit(initBin) != 2);
 
-const powerOtTwos = devideIntoPowerOfTwo(initNumber);
-console.log(initNumber);
-console.log(powerOtTwos);
-
-const hintFormat01 = "<h2>考え方 2</h2>";
-const hintFormat02 = "<span class=\"history-indented\">{0}<sub>(10)</sub> 以下で最大の2の累乗は {1}<sub>(10)</sub></span><br>";
-const hintFormat03 = "<span class=\"history-indented\">{0}<sub>(10)</sub> - {1}<sub>(10)</sub> = {2}<sub>(10)</sub></span><br>";
-const hintFormat04 = "<span class=\"history-indented\">{2}<sub>(10)</sub> 以下で最大の2の累乗は {3}<sub>(10)</sub></span><br>";
-const hintFormat05 = "<span class=\"history-indented\">{2}<sub>(10)</sub> - {3}<sub>(10)</sub> = {4}<sub>(10)</sub></span><br>";
-const hintFormat06 = "<span class=\"history-indented\">よって、{0}<sub>(10)</sub> = {1}<sub>(10)</sub> + {3}<sub>(10)</sub></span><br>";
-const hintFormat07 = "<span class=\"history-indented\">または、{0}<sub>(10)</sub> = 2<sup>{5}</sup><sub>(10)</sub> + 2<sup>{6}</sup><sub>(10)</sub></span>";
-const hintFormat = hintFormat01 + hintFormat02 + hintFormat03 + hintFormat04 + hintFormat05 + hintFormat06 + hintFormat07;
-const hint = formatString(hintFormat, [initNumber, powerOtTwos[0], initNumber - powerOtTwos[0], powerOtTwos[1], initNumber - powerOtTwos[0] - powerOtTwos[1], Math.floor(Math.log(powerOtTwos[0]) / Math.log(2)), Math.floor(Math.log(powerOtTwos[1]) / Math.log(2))]);
-console.log(hint);
-
 const quotientsAndRemainders = repeatDivision(initNumber, 2);
+const powerOfTwos = devideIntoPowerOfTwo(initNumber);
+console.log(initNumber);
+console.log(quotientsAndRemainders);
+console.log(powerOfTwos);
 
 document.getElementById('questionSpan').innerText = initNumber;
-document.getElementById('hintArea').innerHTML = "<details><summary>ヒント: </summary>" + "<h2>考え方 1</h2>" + newColumnAddition(initNumber, quotientsAndRemainders) + hint + "</details>";
+document.getElementById('hintArea').innerHTML = newHint(initNumber, quotientsAndRemainders, powerOfTwos);
