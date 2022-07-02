@@ -141,11 +141,11 @@ function newColumnAddition (quotients_and_remainders) {
 
 
 function newHint (number, quotients_and_remainders, power_of_twos) {
-    return "<details><summary>ヒント: </summary>" + "<h2>考え方 1</h2>" + newHint1(number, quotients_and_remainders) + "<h2>考え方 2</h2>" + newHint2(number, power_of_twos) + "</details>"
+    return "<details><summary>ヒント: </summary>" + "<h2>考え方 1</h2>" + newHintRepeatDivision(number, quotients_and_remainders) + "<h2>考え方 2</h2>" + newHintRepeatAddition(number, power_of_twos) + "</details>"
 }
 
 
-function newHint1 (number, quotients_and_remainders) {
+function newHintRepeatDivision (number, quotients_and_remainders) {
     const firstRow = "2<span class=\"column-addition-row\">" + number.toString().padStart(3, " ").replace(" ", "&nbsp;") + "</span>";
     const columnAddition = newColumnAddition(quotients_and_remainders);
 
@@ -161,7 +161,7 @@ function newHint1 (number, quotients_and_remainders) {
 }
 
 
-function newHint2 (number, power_of_twos) {
+function newHintRepeatAddition (number, power_of_twos) {
     const hintFormat01 = "<p class=\"history-indented\">";
     const hintFormat02 = "{0}<sub>(10)</sub> 以下で最大の2の累乗は {1}<sub>(10)</sub><br>";
     const hintFormat03 = "{0}<sub>(10)</sub> - {1}<sub>(10)</sub> = {2}<sub>(10)</sub><br>";
