@@ -114,6 +114,27 @@ function devideIntoPowerOfTwo (number) {
 }
 
 
+function repeatDivision (dividend, divisor) {
+    const quotient = parseInt(dividend / divisor);
+    const remainder = dividend - (quotient * divisor);
+    if (quotient < divisor) {
+        return [[quotient, remainder]];
+    } else {
+        return [[quotient, remainder]].concat(repeatDivision(quotient, divisor));
+    }
+}
+
+
+function newColumnAddition (number, quotients_and_remainders) {
+    const lengthMinusOne = quotients_and_remainders.length - 1;
+    const reducedMEssage =  quotients_and_remainders.slice(0, lengthMinusOne).reduceRight(
+        (prev, curr) => "2<span class=\"column-addition-row\">" + curr[0].toString().padStart(3, " ").replace(" ", "&nbsp;") + "</span>..." + curr[1] + "<br>" + prev,
+        "<span class=\"column-addition-row-last\">" + quotients_and_remainders[lengthMinusOne][0].toString().padStart(5, " ").replace(" ", "&nbsp;") + "</span>..." + quotients_and_remainders[lengthMinusOne][1]
+        );
+    return "<div class=\"history-indented column-addition-area\">" + "2<span class=\"column-addition-row\">" + number.toString().padStart(3, " ").replace(" ", "&nbsp;") + "</span><br>" + reducedMEssage + "</div>"
+}
+
+
 let initNumber = 0;
 let initBin = "";
 
@@ -126,16 +147,18 @@ const powerOtTwos = devideIntoPowerOfTwo(initNumber);
 console.log(initNumber);
 console.log(powerOtTwos);
 
-const hintFormat01 = "<details><summary>ヒント: </summary>";
+const hintFormat01 = "<h2>考え方 2</h2>";
 const hintFormat02 = "<span class=\"history-indented\">{0}<sub>(10)</sub> 以下で最大の2の累乗は {1}<sub>(10)</sub></span><br>";
 const hintFormat03 = "<span class=\"history-indented\">{0}<sub>(10)</sub> - {1}<sub>(10)</sub> = {2}<sub>(10)</sub></span><br>";
 const hintFormat04 = "<span class=\"history-indented\">{2}<sub>(10)</sub> 以下で最大の2の累乗は {3}<sub>(10)</sub></span><br>";
 const hintFormat05 = "<span class=\"history-indented\">{2}<sub>(10)</sub> - {3}<sub>(10)</sub> = {4}<sub>(10)</sub></span><br>";
 const hintFormat06 = "<span class=\"history-indented\">よって、{0}<sub>(10)</sub> = {1}<sub>(10)</sub> + {3}<sub>(10)</sub></span><br>";
-const hintFormat07 = "<span class=\"history-indented\">または、{0}<sub>(10)</sub> = 2<sup>{5}</sup><sub>(10)</sub> + 2<sup>{6}</sup><sub>(10)</sub></span></details>";
+const hintFormat07 = "<span class=\"history-indented\">または、{0}<sub>(10)</sub> = 2<sup>{5}</sup><sub>(10)</sub> + 2<sup>{6}</sup><sub>(10)</sub></span>";
 const hintFormat = hintFormat01 + hintFormat02 + hintFormat03 + hintFormat04 + hintFormat05 + hintFormat06 + hintFormat07;
 const hint = formatString(hintFormat, [initNumber, powerOtTwos[0], initNumber - powerOtTwos[0], powerOtTwos[1], initNumber - powerOtTwos[0] - powerOtTwos[1], Math.floor(Math.log(powerOtTwos[0]) / Math.log(2)), Math.floor(Math.log(powerOtTwos[1]) / Math.log(2))]);
 console.log(hint);
 
+const quotientsAndRemainders = repeatDivision(initNumber, 2);
+
 document.getElementById('questionSpan').innerText = initNumber;
-document.getElementById('hintArea').innerHTML = hint;
+document.getElementById('hintArea').innerHTML = "<details><summary>ヒント: </summary>" + "<h2>考え方 1</h2>" + newColumnAddition(initNumber, quotientsAndRemainders) + hint + "</details>";

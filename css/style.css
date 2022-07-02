@@ -150,6 +150,18 @@ details:hover {
     cursor: pointer;
 }
 
+.column-addition-area {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.column-addition-row {
+    text-decoration: underline;
+}
+
+.column-addition-row::before {
+    content: ")";
+}
+
 .warning {
     color: red;
 }
