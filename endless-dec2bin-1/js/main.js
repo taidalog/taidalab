@@ -27,9 +27,6 @@ function main() {
     const quotientsAndRemainders = repeatDivision(question, 2);
     console.log(quotientsAndRemainders);
 
-    const hint = newHint(question, quotientsAndRemainders, powerOfTwos);
-    console.log(hint);
-
     if (bin == "") {
         errorArea.innerHTML = "<span class=\"warning\">" + question + " の2進法表記を入力してください。</span>";
     } else if (testBinaryString(bin) == false) {
@@ -80,8 +77,6 @@ function main() {
             hintArea.innerHTML = nextHint;
             console.log(nextHint);
             numberInput.value = "";
-        } else {
-            hintArea.innerHTML = hint;
         }
     }
     
