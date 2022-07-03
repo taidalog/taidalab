@@ -242,6 +242,13 @@ dd {
     width: 1rem;
 }
 
+.eight-digit {
+    width: 10.5rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: right;
+}
+
 @media (max-width: 600px) {
     .header-container {
         max-width: 94%;
@@ -255,6 +262,10 @@ dd {
     
     .number-input {
         width: 80%;
+    }
+
+    .eight-digit {
+        width: 10.5rem;
     }
     
     .submit-button {
