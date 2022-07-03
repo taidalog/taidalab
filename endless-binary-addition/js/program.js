@@ -106,13 +106,13 @@ function setColumnAddition (number1, number2) {
 function newHint () {
     const hintFormat01 = "<details><summary>ヒント: </summary>";
     const hintFormat02 = "<p class=\"history-indented\">";
-    const hintFormat03 = "10進数の筆算と同じように、左端から上下の数を足していきます。<br>";
+    const hintFormat03 = "10進数の筆算と同じように、右端から上下の数を足していきます。<br><br>";
     const hintFormat04 = "0<sub>(2)</sub> + 0<sub>(2)</sub> = 0<sub>(2)</sub><br>";
     const hintFormat05 = "0<sub>(2)</sub> + 1<sub>(2)</sub> = 1<sub>(2)</sub><br>";
     const hintFormat06 = "1<sub>(2)</sub> + 1<sub>(2)</sub> = 10<sub>(2)</sub><br>";
-    const hintFormat07 = "1<sub>(2)</sub> + 1<sub>(2)</sub> + 1<sub>(2)</sub> = 11<sub>(2)</sub><br>";
+    const hintFormat07 = "1<sub>(2)</sub> + 1<sub>(2)</sub> + 1<sub>(2)</sub> = 11<sub>(2)</sub><br><br>";
     const hintFormat08 = "10<sub>(2)</sub> や 11<sub>(2)</sub>のように桁が繰り上がった時は、<br>";
-    const hintFormat09 = "ひとつ左の桁に 1 を足します。<br>";
+    const hintFormat09 = "繰り上がった桁 (=1) をひとつ左の桁に足します。<br>";
     const hintFormat10 = "</p>";
     const hintFormat11 = "</details>";
     const hint = hintFormat01 + hintFormat02 + hintFormat03 + hintFormat04 + hintFormat05 + hintFormat06 + hintFormat07 + hintFormat08 + hintFormat09 + hintFormat10 + hintFormat11;
