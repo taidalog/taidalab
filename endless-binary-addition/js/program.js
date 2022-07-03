@@ -63,15 +63,24 @@ function checkAnswer(answer, num1, num2) {
 }
 
 function newNumbers () {
-    const number1 = getRandomBetween(0, 255);
+    
+    const regex = /^1+0+$/;
+    let number1 = 0;
+
+    do {
+        number1 = getRandomBetween(1, 255);
+        console.log("number1: " + number1);
+        console.log("number1.binary: " + number1.toString(2));
+        console.log("number1.length: " + number1.toString(2).length);
+    } while ((number1.toString(2).length == 8) && regex.test(number1.toString(2)))
+
     let number2 = 0;
 
     do {
-        number2 = getRandomBetween(0, 255 - number1);
-    //    console.log("band : " + (number1 & number2));
-    } while ((number1 == number2) || ((number1 & number2) == 0) || (number1 + number2 > 255))
+        number2 = getRandomBetween(1, 255 - number1);
+        console.debug("number1 == number2: " + (number1 == number2) + "\t(number1 & number2) == 0: " + ((number1 & number2) == 0));
+    } while ((number1 == number2) || ((number1 & number2) == 0))
 
-    console.log(number1);
     console.log(number2);
     console.log(number1 + number2);
     return [number1, number2];
