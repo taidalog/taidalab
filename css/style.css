@@ -137,16 +137,16 @@ footer {
 }
 
 .add-header {
-    background-color: #da959f;
+    background-color: #656eac;
 }
 
 .add-button {
-    color: firebrick;
-    background: sienna;
+    color: #1e2133;
+    background: #8692e4;
 }
 
 .add-button:hover {
-    background-color: #c690c6;
+    background-color: #7883cd;
 }
 
 .hint-area {

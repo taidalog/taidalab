@@ -56,8 +56,12 @@ footer {
 }
 
 .button-ebad {
-    background-color: #da959f;
+    background-color: #656eac;
     order: 3;
+}
+
+.button-ebad:hover {
+    background-color: #5a639a;
 }
 
 .button-esad {
