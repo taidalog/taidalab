@@ -220,7 +220,7 @@ dd {
 }
 
 .calculation-area {
-    width: 250px;
+    width: 13rem;
     margin: 0px;
     padding: 0px;
     display: flex;
@@ -232,6 +232,10 @@ dd {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
+}
+
+.under-line {
+    border-bottom: 2px solid #000000;
 }
 
 .digit-area {
