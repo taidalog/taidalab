@@ -91,14 +91,18 @@ footer {
     background-color: #5a639a;
 }
 
+.button-ebsb {
+    background-color: #656eac;
+    order: 8;
+}
+
+.button-ebsb:hover {
+    background-color: #5a639a;
+}
+
 .button-ebadex {
     background-color: #da959f;
     order: 6;
-}
-
-.button-ebsb {
-    background-color: aquamarine;
-    order: 7;
 }
 
 .button-ebsbex {

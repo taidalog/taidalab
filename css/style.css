@@ -149,6 +149,19 @@ footer {
     background-color: #8692e5;
 }
 
+.sub-header {
+    background-color: #656eac;
+}
+
+.sub-button {
+    color: #1e2133;
+    background: #95a2fe;
+}
+
+.sub-button:hover {
+    background-color: #8692e5;
+}
+
 .hint-area {
     width: 100%;
     order: 4;
