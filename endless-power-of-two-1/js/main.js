@@ -3,7 +3,7 @@
 // Copyright (c) 2022 taidalog
 // This software is licensed under the MIT License.
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
-function checkNumber (index_number, answer, hint_format) {
+function checkAnswer (answer, index_number, hint_format) {
     const inputForm = document.getElementById("inputForm");
     const userInput = escapeHtml(inputForm.value);
     console.log(userInput);
@@ -58,7 +58,7 @@ function checkNumber (index_number, answer, hint_format) {
             hintArea.innerHTML = nextHint;
             inputForm.value = "";
 
-            document.getElementById('submitButton').onclick = function() { checkNumber(nextIndexNumber, nextAnswer, hintFormat); return false; };
+            document.getElementById('submitButton').onclick = function() { checkAnswer(nextAnswer, nextIndexNumber, hintFormat); return false; };
         } else {
             hintArea.innerHTML = hint;
         }
@@ -91,4 +91,4 @@ const hint = formatString(hintFormat, [initAnswer, initIndexNumber]);
 document.getElementById('questionSpan').innerText = initAnswer;
 document.getElementById('hintArea').innerHTML = hint;
 
-document.getElementById('submitButton').onclick = function() { checkNumber(initIndexNumber, initAnswer, hintFormat); return false;  };
+document.getElementById('submitButton').onclick = function() { checkAnswer(initAnswer, initIndexNumber, hintFormat); return false;  };
