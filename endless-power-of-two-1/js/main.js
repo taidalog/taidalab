@@ -3,7 +3,7 @@
 // Copyright (c) 2022 taidalog
 // This software is licensed under the MIT License.
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
-function checkAnswer (answer, index_number, hint_format) {
+function checkAnswer (answer, hint_format) {
     const inputForm = document.getElementById("inputForm");
     const userInput = escapeHtml(inputForm.value);
     console.log(userInput);
@@ -48,14 +48,14 @@ function checkAnswer (answer, index_number, hint_format) {
             } while (nextAnswer == answer)
             console.log(nextAnswer);
             
-            const nextHint = formatString(hintFormat, [nextAnswer, nextIndexNumber]);
+            const nextHint = formatString(hint_format, [nextAnswer, nextIndexNumber]);
             console.log(nextHint);
             
             questionSpan.innerText = nextAnswer;
             hintArea.innerHTML = nextHint;
             inputForm.value = "";
 
-            document.getElementById('submitButton').onclick = function() { checkAnswer(nextAnswer, nextIndexNumber, hintFormat); return false; };
+            document.getElementById('submitButton').onclick = function() { checkAnswer(nextAnswer, hint_format); return false; };
         }
     }
     
@@ -86,4 +86,4 @@ const hint = formatString(hintFormat, [initAnswer, initIndexNumber]);
 document.getElementById('questionSpan').innerText = initAnswer;
 document.getElementById('hintArea').innerHTML = hint;
 
-document.getElementById('submitButton').onclick = function() { checkAnswer(initAnswer, initIndexNumber, hintFormat); return false;  };
+document.getElementById('submitButton').onclick = function() { checkAnswer(initAnswer, hintFormat); return false;  };
