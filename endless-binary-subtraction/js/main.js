@@ -63,16 +63,8 @@ function checkAnswer(answer, num1, num2) {
 }
 
 function newNumbers () {
-    
-    const regex = /^1+0+$/;
-    let number1 = 0;
-
-//    do {
-        number1 = getRandomBetween(1, 255);
-        console.log("number1: " + number1);
-//        console.log("number1.binary: " + number1.toString(2));
-//        console.log("number1.length: " + number1.toString(2).length);
-//    } while ((number1.toString(2).length == 8) && regex.test(number1.toString(2)))
+    const number1 = getRandomBetween(1, 255);
+    console.log("number1: " + number1);
 
     let number2 = 0;
 
