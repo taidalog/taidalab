@@ -12,12 +12,6 @@ function checkAnswer (answer, index_number, hint_format) {
     const errorArea = document.getElementById('errorArea');
     errorArea.innerHTML = "";
     
-    // const numberInput = document.getElementById("numberInput");
-    // const bin = escapeHtml(numberInput.value);
-    // console.log(bin);
-    
-    const hint = formatString(hint_format, [answer, index_number]);
-    
     if (userInput == "") {
         errorArea.innerHTML = "<span class=\"warning\">" + answer + " の2進法表記を入力してください。</span>";
     } else if (testBinaryString(userInput) == false) {
@@ -62,8 +56,6 @@ function checkAnswer (answer, index_number, hint_format) {
             inputForm.value = "";
 
             document.getElementById('submitButton').onclick = function() { checkAnswer(nextAnswer, nextIndexNumber, hintFormat); return false; };
-        } else {
-            hintArea.innerHTML = hint;
         }
     }
     
@@ -88,7 +80,7 @@ function newHistory (is_correct, input, source_radix, converted_input, destinati
 const initIndexNumber = getRandomBetween(0, 7);
 const initAnswer = Math.pow(2, initIndexNumber);
 
-const hintFormat = "<details><summary>ヒント: </summary><span class=\"history-indented\">{0}<sub>(10)</sub> = 2<sup>{1}</sup></span><br><span class=\"history-indented\">10進法で2<sup>n</sup>になる数は、</span><br><span class=\"history-indented\">2進法では1の後ろに0をn個つけます。</span></details>";
+const hintFormat = "<details><summary>ヒント: </summary><p class=\"history-indented\">{0}<sub>(10)</sub> = 2<sup>{1}</sup><br>10進法で2<sup>n</sup>になる数は、<br>2進法では1の後ろに0をn個つけます。</p></details>";
 const hint = formatString(hintFormat, [initAnswer, initIndexNumber]);
 
 document.getElementById('questionSpan').innerText = initAnswer;
