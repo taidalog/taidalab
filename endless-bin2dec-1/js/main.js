@@ -3,60 +3,51 @@
 // Copyright (c) 2022 taidalog
 // This software is licensed under the MIT License.
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
-function main() {
-    const sourceRadix = 2;
-    const destinationRadix = 10;
-    const digit = 3;
-
+function checkAnswer (answer, question) {
     const hintArea = document.getElementById('hintArea');
     const errorArea = document.getElementById('errorArea');
     errorArea.innerHTML = "";
-
-    const questionSpan = document.getElementById('questionSpan');
-    const question = questionSpan.innerText;
-    const questionWithoutSpace = question.replace(' ', '');
-    console.log(question);
-    console.log(questionWithoutSpace);
 
     const numberInput = document.getElementById("numberInput");
     const inputValue = escapeHtml(numberInput.value);
     console.log("inputValue : " + inputValue);
 
-    const addtionFormula = writeAdditionFormula(questionWithoutSpace);
-    const hint = formatString(hintFormat, [questionWithoutSpace, addtionFormula]);
-
     if (inputValue == "") {
+        const questionWithoutSpace = question.replace(' ', '');
         errorArea.innerHTML = "<span class=\"warning\">" + questionWithoutSpace + " の10進法表記を入力してください。</span>";
     } else if (tesDecimalString(inputValue) == false) {
         errorArea.innerHTML = "<span class=\"warning\">\"" + inputValue + "\" は10進数ではありません。使えるのは半角の 0123456789 のみです。</span>";
     } else {
 
         const inputValueAsInt = parseInt(inputValue);
-        const bin = inputValueAsInt.toString(sourceRadix);
-        console.log("inputValue -> binary : " + bin);
-        
-        const outputArea = document.getElementById("outputArea");
         
         let historyClassName = ""
-        if (bin == questionWithoutSpace) {
+        if (inputValueAsInt == answer) {
             historyClassName = "history-correct"
         } else {
             historyClassName = "history-wrong"
         }
         
+        const digit = 3;
         const spacePaddedInputValue = inputValue.padStart(digit, ' ').replace(' ', '&nbsp;');
+        
+        const sourceRadix = 2;
+        const bin = inputValueAsInt.toString(sourceRadix);
+        
+        const destinationRadix = 10;
+        const outputArea = document.getElementById("outputArea");
         const msg1 = "<span class =\"" + historyClassName + "\">" + spacePaddedInputValue + "<sub>(" + destinationRadix + ")</sub> = " + bin + "<sub>(" + sourceRadix + ")</sub></span>";
         const msg2 = concatinateStrings(msg1, outputArea.innerHTML);
         outputArea.innerHTML = msg2;
         console.log(msg1);
         console.log(msg2);
         
-        if (bin == questionWithoutSpace) {
+        if (inputValueAsInt == answer) {
             const nextIndexNumber = getRandomBetween(0, 7);
             const nextNumber = Math.pow(2, nextIndexNumber);
             const nextBin = nextNumber.toString(sourceRadix);
             const splitBin = splitBinaryStringBy(4, nextBin);
-            questionSpan.innerText = splitBin;
+            document.getElementById('questionSpan').innerText = splitBin;
             console.log(nextBin);
             console.log(splitBin);
             
@@ -66,13 +57,14 @@ function main() {
             
             hintArea.innerHTML = nextHint;
             numberInput.value = "";
-        } else {
-            hintArea.innerHTML = hint;
+
+            document.getElementById('submitButton').onclick = function() { checkAnswer(nextNumber, splitBin); return false; };
         }
     }
     
     numberInput.focus();
 }
+
 
 function writeAdditionFormula (binary_string) {
     let result = "";
@@ -90,6 +82,8 @@ function writeAdditionFormula (binary_string) {
     return result;
 }
 
+
+// initialization
 const initIndexNumber = getRandomBetween(0, 7);
 const initNumber = Math.pow(2,initIndexNumber);
 const initBin = initNumber.toString(2);
@@ -116,3 +110,5 @@ const hint = formatString(hintFormat, [initBin, addtionFormula]);
 
 document.getElementById('questionSpan').innerText = splitBin;
 document.getElementById('hintArea').innerHTML = hint;
+
+document.getElementById('submitButton').onclick = function() { checkAnswer(initNumber, splitBin); return false; };
