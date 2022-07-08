@@ -31,18 +31,18 @@ function checkAnswer (answer, index_number, hint_format) {
         console.log(taggedBin);
         
         const destinationRadix = 2;
-        const useInputToDestRadix = parseInt(userInput, destinationRadix);
-        console.log(useInputToDestRadix);
+        const userInputToDestRadix = parseInt(userInput, destinationRadix);
+        console.log(userInputToDestRadix);
         
         const decimalDigit = 3;
-        const spacePaddedDec = useInputToDestRadix.toString().padStart(decimalDigit, ' ').replace(' ', '&nbsp;');
+        const spacePaddedDec = userInputToDestRadix.toString().padStart(decimalDigit, ' ').replace(' ', '&nbsp;');
         
         const sourceRadix = 10;
         const outputArea = document.getElementById("outputArea");
-        const historyMessage = newHistory((useInputToDestRadix == answer), taggedBin, sourceRadix, spacePaddedDec, destinationRadix, outputArea.innerHTML);
+        const historyMessage = newHistory((userInputToDestRadix == answer), taggedBin, sourceRadix, spacePaddedDec, destinationRadix, outputArea.innerHTML);
         outputArea.innerHTML = historyMessage;
         
-        if (useInputToDestRadix == answer) {
+        if (userInputToDestRadix == answer) {
             let nextIndexNumber = 0;
             let nextAnswer = 0;
             do {
