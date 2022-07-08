@@ -39,7 +39,10 @@ function checkAnswer (answer, index_number, hint_format) {
         
         const sourceRadix = 10;
         const outputArea = document.getElementById("outputArea");
-        const historyMessage = newHistory((userInputToDestRadix == answer), taggedBin, sourceRadix, spacePaddedDec, destinationRadix, outputArea.innerHTML);
+        const currentHistoryMessage = newHistory((userInputToDestRadix == answer), taggedBin, sourceRadix, spacePaddedDec, destinationRadix);
+        const historyMessage = concatinateStrings(currentHistoryMessage, outputArea.innerHTML);
+        console.log(currentHistoryMessage);
+        console.log(historyMessage);
         outputArea.innerHTML = historyMessage;
         
         if (userInputToDestRadix == answer) {
@@ -67,7 +70,8 @@ function checkAnswer (answer, index_number, hint_format) {
     inputForm.focus();
 }
 
-function newHistory (is_correct, input, source_radix, converted_input, destination_radix, existing_results) {
+
+function newHistory (is_correct, input, source_radix, converted_input, destination_radix) {
     let historyClassName = "";
     if (is_correct) {
         historyClassName = "history-correct";
@@ -75,13 +79,12 @@ function newHistory (is_correct, input, source_radix, converted_input, destinati
         historyClassName = "history-wrong";
     }
     
-    const msg1 = "<span class =\"" + historyClassName + "\">" + input + "<sub>(" + destination_radix + ")</sub> = " + converted_input + "<sub>(" + source_radix + ")</sub></span>";
-    const msg2 = concatinateStrings(msg1, existing_results);
-    console.log(msg1);
-    console.log(msg2);
-    return msg2;
+    const result = "<span class =\"" + historyClassName + "\">" + input + "<sub>(" + destination_radix + ")</sub> = " + converted_input + "<sub>(" + source_radix + ")</sub></span>";
+    return result;
 }
 
+
+// initialization.
 const initIndexNumber = getRandomBetween(0, 7);
 const initAnswer = Math.pow(2, initIndexNumber);
 
