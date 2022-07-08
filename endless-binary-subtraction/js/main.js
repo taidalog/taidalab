@@ -62,6 +62,7 @@ function checkAnswer(answer, num1, num2) {
     numberInput.focus();
 }
 
+
 function newNumbers () {
     const number1 = getRandomBetween(1, 255);
     console.log("number1: " + number1);

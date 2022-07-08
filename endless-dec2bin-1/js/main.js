@@ -80,6 +80,7 @@ function checkAnswer (answer) {
     numberInput.focus();
 }
 
+
 function countOneBit (binaryString) {
     const regex = /1/g;
     const res = binaryString.match(regex);
