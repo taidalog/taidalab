@@ -51,7 +51,7 @@ function checkAnswer (answer, hint_format) {
             const nextHint = formatString(hint_format, [nextAnswer, nextIndexNumber]);
             console.log(nextHint);
             
-            questionSpan.innerText = nextAnswer;
+            document.getElementById('questionSpan').innerText = nextAnswer;
             hintArea.innerHTML = nextHint;
             inputForm.value = "";
 
