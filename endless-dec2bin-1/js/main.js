@@ -3,7 +3,7 @@
 // Copyright (c) 2022 taidalog
 // This software is licensed under the MIT License.
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
-function main() {
+function checkAnswer (answer) {
     const sourceRadix = 10;
     const destinationRadix = 2;
     const binaryDigit = 8;
@@ -12,23 +12,19 @@ function main() {
     const hintArea = document.getElementById('hintArea');
     const errorArea = document.getElementById('errorArea');
     errorArea.innerHTML = "";
-
-    const questionSpan = document.getElementById('questionSpan');
-    const question = questionSpan.innerText;
-    console.log(question);
     
     const numberInput = document.getElementById("numberInput");
     const bin = escapeHtml(numberInput.value);
     console.log(bin);
     
-    const powerOfTwos = devideIntoPowerOfTwo(question);
+    const powerOfTwos = devideIntoPowerOfTwo(answer);
     console.log(powerOfTwos);
 
-    const quotientsAndRemainders = repeatDivision(question, 2);
+    const quotientsAndRemainders = repeatDivision(answer, 2);
     console.log(quotientsAndRemainders);
 
     if (bin == "") {
-        errorArea.innerHTML = "<span class=\"warning\">" + question + " の2進法表記を入力してください。</span>";
+        errorArea.innerHTML = "<span class=\"warning\">" + answer + " の2進法表記を入力してください。</span>";
     } else if (testBinaryString(bin) == false) {
         errorArea.innerHTML = "<span class=\"warning\">\"" + bin + "\" は2進数ではありません。使えるのは半角の 0 と 1 のみです。</span>";
     } else {
@@ -42,7 +38,7 @@ function main() {
         const outputArea = document.getElementById("outputArea");
         
         let historyClassName = ""
-        if (dec == question) {
+        if (dec == answer) {
             historyClassName = "history-correct"
         } else {
             historyClassName = "history-wrong"
@@ -55,7 +51,7 @@ function main() {
         console.log(msg1);
         console.log(msg2);
         
-        if (dec == question) {
+        if (dec == answer) {
             let nextNumber = 0;
             let nextBin = 0;
             do {
@@ -73,10 +69,12 @@ function main() {
             const nextHint = newHint(nextNumber, quotientsAndRemainders, powerOfTwos);
             console.log(nextHint);
             
-            questionSpan.innerText = nextNumber;
+            document.getElementById('questionSpan').innerText = nextNumber;
             hintArea.innerHTML = nextHint;
-            console.log(nextHint);
+            
             numberInput.value = "";
+
+            document.getElementById('submitButton').onclick = function() { checkAnswer(nextNumber); return false; };
         }
     }
     
@@ -188,3 +186,5 @@ console.log(powerOfTwos);
 
 document.getElementById('questionSpan').innerText = initNumber;
 document.getElementById('hintArea').innerHTML = newHint(initNumber, quotientsAndRemainders, powerOfTwos);
+
+document.getElementById('submitButton').onclick = function() { checkAnswer(initNumber); return false; };
