@@ -48,14 +48,21 @@ function checkAnswer (answer) {
         console.log(msg1);
         console.log(msg2);
         
-        if (dec == answer) {
-            const nextNumber = getRandomBetween(0, 255);
-            document.getElementById('questionSpan').innerText = nextNumber;
-            console.log(nextNumber);
-            
+        if (dec == question) {
+            let nextNumber = 0;
+
+            console.log(last_answers);
+            do {
+                nextNumber = getRandomBetween(0, 255);
+                console.log(nextNumber);
+                console.log(last_answers.some((element) => element == nextNumber));
+            } while (last_answers.some((element) => element == nextNumber));
+
+            questionSpan.innerText = nextNumber;
             numberInput.value = "";
 
-            document.getElementById('submitButton').onclick = function() { checkAnswer(nextNumber); return false; };
+            const answersToKeep = 10;
+            const lastAnswers = [nextNumber].concat(last_answers).slice(0, answersToKeep);
         }
     }
     
