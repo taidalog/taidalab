@@ -3,7 +3,7 @@
 // Copyright (c) 2022 taidalog
 // This software is licensed under the MIT License.
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
-function checkAnswer (answer, hint_format) {
+function checkAnswer (answer, hint_format, last_answers) {
     const inputForm = document.getElementById("inputForm");
     const userInput = escapeHtml(inputForm.value);
     console.log(userInput);
@@ -42,11 +42,14 @@ function checkAnswer (answer, hint_format) {
         if (userInputToDestRadix == answer) {
             let nextIndexNumber = 0;
             let nextAnswer = 0;
+
+            console.log(last_answers);
             do {
                 nextIndexNumber = getRandomBetween(0, 7);
                 nextAnswer = Math.pow(2, nextIndexNumber);
-            } while (nextAnswer == answer)
-            console.log(nextAnswer);
+                console.log(nextAnswer);
+                console.log(last_answers.some((element) => element == nextAnswer));
+            } while (last_answers.some((element) => element == nextAnswer))
             
             const nextHint = formatString(hint_format, [nextAnswer, nextIndexNumber]);
             console.log(nextHint);
@@ -55,7 +58,9 @@ function checkAnswer (answer, hint_format) {
             hintArea.innerHTML = nextHint;
             inputForm.value = "";
 
-            document.getElementById('submitButton').onclick = function() { checkAnswer(nextAnswer, hint_format); return false; };
+            const answersToKeep = 4;
+            const lastAnswers = [nextAnswer].concat(last_answers).slice(0, answersToKeep);
+            document.getElementById('submitButton').onclick = function() { checkAnswer(nextAnswer, hint_format, lastAnswers); return false; };
         }
     }
     
@@ -86,4 +91,4 @@ const hint = formatString(hintFormat, [initAnswer, initIndexNumber]);
 document.getElementById('questionSpan').innerText = initAnswer;
 document.getElementById('hintArea').innerHTML = hint;
 
-document.getElementById('submitButton').onclick = function() { checkAnswer(initAnswer, hintFormat); return false;  };
+document.getElementById('submitButton').onclick = function() { checkAnswer(initAnswer, hintFormat, [initAnswer]); return false;  };
