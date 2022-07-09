@@ -3,7 +3,7 @@
 // Copyright (c) 2022 taidalog
 // This software is licensed under the MIT License.
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
-function checkAnswer (answer) {
+function checkAnswer (answer, last_answers) {
     const hintArea = document.getElementById('hintArea');
     const errorArea = document.getElementById('errorArea');
     errorArea.innerHTML = "";
@@ -53,11 +53,17 @@ function checkAnswer (answer) {
         if (dec == answer) {
             let nextNumber = 0;
             let nextBin = 0;
+            
+            console.log(last_answers);
             do {
-                nextNumber = getRandomBetween(0, 192);
-                nextBin = nextNumber.toString(2);
-            } while (countOneBit(nextBin) != 2);
-            console.log(nextNumber);
+
+                do {
+                    nextNumber = getRandomBetween(0, 192);
+                    nextBin = nextNumber.toString(2);
+                } while (countOneBit(nextBin) != 2);
+                console.log(nextNumber);
+                console.log(last_answers.some((element) => element == nextNumber));
+            } while (last_answers.some((element) => element == nextNumber));
             
             const quotientsAndRemainders = repeatDivision(nextNumber, 2);
             console.log(quotientsAndRemainders);
@@ -73,7 +79,9 @@ function checkAnswer (answer) {
             
             numberInput.value = "";
 
-            document.getElementById('submitButton').onclick = function() { checkAnswer(nextNumber); return false; };
+            const answersToKeep = 10;
+            const lastAnswers = [nextNumber].concat(last_answers).slice(0, answersToKeep);
+            document.getElementById('submitButton').onclick = function() { checkAnswer(nextNumber, lastAnswers); return false; };
         }
     }
     
@@ -187,4 +195,4 @@ console.log(powerOfTwos);
 document.getElementById('questionSpan').innerText = initNumber;
 document.getElementById('hintArea').innerHTML = newHint(initNumber, quotientsAndRemainders, powerOfTwos);
 
-document.getElementById('submitButton').onclick = function() { checkAnswer(initNumber); return false; };
+document.getElementById('submitButton').onclick = function() { checkAnswer(initNumber, [initNumber]); return false; };
