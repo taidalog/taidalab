@@ -3,7 +3,7 @@
 // Copyright (c) 2022 taidalog
 // This software is licensed under the MIT License.
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
-function checkAnswer (answer, question) {
+function checkAnswer (answer, question, last_answers) {
     const errorArea = document.getElementById('errorArea');
     errorArea.innerHTML = "";
     
@@ -43,16 +43,27 @@ function checkAnswer (answer, question) {
         console.log(msg2);
         
         if (inputValueAsInt == answer) {
-            const nextNumber = getRandomBetween(0, 255);
+            let nextNumber = 0;
+            
+            console.log(last_answers);
+            do {
+                nextNumber = getRandomBetween(0, 255);
+                console.log(nextNumber);
+                console.log(last_answers.some((element) => element == nextNumber));
+            } while (last_answers.some((element) => element == nextNumber));
+
             const nextBin = nextNumber.toString(sourceRadix);
             const splitBin = splitBinaryStringBy(4, nextBin);
-            document.getElementById('questionSpan').innerText = splitBin;
             console.log(nextBin);
             console.log(splitBin);
+            
+            document.getElementById('questionSpan').innerText = splitBin;
 
             numberInput.value = "";
 
-            document.getElementById('submitButton').onclick = function() { checkAnswer(nextNumber, splitBin); return false; };
+            const answersToKeep = 10;
+            const lastAnswers = [nextNumber].concat(last_answers).slice(0, answersToKeep);
+            document.getElementById('submitButton').onclick = function() { checkAnswer(nextNumber, splitBin, lastAnswers); return false; };
         }
     }
     
@@ -67,4 +78,4 @@ console.log(initBin);
 console.log(splitBin);
 document.getElementById('questionSpan').innerText = splitBin;
 
-document.getElementById('submitButton').onclick = function() { checkAnswer(initNumber, splitBin); return false; };
+document.getElementById('submitButton').onclick = function() { checkAnswer(initNumber, splitBin, [initNumber]); return false; };

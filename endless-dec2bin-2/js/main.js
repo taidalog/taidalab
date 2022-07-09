@@ -3,13 +3,9 @@
 // Copyright (c) 2022 taidalog
 // This software is licensed under the MIT License.
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
-function checkAnswer (answer) {
+function checkAnswer (answer, last_answers) {
     const errorArea = document.getElementById('errorArea');
     errorArea.innerHTML = "";
-    
-    //    const questionSpan = document.getElementById('questionSpan');
-    //    const question = questionSpan.innerText;
-    //    console.log(question);
     
     const numberInput = document.getElementById("numberInput");
     const bin = escapeHtml(numberInput.value);
@@ -48,7 +44,7 @@ function checkAnswer (answer) {
         console.log(msg1);
         console.log(msg2);
         
-        if (dec == question) {
+        if (dec == answer) {
             let nextNumber = 0;
 
             console.log(last_answers);
@@ -58,11 +54,12 @@ function checkAnswer (answer) {
                 console.log(last_answers.some((element) => element == nextNumber));
             } while (last_answers.some((element) => element == nextNumber));
 
-            questionSpan.innerText = nextNumber;
+            document.getElementById('questionSpan').innerText = nextNumber;
             numberInput.value = "";
 
             const answersToKeep = 10;
             const lastAnswers = [nextNumber].concat(last_answers).slice(0, answersToKeep);
+            document.getElementById('submitButton').onclick = function() { checkAnswer(nextNumber, lastAnswers); return false; };
         }
     }
     
@@ -73,4 +70,4 @@ function checkAnswer (answer) {
 const initNumber = getRandomBetween(0, 255);
 document.getElementById('questionSpan').innerText = initNumber;
 
-document.getElementById('submitButton').onclick = function() { checkAnswer(initNumber); return false; };
+document.getElementById('submitButton').onclick = function() { checkAnswer(initNumber, [initNumber]); return false; };

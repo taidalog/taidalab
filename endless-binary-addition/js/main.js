@@ -3,7 +3,7 @@
 // Copyright (c) 2022 taidalog
 // This software is licensed under the MIT License.
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
-function checkAnswer(answer, num1, num2) {
+function checkAnswer(answer, num1, num2, last_answers) {
     
     const numberInput = document.getElementById("numberInput");
     const bin = escapeHtml(numberInput.value);
@@ -44,10 +44,17 @@ function checkAnswer(answer, num1, num2) {
         
         if (dec == answer) {
             // Making next question.
-            const numbers = newNumbers();
+            let numbers = [];
+
+            console.log(last_answers);
+            do {
+                numbers = newNumbers();
+                console.log(numbers[0]);
+                console.log(numbers[1]);
+                console.log(last_answers.some((element) => element == numbers[0] || element == numbers[1]));
+            } while (last_answers.some((element) => element == numbers[0] || element == numbers[1]));
+
             setColumnAddition(numbers[0], numbers[1]);
-            console.log(numbers[0]);
-            console.log(numbers[1]);
 
             const hintArea = document.getElementById('hintArea');
             const nextHint = newHint();
@@ -55,7 +62,10 @@ function checkAnswer(answer, num1, num2) {
             console.log(nextHint);
 
             numberInput.value = "";
-            document.getElementById('submitButton').onclick = function () { checkAnswer((numbers[0] + numbers[1]), numbers[0], numbers[1]); return false; };
+
+            const answersToKeep = 20;
+            const lastAnswers = [numbers[0], numbers[1]].concat(last_answers).slice(0, answersToKeep);
+            document.getElementById('submitButton').onclick = function () { checkAnswer((numbers[0] + numbers[1]), numbers[0], numbers[1], lastAnswers); return false; };
         }
     }
     
@@ -137,4 +147,4 @@ setColumnAddition(numbers[0], numbers[1]);
 const hint = newHint();
 document.getElementById('hintArea').innerHTML = hint;
 
-document.getElementById('submitButton').onclick = function () { checkAnswer((numbers[0] + numbers[1]), numbers[0], numbers[1]); return false; };
+document.getElementById('submitButton').onclick = function () { checkAnswer((numbers[0] + numbers[1]), numbers[0], numbers[1], [numbers[0], numbers[1]]); return false; };

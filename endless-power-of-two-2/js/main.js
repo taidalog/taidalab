@@ -3,7 +3,7 @@
 // Copyright (c) 2022 taidalog
 // This software is licensed under the MIT License.
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
-function checkAnswer (answer, hint_format) {
+function checkAnswer (answer, hint_format, last_answers) {
     const hintArea = document.getElementById('hintArea');
     const errorArea = document.getElementById('errorArea');
     errorArea.innerHTML = "";
@@ -53,20 +53,26 @@ function checkAnswer (answer, hint_format) {
         if (dec == answer) {
             let nextNumber = 0;
             let nextIndexNumber = 0;
+            
+            console.log(last_answers);
             do {
                 nextIndexNumber = getRandomBetween(1, 8);
                 nextNumber = Math.pow(2, nextIndexNumber) - 1;
-            } while (nextNumber == answer)
+                console.log(nextNumber);
+                console.log(last_answers.some((element) => element == nextNumber));
+            } while (last_answers.some((element) => element == nextNumber))
+            
+            document.getElementById('questionSpan').innerText = nextNumber;
             
             const nextHint = formatString(hint_format, [nextNumber, nextNumber + 1, nextIndexNumber]);
-            document.getElementById('questionSpan').innerText = nextNumber;
-            console.log(nextNumber);
             hintArea.innerHTML = nextHint;
             console.log(nextHint);
 
             numberInput.value = "";
 
-            document.getElementById('submitButton').onclick = function() { checkAnswer(nextNumber, hint_format); return false;  };
+            const answersToKeep = 4;
+            const lastAnswers = [nextNumber].concat(last_answers).slice(0, answersToKeep);
+            document.getElementById('submitButton').onclick = function() { checkAnswer(nextNumber, hint_format, lastAnswers); return false;  };
         }
     }
     
@@ -80,4 +86,4 @@ const hint = formatString(hintFormat, [initNumber, initNumber + 1, initIndexNumb
 document.getElementById('questionSpan').innerText = initNumber;
 document.getElementById('hintArea').innerHTML = hint;
 
-document.getElementById('submitButton').onclick = function() { checkAnswer(initNumber, hintFormat); return false;  };
+document.getElementById('submitButton').onclick = function() { checkAnswer(initNumber, hintFormat, [initNumber]); return false;  };
