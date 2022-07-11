@@ -63,6 +63,23 @@ function splitBinaryStringBy (digit, str) {
 
 const headerContentPages = "<div id=\"headerContainer\" class=\"header-container\"></div>";
 
+const mainContentPages = "\
+<div id=\"questionArea\" class=\"question-area\"></div>\
+<form class=\"input-area\">\
+    <input type=\"text\" id=\"numberInput\" class=\"number-input consolas\">\
+    <span id=\"binaryRadix\" class=\"binary-radix\"></span>\
+    <input type=\"submit\" value =\"確認\" id=\"submitButton\">\
+    <div id=\"hintArea\" class=\"hint-area\"></div>\
+    <div id=\"errorArea\" class=\"error-area\"></div>\
+</form>\
+<div class=\"history-area\">\
+    結果:\
+    <div class=\"history-indented consolas\">\
+        <span id=\"outputArea\"></span>\
+    </div>\
+</div>\
+";
+
 const footerContentPages = "\
 <small class=\"footer-container\">\
     <div class=\"item\">&copy; 2022 taidalog</div>\
