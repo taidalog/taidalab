@@ -60,3 +60,14 @@ function splitBinaryStringBy (digit, str) {
     const regex = new RegExp ("([01])(?=([01]{" + digit + "})+(?![01]))", "g");
     return str.replace(regex, '$1 ');
 }
+
+const footerContentPages = "\
+<small class=\"footer-container\">\
+    <div class=\"item\">&copy; 2022 taidalog</div>\
+    <div class=\"item\" id=\"versionNumber\"></div>\
+    <div class=\"item\"><a href=\"../\">Home</a></div>\
+    <div class=\"item\"><a href=\"../about.html\">About</a></div>\
+    <div class=\"item\"><a href=\"../terms.html\">ご利用について</a></div>\
+    <div class=\"item\"><a href=\"https://github.com/taidalog/taidalab\">Repository on GitHub</a></div>\
+</small>\
+"

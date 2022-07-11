@@ -96,6 +96,7 @@ document.getElementById('headerContainer').innerHTML = "<h1>2のn乗</h1>";
 document.getElementById('questionArea').innerHTML = "<span id=\"questionSpan\" class=\"question-number\">" + initAnswer + "</span><sub>(" + sourceRadix + ")</sub> を" + destinationRadix + "進法で表すと？";
 document.getElementById('binaryRadix').innerHTML = "<sub>(" + destinationRadix + ")</sub>";
 document.getElementById('hintArea').innerHTML = hint;
+document.getElementsByTagName('footer')[0].innerHTML = footerContentPages;
 document.getElementById('versionNumber').innerText = "Version 0.10.1";
 
 document.getElementById('submitButton').onclick = function() { checkAnswer(initAnswer, hintFormat, [initAnswer]); return false;  };

@@ -85,6 +85,7 @@ document.title = "2進数→10進数 (2) - taidalab";
 document.getElementById('headerContainer').innerHTML = "<h1>2進数→10進数 (2)</h1>";
 document.getElementById('questionArea').innerHTML = "<span id=\"questionSpan\" class=\"question-number\">" + splitBin + "</span><sub>(" + sourceRadix + ")</sub> を" + destinationRadix + "進法で表すと？";
 document.getElementById('binaryRadix').innerHTML = "<sub>(" + destinationRadix + ")</sub>";
+document.getElementsByTagName('footer')[0].innerHTML = footerContentPages;
 document.getElementById('versionNumber').innerText = "Version 0.10.1";
 
 document.getElementById('submitButton').onclick = function() { checkAnswer(initNumber, splitBin, [initNumber]); return false; };
