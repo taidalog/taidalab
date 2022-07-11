@@ -92,6 +92,8 @@ const sourceRadix = 10;
 const destinationRadix = 2;
 
 document.title = "2のn乗 - taidalab";
+document.getElementsByTagName('header')[0].innerHTML = headerContentPages;
+document.getElementsByTagName('header')[0].className = "pot-header";
 document.getElementById('headerContainer').innerHTML = "<h1>2のn乗</h1>";
 document.getElementById('questionArea').innerHTML = "<span id=\"questionSpan\" class=\"question-number\">" + initAnswer + "</span><sub>(" + sourceRadix + ")</sub> を" + destinationRadix + "進法で表すと？";
 document.getElementById('binaryRadix').innerHTML = "<sub>(" + destinationRadix + ")</sub>";

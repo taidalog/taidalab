@@ -61,6 +61,8 @@ function splitBinaryStringBy (digit, str) {
     return str.replace(regex, '$1 ');
 }
 
+const headerContentPages = "<div id=\"headerContainer\" class=\"header-container\"></div>";
+
 const footerContentPages = "\
 <small class=\"footer-container\">\
     <div class=\"item\">&copy; 2022 taidalog</div>\
@@ -70,4 +72,4 @@ const footerContentPages = "\
     <div class=\"item\"><a href=\"../terms.html\">ご利用について</a></div>\
     <div class=\"item\"><a href=\"https://github.com/taidalog/taidalab\">Repository on GitHub</a></div>\
 </small>\
-"
+";
