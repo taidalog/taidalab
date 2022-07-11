@@ -178,6 +178,7 @@ function newHintRepeatAddition (number, power_of_twos) {
 }
 
 
+// initialization
 let initNumber = 0;
 let initBin = "";
 
@@ -192,7 +193,14 @@ console.log(initNumber);
 console.log(quotientsAndRemainders);
 console.log(powerOfTwos);
 
-document.getElementById('questionSpan').innerText = initNumber;
+const sourceRadix = 10;
+const destinationRadix = 2;
+
+document.title = "10進数→2進数 (1) - taidalab";
+document.getElementById('headerContainer').innerHTML = "<h1>10進数→2進数 (1)</h1>";
+document.getElementById('questionArea').innerHTML = "<span id=\"questionSpan\" class=\"question-number\">" + initNumber + "</span><sub>(" + sourceRadix + ")</sub> を" + destinationRadix + "進法で表すと？";
+document.getElementById('binaryRadix').innerHTML = "<sub>(" + destinationRadix + ")</sub>";
 document.getElementById('hintArea').innerHTML = newHint(initNumber, quotientsAndRemainders, powerOfTwos);
+document.getElementById('versionNumber').innerText = "Version 0.10.1";
 
 document.getElementById('submitButton').onclick = function() { checkAnswer(initNumber, [initNumber]); return false; };

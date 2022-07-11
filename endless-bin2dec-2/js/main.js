@@ -76,6 +76,15 @@ const splitBin = splitBinaryStringBy(4,initBin);
 console.log(initNumber);
 console.log(initBin);
 console.log(splitBin);
-document.getElementById('questionSpan').innerText = splitBin;
+//document.getElementById('questionSpan').innerText = splitBin;
+
+const sourceRadix = 2;
+const destinationRadix = 10;
+
+document.title = "2進数→10進数 (2) - taidalab";
+document.getElementById('headerContainer').innerHTML = "<h1>2進数→10進数 (2)</h1>";
+document.getElementById('questionArea').innerHTML = "<span id=\"questionSpan\" class=\"question-number\">" + splitBin + "</span><sub>(" + sourceRadix + ")</sub> を" + destinationRadix + "進法で表すと？";
+document.getElementById('binaryRadix').innerHTML = "<sub>(" + destinationRadix + ")</sub>";
+document.getElementById('versionNumber').innerText = "Version 0.10.1";
 
 document.getElementById('submitButton').onclick = function() { checkAnswer(initNumber, splitBin, [initNumber]); return false; };

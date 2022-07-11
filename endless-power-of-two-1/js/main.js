@@ -88,7 +88,14 @@ const initAnswer = Math.pow(2, initIndexNumber);
 const hintFormat = "<details><summary>ヒント: </summary><p class=\"history-indented\">{0}<sub>(10)</sub> = 2<sup>{1}</sup><br>10進法で2<sup>n</sup>になる数は、<br>2進法では1の後ろに0をn個つけます。</p></details>";
 const hint = formatString(hintFormat, [initAnswer, initIndexNumber]);
 
-document.getElementById('questionSpan').innerText = initAnswer;
+const sourceRadix = 10;
+const destinationRadix = 2;
+
+document.title = "2のn乗 - taidalab";
+document.getElementById('headerContainer').innerHTML = "<h1>2のn乗</h1>";
+document.getElementById('questionArea').innerHTML = "<span id=\"questionSpan\" class=\"question-number\">" + initAnswer + "</span><sub>(" + sourceRadix + ")</sub> を" + destinationRadix + "進法で表すと？";
+document.getElementById('binaryRadix').innerHTML = "<sub>(" + destinationRadix + ")</sub>";
 document.getElementById('hintArea').innerHTML = hint;
+document.getElementById('versionNumber').innerText = "Version 0.10.1";
 
 document.getElementById('submitButton').onclick = function() { checkAnswer(initAnswer, hintFormat, [initAnswer]); return false;  };

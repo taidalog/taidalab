@@ -121,7 +121,17 @@ const hintFormat10 = "</details>";
 const hintFormat = hintFormat01 + hintFormat02 + hintFormat03 + hintFormat04 + hintFormat05 + hintFormat06 + hintFormat07 + hintFormat08 + hintFormat09 + hintFormat10;
 const hint = formatString(hintFormat, [initBin, addtionFormula]);
 
-document.getElementById('questionSpan').innerText = splitBin;
+//document.getElementById('questionSpan').innerText = splitBin;
+
+const sourceRadix = 2;
+const destinationRadix = 10;
+
+document.title = "2進数→10進数 (1) - taidalab";
+document.getElementById('headerContainer').innerHTML = "<h1>2進数→10進数 (1)</h1>";
+document.getElementById('questionArea').innerHTML = "<span id=\"questionSpan\" class=\"question-number\">" + splitBin + "</span><sub>(" + sourceRadix + ")</sub> を" + destinationRadix + "進法で表すと？";
+document.getElementById('binaryRadix').innerHTML = "<sub>(" + destinationRadix + ")</sub>";
+//document.getElementById('hintArea').innerHTML = newHint(initNumber, quotientsAndRemainders, powerOfTwos);
 document.getElementById('hintArea').innerHTML = hint;
+document.getElementById('versionNumber').innerText = "Version 0.10.1";
 
 document.getElementById('submitButton').onclick = function() { checkAnswer(initNumber, splitBin, [initNumber]); return false; };

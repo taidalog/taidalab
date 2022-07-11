@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>2のn乗 - taidalab</title>
+        <title></title>
         <meta charset="utf-8">
         <meta name="description" content="10進数から2進数への変換の反復練習サイト（2のn乗コース）">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,19 +16,15 @@
     </head>
     <body>
         <header class="pot-header">
-            <div class="header-container">
-                <h1>2のn乗</h1>
-            </div>
+            <div id="headerContainer" class="header-container"></div>
         </header>
         
         <main>
-            <div class="question-area">
-                <span id="questionSpan" class="question-number"></span><sub>(10)</sub> を2進法で表すと？
-            </div>
+            <div id="questionArea" class="question-area"></div>
             
             <form class="input-area">
                 <input type="text" id="inputForm" class="number-input consolas">
-                <span class="binary-radix"><sub>(2)</sub></span>
+                <span id="binaryRadix" class="binary-radix"></span>
                 <input type="submit" value ="確認" id="submitButton" class="submit-button pot-button">
                 <div id="hintArea" class="hint-area"></div>
                 <div id="errorArea" class="error-area"></div>
@@ -45,7 +41,7 @@
         <footer>
             <small class="footer-container">
                 <div class="item">&copy; 2022 taidalog</div>
-                <div class="item">Version 0.10.1</div>
+                <div class="item" id="versionNumber"></div>
                 <div class="item"><a href="../">Home</a></div>
                 <div class="item"><a href="../about.html">About</a></div>
                 <div class="item"><a href="../terms.html">ご利用について</a></div>

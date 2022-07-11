@@ -145,6 +145,16 @@ const numbers = newNumbers();
 setColumnAddition(numbers[0], numbers[1]);
 
 const hint = newHint();
+
+const sourceRadix = 10;
+const destinationRadix = 2;
+
+document.title = "加算 - taidalab";
+document.getElementById('headerContainer').innerHTML = "<h1>加算</h1>";
+//document.getElementById('questionArea').innerHTML = "<span id=\"questionSpan\" class=\"question-number\">" + initNumber + "</span><sub>(" + sourceRadix + ")</sub> を" + destinationRadix + "進法で表すと？";
+document.getElementById('binaryRadix').innerHTML = "<sub>(" + destinationRadix + ")</sub>";
+//document.getElementById('hintArea').innerHTML = newHint(initNumber, quotientsAndRemainders, powerOfTwos);
 document.getElementById('hintArea').innerHTML = hint;
+document.getElementById('versionNumber').innerText = "Version 0.11.1";
 
 document.getElementById('submitButton').onclick = function () { checkAnswer((numbers[0] + numbers[1]), numbers[0], numbers[1], [numbers[0], numbers[1]]); return false; };

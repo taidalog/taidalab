@@ -83,7 +83,15 @@ const initIndexNumber = getRandomBetween(1, 8);
 const initNumber = Math.pow(2, initIndexNumber) - 1;
 const hintFormat = "<details><summary>ヒント: </summary><span class=\"history-indented\">{0}<sub>(10)</sub> = {1}<sub>(10)</sub> - 1<sub>(10)</sub> = 2<sup>{2}</sup> - 1<sub>(10)</sub></span></details>";
 const hint = formatString(hintFormat, [initNumber, initNumber + 1, initIndexNumber]);
-document.getElementById('questionSpan').innerText = initNumber;
+
+const sourceRadix = 10;
+const destinationRadix = 2;
+
+document.title = "2のn乗-1 - taidalab";
+document.getElementById('headerContainer').innerHTML = "<h1>2のn乗 - 1</h1>";
+document.getElementById('questionArea').innerHTML = "<span id=\"questionSpan\" class=\"question-number\">" + initNumber + "</span><sub>(" + sourceRadix + ")</sub> を" + destinationRadix + "進法で表すと？";
+document.getElementById('binaryRadix').innerHTML = "<sub>(" + destinationRadix + ")</sub>";
 document.getElementById('hintArea').innerHTML = hint;
+document.getElementById('versionNumber').innerText = "Version 0.10.1";
 
 document.getElementById('submitButton').onclick = function() { checkAnswer(initNumber, hintFormat, [initNumber]); return false;  };
