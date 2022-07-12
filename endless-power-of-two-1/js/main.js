@@ -4,8 +4,8 @@
 // This software is licensed under the MIT License.
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
 function checkAnswer (answer, hint_format, last_answers) {
-    const inputForm = document.getElementById('inputForm');
-    const userInput = escapeHtml(inputForm.value);
+    const numberInput = document.getElementById('numberInput');
+    const userInput = escapeHtml(numberInput.value);
     console.log(userInput);
 
     const hintArea = document.getElementById('hintArea');
@@ -56,7 +56,7 @@ function checkAnswer (answer, hint_format, last_answers) {
             
             document.getElementById('questionSpan').innerText = nextAnswer;
             hintArea.innerHTML = nextHint;
-            inputForm.value = '';
+            numberInput.value = '';
 
             const answersToKeep = 4;
             const lastAnswers = [nextAnswer].concat(last_answers).slice(0, answersToKeep);
@@ -64,7 +64,7 @@ function checkAnswer (answer, hint_format, last_answers) {
         }
     }
     
-    inputForm.focus();
+    numberInput.focus();
 }
 
 
