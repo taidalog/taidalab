@@ -162,6 +162,19 @@ footer {
     background-color: #8692e5;
 }
 
+.cmp-header {
+    background-color: #6588ac;
+}
+
+.cmp-button {
+    color: #1e2833;
+    background: #95c9fe;
+}
+
+.cmp-button:hover {
+    background-color: #86b5e5;
+}
+
 .hint-area {
     width: 100%;
     order: 4;
