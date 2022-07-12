@@ -52,7 +52,7 @@ function colorLeadingZero (str) {
     }
     
     const leadingZero = str.match(reLeadingZero);
-    const leadingZeroInTag = "<span class=\"zero-grey\">" + leadingZero + "</span>";
+    const leadingZeroInTag = '<span class="zero-grey">' + leadingZero + "</span>";
     return str.replace(leadingZero, leadingZeroInTag);
 }
 
@@ -61,61 +61,61 @@ function splitBinaryStringBy (digit, str) {
     return str.replace(regex, '$1 ');
 }
 
-const headerContentPages = "<div id=\"headerContainer\" class=\"header-container\"></div>";
+const headerContentPages = '<div id="headerContainer" class="header-container"></div>';
 
-const mainContentPages = "\
-<div id=\"questionArea\" class=\"question-area\"></div>\
-<form class=\"input-area\">\
-    <input type=\"text\" id=\"numberInput\" class=\"number-input consolas\">\
-    <span id=\"binaryRadix\" class=\"binary-radix\"></span>\
-    <input type=\"submit\" value =\"確認\" id=\"submitButton\">\
-    <div id=\"hintArea\" class=\"hint-area\"></div>\
-    <div id=\"errorArea\" class=\"error-area\"></div>\
+const mainContentPages = '\
+<div id="questionArea" class="question-area"></div>\
+<form class="input-area">\
+    <input type="text" id="numberInput" class="number-input consolas">\
+    <span id="binaryRadix" class="binary-radix"></span>\
+    <input type="submit" value ="確認" id="submitButton">\
+    <div id="hintArea" class="hint-area"></div>\
+    <div id="errorArea" class="error-area"></div>\
 </form>\
-<div class=\"history-area\">\
+<div class="history-area">\
     結果:\
-    <div class=\"history-indented consolas\">\
-        <span id=\"outputArea\"></span>\
+    <div class="history-indented consolas">\
+        <span id="outputArea"></span>\
     </div>\
 </div>\
-";
+';
 
-const footerContentPages = "\
-<small class=\"footer-container\">\
-    <div class=\"item\">&copy; 2022 taidalog</div>\
-    <div class=\"item\" id=\"versionNumber\"></div>\
-    <div class=\"item\"><a href=\"../\">Home</a></div>\
-    <div class=\"item\"><a href=\"../about.html\">About</a></div>\
-    <div class=\"item\"><a href=\"../terms.html\">ご利用について</a></div>\
-    <div class=\"item\"><a href=\"https://github.com/taidalog/taidalab\">Repository on GitHub</a></div>\
+const footerContentPages = '\
+<small class="footer-container">\
+    <div class="item">&copy; 2022 taidalog</div>\
+    <div class="item" id="versionNumber"></div>\
+    <div class="item"><a href="../">Home</a></div>\
+    <div class="item"><a href="../about.html">About</a></div>\
+    <div class="item"><a href="../terms.html">ご利用について</a></div>\
+    <div class="item"><a href="https://github.com/taidalog/taidalab">Repository on GitHub</a></div>\
 </small>\
-";
+';
 
-const columnAdditionFormat = "\
-<div class=\"calculation-area\" id=\"calculationArea\">\
-    <div class=\"first-row\" id=\"\">\
-        <span class=\"digit-area question-number\" id=\"firstRowDigit8\"></span>\
-        <span class=\"digit-area question-number\" id=\"firstRowDigit7\"></span>\
-        <span class=\"digit-area question-number\" id=\"firstRowDigit6\"></span>\
-        <span class=\"digit-area question-number\" id=\"firstRowDigit5\"></span>\
-        <span class=\"digit-area question-number\" id=\"firstRowDigit4\"></span>\
-        <span class=\"digit-area question-number\" id=\"firstRowDigit3\"></span>\
-        <span class=\"digit-area question-number\" id=\"firstRowDigit2\"></span>\
-        <span class=\"digit-area question-number\" id=\"firstRowDigit1\"></span>\
-        <span class=\"\" id=\"\"><sub>(2)</sub></span>\
+const columnAdditionFormat = '\
+<div class="calculation-area" id="calculationArea">\
+    <div class="first-row" id="">\
+        <span class="digit-area question-number" id="firstRowDigit8"></span>\
+        <span class="digit-area question-number" id="firstRowDigit7"></span>\
+        <span class="digit-area question-number" id="firstRowDigit6"></span>\
+        <span class="digit-area question-number" id="firstRowDigit5"></span>\
+        <span class="digit-area question-number" id="firstRowDigit4"></span>\
+        <span class="digit-area question-number" id="firstRowDigit3"></span>\
+        <span class="digit-area question-number" id="firstRowDigit2"></span>\
+        <span class="digit-area question-number" id="firstRowDigit1"></span>\
+        <span class="" id=""><sub>(2)</sub></span>\
     </div>\
-    <div class=\"second-row\" id=\"secondRow\">\
-        <span class=\"question-number\" id=\"operator\"></span>\
-        <span class=\"digit-area question-number\" id=\"secondRowDigit8\"></span>\
-        <span class=\"digit-area question-number\" id=\"secondRowDigit7\"></span>\
-        <span class=\"digit-area question-number\" id=\"secondRowDigit6\"></span>\
-        <span class=\"digit-area question-number\" id=\"secondRowDigit5\"></span>\
-        <span class=\"digit-area question-number\" id=\"secondRowDigit4\"></span>\
-        <span class=\"digit-area question-number\" id=\"secondRowDigit3\"></span>\
-        <span class=\"digit-area question-number\" id=\"secondRowDigit2\"></span>\
-        <span class=\"digit-area question-number\" id=\"secondRowDigit1\"></span>\
-        <span class=\"\" id=\"\"><sub>(2)</sub></span>\
+    <div class="second-row" id="secondRow">\
+        <span class="question-number" id="operator"></span>\
+        <span class="digit-area question-number" id="secondRowDigit8"></span>\
+        <span class="digit-area question-number" id="secondRowDigit7"></span>\
+        <span class="digit-area question-number" id="secondRowDigit6"></span>\
+        <span class="digit-area question-number" id="secondRowDigit5"></span>\
+        <span class="digit-area question-number" id="secondRowDigit4"></span>\
+        <span class="digit-area question-number" id="secondRowDigit3"></span>\
+        <span class="digit-area question-number" id="secondRowDigit2"></span>\
+        <span class="digit-area question-number" id="secondRowDigit1"></span>\
+        <span class="" id=""><sub>(2)</sub></span>\
     </div>\
-    <div class=\"under-line\"></div>\
+    <div class="under-line"></div>\
 </div>\
-";
+';
