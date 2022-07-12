@@ -136,22 +136,25 @@ function newHint () {
 
 
 // initialization
-const numbers = newNumbers();
-setColumnAddition(numbers[0], numbers[1]);
-
-const hint = newHint();
-
 const sourceRadix = 10;
 const destinationRadix = 2;
+const hint = newHint();
 
 document.title = "減算 - taidalab";
 document.getElementsByTagName('header')[0].innerHTML = headerContentPages;
 document.getElementsByTagName('header')[0].className = "sub-header";
 document.getElementById('headerContainer').innerHTML = "<h1>減算</h1>";
-//document.getElementById('questionArea').innerHTML = "<span id=\"questionSpan\" class=\"question-number\">" + initNumber + "</span><sub>(" + sourceRadix + ")</sub> を" + destinationRadix + "進法で表すと？";
+document.getElementsByTagName('main')[0].innerHTML = mainContentPages;
+document.getElementById('submitButton').className = "submit-button sub-button";
+document.getElementById('numberInput').className = "number-input question-number eight-digit";
+document.getElementById('questionArea').innerHTML = columnAdditionFormat;
+document.getElementById('operator').innerText = "-)";
 document.getElementById('binaryRadix').innerHTML = "<sub>(" + destinationRadix + ")</sub>";
 document.getElementById('hintArea').innerHTML = hint;
 document.getElementsByTagName('footer')[0].innerHTML = footerContentPages;
 document.getElementById('versionNumber').innerText = "Version 0.1.1";
+
+const numbers = newNumbers();
+setColumnAddition(numbers[0], numbers[1]);
 
 document.getElementById('submitButton').onclick = function () { checkAnswer((numbers[0] - numbers[1]), numbers[0], numbers[1], [numbers[0], numbers[1]]); return false; };
