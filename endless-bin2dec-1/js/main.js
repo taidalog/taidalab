@@ -95,60 +95,41 @@ function writeAdditionFormula (binary_string) {
     return result;
 }
 
+function initBin2Dec1 () {
+    // initialization
+    const initIndexNumber = getRandomBetween(0, 7);
+    const initNumber = Math.pow(2,initIndexNumber);
+    const initBin = initNumber.toString(2);
+    const splitBin = splitBinaryStringBy(4,initBin);
+    console.log(initIndexNumber);
+    console.log(initNumber);
+    console.log(initBin);
+    console.log(splitBin);
 
-// initialization
-const initIndexNumber = getRandomBetween(0, 7);
-const initNumber = Math.pow(2,initIndexNumber);
-const initBin = initNumber.toString(2);
-const splitBin = splitBinaryStringBy(4,initBin);
-console.log(initIndexNumber);
-console.log(initNumber);
-console.log(initBin);
-console.log(splitBin);
+    const addtionFormula = writeAdditionFormula(initBin);
 
-const addtionFormula = writeAdditionFormula(initBin);
+    const hintFormat01 = '<details><summary>ヒント:</summary>';
+    const hintFormat02 = '<p class="history-indented">10進数は、一番右の桁から<br>';
+    const hintFormat03 = '1の位、10の位、100の位、1000の位...つまり、<br>';
+    const hintFormat04 = '10<sup>0</sup>の位、10<sup>1</sup>の位、10<sup>2</sup>の位、10<sup>3</sup>の位...となっています。</p>';
+    const hintFormat05 = '<p class="history-indented">同様に、2進数は一番右の桁から<br>';
+    const hintFormat06 = '1の位、2の位、4の位、8の位...つまり、<br>';
+    const hintFormat07 = '2<sup>0</sup>の位、2<sup>1</sup>の位、2<sup>2</sup>の位、2<sup>3</sup>の位...となっています。</p>';
+    const hintFormat08 = '<p class="history-indented">ですので、{0}<sub>(2)</sub>を10進数に変換するには、以下のように計算します。<br>';
+    const hintFormat09 = '{1}</p>';
+    const hintFormat10 = '</details>';
+    const hintFormat = hintFormat01 + hintFormat02 + hintFormat03 + hintFormat04 + hintFormat05 + hintFormat06 + hintFormat07 + hintFormat08 + hintFormat09 + hintFormat10;
+    const hint = formatString(hintFormat, [initBin, addtionFormula]);
 
-const hintFormat01 = '<details><summary>ヒント:</summary>';
-const hintFormat02 = '<p class="history-indented">10進数は、一番右の桁から<br>';
-const hintFormat03 = '1の位、10の位、100の位、1000の位...つまり、<br>';
-const hintFormat04 = '10<sup>0</sup>の位、10<sup>1</sup>の位、10<sup>2</sup>の位、10<sup>3</sup>の位...となっています。</p>';
-const hintFormat05 = '<p class="history-indented">同様に、2進数は一番右の桁から<br>';
-const hintFormat06 = '1の位、2の位、4の位、8の位...つまり、<br>';
-const hintFormat07 = '2<sup>0</sup>の位、2<sup>1</sup>の位、2<sup>2</sup>の位、2<sup>3</sup>の位...となっています。</p>';
-const hintFormat08 = '<p class="history-indented">ですので、{0}<sub>(2)</sub>を10進数に変換するには、以下のように計算します。<br>';
-const hintFormat09 = '{1}</p>';
-const hintFormat10 = '</details>';
-const hintFormat = hintFormat01 + hintFormat02 + hintFormat03 + hintFormat04 + hintFormat05 + hintFormat06 + hintFormat07 + hintFormat08 + hintFormat09 + hintFormat10;
-const hint = formatString(hintFormat, [initBin, addtionFormula]);
+    const sourceRadix = 2;
+    const destinationRadix = 10;
 
-const sourceRadix = 2;
-const destinationRadix = 10;
+    document.getElementById('questionSpan').innerHTML = splitBin;
+    document.getElementById('srcRadix').innerHTML = '(' + sourceRadix + ')';
+    document.getElementById('dstRadix').innerHTML = destinationRadix;
+    document.getElementById('binaryRadix').innerHTML = '<sub>(' + destinationRadix + ')</sub>';
+    document.getElementById('hintArea').innerHTML = hint;
+    document.getElementById('submitButton').onclick = function() { checkAnswer(initNumber, splitBin, [initNumber]); return false; };
+}
 
-// const contents = {
-//     title: '2進数→10進数 (1) - taidalab',
-//     headerContent: headerContentPages,
-//     headerColorClass: 'b2d-header',
-//     headerTitle: '<h1>2進数→10進数 (1)</h1>',
-//     mainContent: mainContentPages,
-//     buttonColorClass: 'submit-button b2d-button',
-//     questionContent: '<span id="questionSpan" class="question-number">' + splitBin + '</span><sub>(' + sourceRadix + ')</sub> を' + destinationRadix + '進法で表すと？',
-//     radixContent: '<sub>(' + destinationRadix + ')</sub>',
-//     footerContent: footerContentPages,
-//     versionNumber: 'Version 0.10.1',
-// };
-// 
-// document.title = contents.title;
-// document.getElementsByTagName('header')[0].innerHTML = contents.headerContent;
-// document.getElementsByTagName('header')[0].className = contents.headerColorClass;
-// document.getElementById('headerContainer').innerHTML = contents.headerTitle;
-// document.getElementsByTagName('main')[0].innerHTML = contents.mainContent;
-// document.getElementById('submitButton').className = contents.buttonColorClass;
-// document.getElementById('questionArea').innerHTML = contents.questionContent;
-// document.getElementsByTagName('footer')[0].innerHTML = contents.footerContent;
-// document.getElementById('versionNumber').innerText = contents.versionNumber;
-
-document.getElementById('srcRadix').innerHTML = '(' + sourceRadix + ')';
-document.getElementById('dstRadix').innerHTML = '(' + destinationRadix + ')';
-document.getElementById('binaryRadix').innerHTML = '<sub>(' + destinationRadix + ')</sub>';
-document.getElementById('hintArea').innerHTML = hint;
-document.getElementById('submitButton').onclick = function() { checkAnswer(initNumber, splitBin, [initNumber]); return false; };
+initBin2Dec1();

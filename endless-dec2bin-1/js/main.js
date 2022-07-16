@@ -178,49 +178,31 @@ function newHintRepeatAddition (number, power_of_twos) {
 }
 
 
-// initialization
-let initNumber = 0;
-let initBin = '';
+function initDec2Bin1 () {
+    // initialization
+    let initNumber = 0;
+    let initBin = '';
 
-do {
-    initNumber = getRandomBetween(0, 192);
-    initBin = initNumber.toString(2);
-} while (countOneBit(initBin) != 2);
+    do {
+        initNumber = getRandomBetween(0, 192);
+        initBin = initNumber.toString(2);
+    } while (countOneBit(initBin) != 2);
 
-const quotientsAndRemainders = repeatDivision(initNumber, 2);
-const powerOfTwos = devideIntoPowerOfTwo(initNumber);
-console.log(initNumber);
-console.log(quotientsAndRemainders);
-console.log(powerOfTwos);
+    const quotientsAndRemainders = repeatDivision(initNumber, 2);
+    const powerOfTwos = devideIntoPowerOfTwo(initNumber);
+    console.log(initNumber);
+    console.log(quotientsAndRemainders);
+    console.log(powerOfTwos);
 
-const sourceRadix = 10;
-const destinationRadix = 2;
+    const sourceRadix = 10;
+    const destinationRadix = 2;
 
-// const contents = {
-//     title: '10進数→2進数 (1) - taidalab',
-//     headerContent: headerContentPages,
-//     headerColorClass: 'd2b-header',
-//     headerTitle: '<h1>10進数→2進数 (1)</h1>',
-//     mainContent: mainContentPages,
-//     buttonColorClass: 'submit-button d2b-button',
-//     questionContent: '<span id="questionSpan" class="question-number">' + initNumber + '</span><sub>(' + sourceRadix + ')</sub> を' + destinationRadix + '進法で表すと？',
-//     radixContent: '<sub>(' + destinationRadix + ')</sub>',
-//     footerContent: footerContentPages,
-//     versionNumber: 'Version 0.10.1',
-// };
-// 
-// document.title = contents.title;
-// document.getElementsByTagName('header')[0].innerHTML = contents.headerContent;
-// document.getElementsByTagName('header')[0].className = contents.headerColorClass;
-// document.getElementById('headerContainer').innerHTML = contents.headerTitle;
-// document.getElementsByTagName('main')[0].innerHTML = contents.mainContent;
-// document.getElementById('submitButton').className = contents.buttonColorClass;
-// document.getElementById('questionArea').innerHTML = contents.questionContent;
-// document.getElementsByTagName('footer')[0].innerHTML = contents.footerContent;
-// document.getElementById('versionNumber').innerText = contents.versionNumber;
+    document.getElementById('questionSpan').innerHTML = initNumber;
+    document.getElementById('srcRadix').innerHTML = '(' + sourceRadix + ')';
+    document.getElementById('dstRadix').innerHTML = destinationRadix;
+    document.getElementById('binaryRadix').innerHTML = '<sub>(' + destinationRadix + ')</sub>';
+    document.getElementById('hintArea').innerHTML = newHint(initNumber, quotientsAndRemainders, powerOfTwos);
+    document.getElementById('submitButton').onclick = function() { checkAnswer(initNumber, [initNumber]); return false; };
+}
 
-document.getElementById('srcRadix').innerHTML = '(' + sourceRadix + ')';
-document.getElementById('dstRadix').innerHTML = '(' + destinationRadix + ')';
-document.getElementById('binaryRadix').innerHTML = '<sub>(' + destinationRadix + ')</sub>';
-document.getElementById('hintArea').innerHTML = newHint(initNumber, quotientsAndRemainders, powerOfTwos);
-document.getElementById('submitButton').onclick = function() { checkAnswer(initNumber, [initNumber]); return false; };
+initDec2Bin1();

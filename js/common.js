@@ -145,6 +145,7 @@ function newInitObject (pathname) {
                 questionContent: null,
                 footerContent: footerContentHome,
                 widthClass: "home",
+                scriptPath: [],
                 versionNumber: 'Version 0.13.0',
             };
         case '/endless-dec2bin-1/':
@@ -160,6 +161,7 @@ function newInitObject (pathname) {
                 questionContent: questionContentPages,
                 footerContent: footerContentPages,
                 widthClass: "course",
+                scriptPath: ['endless-dec2bin-1\\js\\main.js'],
                 versionNumber: 'Version 0.10.1',
             };
         case '/endless-bin2dec-1/':
@@ -175,6 +177,7 @@ function newInitObject (pathname) {
                 questionContent: questionContentPages,
                 footerContent: footerContentPages,
                 widthClass: "course",
+                scriptPath: ['endless-bin2dec-1\\js\\main.js'],
                 versionNumber: 'Version 0.10.1',
             };
         default:
@@ -194,9 +197,20 @@ function initPage (initial_object) {
     document.getElementsByTagName('footer')[0].className = initial_object.widthClass;
     document.getElementById('versionNumber').innerText = initial_object.versionNumber;
 
+    if (initial_object.scriptPath != []) {
+        initial_object.scriptPath.map(
+            x => { 
+                const element = document.createElement('script');
+                element.src = x;
+                document.getElementsByTagName('footer')[0].appendChild(element);
+            }
+        );
+    }
+
     if (initial_object.pathname != '/') {
         document.getElementById('submitButton').className = initial_object.buttonColorClass;
         document.getElementById('questionArea').innerHTML = initial_object.questionContent
         document.getElementById('binaryRadix').innerHTML = initial_object.radixContent;
+
     }
 }
