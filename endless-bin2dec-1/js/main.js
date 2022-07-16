@@ -6,26 +6,26 @@
 function checkAnswer (answer, question, last_answers) {
     const hintArea = document.getElementById('hintArea');
     const errorArea = document.getElementById('errorArea');
-    errorArea.innerHTML = "";
+    errorArea.innerHTML = '';
 
-    const numberInput = document.getElementById("numberInput");
+    const numberInput = document.getElementById('numberInput');
     const inputValue = escapeHtml(numberInput.value);
-    console.log("inputValue : " + inputValue);
+    console.log('inputValue : ' + inputValue);
 
-    if (inputValue == "") {
+    if (inputValue == '') {
         const questionWithoutSpace = question.replace(' ', '');
-        errorArea.innerHTML = "<span class=\"warning\">" + questionWithoutSpace + " の10進法表記を入力してください。</span>";
+        errorArea.innerHTML = '<span class="warning">' + questionWithoutSpace + ' の10進法表記を入力してください。</span>';
     } else if (tesDecimalString(inputValue) == false) {
-        errorArea.innerHTML = "<span class=\"warning\">\"" + inputValue + "\" は10進数ではありません。使えるのは半角の 0123456789 のみです。</span>";
+        errorArea.innerHTML = '<span class="warning">"' + inputValue + '" は10進数ではありません。使えるのは半角の 0123456789 のみです。</span>';
     } else {
 
         const inputValueAsInt = parseInt(inputValue);
         
-        let historyClassName = ""
+        let historyClassName = ''
         if (inputValueAsInt == answer) {
-            historyClassName = "history-correct"
+            historyClassName = 'history-correct'
         } else {
-            historyClassName = "history-wrong"
+            historyClassName = 'history-wrong'
         }
         
         const digit = 3;
@@ -35,8 +35,8 @@ function checkAnswer (answer, question, last_answers) {
         const bin = inputValueAsInt.toString(sourceRadix);
         
         const destinationRadix = 10;
-        const outputArea = document.getElementById("outputArea");
-        const msg1 = "<span class =\"" + historyClassName + "\">" + spacePaddedInputValue + "<sub>(" + destinationRadix + ")</sub> = " + bin + "<sub>(" + sourceRadix + ")</sub></span>";
+        const outputArea = document.getElementById('outputArea');
+        const msg1 = '<span class ="' + historyClassName + '">' + spacePaddedInputValue + '<sub>(' + destinationRadix + ')</sub> = ' + bin + '<sub>(' + sourceRadix + ')</sub></span>';
         const msg2 = concatinateStrings(msg1, outputArea.innerHTML);
         outputArea.innerHTML = msg2;
         console.log(msg1);
@@ -67,7 +67,7 @@ function checkAnswer (answer, question, last_answers) {
             console.log(nextHint);
             
             hintArea.innerHTML = nextHint;
-            numberInput.value = "";
+            numberInput.value = '';
 
             const answersToKeep = 4;
             const lastAnswers = [nextNumber].concat(last_answers).slice(0, answersToKeep);
@@ -80,15 +80,15 @@ function checkAnswer (answer, question, last_answers) {
 
 
 function writeAdditionFormula (binary_string) {
-    let result = "";
-    let tmp ="";
+    let result = '';
+    let tmp ='';
 
     for (let i = 0; i < binary_string.length; i++) {
-        tmp = formatString("(2<sup>{0}</sup> * {1})", [binary_string.length - 1 - i, binary_string[i]]);
-        if (result == "") {
+        tmp = formatString('(2<sup>{0}</sup> * {1})', [binary_string.length - 1 - i, binary_string[i]]);
+        if (result == '') {
             result = tmp;
         } else {
-            result = result + " + " + tmp;
+            result = result + ' + ' + tmp;
         }
     }
 
@@ -108,20 +108,32 @@ console.log(splitBin);
 
 const addtionFormula = writeAdditionFormula(initBin);
 
-const hintFormat01 = "<details><summary>ヒント:</summary>";
-const hintFormat02 = "<p class=\"history-indented\">10進数は、一番右の桁から<br>";
-const hintFormat03 = "1の位、10の位、100の位、1000の位...つまり、<br>";
-const hintFormat04 = "10<sup>0</sup>の位、10<sup>1</sup>の位、10<sup>2</sup>の位、10<sup>3</sup>の位...となっています。</p>";
-const hintFormat05 = "<p class=\"history-indented\">同様に、2進数は一番右の桁から<br>";
-const hintFormat06 = "1の位、2の位、4の位、8の位...つまり、<br>";
-const hintFormat07 = "2<sup>0</sup>の位、2<sup>1</sup>の位、2<sup>2</sup>の位、2<sup>3</sup>の位...となっています。</p>";
-const hintFormat08 = "<p class=\"history-indented\">ですので、{0}<sub>(2)</sub>を10進数に変換するには、以下のように計算します。<br>";
-const hintFormat09 = "{1}</p>";
-const hintFormat10 = "</details>";
+const hintFormat01 = '<details><summary>ヒント:</summary>';
+const hintFormat02 = '<p class="history-indented">10進数は、一番右の桁から<br>';
+const hintFormat03 = '1の位、10の位、100の位、1000の位...つまり、<br>';
+const hintFormat04 = '10<sup>0</sup>の位、10<sup>1</sup>の位、10<sup>2</sup>の位、10<sup>3</sup>の位...となっています。</p>';
+const hintFormat05 = '<p class="history-indented">同様に、2進数は一番右の桁から<br>';
+const hintFormat06 = '1の位、2の位、4の位、8の位...つまり、<br>';
+const hintFormat07 = '2<sup>0</sup>の位、2<sup>1</sup>の位、2<sup>2</sup>の位、2<sup>3</sup>の位...となっています。</p>';
+const hintFormat08 = '<p class="history-indented">ですので、{0}<sub>(2)</sub>を10進数に変換するには、以下のように計算します。<br>';
+const hintFormat09 = '{1}</p>';
+const hintFormat10 = '</details>';
 const hintFormat = hintFormat01 + hintFormat02 + hintFormat03 + hintFormat04 + hintFormat05 + hintFormat06 + hintFormat07 + hintFormat08 + hintFormat09 + hintFormat10;
 const hint = formatString(hintFormat, [initBin, addtionFormula]);
 
-document.getElementById('questionSpan').innerText = splitBin;
+const sourceRadix = 2;
+const destinationRadix = 10;
+
+document.title = '2進数→10進数 (1) - taidalab';
+document.getElementsByTagName('header')[0].innerHTML = headerContentPages;
+document.getElementsByTagName('header')[0].className = 'b2d-header';
+document.getElementById('headerContainer').innerHTML = '<h1>2進数→10進数 (1)</h1>';
+document.getElementsByTagName('main')[0].innerHTML = mainContentPages;
+document.getElementById('submitButton').className = 'submit-button b2d-button';
+document.getElementById('questionArea').innerHTML = '<span id="questionSpan" class="question-number">' + splitBin + '</span><sub>(' + sourceRadix + ')</sub> を' + destinationRadix + '進法で表すと？';
+document.getElementById('binaryRadix').innerHTML = '<sub>(' + destinationRadix + ')</sub>';
 document.getElementById('hintArea').innerHTML = hint;
+document.getElementsByTagName('footer')[0].innerHTML = footerContentPages;
+document.getElementById('versionNumber').innerText = 'Version 0.10.1';
 
 document.getElementById('submitButton').onclick = function() { checkAnswer(initNumber, splitBin, [initNumber]); return false; };
