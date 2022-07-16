@@ -29,12 +29,12 @@ header h1 {
     max-height: 40px;
 }
 
-.header-container {
-    max-width: 600px;
+main.home, header.home .header-container {
+    max-width: 94%;
     margin: 0 auto;
 }
 
-main, footer {
+.header-container, main, footer {
     max-width: 600px;
     margin: 0 auto;
 }
@@ -300,6 +300,20 @@ dd {
     }
 
     .footer-container {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 799px) {    
+    main.home {
+        margin: 0 auto;
+    }
+
+    footer.home {
+        max-width: 94%;
+    }
+
+    .home .footer-container {
         flex-direction: column;
     }
 }

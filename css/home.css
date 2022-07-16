@@ -6,16 +6,6 @@
     https://github.com/taidalog/taidalab/blob/main/LICENSE
  */
 @charset "UTF-8";
-main, .header-container {
-    max-width: 94%;
-    margin: 0 auto;
-}
-
-footer {
-    max-width: 600px;
-    margin: 0 auto;
-}
-
 .button-container {
     padding: 5px 0;
     display: grid;
@@ -124,21 +114,7 @@ footer {
     order: 9;
 }
 
-footer {
-    margin-top: 20px;
-}
-
-.footer-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
 @media (max-width: 799px) {    
-    main {
-        margin: 0 auto;
-    }
-
     .button-container {
         padding: 5px 0;
         display: flex;
@@ -149,13 +125,5 @@ footer {
     .btn {
         font-size: 1.25rem;
         height: 60px;
-    }
-
-    footer {
-        max-width: 94%;
-    }
-
-    .footer-container {
-        flex-direction: column;
     }
 }
