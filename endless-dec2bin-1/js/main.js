@@ -196,16 +196,31 @@ console.log(powerOfTwos);
 const sourceRadix = 10;
 const destinationRadix = 2;
 
-document.title = '10進数→2進数 (1) - taidalab';
-document.getElementsByTagName('header')[0].innerHTML = headerContentPages;
-document.getElementsByTagName('header')[0].className = 'd2b-header';
-document.getElementById('headerContainer').innerHTML = '<h1>10進数→2進数 (1)</h1>';
-document.getElementsByTagName('main')[0].innerHTML = mainContentPages;
-document.getElementById('submitButton').className = 'submit-button d2b-button';
-document.getElementById('questionArea').innerHTML = '<span id="questionSpan" class="question-number">' + initNumber + '</span><sub>(' + sourceRadix + ')</sub> を' + destinationRadix + '進法で表すと？';
+// const contents = {
+//     title: '10進数→2進数 (1) - taidalab',
+//     headerContent: headerContentPages,
+//     headerColorClass: 'd2b-header',
+//     headerTitle: '<h1>10進数→2進数 (1)</h1>',
+//     mainContent: mainContentPages,
+//     buttonColorClass: 'submit-button d2b-button',
+//     questionContent: '<span id="questionSpan" class="question-number">' + initNumber + '</span><sub>(' + sourceRadix + ')</sub> を' + destinationRadix + '進法で表すと？',
+//     radixContent: '<sub>(' + destinationRadix + ')</sub>',
+//     footerContent: footerContentPages,
+//     versionNumber: 'Version 0.10.1',
+// };
+// 
+// document.title = contents.title;
+// document.getElementsByTagName('header')[0].innerHTML = contents.headerContent;
+// document.getElementsByTagName('header')[0].className = contents.headerColorClass;
+// document.getElementById('headerContainer').innerHTML = contents.headerTitle;
+// document.getElementsByTagName('main')[0].innerHTML = contents.mainContent;
+// document.getElementById('submitButton').className = contents.buttonColorClass;
+// document.getElementById('questionArea').innerHTML = contents.questionContent;
+// document.getElementsByTagName('footer')[0].innerHTML = contents.footerContent;
+// document.getElementById('versionNumber').innerText = contents.versionNumber;
+
+document.getElementById('srcRadix').innerHTML = '(' + sourceRadix + ')';
+document.getElementById('dstRadix').innerHTML = '(' + destinationRadix + ')';
 document.getElementById('binaryRadix').innerHTML = '<sub>(' + destinationRadix + ')</sub>';
 document.getElementById('hintArea').innerHTML = newHint(initNumber, quotientsAndRemainders, powerOfTwos);
-document.getElementsByTagName('footer')[0].innerHTML = footerContentPages;
-document.getElementById('versionNumber').innerText = 'Version 0.10.1';
-
 document.getElementById('submitButton').onclick = function() { checkAnswer(initNumber, [initNumber]); return false; };

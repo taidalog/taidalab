@@ -91,6 +91,8 @@ const footerContentPages = '\
 </small>\
 ';
 
+const questionContentPages = '<span id="questionSpan" class="question-number"></span><sub id="srcRadix"></sub> を<span id="dstRadix"></span>進法で表すと？'
+
 const columnAdditionFormat = '\
 <div class="calculation-area" id="calculationArea">\
     <div class="first-row" id="">\
@@ -119,3 +121,69 @@ const columnAdditionFormat = '\
     <div class="under-line"></div>\
 </div>\
 ';
+
+
+
+
+
+
+function switchPage (pathname) {
+    //window.history.pushState(null, null, pathname);
+    const initialObject = newInitObject(pathname);
+    initPage(initialObject);
+}
+
+function newInitObject (pathname) {
+    console.log(pathname);
+    switch (pathname) {
+        case "/":
+            console.log("/");
+            return {};
+        case "/endless-dec2bin-1/":
+            console.log("/endless-dec2bin-1/");
+            return {
+                title: '10進数→2進数 (1) - taidalab',
+                headerContent: headerContentPages,
+                headerColorClass: 'd2b-header',
+                headerTitle: '<h1>10進数→2進数 (1)</h1>',
+                mainContent: mainContentPages,
+                buttonColorClass: 'submit-button d2b-button',
+                questionContent: questionContentPages,
+                footerContent: footerContentPages,
+                widthClass: "header-container course-width",
+                versionNumber: 'Version 0.10.1',
+            };
+        case "/endless-bin2dec-1/":
+            console.log("/endless-bin2dec-1/");
+            return {
+                title: '2進数→10進数 (1) - taidalab',
+                headerContent: headerContentPages,
+                headerColorClass: 'b2d-header',
+                headerTitle: '<h1>2進数→10進数 (1)</h1>',
+                mainContent: mainContentPages,
+                buttonColorClass: 'submit-button b2d-button',
+                questionContent: questionContentPages,
+                footerContent: footerContentPages,
+                widthClass: "header-container course-width",
+                versionNumber: 'Version 0.10.1',
+            };
+        default:
+            console.log("default");
+            return {};
+    }
+}
+
+function initPage (initial_object) {
+    document.title = initial_object.title;
+    document.getElementsByTagName('header')[0].innerHTML = initial_object.headerContent;
+    document.getElementsByTagName('header')[0].className = initial_object.headerColorClass;
+    document.getElementById('headerContainer').className = initial_object.widthClass;
+    document.getElementById('headerContainer').innerHTML = initial_object.headerTitle;
+    document.getElementsByTagName('main')[0].className = initial_object.widthClass;
+    document.getElementsByTagName('main')[0].innerHTML = initial_object.mainContent;
+    document.getElementById('submitButton').className = initial_object.buttonColorClass;
+    document.getElementById('questionArea').innerHTML = initial_object.questionContent
+    document.getElementById('binaryRadix').innerHTML = initial_object.radixContent;
+    document.getElementsByTagName('footer')[0].innerHTML = initial_object.footerContent;
+    document.getElementById('versionNumber').innerText = initial_object.versionNumber;
+}
