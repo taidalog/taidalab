@@ -150,7 +150,7 @@ function newInitObject (pathname) {
                 buttonColorClass: 'submit-button d2b-button',
                 questionContent: questionContentPages,
                 footerContent: footerContentPages,
-                widthClass: "header-container course-width",
+                widthClass: "course",
                 versionNumber: 'Version 0.10.1',
             };
         case "/endless-bin2dec-1/":
@@ -164,7 +164,7 @@ function newInitObject (pathname) {
                 buttonColorClass: 'submit-button b2d-button',
                 questionContent: questionContentPages,
                 footerContent: footerContentPages,
-                widthClass: "header-container course-width",
+                widthClass: "course",
                 versionNumber: 'Version 0.10.1',
             };
         default:
@@ -176,8 +176,7 @@ function newInitObject (pathname) {
 function initPage (initial_object) {
     document.title = initial_object.title;
     document.getElementsByTagName('header')[0].innerHTML = initial_object.headerContent;
-    document.getElementsByTagName('header')[0].className = initial_object.headerColorClass;
-    document.getElementById('headerContainer').className = initial_object.widthClass;
+    document.getElementsByTagName('header')[0].className = initial_object.headerColorClass + ' ' + initial_object.widthClass;
     document.getElementById('headerContainer').innerHTML = initial_object.headerTitle;
     document.getElementsByTagName('main')[0].className = initial_object.widthClass;
     document.getElementsByTagName('main')[0].innerHTML = initial_object.mainContent;
@@ -185,5 +184,6 @@ function initPage (initial_object) {
     document.getElementById('questionArea').innerHTML = initial_object.questionContent
     document.getElementById('binaryRadix').innerHTML = initial_object.radixContent;
     document.getElementsByTagName('footer')[0].innerHTML = initial_object.footerContent;
+    document.getElementsByTagName('footer')[0].className = initial_object.widthClass;
     document.getElementById('versionNumber').innerText = initial_object.versionNumber;
 }
