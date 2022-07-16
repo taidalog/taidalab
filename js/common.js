@@ -84,7 +84,7 @@ const footerContentPages = '\
 <small class="footer-container">\
     <div class="item">&copy; 2022 taidalog</div>\
     <div class="item" id="versionNumber"></div>\
-    <div class="item"><a href="../">Home</a></div>\
+    <div class="item"><a href="javascript:switchPage(\'/\')">Home</a></div>\
     <div class="item"><a href="../about.html">About</a></div>\
     <div class="item"><a href="../terms.html">ご利用について</a></div>\
     <div class="item"><a href="https://github.com/taidalog/taidalab">Repository on GitHub</a></div>\
@@ -123,10 +123,6 @@ const columnAdditionFormat = '\
 ';
 
 
-
-
-
-
 function switchPage (pathname) {
     //window.history.pushState(null, null, pathname);
     const initialObject = newInitObject(pathname);
@@ -136,12 +132,25 @@ function switchPage (pathname) {
 function newInitObject (pathname) {
     console.log(pathname);
     switch (pathname) {
-        case "/":
-            console.log("/");
-            return {};
-        case "/endless-dec2bin-1/":
-            console.log("/endless-dec2bin-1/");
+        case '/':
+            console.log('/');
             return {
+                pathname: '/',
+                title: 'taidalab',
+                headerContent: headerContentPages,
+                headerColorClass: 'home-header',
+                headerTitle: '<h1>taidalab</h1>',
+                mainContent: mainContentHome,
+                buttonColorClass: null,
+                questionContent: null,
+                footerContent: footerContentHome,
+                widthClass: "home",
+                versionNumber: 'Version 0.13.0',
+            };
+        case '/endless-dec2bin-1/':
+            console.log('/endless-dec2bin-1/');
+            return {
+                pathname: '/endless-dec2bin-1/',
                 title: '10進数→2進数 (1) - taidalab',
                 headerContent: headerContentPages,
                 headerColorClass: 'd2b-header',
@@ -153,9 +162,10 @@ function newInitObject (pathname) {
                 widthClass: "course",
                 versionNumber: 'Version 0.10.1',
             };
-        case "/endless-bin2dec-1/":
-            console.log("/endless-bin2dec-1/");
+        case '/endless-bin2dec-1/':
+            console.log('/endless-bin2dec-1/');
             return {
+                pathname: '/endless-bin2dec-1/',
                 title: '2進数→10進数 (1) - taidalab',
                 headerContent: headerContentPages,
                 headerColorClass: 'b2d-header',
@@ -180,10 +190,13 @@ function initPage (initial_object) {
     document.getElementById('headerContainer').innerHTML = initial_object.headerTitle;
     document.getElementsByTagName('main')[0].className = initial_object.widthClass;
     document.getElementsByTagName('main')[0].innerHTML = initial_object.mainContent;
-    document.getElementById('submitButton').className = initial_object.buttonColorClass;
-    document.getElementById('questionArea').innerHTML = initial_object.questionContent
-    document.getElementById('binaryRadix').innerHTML = initial_object.radixContent;
     document.getElementsByTagName('footer')[0].innerHTML = initial_object.footerContent;
     document.getElementsByTagName('footer')[0].className = initial_object.widthClass;
     document.getElementById('versionNumber').innerText = initial_object.versionNumber;
+
+    if (initial_object.pathname != '/') {
+        document.getElementById('submitButton').className = initial_object.buttonColorClass;
+        document.getElementById('questionArea').innerHTML = initial_object.questionContent
+        document.getElementById('binaryRadix').innerHTML = initial_object.radixContent;
+    }
 }

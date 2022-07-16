@@ -27,12 +27,4 @@ const footerContentHome = '\
 </small>\
 ';
 
-document.title = 'taidalab';
-document.getElementsByTagName('header')[0].innerHTML = headerContentPages;
-document.getElementsByTagName('header')[0].className = 'home-header home';
-document.getElementById('headerContainer').innerHTML = '<h1>taidalab</h1>';
-document.getElementsByTagName('main')[0].className = 'home';
-document.getElementsByTagName('main')[0].innerHTML = mainContentHome;
-document.getElementsByTagName('footer')[0].className = 'home';
-document.getElementsByTagName('footer')[0].innerHTML = footerContentHome;
-document.getElementById('versionNumber').innerText = 'Version 0.12.1';
+switchPage('/');
