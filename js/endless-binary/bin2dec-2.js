@@ -70,26 +70,24 @@ function checkAnswer (answer, question, last_answers) {
     numberInput.focus();
 }
 
-const initNumber = getRandomBetween(0, 255);
-const initBin = initNumber.toString(2);
-const splitBin = splitBinaryStringBy(4,initBin);
-console.log(initNumber);
-console.log(initBin);
-console.log(splitBin);
-//document.getElementById('questionSpan').innerText = splitBin;
 
-const sourceRadix = 2;
-const destinationRadix = 10;
+function initBin2Dec2 () {
+    // initialization
+    const initNumber = getRandomBetween(0, 255);
+    const initBin = initNumber.toString(2);
+    const splitBin = splitBinaryStringBy(4,initBin);
+    console.log(initNumber);
+    console.log(initBin);
+    console.log(splitBin);
+    
+    const sourceRadix = 2;
+    const destinationRadix = 10;
+    
+    document.getElementById('questionSpan').innerText = splitBin;
+    document.getElementById('binaryRadix').innerHTML = '<sub>(' + destinationRadix + ')</sub>';
+    document.getElementById('srcRadix').innerHTML = '(' + sourceRadix + ')';
+    document.getElementById('dstRadix').innerHTML = destinationRadix;
+    document.getElementById('submitButton').onclick = function() { checkAnswer(initNumber, splitBin, [initNumber]); return false; };
+}
 
-document.title = '2進数→10進数 (2) - taidalab';
-document.getElementsByTagName('header')[0].innerHTML = headerContentPages;
-document.getElementsByTagName('header')[0].className = 'b2d-header';
-document.getElementById('headerContainer').innerHTML = '<h1>2進数→10進数 (2)</h1>';
-document.getElementsByTagName('main')[0].innerHTML = mainContentPages;
-document.getElementById('submitButton').className = 'submit-button b2d-button';
-document.getElementById('questionArea').innerHTML = '<span id="questionSpan" class="question-number">' + splitBin + '</span><sub>(' + sourceRadix + ')</sub> を' + destinationRadix + '進法で表すと？';
-document.getElementById('binaryRadix').innerHTML = '<sub>(' + destinationRadix + ')</sub>';
-document.getElementsByTagName('footer')[0].innerHTML = footerContentPages;
-document.getElementById('versionNumber').innerText = 'Version 0.10.1';
-
-document.getElementById('submitButton').onclick = function() { checkAnswer(initNumber, splitBin, [initNumber]); return false; };
+initBin2Dec2();

@@ -85,13 +85,33 @@ const footerContentPages = '\
     <div class="item">&copy; 2022 taidalog</div>\
     <div class="item" id="versionNumber"></div>\
     <div class="item"><a href="javascript:switchPage(\'/\')">Home</a></div>\
-    <div class="item"><a href="../about.html">About</a></div>\
-    <div class="item"><a href="../terms.html">ご利用について</a></div>\
+    <div class="item"><a href="javascript:switchPage(\'/about/\')">About</a></div>\
+    <div class="item"><a href="javascript:switchPage(\'/terms/\')">ご利用について</a></div>\
+    <div class="item"><a href="https://github.com/taidalog/taidalab">Repository on GitHub</a></div>\
+</small>\
+';
+
+const footerContentAbout = '\
+<small class="footer-container">\
+    <div class="item">&copy; 2022 taidalog</div>\
+    <div class="item"><a href="javascript:switchPage(\'/\')">Home</a></div>\
+    <div class="item"><a href="javascript:switchPage(\'/terms/\')">ご利用について</a></div>\
+    <div class="item"><a href="https://github.com/taidalog/taidalab">Repository on GitHub</a></div>\
+</small>\
+';
+
+const footerContentTerms = '\
+<small class="footer-container">\
+    <div class="item">&copy; 2022 taidalog</div>\
+    <div class="item"><a href="javascript:switchPage(\'/\')">Home</a></div>\
+    <div class="item"><a href="javascript:switchPage(\'/about/\')">About</a></div>\
     <div class="item"><a href="https://github.com/taidalog/taidalab">Repository on GitHub</a></div>\
 </small>\
 ';
 
 const questionContentPages = '<span id="questionSpan" class="question-number"></span><sub id="srcRadix"></sub> を<span id="dstRadix"></span>進法で表すと？'
+
+const questionContentComplement = '4ビットの2進数 <span id="questionSpan" class="question-number"></span><sub id="srcRadix"></sub> の補数は？'
 
 const columnAdditionFormat = '\
 <div class="calculation-area" id="calculationArea">\
@@ -104,7 +124,7 @@ const columnAdditionFormat = '\
         <span class="digit-area question-number" id="firstRowDigit3"></span>\
         <span class="digit-area question-number" id="firstRowDigit2"></span>\
         <span class="digit-area question-number" id="firstRowDigit1"></span>\
-        <span class="" id=""><sub>(2)</sub></span>\
+        <span class=""><sub id="firstRowSrcRadix"></sub></span>\
     </div>\
     <div class="second-row" id="secondRow">\
         <span class="question-number" id="operator"></span>\
@@ -116,7 +136,7 @@ const columnAdditionFormat = '\
         <span class="digit-area question-number" id="secondRowDigit3"></span>\
         <span class="digit-area question-number" id="secondRowDigit2"></span>\
         <span class="digit-area question-number" id="secondRowDigit1"></span>\
-        <span class="" id=""><sub>(2)</sub></span>\
+        <span class=""><sub id="secondRowSrcRadix"></sub></span>\
     </div>\
     <div class="under-line"></div>\
 </div>\
@@ -164,6 +184,22 @@ function newInitObject (pathname) {
                 scriptPath: ['js\\endless-binary\\dec2bin-1.js'],
                 versionNumber: 'Version 0.10.1',
             };
+        case '/endless-dec2bin-2/':
+            console.log('/endless-dec2bin-2/');
+            return {
+                pathname: '/endless-dec2bin-2/',
+                title: '10進数→2進数 (2) - taidalab',
+                headerContent: headerContentPages,
+                headerColorClass: 'd2b-header',
+                headerTitle: '<h1>10進数→2進数 (2)</h1>',
+                mainContent: mainContentPages,
+                buttonColorClass: 'submit-button d2b-button',
+                questionContent: questionContentPages,
+                footerContent: footerContentPages,
+                widthClass: "course",
+                scriptPath: ['js\\endless-binary\\dec2bin-2.js'],
+                versionNumber: 'Version 0.10.1',
+            };
         case '/endless-bin2dec-1/':
             console.log('/endless-bin2dec-1/');
             return {
@@ -180,6 +216,134 @@ function newInitObject (pathname) {
                 scriptPath: ['js\\endless-binary\\bin2dec-1.js'],
                 versionNumber: 'Version 0.10.1',
             };
+        case '/endless-bin2dec-2/':
+            console.log('/endless-bin2dec-2/');
+            return {
+                pathname: '/endless-bin2dec-2/',
+                title: '2進数→10進数 (2) - taidalab',
+                headerContent: headerContentPages,
+                headerColorClass: 'b2d-header',
+                headerTitle: '<h1>2進数→10進数 (2)</h1>',
+                mainContent: mainContentPages,
+                buttonColorClass: 'submit-button b2d-button',
+                questionContent: questionContentPages,
+                footerContent: footerContentPages,
+                widthClass: "course",
+                scriptPath: ['js\\endless-binary\\bin2dec-2.js'],
+                versionNumber: 'Version 0.10.1',
+            };
+        case '/endless-power-of-two-1/':
+            console.log('/endless-power-of-two-1/');
+            return {
+                pathname: '/endless-power-of-two-1/',
+                title: '2のn乗 - taidalab',
+                headerContent: headerContentPages,
+                headerColorClass: 'pot-header',
+                headerTitle: '<h1>2のn乗</h1>',
+                mainContent: mainContentPages,
+                buttonColorClass: 'submit-button pot-button',
+                questionContent: questionContentPages,
+                footerContent: footerContentPages,
+                widthClass: "course",
+                scriptPath: ['js\\endless-binary\\power-of-two-1.js'],
+                versionNumber: 'Version 0.10.1',
+            };
+        case '/endless-power-of-two-2/':
+            console.log('/endless-power-of-two-2/');
+            return {
+                pathname: '/endless-power-of-two-2/',
+                title: '2のn乗-1 - taidalab',
+                headerContent: headerContentPages,
+                headerColorClass: 'pot-header',
+                headerTitle: '<h1>2のn乗 - 1</h1>',
+                mainContent: mainContentPages,
+                buttonColorClass: 'submit-button pot-button',
+                questionContent: questionContentPages,
+                footerContent: footerContentPages,
+                widthClass: "course",
+                scriptPath: ['js\\endless-binary\\power-of-two-2.js'],
+                versionNumber: 'Version 0.10.1',
+            };
+        case '/endless-addition/':
+            console.log('/endless-addition/');
+            return {
+                pathname: '/endless-addition/',
+                title: '加算 - taidalab',
+                headerContent: headerContentPages,
+                headerColorClass: 'add-header',
+                headerTitle: '<h1>加算</h1>',
+                mainContent: mainContentPages,
+                buttonColorClass: 'submit-button add-button',
+                questionContent: columnAdditionFormat,
+                footerContent: footerContentPages,
+                widthClass: "course",
+                scriptPath: ['js\\endless-binary\\addition.js'],
+                versionNumber: 'Version 0.11.1',
+            };
+        case '/endless-subtraction/':
+            console.log('/endless-subtraction/');
+            return {
+                pathname: '/endless-subtraction/',
+                title: '減算 - taidalab',
+                headerContent: headerContentPages,
+                headerColorClass: 'sub-header',
+                headerTitle: '<h1>減算</h1>',
+                mainContent: mainContentPages,
+                buttonColorClass: 'submit-button sub-button',
+                questionContent: columnAdditionFormat,
+                footerContent: footerContentPages,
+                widthClass: "course",
+                scriptPath: ['js\\endless-binary\\subtraction.js'],
+                versionNumber: 'Version 0.1.1',
+            };
+        case '/endless-complement/':
+            console.log('/endless-complement/');
+            return {
+                pathname: '/endless-complement/',
+                title: '補数 - taidalab',
+                headerContent: headerContentPages,
+                headerColorClass: 'cmp-header',
+                headerTitle: '<h1>補数</h1>',
+                mainContent: mainContentPages,
+                buttonColorClass: 'submit-button cmp-button',
+                questionContent: questionContentComplement,
+                footerContent: footerContentPages,
+                widthClass: "course",
+                scriptPath: ['js\\endless-binary\\complement.js'],
+                versionNumber: 'Version 0.1.1',
+            };
+        case '/about/':
+            console.log('/about/');
+            return {
+                pathname: '/about/',
+                title: 'about - taidalab',
+                headerContent: headerContentPages,
+                headerColorClass: 'home-header',
+                headerTitle: '<h1>about</h1>',
+                mainContent: '',
+                buttonColorClass: null,
+                questionContent: null,
+                footerContent: footerContentAbout,
+                widthClass: "course",
+                scriptPath: ['js\\about.js'],
+                versionNumber: null,
+            };
+        case '/terms/':
+            console.log('/terms/');
+            return {
+                pathname: '/terms/',
+                title: 'ご利用について - taidalab',
+                headerContent: headerContentPages,
+                headerColorClass: 'home-header',
+                headerTitle: '<h1>ご利用について</h1>',
+                mainContent: '',
+                buttonColorClass: null,
+                questionContent: null,
+                footerContent: footerContentTerms,
+                widthClass: "course",
+                scriptPath: ['js\\terms.js'],
+                versionNumber: null,
+            };
         default:
             console.log("default");
             return {};
@@ -195,7 +359,22 @@ function initPage (initial_object) {
     document.getElementsByTagName('main')[0].innerHTML = initial_object.mainContent;
     document.getElementsByTagName('footer')[0].innerHTML = initial_object.footerContent;
     document.getElementsByTagName('footer')[0].className = initial_object.widthClass;
-    document.getElementById('versionNumber').innerText = initial_object.versionNumber;
+
+    if (initial_object.questionContent != null) {
+        document.getElementById('questionArea').innerHTML = initial_object.questionContent;
+    }
+
+    if (initial_object.buttonColorClass != null) {
+        document.getElementById('submitButton').className = initial_object.buttonColorClass;
+    }
+
+    if (initial_object.radixContent != null) {
+        document.getElementById('binaryRadix').innerHTML = initial_object.radixContent;
+    }
+
+    if (initial_object.versionNumber != null) {
+        document.getElementById('versionNumber').innerText = initial_object.versionNumber;
+    }
 
     if (initial_object.scriptPath != []) {
         initial_object.scriptPath.map(
@@ -205,12 +384,5 @@ function initPage (initial_object) {
                 document.getElementsByTagName('footer')[0].appendChild(element);
             }
         );
-    }
-
-    if (initial_object.pathname != '/') {
-        document.getElementById('submitButton').className = initial_object.buttonColorClass;
-        document.getElementById('questionArea').innerHTML = initial_object.questionContent
-        document.getElementById('binaryRadix').innerHTML = initial_object.radixContent;
-
     }
 }

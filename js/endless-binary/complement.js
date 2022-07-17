@@ -3,7 +3,7 @@
 // Copyright (c) 2022 taidalog
 // This software is licensed under the MIT License.
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
-function checkAnswer (question, answer, last_answers) {
+function checkAnswer (question, answer, last_answers, hint_format) {
     const numberInput = document.getElementById('numberInput');
     const inputValue = escapeHtml(numberInput.value);
     console.log('inputValue : ' + inputValue);
@@ -62,7 +62,7 @@ function checkAnswer (question, answer, last_answers) {
             const reversedBin = [...nextBin].map(x => x === "1" ? "0" : "1").join('');
             console.log(reversedBin);
 
-            const nextHint = formatString(hintFormat, [nextBin, reversedBin]);
+            const nextHint = formatString(hint_format, [nextBin, reversedBin]);
             const hintArea = document.getElementById('hintArea');
             hintArea.innerHTML = nextHint;
             console.log(nextHint);
@@ -71,38 +71,43 @@ function checkAnswer (question, answer, last_answers) {
 
             const answersToKeep = 8;
             const lastAnswers = [nextNumber].concat(last_answers).slice(0, answersToKeep);
-            document.getElementById('submitButton').onclick = function() { checkAnswer(nextBin, nextAnswer, lastAnswers); return false; };
+            document.getElementById('submitButton').onclick = function() { checkAnswer(nextBin, nextAnswer, lastAnswers, hint_format); return false; };
         }
     }
     
     numberInput.focus();
 }
 
+function initcomplement () {
+    // initialization
+    const sourceRadix = 2;
+    const destinationRadix = 2;
 
-// initialization
-const sourceRadix = 2;
+    const initNumber = getRandomBetween(1, 15);
+    const initAnswer = 16 - initNumber;
+    const initBin = initNumber.toString(sourceRadix).padStart(4, '0');
+    console.log(initNumber);
+    console.log(initAnswer);
+    console.log(initBin);
 
-const initNumber = getRandomBetween(1, 15);
-const initAnswer = 16 - initNumber;
-const initBin = initNumber.toString(sourceRadix).padStart(4, '0');
-console.log(initNumber);
-console.log(initAnswer);
-console.log(initBin);
+    const reversedBin = [...initBin].map(x => x === "1" ? "0" : "1").join('');
+    console.log(reversedBin);
 
-const reversedBin = [...initBin].map(x => x === "1" ? "0" : "1").join('');
-console.log(reversedBin);
+    const hintFormat01 = '<details><summary>ヒント:</summary>';
+    const hintFormat02 = '<p class="history-indented">2進数の補数（2の補数）は、';
+    const hintFormat03 = 'ある2進数の 0 と 1 を反転させて１を足したものです。<br>';
+    const hintFormat04 = '{0} の 0 と 1 を反転させると<br>';
+    const hintFormat05 = '{1} になります。<br>';
+    const hintFormat06 = 'これに 1 を足したものが {0} の補数（2の補数）です。</p>';
+    const hintFormat07 = '</details>';
+    const hintFormat = hintFormat01 + hintFormat02 + hintFormat03 + hintFormat04 + hintFormat05 + hintFormat06 + hintFormat07;
+    const hint = formatString(hintFormat, [initBin, reversedBin]);
 
-const hintFormat01 = '<details><summary>ヒント:</summary>';
-const hintFormat02 = '<p class="history-indented">2進数の補数（2の補数）は、';
-const hintFormat03 = 'ある2進数の 0 と 1 を反転させて１を足したものです。<br>';
-const hintFormat04 = '{0} の 0 と 1 を反転させると<br>';
-const hintFormat05 = '{1} になります。<br>';
-const hintFormat06 = 'これに 1 を足したものが {0} の補数（2の補数）です。</p>';
-const hintFormat07 = '</details>';
-const hintFormat = hintFormat01 + hintFormat02 + hintFormat03 + hintFormat04 + hintFormat05 + hintFormat06 + hintFormat07;
-const hint = formatString(hintFormat, [initBin, reversedBin]);
+    document.getElementById('questionSpan').innerText = initBin;
+    document.getElementById('srcRadix').innerHTML = '(' + sourceRadix + ')';
+    document.getElementById('binaryRadix').innerHTML = '<sub>(' + destinationRadix + ')</sub>';
+    document.getElementById('hintArea').innerHTML = hint;
+    document.getElementById('submitButton').onclick = function() { checkAnswer(initBin, initAnswer, [initNumber], hintFormat); return false; };
+}
 
-document.getElementById('questionSpan').innerText = initBin;
-document.getElementById('hintArea').innerHTML = hint;
-
-document.getElementById('submitButton').onclick = function() { checkAnswer(initBin, initAnswer, [initNumber]); return false; };
+initcomplement();

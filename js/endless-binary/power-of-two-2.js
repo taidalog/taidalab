@@ -79,24 +79,23 @@ function checkAnswer (answer, hint_format, last_answers) {
     numberInput.focus();
 }
 
-const initIndexNumber = getRandomBetween(1, 8);
-const initNumber = Math.pow(2, initIndexNumber) - 1;
-const hintFormat = '<details><summary>ヒント: </summary><span class="history-indented">{0}<sub>(10)</sub> = {1}<sub>(10)</sub> - 1<sub>(10)</sub> = 2<sup>{2}</sup> - 1<sub>(10)</sub></span></details>';
-const hint = formatString(hintFormat, [initNumber, initNumber + 1, initIndexNumber]);
 
-const sourceRadix = 10;
-const destinationRadix = 2;
+function initPowerOfTwo2 () {
+    // initialization
+    const initIndexNumber = getRandomBetween(1, 8);
+    const initNumber = Math.pow(2, initIndexNumber) - 1;
+    const hintFormat = '<details><summary>ヒント: </summary><span class="history-indented">{0}<sub>(10)</sub> = {1}<sub>(10)</sub> - 1<sub>(10)</sub> = 2<sup>{2}</sup> - 1<sub>(10)</sub></span></details>';
+    const hint = formatString(hintFormat, [initNumber, initNumber + 1, initIndexNumber]);
 
-document.title = '2のn乗-1 - taidalab';
-document.getElementsByTagName('header')[0].innerHTML = headerContentPages;
-document.getElementsByTagName('header')[0].className = 'pot-header';
-document.getElementById('headerContainer').innerHTML = '<h1>2のn乗 - 1</h1>';
-document.getElementsByTagName('main')[0].innerHTML = mainContentPages;
-document.getElementById('submitButton').className = 'submit-button pot-button';
-document.getElementById('questionArea').innerHTML = '<span id="questionSpan" class="question-number">' + initNumber + '</span><sub>(' + sourceRadix + ')</sub> を' + destinationRadix + '進法で表すと？';
-document.getElementById('binaryRadix').innerHTML = '<sub>(' + destinationRadix + ')</sub>';
-document.getElementById('hintArea').innerHTML = hint;
-document.getElementsByTagName('footer')[0].innerHTML = footerContentPages;
-document.getElementById('versionNumber').innerText = 'Version 0.10.1';
+    const sourceRadix = 10;
+    const destinationRadix = 2;
 
-document.getElementById('submitButton').onclick = function() { checkAnswer(initNumber, hintFormat, [initNumber]); return false;  };
+    document.getElementById('questionSpan').innerHTML = initNumber;
+    document.getElementById('srcRadix').innerHTML = '(' + sourceRadix + ')';
+    document.getElementById('dstRadix').innerHTML = destinationRadix;
+    document.getElementById('binaryRadix').innerHTML = '<sub>(' + destinationRadix + ')</sub>';
+    document.getElementById('hintArea').innerHTML = hint;
+    document.getElementById('submitButton').onclick = function() { checkAnswer(initNumber, hintFormat, [initNumber]); return false;  };
+}
+
+initPowerOfTwo2();
