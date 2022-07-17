@@ -386,3 +386,8 @@ function initPage (initial_object) {
         );
     }
 }
+
+window.addEventListener("popstate", (ev) => {
+    const initialObject = newInitObject(window.location.pathname);
+    initPage(initialObject);
+});
