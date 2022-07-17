@@ -3,7 +3,7 @@
 // Copyright (c) 2022 taidalog
 // This software is licensed under the MIT License.
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
-function checkAnswer (answer, question, last_answers) {
+function checkAnswer (answer, question, last_answers, hint_format) {
     const hintArea = document.getElementById('hintArea');
     const errorArea = document.getElementById('errorArea');
     errorArea.innerHTML = '';
@@ -63,7 +63,7 @@ function checkAnswer (answer, question, last_answers) {
             document.getElementById('questionSpan').innerText = splitBin;
             
             const nextAddtionFormula = writeAdditionFormula(nextBin);
-            const nextHint = formatString(hintFormat, [nextBin, nextAddtionFormula]);
+            const nextHint = formatString(hint_format, [nextBin, nextAddtionFormula]);
             console.log(nextHint);
             
             hintArea.innerHTML = nextHint;
@@ -71,7 +71,7 @@ function checkAnswer (answer, question, last_answers) {
 
             const answersToKeep = 4;
             const lastAnswers = [nextNumber].concat(last_answers).slice(0, answersToKeep);
-            document.getElementById('submitButton').onclick = function() { checkAnswer(nextNumber, splitBin, lastAnswers); return false; };
+            document.getElementById('submitButton').onclick = function() { checkAnswer(nextNumber, splitBin, lastAnswers, hint_format); return false; };
         }
     }
     
@@ -129,7 +129,7 @@ function initBin2Dec1 () {
     document.getElementById('dstRadix').innerHTML = destinationRadix;
     document.getElementById('binaryRadix').innerHTML = '<sub>(' + destinationRadix + ')</sub>';
     document.getElementById('hintArea').innerHTML = hint;
-    document.getElementById('submitButton').onclick = function() { checkAnswer(initNumber, splitBin, [initNumber]); return false; };
+    document.getElementById('submitButton').onclick = function() { checkAnswer(initNumber, splitBin, [initNumber], hintFormat); return false; };
 }
 
 initBin2Dec1();
