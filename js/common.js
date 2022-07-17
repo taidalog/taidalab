@@ -181,7 +181,7 @@ function newInitObject (pathname) {
                 questionContent: questionContentPages,
                 footerContent: footerContentPages,
                 widthClass: "course",
-                scriptPath: ['js\\endless-binary\\dec2bin-1.js'],
+                scriptPath: ['/js\\endless-binary\\dec2bin-1.js'],
                 versionNumber: 'Version 0.10.1',
             };
         case '/endless-dec2bin-2/':
@@ -197,7 +197,7 @@ function newInitObject (pathname) {
                 questionContent: questionContentPages,
                 footerContent: footerContentPages,
                 widthClass: "course",
-                scriptPath: ['js\\endless-binary\\dec2bin-2.js'],
+                scriptPath: ['/js\\endless-binary\\dec2bin-2.js'],
                 versionNumber: 'Version 0.10.1',
             };
         case '/endless-bin2dec-1/':
@@ -213,7 +213,7 @@ function newInitObject (pathname) {
                 questionContent: questionContentPages,
                 footerContent: footerContentPages,
                 widthClass: "course",
-                scriptPath: ['js\\endless-binary\\bin2dec-1.js'],
+                scriptPath: ['/js\\endless-binary\\bin2dec-1.js'],
                 versionNumber: 'Version 0.10.1',
             };
         case '/endless-bin2dec-2/':
@@ -229,7 +229,7 @@ function newInitObject (pathname) {
                 questionContent: questionContentPages,
                 footerContent: footerContentPages,
                 widthClass: "course",
-                scriptPath: ['js\\endless-binary\\bin2dec-2.js'],
+                scriptPath: ['/js\\endless-binary\\bin2dec-2.js'],
                 versionNumber: 'Version 0.10.1',
             };
         case '/endless-power-of-two-1/':
@@ -245,7 +245,7 @@ function newInitObject (pathname) {
                 questionContent: questionContentPages,
                 footerContent: footerContentPages,
                 widthClass: "course",
-                scriptPath: ['js\\endless-binary\\power-of-two-1.js'],
+                scriptPath: ['/js\\endless-binary\\power-of-two-1.js'],
                 versionNumber: 'Version 0.10.1',
             };
         case '/endless-power-of-two-2/':
@@ -261,7 +261,7 @@ function newInitObject (pathname) {
                 questionContent: questionContentPages,
                 footerContent: footerContentPages,
                 widthClass: "course",
-                scriptPath: ['js\\endless-binary\\power-of-two-2.js'],
+                scriptPath: ['/js\\endless-binary\\power-of-two-2.js'],
                 versionNumber: 'Version 0.10.1',
             };
         case '/endless-addition/':
@@ -277,7 +277,7 @@ function newInitObject (pathname) {
                 questionContent: columnAdditionFormat,
                 footerContent: footerContentPages,
                 widthClass: "course",
-                scriptPath: ['js\\endless-binary\\addition.js'],
+                scriptPath: ['/js\\endless-binary\\addition.js'],
                 versionNumber: 'Version 0.11.1',
             };
         case '/endless-subtraction/':
@@ -293,7 +293,7 @@ function newInitObject (pathname) {
                 questionContent: columnAdditionFormat,
                 footerContent: footerContentPages,
                 widthClass: "course",
-                scriptPath: ['js\\endless-binary\\subtraction.js'],
+                scriptPath: ['/js\\endless-binary\\subtraction.js'],
                 versionNumber: 'Version 0.1.1',
             };
         case '/endless-complement/':
@@ -309,7 +309,7 @@ function newInitObject (pathname) {
                 questionContent: questionContentComplement,
                 footerContent: footerContentPages,
                 widthClass: "course",
-                scriptPath: ['js\\endless-binary\\complement.js'],
+                scriptPath: ['/js\\endless-binary\\complement.js'],
                 versionNumber: 'Version 0.1.1',
             };
         case '/about/':
@@ -325,7 +325,7 @@ function newInitObject (pathname) {
                 questionContent: null,
                 footerContent: footerContentAbout,
                 widthClass: "course",
-                scriptPath: ['js\\about.js'],
+                scriptPath: ['/js\\about.js'],
                 versionNumber: null,
             };
         case '/terms/':
@@ -341,7 +341,7 @@ function newInitObject (pathname) {
                 questionContent: null,
                 footerContent: footerContentTerms,
                 widthClass: "course",
-                scriptPath: ['js\\terms.js'],
+                scriptPath: ['/js\\terms.js'],
                 versionNumber: null,
             };
         default:
