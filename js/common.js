@@ -393,6 +393,7 @@ function initPage (initial_object) {
         initial_object.scriptPath.map(
             x => { 
                 const element = document.createElement('script');
+                element.type = 'text/javascript';
                 element.src = x;
                 document.body.appendChild(element);
             }
