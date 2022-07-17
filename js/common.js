@@ -394,11 +394,12 @@ function initPage (initial_object) {
             x => { 
                 const element = document.createElement('script');
                 element.src = x;
-                document.getElementsByTagName('footer')[0].appendChild(element);
+                document.body.appendChild(element);
             }
         );
     }
 }
+
 
 window.addEventListener("popstate", (ev) => {
     const initialObject = newInitObject(window.location.pathname);
