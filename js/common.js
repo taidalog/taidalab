@@ -161,7 +161,7 @@ function newInitObject (pathname) {
                 questionContent: questionContentPages,
                 footerContent: footerContentPages,
                 widthClass: "course",
-                scriptPath: ['endless-dec2bin-1\\js\\main.js'],
+                scriptPath: ['js\\endless-binary\\dec2bin-1.js'],
                 versionNumber: 'Version 0.10.1',
             };
         case '/endless-bin2dec-1/':
@@ -177,7 +177,7 @@ function newInitObject (pathname) {
                 questionContent: questionContentPages,
                 footerContent: footerContentPages,
                 widthClass: "course",
-                scriptPath: ['endless-bin2dec-1\\js\\main.js'],
+                scriptPath: ['js\\endless-binary\\bin2dec-1.js'],
                 versionNumber: 'Version 0.10.1',
             };
         default:
