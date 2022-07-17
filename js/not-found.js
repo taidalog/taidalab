@@ -44,8 +44,8 @@ function checkAnswer (answer) {
         console.log(msg2);
         
         if (dec == answer) {
-            window.history.replaceState(null, null, '/');
             const initialObject = newInitObject('/');
+            window.history.replaceState(null, null, initialObject.pathname);
             initPage(initialObject);
         }
     }
