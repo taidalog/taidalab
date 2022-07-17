@@ -175,6 +175,19 @@ footer {
     background-color: #86b5e5;
 }
 
+.not-header {
+    background-color: #808080;
+}
+
+.not-button {
+    color: #262626;
+    background: #bdbdbd;
+}
+
+.not-button:hover {
+    background-color: #aaaaaa;
+}
+
 .hint-area {
     width: 100%;
     order: 4;

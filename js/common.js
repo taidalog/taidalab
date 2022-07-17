@@ -346,7 +346,20 @@ function newInitObject (pathname) {
             };
         default:
             console.log("default");
-            return {};
+            return {
+                pathname: '/404/',
+                title: '404: Page Not Found - taidalab',
+                headerContent: headerContentPages,
+                headerColorClass: 'not-header',
+                headerTitle: '<h1>404: Page Not Found</h1>',
+                mainContent: mainContentPages,
+                buttonColorClass: 'submit-button not-button',
+                questionContent: questionContentPages,
+                footerContent: footerContentPages,
+                widthClass: "course",
+                scriptPath: ['/js/not-found.js'],
+                versionNumber: 'Version 0.10.1',
+            };
     }
 }
 
