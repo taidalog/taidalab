@@ -27,4 +27,5 @@ const footerContentHome = '\
 </small>\
 ';
 
-switchPage('/');
+const initialObject = newInitObject('/');
+initPage(initialObject);
