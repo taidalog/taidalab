@@ -43,6 +43,10 @@ footer {
     margin-bottom: 20px;
 }
 
+footer.home {
+    margin-top: 20px;
+}
+
 .question-area {
     padding: 5px 0;
 }
