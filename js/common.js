@@ -109,6 +109,8 @@ const footerContentTerms = '\
 </small>\
 ';
 
+const versionNumber = 'Version 1.0.0';
+
 const questionContentPages = '<span id="questionSpan" class="question-number"></span><sub id="srcRadix"></sub> を<span id="dstRadix"></span>進法で表すと？'
 
 const questionContentComplement = '4ビットの2進数 <span id="questionSpan" class="question-number"></span><sub id="srcRadix"></sub> の補数は？'
@@ -166,7 +168,7 @@ function newInitObject (pathname) {
                 footerContent: footerContentHome,
                 widthClass: "home",
                 scriptPath: [],
-                versionNumber: 'Version 0.13.0',
+                versionNumber: versionNumber,
             };
         case '/endless-dec2bin-1/':
             console.log('/endless-dec2bin-1/');
@@ -182,7 +184,7 @@ function newInitObject (pathname) {
                 footerContent: footerContentPages,
                 widthClass: "course",
                 scriptPath: ['/js/endless-binary/dec2bin-1.js'],
-                versionNumber: 'Version 0.10.1',
+                versionNumber: versionNumber,
             };
         case '/endless-dec2bin-2/':
             console.log('/endless-dec2bin-2/');
@@ -198,7 +200,7 @@ function newInitObject (pathname) {
                 footerContent: footerContentPages,
                 widthClass: "course",
                 scriptPath: ['/js/endless-binary/dec2bin-2.js'],
-                versionNumber: 'Version 0.10.1',
+                versionNumber: versionNumber,
             };
         case '/endless-bin2dec-1/':
             console.log('/endless-bin2dec-1/');
@@ -214,7 +216,7 @@ function newInitObject (pathname) {
                 footerContent: footerContentPages,
                 widthClass: "course",
                 scriptPath: ['/js/endless-binary/bin2dec-1.js'],
-                versionNumber: 'Version 0.10.1',
+                versionNumber: versionNumber,
             };
         case '/endless-bin2dec-2/':
             console.log('/endless-bin2dec-2/');
@@ -230,7 +232,7 @@ function newInitObject (pathname) {
                 footerContent: footerContentPages,
                 widthClass: "course",
                 scriptPath: ['/js/endless-binary/bin2dec-2.js'],
-                versionNumber: 'Version 0.10.1',
+                versionNumber: versionNumber,
             };
         case '/endless-power-of-two-1/':
             console.log('/endless-power-of-two-1/');
@@ -246,7 +248,7 @@ function newInitObject (pathname) {
                 footerContent: footerContentPages,
                 widthClass: "course",
                 scriptPath: ['/js/endless-binary/power-of-two-1.js'],
-                versionNumber: 'Version 0.10.1',
+                versionNumber: versionNumber,
             };
         case '/endless-power-of-two-2/':
             console.log('/endless-power-of-two-2/');
@@ -262,7 +264,7 @@ function newInitObject (pathname) {
                 footerContent: footerContentPages,
                 widthClass: "course",
                 scriptPath: ['/js/endless-binary/power-of-two-2.js'],
-                versionNumber: 'Version 0.10.1',
+                versionNumber: versionNumber,
             };
         case '/endless-addition/':
             console.log('/endless-addition/');
@@ -278,7 +280,7 @@ function newInitObject (pathname) {
                 footerContent: footerContentPages,
                 widthClass: "course",
                 scriptPath: ['/js/endless-binary/addition.js'],
-                versionNumber: 'Version 0.11.1',
+                versionNumber: versionNumber,
             };
         case '/endless-subtraction/':
             console.log('/endless-subtraction/');
@@ -294,7 +296,7 @@ function newInitObject (pathname) {
                 footerContent: footerContentPages,
                 widthClass: "course",
                 scriptPath: ['/js/endless-binary/subtraction.js'],
-                versionNumber: 'Version 0.1.1',
+                versionNumber: versionNumber,
             };
         case '/endless-complement/':
             console.log('/endless-complement/');
@@ -310,7 +312,7 @@ function newInitObject (pathname) {
                 footerContent: footerContentPages,
                 widthClass: "course",
                 scriptPath: ['/js/endless-binary/complement.js'],
-                versionNumber: 'Version 0.1.1',
+                versionNumber: versionNumber,
             };
         case '/about/':
             console.log('/about/');
@@ -358,7 +360,7 @@ function newInitObject (pathname) {
                 footerContent: footerContentPages,
                 widthClass: "course",
                 scriptPath: ['/js/not-found.js'],
-                versionNumber: 'Version 0.10.1',
+                versionNumber: versionNumber,
             };
     }
 }
