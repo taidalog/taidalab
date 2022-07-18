@@ -171,7 +171,7 @@ const columnAdditionFormat = '\
 
 function switchPage (pathname) {
     const initialObject = newInitObject(pathname);
-    //window.history.pushState(null, null, initialObject.pathname);
+    window.history.pushState(null, null, initialObject.pathname);
     initPage(initialObject);
 }
 
