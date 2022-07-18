@@ -1,3 +1,8 @@
+// taidalab Version 1.0.0
+// https://github.com/taidalog/taidalab
+// Copyright (c) 2022 taidalog
+// This software is licensed under the MIT License.
+// https://github.com/taidalog/taidalab/blob/main/LICENSE
 function initAbout () {
     const content = '\
     <p>このサイトでは、主に10進数と2進数の変換を反復練習するためのツールを公開しています。</p>\
