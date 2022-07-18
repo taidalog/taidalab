@@ -97,7 +97,7 @@ const mainContentHome = '\
 const footerContentPages = '\
 <small class="footer-container">\
     <div class="item">&copy; 2022 taidalog</div>\
-    <div class="item" id="versionNumber"></div>\
+    <div class="item"><a href="https://github.com/taidalog/taidalab/releases" id="versionNumber"></a></div>\
     <div class="item"><a href="javascript:switchPage(\'/\')">Home</a></div>\
     <div class="item"><a href="javascript:switchPage(\'/about/\')">About</a></div>\
     <div class="item"><a href="javascript:switchPage(\'/terms/\')">ご利用について</a></div>\
@@ -108,7 +108,7 @@ const footerContentPages = '\
 const footerContentHome = '\
 <small class="footer-container">\
     <div class="item">&copy; 2022 taidalog</div>\
-    <div class="item" id="versionNumber"></div>\
+    <div class="item"><a href="https://github.com/taidalog/taidalab/releases" id="versionNumber"></a></div>\
     <div class="item"><a href="javascript:switchPage(\'/about/\')">About</a></div>\
     <div class="item"><a href="javascript:switchPage(\'/terms/\')">ご利用について</a></div>\
     <div class="item"><a href="https://github.com/taidalog/taidalab">Repository on GitHub</a></div>\
