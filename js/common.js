@@ -421,6 +421,12 @@ function initPage (initial_object) {
 }
 
 
+window.addEventListener("DOMContentLoaded", (ev) => {
+    console.log('DOMContentLoaded');
+    const initialObject = newInitObject('/');
+    initPage(initialObject);
+});
+
 window.addEventListener("popstate", (ev) => {
     const initialObject = newInitObject(window.location.pathname);
     initPage(initialObject);
