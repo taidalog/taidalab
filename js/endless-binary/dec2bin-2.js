@@ -3,7 +3,7 @@
 // Copyright (c) 2022 taidalog
 // This software is licensed under the MIT License.
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
-function checkAnswer (answer, last_answers) {
+function checkAnswerd2b2 (answer, last_answers) {
     const errorArea = document.getElementById('errorArea');
     errorArea.innerHTML = '';
     
@@ -59,7 +59,7 @@ function checkAnswer (answer, last_answers) {
 
             const answersToKeep = 10;
             const lastAnswers = [nextNumber].concat(last_answers).slice(0, answersToKeep);
-            document.getElementById('submitButton').onclick = function() { checkAnswer(nextNumber, lastAnswers); return false; };
+            document.getElementById('submitButton').onclick = function() { checkAnswerd2b2(nextNumber, lastAnswers); return false; };
         }
     }
     
@@ -77,7 +77,7 @@ function initDec2Bin2 () {
     document.getElementById('srcRadix').innerHTML = '(' + sourceRadix + ')';
     document.getElementById('dstRadix').innerHTML = destinationRadix;
     document.getElementById('binaryRadix').innerHTML = '<sub>(' + destinationRadix + ')</sub>';
-    document.getElementById('submitButton').onclick = function() { checkAnswer(initNumber, [initNumber]); return false; };
+    document.getElementById('submitButton').onclick = function() { checkAnswerd2b2(initNumber, [initNumber]); return false; };
 }
 
 initDec2Bin2();

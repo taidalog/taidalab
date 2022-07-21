@@ -3,7 +3,7 @@
 // Copyright (c) 2022 taidalog
 // This software is licensed under the MIT License.
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
-function checkAnswer (answer, last_answers) {
+function checkAnswerd2b1 (answer, last_answers) {
     const hintArea = document.getElementById('hintArea');
     const errorArea = document.getElementById('errorArea');
     errorArea.innerHTML = '';
@@ -81,7 +81,7 @@ function checkAnswer (answer, last_answers) {
 
             const answersToKeep = 10;
             const lastAnswers = [nextNumber].concat(last_answers).slice(0, answersToKeep);
-            document.getElementById('submitButton').onclick = function() { checkAnswer(nextNumber, lastAnswers); return false; };
+            document.getElementById('submitButton').onclick = function() { checkAnswerd2b1(nextNumber, lastAnswers); return false; };
         }
     }
     
@@ -202,7 +202,7 @@ function initDec2Bin1 () {
     document.getElementById('dstRadix').innerHTML = destinationRadix;
     document.getElementById('binaryRadix').innerHTML = '<sub>(' + destinationRadix + ')</sub>';
     document.getElementById('hintArea').innerHTML = newHint(initNumber, quotientsAndRemainders, powerOfTwos);
-    document.getElementById('submitButton').onclick = function() { checkAnswer(initNumber, [initNumber]); return false; };
+    document.getElementById('submitButton').onclick = function() { checkAnswerd2b1(initNumber, [initNumber]); return false; };
 }
 
 initDec2Bin1();

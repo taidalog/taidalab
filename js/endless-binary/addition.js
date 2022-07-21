@@ -3,7 +3,7 @@
 // Copyright (c) 2022 taidalog
 // This software is licensed under the MIT License.
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
-function checkAnswer(answer, num1, num2, last_answers) {
+function checkAnswerAdd(answer, num1, num2, last_answers) {
     
     const numberInput = document.getElementById('numberInput');
     const bin = escapeHtml(numberInput.value);
@@ -65,7 +65,7 @@ function checkAnswer(answer, num1, num2, last_answers) {
 
             const answersToKeep = 20;
             const lastAnswers = [numbers[0], numbers[1]].concat(last_answers).slice(0, answersToKeep);
-            document.getElementById('submitButton').onclick = function () { checkAnswer((numbers[0] + numbers[1]), numbers[0], numbers[1], lastAnswers); return false; };
+            document.getElementById('submitButton').onclick = function () { checkAnswerAdd((numbers[0] + numbers[1]), numbers[0], numbers[1], lastAnswers); return false; };
         }
     }
     
@@ -156,7 +156,7 @@ function initAddition () {
     const numbers = newNumbers();
     setColumnAddition(numbers[0], numbers[1]);
 
-    document.getElementById('submitButton').onclick = function () { checkAnswer((numbers[0] + numbers[1]), numbers[0], numbers[1], [numbers[0], numbers[1]]); return false; };
+    document.getElementById('submitButton').onclick = function () { checkAnswerAdd((numbers[0] + numbers[1]), numbers[0], numbers[1], [numbers[0], numbers[1]]); return false; };
 }
 
 initAddition();

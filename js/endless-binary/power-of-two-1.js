@@ -3,7 +3,7 @@
 // Copyright (c) 2022 taidalog
 // This software is licensed under the MIT License.
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
-function checkAnswer (answer, hint_format, last_answers) {
+function checkAnswerPot1 (answer, hint_format, last_answers) {
     const numberInput = document.getElementById('numberInput');
     const userInput = escapeHtml(numberInput.value);
     console.log(userInput);
@@ -60,7 +60,7 @@ function checkAnswer (answer, hint_format, last_answers) {
 
             const answersToKeep = 4;
             const lastAnswers = [nextAnswer].concat(last_answers).slice(0, answersToKeep);
-            document.getElementById('submitButton').onclick = function() { checkAnswer(nextAnswer, hint_format, lastAnswers); return false; };
+            document.getElementById('submitButton').onclick = function() { checkAnswerPot1(nextAnswer, hint_format, lastAnswers); return false; };
         }
     }
     
@@ -104,7 +104,7 @@ function initPowerOfTwo1 () {
     document.getElementsByTagName('footer')[0].innerHTML = footerContentPages;
     document.getElementById('versionNumber').innerText = 'Version 0.10.1';
 
-    document.getElementById('submitButton').onclick = function() { checkAnswer(initAnswer, hintFormat, [initAnswer]); return false;  };
+    document.getElementById('submitButton').onclick = function() { checkAnswerPot1(initAnswer, hintFormat, [initAnswer]); return false;  };
 }
 
 initPowerOfTwo1();
