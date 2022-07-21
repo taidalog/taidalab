@@ -89,5 +89,3 @@ function initBin2Dec2 () {
     document.getElementById('dstRadix').innerHTML = destinationRadix;
     document.getElementById('submitButton').onclick = function() { checkAnswerb2d2(initNumber, splitBin, [initNumber]); return false; };
 }
-
-initBin2Dec2();

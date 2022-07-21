@@ -204,5 +204,3 @@ function initDec2Bin1 () {
     document.getElementById('hintArea').innerHTML = newHint(initNumber, quotientsAndRemainders, powerOfTwos);
     document.getElementById('submitButton').onclick = function() { checkAnswerd2b1(initNumber, [initNumber]); return false; };
 }
-
-initDec2Bin1();

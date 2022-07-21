@@ -131,5 +131,3 @@ function initBin2Dec1 () {
     document.getElementById('hintArea').innerHTML = hint;
     document.getElementById('submitButton').onclick = function() { checkAnswerb2d1(initNumber, splitBin, [initNumber], hintFormat); return false; };
 }
-
-initBin2Dec1();

@@ -97,5 +97,3 @@ function initPowerOfTwo2 () {
     document.getElementById('hintArea').innerHTML = hint;
     document.getElementById('submitButton').onclick = function() { checkAnswerPot2(initNumber, hintFormat, [initNumber]); return false;  };
 }
-
-initPowerOfTwo2();

@@ -158,5 +158,3 @@ function initAddition () {
 
     document.getElementById('submitButton').onclick = function () { checkAnswerAdd((numbers[0] + numbers[1]), numbers[0], numbers[1], [numbers[0], numbers[1]]); return false; };
 }
-
-initAddition();

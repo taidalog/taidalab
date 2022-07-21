@@ -191,8 +191,8 @@ function newInitObject (pathname) {
                 questionContent: null,
                 footerContent: footerContentHome,
                 widthClass: "home",
-                scriptPath: [],
                 versionNumber: versionNumber,
+                initFunc: null
             };
         case '/endless-dec2bin-1/':
             console.log('/endless-dec2bin-1/');
@@ -207,8 +207,8 @@ function newInitObject (pathname) {
                 questionContent: questionContentPages,
                 footerContent: footerContentPages,
                 widthClass: "course",
-                scriptPath: ['/js/endless-binary/dec2bin-1.js'],
                 versionNumber: versionNumber,
+                initFunc: function () { initDec2Bin1(); }
             };
         case '/endless-dec2bin-2/':
             console.log('/endless-dec2bin-2/');
@@ -223,8 +223,8 @@ function newInitObject (pathname) {
                 questionContent: questionContentPages,
                 footerContent: footerContentPages,
                 widthClass: "course",
-                scriptPath: ['/js/endless-binary/dec2bin-2.js'],
                 versionNumber: versionNumber,
+                initFunc: function () { initDec2Bin2(); }
             };
         case '/endless-bin2dec-1/':
             console.log('/endless-bin2dec-1/');
@@ -239,8 +239,8 @@ function newInitObject (pathname) {
                 questionContent: questionContentPages,
                 footerContent: footerContentPages,
                 widthClass: "course",
-                scriptPath: ['/js/endless-binary/bin2dec-1.js'],
                 versionNumber: versionNumber,
+                initFunc: function () { initBin2Dec1(); }
             };
         case '/endless-bin2dec-2/':
             console.log('/endless-bin2dec-2/');
@@ -255,8 +255,8 @@ function newInitObject (pathname) {
                 questionContent: questionContentPages,
                 footerContent: footerContentPages,
                 widthClass: "course",
-                scriptPath: ['/js/endless-binary/bin2dec-2.js'],
                 versionNumber: versionNumber,
+                initFunc: function () { initBin2Dec2(); }
             };
         case '/endless-power-of-two-1/':
             console.log('/endless-power-of-two-1/');
@@ -271,8 +271,8 @@ function newInitObject (pathname) {
                 questionContent: questionContentPages,
                 footerContent: footerContentPages,
                 widthClass: "course",
-                scriptPath: ['/js/endless-binary/power-of-two-1.js'],
                 versionNumber: versionNumber,
+                initFunc: function () { initPowerOfTwo1(); }
             };
         case '/endless-power-of-two-2/':
             console.log('/endless-power-of-two-2/');
@@ -287,8 +287,8 @@ function newInitObject (pathname) {
                 questionContent: questionContentPages,
                 footerContent: footerContentPages,
                 widthClass: "course",
-                scriptPath: ['/js/endless-binary/power-of-two-2.js'],
                 versionNumber: versionNumber,
+                initFunc: function () { initPowerOfTwo2(); }
             };
         case '/endless-addition/':
             console.log('/endless-addition/');
@@ -303,8 +303,8 @@ function newInitObject (pathname) {
                 questionContent: columnAdditionFormat,
                 footerContent: footerContentPages,
                 widthClass: "course",
-                scriptPath: ['/js/endless-binary/addition.js'],
                 versionNumber: versionNumber,
+                initFunc: function () { initAddition(); }
             };
         case '/endless-subtraction/':
             console.log('/endless-subtraction/');
@@ -319,8 +319,8 @@ function newInitObject (pathname) {
                 questionContent: columnAdditionFormat,
                 footerContent: footerContentPages,
                 widthClass: "course",
-                scriptPath: ['/js/endless-binary/subtraction.js'],
                 versionNumber: versionNumber,
+                initFunc: function () { initSubtraction(); }
             };
         case '/endless-complement/':
             console.log('/endless-complement/');
@@ -335,8 +335,8 @@ function newInitObject (pathname) {
                 questionContent: questionContentComplement,
                 footerContent: footerContentPages,
                 widthClass: "course",
-                scriptPath: ['/js/endless-binary/complement.js'],
                 versionNumber: versionNumber,
+                initFunc: function () { initComplement(); }
             };
         case '/about/':
             console.log('/about/');
@@ -351,8 +351,8 @@ function newInitObject (pathname) {
                 questionContent: null,
                 footerContent: footerContentAbout,
                 widthClass: "course",
-                scriptPath: ['/js/about.js'],
                 versionNumber: null,
+                initFunc: function () { initAbout(); }
             };
         case '/terms/':
             console.log('/terms/');
@@ -367,8 +367,8 @@ function newInitObject (pathname) {
                 questionContent: null,
                 footerContent: footerContentTerms,
                 widthClass: "course",
-                scriptPath: ['/js/terms.js'],
                 versionNumber: null,
+                initFunc: function () { initTerms(); }
             };
         default:
             console.log("default");
@@ -383,8 +383,8 @@ function newInitObject (pathname) {
                 questionContent: questionContentPages,
                 footerContent: footerContentPages,
                 widthClass: "course",
-                scriptPath: ['/js/not-found.js'],
                 versionNumber: versionNumber,
+                initFunc: function () { initNotFound(); }
             };
     }
 }
@@ -415,15 +415,8 @@ function initPage (initial_object) {
         document.getElementById('versionNumber').innerText = initial_object.versionNumber;
     }
 
-    if (initial_object.scriptPath != []) {
-        initial_object.scriptPath.map(
-            x => { 
-                const element = document.createElement('script');
-                element.type = 'text/javascript';
-                element.src = x;
-                document.body.appendChild(element);
-            }
-        );
+    if (initial_object.initFunc != null) {
+        initial_object.initFunc();
     }
 }
 

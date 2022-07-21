@@ -65,5 +65,3 @@ function initAbout () {
 
     document.getElementsByTagName('main')[0].innerHTML = content;
 }
-
-initAbout();

@@ -109,5 +109,3 @@ function initcomplement () {
     document.getElementById('hintArea').innerHTML = hint;
     document.getElementById('submitButton').onclick = function() { checkAnswerCmp(initBin, initAnswer, [initNumber], hintFormat); return false; };
 }
-
-initcomplement();

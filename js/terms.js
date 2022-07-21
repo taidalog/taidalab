@@ -14,5 +14,3 @@ function initTerms () {
 
     document.getElementsByTagName('main')[0].innerHTML = content;
 }
-
-initTerms();

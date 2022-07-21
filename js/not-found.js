@@ -66,5 +66,3 @@ function initNotFound () {
     document.getElementById('binaryRadix').innerHTML = '<sub>(' + destinationRadix + ')</sub>';
     document.getElementById('submitButton').onclick = function() { checkAnswer(initNumber); return false; };
 }
-
-initNotFound();

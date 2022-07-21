@@ -163,5 +163,3 @@ function initSubtraction () {
 
     document.getElementById('submitButton').onclick = function () { checkAnswerSub((numbers[0] - numbers[1]), numbers[0], numbers[1], [numbers[0], numbers[1]]); return false; };
 }
-
-initSubtraction();

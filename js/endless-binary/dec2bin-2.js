@@ -79,5 +79,3 @@ function initDec2Bin2 () {
     document.getElementById('binaryRadix').innerHTML = '<sub>(' + destinationRadix + ')</sub>';
     document.getElementById('submitButton').onclick = function() { checkAnswerd2b2(initNumber, [initNumber]); return false; };
 }
-
-initDec2Bin2();

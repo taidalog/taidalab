@@ -106,5 +106,3 @@ function initPowerOfTwo1 () {
 
     document.getElementById('submitButton').onclick = function() { checkAnswerPot1(initAnswer, hintFormat, [initAnswer]); return false;  };
 }
-
-initPowerOfTwo1();
