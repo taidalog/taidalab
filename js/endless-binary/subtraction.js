@@ -48,7 +48,7 @@ function checkAnswerSub(answer, num1, num2, last_answers) {
 
             console.log(last_answers);
             do {
-                numbers = newNumbers();
+                numbers = newNumbersSub();
                 console.log(numbers[0]);
                 console.log(numbers[1]);
                 console.log(last_answers.some((element) => element == numbers[0] || element == numbers[1]));
@@ -57,7 +57,7 @@ function checkAnswerSub(answer, num1, num2, last_answers) {
             setColumnAddition(numbers[0], numbers[1]);
 
             const hintArea = document.getElementById('hintArea');
-            const nextHint = newHint();
+            const nextHint = newHintSub();
             hintArea.innerHTML = nextHint;
             console.log(nextHint);
 
@@ -73,7 +73,7 @@ function checkAnswerSub(answer, num1, num2, last_answers) {
 }
 
 
-function newNumbers () {
+function newNumbersSub () {
     const number1 = getRandomBetween(1, 255);
     console.log('number1: ' + number1);
 
@@ -119,7 +119,7 @@ function setColumnAddition (number1, number2) {
 }
 
 
-function newHint () {
+function newHintSub () {
     const hintFormat01 = '<details><summary>ヒント: </summary>';
     const hintFormat02 = '<p class="history-indented">';
     const hintFormat03 = '10進数の筆算と同じように、右端から上下の数で引き算をします。<br><br>';
@@ -139,7 +139,7 @@ function initSubtraction () {
     // initialization
     const sourceRadix = 2;
     const destinationRadix = 2;
-    const hint = newHint();
+    const hint = newHintSub();
 
 //    document.title = '減算 - taidalab';
 //    document.getElementsByTagName('header')[0].innerHTML = headerContentPages;
@@ -158,7 +158,7 @@ function initSubtraction () {
     document.getElementById('binaryRadix').innerHTML = '<sub>(' + destinationRadix + ')</sub>';
     document.getElementById('hintArea').innerHTML = hint;
 
-    const numbers = newNumbers();
+    const numbers = newNumbersSub();
     setColumnAddition(numbers[0], numbers[1]);
 
     document.getElementById('submitButton').onclick = function () { checkAnswerSub((numbers[0] - numbers[1]), numbers[0], numbers[1], [numbers[0], numbers[1]]); return false; };

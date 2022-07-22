@@ -71,7 +71,7 @@ function checkAnswerd2b1 (answer, last_answers) {
             const powerOfTwos = devideIntoPowerOfTwo(nextNumber);
             console.log(powerOfTwos);
 
-            const nextHint = newHint(nextNumber, quotientsAndRemainders, powerOfTwos);
+            const nextHint = newHintDec2Bin(nextNumber, quotientsAndRemainders, powerOfTwos);
             console.log(nextHint);
             
             document.getElementById('questionSpan').innerText = nextNumber;
@@ -141,7 +141,7 @@ function newColumnAddition (quotients_and_remainders) {
 }
 
 
-function newHint (number, quotients_and_remainders, power_of_twos) {
+function newHintDec2Bin (number, quotients_and_remainders, power_of_twos) {
     return '<details><summary>ヒント: </summary>' + '<h2>考え方 1</h2>' + newHintRepeatDivision(number, quotients_and_remainders) + '<h2>考え方 2</h2>' + newHintRepeatAddition(number, power_of_twos) + '</details>'
 }
 
@@ -201,6 +201,6 @@ function initDec2Bin1 () {
     document.getElementById('srcRadix').innerHTML = '(' + sourceRadix + ')';
     document.getElementById('dstRadix').innerHTML = destinationRadix;
     document.getElementById('binaryRadix').innerHTML = '<sub>(' + destinationRadix + ')</sub>';
-    document.getElementById('hintArea').innerHTML = newHint(initNumber, quotientsAndRemainders, powerOfTwos);
+    document.getElementById('hintArea').innerHTML = newHintDec2Bin(initNumber, quotientsAndRemainders, powerOfTwos);
     document.getElementById('submitButton').onclick = function() { checkAnswerd2b1(initNumber, [initNumber]); return false; };
 }

@@ -48,7 +48,7 @@ function checkAnswerAdd(answer, num1, num2, last_answers) {
 
             console.log(last_answers);
             do {
-                numbers = newNumbers();
+                numbers = newNumbersAdd();
                 console.log(numbers[0]);
                 console.log(numbers[1]);
                 console.log(last_answers.some((element) => element == numbers[0] || element == numbers[1]));
@@ -57,7 +57,7 @@ function checkAnswerAdd(answer, num1, num2, last_answers) {
             setColumnAddition(numbers[0], numbers[1]);
 
             const hintArea = document.getElementById('hintArea');
-            const nextHint = newHint();
+            const nextHint = newHintAdd();
             hintArea.innerHTML = nextHint;
             console.log(nextHint);
 
@@ -73,7 +73,7 @@ function checkAnswerAdd(answer, num1, num2, last_answers) {
 }
 
 
-function newNumbers () {
+function newNumbersAdd () {
     
     const regex = /^1+0+$/;
     let number1 = 0;
@@ -123,7 +123,7 @@ function setColumnAddition (number1, number2) {
 }
 
 
-function newHint () {
+function newHintAdd () {
     const hintFormat01 = '<details><summary>ヒント: </summary>';
     const hintFormat02 = '<p class="history-indented">';
     const hintFormat03 = '10進数の筆算と同じように、右端から上下の数を足していきます。<br><br>';
@@ -144,7 +144,7 @@ function initAddition () {
     // initialization
     const sourceRadix = 2;
     const destinationRadix = 2;
-    const hint = newHint();
+    const hint = newHintAdd();
 
     document.getElementById('numberInput').className = 'number-input question-number eight-digit';
     document.getElementById('operator').innerText = '+)';
@@ -153,7 +153,7 @@ function initAddition () {
     document.getElementById('binaryRadix').innerHTML = '<sub>(' + destinationRadix + ')</sub>';
     document.getElementById('hintArea').innerHTML = hint;
 
-    const numbers = newNumbers();
+    const numbers = newNumbersAdd();
     setColumnAddition(numbers[0], numbers[1]);
 
     document.getElementById('submitButton').onclick = function () { checkAnswerAdd((numbers[0] + numbers[1]), numbers[0], numbers[1], [numbers[0], numbers[1]]); return false; };
