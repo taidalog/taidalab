@@ -114,7 +114,26 @@
     order: 9;
 }
 
+@media (max-width: 999px) {    
+    .button-container {
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 200px 200px 200px;
+    }
+}
+
 @media (max-width: 799px) {    
+    .button-container {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 5rem 5rem 5rem 5rem 5rem;
+        gap: 10px;
+    }
+
+    .btn {
+        font-size: 1.25rem;
+    }
+}
+
+@media (max-width: 599px) {    
     .button-container {
         padding: 5px 0;
         display: flex;
