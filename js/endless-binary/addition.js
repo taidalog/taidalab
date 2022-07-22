@@ -98,31 +98,6 @@ function newNumbersAdd () {
 }
 
 
-function setColumnAddition (number1, number2) {
-    const bin1 = number1.toString(2);
-    const bin2 = number2.toString(2);
-    console.log(bin1);
-    console.log(bin2);
-    console.log((number1 + number2).toString(2));
-
-    for (let i = 1; i <= 8; i++) {
-        document.getElementById('firstRowDigit' + i).innerText = '';
-    }
-
-    for (let i = 1; i <= 8; i++) {
-        document.getElementById('secondRowDigit' + i).innerText = '';
-    }
-
-    for (let i = 1; i <= bin1.length; i++) {
-        document.getElementById('firstRowDigit' + i).innerText = bin1[bin1.length - i];
-    }
-
-    for (let i = 1; i <= bin2.length; i++) {
-        document.getElementById('secondRowDigit' + i).innerText = bin2[bin2.length - i];
-    }
-}
-
-
 function newHintAdd () {
     const hintFormat01 = '<details><summary>ヒント: </summary>';
     const hintFormat02 = '<p class="history-indented">';
