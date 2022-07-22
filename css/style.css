@@ -292,6 +292,16 @@ dd {
     text-align: right;
 }
 
+@media (max-width: 799px) {    
+    main.home {
+        margin: 0 auto;
+    }
+
+    footer.home {
+        max-width: 94%;
+    }
+}
+
 @media (max-width: 600px) {
     .header-container {
         max-width: 94%;
@@ -318,19 +328,6 @@ dd {
 
     .footer-container {
         flex-direction: column;
-    }
-}
-
-@media (max-width: 799px) {    
-    main.home {
-        margin: 0 auto;
-    }
-
-    footer.home {
-        max-width: 94%;
-    }
-
-    .home .footer-container {
-        flex-direction: column;
+        text-align: center;
     }
 }
