@@ -66,7 +66,6 @@ function setColumnAddition (number1, number2) {
     const bin2 = number2.toString(2);
     console.log(bin1);
     console.log(bin2);
-    console.log((number1 + number2).toString(2));
 
     for (let i = 1; i <= 8; i++) {
         document.getElementById('firstRowDigit' + i).innerText = '';

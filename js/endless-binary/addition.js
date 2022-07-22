@@ -54,6 +54,10 @@ function checkAnswerAdd(answer, num1, num2, last_answers) {
                 console.log(last_answers.some((element) => element == numbers[0] || element == numbers[1]));
             } while (last_answers.some((element) => element == numbers[0] || element == numbers[1]));
 
+            console.log(numbers[0]);
+            console.log(numbers[1]);
+            console.log(numbers[0] + numbers[1]);
+            console.log((numbers[0] + numbers[1]).toString(sourceRadix));
             setColumnAddition(numbers[0], numbers[1]);
 
             const hintArea = document.getElementById('hintArea');
@@ -129,6 +133,10 @@ function initAddition () {
     document.getElementById('hintArea').innerHTML = hint;
 
     const numbers = newNumbersAdd();
+    console.log(numbers[0]);
+    console.log(numbers[1]);
+    console.log(numbers[0] + numbers[1]);
+    console.log((numbers[0] + numbers[1]).toString(sourceRadix));
     setColumnAddition(numbers[0], numbers[1]);
 
     document.getElementById('submitButton').onclick = function () { checkAnswerAdd((numbers[0] + numbers[1]), numbers[0], numbers[1], [numbers[0], numbers[1]]); return false; };

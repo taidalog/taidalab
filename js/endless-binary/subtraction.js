@@ -54,6 +54,10 @@ function checkAnswerSub(answer, num1, num2, last_answers) {
                 console.log(last_answers.some((element) => element == numbers[0] || element == numbers[1]));
             } while (last_answers.some((element) => element == numbers[0] || element == numbers[1]));
 
+            console.log(numbers[0]);
+            console.log(numbers[1]);
+            console.log(numbers[0] - numbers[1]);
+            console.log((numbers[0] - numbers[1]).toString(sourceRadix));
             setColumnAddition(numbers[0], numbers[1]);
 
             const hintArea = document.getElementById('hintArea');
@@ -134,6 +138,10 @@ function initSubtraction () {
     document.getElementById('hintArea').innerHTML = hint;
 
     const numbers = newNumbersSub();
+    console.log(numbers[0]);
+    console.log(numbers[1]);
+    console.log(numbers[0] - numbers[1]);
+    console.log((numbers[0] - numbers[1]).toString(sourceRadix));
     setColumnAddition(numbers[0], numbers[1]);
 
     document.getElementById('submitButton').onclick = function () { checkAnswerSub((numbers[0] - numbers[1]), numbers[0], numbers[1], [numbers[0], numbers[1]]); return false; };
