@@ -33,7 +33,7 @@ function checkAnswerPot1 (answer, hint_format, last_answers) {
         
         const sourceRadix = 10;
         const outputArea = document.getElementById('outputArea');
-        const currentHistoryMessage = newHistory((userInputToDestRadix == answer), taggedBin, sourceRadix, spacePaddedDec, destinationRadix);
+        const currentHistoryMessage = newHistory((userInputToDestRadix == answer), taggedBin, destinationRadix, spacePaddedDec, sourceRadix);
         const historyMessage = concatinateStrings(currentHistoryMessage, outputArea.innerHTML);
         console.log(currentHistoryMessage);
         console.log(historyMessage);
@@ -68,7 +68,7 @@ function checkAnswerPot1 (answer, hint_format, last_answers) {
 }
 
 
-function newHistory (is_correct, input, source_radix, converted_input, destination_radix) {
+function newHistory (is_correct, input, destination_radix, converted_input, source_radix) {
     let historyClassName = '';
     if (is_correct) {
         historyClassName = 'history-correct';
