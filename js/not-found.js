@@ -25,11 +25,11 @@ function checkAnswer (answer) {
         console.log(taggedBin);
         console.log(dec);
         
-        let historyClassName = ''
+        let historyClassName = '';
         if (dec == answer) {
-            historyClassName = 'history-correct'
+            historyClassName = 'history-correct';
         } else {
-            historyClassName = 'history-wrong'
+            historyClassName = 'history-wrong';
         }
         
         const decimalDigit = 3;

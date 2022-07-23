@@ -21,11 +21,11 @@ function checkAnswerb2d1 (answer, question, last_answers, hint_format) {
 
         const inputValueAsInt = parseInt(inputValue);
         
-        let historyClassName = ''
+        let historyClassName = '';
         if (inputValueAsInt == answer) {
-            historyClassName = 'history-correct'
+            historyClassName = 'history-correct';
         } else {
-            historyClassName = 'history-wrong'
+            historyClassName = 'history-wrong';
         }
         
         const digit = 3;

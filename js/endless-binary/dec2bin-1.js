@@ -32,11 +32,11 @@ function checkAnswerd2b1 (answer, last_answers) {
         console.log(taggedBin);
         console.log(dec);
         
-        let historyClassName = ''
+        let historyClassName = '';
         if (dec == answer) {
-            historyClassName = 'history-correct'
+            historyClassName = 'history-correct';
         } else {
-            historyClassName = 'history-wrong'
+            historyClassName = 'history-wrong';
         }
         
         const decimalDigit = 3;
@@ -93,9 +93,9 @@ function countOneBit (binaryString) {
     const regex = /1/g;
     const res = binaryString.match(regex);
     if (res == null) {
-        return 0
+        return 0;
     } else {
-        return res.length
+        return res.length;
     }
 }
 
@@ -142,7 +142,7 @@ function newColumnAddition (quotients_and_remainders) {
 
 
 function newHintDec2Bin (number, quotients_and_remainders, power_of_twos) {
-    return '<details><summary>ヒント: </summary>' + '<h2>考え方 1</h2>' + newHintRepeatDivision(number, quotients_and_remainders) + '<h2>考え方 2</h2>' + newHintRepeatAddition(number, power_of_twos) + '</details>'
+    return '<details><summary>ヒント: </summary>' + '<h2>考え方 1</h2>' + newHintRepeatDivision(number, quotients_and_remainders) + '<h2>考え方 2</h2>' + newHintRepeatAddition(number, power_of_twos) + '</details>';
 }
 
 
@@ -158,7 +158,7 @@ function newHintRepeatDivision (number, quotients_and_remainders) {
     const msg06 = '<div class="history-indented column-addition-area">';
     const msg07 = '</div>';
 
-    return msg01 + msg02 + msg03 + msg04 + msg05 + msg06 + firstRow + '<br>' + columnAddition + msg07
+    return msg01 + msg02 + msg03 + msg04 + msg05 + msg06 + firstRow + '<br>' + columnAddition + msg07;
 }
 
 
@@ -174,7 +174,7 @@ function newHintRepeatAddition (number, power_of_twos) {
     const hintFormat = hintFormat01 + hintFormat02 + hintFormat03 + hintFormat04 + hintFormat05 + hintFormat06 + hintFormat07 + hintFormat08;
     const hint = formatString(hintFormat, [number, power_of_twos[0], number - power_of_twos[0], power_of_twos[1], number - power_of_twos[0] - power_of_twos[1], Math.floor(Math.log(power_of_twos[0]) / Math.log(2)), Math.floor(Math.log(power_of_twos[1]) / Math.log(2))]);
     console.log(hint);
-    return hint
+    return hint;
 }
 
 

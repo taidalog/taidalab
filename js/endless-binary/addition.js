@@ -28,11 +28,11 @@ function checkAnswerAdd(answer, num1, num2, last_answers) {
         
         const outputArea = document.getElementById('outputArea');
         
-        let historyClassName = ''
+        let historyClassName = '';
         if (dec == answer) {
-            historyClassName = 'history-correct'
+            historyClassName = 'history-correct';
         } else {
-            historyClassName = 'history-wrong'
+            historyClassName = 'history-wrong';
         }
         
         const destinationRadix = 10;
@@ -87,14 +87,14 @@ function newNumbersAdd () {
         console.log('number1: ' + number1);
         console.log('number1.binary: ' + number1.toString(2));
         console.log('number1.length: ' + number1.toString(2).length);
-    } while ((number1.toString(2).length == 8) && regex.test(number1.toString(2)))
+    } while ((number1.toString(2).length == 8) && regex.test(number1.toString(2)));
 
     let number2 = 0;
 
     do {
         number2 = getRandomBetween(1, 255 - number1);
         console.debug('number1 == number2: ' + (number1 == number2) + '\t(number1 & number2) == 0: ' + ((number1 & number2) == 0));
-    } while ((number1 == number2) || ((number1 & number2) == 0))
+    } while ((number1 == number2) || ((number1 & number2) == 0));
 
     console.log(number2);
     console.log(number1 + number2);

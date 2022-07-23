@@ -28,11 +28,11 @@ function checkAnswerSub(answer, num1, num2, last_answers) {
         
         const outputArea = document.getElementById('outputArea');
         
-        let historyClassName = ''
+        let historyClassName = '';
         if (dec == answer) {
-            historyClassName = 'history-correct'
+            historyClassName = 'history-correct';
         } else {
-            historyClassName = 'history-wrong'
+            historyClassName = 'history-wrong';
         }
         
         const destinationRadix = 10;
@@ -86,7 +86,7 @@ function newNumbersSub () {
     do {
         number2 = getRandomBetween(1, 255);
         console.debug('number1 == number2: ' + (number1 <= number2) + '\t(number1 & number2) == 0: ' + ((number1 & number2) == 0));
-    } while ((number1 == number2) || ((number1 & number2) == 0))
+    } while ((number1 == number2) || ((number1 & number2) == 0));
 
     console.log(number2);
 

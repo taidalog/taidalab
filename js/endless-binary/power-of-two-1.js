@@ -49,7 +49,7 @@ function checkAnswerPot1 (answer, hint_format, last_answers) {
                 nextAnswer = Math.pow(2, nextIndexNumber);
                 console.log(nextAnswer);
                 console.log(last_answers.some((element) => element == nextAnswer));
-            } while (last_answers.some((element) => element == nextAnswer))
+            } while (last_answers.some((element) => element == nextAnswer));
             
             const nextHint = formatString(hint_format, [nextAnswer, nextIndexNumber]);
             console.log(nextHint);

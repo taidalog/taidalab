@@ -33,11 +33,11 @@ function checkAnswerPot2 (answer, hint_format, last_answers) {
         
         const outputArea = document.getElementById('outputArea');
         
-        let historyClassName = ''
+        let historyClassName = '';
         if (dec == answer) {
-            historyClassName = 'history-correct'
+            historyClassName = 'history-correct';
         } else {
-            historyClassName = 'history-wrong'
+            historyClassName = 'history-wrong';
         }
         
         const decimalDigit = 3;
@@ -60,7 +60,7 @@ function checkAnswerPot2 (answer, hint_format, last_answers) {
                 nextNumber = Math.pow(2, nextIndexNumber) - 1;
                 console.log(nextNumber);
                 console.log(last_answers.some((element) => element == nextNumber));
-            } while (last_answers.some((element) => element == nextNumber))
+            } while (last_answers.some((element) => element == nextNumber));
             
             document.getElementById('questionSpan').innerText = nextNumber;
             

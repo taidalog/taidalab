@@ -27,11 +27,11 @@ function checkAnswerd2b2 (answer, last_answers) {
         
         const outputArea = document.getElementById('outputArea');
         
-        let historyClassName = ''
+        let historyClassName = '';
         if (dec == answer) {
-            historyClassName = 'history-correct'
+            historyClassName = 'history-correct';
         } else {
-            historyClassName = 'history-wrong'
+            historyClassName = 'history-wrong';
         }
         
         const decimalDigit = 3;

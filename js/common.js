@@ -9,19 +9,19 @@ function getRandomBetween (min, max) {
 
 function testBinaryString (binary_string) {
     const reCorrect = /^[01]+$/;
-    return reCorrect.test(binary_string)
+    return reCorrect.test(binary_string);
 }
 
 function tesDecimalString (decimal_string) {
     const reCorrect = /^[0-9]+$/;
-    return reCorrect.test(decimal_string)
+    return reCorrect.test(decimal_string);
 }
 
 function concatinateStrings (new_string, existing_string) {
     if (existing_string == "" || existing_string == null) {
-        return new_string
+        return new_string;
     } else {
-        return new_string + "<br>" + existing_string
+        return new_string + "<br>" + existing_string;
     }
 }
 
@@ -225,9 +225,9 @@ const footerContentTerms = '\
 
 const versionNumber = 'Version 1.1.0';
 
-const questionContentPages = '<span id="questionSpan" class="question-number"></span><sub id="srcRadix"></sub> を<span id="dstRadix"></span>進法で表すと？'
+const questionContentPages = '<span id="questionSpan" class="question-number"></span><sub id="srcRadix"></sub> を<span id="dstRadix"></span>進法で表すと？';
 
-const questionContentComplement = '4ビットの2進数 <span id="questionSpan" class="question-number"></span><sub id="srcRadix"></sub> の補数は？'
+const questionContentComplement = '4ビットの2進数 <span id="questionSpan" class="question-number"></span><sub id="srcRadix"></sub> の補数は？';
 
 const columnAdditionFormat = '\
 <div class="calculation-area" id="calculationArea">\

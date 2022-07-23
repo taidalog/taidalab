@@ -20,11 +20,11 @@ function checkAnswerCmp (question, answer, last_answers, hint_format) {
 
         const inputValueAsInt = parseInt(inputValue, 2);
         
-        let historyClassName = ''
+        let historyClassName = '';
         if (inputValueAsInt == answer) {
-            historyClassName = 'history-correct'
+            historyClassName = 'history-correct';
         } else {
-            historyClassName = 'history-wrong'
+            historyClassName = 'history-wrong';
         }
         
         const digit = 4;
