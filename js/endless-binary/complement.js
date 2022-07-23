@@ -78,7 +78,7 @@ function checkAnswerCmp (question, answer, last_answers, hint_format) {
     numberInput.focus();
 }
 
-function initcomplement () {
+function initComplement () {
     // initialization
     const sourceRadix = 2;
     const destinationRadix = 2;
