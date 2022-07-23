@@ -119,16 +119,6 @@ function initSubtraction () {
     const sourceRadix = 2;
     const destinationRadix = 2;
     const hint = newHintSub();
-
-//    document.title = '減算 - taidalab';
-//    document.getElementsByTagName('header')[0].innerHTML = headerContentPages;
-//    document.getElementsByTagName('header')[0].className = 'sub-header';
-//    document.getElementById('headerContainer').innerHTML = '<h1>減算</h1>';
-//    document.getElementsByTagName('main')[0].innerHTML = mainContentPages;
-//    document.getElementById('submitButton').className = 'submit-button sub-button';
-//    document.getElementById('questionArea').innerHTML = columnAdditionFormat;
-//    document.getElementsByTagName('footer')[0].innerHTML = footerContentPages;
-//    document.getElementById('versionNumber').innerText = 'Version 0.1.1';
     
     document.getElementById('numberInput').className = 'number-input question-number eight-digit';
     document.getElementById('operator').innerText = '-)';

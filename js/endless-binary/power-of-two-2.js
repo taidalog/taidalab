@@ -12,10 +12,6 @@ function checkAnswerPot2 (answer, hint_format, last_answers) {
     const bin = escapeHtml(numberInput.value);
     console.log(bin);
 
-//    const answerAsInt = parseInt(answer, 10);
-//    const indexNumber = Math.log(answerAsInt + 1) / Math.log(2);
-    // const hint = formatString(hintFormat, [answer, answerAsInt + 1, indexNumber]);
-
     if (bin == '') {
         errorArea.innerHTML = '<span class="warning">' + answer + ' の2進法表記を入力してください。</span>';
     } else if (testBinaryString(bin) == false) {
