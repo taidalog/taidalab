@@ -36,8 +36,8 @@ function checkAnswerb2d1 (answer, question, last_answers, hint_format) {
         outputArea.innerHTML = historyMessage;
         
         if (inputValueAsInt == answer) {
-            let nextIndexNumber = 0; //getRandomBetween(0, 7);
-            let nextNumber = 0; //Math.pow(2, nextIndexNumber);
+            let nextIndexNumber = 0;
+            let nextNumber = 0;
             
             console.log(last_answers);
             do {
