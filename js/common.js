@@ -56,6 +56,18 @@ function colorLeadingZero (str) {
     return str.replace(leadingZero, leadingZeroInTag);
 }
 
+function newHistory (is_correct, input, destination_radix, converted_input, source_radix) {
+    let historyClassName = '';
+    if (is_correct) {
+        historyClassName = 'history-correct';
+    } else {
+        historyClassName = 'history-wrong';
+    }
+    
+    const result = '<span class ="' + historyClassName + '">' + input + '<sub>(' + destination_radix + ')</sub> = ' + converted_input + '<sub>(' + source_radix + ')</sub></span>';
+    return result;
+}
+
 function splitBinaryStringBy (digit, str) {
     const regex = new RegExp ("([01])(?=([01]{" + digit + "})+(?![01]))", "g");
     return str.replace(regex, '$1 ');

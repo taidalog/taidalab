@@ -68,19 +68,6 @@ function checkAnswerPot1 (answer, hint_format, last_answers) {
 }
 
 
-function newHistory (is_correct, input, destination_radix, converted_input, source_radix) {
-    let historyClassName = '';
-    if (is_correct) {
-        historyClassName = 'history-correct';
-    } else {
-        historyClassName = 'history-wrong';
-    }
-    
-    const result = '<span class ="' + historyClassName + '">' + input + '<sub>(' + destination_radix + ')</sub> = ' + converted_input + '<sub>(' + source_radix + ')</sub></span>';
-    return result;
-}
-
-
 function initPowerOfTwo1 () {
     // initialization.
     const initIndexNumber = getRandomBetween(0, 7);
