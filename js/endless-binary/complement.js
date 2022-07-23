@@ -14,7 +14,7 @@ function checkAnswerCmp (question, answer, last_answers, hint_format) {
     if (inputValue == '') {
         const questionWithoutSpace = question.replace(' ', '');
         errorArea.innerHTML = '<span class="warning">' + questionWithoutSpace + ' の補数を、2進法表記で入力してください。</span>';
-    } else if (tesDecimalString(inputValue) == false) {
+    } else if (testDecimalString(inputValue) == false) {
         errorArea.innerHTML = '<span class="warning">"' + inputValue + '" は2進数ではありません。使えるのは半角の 0 と 1 のみです。</span>';
     } else {
 
