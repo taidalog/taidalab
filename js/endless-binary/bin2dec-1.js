@@ -15,7 +15,7 @@ function checkAnswerb2d1 (answer, question, last_answers, hint_format) {
     if (inputValue == '') {
         const questionWithoutSpace = question.replace(' ', '');
         errorArea.innerHTML = '<span class="warning">' + questionWithoutSpace + ' の10進法表記を入力してください。</span>';
-    } else if (tesDecimalString(inputValue) == false) {
+    } else if (testDecimalString(inputValue) == false) {
         errorArea.innerHTML = '<span class="warning">"' + inputValue + '" は10進数ではありません。使えるのは半角の 0123456789 のみです。</span>';
     } else {
 

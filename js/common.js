@@ -12,7 +12,7 @@ function testBinaryString (binary_string) {
     return reCorrect.test(binary_string);
 }
 
-function tesDecimalString (decimal_string) {
+function testDecimalString (decimal_string) {
     const reCorrect = /^[0-9]+$/;
     return reCorrect.test(decimal_string);
 }
