@@ -32,23 +32,16 @@ function checkAnswerd2b1 (answer, last_answers) {
         console.log(taggedBin);
         console.log(dec);
         
-        let historyClassName = '';
-        if (dec == answer) {
-            historyClassName = 'history-correct';
-        } else {
-            historyClassName = 'history-wrong';
-        }
-        
         const decimalDigit = 3;
         const spacePaddedDec = dec.toString().padStart(decimalDigit, ' ').replace(' ', '&nbsp;');
         
         const sourceRadix = 10;
         const outputArea = document.getElementById('outputArea');
-        const msg1 = '<span class ="' + historyClassName + '">' + taggedBin + '<sub>(' + destinationRadix + ')</sub> = ' + spacePaddedDec + '<sub>(' + sourceRadix + ')</sub></span>';
-        const msg2 = concatinateStrings(msg1, outputArea.innerHTML);
-        outputArea.innerHTML = msg2;
-        console.log(msg1);
-        console.log(msg2);
+        const currentHistoryMessage = newHistory((dec == answer), taggedBin, destinationRadix, spacePaddedDec, sourceRadix);
+        const historyMessage = concatinateStrings(currentHistoryMessage, outputArea.innerHTML);
+        console.log(currentHistoryMessage);
+        console.log(historyMessage);
+        outputArea.innerHTML = historyMessage;
         
         if (dec == answer) {
             let nextNumber = 0;

@@ -21,13 +21,6 @@ function checkAnswerb2d1 (answer, question, last_answers, hint_format) {
 
         const inputValueAsInt = parseInt(inputValue);
         
-        let historyClassName = '';
-        if (inputValueAsInt == answer) {
-            historyClassName = 'history-correct';
-        } else {
-            historyClassName = 'history-wrong';
-        }
-        
         const digit = 3;
         const spacePaddedInputValue = inputValue.padStart(digit, ' ').replace(' ', '&nbsp;');
         
@@ -36,11 +29,11 @@ function checkAnswerb2d1 (answer, question, last_answers, hint_format) {
         
         const destinationRadix = 10;
         const outputArea = document.getElementById('outputArea');
-        const msg1 = '<span class ="' + historyClassName + '">' + spacePaddedInputValue + '<sub>(' + destinationRadix + ')</sub> = ' + bin + '<sub>(' + sourceRadix + ')</sub></span>';
-        const msg2 = concatinateStrings(msg1, outputArea.innerHTML);
-        outputArea.innerHTML = msg2;
-        console.log(msg1);
-        console.log(msg2);
+        const currentHistoryMessage = newHistory((inputValueAsInt == answer), spacePaddedInputValue, destinationRadix, bin, sourceRadix);
+        const historyMessage = concatinateStrings(currentHistoryMessage, outputArea.innerHTML);
+        console.log(currentHistoryMessage);
+        console.log(historyMessage);
+        outputArea.innerHTML = historyMessage;
         
         if (inputValueAsInt == answer) {
             let nextIndexNumber = 0; //getRandomBetween(0, 7);

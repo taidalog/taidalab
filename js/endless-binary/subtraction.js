@@ -26,21 +26,13 @@ function checkAnswerSub(answer, num1, num2, last_answers) {
         console.log(taggedBin);
         console.log(dec);
         
-        const outputArea = document.getElementById('outputArea');
-        
-        let historyClassName = '';
-        if (dec == answer) {
-            historyClassName = 'history-correct';
-        } else {
-            historyClassName = 'history-wrong';
-        }
-        
         const destinationRadix = 10;
-        const msg1 = '<span class ="' + historyClassName + '">' + taggedBin + '<sub>(' + sourceRadix + ')</sub> = ' + dec + '<sub>(' + destinationRadix + ')</sub></span>';
-        const msg2 = concatinateStrings(msg1, outputArea.innerHTML);
-        outputArea.innerHTML = msg2;
-        console.log(msg1);
-        console.log(msg2);
+        const outputArea = document.getElementById('outputArea');
+        const currentHistoryMessage = newHistory((dec == answer), taggedBin, sourceRadix, dec, destinationRadix);
+        const historyMessage = concatinateStrings(currentHistoryMessage, outputArea.innerHTML);
+        console.log(currentHistoryMessage);
+        console.log(historyMessage);
+        outputArea.innerHTML = historyMessage;
         
         if (dec == answer) {
             // Making next question.
