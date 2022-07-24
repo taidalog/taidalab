@@ -14,7 +14,7 @@ function checkAnswerSub(answer, num1, num2, last_answers) {
     
     const sourceRadix = 2;
     if (bin == '') {
-        errorArea.innerHTML = '<span class="warning">' + num1.toString(sourceRadix) + '<small>(' + sourceRadix + ')</small>' + num2.toString(sourceRadix)+ '<small>(' + sourceRadix + ')</small>' + ' の2進法表記を入力してください。</span>';
+        errorArea.innerHTML = '<span class="warning">' + num1.toString(sourceRadix) + '<small>(' + sourceRadix + ')</small> - ' + num2.toString(sourceRadix)+ '<small>(' + sourceRadix + ')</small>' + ' の2進法表記を入力してください。</span>';
     } else if (testBinaryString(bin) == false) {
         errorArea.innerHTML = '<span class="warning">"' + bin + '" は2進数ではありません。使えるのは半角の 0 と 1 のみです。</span>';
     } else {
