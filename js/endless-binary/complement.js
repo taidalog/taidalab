@@ -4,82 +4,91 @@
 // This software is licensed under the MIT License.
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
 function checkAnswerCmp (question, answer, last_answers, hint_format) {
+    // Getting the user input.
     const numberInput = document.getElementById('numberInput');
     const inputValue = escapeHtml(numberInput.value);
     console.log('inputValue : ' + inputValue);
-    
-    const errorArea = document.getElementById('errorArea');
-    errorArea.innerHTML = '';
 
+    // Making an error message.
+    let errorMessage = '';
     if (inputValue == '') {
         const questionWithoutSpace = question.replace(' ', '');
-        errorArea.innerHTML = '<span class="warning">' + questionWithoutSpace + ' の補数を、2進法表記で入力してください。</span>';
+        errorMessage = '<span class="warning">' + questionWithoutSpace + ' の補数を、2進法表記で入力してください。</span>';
     } else if (testBinaryString(inputValue) == false) {
-        errorArea.innerHTML = '<span class="warning">"' + inputValue + '" は2進数ではありません。使えるのは半角の 0 と 1 のみです。</span>';
+        errorMessage = '<span class="warning">"' + inputValue + '" は2進数ではありません。使えるのは半角の 0 と 1 のみです。</span>';
+    }
+
+    document.getElementById('errorArea').innerHTML = errorMessage;
+    
+    // Exits when the input was invalid.
+    if (errorMessage) {
+        return;
+    }
+
+    const inputValueAsInt = parseInt(inputValue, 2);
+    
+    let historyClassName = '';
+    if (inputValueAsInt == answer) {
+        historyClassName = 'history-correct';
     } else {
-
-        const inputValueAsInt = parseInt(inputValue, 2);
-        
-        let historyClassName = '';
-        if (inputValueAsInt == answer) {
-            historyClassName = 'history-correct';
-        } else {
-            historyClassName = 'history-wrong';
-        }
-        
-        const digit = 4;
-        const zeroPaddedInputValue = inputValue.padStart(digit, '0');
-        const taggedInputValue = colorLeadingZero(zeroPaddedInputValue);
-        const sourceRadix = 2;
-        const bin = inputValueAsInt.toString(sourceRadix);
-        
-        const destinationRadix = 10;
-        const outputArea = document.getElementById('outputArea');
-        const msg1 = '<span class ="' + historyClassName + '">' + taggedInputValue + '<sub>(' + sourceRadix + ')</sub></span>';
-        const msg2 = concatinateStrings(msg1, outputArea.innerHTML);
-        outputArea.innerHTML = msg2;
-        console.log(msg1);
-        console.log(msg2);
-        
-        if (inputValueAsInt == answer) {
-            
-            let nextNumber = 0;
-            
-            console.log(last_answers);
-            do {
-                nextNumber = getRandomBetween(1, 15);
-                console.log(nextNumber);
-                console.log(last_answers.some((element) => element == nextNumber));
-            } while (last_answers.some((element) => element == nextNumber));
-            
-            const nextAnswer = 16 - nextNumber;
-            const nextBin = nextNumber.toString(sourceRadix).padStart(4, '0');
-            console.log(nextAnswer);
-            console.log(nextBin);
-            
-            document.getElementById('questionSpan').innerText = nextBin;
-            
-            const reversedBin = [...nextBin].map(x => x === "1" ? "0" : "1").join('');
-            console.log(reversedBin);
-
-            const nextHint = formatString(hint_format, [nextBin, reversedBin]);
-            const hintArea = document.getElementById('hintArea');
-            hintArea.innerHTML = nextHint;
-            console.log(nextHint);
-            
-            numberInput.value = '';
-
-            const answersToKeep = 8;
-            const lastAnswers = [nextNumber].concat(last_answers).slice(0, answersToKeep);
-            document.getElementById('submitButton').onclick = function() { checkAnswerCmp(nextBin, nextAnswer, lastAnswers, hint_format); return false; };
-        }
+        historyClassName = 'history-wrong';
     }
     
-    numberInput.focus();
+    // Converting the input in order to use in the history message.
+    const digit = 4;
+    const zeroPaddedInputValue = inputValue.padStart(digit, '0');
+    const taggedInputValue = colorLeadingZero(zeroPaddedInputValue);
+    const sourceRadix = 2;
+    const bin = inputValueAsInt.toString(sourceRadix);
+    
+    // Making a new history and updating the history with the new one.
+    const destinationRadix = 10;
+    const outputArea = document.getElementById('outputArea');
+    const msg1 = '<span class ="' + historyClassName + '">' + taggedInputValue + '<sub>(' + sourceRadix + ')</sub></span>';
+    const msg2 = concatinateStrings(msg1, outputArea.innerHTML);
+    outputArea.innerHTML = msg2;
+    console.log(msg1);
+    console.log(msg2);
+    
+    if (inputValueAsInt == answer) {
+        // Making the next question.
+        let nextNumber = 0;
+        
+        console.log(last_answers);
+        do {
+            nextNumber = getRandomBetween(1, 15);
+            console.log(nextNumber);
+            console.log(last_answers.some((element) => element == nextNumber));
+        } while (last_answers.some((element) => element == nextNumber));
+        
+        const nextAnswer = 16 - nextNumber;
+        const nextBin = nextNumber.toString(sourceRadix).padStart(4, '0');
+        console.log(nextAnswer);
+        console.log(nextBin);
+        
+        document.getElementById('questionSpan').innerText = nextBin;
+        
+        const reversedBin = [...nextBin].map(x => x === "1" ? "0" : "1").join('');
+        console.log(reversedBin);
+
+        const nextHint = formatString(hint_format, [nextBin, reversedBin]);
+        document.getElementById('hintArea').innerHTML = nextHint;
+        console.log(nextHint);
+        
+        numberInput.value = '';
+
+        // Updating `lastAnswers`.
+        // These numbers will not be used for the next question.
+        const answersToKeep = 8;
+        const lastAnswers = [nextNumber].concat(last_answers).slice(0, answersToKeep);
+
+        // Setting the next answer to the check button.
+        document.getElementById('submitButton').onclick = function() { checkAnswerCmp(nextBin, nextAnswer, lastAnswers, hint_format); return false; };
+    }
 }
 
 function initComplement () {
-    // initialization
+    // Initialization.
     const sourceRadix = 2;
     const destinationRadix = 2;
 

@@ -4,72 +4,78 @@
 // This software is licensed under the MIT License.
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
 function checkAnswerPot1 (answer, hint_format, last_answers) {
+    // Getting the user input.
     const numberInput = document.getElementById('numberInput');
     const userInput = escapeHtml(numberInput.value);
     console.log(userInput);
 
-    const hintArea = document.getElementById('hintArea');
-    const errorArea = document.getElementById('errorArea');
-    errorArea.innerHTML = '';
+    numberInput.focus();
+
+    // Making an error message.
+    const errorMessage = newErrorMessageBin(answer, userInput);
+    document.getElementById('errorArea').innerHTML = errorMessage;
     
-    if (userInput == '') {
-        errorArea.innerHTML = '<span class="warning">' + answer + ' の2進法表記を入力してください。</span>';
-    } else if (testBinaryString(userInput) == false) {
-        errorArea.innerHTML = '<span class="warning">"' + userInput + '" は2進数ではありません。使えるのは半角の 0 と 1 のみです。</span>';
-    } else {
-        
-        const binaryDigit = 8;
-        const zeroPaddedBin = userInput.padStart(binaryDigit, '0');
-        const taggedBin = colorLeadingZero(zeroPaddedBin);
-        console.log(zeroPaddedBin);
-        console.log(taggedBin);
-        
-        const destinationRadix = 2;
-        const userInputToDestRadix = parseInt(userInput, destinationRadix);
-        console.log(userInputToDestRadix);
-        
-        const decimalDigit = 3;
-        const spacePaddedDec = userInputToDestRadix.toString().padStart(decimalDigit, ' ').replace(' ', '&nbsp;');
-        
-        const sourceRadix = 10;
-        const outputArea = document.getElementById('outputArea');
-        const currentHistoryMessage = newHistory((userInputToDestRadix == answer), taggedBin, destinationRadix, spacePaddedDec, sourceRadix);
-        const historyMessage = concatinateStrings(currentHistoryMessage, outputArea.innerHTML);
-        console.log(currentHistoryMessage);
-        console.log(historyMessage);
-        outputArea.innerHTML = historyMessage;
-        
-        if (userInputToDestRadix == answer) {
-            let nextIndexNumber = 0;
-            let nextAnswer = 0;
-
-            console.log(last_answers);
-            do {
-                nextIndexNumber = getRandomBetween(0, 7);
-                nextAnswer = Math.pow(2, nextIndexNumber);
-                console.log(nextAnswer);
-                console.log(last_answers.some((element) => element == nextAnswer));
-            } while (last_answers.some((element) => element == nextAnswer));
-            
-            const nextHint = formatString(hint_format, [nextAnswer, nextIndexNumber]);
-            console.log(nextHint);
-            
-            document.getElementById('questionSpan').innerText = nextAnswer;
-            hintArea.innerHTML = nextHint;
-            numberInput.value = '';
-
-            const answersToKeep = 4;
-            const lastAnswers = [nextAnswer].concat(last_answers).slice(0, answersToKeep);
-            document.getElementById('submitButton').onclick = function() { checkAnswerPot1(nextAnswer, hint_format, lastAnswers); return false; };
-        }
+    // Exits when the input was invalid.
+    if (errorMessage) {
+        return;
     }
     
-    numberInput.focus();
+    // Converting the input in order to use in the history message.
+    const binaryDigit = 8;
+    const zeroPaddedBin = userInput.padStart(binaryDigit, '0');
+    const taggedBin = colorLeadingZero(zeroPaddedBin);
+    console.log(zeroPaddedBin);
+    console.log(taggedBin);
+    
+    const destinationRadix = 2;
+    const userInputToDestRadix = parseInt(userInput, destinationRadix);
+    console.log(userInputToDestRadix);
+    
+    const decimalDigit = 3;
+    const spacePaddedDec = userInputToDestRadix.toString().padStart(decimalDigit, ' ').replace(' ', '&nbsp;');
+    
+    // Making a new history and updating the history with the new one.
+    const sourceRadix = 10;
+    const outputArea = document.getElementById('outputArea');
+    const currentHistoryMessage = newHistory((userInputToDestRadix == answer), taggedBin, destinationRadix, spacePaddedDec, sourceRadix);
+    const historyMessage = concatinateStrings(currentHistoryMessage, outputArea.innerHTML);
+    console.log(currentHistoryMessage);
+    console.log(historyMessage);
+    outputArea.innerHTML = historyMessage;
+    
+    if (userInputToDestRadix == answer) {
+        // Making the next question.
+        let nextIndexNumber = 0;
+        let nextAnswer = 0;
+
+        console.log(last_answers);
+        do {
+            nextIndexNumber = getRandomBetween(0, 7);
+            nextAnswer = Math.pow(2, nextIndexNumber);
+            console.log(nextAnswer);
+            console.log(last_answers.some((element) => element == nextAnswer));
+        } while (last_answers.some((element) => element == nextAnswer));
+        
+        const nextHint = formatString(hint_format, [nextAnswer, nextIndexNumber]);
+        console.log(nextHint);
+        
+        document.getElementById('questionSpan').innerText = nextAnswer;
+        document.getElementById('hintArea').innerHTML = nextHint;
+        numberInput.value = '';
+
+        // Updating `lastAnswers`.
+        // These numbers will not be used for the next question.
+        const answersToKeep = 4;
+        const lastAnswers = [nextAnswer].concat(last_answers).slice(0, answersToKeep);
+
+        // Setting the next answer to the check button.
+        document.getElementById('submitButton').onclick = function() { checkAnswerPot1(nextAnswer, hint_format, lastAnswers); return false; };
+    }
 }
 
 
 function initPowerOfTwo1 () {
-    // initialization.
+    // Initialization.
     const initIndexNumber = getRandomBetween(0, 7);
     const initAnswer = Math.pow(2, initIndexNumber);
 

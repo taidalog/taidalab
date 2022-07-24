@@ -4,71 +4,77 @@
 // This software is licensed under the MIT License.
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
 function checkAnswerb2d1 (answer, question, last_answers, hint_format) {
-    const hintArea = document.getElementById('hintArea');
-    const errorArea = document.getElementById('errorArea');
-    errorArea.innerHTML = '';
-
+    // Getting the user input.
     const numberInput = document.getElementById('numberInput');
     const inputValue = escapeHtml(numberInput.value);
     console.log('inputValue : ' + inputValue);
 
-    if (inputValue == '') {
-        const questionWithoutSpace = question.replace(' ', '');
-        errorArea.innerHTML = '<span class="warning">' + questionWithoutSpace + ' の10進法表記を入力してください。</span>';
-    } else if (testDecimalString(inputValue) == false) {
-        errorArea.innerHTML = '<span class="warning">"' + inputValue + '" は10進数ではありません。使えるのは半角の 0123456789 のみです。</span>';
-    } else {
+    numberInput.focus();
 
-        const inputValueAsInt = parseInt(inputValue);
-        
-        const digit = 3;
-        const spacePaddedInputValue = inputValue.padStart(digit, ' ').replace(' ', '&nbsp;');
-        
-        const sourceRadix = 2;
-        const bin = inputValueAsInt.toString(sourceRadix);
-        
-        const destinationRadix = 10;
-        const outputArea = document.getElementById('outputArea');
-        const currentHistoryMessage = newHistory((inputValueAsInt == answer), spacePaddedInputValue, destinationRadix, bin, sourceRadix);
-        const historyMessage = concatinateStrings(currentHistoryMessage, outputArea.innerHTML);
-        console.log(currentHistoryMessage);
-        console.log(historyMessage);
-        outputArea.innerHTML = historyMessage;
-        
-        if (inputValueAsInt == answer) {
-            let nextIndexNumber = 0;
-            let nextNumber = 0;
-            
-            console.log(last_answers);
-            do {
-                nextIndexNumber = getRandomBetween(0, 7);
-                nextNumber = Math.pow(2, nextIndexNumber);
-                console.log(nextNumber);
-                console.log(nextIndexNumber);
-                console.log(last_answers.some((element) => element == nextNumber));
-            } while (last_answers.some((element) => element == nextNumber));
-
-            const nextBin = nextNumber.toString(sourceRadix);
-            const splitBin = splitBinaryStringBy(4, nextBin);
-            console.log(nextBin);
-            console.log(splitBin);
-            
-            document.getElementById('questionSpan').innerText = splitBin;
-            
-            const nextAddtionFormula = writeAdditionFormula(nextBin);
-            const nextHint = formatString(hint_format, [nextBin, nextAddtionFormula]);
-            console.log(nextHint);
-            
-            hintArea.innerHTML = nextHint;
-            numberInput.value = '';
-
-            const answersToKeep = 4;
-            const lastAnswers = [nextNumber].concat(last_answers).slice(0, answersToKeep);
-            document.getElementById('submitButton').onclick = function() { checkAnswerb2d1(nextNumber, splitBin, lastAnswers, hint_format); return false; };
-        }
+    // Making an error message.
+    const questionWithoutSpace = question.replace(' ', '');
+    const errorMessage = newErrorMessageDec(questionWithoutSpace, inputValue);
+    document.getElementById('errorArea').innerHTML = errorMessage;
+    
+    // Exits when the input was invalid.
+    if (errorMessage) {
+        return;
     }
     
-    numberInput.focus();
+    const inputValueAsInt = parseInt(inputValue);
+    
+    // Converting the input in order to use in the history message.
+    const digit = 3;
+    const spacePaddedInputValue = inputValue.padStart(digit, ' ').replace(' ', '&nbsp;');
+    
+    const sourceRadix = 2;
+    const bin = inputValueAsInt.toString(sourceRadix);
+    
+    // Making a new history and updating the history with the new one.
+    const destinationRadix = 10;
+    const outputArea = document.getElementById('outputArea');
+    const currentHistoryMessage = newHistory((inputValueAsInt == answer), spacePaddedInputValue, destinationRadix, bin, sourceRadix);
+    const historyMessage = concatinateStrings(currentHistoryMessage, outputArea.innerHTML);
+    console.log(currentHistoryMessage);
+    console.log(historyMessage);
+    outputArea.innerHTML = historyMessage;
+    
+    if (inputValueAsInt == answer) {
+        // Making the next question.
+        let nextIndexNumber = 0;
+        let nextNumber = 0;
+        
+        console.log(last_answers);
+        do {
+            nextIndexNumber = getRandomBetween(0, 7);
+            nextNumber = Math.pow(2, nextIndexNumber);
+            console.log(nextNumber);
+            console.log(nextIndexNumber);
+            console.log(last_answers.some((element) => element == nextNumber));
+        } while (last_answers.some((element) => element == nextNumber));
+
+        const nextBin = nextNumber.toString(sourceRadix);
+        const splitBin = splitBinaryStringBy(4, nextBin);
+        console.log(nextBin);
+        console.log(splitBin);
+        
+        document.getElementById('questionSpan').innerText = splitBin;
+        
+        const nextAddtionFormula = writeAdditionFormula(nextBin);
+        const nextHint = formatString(hint_format, [nextBin, nextAddtionFormula]);
+        console.log(nextHint);
+        
+        document.getElementById('hintArea').innerHTML = nextHint;
+        numberInput.value = '';
+
+        // Updating `lastAnswers`.
+        // These numbers will not be used for the next question.
+        const answersToKeep = 4;
+        const lastAnswers = [nextNumber].concat(last_answers).slice(0, answersToKeep);
+
+        // Setting the next answer to the check button.
+        document.getElementById('submitButton').onclick = function() { checkAnswerb2d1(nextNumber, splitBin, lastAnswers, hint_format); return false; };
+    }
 }
 
 
@@ -89,7 +95,7 @@ function writeAdditionFormula (binary_string) {
 }
 
 function initBin2Dec1 () {
-    // initialization
+    // Initialization.
     const initIndexNumber = getRandomBetween(0, 7);
     const initNumber = Math.pow(2,initIndexNumber);
     const initBin = initNumber.toString(2);
