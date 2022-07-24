@@ -4,29 +4,34 @@
 // This software is licensed under the MIT License.
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
 function checkAnswerb2d1 (answer, question, last_answers, hint_format) {
+    // Getting the user input.
     const numberInput = document.getElementById('numberInput');
     const inputValue = escapeHtml(numberInput.value);
     console.log('inputValue : ' + inputValue);
 
     numberInput.focus();
 
+    // Making an error message.
     const questionWithoutSpace = question.replace(' ', '');
     const errorMessage = newErrorMessageDec(questionWithoutSpace, inputValue);
     const errorArea = document.getElementById('errorArea');
     errorArea.innerHTML = errorMessage;
     
+    // Exits when the input was invalid.
     if (errorMessage) {
         return;
     }
     
     const inputValueAsInt = parseInt(inputValue);
     
+    // Converting the input in order to use in the history message.
     const digit = 3;
     const spacePaddedInputValue = inputValue.padStart(digit, ' ').replace(' ', '&nbsp;');
     
     const sourceRadix = 2;
     const bin = inputValueAsInt.toString(sourceRadix);
     
+    // Making a new history and updating the history with the new one.
     const destinationRadix = 10;
     const outputArea = document.getElementById('outputArea');
     const currentHistoryMessage = newHistory((inputValueAsInt == answer), spacePaddedInputValue, destinationRadix, bin, sourceRadix);
@@ -36,6 +41,7 @@ function checkAnswerb2d1 (answer, question, last_answers, hint_format) {
     outputArea.innerHTML = historyMessage;
     
     if (inputValueAsInt == answer) {
+        // Making the next question.
         let nextIndexNumber = 0;
         let nextNumber = 0;
         
@@ -62,8 +68,12 @@ function checkAnswerb2d1 (answer, question, last_answers, hint_format) {
         document.getElementById('hintArea').innerHTML = nextHint;
         numberInput.value = '';
 
+        // Updating `lastAnswers`.
+        // These numbers will not be used for the next question.
         const answersToKeep = 4;
         const lastAnswers = [nextNumber].concat(last_answers).slice(0, answersToKeep);
+
+        // Setting the next answer to the check button.
         document.getElementById('submitButton').onclick = function() { checkAnswerb2d1(nextNumber, splitBin, lastAnswers, hint_format); return false; };
     }
 }
@@ -86,7 +96,7 @@ function writeAdditionFormula (binary_string) {
 }
 
 function initBin2Dec1 () {
-    // initialization
+    // Initialization.
     const initIndexNumber = getRandomBetween(0, 7);
     const initNumber = Math.pow(2,initIndexNumber);
     const initBin = initNumber.toString(2);

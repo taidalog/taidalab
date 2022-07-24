@@ -4,10 +4,12 @@
 // This software is licensed under the MIT License.
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
 function checkAnswerCmp (question, answer, last_answers, hint_format) {
+    // Getting the user input.
     const numberInput = document.getElementById('numberInput');
     const inputValue = escapeHtml(numberInput.value);
     console.log('inputValue : ' + inputValue);
 
+    // Making an error message.
     let errorMessage = '';
     if (inputValue == '') {
         const questionWithoutSpace = question.replace(' ', '');
@@ -19,6 +21,7 @@ function checkAnswerCmp (question, answer, last_answers, hint_format) {
     const errorArea = document.getElementById('errorArea');
     errorArea.innerHTML = errorMessage;
     
+    // Exits when the input was invalid.
     if (errorMessage) {
         return;
     }
@@ -32,12 +35,14 @@ function checkAnswerCmp (question, answer, last_answers, hint_format) {
         historyClassName = 'history-wrong';
     }
     
+    // Converting the input in order to use in the history message.
     const digit = 4;
     const zeroPaddedInputValue = inputValue.padStart(digit, '0');
     const taggedInputValue = colorLeadingZero(zeroPaddedInputValue);
     const sourceRadix = 2;
     const bin = inputValueAsInt.toString(sourceRadix);
     
+    // Making a new history and updating the history with the new one.
     const destinationRadix = 10;
     const outputArea = document.getElementById('outputArea');
     const msg1 = '<span class ="' + historyClassName + '">' + taggedInputValue + '<sub>(' + sourceRadix + ')</sub></span>';
@@ -47,7 +52,7 @@ function checkAnswerCmp (question, answer, last_answers, hint_format) {
     console.log(msg2);
     
     if (inputValueAsInt == answer) {
-        
+        // Making the next question.
         let nextNumber = 0;
         
         console.log(last_answers);
@@ -73,14 +78,18 @@ function checkAnswerCmp (question, answer, last_answers, hint_format) {
         
         numberInput.value = '';
 
+        // Updating `lastAnswers`.
+        // These numbers will not be used for the next question.
         const answersToKeep = 8;
         const lastAnswers = [nextNumber].concat(last_answers).slice(0, answersToKeep);
+
+        // Setting the next answer to the check button.
         document.getElementById('submitButton').onclick = function() { checkAnswerCmp(nextBin, nextAnswer, lastAnswers, hint_format); return false; };
     }
 }
 
 function initComplement () {
-    // initialization
+    // Initialization.
     const sourceRadix = 2;
     const destinationRadix = 2;
 

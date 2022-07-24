@@ -4,20 +4,24 @@
 // This software is licensed under the MIT License.
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
 function checkAnswerPot1 (answer, hint_format, last_answers) {
+    // Getting the user input.
     const numberInput = document.getElementById('numberInput');
     const userInput = escapeHtml(numberInput.value);
     console.log(userInput);
 
     numberInput.focus();
 
+    // Making an error message.
     const errorMessage = newErrorMessageBin(answer, userInput);
     const errorArea = document.getElementById('errorArea');
     errorArea.innerHTML = errorMessage;
     
+    // Exits when the input was invalid.
     if (errorMessage) {
         return;
     }
     
+    // Converting the input in order to use in the history message.
     const binaryDigit = 8;
     const zeroPaddedBin = userInput.padStart(binaryDigit, '0');
     const taggedBin = colorLeadingZero(zeroPaddedBin);
@@ -31,6 +35,7 @@ function checkAnswerPot1 (answer, hint_format, last_answers) {
     const decimalDigit = 3;
     const spacePaddedDec = userInputToDestRadix.toString().padStart(decimalDigit, ' ').replace(' ', '&nbsp;');
     
+    // Making a new history and updating the history with the new one.
     const sourceRadix = 10;
     const outputArea = document.getElementById('outputArea');
     const currentHistoryMessage = newHistory((userInputToDestRadix == answer), taggedBin, destinationRadix, spacePaddedDec, sourceRadix);
@@ -40,6 +45,7 @@ function checkAnswerPot1 (answer, hint_format, last_answers) {
     outputArea.innerHTML = historyMessage;
     
     if (userInputToDestRadix == answer) {
+        // Making the next question.
         let nextIndexNumber = 0;
         let nextAnswer = 0;
 
@@ -58,15 +64,19 @@ function checkAnswerPot1 (answer, hint_format, last_answers) {
         document.getElementById('hintArea').innerHTML = nextHint;
         numberInput.value = '';
 
+        // Updating `lastAnswers`.
+        // These numbers will not be used for the next question.
         const answersToKeep = 4;
         const lastAnswers = [nextAnswer].concat(last_answers).slice(0, answersToKeep);
+
+        // Setting the next answer to the check button.
         document.getElementById('submitButton').onclick = function() { checkAnswerPot1(nextAnswer, hint_format, lastAnswers); return false; };
     }
 }
 
 
 function initPowerOfTwo1 () {
-    // initialization.
+    // Initialization.
     const initIndexNumber = getRandomBetween(0, 7);
     const initAnswer = Math.pow(2, initIndexNumber);
 

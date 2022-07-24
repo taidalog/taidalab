@@ -4,6 +4,7 @@
 // This software is licensed under the MIT License.
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
 function checkAnswerAdd(answer, num1, num2, last_answers) {
+    // Getting the user input.
     const numberInput = document.getElementById('numberInput');
     const bin = escapeHtml(numberInput.value);
     console.log(bin);
@@ -12,6 +13,7 @@ function checkAnswerAdd(answer, num1, num2, last_answers) {
 
     const sourceRadix = 2;
     
+    // Making an error message.
     let errorMessage = '';
     if (bin == '') {
         errorMessage = '<span class="warning">' + num1.toString(sourceRadix) + '<small>(' + sourceRadix + ')</small>' + num2.toString(sourceRadix)+ '<small>(' + sourceRadix + ')</small>' + ' の2進法表記を入力してください。</span>';
@@ -22,10 +24,12 @@ function checkAnswerAdd(answer, num1, num2, last_answers) {
     const errorArea = document.getElementById('errorArea');
     errorArea.innerHTML = errorMessage;
     
+    // Exits when the input was invalid.
     if (errorMessage) {
         return;
     }
     
+    // Converting the input in order to use in the history message.
     const digit = 8;
     const zeroPaddedBin = bin.padStart(digit, '0');
     const taggedBin = colorLeadingZero(zeroPaddedBin);
@@ -33,6 +37,7 @@ function checkAnswerAdd(answer, num1, num2, last_answers) {
     console.log(taggedBin);
     console.log(dec);
     
+    // Making a new history and updating the history with the new one.
     const destinationRadix = 10;
     const outputArea = document.getElementById('outputArea');
     const currentHistoryMessage = newHistory((dec == answer), taggedBin, sourceRadix, dec, destinationRadix);
@@ -42,7 +47,7 @@ function checkAnswerAdd(answer, num1, num2, last_answers) {
     outputArea.innerHTML = historyMessage;
     
     if (dec == answer) {
-        // Making next question.
+        // Making the next question.
         let numbers = [];
 
         console.log(last_answers);
@@ -65,8 +70,12 @@ function checkAnswerAdd(answer, num1, num2, last_answers) {
 
         numberInput.value = '';
 
+        // Updating `lastAnswers`.
+        // These numbers will not be used for the next question.
         const answersToKeep = 20;
         const lastAnswers = [numbers[0], numbers[1]].concat(last_answers).slice(0, answersToKeep);
+
+        // Setting the next answer to the check button.
         document.getElementById('submitButton').onclick = function () { checkAnswerAdd((numbers[0] + numbers[1]), numbers[0], numbers[1], lastAnswers); return false; };
     }
 }
@@ -115,7 +124,7 @@ function newHintAdd () {
 
 
 function initAddition () {
-    // initialization
+    // Initialization.
     const sourceRadix = 2;
     const destinationRadix = 2;
     const hint = newHintAdd();
