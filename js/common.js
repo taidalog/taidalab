@@ -17,6 +17,26 @@ function testDecimalString (decimal_string) {
     return reCorrect.test(decimal_string);
 }
 
+function newErrorMessageBin (answer, input) {
+    if (input == '') {
+        return '<span class="warning">' + answer + ' の2進法表記を入力してください。</span>';
+    } else if (testBinaryString(input) == false) {
+        return '<span class="warning">"' + input + '" は2進数ではありません。使えるのは半角の 0 と 1 のみです。</span>';
+    } else {
+        return '';
+    }
+}
+
+function newErrorMessageDec (answer, input) {
+    if (input == '') {
+        return '<span class="warning">' + answer + ' の10進法表記を入力してください。</span>';
+    } else if (testDecimalString(input) == false) {
+        return '<span class="warning">"' + input + '" は10進数ではありません。使えるのは半角の 0123456789 のみです。</span>';
+    } else {
+        return '';
+    }
+}
+
 function concatinateStrings (new_string, existing_string) {
     if (existing_string == "" || existing_string == null) {
         return new_string;

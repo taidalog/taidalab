@@ -5,66 +5,65 @@
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
 function checkAnswerPot2 (answer, hint_format, last_answers) {
     const hintArea = document.getElementById('hintArea');
-    const errorArea = document.getElementById('errorArea');
-    errorArea.innerHTML = '';
-
+    
     const numberInput = document.getElementById('numberInput');
     const bin = escapeHtml(numberInput.value);
     console.log(bin);
 
-    if (bin == '') {
-        errorArea.innerHTML = '<span class="warning">' + answer + ' の2進法表記を入力してください。</span>';
-    } else if (testBinaryString(bin) == false) {
-        errorArea.innerHTML = '<span class="warning">"' + bin + '" は2進数ではありません。使えるのは半角の 0 と 1 のみです。</span>';
-    } else {
-
-        const binaryDigit = 8;
-        const zeroPaddedBin = bin.padStart(binaryDigit, '0');
-        const taggedBin = colorLeadingZero(zeroPaddedBin);
-        console.log(taggedBin);
-        
-        const destinationRadix = 2;
-        const dec = parseInt(bin, destinationRadix);
-        console.log(dec);
-        
-        const decimalDigit = 3;
-        const spacePaddedDec = dec.toString().padStart(decimalDigit, ' ').replace(' ', '&nbsp;');
-        
-        const sourceRadix = 10;
-        const outputArea = document.getElementById('outputArea');
-        const currentHistoryMessage = newHistory((dec == answer), taggedBin, destinationRadix, spacePaddedDec, sourceRadix);
-        const historyMessage = concatinateStrings(currentHistoryMessage, outputArea.innerHTML);
-        console.log(currentHistoryMessage);
-        console.log(historyMessage);
-        outputArea.innerHTML = historyMessage;
-        
-        if (dec == answer) {
-            let nextNumber = 0;
-            let nextIndexNumber = 0;
-            
-            console.log(last_answers);
-            do {
-                nextIndexNumber = getRandomBetween(1, 8);
-                nextNumber = Math.pow(2, nextIndexNumber) - 1;
-                console.log(nextNumber);
-                console.log(last_answers.some((element) => element == nextNumber));
-            } while (last_answers.some((element) => element == nextNumber));
-            
-            document.getElementById('questionSpan').innerText = nextNumber;
-            
-            const nextHint = formatString(hint_format, [nextNumber, nextNumber + 1, nextIndexNumber]);
-            hintArea.innerHTML = nextHint;
-            console.log(nextHint);
-
-            numberInput.value = '';
-
-            const answersToKeep = 4;
-            const lastAnswers = [nextNumber].concat(last_answers).slice(0, answersToKeep);
-            document.getElementById('submitButton').onclick = function() { checkAnswerPot2(nextNumber, hint_format, lastAnswers); return false;  };
-        }
-    }
-    
     numberInput.focus();
+
+    const errorMessage = newErrorMessageBin(answer, bin);
+    const errorArea = document.getElementById('errorArea');
+    errorArea.innerHTML = errorMessage;
+    
+    if (errorMessage) {
+        return;
+    }
+
+    const binaryDigit = 8;
+    const zeroPaddedBin = bin.padStart(binaryDigit, '0');
+    const taggedBin = colorLeadingZero(zeroPaddedBin);
+    console.log(taggedBin);
+    
+    const destinationRadix = 2;
+    const dec = parseInt(bin, destinationRadix);
+    console.log(dec);
+    
+    const decimalDigit = 3;
+    const spacePaddedDec = dec.toString().padStart(decimalDigit, ' ').replace(' ', '&nbsp;');
+    
+    const sourceRadix = 10;
+    const outputArea = document.getElementById('outputArea');
+    const currentHistoryMessage = newHistory((dec == answer), taggedBin, destinationRadix, spacePaddedDec, sourceRadix);
+    const historyMessage = concatinateStrings(currentHistoryMessage, outputArea.innerHTML);
+    console.log(currentHistoryMessage);
+    console.log(historyMessage);
+    outputArea.innerHTML = historyMessage;
+    
+    if (dec == answer) {
+        let nextNumber = 0;
+        let nextIndexNumber = 0;
+        
+        console.log(last_answers);
+        do {
+            nextIndexNumber = getRandomBetween(1, 8);
+            nextNumber = Math.pow(2, nextIndexNumber) - 1;
+            console.log(nextNumber);
+            console.log(last_answers.some((element) => element == nextNumber));
+        } while (last_answers.some((element) => element == nextNumber));
+        
+        document.getElementById('questionSpan').innerText = nextNumber;
+        
+        const nextHint = formatString(hint_format, [nextNumber, nextNumber + 1, nextIndexNumber]);
+        hintArea.innerHTML = nextHint;
+        console.log(nextHint);
+
+        numberInput.value = '';
+
+        const answersToKeep = 4;
+        const lastAnswers = [nextNumber].concat(last_answers).slice(0, answersToKeep);
+        document.getElementById('submitButton').onclick = function() { checkAnswerPot2(nextNumber, hint_format, lastAnswers); return false;  };
+    }
 }
 
 

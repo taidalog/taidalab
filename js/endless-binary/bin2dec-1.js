@@ -5,70 +5,69 @@
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
 function checkAnswerb2d1 (answer, question, last_answers, hint_format) {
     const hintArea = document.getElementById('hintArea');
-    const errorArea = document.getElementById('errorArea');
-    errorArea.innerHTML = '';
 
     const numberInput = document.getElementById('numberInput');
     const inputValue = escapeHtml(numberInput.value);
     console.log('inputValue : ' + inputValue);
 
-    if (inputValue == '') {
-        const questionWithoutSpace = question.replace(' ', '');
-        errorArea.innerHTML = '<span class="warning">' + questionWithoutSpace + ' の10進法表記を入力してください。</span>';
-    } else if (testDecimalString(inputValue) == false) {
-        errorArea.innerHTML = '<span class="warning">"' + inputValue + '" は10進数ではありません。使えるのは半角の 0123456789 のみです。</span>';
-    } else {
+    numberInput.focus();
 
-        const inputValueAsInt = parseInt(inputValue);
-        
-        const digit = 3;
-        const spacePaddedInputValue = inputValue.padStart(digit, ' ').replace(' ', '&nbsp;');
-        
-        const sourceRadix = 2;
-        const bin = inputValueAsInt.toString(sourceRadix);
-        
-        const destinationRadix = 10;
-        const outputArea = document.getElementById('outputArea');
-        const currentHistoryMessage = newHistory((inputValueAsInt == answer), spacePaddedInputValue, destinationRadix, bin, sourceRadix);
-        const historyMessage = concatinateStrings(currentHistoryMessage, outputArea.innerHTML);
-        console.log(currentHistoryMessage);
-        console.log(historyMessage);
-        outputArea.innerHTML = historyMessage;
-        
-        if (inputValueAsInt == answer) {
-            let nextIndexNumber = 0;
-            let nextNumber = 0;
-            
-            console.log(last_answers);
-            do {
-                nextIndexNumber = getRandomBetween(0, 7);
-                nextNumber = Math.pow(2, nextIndexNumber);
-                console.log(nextNumber);
-                console.log(nextIndexNumber);
-                console.log(last_answers.some((element) => element == nextNumber));
-            } while (last_answers.some((element) => element == nextNumber));
-
-            const nextBin = nextNumber.toString(sourceRadix);
-            const splitBin = splitBinaryStringBy(4, nextBin);
-            console.log(nextBin);
-            console.log(splitBin);
-            
-            document.getElementById('questionSpan').innerText = splitBin;
-            
-            const nextAddtionFormula = writeAdditionFormula(nextBin);
-            const nextHint = formatString(hint_format, [nextBin, nextAddtionFormula]);
-            console.log(nextHint);
-            
-            hintArea.innerHTML = nextHint;
-            numberInput.value = '';
-
-            const answersToKeep = 4;
-            const lastAnswers = [nextNumber].concat(last_answers).slice(0, answersToKeep);
-            document.getElementById('submitButton').onclick = function() { checkAnswerb2d1(nextNumber, splitBin, lastAnswers, hint_format); return false; };
-        }
+    const questionWithoutSpace = question.replace(' ', '');
+    const errorMessage = newErrorMessageDec(questionWithoutSpace, inputValue);
+    const errorArea = document.getElementById('errorArea');
+    errorArea.innerHTML = errorMessage;
+    
+    if (errorMessage) {
+        return;
     }
     
-    numberInput.focus();
+    const inputValueAsInt = parseInt(inputValue);
+    
+    const digit = 3;
+    const spacePaddedInputValue = inputValue.padStart(digit, ' ').replace(' ', '&nbsp;');
+    
+    const sourceRadix = 2;
+    const bin = inputValueAsInt.toString(sourceRadix);
+    
+    const destinationRadix = 10;
+    const outputArea = document.getElementById('outputArea');
+    const currentHistoryMessage = newHistory((inputValueAsInt == answer), spacePaddedInputValue, destinationRadix, bin, sourceRadix);
+    const historyMessage = concatinateStrings(currentHistoryMessage, outputArea.innerHTML);
+    console.log(currentHistoryMessage);
+    console.log(historyMessage);
+    outputArea.innerHTML = historyMessage;
+    
+    if (inputValueAsInt == answer) {
+        let nextIndexNumber = 0;
+        let nextNumber = 0;
+        
+        console.log(last_answers);
+        do {
+            nextIndexNumber = getRandomBetween(0, 7);
+            nextNumber = Math.pow(2, nextIndexNumber);
+            console.log(nextNumber);
+            console.log(nextIndexNumber);
+            console.log(last_answers.some((element) => element == nextNumber));
+        } while (last_answers.some((element) => element == nextNumber));
+
+        const nextBin = nextNumber.toString(sourceRadix);
+        const splitBin = splitBinaryStringBy(4, nextBin);
+        console.log(nextBin);
+        console.log(splitBin);
+        
+        document.getElementById('questionSpan').innerText = splitBin;
+        
+        const nextAddtionFormula = writeAdditionFormula(nextBin);
+        const nextHint = formatString(hint_format, [nextBin, nextAddtionFormula]);
+        console.log(nextHint);
+        
+        hintArea.innerHTML = nextHint;
+        numberInput.value = '';
+
+        const answersToKeep = 4;
+        const lastAnswers = [nextNumber].concat(last_answers).slice(0, answersToKeep);
+        document.getElementById('submitButton').onclick = function() { checkAnswerb2d1(nextNumber, splitBin, lastAnswers, hint_format); return false; };
+    }
 }
 
 

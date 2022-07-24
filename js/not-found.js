@@ -4,46 +4,44 @@
 // This software is licensed under the MIT License.
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
 function checkAnswer (answer) {
-    const errorArea = document.getElementById('errorArea');
-    errorArea.innerHTML = '';
-    
     const numberInput = document.getElementById('numberInput');
     const bin = escapeHtml(numberInput.value);
     console.log(bin);
     
-    if (bin == '') {
-        errorArea.innerHTML = '<span class="warning">' + answer + ' の2進法表記を入力してください。</span>';
-    } else if (testBinaryString(bin) == false) {
-        errorArea.innerHTML = '<span class="warning">"' + bin + '" は2進数ではありません。使えるのは半角の 0 と 1 のみです。</span>';
-    } else {
-        
-        const binaryDigit = 9;
-        const destinationRadix = 2;
-        const zeroPaddedBin = bin.padStart(binaryDigit, '0');
-        const taggedBin = colorLeadingZero(zeroPaddedBin);
-        const dec = parseInt(bin, destinationRadix);
-        console.log(taggedBin);
-        console.log(dec);
-        
-        const decimalDigit = 3;
-        const spacePaddedDec = dec.toString().padStart(decimalDigit, ' ').replace(' ', '&nbsp;');
-        
-        const sourceRadix = 10;
-        const outputArea = document.getElementById('outputArea');
-        const currentHistoryMessage = newHistory((dec == answer), taggedBin, sourceRadix, spacePaddedDec, destinationRadix);
-        const historyMessage = concatinateStrings(currentHistoryMessage, outputArea.innerHTML);
-        console.log(currentHistoryMessage);
-        console.log(historyMessage);
-        outputArea.innerHTML = historyMessage;
-        
-        if (dec == answer) {
-            const initialObject = newInitObject('/');
-            window.history.replaceState(null, null, initialObject.pathname);
-            initPage(initialObject);
-        }
+    numberInput.focus();
+
+    const errorMessage = newErrorMessageBin(answer, bin);
+    const errorArea = document.getElementById('errorArea');
+    errorArea.innerHTML = errorMessage;
+    
+    if (errorMessage) {
+        return;
     }
     
-    numberInput.focus();
+    const binaryDigit = 9;
+    const destinationRadix = 2;
+    const zeroPaddedBin = bin.padStart(binaryDigit, '0');
+    const taggedBin = colorLeadingZero(zeroPaddedBin);
+    const dec = parseInt(bin, destinationRadix);
+    console.log(taggedBin);
+    console.log(dec);
+    
+    const decimalDigit = 3;
+    const spacePaddedDec = dec.toString().padStart(decimalDigit, ' ').replace(' ', '&nbsp;');
+    
+    const sourceRadix = 10;
+    const outputArea = document.getElementById('outputArea');
+    const currentHistoryMessage = newHistory((dec == answer), taggedBin, sourceRadix, spacePaddedDec, destinationRadix);
+    const historyMessage = concatinateStrings(currentHistoryMessage, outputArea.innerHTML);
+    console.log(currentHistoryMessage);
+    console.log(historyMessage);
+    outputArea.innerHTML = historyMessage;
+    
+    if (dec == answer) {
+        const initialObject = newInitObject('/');
+        window.history.replaceState(null, null, initialObject.pathname);
+        initPage(initialObject);
+    }
 }
 
 
