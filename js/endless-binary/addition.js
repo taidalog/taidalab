@@ -21,8 +21,7 @@ function checkAnswerAdd(answer, num1, num2, last_answers) {
         errorMessage = '<span class="warning">"' + bin + '" は2進数ではありません。使えるのは半角の 0 と 1 のみです。</span>';
     }
 
-    const errorArea = document.getElementById('errorArea');
-    errorArea.innerHTML = errorMessage;
+    document.getElementById('errorArea').innerHTML = errorMessage;
     
     // Exits when the input was invalid.
     if (errorMessage) {

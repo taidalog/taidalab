@@ -13,8 +13,7 @@ function checkAnswer (answer) {
 
     // Making an error message.
     const errorMessage = newErrorMessageBin(answer, bin);
-    const errorArea = document.getElementById('errorArea');
-    errorArea.innerHTML = errorMessage;
+    document.getElementById('errorArea').innerHTML = errorMessage;
     
     // Exits when the input was invalid.
     if (errorMessage) {

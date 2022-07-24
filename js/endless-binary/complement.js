@@ -18,8 +18,7 @@ function checkAnswerCmp (question, answer, last_answers, hint_format) {
         errorMessage = '<span class="warning">"' + inputValue + '" は2進数ではありません。使えるのは半角の 0 と 1 のみです。</span>';
     }
 
-    const errorArea = document.getElementById('errorArea');
-    errorArea.innerHTML = errorMessage;
+    document.getElementById('errorArea').innerHTML = errorMessage;
     
     // Exits when the input was invalid.
     if (errorMessage) {

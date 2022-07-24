@@ -14,8 +14,7 @@ function checkAnswerb2d1 (answer, question, last_answers, hint_format) {
     // Making an error message.
     const questionWithoutSpace = question.replace(' ', '');
     const errorMessage = newErrorMessageDec(questionWithoutSpace, inputValue);
-    const errorArea = document.getElementById('errorArea');
-    errorArea.innerHTML = errorMessage;
+    document.getElementById('errorArea').innerHTML = errorMessage;
     
     // Exits when the input was invalid.
     if (errorMessage) {

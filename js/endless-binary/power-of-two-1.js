@@ -13,8 +13,7 @@ function checkAnswerPot1 (answer, hint_format, last_answers) {
 
     // Making an error message.
     const errorMessage = newErrorMessageBin(answer, userInput);
-    const errorArea = document.getElementById('errorArea');
-    errorArea.innerHTML = errorMessage;
+    document.getElementById('errorArea').innerHTML = errorMessage;
     
     // Exits when the input was invalid.
     if (errorMessage) {
