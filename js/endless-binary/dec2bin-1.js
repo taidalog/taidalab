@@ -11,12 +11,6 @@ function checkAnswerd2b1 (answer, last_answers) {
     
     numberInput.focus();
     
-//    const quotientsAndRemainders = repeatDivision(answer, 2);
-//    console.log(quotientsAndRemainders);
-//    
-//    const powerOfTwos = devideIntoPowerOfTwo(answer);
-//    console.log(powerOfTwos);
-    
     // Making an error message.
     const errorMessage = newErrorMessageBin(answer, bin);
     document.getElementById('errorArea').innerHTML = errorMessage;
