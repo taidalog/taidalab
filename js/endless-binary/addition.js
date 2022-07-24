@@ -4,68 +4,72 @@
 // This software is licensed under the MIT License.
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
 function checkAnswerAdd(answer, num1, num2, last_answers) {
-    
     const numberInput = document.getElementById('numberInput');
     const bin = escapeHtml(numberInput.value);
     console.log(bin);
     
-    const errorArea = document.getElementById('errorArea');
-    errorArea.innerHTML = '';
-    
+    numberInput.focus();
+
     const sourceRadix = 2;
+    
+    let errorMessage = '';
     if (bin == '') {
-        errorArea.innerHTML = '<span class="warning">' + num1.toString(sourceRadix) + '<small>(' + sourceRadix + ')</small>' + num2.toString(sourceRadix)+ '<small>(' + sourceRadix + ')</small>' + ' の2進法表記を入力してください。</span>';
+        errorMessage = '<span class="warning">' + num1.toString(sourceRadix) + '<small>(' + sourceRadix + ')</small>' + num2.toString(sourceRadix)+ '<small>(' + sourceRadix + ')</small>' + ' の2進法表記を入力してください。</span>';
     } else if (testBinaryString(bin) == false) {
-        errorArea.innerHTML = '<span class="warning">"' + bin + '" は2進数ではありません。使えるのは半角の 0 と 1 のみです。</span>';
-    } else {
-        
-        const digit = 8;
-        const zeroPaddedBin = bin.padStart(digit, '0');
-        const taggedBin = colorLeadingZero(zeroPaddedBin);
-        const dec = parseInt(bin, sourceRadix);
-        console.log(taggedBin);
-        console.log(dec);
-        
-        const destinationRadix = 10;
-        const outputArea = document.getElementById('outputArea');
-        const currentHistoryMessage = newHistory((dec == answer), taggedBin, sourceRadix, dec, destinationRadix);
-        const historyMessage = concatinateStrings(currentHistoryMessage, outputArea.innerHTML);
-        console.log(currentHistoryMessage);
-        console.log(historyMessage);
-        outputArea.innerHTML = historyMessage;
-        
-        if (dec == answer) {
-            // Making next question.
-            let numbers = [];
+        errorMessage = '<span class="warning">"' + bin + '" は2進数ではありません。使えるのは半角の 0 と 1 のみです。</span>';
+    }
 
-            console.log(last_answers);
-            do {
-                numbers = newNumbersAdd();
-                console.log(numbers[0]);
-                console.log(numbers[1]);
-                console.log(last_answers.some((element) => element == numbers[0] || element == numbers[1]));
-            } while (last_answers.some((element) => element == numbers[0] || element == numbers[1]));
-
-            console.log(numbers[0]);
-            console.log(numbers[1]);
-            console.log(numbers[0] + numbers[1]);
-            console.log((numbers[0] + numbers[1]).toString(sourceRadix));
-            setColumnAddition(numbers[0], numbers[1]);
-
-            const hintArea = document.getElementById('hintArea');
-            const nextHint = newHintAdd();
-            hintArea.innerHTML = nextHint;
-            console.log(nextHint);
-
-            numberInput.value = '';
-
-            const answersToKeep = 20;
-            const lastAnswers = [numbers[0], numbers[1]].concat(last_answers).slice(0, answersToKeep);
-            document.getElementById('submitButton').onclick = function () { checkAnswerAdd((numbers[0] + numbers[1]), numbers[0], numbers[1], lastAnswers); return false; };
-        }
+    const errorArea = document.getElementById('errorArea');
+    errorArea.innerHTML = errorMessage;
+    
+    if (errorMessage) {
+        return;
     }
     
-    numberInput.focus();
+    const digit = 8;
+    const zeroPaddedBin = bin.padStart(digit, '0');
+    const taggedBin = colorLeadingZero(zeroPaddedBin);
+    const dec = parseInt(bin, sourceRadix);
+    console.log(taggedBin);
+    console.log(dec);
+    
+    const destinationRadix = 10;
+    const outputArea = document.getElementById('outputArea');
+    const currentHistoryMessage = newHistory((dec == answer), taggedBin, sourceRadix, dec, destinationRadix);
+    const historyMessage = concatinateStrings(currentHistoryMessage, outputArea.innerHTML);
+    console.log(currentHistoryMessage);
+    console.log(historyMessage);
+    outputArea.innerHTML = historyMessage;
+    
+    if (dec == answer) {
+        // Making next question.
+        let numbers = [];
+
+        console.log(last_answers);
+        do {
+            numbers = newNumbersAdd();
+            console.log(numbers[0]);
+            console.log(numbers[1]);
+            console.log(last_answers.some((element) => element == numbers[0] || element == numbers[1]));
+        } while (last_answers.some((element) => element == numbers[0] || element == numbers[1]));
+
+        console.log(numbers[0]);
+        console.log(numbers[1]);
+        console.log(numbers[0] + numbers[1]);
+        console.log((numbers[0] + numbers[1]).toString(sourceRadix));
+        setColumnAddition(numbers[0], numbers[1]);
+
+        const hintArea = document.getElementById('hintArea');
+        const nextHint = newHintAdd();
+        hintArea.innerHTML = nextHint;
+        console.log(nextHint);
+
+        numberInput.value = '';
+
+        const answersToKeep = 20;
+        const lastAnswers = [numbers[0], numbers[1]].concat(last_answers).slice(0, answersToKeep);
+        document.getElementById('submitButton').onclick = function () { checkAnswerAdd((numbers[0] + numbers[1]), numbers[0], numbers[1], lastAnswers); return false; };
+    }
 }
 
 
