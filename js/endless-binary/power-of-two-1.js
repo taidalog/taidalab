@@ -10,8 +10,6 @@ function checkAnswerPot1 (answer, hint_format, last_answers) {
 
     numberInput.focus();
 
-    const hintArea = document.getElementById('hintArea');
-    
     const errorMessage = newErrorMessageBin(answer, userInput);
     const errorArea = document.getElementById('errorArea');
     errorArea.innerHTML = errorMessage;
@@ -57,7 +55,7 @@ function checkAnswerPot1 (answer, hint_format, last_answers) {
         console.log(nextHint);
         
         document.getElementById('questionSpan').innerText = nextAnswer;
-        hintArea.innerHTML = nextHint;
+        document.getElementById('hintArea').innerHTML = nextHint;
         numberInput.value = '';
 
         const answersToKeep = 4;

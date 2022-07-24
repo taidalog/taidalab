@@ -59,9 +59,8 @@ function checkAnswerSub(answer, num1, num2, last_answers) {
         console.log((numbers[0] - numbers[1]).toString(sourceRadix));
         setColumnAddition(numbers[0], numbers[1]);
 
-        const hintArea = document.getElementById('hintArea');
         const nextHint = newHintSub();
-        hintArea.innerHTML = nextHint;
+        document.getElementById('hintArea').innerHTML = nextHint;
         console.log(nextHint);
 
         numberInput.value = '';

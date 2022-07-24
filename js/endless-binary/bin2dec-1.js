@@ -4,8 +4,6 @@
 // This software is licensed under the MIT License.
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
 function checkAnswerb2d1 (answer, question, last_answers, hint_format) {
-    const hintArea = document.getElementById('hintArea');
-
     const numberInput = document.getElementById('numberInput');
     const inputValue = escapeHtml(numberInput.value);
     console.log('inputValue : ' + inputValue);
@@ -61,7 +59,7 @@ function checkAnswerb2d1 (answer, question, last_answers, hint_format) {
         const nextHint = formatString(hint_format, [nextBin, nextAddtionFormula]);
         console.log(nextHint);
         
-        hintArea.innerHTML = nextHint;
+        document.getElementById('hintArea').innerHTML = nextHint;
         numberInput.value = '';
 
         const answersToKeep = 4;

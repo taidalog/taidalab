@@ -68,8 +68,7 @@ function checkAnswerCmp (question, answer, last_answers, hint_format) {
         console.log(reversedBin);
 
         const nextHint = formatString(hint_format, [nextBin, reversedBin]);
-        const hintArea = document.getElementById('hintArea');
-        hintArea.innerHTML = nextHint;
+        document.getElementById('hintArea').innerHTML = nextHint;
         console.log(nextHint);
         
         numberInput.value = '';

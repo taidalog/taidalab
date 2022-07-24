@@ -4,8 +4,6 @@
 // This software is licensed under the MIT License.
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
 function checkAnswerd2b1 (answer, last_answers) {
-    const hintArea = document.getElementById('hintArea');
-    
     const numberInput = document.getElementById('numberInput');
     const bin = escapeHtml(numberInput.value);
     console.log(bin);
@@ -70,7 +68,7 @@ function checkAnswerd2b1 (answer, last_answers) {
         console.log(nextHint);
         
         document.getElementById('questionSpan').innerText = nextNumber;
-        hintArea.innerHTML = nextHint;
+        document.getElementById('hintArea').innerHTML = nextHint;
         
         numberInput.value = '';
 
