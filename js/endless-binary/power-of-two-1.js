@@ -79,17 +79,10 @@ function initPowerOfTwo1 () {
     const sourceRadix = 10;
     const destinationRadix = 2;
 
-    document.title = '2のn乗 - taidalab';
-    document.getElementsByTagName('header')[0].innerHTML = headerContentPages;
-    document.getElementsByTagName('header')[0].className = 'pot-header';
-    document.getElementById('headerContainer').innerHTML = '<h1>2のn乗</h1>';
-    document.getElementsByTagName('main')[0].innerHTML = mainContentPages;
-    document.getElementById('submitButton').className = 'submit-button pot-button';
-    document.getElementById('questionArea').innerHTML = '<span id="questionSpan" class="question-number">' + initAnswer + '</span><sub>(' + sourceRadix + ')</sub> を' + destinationRadix + '進法で表すと？';
+    document.getElementById('questionSpan').innerHTML = initAnswer;
+    document.getElementById('srcRadix').innerHTML = '(' + sourceRadix + ')';
+    document.getElementById('dstRadix').innerHTML = destinationRadix;
     document.getElementById('binaryRadix').innerHTML = '<sub>(' + destinationRadix + ')</sub>';
     document.getElementById('hintArea').innerHTML = hint;
-    document.getElementsByTagName('footer')[0].innerHTML = footerContentPages;
-    document.getElementById('versionNumber').innerText = 'Version 0.10.1';
-
     document.getElementById('submitButton').onclick = function() { checkAnswerPot1(initAnswer, hintFormat, [initAnswer]); return false;  };
 }
