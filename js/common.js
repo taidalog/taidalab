@@ -1,4 +1,4 @@
-// taidalab Version 1.5.1
+// taidalab Version 1.5.2
 // https://github.com/taidalog/taidalab
 // Copyright (c) 2022 taidalog
 // This software is licensed under the MIT License.
@@ -255,7 +255,7 @@ const footerContentTerms = '\
 </small>\
 ';
 
-const versionNumber = 'Version 1.5.1';
+const versionNumber = 'Version 1.5.2';
 
 const questionContentPages = '<span id="questionSpan" class="question-number"></span><sub id="srcRadix"></sub> を<span id="dstRadix"></span>進法で表すと？';
 
