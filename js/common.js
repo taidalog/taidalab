@@ -255,6 +255,17 @@ const footerContentTerms = '\
 </small>\
 ';
 
+const footerContentNotFound = '\
+<small class="footer-container">\
+    <div class="item">&copy; 2022 taidalog</div>\
+    <div class="item"><a href="javascript:window.location.replace(\'https://github.com/taidalog/taidalab/releases\')" id="versionNumber"></a></div>\
+    <div class="item"><a href="javascript:replacePage(\'/\')">Home</a></div>\
+    <div class="item"><a href="javascript:replacePage(\'/about/\')">About</a></div>\
+    <div class="item"><a href="javascript:replacePage(\'/terms/\')">ご利用について</a></div>\
+    <div class="item"><a href="javascript:window.location.replace(\'https://github.com/taidalog/taidalab\')">Repository on GitHub</a></div>\
+</small>\
+';
+
 const versionNumber = 'Version 1.5.2';
 
 const questionContentPages = '<span id="questionSpan" class="question-number"></span><sub id="srcRadix"></sub> を<span id="dstRadix"></span>進法で表すと？';
@@ -509,7 +520,7 @@ function newInitObject (pathname) {
                 mainContent: mainContentPages,
                 buttonColorClass: 'submit-button not-button',
                 questionContent: questionContentPages,
-                footerContent: footerContentPages,
+                footerContent: footerContentNotFound,
                 widthClass: "course",
                 versionNumber: versionNumber,
                 initFunc: function () { initNotFound(); }
