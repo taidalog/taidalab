@@ -43,9 +43,7 @@ function checkAnswer (answer) {
     
     if (dec == answer) {
         // Redirecting to the home.
-        const initialObject = newInitObject('/');
-        window.history.replaceState(null, null, initialObject.pathname);
-        initPage(initialObject);
+        replacePage('/');
     }
 }
 

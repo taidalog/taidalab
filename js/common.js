@@ -297,6 +297,12 @@ function switchPage (pathname) {
     initPage(initialObject);
 }
 
+function replacePage (pathname) {
+    const initialObject = newInitObject(pathname);
+    window.history.replaceState(null, null, initialObject.pathname);
+    initPage(initialObject);
+}
+
 function newInitObject (pathname) {
     console.log(pathname);
     switch (pathname) {
