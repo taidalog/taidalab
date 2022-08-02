@@ -1,6 +1,6 @@
 # taidalab
 
-Version 1.5.2
+Version 1.6.0
 
 [Japanese README](README.ja.md)
 
