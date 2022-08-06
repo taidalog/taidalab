@@ -3,6 +3,10 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Common.fs" />
+    <Compile Include="Dec2Bin1.fs" />
+    <Compile Include="Content.fs" />
+    <Compile Include="Switcher.fs" />
     <Compile Include="App.fs" />
   </ItemGroup>
   <ItemGroup>
