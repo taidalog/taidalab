@@ -221,10 +221,10 @@ module Switcher =
             printfn "%s" "default"
             {
                 pathname = "/404/"
-                title = "404 = Page Not Found - taidalab"
+                title = "404: Page Not Found - taidalab"
                 headerContent = Content.Common.header
                 headerColorClass = "not-header"
-                headerTitle = "<h1>404 = Page Not Found</h1>"
+                headerTitle = "<h1>404; Page Not Found</h1>"
                 mainContent = Content.Course.main
                 buttonColorClass = "submit-button not-button"
                 questionContent = Content.Common.question
