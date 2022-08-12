@@ -6,18 +6,9 @@
 namespace Taidalab
 
 open Browser.Dom
+open Taidalab.Common
 
 module rec Switcher =
-    let setHomeButtons () =
-        (document.getElementById "buttonED2B1").onclick <- (fun _ -> pushPage "/endless-dec2bin-1/")
-        (document.getElementById "buttonED2B2").onclick <- (fun _ -> pushPage "/endless-dec2bin-2/")
-        (document.getElementById "buttonEB2D1").onclick <- (fun _ -> pushPage "/endless-bin2dec-1/")
-        (document.getElementById "buttonEB2D2").onclick <- (fun _ -> pushPage "/endless-bin2dec-2/")
-        (document.getElementById "buttonEPOT1").onclick <- (fun _ -> pushPage "/endless-power-of-two-1/")
-        (document.getElementById "buttonEPOT2").onclick <- (fun _ -> pushPage "/endless-power-of-two-2/")
-        (document.getElementById "buttonEBAD").onclick <- (fun _ -> pushPage "/endless-addition/")
-        (document.getElementById "buttonEBSB").onclick <- (fun _ -> pushPage "/endless-subtraction/")
-        (document.getElementById "buttonECMP").onclick <- (fun _ -> pushPage "/endless-complement/")
     
     type InitObject =
         { pathname : string
@@ -242,7 +233,7 @@ module rec Switcher =
                 footerContent = Content.NotFound.footer
                 widthClass = "course"
                 versionNumber = Content.Common.version
-                initFunc = (fun _ -> ())
+                initFunc = (fun _ -> NotFound.init ())
             }
 
     let initPage initial_object =
@@ -284,3 +275,80 @@ module rec Switcher =
         let initialObject = newInitObject pathname
         window.history.replaceState(null, null, initialObject.pathname)
         initPage initialObject
+
+    let setHomeButtons () =
+        (document.getElementById "buttonED2B1").onclick <- (fun _ -> pushPage "/endless-dec2bin-1/")
+        (document.getElementById "buttonED2B2").onclick <- (fun _ -> pushPage "/endless-dec2bin-2/")
+        (document.getElementById "buttonEB2D1").onclick <- (fun _ -> pushPage "/endless-bin2dec-1/")
+        (document.getElementById "buttonEB2D2").onclick <- (fun _ -> pushPage "/endless-bin2dec-2/")
+        (document.getElementById "buttonEPOT1").onclick <- (fun _ -> pushPage "/endless-power-of-two-1/")
+        (document.getElementById "buttonEPOT2").onclick <- (fun _ -> pushPage "/endless-power-of-two-2/")
+        (document.getElementById "buttonEBAD").onclick <- (fun _ -> pushPage "/endless-addition/")
+        (document.getElementById "buttonEBSB").onclick <- (fun _ -> pushPage "/endless-subtraction/")
+        (document.getElementById "buttonECMP").onclick <- (fun _ -> pushPage "/endless-complement/")
+    
+
+    module NotFound =
+
+        let rec checkAnswer answer =
+            // Getting the user input.
+            let numberInput = document.getElementById "numberInput" :?> Browser.Types.HTMLInputElement
+            let bin = escapeHtml numberInput.value
+            printfn "%s" bin
+            
+            numberInput.focus()
+            
+            // Making an error message.
+            let errorMessage = newErrorMessageBin answer bin
+            (document.getElementById "errorArea").innerHTML <- errorMessage
+            
+            // Exits when the input was invalid.
+            if errorMessage <> "" then
+                ()
+            else
+                // Converting the input in order to use in the history message.
+                let binaryDigit = 9
+                let destinationRadix = 2
+                let taggedBin = padWithZero binaryDigit bin |> colorLeadingZero
+                let dec = toDecimal bin
+                printfn "%s" taggedBin
+                printfn "%d" dec
+                
+                let decimalDigit = 3
+                let spacePaddedDec =
+                    dec
+                    |> string
+                    |> padStart " " decimalDigit
+                    |> escapeSpace
+                
+                // Making a new history and updating the history with the new one.
+                let sourceRadix = 10
+                let outputArea = document.getElementById "outputArea" :?> Browser.Types.HTMLParagraphElement
+                let historyMessage =
+                    newHistory (dec = int answer) taggedBin destinationRadix spacePaddedDec sourceRadix
+                    |> (fun x -> concatinateStrings "<br>" x outputArea.innerHTML)
+                printfn "%s" historyMessage
+                outputArea.innerHTML <- historyMessage
+                
+                if dec <> int answer then
+                    ()
+                else
+                    // Redirecting to the home.
+                    Switcher.replacePage "/"
+
+
+        let init ()  =
+            // Initialization.
+            printfn "Initialization starts."
+
+            let initNumber = 404
+            let sourceRadix = 10
+            let destinationRadix = 2
+
+            (document.getElementById "questionSpan").innerHTML <- string initNumber
+            (document.getElementById "srcRadix").innerHTML <- sprintf "(%d)" sourceRadix
+            (document.getElementById "dstRadix").innerHTML <- string destinationRadix
+            (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
+            (document.getElementById "submitButton").onclick <- (fun _ -> checkAnswer (string initNumber))
+            
+            printfn "Initialization ends."
