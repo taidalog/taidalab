@@ -8,6 +8,7 @@ namespace Taidalab
 open System
 open System.Text.RegularExpressions
 open Browser.Dom
+open Taidalab.Common
 
 module Dec2Bin1 =
 
@@ -46,18 +47,18 @@ module Dec2Bin1 =
 
     let newColumnAddition answer quotients_and_remainders =
         let first =
-            sprintf """2<span class="column-addition-row">%s</span>""" (answer |> string |> Common.padStart " " 3 |> Common.escapeSpace)
+            sprintf """2<span class="column-addition-row">%s</span>""" (answer |> string |> padStart " " 3 |> escapeSpace)
         let body =
             quotients_and_remainders
             |> List.rev
             |> List.tail
             |> List.rev
-            |> List.map (fun ((q : int), r) -> sprintf """2<span class="column-addition-row">%s</span>...%d""" (q |> string  |> Common.padStart " " 3 |> Common.escapeSpace) r)
+            |> List.map (fun ((q : int), r) -> sprintf """2<span class="column-addition-row">%s</span>...%d""" (q |> string  |> padStart " " 3 |> escapeSpace) r)
         let foot =
             quotients_and_remainders
             |> List.rev
             |> List.head
-            |> (fun ((q : int), r) -> sprintf """<span class="column-addition-row-last">%s</span>...%d""" (q |> string |> Common.padStart " " 5 |> Common.escapeSpace) r)
+            |> (fun ((q : int), r) -> sprintf """<span class="column-addition-row-last">%s</span>...%d""" (q |> string |> padStart " " 5 |> escapeSpace) r)
         first :: (body @ [foot]) |> List.reduce (fun x  y -> sprintf "%s<br>%s" x y)
 
 
@@ -99,13 +100,13 @@ module Dec2Bin1 =
     let rec checkAnswer answer (last_answers : int list) =
         // Getting the user input.
         let numberInput = document.getElementById "numberInput" :?> Browser.Types.HTMLInputElement
-        let bin = Common.escapeHtml numberInput.value
+        let bin = escapeHtml numberInput.value
         printfn "%s" bin
         
         numberInput.focus()
         
         // Making an error message.
-        let errorMessage = Common.newErrorMessageBin answer bin
+        let errorMessage = newErrorMessageBin answer bin
         (document.getElementById "errorArea").innerHTML <- errorMessage
         
         // Exits when the input was invalid.
@@ -115,8 +116,8 @@ module Dec2Bin1 =
             // Converting the input in order to use in the history message.
             let binaryDigit = 8
             let destinationRadix = 2
-            let taggedBin = Common.padWithZero binaryDigit bin |> Common.colorLeadingZero
-            let dec = Common.toDecimal bin
+            let taggedBin = padWithZero binaryDigit bin |> colorLeadingZero
+            let dec = toDecimal bin
             printfn "%s" taggedBin
             printfn "%d" dec
             
@@ -124,15 +125,15 @@ module Dec2Bin1 =
             let spacePaddedDec =
                 dec
                 |> string
-                |> Common.padStart " " decimalDigit
-                |> Common.escapeSpace
+                |> padStart " " decimalDigit
+                |> escapeSpace
             
             // Making a new history and updating the history with the new one.
             let sourceRadix = 10
             let outputArea = document.getElementById "outputArea" :?> Browser.Types.HTMLParagraphElement
             let historyMessage =
-                Common.newHistory (dec = int answer) taggedBin destinationRadix spacePaddedDec sourceRadix
-                |> (fun x -> Common.concatinateStrings "<br>" x outputArea.innerHTML)
+                newHistory (dec = int answer) taggedBin destinationRadix spacePaddedDec sourceRadix
+                |> (fun x -> concatinateStrings "<br>" x outputArea.innerHTML)
             printfn "%s" historyMessage
             outputArea.innerHTML <- historyMessage
             
@@ -147,8 +148,8 @@ module Dec2Bin1 =
 
                 while List.contains nextNumber last_answers do
                     while countOneBit nextBin <> 2 do
-                        nextNumber <- Common.getRandomBetween 0 192
-                        nextBin <- Common.toBinary nextNumber
+                        nextNumber <- getRandomBetween 0 192
+                        nextBin <- toBinary nextNumber
                     printfn "Next answer : %d" nextNumber
                     printfn "last_answers contains next answer : \t%b" (List.contains nextNumber last_answers)
                 
@@ -183,8 +184,8 @@ module Dec2Bin1 =
         let mutable initBin = "0"
 
         while countOneBit initBin <> 2 do
-            initNumber <- Common.getRandomBetween 0 192
-            initBin <- Common.toBinary initNumber
+            initNumber <- getRandomBetween 0 192
+            initBin <- toBinary initNumber
 
         let quotientsAndRemainders = repeatDivision initNumber 2
         let powerOfTwos = devideIntoPowerOfTwo initNumber
