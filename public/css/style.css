@@ -258,6 +258,11 @@ footer a {
     justify-content: space-between;
 }
 
+.acknowledgements {
+    width: 100%;
+    text-align: center;
+}
+
 dd {
     margin-bottom: 12px;
 }

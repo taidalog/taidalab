@@ -129,7 +129,7 @@ module Content =
                 <div id="footerTermsDiv" class="item"><a id="footerTerms">ご利用について</a></div>
                 <div class="item"><a id="footerRepo">Repository on GitHub</a></div>
             </small>
-            <small class="acknowledgements">taidalab is written in <a id="footerFSharp">F#</a> and transpiled by <a id="footerFable">Fable</a>. Thank you!</small>""" version
+            <div class="acknowledgements"><small>taidalab is written in <a id="footerFSharp">F#</a> and transpiled by <a id="footerFable">Fable</a>. Thank you!</small></div>""" version
         
         let columnAdditionFormat = """
             <div class="calculation-area" id="calculationArea">
