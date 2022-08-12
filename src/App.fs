@@ -11,7 +11,7 @@ open Taidalab.Switcher
 module Main =
 
     window.addEventListener("DOMContentLoaded", (fun _ ->
-        printfn "%s" "DOMContentLoaded"
+        printfn "%s" "The begining of DOMContentLoaded"
         printfn "%s" window.location.pathname
         newInitObject window.location.pathname |> initPage
         printfn "%s" "The end of DOMContentLoaded"
