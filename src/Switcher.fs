@@ -189,7 +189,7 @@ module rec Switcher =
                 questionContent = ""
                 widthClass = "course"
                 versionNumber = ""
-                initFunc = (fun _ -> ())
+                initFunc = (fun _ -> About.setLinks ())
             }
         | "/terms/" ->
             printfn "%s" "/terms/"
@@ -287,6 +287,19 @@ module rec Switcher =
             ev.preventDefault()
             pushPage x.pathname
             ))
+
+
+    module About =
+
+        let setLinks () =
+            let anchors = (document.getElementById "explanation").getElementsByTagName "a"
+            for i in 0 ..(anchors.length - 1) do
+                anchors.item(double i) :?> Browser.Types.HTMLAnchorElement
+                |> (fun x -> x.onclick <- (fun ev ->
+                    ev.preventDefault()
+                    pushPage x.pathname
+                    ))
+                |> ignore
 
 
     module NotFound =
