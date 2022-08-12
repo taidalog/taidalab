@@ -8,7 +8,7 @@ namespace Taidalab
 open Browser.Dom
 
 module rec Switcher =
-    let settHomeButtons () =
+    let setHomeButtons () =
         (document.getElementById "buttonED2B1").onclick <- (fun _ -> pushPage "/endless-dec2bin-1/")
         (document.getElementById "buttonED2B2").onclick <- (fun _ -> pushPage "/endless-dec2bin-2/")
         (document.getElementById "buttonEB2D1").onclick <- (fun _ -> pushPage "/endless-bin2dec-1/")
@@ -50,7 +50,7 @@ module rec Switcher =
                 footerContent = Content.Home.footer
                 widthClass = "home"
                 versionNumber = Content.Common.version
-                initFunc = (fun _ -> settHomeButtons ())
+                initFunc = (fun _ -> setHomeButtons ())
             }
         | "/endless-dec2bin-1/" ->
             printfn "%s" "/endless-dec2bin-1/"
