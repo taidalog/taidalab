@@ -82,7 +82,7 @@ module rec Switcher =
                 footerContent = Content.Course.footer
                 widthClass = "course"
                 versionNumber = Content.Common.version
-                initFunc = (fun _ -> ())
+                initFunc = (fun _ -> Dec2Bin2.init ())
             }
         | "/endless-bin2dec-1/" ->
             printfn "%s" "/endless-bin2dec-1/"
@@ -98,7 +98,7 @@ module rec Switcher =
                 footerContent = Content.Course.footer
                 widthClass = "course"
                 versionNumber = Content.Common.version
-                initFunc = (fun _ -> ())
+                initFunc = (fun _ -> Bin2Dec1.init ())
             }
         | "/endless-bin2dec-2/" ->
             printfn "%s" "/endless-bin2dec-2/"
@@ -114,7 +114,7 @@ module rec Switcher =
                 footerContent = Content.Course.footer
                 widthClass = "course"
                 versionNumber = Content.Common.version
-                initFunc = (fun _ -> ())
+                initFunc = (fun _ -> Bin2Dec2.init ())
             }
         | "/endless-power-of-two-1/" ->
             printfn "%s" "/endless-power-of-two-1/"
@@ -130,7 +130,7 @@ module rec Switcher =
                 footerContent = Content.Course.footer
                 widthClass = "course"
                 versionNumber = Content.Common.version
-                initFunc = (fun _ -> ())
+                initFunc = (fun _ -> PowerOfTwo1.init ())
             }
         | "/endless-power-of-two-2/" ->
             printfn "%s" "/endless-power-of-two-2/"
@@ -146,7 +146,7 @@ module rec Switcher =
                 footerContent = Content.Course.footer
                 widthClass = "course"
                 versionNumber = Content.Common.version
-                initFunc = (fun _ -> ())
+                initFunc = (fun _ -> PowerOfTwo2.init ())
             }
         | "/endless-addition/" ->
             printfn "%s" "/endless-addition/"
@@ -162,7 +162,7 @@ module rec Switcher =
                 footerContent = Content.Course.footer
                 widthClass = "course"
                 versionNumber = Content.Common.version
-                initFunc = (fun _ -> ())
+                initFunc = (fun _ -> Addition.init ())
             }
         | "/endless-subtraction/" ->
             printfn "%s" "/endless-subtraction/"
@@ -178,7 +178,7 @@ module rec Switcher =
                 footerContent = Content.Course.footer
                 widthClass = "course"
                 versionNumber = Content.Common.version
-                initFunc = (fun _ -> ())
+                initFunc = (fun _ -> Subtraction.init ())
             }
         | "/endless-complement/" ->
             printfn "%s" "/endless-complement/"
@@ -194,7 +194,7 @@ module rec Switcher =
                 footerContent = Content.Course.footer
                 widthClass = "course"
                 versionNumber = Content.Common.version
-                initFunc = (fun _ -> ())
+                initFunc = (fun _ -> Complement.init ())
             }
         | "/about/" ->
             printfn "%s" "/about/"
