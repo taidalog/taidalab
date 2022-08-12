@@ -19,7 +19,6 @@ module rec Switcher =
           mainContent : string
           buttonColorClass : string
           questionContent : string
-          footerContent : string
           widthClass : string
           versionNumber : string
           initFunc : unit -> unit }
@@ -38,7 +37,6 @@ module rec Switcher =
                 mainContent = Content.Home.main
                 buttonColorClass = ""
                 questionContent = ""
-                footerContent = Content.Home.footer
                 widthClass = "home"
                 versionNumber = Content.Common.version
                 initFunc = (fun _ -> setHomeButtons ())
@@ -54,7 +52,6 @@ module rec Switcher =
                 mainContent = Content.Course.main
                 buttonColorClass = "submit-button d2b-button"
                 questionContent = Content.Common.question
-                footerContent = Content.Course.footer
                 widthClass = "course"
                 versionNumber = Content.Common.version
                 initFunc = (fun _ -> Dec2Bin1.init ())
@@ -70,7 +67,6 @@ module rec Switcher =
                 mainContent = Content.Course.main
                 buttonColorClass = "submit-button d2b-button"
                 questionContent = Content.Common.question
-                footerContent = Content.Course.footer
                 widthClass = "course"
                 versionNumber = Content.Common.version
                 initFunc = (fun _ -> Dec2Bin2.init ())
@@ -86,7 +82,6 @@ module rec Switcher =
                 mainContent = Content.Course.main
                 buttonColorClass = "submit-button b2d-button"
                 questionContent = Content.Common.question
-                footerContent = Content.Course.footer
                 widthClass = "course"
                 versionNumber = Content.Common.version
                 initFunc = (fun _ -> Bin2Dec1.init ())
@@ -102,7 +97,6 @@ module rec Switcher =
                 mainContent = Content.Course.main
                 buttonColorClass = "submit-button b2d-button"
                 questionContent = Content.Common.question
-                footerContent = Content.Course.footer
                 widthClass = "course"
                 versionNumber = Content.Common.version
                 initFunc = (fun _ -> Bin2Dec2.init ())
@@ -118,7 +112,6 @@ module rec Switcher =
                 mainContent = Content.Course.main
                 buttonColorClass = "submit-button pot-button"
                 questionContent = Content.Common.question
-                footerContent = Content.Course.footer
                 widthClass = "course"
                 versionNumber = Content.Common.version
                 initFunc = (fun _ -> PowerOfTwo1.init ())
@@ -134,7 +127,6 @@ module rec Switcher =
                 mainContent = Content.Course.main
                 buttonColorClass = "submit-button pot-button"
                 questionContent = Content.Common.question
-                footerContent = Content.Course.footer
                 widthClass = "course"
                 versionNumber = Content.Common.version
                 initFunc = (fun _ -> PowerOfTwo2.init ())
@@ -150,7 +142,6 @@ module rec Switcher =
                 mainContent = Content.Course.main
                 buttonColorClass = "submit-button add-button"
                 questionContent = Content.Common.columnAdditionFormat
-                footerContent = Content.Course.footer
                 widthClass = "course"
                 versionNumber = Content.Common.version
                 initFunc = (fun _ -> Addition.init ())
@@ -166,7 +157,6 @@ module rec Switcher =
                 mainContent = Content.Course.main
                 buttonColorClass = "submit-button sub-button"
                 questionContent = Content.Common.columnAdditionFormat
-                footerContent = Content.Course.footer
                 widthClass = "course"
                 versionNumber = Content.Common.version
                 initFunc = (fun _ -> Subtraction.init ())
@@ -182,7 +172,6 @@ module rec Switcher =
                 mainContent = Content.Course.main
                 buttonColorClass = "submit-button cmp-button"
                 questionContent = Content.Complement.question
-                footerContent = Content.Course.footer
                 widthClass = "course"
                 versionNumber = Content.Common.version
                 initFunc = (fun _ -> Complement.init ())
@@ -198,7 +187,6 @@ module rec Switcher =
                 mainContent = Content.About.main
                 buttonColorClass = null
                 questionContent = null
-                footerContent = Content.About.footer
                 widthClass = "course"
                 versionNumber = null
                 initFunc = (fun _ -> ())
@@ -214,7 +202,6 @@ module rec Switcher =
                 mainContent = Content.Terms.main
                 buttonColorClass = null
                 questionContent = null
-                footerContent = Content.Terms.footer
                 widthClass = "course"
                 versionNumber = null
                 initFunc = (fun _ -> ())
@@ -230,7 +217,6 @@ module rec Switcher =
                 mainContent = Content.Course.main
                 buttonColorClass = "submit-button not-button"
                 questionContent = Content.Common.question
-                footerContent = Content.NotFound.footer
                 widthClass = "course"
                 versionNumber = Content.Common.version
                 initFunc = (fun _ -> NotFound.init ())
@@ -251,7 +237,6 @@ module rec Switcher =
         main.innerHTML <- initial_object.mainContent
         
         let footer = document.querySelector "footer"
-        //footer.innerHTML <- initial_object.footerContent
         footer.className <- initial_object.widthClass
 
         if initial_object.questionContent <> "" then
@@ -368,3 +353,28 @@ module rec Switcher =
             (document.getElementById "submitButton").onclick <- (fun _ -> checkAnswer (string initNumber))
             
             printfn "Initialization ends."
+        
+        let setFooterLinks () =
+            (document.getElementById "versionNumber" :?> Browser.Types.HTMLAnchorElement).href <- "https://github.com/taidalog/taidalab/releases"
+            (document.getElementById "footerHome" :?> Browser.Types.HTMLAnchorElement).href <- "/"
+            (document.getElementById "footerAbout" :?> Browser.Types.HTMLAnchorElement).href <- "/about/"
+            (document.getElementById "footerTerms" :?> Browser.Types.HTMLAnchorElement).href <- "/terms/"
+            (document.getElementById "footerRepo" :?> Browser.Types.HTMLAnchorElement).href <- "https://github.com/taidalog/taidalab"
+            (document.getElementById "footerFSharp" :?> Browser.Types.HTMLAnchorElement).href <- "https://fsharp.org/"
+            (document.getElementById "footerFable" :?> Browser.Types.HTMLAnchorElement).href <- "https://fable.io"
+            
+            ["footerHome"; "footerAbout"; "footerTerms"]
+            |> List.map (fun x -> document.getElementById x :?> Browser.Types.HTMLAnchorElement)
+            |> List.map (fun x -> x.onclick <- (fun ev ->
+                ev.preventDefault()
+                replacePage x.pathname
+                ))
+            |> ignore
+
+            ["versionNumber"; "footerRepo"; "footerFSharp"; "footerFable"]
+            |> List.map (fun x -> document.getElementById x :?> Browser.Types.HTMLAnchorElement)
+            |> List.map (fun x -> x.onclick <- (fun ev ->
+                ev.preventDefault()
+                window.location.replace(x.href)
+                ))
+            |> ignore

@@ -20,17 +20,7 @@ module Content =
                 <button type="button" id="buttonEBSB" class="btn button-ebsb">減算</button>
                 <button type="button" id="buttonECMP" class="btn button-ecmp">補数</button>
             </form>"""
-        
-        let footer = """
-            <small class="footer-container">
-                <div class="item">&copy; 2022 taidalog</div>
-                <div class="item"><a href="https://github.com/taidalog/taidalab/releases" id="versionNumber"></a></div>
-                <div class="item"><a href="javascript:pushPage('/about/')">About</a></div>
-                <div class="item"><a href="javascript:pushPage('/terms/')">ご利用について</a></div>
-                <div class="item"><a href="https://github.com/taidalog/taidalab">Repository on GitHub</a></div>
-            </small>
-            <small class="acknowledgements">taidalab is written in <a href="https://fsharp.org/">F#</a> and transpiled by <a href="https://fable.io">Fable</a>. Thank you!</small>"""
-    
+
 
     module Course =
         let main = """
@@ -48,17 +38,6 @@ module Content =
                     <span id="outputArea"></span>
                 </div>
             </div>"""
-
-        let footer = """
-            <small class="footer-container">
-                <div class="item">&copy; 2022 taidalog</div>
-                <div class="item"><a href="https://github.com/taidalog/taidalab/releases" id="versionNumber"></a></div>
-                <div class="item"><a href="javascript:pushPage('/')">Home</a></div>
-                <div class="item"><a href="javascript:pushPage('/about/')">About</a></div>
-                <div class="item"><a href="javascript:pushPage('/terms/')">ご利用について</a></div>
-                <div class="item"><a href="https://github.com/taidalog/taidalab">Repository on GitHub</a></div>
-            </small>
-            <small class="acknowledgements">taidalab is written in <a href="https://fsharp.org/">F#</a> and transpiled by <a href="https://fable.io">Fable</a>. Thank you!</small>"""
 
 
     module About =
@@ -120,15 +99,6 @@ module Content =
                 </dd>
             </dl>"""
 
-        let footer = """
-            <small class="footer-container">
-                <div class="item">&copy; 2022 taidalog</div>
-                <div class="item"><a href="javascript:pushPage('/')">Home</a></div>
-                <div class="item"><a href="javascript:pushPage('/terms/')">ご利用について</a></div>
-                <div class="item"><a href="https://github.com/taidalog/taidalab">Repository on GitHub</a></div>
-            </small>
-            <small class="acknowledgements">taidalab is written in <a href="https://fsharp.org/">F#</a> and transpiled by <a href="https://fable.io">Fable</a>. Thank you!</small>"""
-
 
     module Terms =
         let main = """
@@ -137,28 +107,6 @@ module Content =
             <p>当サイトを利用したことにより、コンピュータウィルス等による被害やデータの損失、その他いかなる不利益が生じた場合も、作成者は一切の責任を負いません。</p>
             <p>ソースコードの利用は可能ですが、再頒布時には著作権表示とライセンス表示を消さずに残しておいてください。</p>
             <p>2022年6月11日</p>"""
-        
-        let footer = """
-            <small class="footer-container">
-                <div class="item">&copy; 2022 taidalog</div>
-                <div class="item"><a href="javascript:pushPage('/')">Home</a></div>
-                <div class="item"><a href="javascript:pushPage('/about/')">About</a></div>
-                <div class="item"><a href="https://github.com/taidalog/taidalab">Repository on GitHub</a></div>
-            </small>
-            <small class="acknowledgements">taidalab is written in <a href="https://fsharp.org/">F#</a> and transpiled by <a href="https://fable.io">Fable</a>. Thank you!</small>"""
-
-
-    module NotFound =
-        let footer = """
-            <small class="footer-container">
-                <div class="item">&copy; 2022 taidalog</div>
-                <div class="item"><a href="javascript:window.location.replace('https://github.com/taidalog/taidalab/releases')" id="versionNumber"></a></div>
-                <div class="item"><a href="javascript:replacePage('/')">Home</a></div>
-                <div class="item"><a href="javascript:replacePage('/about/')">About</a></div>
-                <div class="item"><a href="javascript:replacePage('/terms/')">ご利用について</a></div>
-                <div class="item"><a href="javascript:window.location.replace('https://github.com/taidalog/taidalab')">Repository on GitHub</a></div>
-            </small>
-            <small class="acknowledgements">taidalab is written in <a href="https://fsharp.org/">F#</a> and transpiled by <a href="https://fable.io">Fable</a>. Thank you!</small>"""
 
 
     module Complement =
