@@ -74,7 +74,10 @@ module PowerOfTwo1 =
                 let lastAnswers = (nextAnswer :: last_answers).[0..(answersToKeep - 1)]
 
                 // Setting the next answer to the check button.
-                (document.getElementById "submitButton").onclick <- (fun _ -> checkAnswer (string nextAnswer) hint_format lastAnswers)
+                (document.getElementById "submitButton").onclick <- (fun _ ->
+                    checkAnswer (string nextAnswer) hint_format lastAnswers
+                    false
+                    )
 
 
     let init () =
@@ -101,4 +104,7 @@ module PowerOfTwo1 =
         (document.getElementById "dstRadix").innerHTML <- string destinationRadix
         (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
         (document.getElementById "hintArea").innerHTML <- hint
-        (document.getElementById "submitButton").onclick <- (fun _ -> checkAnswer (string initAnswer) hintFormat [initAnswer])
+        (document.getElementById "submitButton").onclick <- (fun _ ->
+            checkAnswer (string initAnswer) hintFormat [initAnswer]
+            false
+            )

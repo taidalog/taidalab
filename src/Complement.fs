@@ -91,7 +91,10 @@ module Complement =
                 let lastAnswers = (nextNumber :: last_answers).[0..(answersToKeep - 1)]
 
                 // Setting the next answer to the check button.
-                (document.getElementById "submitButton").onclick <- (fun _ -> checkAnswer nextBin nextAnswer lastAnswers hint_format)
+                (document.getElementById "submitButton").onclick <- (fun _ ->
+                    checkAnswer nextBin nextAnswer lastAnswers hint_format
+                    false
+                    )
 
 
     let init () =
@@ -124,4 +127,7 @@ module Complement =
         (document.getElementById "srcRadix").innerHTML <- sprintf "(%d)" sourceRadix
         (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
         (document.getElementById "hintArea").innerHTML <- hint
-        (document.getElementById "submitButton").onclick <- (fun _ -> checkAnswer initBin initAnswer [initNumber] hintFormat)
+        (document.getElementById "submitButton").onclick <- (fun _ ->
+            checkAnswer initBin initAnswer [initNumber] hintFormat
+            false
+            )

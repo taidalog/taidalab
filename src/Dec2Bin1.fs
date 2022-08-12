@@ -173,7 +173,10 @@ module Dec2Bin1 =
                 let lastAnswers = (nextNumber :: last_answers).[0..(answersToKeep - 1)]
 
                 // Setting the next answer to the check button.
-                (document.getElementById "submitButton").onclick <- (fun _ -> checkAnswer (string nextNumber) lastAnswers)
+                (document.getElementById "submitButton").onclick <- (fun _ ->
+                    checkAnswer (string nextNumber) lastAnswers
+                    false
+                    )
 
 
     let init ()  =
@@ -201,6 +204,9 @@ module Dec2Bin1 =
         (document.getElementById "dstRadix").innerHTML <- string destinationRadix
         (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
         (document.getElementById "hintArea").innerHTML <- newHint initNumber quotientsAndRemainders powerOfTwos
-        (document.getElementById "submitButton").onclick <- (fun _ -> checkAnswer (string initNumber) [initNumber])
+        (document.getElementById "submitButton").onclick <- (fun _ ->
+            checkAnswer (string initNumber) [initNumber]
+            false
+            )
         
         printfn "Initialization ends."

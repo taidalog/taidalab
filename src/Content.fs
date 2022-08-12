@@ -25,13 +25,13 @@ module Content =
     module Course =
         let main = """
             <div id="questionArea" class="question-area"></div>
-            <div class="input-area">
+            <form class="input-area">
                 <input type="text" id="numberInput" class="number-input consolas">
                 <span id="binaryRadix" class="binary-radix"></span>
                 <button id="submitButton" class="submit-button d2b-button">確認</button>
                 <div id="hintArea" class="hint-area"></div>
                 <div id="errorArea" class="error-area"></div>
-            </div>
+            </form>
             <div class="history-area">
                 結果:
                 <div class="history-indented consolas">

@@ -67,7 +67,10 @@ module Dec2Bin2 =
                 let lastAnswers = (nextNumber :: last_answers).[0..(answersToKeep - 1)]
 
                 // Setting the next answer to the check button.
-                (document.getElementById "submitButton").onclick <- (fun _ -> checkAnswer nextNumber lastAnswers)
+                (document.getElementById "submitButton").onclick <- (fun _ ->
+                    checkAnswer nextNumber lastAnswers
+                    false
+                    )
 
 
     let init () =
@@ -80,4 +83,7 @@ module Dec2Bin2 =
         (document.getElementById "srcRadix").innerHTML <- sprintf "(%d)" sourceRadix
         (document.getElementById "dstRadix").innerHTML <- string destinationRadix
         (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
-        (document.getElementById "submitButton").onclick <- (fun _ -> checkAnswer initNumber [initNumber])
+        (document.getElementById "submitButton").onclick <- (fun _ ->
+            checkAnswer initNumber [initNumber]
+            false
+            )

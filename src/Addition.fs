@@ -129,7 +129,10 @@ module Addition =
                 let lastAnswers = ([number1; number2] @ last_answers).[0..(answersToKeep - 1)]
 
                 // Setting the next answer to the check button.
-                (document.getElementById "submitButton").onclick <- (fun _ -> checkAnswer (number1 + number2) number1 number2 lastAnswers)
+                (document.getElementById "submitButton").onclick <- (fun _ ->
+                    checkAnswer (number1 + number2) number1 number2 lastAnswers
+                    false
+                    )
 
 
     let init  () =
@@ -152,4 +155,7 @@ module Addition =
         printfn "(toBinary (number1 + number2)): %s" (toBinary (number1 + number2))
         setColumnAddition number1 number2
 
-        (document.getElementById "submitButton").onclick <- (fun _ -> checkAnswer (number1 + number2) number1 number2 [number1; number2])
+        (document.getElementById "submitButton").onclick <- (fun _ ->
+            checkAnswer (number1 + number2) number1 number2 [number1; number2]
+            false
+            )
