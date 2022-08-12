@@ -20,7 +20,6 @@ module rec Switcher =
           buttonColorClass : string
           questionContent : string
           widthClass : string
-          versionNumber : string
           initFunc : unit -> unit }
     
     let newInitObject pathname =
@@ -38,7 +37,6 @@ module rec Switcher =
                 buttonColorClass = ""
                 questionContent = ""
                 widthClass = "home"
-                versionNumber = Content.Common.version
                 initFunc = (fun _ -> setHomeButtons ())
             }
         | "/endless-dec2bin-1/" ->
@@ -53,7 +51,6 @@ module rec Switcher =
                 buttonColorClass = "submit-button d2b-button"
                 questionContent = Content.Common.question
                 widthClass = "course"
-                versionNumber = Content.Common.version
                 initFunc = (fun _ -> Dec2Bin1.init ())
             }
         | "/endless-dec2bin-2/" ->
@@ -68,7 +65,6 @@ module rec Switcher =
                 buttonColorClass = "submit-button d2b-button"
                 questionContent = Content.Common.question
                 widthClass = "course"
-                versionNumber = Content.Common.version
                 initFunc = (fun _ -> Dec2Bin2.init ())
             }
         | "/endless-bin2dec-1/" ->
@@ -83,7 +79,6 @@ module rec Switcher =
                 buttonColorClass = "submit-button b2d-button"
                 questionContent = Content.Common.question
                 widthClass = "course"
-                versionNumber = Content.Common.version
                 initFunc = (fun _ -> Bin2Dec1.init ())
             }
         | "/endless-bin2dec-2/" ->
@@ -98,7 +93,6 @@ module rec Switcher =
                 buttonColorClass = "submit-button b2d-button"
                 questionContent = Content.Common.question
                 widthClass = "course"
-                versionNumber = Content.Common.version
                 initFunc = (fun _ -> Bin2Dec2.init ())
             }
         | "/endless-power-of-two-1/" ->
@@ -113,7 +107,6 @@ module rec Switcher =
                 buttonColorClass = "submit-button pot-button"
                 questionContent = Content.Common.question
                 widthClass = "course"
-                versionNumber = Content.Common.version
                 initFunc = (fun _ -> PowerOfTwo1.init ())
             }
         | "/endless-power-of-two-2/" ->
@@ -128,7 +121,6 @@ module rec Switcher =
                 buttonColorClass = "submit-button pot-button"
                 questionContent = Content.Common.question
                 widthClass = "course"
-                versionNumber = Content.Common.version
                 initFunc = (fun _ -> PowerOfTwo2.init ())
             }
         | "/endless-addition/" ->
@@ -143,7 +135,6 @@ module rec Switcher =
                 buttonColorClass = "submit-button add-button"
                 questionContent = Content.Common.columnAdditionFormat
                 widthClass = "course"
-                versionNumber = Content.Common.version
                 initFunc = (fun _ -> Addition.init ())
             }
         | "/endless-subtraction/" ->
@@ -158,7 +149,6 @@ module rec Switcher =
                 buttonColorClass = "submit-button sub-button"
                 questionContent = Content.Common.columnAdditionFormat
                 widthClass = "course"
-                versionNumber = Content.Common.version
                 initFunc = (fun _ -> Subtraction.init ())
             }
         | "/endless-complement/" ->
@@ -173,7 +163,6 @@ module rec Switcher =
                 buttonColorClass = "submit-button cmp-button"
                 questionContent = Content.Complement.question
                 widthClass = "course"
-                versionNumber = Content.Common.version
                 initFunc = (fun _ -> Complement.init ())
             }
         | "/about/" ->
@@ -188,7 +177,6 @@ module rec Switcher =
                 buttonColorClass = ""
                 questionContent = ""
                 widthClass = "course"
-                versionNumber = ""
                 initFunc = (fun _ -> About.setLinks ())
             }
         | "/terms/" ->
@@ -203,7 +191,6 @@ module rec Switcher =
                 buttonColorClass = ""
                 questionContent = ""
                 widthClass = "course"
-                versionNumber = ""
                 initFunc = (fun _ -> ())
             }
         | _ ->
@@ -218,7 +205,6 @@ module rec Switcher =
                 buttonColorClass = "submit-button not-button"
                 questionContent = Content.Common.question
                 widthClass = "course"
-                versionNumber = Content.Common.version
                 initFunc = (fun _ -> NotFound.init ())
             }
 
@@ -245,9 +231,9 @@ module rec Switcher =
         if initial_object.buttonColorClass <> "" then
             (document.querySelector "#submitButton").className <- initial_object.buttonColorClass
 
-        if initial_object.versionNumber <> "" then
-            let versionNumber = document.querySelector "#versionNumber" :?> Browser.Types.HTMLDivElement
-            versionNumber.innerText <- initial_object.versionNumber
+//        if initial_object.versionNumber <> "" then
+//            let versionNumber = document.querySelector "#versionNumber" :?> Browser.Types.HTMLDivElement
+//            versionNumber.innerText <- initial_object.versionNumber
 
         initial_object.initFunc()
 
