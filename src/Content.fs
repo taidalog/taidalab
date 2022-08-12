@@ -124,9 +124,9 @@ module Content =
             <small class="footer-container">
                 <div class="item">&copy; 2022 taidalog</div>
                 <div class="item"><a id="versionNumber">%s</a></div>
-                <div class="item"><a id="footerHome">Home</a></div>
-                <div class="item"><a id="footerAbout">About</a></div>
-                <div class="item"><a id="footerTerms">ご利用について</a></div>
+                <div id="footerHomeDiv" class="item"><a id="footerHome">Home</a></div>
+                <div id="footerAboutDiv" class="item"><a id="footerAbout">About</a></div>
+                <div id="footerTermsDiv" class="item"><a id="footerTerms">ご利用について</a></div>
                 <div class="item"><a id="footerRepo">Repository on GitHub</a></div>
             </small>
             <small class="acknowledgements">taidalab is written in <a id="footerFSharp">F#</a> and transpiled by <a id="footerFable">Fable</a>. Thank you!</small>""" version

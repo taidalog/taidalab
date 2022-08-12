@@ -292,6 +292,10 @@ dd {
     text-align: right;
 }
 
+.no-display {
+    display: none;
+}
+
 @media (max-width: 799px) {    
     main.home {
         margin: 0 auto;
