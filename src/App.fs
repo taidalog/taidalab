@@ -15,8 +15,11 @@ module Main =
         document.body.innerHTML <- """<header></header><main></main><footer></footer>"""
         (document.querySelector "footer").innerHTML <- Content.Common.footer
         printfn "%s" window.location.pathname
-        newInitObject window.location.pathname |> initPage
-        setFooterLinks ()
+        let initObj = newInitObject window.location.pathname
+        initPage initObj |> ignore
+        match initObj.pathname with
+        | "/404/" -> NotFound.setFooterLinks () |> ignore
+        | _ -> setFooterLinks () |> ignore
         printfn "%s" "The end of DOMContentLoaded"
     ))
 
