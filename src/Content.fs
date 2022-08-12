@@ -172,6 +172,17 @@ module Content =
         
         let version = "Version 2.0.0-beta"
 
+        let footer = """
+            <small class="footer-container">
+                <div class="item">&copy; 2022 taidalog</div>
+                <div class="item"><a href="https://github.com/taidalog/taidalab/releases" id="versionNumber"></a></div>
+                <div class="item"><a href="javascript:pushPage('/')">Home</a></div>
+                <div class="item"><a href="javascript:pushPage('/about/')">About</a></div>
+                <div class="item"><a href="javascript:pushPage('/terms/')">ご利用について</a></div>
+                <div class="item"><a href="https://github.com/taidalog/taidalab">Repository on GitHub</a></div>
+            </small>
+            <small class="acknowledgements">taidalab is written in <a href="https://fsharp.org/">F#</a> and transpiled by <a href="https://fable.io">Fable</a>. Thank you!</small>"""
+        
         let columnAdditionFormat = """
             <div class="calculation-area" id="calculationArea">
                 <div class="first-row" id="">
