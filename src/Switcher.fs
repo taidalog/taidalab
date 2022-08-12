@@ -185,10 +185,10 @@ module rec Switcher =
                 headerColorClass = "home-header"
                 headerTitle = "<h1>about</h1>"
                 mainContent = Content.About.main
-                buttonColorClass = null
-                questionContent = null
+                buttonColorClass = ""
+                questionContent = ""
                 widthClass = "course"
-                versionNumber = null
+                versionNumber = ""
                 initFunc = (fun _ -> ())
             }
         | "/terms/" ->
@@ -200,10 +200,10 @@ module rec Switcher =
                 headerColorClass = "home-header"
                 headerTitle = "<h1>ご利用について</h1>"
                 mainContent = Content.Terms.main
-                buttonColorClass = null
-                questionContent = null
+                buttonColorClass = ""
+                questionContent = ""
                 widthClass = "course"
-                versionNumber = null
+                versionNumber = ""
                 initFunc = (fun _ -> ())
             }
         | _ ->
@@ -253,12 +253,12 @@ module rec Switcher =
 
     let pushPage pathname =
         let initialObject = newInitObject pathname
-        window.history.pushState(null, null, initialObject.pathname)
+        window.history.pushState(null, "", initialObject.pathname)
         initPage initialObject
 
     let replacePage pathname =
         let initialObject = newInitObject pathname
-        window.history.replaceState(null, null, initialObject.pathname)
+        window.history.replaceState(null, "", initialObject.pathname)
         initPage initialObject
 
     let setHomeButtons () =
