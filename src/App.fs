@@ -6,16 +6,17 @@
 namespace Taidalab
 
 open Browser.Dom
+open Taidalab.Switcher
 
 module Main =
 
     window.addEventListener("DOMContentLoaded", (fun _ ->
         printfn "%s" "DOMContentLoaded"
         printfn "%s" window.location.pathname
-        Switcher.newInitObject window.location.pathname |> Switcher.initPage
+        newInitObject window.location.pathname |> initPage
         printfn "%s" "The end of DOMContentLoaded"
     ))
 
     window.addEventListener("popstate", (fun _ ->
-        Switcher.newInitObject window.location.pathname |> Switcher.initPage
+        newInitObject window.location.pathname |> initPage
     ))
