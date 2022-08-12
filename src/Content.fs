@@ -29,7 +29,7 @@ module Content =
                 <div class="item"><a href="javascript:pushPage('/terms/')">ご利用について</a></div>
                 <div class="item"><a href="https://github.com/taidalog/taidalab">Repository on GitHub</a></div>
             </small>
-            <small class="acknowledgements">taidalab is written in F# and transpiled by Fable. Thank you!</small>"""
+            <small class="acknowledgements">taidalab is written in <a href="https://fsharp.org/">F#</a> and transpiled by <a href="https://fable.io">Fable</a>. Thank you!</small>"""
     
 
     module Course =
@@ -58,7 +58,7 @@ module Content =
                 <div class="item"><a href="javascript:pushPage('/terms/')">ご利用について</a></div>
                 <div class="item"><a href="https://github.com/taidalog/taidalab">Repository on GitHub</a></div>
             </small>
-            <small class="acknowledgements">taidalab is written in F# and transpiled by Fable. Thank you!</small>"""
+            <small class="acknowledgements">taidalab is written in <a href="https://fsharp.org/">F#</a> and transpiled by <a href="https://fable.io">Fable</a>. Thank you!</small>"""
 
 
     module About =
@@ -127,7 +127,7 @@ module Content =
                 <div class="item"><a href="javascript:pushPage('/terms/')">ご利用について</a></div>
                 <div class="item"><a href="https://github.com/taidalog/taidalab">Repository on GitHub</a></div>
             </small>
-            <small class="acknowledgements">taidalab is written in F# and transpiled by Fable. Thank you!</small>"""
+            <small class="acknowledgements">taidalab is written in <a href="https://fsharp.org/">F#</a> and transpiled by <a href="https://fable.io">Fable</a>. Thank you!</small>"""
 
 
     module Terms =
@@ -145,7 +145,7 @@ module Content =
                 <div class="item"><a href="javascript:pushPage('/about/')">About</a></div>
                 <div class="item"><a href="https://github.com/taidalog/taidalab">Repository on GitHub</a></div>
             </small>
-            <small class="acknowledgements">taidalab is written in F# and transpiled by Fable. Thank you!</small>"""
+            <small class="acknowledgements">taidalab is written in <a href="https://fsharp.org/">F#</a> and transpiled by <a href="https://fable.io">Fable</a>. Thank you!</small>"""
 
 
     module NotFound =
@@ -158,7 +158,7 @@ module Content =
                 <div class="item"><a href="javascript:replacePage('/terms/')">ご利用について</a></div>
                 <div class="item"><a href="javascript:window.location.replace('https://github.com/taidalog/taidalab')">Repository on GitHub</a></div>
             </small>
-            <small class="acknowledgements">taidalab is written in F# and transpiled by Fable. Thank you!</small>"""
+            <small class="acknowledgements">taidalab is written in <a href="https://fsharp.org/">F#</a> and transpiled by <a href="https://fable.io">Fable</a>. Thank you!</small>"""
 
 
     module Complement =
