@@ -16,6 +16,7 @@ module Main =
         (document.querySelector "footer").innerHTML <- Content.Common.footer
         printfn "%s" window.location.pathname
         newInitObject window.location.pathname |> initPage
+        setFooterLinks ()
         printfn "%s" "The end of DOMContentLoaded"
     ))
 
