@@ -14,12 +14,12 @@ module Common =
         let rand = new Random()
         rand.Next(min, max + 1)
 
-    let rec newNumber f last_list =
-        let (nextCand :int ) = f ()
+    let rec newNumber generator last_list =
+        let (nextCand :int ) = generator ()
         if List.contains nextCand last_list = false then
             nextCand
         else
-            newNumber f last_list
+            newNumber generator last_list
 
     let testBinaryString input =
         let reCorrect = "^[01]+$"
