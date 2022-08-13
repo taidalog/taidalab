@@ -12,16 +12,10 @@ open Taidalab.Common
 module Bin2Dec1 =
 
     let writeAdditionFormula binary_string =
-        let mutable result = ""
-        let mutable tmp = ""
-
-        for i in 0..(String.length binary_string - 1) do
-            tmp <- sprintf """(2<sup>%d</sup> * %c)""" (String.length binary_string - 1 - i) binary_string.[i]
-            if result = "" then
-                result <- tmp
-            else
-                result <- result + " + " + tmp
-        result
+        binary_string
+        |> Seq.toList
+        |> List.mapi (fun i c -> sprintf """(2<sup>%d</sup> * %c)""" (String.length binary_string - i - 1) c)
+        |> List.reduce (fun x y -> sprintf "%s + %s" x y)
     
     let rec checkAnswer answer (question : string) (last_answers : int list) (hint_format : string) =
         // Getting the user input.
