@@ -298,10 +298,10 @@ module rec Switcher =
             [0 ..(anchors.length - 1)]
             |> List.map double
             |> List.map (fun i -> anchors.item(i) :?> Browser.Types.HTMLAnchorElement)
-            |> List.map (fun x -> x.onclick <- (fun ev ->
-                ev.preventDefault()
-                pushPage x.pathname
-                ))
+            |> List.map (fun x ->
+                x.onclick <- (fun ev ->
+                    ev.preventDefault()
+                    pushPage x.pathname))
             |> ignore
 
 
