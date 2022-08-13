@@ -15,7 +15,7 @@ module Bin2Dec1 =
         binary_string
         |> Seq.toList
         |> List.mapi (fun i c -> sprintf """(2<sup>%d</sup> * %c)""" (String.length binary_string - i - 1) c)
-        |> List.reduce (fun x y -> sprintf "%s + %s" x y)
+        |> String.concat " + "
     
     let rec checkAnswer answer (question : string) (last_answers : int list) (hint_format : string) =
         // Getting the user input.
