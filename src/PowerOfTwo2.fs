@@ -51,16 +51,15 @@ module PowerOfTwo2 =
             
             if dec = int answer then
                 // Making the next question.
-                let mutable nextIndexNumber = getRandomBetween 1 8
-                let mutable nextNumber = (Math.Pow(2.0, (double nextIndexNumber)) |> int) - 1
-                
                 printfn "last_answers: %A" last_answers
-                while List.contains nextNumber last_answers do
-                    nextIndexNumber <- getRandomBetween 1 8
-                    nextNumber <- (Math.Pow(2.0, (double nextIndexNumber)) |> int) - 1
-                    printfn "nextNumber: %d" nextNumber
-                    printfn "List.contains nextNumber last_answers: %b" (List.contains nextNumber last_answers)
                 
+                let nextIndexNumber =
+                    newNumber
+                        (fun _ -> getRandomBetween 0 8)
+                        last_answers
+                let nextNumber = nextIndexNumber |> double |> (fun x -> Math.Pow(2.0, x)) |> int |> ((+) -1)
+                printfn "nextAnswer: %d" nextNumber
+
                 (document.getElementById "questionSpan").innerText <- string nextNumber
                 
                 let nextHint = String.Format(hint_format, nextNumber, (nextNumber + 1), nextIndexNumber)
@@ -72,7 +71,7 @@ module PowerOfTwo2 =
                 // Updating `lastAnswers`.
                 // These numbers will not be used for the next question.
                 let answersToKeep = Math.Min(4, List.length last_answers + 1)
-                let lastAnswers = (nextNumber :: last_answers).[0..(answersToKeep - 1)]
+                let lastAnswers = (nextIndexNumber :: last_answers).[0..(answersToKeep - 1)]
 
                 // Setting the next answer to the check button.
                 (document.getElementById "submitButton").onclick <- (fun _ ->
@@ -96,5 +95,5 @@ module PowerOfTwo2 =
         (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
         (document.getElementById "hintArea").innerHTML <- hint
         (document.getElementById "submitButton").onclick <- (fun _ ->
-            checkAnswer (string initNumber) hintFormat [initNumber]
+            checkAnswer (string initNumber) hintFormat [initIndexNumber]
             false)

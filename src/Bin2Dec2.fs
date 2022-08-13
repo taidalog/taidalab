@@ -52,13 +52,10 @@ module Bin2Dec2 =
             
             if inputValueAsInt = answer then
                 // Making the next question.
-                let mutable nextNumber = getRandomBetween 0 255
-                
                 printfn "last_answers: %A" last_answers
-                while List.contains nextNumber last_answers do
-                    nextNumber <- getRandomBetween 0 255
-                    printfn "nextNumber: %d" nextNumber
-                    printfn "List.contains nextNumber last_answers: %b" (List.contains nextNumber last_answers)
+                
+                let nextNumber = newNumber (fun _ -> getRandomBetween 0 255) last_answers
+                printfn "nextNumber: %d" nextNumber
 
                 let nextBin = toBinary nextNumber
                 let splitBin = splitBinaryStringBy 4 nextBin

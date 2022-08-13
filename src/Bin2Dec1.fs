@@ -60,16 +60,13 @@ module Bin2Dec1 =
             
             if inputValueAsInt = answer then
                 // Making the next question.
-                let mutable nextIndexNumber = 0
-                let mutable nextNumber = last_answers.[0]
-                
                 printfn "%A" last_answers
-                while List.contains nextNumber last_answers do
-                    nextIndexNumber <- getRandomBetween 0 7
-                    nextNumber <- Math.Pow(2.0, double nextIndexNumber) |> int
-                    printfn "%d" nextNumber
-                    printfn "%d" nextIndexNumber
-                    printfn "%b" (List.contains nextNumber last_answers)
+
+                let nextNumber =
+                    newNumber
+                        (fun _ -> getRandomBetween 0 7 |> double |> (fun x -> Math.Pow(2.0, x)) |> int)
+                        last_answers
+                printfn "%d" nextNumber
 
                 let nextBin = toBinary nextNumber
                 let splitBin = splitBinaryStringBy 4 nextBin

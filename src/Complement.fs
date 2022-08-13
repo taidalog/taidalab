@@ -61,14 +61,11 @@ module Complement =
             
             if inputValueAsInt = answer then
                 // Making the next question.
-                let mutable nextNumber = getRandomBetween 1 15
-                
                 printfn "last_answers: %A" last_answers
-                while List.contains nextNumber last_answers do
-                    nextNumber <- getRandomBetween 1 15
-                    printfn "nextNumber: %A" nextNumber
-                    printfn "List.contains nexrNumber last_answers: %A" (List.contains nextNumber last_answers)
                 
+                let nextNumber = newNumber (fun _ -> getRandomBetween 1 15) last_answers
+                printfn "nextNumber: %A" nextNumber
+
                 let nextAnswer = 16 - nextNumber
                 let nextBin = nextNumber |> toBinary |> padStart "0" 4
                 printfn "nextAnswer: %A" nextAnswer
