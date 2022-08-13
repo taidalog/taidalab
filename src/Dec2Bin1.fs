@@ -101,7 +101,7 @@ module Dec2Bin1 =
         // Getting the user input.
         let numberInput = document.getElementById "numberInput" :?> Browser.Types.HTMLInputElement
         let bin = escapeHtml numberInput.value
-        printfn "%s" bin
+        printfn "bin: %s" bin
         
         numberInput.focus()
         
@@ -118,8 +118,8 @@ module Dec2Bin1 =
             let destinationRadix = 2
             let taggedBin = padWithZero binaryDigit bin |> colorLeadingZero
             let dec = toDecimal bin
-            printfn "%s" taggedBin
-            printfn "%d" dec
+            printfn "taggedBin: %s" taggedBin
+            printfn "dec: %d" dec
             
             let decimalDigit = 3
             let spacePaddedDec =
@@ -134,7 +134,7 @@ module Dec2Bin1 =
             let historyMessage =
                 newHistory (dec = int answer) taggedBin destinationRadix spacePaddedDec sourceRadix
                 |> (fun x -> concatinateStrings "<br>" x outputArea.innerHTML)
-            printfn "%s" historyMessage
+            printfn "historyMessage: \n%s" historyMessage
             outputArea.innerHTML <- historyMessage
             
             if dec <> int answer then
@@ -150,17 +150,18 @@ module Dec2Bin1 =
                     while countOneBit nextBin <> 2 do
                         nextNumber <- getRandomBetween 0 192
                         nextBin <- toBinary nextNumber
-                    printfn "Next answer : %d" nextNumber
-                    printfn "last_answers contains next answer : \t%b" (List.contains nextNumber last_answers)
+                        printfn "countOneBit nextBin : %d" (countOneBit nextBin)
+                    printfn "nextNumber : %d" nextNumber
+                    printfn "List.contains nextNumber last_answers : %b" (List.contains nextNumber last_answers)
                 
                 let quotientsAndRemainders = repeatDivision nextNumber 2
-                printfn "%A" quotientsAndRemainders
+                printfn "quotientsAndRemainders: %A" quotientsAndRemainders
                 
                 let powerOfTwos = devideIntoPowerOfTwo nextNumber
-                printfn "%A" powerOfTwos
+                printfn "powerOfTwos: %A" powerOfTwos
 
                 let nextHint = newHint nextNumber quotientsAndRemainders powerOfTwos
-                printfn "%s" nextHint
+                printfn "nextHint: \n%s" nextHint
                 
                 (document.getElementById "questionSpan").innerText <- string nextNumber
                 (document.getElementById "hintArea").innerHTML <- nextHint
