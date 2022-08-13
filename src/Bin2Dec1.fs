@@ -93,8 +93,7 @@ module Bin2Dec1 =
                 // Setting the next answer to the check button.
                 (document.getElementById "submitButton").onclick <- (fun _ ->
                     checkAnswer nextNumber splitBin lastAnswers hint_format
-                    false
-                    )
+                    false)
 
 
     let init  () =
@@ -139,5 +138,4 @@ module Bin2Dec1 =
         (document.getElementById "hintArea").innerHTML <- hint
         (document.getElementById "submitButton").onclick <- (fun _ ->
             checkAnswer initNumber splitBin [initNumber] hintFormat
-            false
-            )
+            false)

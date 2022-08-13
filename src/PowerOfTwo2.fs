@@ -77,8 +77,7 @@ module PowerOfTwo2 =
                 // Setting the next answer to the check button.
                 (document.getElementById "submitButton").onclick <- (fun _ ->
                     checkAnswer (string nextNumber) hint_format lastAnswers
-                    false
-                    )
+                    false)
 
 
     let init () =
@@ -98,5 +97,4 @@ module PowerOfTwo2 =
         (document.getElementById "hintArea").innerHTML <- hint
         (document.getElementById "submitButton").onclick <- (fun _ ->
             checkAnswer (string initNumber) hintFormat [initNumber]
-            false
-            )
+            false)

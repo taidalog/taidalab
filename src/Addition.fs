@@ -131,8 +131,7 @@ module Addition =
                 // Setting the next answer to the check button.
                 (document.getElementById "submitButton").onclick <- (fun _ ->
                     checkAnswer (number1 + number2) number1 number2 lastAnswers
-                    false
-                    )
+                    false)
 
 
     let init  () =
@@ -157,5 +156,4 @@ module Addition =
 
         (document.getElementById "submitButton").onclick <- (fun _ ->
             checkAnswer (number1 + number2) number1 number2 [number1; number2]
-            false
-            )
+            false)

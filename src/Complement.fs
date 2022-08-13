@@ -93,8 +93,7 @@ module Complement =
                 // Setting the next answer to the check button.
                 (document.getElementById "submitButton").onclick <- (fun _ ->
                     checkAnswer nextBin nextAnswer lastAnswers hint_format
-                    false
-                    )
+                    false)
 
 
     let init () =
@@ -129,5 +128,4 @@ module Complement =
         (document.getElementById "hintArea").innerHTML <- hint
         (document.getElementById "submitButton").onclick <- (fun _ ->
             checkAnswer initBin initAnswer [initNumber] hintFormat
-            false
-            )
+            false)

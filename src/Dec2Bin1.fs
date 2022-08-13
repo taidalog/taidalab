@@ -175,8 +175,7 @@ module Dec2Bin1 =
                 // Setting the next answer to the check button.
                 (document.getElementById "submitButton").onclick <- (fun _ ->
                     checkAnswer (string nextNumber) lastAnswers
-                    false
-                    )
+                    false)
 
 
     let init ()  =
@@ -206,7 +205,6 @@ module Dec2Bin1 =
         (document.getElementById "hintArea").innerHTML <- newHint initNumber quotientsAndRemainders powerOfTwos
         (document.getElementById "submitButton").onclick <- (fun _ ->
             checkAnswer (string initNumber) [initNumber]
-            false
-            )
+            false)
         
         printfn "Initialization ends."
