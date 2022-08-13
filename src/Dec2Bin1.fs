@@ -45,6 +45,29 @@ module Dec2Bin1 =
             [(quotient, remainder)] @ repeatDivision quotient divisor
 
 
+    let newNumberWithTwoOne () =
+        let rec newTwoRandomNumbers min max =
+            let rand = new Random()
+            let index1 = rand.Next(min, max)
+            let index2 = rand.Next(min, max)
+            if index1 <> index2 then
+                (index1, index2)
+            else
+                newTwoRandomNumbers min max
+        newTwoRandomNumbers 0 7
+        ||> (fun x y -> double x, double y)
+        ||> (fun x y -> Math.Pow(2.0, x) + Math.Pow(2.0, y))
+        |> int
+
+
+    let rec newNumber last_list =
+        let nextCand = newNumberWithTwoOne ()
+        if List.contains nextCand last_list = false then
+            nextCand
+        else
+            newNumber last_list
+
+
     let newColumnAddition answer quotients_and_remainders =
         let first =
             sprintf """2<span class="column-addition-row">%s</span>""" (answer |> string |> padStart " " 3 |> escapeSpace)
@@ -141,19 +164,12 @@ module Dec2Bin1 =
                 ()
             else
                 // Making the next question.
-                let mutable nextNumber = last_answers.[0]
-                let mutable nextBin = "0"
-                
                 printfn "last_answers : %A" last_answers
-
-                while List.contains nextNumber last_answers do
-                    while countOneBit nextBin <> 2 do
-                        nextNumber <- getRandomBetween 0 192
-                        nextBin <- toBinary nextNumber
-                        printfn "countOneBit nextBin : %d" (countOneBit nextBin)
-                    printfn "nextNumber : %d" nextNumber
-                    printfn "List.contains nextNumber last_answers : %b" (List.contains nextNumber last_answers)
                 
+                let nextNumber = newNumber last_answers
+                printfn "nextNumber : %d" nextNumber
+                printfn "List.contains nextNumber last_answers : %b" (List.contains nextNumber last_answers)
+
                 let quotientsAndRemainders = repeatDivision nextNumber 2
                 printfn "quotientsAndRemainders: %A" quotientsAndRemainders
                 
@@ -183,16 +199,11 @@ module Dec2Bin1 =
         // Initialization.
         printfn "Initialization starts."
 
-        let mutable initNumber = 0
-        let mutable initBin = "0"
-
-        while countOneBit initBin <> 2 do
-            initNumber <- getRandomBetween 0 192
-            initBin <- toBinary initNumber
+        let initNumber = newNumberWithTwoOne ()
+        printfn "initNumber : %d" initNumber
 
         let quotientsAndRemainders = repeatDivision initNumber 2
         let powerOfTwos = devideIntoPowerOfTwo initNumber
-        printfn "initNumber : %d" initNumber
         printfn "quotients and remainders : %A" quotientsAndRemainders
         printfn "power of twos : %A" powerOfTwos
 
