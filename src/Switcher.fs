@@ -295,13 +295,14 @@ module rec Switcher =
 
         let setLinks () =
             let anchors = (document.getElementById "explanation").getElementsByTagName "a"
-            for i in 0 ..(anchors.length - 1) do
-                anchors.item(double i) :?> Browser.Types.HTMLAnchorElement
-                |> (fun x -> x.onclick <- (fun ev ->
-                    ev.preventDefault()
-                    pushPage x.pathname
-                    ))
-                |> ignore
+            [0 ..(anchors.length - 1)]
+            |> List.map double
+            |> List.map (fun i -> anchors.item(i) :?> Browser.Types.HTMLAnchorElement)
+            |> List.map (fun x -> x.onclick <- (fun ev ->
+                ev.preventDefault()
+                pushPage x.pathname
+                ))
+            |> ignore
 
 
     module NotFound =
