@@ -11,6 +11,14 @@ open Taidalab.Common
 
 module Dec2Bin2 =
 
+    let rec newNumber f last_list =
+        let (nextCand :int ) = f ()
+        if List.contains nextCand last_list = false then
+            nextCand
+        else
+            newNumber f last_list
+
+
     let rec checkAnswer answer (last_answers : int list) =
         // Getting the user input.
         let numberInput = document.getElementById "numberInput" :?> Browser.Types.HTMLInputElement
@@ -50,13 +58,10 @@ module Dec2Bin2 =
             
             if dec = answer then
                 // Making the next question.
-                let mutable nextNumber = getRandomBetween 0 255
-
                 printfn "last_answers: %A" last_answers
-                while List.contains nextNumber last_answers do
-                    nextNumber <- getRandomBetween 0 255
-                    printfn "nextNumber: %d" nextNumber
-                    printfn "List.contains nextNumber last_answers: %b" (List.contains nextNumber last_answers)
+                
+                let nextNumber = newNumber (fun _ -> getRandomBetween 0 255) last_answers
+                printfn "nextNumber: %d" nextNumber
 
                 (document.getElementById "questionSpan").innerText <- string nextNumber
                 numberInput.value <- ""
