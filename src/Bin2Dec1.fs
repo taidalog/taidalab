@@ -16,7 +16,7 @@ module Bin2Dec1 =
         let mutable tmp = ""
 
         for i in 0..(String.length binary_string - 1) do
-            tmp <- String.Format("(2<sup>{0}</sup> * {1})", string ((String.length binary_string - 1 - i)), binary_string.[i])
+            tmp <- sprintf """(2<sup>%d</sup> * %c)""" (String.length binary_string - 1 - i) binary_string.[i]
             if result = "" then
                 result <- tmp
             else
