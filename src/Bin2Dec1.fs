@@ -85,6 +85,9 @@ module Bin2Dec1 =
                 (document.getElementById "submitButton").onclick <- (fun _ ->
                     checkAnswer nextNumber splitBin lastAnswers hint_format
                     false)
+                (document.getElementById "inputArea").onsubmit <- (fun _ ->
+                    checkAnswer nextNumber splitBin lastAnswers hint_format
+                    false)
 
 
     let init  () =
@@ -128,5 +131,8 @@ module Bin2Dec1 =
         (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
         (document.getElementById "hintArea").innerHTML <- hint
         (document.getElementById "submitButton").onclick <- (fun _ ->
+            checkAnswer initNumber splitBin [initNumber] hintFormat
+            false)
+        (document.getElementById "inputArea").onsubmit <- (fun _ ->
             checkAnswer initNumber splitBin [initNumber] hintFormat
             false)

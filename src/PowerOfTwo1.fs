@@ -76,6 +76,9 @@ module PowerOfTwo1 =
                 (document.getElementById "submitButton").onclick <- (fun _ ->
                     checkAnswer (string nextAnswer) hint_format lastAnswers
                     false)
+                (document.getElementById "inputArea").onsubmit <- (fun _ ->
+                    checkAnswer (string nextAnswer) hint_format lastAnswers
+                    false)
 
 
     let init () =
@@ -103,5 +106,8 @@ module PowerOfTwo1 =
         (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
         (document.getElementById "hintArea").innerHTML <- hint
         (document.getElementById "submitButton").onclick <- (fun _ ->
+            checkAnswer (string initAnswer) hintFormat [initIndexNumber]
+            false)
+        (document.getElementById "inputArea").onsubmit <- (fun _ ->
             checkAnswer (string initAnswer) hintFormat [initIndexNumber]
             false)

@@ -91,6 +91,9 @@ module Complement =
                 (document.getElementById "submitButton").onclick <- (fun _ ->
                     checkAnswer nextBin nextAnswer lastAnswers hint_format
                     false)
+                (document.getElementById "inputArea").onsubmit <- (fun _ ->
+                    checkAnswer nextBin nextAnswer lastAnswers hint_format
+                    false)
 
 
     let init () =
@@ -124,5 +127,8 @@ module Complement =
         (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
         (document.getElementById "hintArea").innerHTML <- hint
         (document.getElementById "submitButton").onclick <- (fun _ ->
+            checkAnswer initBin initAnswer [initNumber] hintFormat
+            false)
+        (document.getElementById "inputArea").onsubmit <- (fun _ ->
             checkAnswer initBin initAnswer [initNumber] hintFormat
             false)

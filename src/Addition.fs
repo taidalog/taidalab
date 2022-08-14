@@ -132,6 +132,9 @@ module Addition =
                 (document.getElementById "submitButton").onclick <- (fun _ ->
                     checkAnswer (number1 + number2) number1 number2 lastAnswers
                     false)
+                (document.getElementById "inputArea").onsubmit <- (fun _ ->
+                    checkAnswer (number1 + number2) number1 number2 lastAnswers
+                    false)
 
 
     let init  () =
@@ -155,5 +158,8 @@ module Addition =
         setColumnAddition number1 number2
 
         (document.getElementById "submitButton").onclick <- (fun _ ->
+            checkAnswer (number1 + number2) number1 number2 [number1; number2]
+            false)
+        (document.getElementById "inputArea").onsubmit <- (fun _ ->
             checkAnswer (number1 + number2) number1 number2 [number1; number2]
             false)
