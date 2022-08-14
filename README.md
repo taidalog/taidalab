@@ -1,10 +1,10 @@
 # taidalab
 
-Version 1.6.0
+Version 2.0.0
 
 [Japanese README](README.ja.md)
 
-Really simple JavaScript application for repeated practice of decimal-to-binary conversion.
+Really simple Web application for repeated practice of decimal-to-binary conversion.
 
 ## Features
 
@@ -30,7 +30,7 @@ Really simple JavaScript application for repeated practice of decimal-to-binary 
 
 ## Known Issue
 
-- An attempt to reload a page fails.
+- 
 
 
 ## License

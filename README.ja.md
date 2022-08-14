@@ -1,10 +1,10 @@
 # taidalab
 
-Version 1.6.0
+Version 2.0.0
 
 [English README](README.md)
 
-10進数から2進数への変換の反復練習のための JavaScript アプリケーション
+10進数から2進数への変換の反復練習のための Web アプリケーション
 
 ## 機能
 
@@ -30,7 +30,7 @@ Version 1.6.0
 
 ## 既知の問題
 
-- ページを更新しようとするとエラーが発生し、ページを更新できない。
+- 
 
 
 ## License
