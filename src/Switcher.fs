@@ -351,7 +351,7 @@ module rec Switcher =
                     ()
                 else
                     // Redirecting to the home.
-                    Switcher.replacePage "/"
+                    replacePage "/"
 
 
         let init ()  =
