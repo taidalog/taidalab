@@ -366,7 +366,12 @@ module rec Switcher =
             (document.getElementById "srcRadix").innerHTML <- sprintf "(%d)" sourceRadix
             (document.getElementById "dstRadix").innerHTML <- string destinationRadix
             (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
-            (document.getElementById "submitButton").onclick <- (fun _ -> checkAnswer (string initNumber))
+            (document.getElementById "submitButton").onclick <- (fun _ ->
+                checkAnswer (string initNumber)
+                false)
+            (document.getElementById "inputArea").onsubmit <- (fun _ ->
+                checkAnswer (string initNumber)
+                false)
             
             printfn "Initialization ends."
         
