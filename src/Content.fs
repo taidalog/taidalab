@@ -1,4 +1,4 @@
-// taidalab Version 1.6.0
+// taidalab Version 2.0.0
 // https://github.com/taidalog/taidalab
 // Copyright (c) 2022 taidalog
 // This software is licensed under the MIT License.
@@ -118,7 +118,7 @@ module Content =
 
         let question = """<span id="questionSpan" class="question-number"></span><sub id="srcRadix"></sub> を<span id="dstRadix"></span>進法で表すと？"""
         
-        let version = "Version 2.0.0-beta"
+        let version = "Version 2.0.0"
 
         let footer = sprintf """
             <small class="footer-container">
