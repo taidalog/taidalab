@@ -441,6 +441,19 @@ dd {
 }
 
 
+/*
+    Settings for responsive design.
+*/
+
+/**/
+@media (max-width: 999px) {
+    .button-container {
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 200px 200px 200px;
+    }
+}
+
+
 /**/
 @media (max-width: 799px) {    
     main.home {
@@ -449,6 +462,16 @@ dd {
 
     footer.home {
         max-width: 94%;
+    }
+
+    .button-container {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 5rem 5rem 5rem 5rem 5rem;
+        gap: 10px;
+    }
+
+    .btn {
+        font-size: 1.25rem;
     }
 }
 
@@ -481,5 +504,20 @@ dd {
     .footer-container {
         flex-direction: column;
         text-align: center;
+    }
+}
+
+/**/
+@media (max-width: 599px) {
+    .button-container {
+        padding: 5px 0;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .btn {
+        font-size: 1.25rem;
+        height: 60px;
     }
 }
