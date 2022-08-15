@@ -477,7 +477,7 @@ dd {
 
 
 /**/
-@media (max-width: 600px) {
+@media (max-width: 599px) {
     .header-container {
         max-width: 94%;
         margin: 0 auto;
@@ -488,6 +488,18 @@ dd {
         margin: 0 auto;
     }
     
+    .button-container {
+        padding: 5px 0;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .btn {
+        font-size: 1.25rem;
+        height: 60px;
+    }
+
     .number-input {
         width: 80%;
     }
@@ -504,20 +516,5 @@ dd {
     .footer-container {
         flex-direction: column;
         text-align: center;
-    }
-}
-
-/**/
-@media (max-width: 599px) {
-    .button-container {
-        padding: 5px 0;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-    }
-    
-    .btn {
-        font-size: 1.25rem;
-        height: 60px;
     }
 }
