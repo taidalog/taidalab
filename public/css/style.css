@@ -39,6 +39,10 @@ main.home, header.home .header-container {
     margin: 0 auto;
 }
 
+
+/*
+    Footer.
+*/
 footer {
     margin-bottom: 20px;
 }
@@ -47,6 +51,29 @@ footer.home {
     margin-top: 20px;
 }
 
+footer a {
+    text-decoration: none;
+}
+
+.footer-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.acknowledgements {
+    width: 100%;
+    text-align: center;
+}
+
+.no-display {
+    display: none;
+}
+
+
+/*
+    Course, main.
+*/
 .question-area {
     padding: 5px 0;
 }
@@ -95,22 +122,71 @@ footer.home {
     order: 3;
 }
 
+.hint-area {
+    width: 100%;
+    order: 4;
+}
+
+details:hover {
+    cursor: pointer;
+}
+
+.column-addition-area {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.column-addition-row {
+    text-decoration: underline;
+}
+
+.column-addition-row::before {
+    content: ")";
+}
+
+.history-area {
+    padding: 10px 0;
+}
+
+.history-indented {
+    margin-left: 2rem;
+}
+
+.consolas {
+    font-family: Consolas, sans-serif;
+}
+
+.history-correct {
+    background-color: greenyellow;
+    font-size: 18px;
+}
+
+.history-wrong {
+    background-color: lightpink;
+    font-size: 18px;
+}
+
+.zero-grey {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.error-area {
+    width: 100%;
+    order: 5;
+}
+
+.warning {
+    color: red;
+}
+
+
+/*
+    Colors for headers and check buttons.
+    header-color-<identifier>
+    button-color-<identifier>
+*/
 .home-header {
     background-color: #65a2ac;
     color: aliceblue;
-}
-
-.pot-header {
-    background-color: #a665ac;
-}
-
-.pot-button {
-    color: indigo;
-    background: plum;
-}
-
-.pot-button:hover {
-    background-color: #c690c6;
 }
 
 .d2b-header {
@@ -138,6 +214,19 @@ footer.home {
 
 .b2d-button:hover {
     background-color: #86e5b2;
+}
+
+.pot-header {
+    background-color: #a665ac;
+}
+
+.pot-button {
+    color: indigo;
+    background: plum;
+}
+
+.pot-button:hover {
+    background-color: #c690c6;
 }
 
 .add-header {
@@ -192,81 +281,10 @@ footer.home {
     background-color: #aaaaaa;
 }
 
-.hint-area {
-    width: 100%;
-    order: 4;
-}
 
-.error-area {
-    width: 100%;
-    order: 5;
-}
-
-details:hover {
-    cursor: pointer;
-}
-
-.column-addition-area {
-    font-family: 'Courier New', Courier, monospace;
-}
-
-.column-addition-row {
-    text-decoration: underline;
-}
-
-.column-addition-row::before {
-    content: ")";
-}
-
-.warning {
-    color: red;
-}
-
-.history-area {
-    padding: 10px 0;
-}
-
-.history-indented {
-    margin-left: 2rem;
-}
-
-.consolas {
-    font-family: Consolas, sans-serif;
-}
-
-.history-correct {
-    background-color: greenyellow;
-    font-size: 18px;
-}
-
-.history-wrong {
-    background-color: lightpink;
-    font-size: 18px;
-}
-
-.zero-grey {
-    color: rgba(0, 0, 0, 0.5);
-}
-
-footer a {
-    text-decoration: none;
-}
-
-.footer-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-.acknowledgements {
-    width: 100%;
-    text-align: center;
-}
-
-dd {
-    margin-bottom: 12px;
-}
-
+/*
+    Addition course and Subtraction course.
+*/
 .calculation-area {
     width: 12rem;
     margin: 0px;
@@ -297,10 +315,16 @@ dd {
     text-align: right;
 }
 
-.no-display {
-    display: none;
+
+/*
+    About page.
+*/
+dd {
+    margin-bottom: 12px;
 }
 
+
+/**/
 @media (max-width: 799px) {    
     main.home {
         margin: 0 auto;
@@ -311,6 +335,8 @@ dd {
     }
 }
 
+
+/**/
 @media (max-width: 600px) {
     .header-container {
         max-width: 94%;

@@ -6,6 +6,10 @@
     https://github.com/taidalog/taidalab/blob/main/LICENSE
  */
 @charset "UTF-8";
+
+/*
+    Home, main.
+*/
 .button-container {
     padding: 5px 0;
     display: grid;
@@ -27,6 +31,11 @@
     cursor: pointer;
 }
 
+
+/*
+    Colors and orders of buttons on home.
+    hoem-button-<identifier>
+*/
 .button-esad {
     background-color: #65a2ac;
     order: 1;
@@ -114,6 +123,8 @@
     order: 9;
 }
 
+
+/**/
 @media (max-width: 999px) {    
     .button-container {
         grid-template-columns: 1fr 1fr 1fr;
@@ -121,6 +132,8 @@
     }
 }
 
+
+/**/
 @media (max-width: 799px) {    
     .button-container {
         grid-template-columns: 1fr 1fr;
@@ -133,6 +146,8 @@
     }
 }
 
+
+/**/
 @media (max-width: 599px) {    
     .button-container {
         padding: 5px 0;
