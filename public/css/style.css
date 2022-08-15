@@ -444,8 +444,6 @@ dd {
 /*
     Settings for responsive design.
 */
-
-/**/
 @media (max-width: 999px) {
     .button-container {
         grid-template-columns: 1fr 1fr 1fr;
@@ -454,7 +452,6 @@ dd {
 }
 
 
-/**/
 @media (max-width: 799px) {    
     main.home {
         margin: 0 auto;
@@ -476,7 +473,6 @@ dd {
 }
 
 
-/**/
 @media (max-width: 599px) {
     .header-container {
         max-width: 94%;
