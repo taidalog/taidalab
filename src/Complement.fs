@@ -63,7 +63,10 @@ module Complement =
                 // Making the next question.
                 printfn "last_answers: %A" last_answers
                 
-                let nextNumber = newNumber (fun _ -> getRandomBetween 1 15) last_answers
+                let nextNumber =
+                    newNumber
+                        (fun _ -> getRandomBetween 1 15)
+                        (fun n -> List.contains n last_answers = false)
                 printfn "nextNumber: %A" nextNumber
 
                 let nextAnswer = 16 - nextNumber

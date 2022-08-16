@@ -56,7 +56,7 @@ module PowerOfTwo2 =
                 let nextIndexNumber =
                     newNumber
                         (fun _ -> getRandomBetween 0 8)
-                        last_answers
+                        (fun n -> List.contains n last_answers = false)
                 let nextNumber = nextIndexNumber |> double |> (fun x -> Math.Pow(2.0, x)) |> int |> ((+) -1)
                 printfn "nextAnswer: %d" nextNumber
 

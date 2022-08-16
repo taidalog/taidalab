@@ -54,7 +54,10 @@ module Bin2Dec2 =
                 // Making the next question.
                 printfn "last_answers: %A" last_answers
                 
-                let nextNumber = newNumber (fun _ -> getRandomBetween 0 255) last_answers
+                let nextNumber =
+                    newNumber
+                        (fun _ -> getRandomBetween 0 255)
+                        (fun n -> List.contains n last_answers = false)
                 printfn "nextNumber: %d" nextNumber
 
                 let nextBin = toBinary nextNumber

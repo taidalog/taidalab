@@ -59,7 +59,7 @@ module Bin2Dec1 =
                 let nextNumber =
                     newNumber
                         (fun _ -> getRandomBetween 0 7 |> double |> (fun x -> Math.Pow(2.0, x)) |> int)
-                        last_answers
+                        (fun n -> List.contains n last_answers = false)
                 printfn "%d" nextNumber
 
                 let nextBin = toBinary nextNumber
