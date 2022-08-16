@@ -21,7 +21,7 @@ module Common =
         else
             newNumber generator tester
     
-    let regMatch str pattern =
+    let regMatch pattern str =
         Regex.Match(str, pattern).Success
     
     let testBinaryString input =
