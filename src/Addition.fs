@@ -87,19 +87,19 @@ module Addition =
             
             if dec = answer then
                 // Making the next question.
-                let mutable (number1, number2) = newNumbersAdd ()
+                let (number1, number2) =
+                    newNumber
+                        (fun _ -> newNumbersAdd ())
+                        (fun (n1, n2) ->
+                            List.contains n1 last_answers = false && List.contains n2 last_answers = false)
 
                 printfn "%A" last_answers
-                while List.contains number1 last_answers || List.contains number2 last_answers do
-                    (number1, number2) <- newNumbersAdd ()
-                    printfn "number1: %d" number1
-                    printfn "number2: %d" number2
-                    printfn "(List.contains number1 last_answers || List.contains number2 last_answers): %b" (List.contains number1 last_answers || List.contains number2 last_answers)
-
-                printfn "numbe: %d" number1
-                printfn "numbe: %d" number2
+                printfn "number1: %d" number1
+                printfn "number1 |> toBinary: %s" (number1 |> toBinary)
+                printfn "number2: %d" number2
+                printfn "number2 |> toBinary: %s" (number2 |> toBinary)
                 printfn "number1 + number2: %d" (number1 + number2)
-                printfn "(toBinary (number1 + number2: %s" (toBinary (number1 + number2))
+                printfn "number1 + number2 |> toBinary: %s" (number1 + number2 |> toBinary)
                 setColumnAddition number1 number2
 
                 let nextHint = newHintAdd ()
