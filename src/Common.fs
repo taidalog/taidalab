@@ -15,7 +15,7 @@ module Common =
         rand.Next(min, max + 1)
 
     let rec newNumber generator tester =
-        let (nextCand : int) = generator ()
+        let nextCand = generator ()
         if tester nextCand then
             nextCand
         else
