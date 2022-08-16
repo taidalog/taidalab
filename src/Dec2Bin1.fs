@@ -60,14 +60,6 @@ module Dec2Bin1 =
         |> int
 
 
-    let rec newNumber last_list =
-        let nextCand = newNumberWithTwoOne ()
-        if List.contains nextCand last_list = false then
-            nextCand
-        else
-            newNumber last_list
-
-
     let newColumnAddition answer quotients_and_remainders =
         let first =
             sprintf """2<span class="column-addition-row">%s</span>""" (answer |> string |> padStart " " 3 |> escapeSpace)
@@ -166,7 +158,10 @@ module Dec2Bin1 =
                 // Making the next question.
                 printfn "last_answers : %A" last_answers
                 
-                let nextNumber = newNumber last_answers
+                let nextNumber =
+                    newNumber
+                        (fun _ -> newNumberWithTwoOne ())
+                        (fun n -> List.contains n last_answers = false)
                 printfn "nextNumber : %d" nextNumber
                 printfn "List.contains nextNumber last_answers : %b" (List.contains nextNumber last_answers)
 
