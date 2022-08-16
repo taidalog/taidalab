@@ -12,18 +12,11 @@ open Taidalab.Common
 module Subtraction =
 
     let newNumbersSub () =
-        
         let number1 = getRandomBetween 1 255
-        printfn "number1: %d" number1
-
-        let mutable number2 = getRandomBetween 1 255
-
-        while (number1 = number2) || ((number1 &&& number2) = 0) do
-            number2 <- getRandomBetween 1 255 - number1
-            printfn "number1 = number2: %b\t(number1 &&& number2) = 0: %b" (number1 = number2) ((number1 &&& number2) = 0)
-
-        printfn "number2: %d" number2
-
+        let number2 =
+            newNumber
+                (fun _ -> getRandomBetween 1 255)
+                (fun n -> (n <> number1) && ((n &&& number1) <> 0))
         if number1 > number2 then
             (number1, number2)
         else
@@ -138,9 +131,11 @@ module Subtraction =
 
         let (number1, number2) = newNumbersSub ()
         printfn "number1: %d" number1
+        printfn "number1 |> toBinary: %s" (number1 |> toBinary)
         printfn "number2: %d" number2
-        printfn "(number1 - number2): %d" (number1 - number2)
-        printfn "(toBinary (number1 - number2)): %s" (toBinary (number1 - number2))
+        printfn "number2 |> toBinary: %s" (number2 |> toBinary)
+        printfn "number1 - number2: %d" (number1 - number2)
+        printfn "number1 - number2 |> toBinary: %s" (number1 - number2 |> toBinary)
         setColumnAddition number1 number2
 
         (document.getElementById "submitButton").onclick <- (fun _ ->
