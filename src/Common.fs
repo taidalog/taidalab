@@ -14,13 +14,13 @@ module Common =
         let rand = new Random()
         rand.Next(min, max + 1)
 
-    let rec newNumber generator last_list =
-        let (nextCand :int ) = generator ()
-        if List.contains nextCand last_list = false then
+    let rec newNumber generator tester =
+        let (nextCand : int) = generator ()
+        if tester nextCand then
             nextCand
         else
-            newNumber generator last_list
-
+            newNumber generator tester
+    
     let testBinaryString input =
         let reCorrect = "^[01]+$"
         Regex.Match(input, reCorrect).Success
