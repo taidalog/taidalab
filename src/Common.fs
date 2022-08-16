@@ -21,6 +21,9 @@ module Common =
         else
             newNumber generator tester
     
+    let regMatch str pattern =
+        Regex.Match(str, pattern).Success
+    
     let testBinaryString input =
         let reCorrect = "^[01]+$"
         Regex.Match(input, reCorrect).Success
