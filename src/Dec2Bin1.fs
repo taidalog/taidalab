@@ -213,9 +213,9 @@ module Dec2Bin1 =
         let sourceRadix = 10
         let destinationRadix = 2
 
-        (document.getElementById "questionSpan").innerHTML <- string initNumber
-        (document.getElementById "srcRadix").innerHTML <- sprintf "(%d)" sourceRadix
-        (document.getElementById "dstRadix").innerHTML <- string destinationRadix
+        (document.getElementById "questionSpan").innerText <- string initNumber
+        (document.getElementById "srcRadix").innerText <- sprintf "(%d)" sourceRadix
+        (document.getElementById "dstRadix").innerText <- string destinationRadix
         (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
         (document.getElementById "hintArea").innerHTML <- newHint initNumber quotientsAndRemainders powerOfTwos
         (document.getElementById "submitButton").onclick <- (fun _ ->

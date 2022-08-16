@@ -131,8 +131,8 @@ module Subtraction =
 
         (document.getElementById "numberInput").className <- "number-input question-number eight-digit"
         (document.getElementById "operator").innerText <- "-)"
-        (document.getElementById "firstRowSrcRadix").innerHTML <- sprintf "(%d)" sourceRadix
-        (document.getElementById "secondRowSrcRadix").innerHTML <- sprintf "(%d)" sourceRadix
+        (document.getElementById "firstRowSrcRadix").innerText <- sprintf "(%d)" sourceRadix
+        (document.getElementById "secondRowSrcRadix").innerText <- sprintf "(%d)" sourceRadix
         (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
         (document.getElementById "hintArea").innerHTML <- hint
 

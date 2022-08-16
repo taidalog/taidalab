@@ -123,7 +123,7 @@ module Complement =
         let hint = String.Format(hintFormat, initBin, reversedBin)
 
         (document.getElementById "questionSpan").innerText <- initBin
-        (document.getElementById "srcRadix").innerHTML <- sprintf "(%d)" sourceRadix
+        (document.getElementById "srcRadix").innerText <- sprintf "(%d)" sourceRadix
         (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
         (document.getElementById "hintArea").innerHTML <- hint
         (document.getElementById "submitButton").onclick <- (fun _ ->

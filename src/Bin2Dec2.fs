@@ -93,9 +93,9 @@ module Bin2Dec2 =
         let destinationRadix = 10
         
         (document.getElementById "questionSpan").innerText <- splitBin
+        (document.getElementById "srcRadix").innerText <- sprintf "(%d)" sourceRadix
+        (document.getElementById "dstRadix").innerText <- string destinationRadix
         (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
-        (document.getElementById "srcRadix").innerHTML <- sprintf "(%d)" sourceRadix
-        (document.getElementById "dstRadix").innerHTML <- string destinationRadix
         (document.getElementById "submitButton").onclick <- (fun _ ->
             checkAnswer initNumber splitBin [initNumber]
             false)
