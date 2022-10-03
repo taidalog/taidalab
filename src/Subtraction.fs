@@ -65,17 +65,21 @@ module Subtraction =
         else
             
             // Converting the input in order to use in the history message.
-            let digit = 8
-            let taggedBin = bin |> padWithZero digit |> colorLeadingZero
-            let dec = toDecimal bin
+            let binaryDigit = 8
+            let taggedBin = bin |> padWithZero binaryDigit |> colorLeadingZero
             printfn "taggedBin: %s" taggedBin
+
+            let decDigit = 3
+            let dec = toDecimal bin
+            let spacePaddedDec = dec |> string |> padStart " " decDigit |> escapeSpace
             printfn "dec: %d" dec
+            printfn "spacePaddedInputValue: %s" spacePaddedDec
             
             // Making a new history and updating the history with the new one.
             let destinationRadix = 10
             let outputArea = document.getElementById "outputArea"
             let historyMessage =
-                newHistory (dec = answer) taggedBin sourceRadix (string dec) destinationRadix
+                newHistory (dec = answer) taggedBin sourceRadix spacePaddedDec destinationRadix
                 |> (fun x -> concatinateStrings "<br>" x outputArea.innerHTML)
             // printfn "historyMessage: `n%s" historyMessage
             outputArea.innerHTML <- historyMessage

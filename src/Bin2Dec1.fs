@@ -42,12 +42,14 @@ module Bin2Dec1 =
             
             let sourceRadix = 2
             let bin = toBinary inputValueAsInt
-            
+            let binaryDigit = 8
+            let taggedBin = padWithZero binaryDigit bin |> colorLeadingZero
+
             // Making a new history and updating the history with the new one.
             let destinationRadix = 10
             let outputArea = document.getElementById "outputArea"
             let historyMessage =
-                newHistory (inputValueAsInt = answer) spacePaddedInputValue destinationRadix bin sourceRadix
+                newHistory (inputValueAsInt = answer) spacePaddedInputValue destinationRadix taggedBin sourceRadix
                 |> (fun x -> concatinateStrings "<br>" x outputArea.innerHTML)
             printfn "%A" historyMessage
             outputArea.innerHTML <- historyMessage
