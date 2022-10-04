@@ -1,5 +1,5 @@
 /* 
-    taidalab Version 2.2.0
+    taidalab Version 2.2.2
     https://github.com/taidalog/taidalab
     Copyright (c) 2022 taidalog
     This software is licensed under the MIT License.
@@ -41,7 +41,7 @@ main.home, header.home .header-container {
 
 
 /*
-    Home, main.
+    <main> of Home page.
 */
 .button-container {
     padding: 5px 0;
@@ -66,7 +66,7 @@ main.home, header.home .header-container {
 
 
 /*
-    Footer.
+    <footer> of all pages.
 */
 footer {
     margin-bottom: 20px;
@@ -97,7 +97,7 @@ footer a {
 
 
 /*
-    Course, main.
+    <main> of Course pages.
 */
 .question-area {
     padding: 5px 0;
@@ -394,7 +394,7 @@ details:hover {
 
 
 /*
-    Addition course and Subtraction course.
+    <main> of Addition course and Subtraction course.
 */
 .calculation-area {
     width: 12rem;
