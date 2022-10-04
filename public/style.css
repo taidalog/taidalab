@@ -206,182 +206,176 @@ details:hover {
 
 /*
     Colors and orders of buttons on home.
-    hoem-button-<identifier>
+    course-button-<identifier>
 */
-.button-esad {
+.course-button-d2b1 {
     background-color: #65a2ac;
     order: 1;
 }
 
-.button-esad:hover {
+.course-button-d2b1:hover {
     background-color: #5a919a;
 }
 
-.button-ed2b {
+.course-button-d2b2 {
     background-color: #65a2ac;
     order: 2;
 }
 
-.button-ed2b:hover {
+.course-button-d2b2:hover {
     background-color: #5a919a;
 }
 
-.button-eb2d {
+.course-button-b2d1 {
     background-color: #65ac86;
     order: 3;
 }
 
-.button-eb2d:hover {
+.course-button-b2d1:hover {
     background-color: #5a9a78;
 }
 
-.button-epot {
+.course-button-b2d2 {
+    background-color: #65ac86;
+    order: 4;
+}
+
+.course-button-b2d2:hover {
+    background-color: #5a9a78;
+}
+
+.course-button-pot1 {
     background-color: #a665ac;
     order: 5;
 }
 
-.button-epot:hover {
+.course-button-pot1:hover {
     background-color: #955a9a;
 }
 
-.button-epotex {
+.course-button-pot2 {
     background-color: #a665ac;
     order: 6;
 }
 
-.button-epotex:hover {
+.course-button-pot2:hover {
     background-color: #955a9a;
 }
 
-.button-ebad {
+.course-button-add {
     background-color: #656eac;
     order: 7;
 }
 
-.button-ebad:hover {
+.course-button-add:hover {
     background-color: #5a639a;
 }
 
-.button-ebsb {
+.course-button-sub {
     background-color: #656eac;
     order: 8;
 }
 
-.button-ebsb:hover {
+.course-button-sub:hover {
     background-color: #5a639a;
 }
 
-.button-ecmp {
+.course-button-cmp {
     background-color: #6588ac;
     order: 9;
 }
 
-.button-ecmp:hover {
+.course-button-cmp:hover {
     background-color: #5a7a9a;
-}
-
-.button-ebadex {
-    background-color: #da959f;
-    order: 6;
-}
-
-.button-ebsbex {
-    background-color: aquamarine;
-    order: 8;
-}
-
-.button-esho {
-    background-color: firebrick;
-    order: 9;
 }
 
 
 /*
     Colors for headers and check buttons.
-    header-color-<identifier>
-    button-color-<identifier>
+    header-<identifier>
+    submit-button-<identifier>
 */
-.home-header {
+.header-home {
     background-color: #65a2ac;
     color: aliceblue;
 }
 
-.d2b-header {
+.header-d2b {
     background-color: #65a2ac;
     color: aliceblue;
 }
 
-.d2b-button {
+.submit-button-d2b {
     color: midnightblue;
     background: powderblue;
 }
 
-.d2b-button:hover {
+.submit-button-d2b:hover {
     background-color: #9ec9cf;
 }
 
-.b2d-header {
+.header-b2d {
     background-color: #65ac86;
 }
 
-.b2d-button {
+.submit-button-b2d {
     color: #1e3328;
     background: #95fec6;
 }
 
-.b2d-button:hover {
+.submit-button-b2d:hover {
     background-color: #86e5b2;
 }
 
-.pot-header {
+.header-pot {
     background-color: #a665ac;
 }
 
-.pot-button {
+.submit-button-pot {
     color: indigo;
     background: plum;
 }
 
-.pot-button:hover {
+.submit-button-pot:hover {
     background-color: #c690c6;
 }
 
-.add-header {
+.header-add {
     background-color: #656eac;
 }
 
-.add-button {
+.submit-button-add {
     color: #1e2133;
     background: #95a2fe;
 }
 
-.add-button:hover {
+.submit-button-add:hover {
     background-color: #8692e5;
 }
 
-.sub-header {
+.header-sub {
     background-color: #656eac;
 }
 
-.sub-button {
+.submit-button-sub {
     color: #1e2133;
     background: #95a2fe;
 }
 
-.sub-button:hover {
+.submit-button-sub:hover {
     background-color: #8692e5;
 }
 
-.cmp-header {
+.header-cmp {
     background-color: #6588ac;
 }
 
-.cmp-button {
+.submit-button-cmp {
     color: #1e2833;
     background: #95c9fe;
 }
 
-.cmp-button:hover {
+.submit-button-cmp:hover {
     background-color: #86b5e5;
 }
 
@@ -389,12 +383,12 @@ details:hover {
     background-color: #808080;
 }
 
-.not-button {
+.submit-button-not {
     color: #262626;
     background: #bdbdbd;
 }
 
-.not-button:hover {
+.submit-button-not:hover {
     background-color: #aaaaaa;
 }
 

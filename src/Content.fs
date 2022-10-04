@@ -10,15 +10,15 @@ module Content =
     module Home =
         let main = """
             <form class="button-container">
-                <button type="button" id="buttonED2B1" class="btn button-esad">10進数→2進数 (1)</button>
-                <button type="button" id="buttonED2B2" class="btn button-ed2b">10進数→2進数 (2)</button>
-                <button type="button" id="buttonEB2D1" class="btn button-eb2d">2進数→10進数 (1)</button>
-                <button type="button" id="buttonEB2D2" class="btn button-eb2d">2進数→10進数 (2)</button>
-                <button type="button" id="buttonEPOT1" class="btn button-epot">2のn乗</button>
-                <button type="button" id="buttonEPOT2" class="btn button-epotex">2のn乗 - 1</button>
-                <button type="button" id="buttonEBAD" class="btn button-ebad">加算</button>
-                <button type="button" id="buttonEBSB" class="btn button-ebsb">減算</button>
-                <button type="button" id="buttonECMP" class="btn button-ecmp">補数</button>
+                <button type="button" id="buttonED2B1" class="btn course-button-d2b1">10進数→2進数 (1)</button>
+                <button type="button" id="buttonED2B2" class="btn course-button-d2b2">10進数→2進数 (2)</button>
+                <button type="button" id="buttonEB2D1" class="btn course-button-b2d1">2進数→10進数 (1)</button>
+                <button type="button" id="buttonEB2D2" class="btn course-button-b2d2">2進数→10進数 (2)</button>
+                <button type="button" id="buttonEPOT1" class="btn course-button-pot1">2のn乗</button>
+                <button type="button" id="buttonEPOT2" class="btn course-button-pot2">2のn乗 - 1</button>
+                <button type="button" id="buttonEBAD" class="btn course-button-add">加算</button>
+                <button type="button" id="buttonEBSB" class="btn course-button-sub">減算</button>
+                <button type="button" id="buttonECMP" class="btn course-button-cmp">補数</button>
             </form>"""
 
 
