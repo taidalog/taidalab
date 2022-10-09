@@ -4,15 +4,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Common.fs" />
-    <Compile Include="Dec2Bin1.fs" />
-    <Compile Include="Dec2Bin2.fs" />
-    <Compile Include="Bin2Dec1.fs" />
-    <Compile Include="Bin2Dec2.fs" />
-    <Compile Include="PowerOfTwo1.fs" />
-    <Compile Include="PowerOfTwo2.fs" />
-    <Compile Include="Addition.fs" />
-    <Compile Include="Subtraction.fs" />
-    <Compile Include="Complement.fs" />
+    <Compile Include="endless-binary/Dec2Bin1.fs" />
+    <Compile Include="endless-binary/Dec2Bin2.fs" />
+    <Compile Include="endless-binary/Bin2Dec1.fs" />
+    <Compile Include="endless-binary/Bin2Dec2.fs" />
+    <Compile Include="endless-binary/PowerOfTwo1.fs" />
+    <Compile Include="endless-binary/PowerOfTwo2.fs" />
+    <Compile Include="endless-binary/Addition.fs" />
+    <Compile Include="endless-binary/Subtraction.fs" />
+    <Compile Include="endless-binary/Complement.fs" />
     <Compile Include="Content.fs" />
     <Compile Include="Switcher.fs" />
     <Compile Include="App.fs" />
