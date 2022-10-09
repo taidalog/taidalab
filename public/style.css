@@ -19,7 +19,6 @@ body {
 }
 
 header {
-    margin-bottom: 20px;
     padding: 1px;
     color: #ffffff;
 }
@@ -30,6 +29,7 @@ header h1 {
 }
 
 main {
+    padding-top: 20px;
     order: 2;
 }
 
@@ -519,6 +519,7 @@ dd {
 
 aside {
     width: 20%;
+    min-height: 80vh;
     background-color: aliceblue;
     order: 1;
 }
