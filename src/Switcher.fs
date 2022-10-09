@@ -41,10 +41,10 @@ module rec Switcher =
                 widthClass = "home"
                 initFunc = (fun _ -> setHomeButtons ())
             }
-        | "/endless-dec2bin-1/" ->
-            printfn "%s" "/endless-dec2bin-1/"
+        | "/endless-binary/dec2bin-1/" ->
+            printfn "%s" "/endless-binary/dec2bin-1/"
             {
-                pathname = "/endless-dec2bin-1/"
+                pathname = "/endless-binary/dec2bin-1/"
                 title = "10進数→2進数 (1) - taidalab"
                 headerContent = Content.Common.header
                 headerColorClass = "header-d2b"
@@ -56,10 +56,10 @@ module rec Switcher =
                 widthClass = "course"
                 initFunc = (fun _ -> Dec2Bin1.init ())
             }
-        | "/endless-dec2bin-2/" ->
-            printfn "%s" "/endless-dec2bin-2/"
+        | "/endless-binary/dec2bin-2/" ->
+            printfn "%s" "/endless-binary/dec2bin-2/"
             {
-                pathname = "/endless-dec2bin-2/"
+                pathname = "/endless-binary/dec2bin-2/"
                 title = "10進数→2進数 (2) - taidalab"
                 headerContent = Content.Common.header
                 headerColorClass = "header-d2b"
@@ -71,10 +71,10 @@ module rec Switcher =
                 widthClass = "course"
                 initFunc = (fun _ -> Dec2Bin2.init ())
             }
-        | "/endless-bin2dec-1/" ->
-            printfn "%s" "/endless-bin2dec-1/"
+        | "/endless-binary/bin2dec-1/" ->
+            printfn "%s" "/endless-binary/bin2dec-1/"
             {
-                pathname = "/endless-bin2dec-1/"
+                pathname = "/endless-binary/bin2dec-1/"
                 title = "2進数→10進数 (1) - taidalab"
                 headerContent = Content.Common.header
                 headerColorClass = "header-b2d"
@@ -86,10 +86,10 @@ module rec Switcher =
                 widthClass = "course"
                 initFunc = (fun _ -> Bin2Dec1.init ())
             }
-        | "/endless-bin2dec-2/" ->
-            printfn "%s" "/endless-bin2dec-2/"
+        | "/endless-binary/bin2dec-2/" ->
+            printfn "%s" "/endless-binary/bin2dec-2/"
             {
-                pathname = "/endless-bin2dec-2/"
+                pathname = "/endless-binary/bin2dec-2/"
                 title = "2進数→10進数 (2) - taidalab"
                 headerContent = Content.Common.header
                 headerColorClass = "header-b2d"
@@ -101,10 +101,10 @@ module rec Switcher =
                 widthClass = "course"
                 initFunc = (fun _ -> Bin2Dec2.init ())
             }
-        | "/endless-power-of-two-1/" ->
-            printfn "%s" "/endless-power-of-two-1/"
+        | "/endless-binary/power-of-two-1/" ->
+            printfn "%s" "/endless-binary/power-of-two-1/"
             {
-                pathname = "/endless-power-of-two-1/"
+                pathname = "/endless-binary/power-of-two-1/"
                 title = "2のn乗 - taidalab"
                 headerContent = Content.Common.header
                 headerColorClass = "header-pot"
@@ -116,10 +116,10 @@ module rec Switcher =
                 widthClass = "course"
                 initFunc = (fun _ -> PowerOfTwo1.init ())
             }
-        | "/endless-power-of-two-2/" ->
-            printfn "%s" "/endless-power-of-two-2/"
+        | "/endless-binary/power-of-two-2/" ->
+            printfn "%s" "/endless-binary/power-of-two-2/"
             {
-                pathname = "/endless-power-of-two-2/"
+                pathname = "/endless-binary/power-of-two-2/"
                 title = "2のn乗-1 - taidalab"
                 headerContent = Content.Common.header
                 headerColorClass = "header-pot"
@@ -131,10 +131,10 @@ module rec Switcher =
                 widthClass = "course"
                 initFunc = (fun _ -> PowerOfTwo2.init ())
             }
-        | "/endless-addition/" ->
-            printfn "%s" "/endless-addition/"
+        | "/endless-binary/addition/" ->
+            printfn "%s" "/endless-binary/addition/"
             {
-                pathname = "/endless-addition/"
+                pathname = "/endless-binary/addition/"
                 title = "加算 - taidalab"
                 headerContent = Content.Common.header
                 headerColorClass = "header-add"
@@ -146,10 +146,10 @@ module rec Switcher =
                 widthClass = "course"
                 initFunc = (fun _ -> Addition.init ())
             }
-        | "/endless-subtraction/" ->
-            printfn "%s" "/endless-subtraction/"
+        | "/endless-binary/subtraction/" ->
+            printfn "%s" "/endless-binary/subtraction/"
             {
-                pathname = "/endless-subtraction/"
+                pathname = "/endless-binary/subtraction/"
                 title = "減算 - taidalab"
                 headerContent = Content.Common.header
                 headerColorClass = "header-sub"
@@ -161,10 +161,10 @@ module rec Switcher =
                 widthClass = "course"
                 initFunc = (fun _ -> Subtraction.init ())
             }
-        | "/endless-complement/" ->
-            printfn "%s" "/endless-complement/"
+        | "/endless-binary/complement/" ->
+            printfn "%s" "/endless-binary/complement/"
             {
-                pathname = "/endless-complement/"
+                pathname = "/endless-binary/complement/"
                 title = "補数 - taidalab"
                 headerContent = Content.Common.header
                 headerColorClass = "header-cmp"
@@ -264,15 +264,15 @@ module rec Switcher =
         initPage initialObject
 
     let setHomeButtons () =
-        (document.getElementById "buttonED2B1").onclick <- (fun _ -> pushPage "/endless-dec2bin-1/")
-        (document.getElementById "buttonED2B2").onclick <- (fun _ -> pushPage "/endless-dec2bin-2/")
-        (document.getElementById "buttonEB2D1").onclick <- (fun _ -> pushPage "/endless-bin2dec-1/")
-        (document.getElementById "buttonEB2D2").onclick <- (fun _ -> pushPage "/endless-bin2dec-2/")
-        (document.getElementById "buttonEPOT1").onclick <- (fun _ -> pushPage "/endless-power-of-two-1/")
-        (document.getElementById "buttonEPOT2").onclick <- (fun _ -> pushPage "/endless-power-of-two-2/")
-        (document.getElementById "buttonEBAD").onclick <- (fun _ -> pushPage "/endless-addition/")
-        (document.getElementById "buttonEBSB").onclick <- (fun _ -> pushPage "/endless-subtraction/")
-        (document.getElementById "buttonECMP").onclick <- (fun _ -> pushPage "/endless-complement/")
+        (document.getElementById "buttonED2B1").onclick <- (fun _ -> pushPage "/endless-binary/dec2bin-1/")
+        (document.getElementById "buttonED2B2").onclick <- (fun _ -> pushPage "/endless-binary/dec2bin-2/")
+        (document.getElementById "buttonEB2D1").onclick <- (fun _ -> pushPage "/endless-binary/bin2dec-1/")
+        (document.getElementById "buttonEB2D2").onclick <- (fun _ -> pushPage "/endless-binary/bin2dec-2/")
+        (document.getElementById "buttonEPOT1").onclick <- (fun _ -> pushPage "/endless-binary/power-of-two-1/")
+        (document.getElementById "buttonEPOT2").onclick <- (fun _ -> pushPage "/endless-binary/power-of-two-2/")
+        (document.getElementById "buttonEBAD").onclick <- (fun _ -> pushPage "/endless-binary/addition/")
+        (document.getElementById "buttonEBSB").onclick <- (fun _ -> pushPage "/endless-binary/subtraction/")
+        (document.getElementById "buttonECMP").onclick <- (fun _ -> pushPage "/endless-binary/complement/")
     
     let setFooterLinks () =
         (document.getElementById "versionNumber" :?> Browser.Types.HTMLAnchorElement).href <- "https://github.com/taidalog/taidalab/releases"
