@@ -116,6 +116,18 @@ module Content =
     module Common =
         let header = """<div id="headerContainer" class="header-container"></div>"""
 
+        let aside = """
+            <ul>
+                <li><a id="asideEndlessBinary" href="/endless-binary/">10進数↔2進数の反復練習</a></li>
+                <li><a id="asideIroIroiro" href="/colorin/">色相ローテーション</a></li>
+                <li><a id="asideSoon" href="#">Comming soon...</a></li>
+            </ul>
+            <ul>
+                <li><a id="asideAbout" href="/about/">About</a></li>
+                <li><a id="asideTerms" href="/terms/">ご利用について</a></li>
+                <li><a id="asideRepo" href="https://github.com/taidalog/taidalab">Repository on GitHub</a></li>
+            </ul>"""
+
         let question = """<span id="questionSpan" class="question-number"></span><sub id="srcRadix"></sub> を<span id="dstRadix"></span>進法で表すと？"""
         
         let version = "Version 2.2.2"

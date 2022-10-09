@@ -12,7 +12,7 @@ module Main =
 
     window.addEventListener("DOMContentLoaded", (fun _ ->
         printfn "%s" "The begining of DOMContentLoaded"
-        document.body.innerHTML <- """<header></header><main></main><footer></footer>"""
+        document.body.innerHTML <- """<header></header><div class="main-container"><main></main><aside></aside></div><footer></footer>"""
         (document.querySelector "footer").innerHTML <- Content.Common.footer
         printfn "%s" window.location.pathname
         let initObj = newInitObject window.location.pathname

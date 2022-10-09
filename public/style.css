@@ -29,8 +29,12 @@ header h1 {
     max-height: 40px;
 }
 
+main {
+    order: 2;
+}
+
 main.home, header.home .header-container {
-    max-width: 94%;
+    max-width: 76%;
     margin: 0 auto;
 }
 
@@ -507,4 +511,30 @@ dd {
         flex-direction: column;
         text-align: center;
     }
+}
+
+.main-container {
+    display: flex;
+}
+
+aside {
+    width: 20%;
+    background-color: aliceblue;
+    order: 1;
+}
+
+aside ul {
+    list-style: none;
+}
+
+aside a {
+    color: #000000;
+    padding: 5px;
+    display: block;
+    text-decoration: none;
+}
+
+aside a:hover {
+    color: #ffffff;
+    background-color: #65a2ac;
 }
