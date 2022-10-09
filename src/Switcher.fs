@@ -26,14 +26,14 @@ module rec Switcher =
     let newInitObject pathname =
         printfn "%A" pathname
         match pathname with
-        | "/" ->
-            printfn "%s" "/"
+        | "/endless-binary/" ->
+            printfn "%s" "/endless-binary/"
             {
-                pathname = "/"
-                title = "taidalab"
+                pathname = "/endless-binary/"
+                title = "10進数↔2進数 | taidalab"
                 headerContent = Content.Common.header
                 headerColorClass = "header-home"
-                headerTitle = "<h1>taidalab</h1>"
+                headerTitle = "<h1>10進数↔2進数 | taidalab</h1>"
                 mainContent = Content.Home.main
                 buttonColorClass = ""
                 questionContent = ""
