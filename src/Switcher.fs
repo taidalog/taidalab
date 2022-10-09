@@ -314,14 +314,6 @@ module rec Switcher =
         (document.getElementById "buttonECMP").onclick <- (fun _ -> pushPage "/endless-binary/complement/")
     
     let setFooterLinks () =
-        (document.getElementById "versionNumber" :?> Browser.Types.HTMLAnchorElement).href <- "https://github.com/taidalog/taidalab/releases"
-        (document.getElementById "footerHome" :?> Browser.Types.HTMLAnchorElement).href <- "/"
-        (document.getElementById "footerAbout" :?> Browser.Types.HTMLAnchorElement).href <- "/about/"
-        (document.getElementById "footerTerms" :?> Browser.Types.HTMLAnchorElement).href <- "/terms/"
-        (document.getElementById "footerRepo" :?> Browser.Types.HTMLAnchorElement).href <- "https://github.com/taidalog/taidalab"
-        (document.getElementById "footerFSharp" :?> Browser.Types.HTMLAnchorElement).href <- "https://fsharp.org/"
-        (document.getElementById "footerFable" :?> Browser.Types.HTMLAnchorElement).href <- "https://fable.io"
-        
         ["footerHome"; "footerAbout"; "footerTerms"]
         |> List.map (fun x -> document.getElementById x :?> Browser.Types.HTMLAnchorElement)
         |> List.map overwriteAnchorClick
@@ -412,14 +404,6 @@ module rec Switcher =
             printfn "Initialization ends."
         
         let setFooterLinks () =
-            (document.getElementById "versionNumber" :?> Browser.Types.HTMLAnchorElement).href <- "https://github.com/taidalog/taidalab/releases"
-            (document.getElementById "footerHome" :?> Browser.Types.HTMLAnchorElement).href <- "/"
-            (document.getElementById "footerAbout" :?> Browser.Types.HTMLAnchorElement).href <- "/about/"
-            (document.getElementById "footerTerms" :?> Browser.Types.HTMLAnchorElement).href <- "/terms/"
-            (document.getElementById "footerRepo" :?> Browser.Types.HTMLAnchorElement).href <- "https://github.com/taidalog/taidalab"
-            (document.getElementById "footerFSharp" :?> Browser.Types.HTMLAnchorElement).href <- "https://fsharp.org/"
-            (document.getElementById "footerFable" :?> Browser.Types.HTMLAnchorElement).href <- "https://fable.io"
-            
             ["footerHome"; "footerAbout"; "footerTerms"]
             |> List.map (fun x -> document.getElementById x :?> Browser.Types.HTMLAnchorElement)
             |> List.map (fun x -> x.onclick <- (fun ev ->
@@ -428,7 +412,7 @@ module rec Switcher =
                 ))
             |> ignore
 
-            ["versionNumber"; "footerRepo"; "footerFSharp"; "footerFable"]
+            ["versionNumber"; "footerFSharp"; "footerFable"]
             |> List.map (fun x -> document.getElementById x :?> Browser.Types.HTMLAnchorElement)
             |> List.map (fun x -> x.onclick <- (fun ev ->
                 ev.preventDefault()

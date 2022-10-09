@@ -136,8 +136,8 @@ module Content =
         let footer = sprintf """
             <small class="footer-container">
                 <div class="item">&copy; 2022 taidalog</div>
-                <div class="item"><a id="versionNumber">%s</a></div>
-                <div class="item">taidalab is written in <a id="footerFSharp">F#</a> and transpiled by <a id="footerFable">Fable</a>. Thank you!</div>
+                <div class="item"><a id="versionNumber" href="https://github.com/taidalog/taidalab/releases">%s</a></div>
+                <div class="item">taidalab is written in <a id="footerFSharp" href="https://fsharp.org/">F#</a> and transpiled by <a id="footerFable" href="https://fable.io">Fable</a>. Thank you!</div>
             </small>""" version
         
         let columnAdditionFormat = """
