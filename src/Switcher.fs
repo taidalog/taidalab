@@ -26,6 +26,21 @@ module rec Switcher =
     let newInitObject pathname =
         printfn "%A" pathname
         match pathname with
+        | "/" ->
+            printfn "%s" "/"
+            {
+                pathname = "/"
+                title = "taidalab"
+                headerContent = Content.Common.header
+                headerColorClass = "header-home"
+                headerTitle = "<h1>taidalab</h1>"
+                mainContent = Taidalab.Home.main
+                buttonColorClass = ""
+                questionContent = ""
+                footerList = [ ("footerHomeDiv", false); ("footerAboutDiv", true); ("footerTermsDiv", true) ]
+                widthClass = "home"
+                initFunc = (fun _ -> ())
+            }
         | "/endless-binary/" ->
             printfn "%s" "/endless-binary/"
             {
