@@ -209,6 +209,39 @@ details:hover {
 
 
 /*
+    IroIroiro
+*/
+.color-div {
+    margin: 10px;
+    width: 94%;
+    max-width: 600px;
+    height: 150px;
+}
+
+.iro-iroiro .input-area {
+    padding: 5px 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.iro-iroiro .number-input {
+    font-size: 1.25rem;
+    border: 2px solid;
+    border-radius: 4px;
+    margin-bottom: 5px;
+    padding: 2px 5px;
+    height: 32px;
+    width: 60px;
+    order: 1;
+}
+
+.iro-iroiro .number-input:invalid {
+    background-color: lightpink;
+}
+
+
+/*
     Colors and orders of buttons on home.
     course-button-<identifier>
 */
@@ -519,6 +552,7 @@ dd {
 
 aside {
     width: 20%;
+    min-width: 260px;
     min-height: 80vh;
     background-color: aliceblue;
     order: 1;

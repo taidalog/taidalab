@@ -205,6 +205,22 @@ module rec Switcher =
                 widthClass = "course"
                 initFunc = (fun _ -> Complement.init ())
             }
+        | "/iro-iroiro/" ->
+            printfn "%s" "/iro-iroiro/"
+            {
+                pathname = "/iro-iroiro/"
+                title = "色相ローテーション - taidalab"
+                headerContent = Content.Common.header
+                headerColorClass = "header-d2b"
+                headerTitle = "<h1>色相ローテーション</h1>"
+                asideContent = Content.Common.aside
+                mainContent = IroIroiro.main
+                buttonColorClass = "submit-button submit-button-d2b"
+                questionContent = ""
+                footerList = [ ("footerHomeDiv", true); ("footerAboutDiv", true); ("footerTermsDiv", true) ]
+                widthClass = "course"
+                initFunc = (fun _ -> IroIroiro.init ())
+            }
         | "/about/" ->
             printfn "%s" "/about/"
             {

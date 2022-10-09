@@ -119,7 +119,7 @@ module Content =
         let aside = """
             <ul>
                 <li><a id="asideEndlessBinary" href="/endless-binary/">10進数↔2進数の反復練習</a></li>
-                <li><a id="asideIroIroiro" href="/colorin/">色相ローテーション</a></li>
+                <li><a id="asideIroIroiro" href="/iro-iroiro/">色相ローテーション</a></li>
                 <li><a id="asideSoon" href="#">Comming soon...</a></li>
             </ul>
             <ul>
