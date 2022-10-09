@@ -38,7 +38,7 @@ main.home, header.home .header-container {
     margin: 0 auto;
 }
 
-.header-container, main, footer {
+.header-container, main {
     max-width: 600px;
     margin: 0 auto;
 }
@@ -73,11 +73,8 @@ main.home, header.home .header-container {
     <footer> of all pages.
 */
 footer {
-    margin-bottom: 20px;
-}
-
-footer.home {
     margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 footer a {
@@ -85,14 +82,12 @@ footer a {
 }
 
 .footer-container {
+    width: 90%;
+    max-width: 800px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-}
-
-.acknowledgements {
-    width: 100%;
-    text-align: center;
+    margin: 0 auto;
 }
 
 .no-display {

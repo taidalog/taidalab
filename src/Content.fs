@@ -123,6 +123,7 @@ module Content =
                 <li><a id="asideSoon" href="#">Comming soon...</a></li>
             </ul>
             <ul>
+                <li><a id="asideAbout" href="/">Home</a></li>
                 <li><a id="asideAbout" href="/about/">About</a></li>
                 <li><a id="asideTerms" href="/terms/">ご利用について</a></li>
                 <li><a id="asideRepo" href="https://github.com/taidalog/taidalab">Repository on GitHub</a></li>
@@ -136,12 +137,8 @@ module Content =
             <small class="footer-container">
                 <div class="item">&copy; 2022 taidalog</div>
                 <div class="item"><a id="versionNumber">%s</a></div>
-                <div id="footerHomeDiv" class="item"><a id="footerHome">Home</a></div>
-                <div id="footerAboutDiv" class="item"><a id="footerAbout">About</a></div>
-                <div id="footerTermsDiv" class="item"><a id="footerTerms">ご利用について</a></div>
-                <div class="item"><a id="footerRepo">Repository on GitHub</a></div>
-            </small>
-            <div class="acknowledgements"><small>taidalab is written in <a id="footerFSharp">F#</a> and transpiled by <a id="footerFable">Fable</a>. Thank you!</small></div>""" version
+                <div class="item">taidalab is written in <a id="footerFSharp">F#</a> and transpiled by <a id="footerFable">Fable</a>. Thank you!</div>
+            </small>""" version
         
         let columnAdditionFormat = """
             <div class="calculation-area" id="calculationArea">

@@ -22,7 +22,7 @@ module rec Switcher =
           mainContent : string
           buttonColorClass : string
           questionContent : string
-          footerList : (string * bool) list
+//          footerList : (string * bool) list
           widthClass : string
           initFunc : unit -> unit }
     
@@ -41,7 +41,6 @@ module rec Switcher =
                 mainContent = Taidalab.Home.main
                 buttonColorClass = ""
                 questionContent = ""
-                footerList = [ ("footerHomeDiv", false); ("footerAboutDiv", true); ("footerTermsDiv", true) ]
                 widthClass = "home"
                 initFunc = (fun _ -> ())
             }
@@ -57,7 +56,6 @@ module rec Switcher =
                 mainContent = Content.Home.main
                 buttonColorClass = ""
                 questionContent = ""
-                footerList = [ ("footerHomeDiv", false); ("footerAboutDiv", true); ("footerTermsDiv", true) ]
                 widthClass = "home"
                 initFunc = (fun _ -> setHomeButtons ())
             }
@@ -73,7 +71,6 @@ module rec Switcher =
                 mainContent = Content.Course.main
                 buttonColorClass = "submit-button submit-button-d2b"
                 questionContent = Content.Common.question
-                footerList = [ ("footerHomeDiv", true); ("footerAboutDiv", true); ("footerTermsDiv", true) ]
                 widthClass = "course"
                 initFunc = (fun _ -> Dec2Bin1.init ())
             }
@@ -89,7 +86,6 @@ module rec Switcher =
                 mainContent = Content.Course.main
                 buttonColorClass = "submit-button submit-button-d2b"
                 questionContent = Content.Common.question
-                footerList = [ ("footerHomeDiv", true); ("footerAboutDiv", true); ("footerTermsDiv", true) ]
                 widthClass = "course"
                 initFunc = (fun _ -> Dec2Bin2.init ())
             }
@@ -105,7 +101,6 @@ module rec Switcher =
                 mainContent = Content.Course.main
                 buttonColorClass = "submit-button submit-button-b2d"
                 questionContent = Content.Common.question
-                footerList = [ ("footerHomeDiv", true); ("footerAboutDiv", true); ("footerTermsDiv", true) ]
                 widthClass = "course"
                 initFunc = (fun _ -> Bin2Dec1.init ())
             }
@@ -121,7 +116,6 @@ module rec Switcher =
                 mainContent = Content.Course.main
                 buttonColorClass = "submit-button submit-button-b2d"
                 questionContent = Content.Common.question
-                footerList = [ ("footerHomeDiv", true); ("footerAboutDiv", true); ("footerTermsDiv", true) ]
                 widthClass = "course"
                 initFunc = (fun _ -> Bin2Dec2.init ())
             }
@@ -137,7 +131,6 @@ module rec Switcher =
                 mainContent = Content.Course.main
                 buttonColorClass = "submit-button submit-button-pot"
                 questionContent = Content.Common.question
-                footerList = [ ("footerHomeDiv", true); ("footerAboutDiv", true); ("footerTermsDiv", true) ]
                 widthClass = "course"
                 initFunc = (fun _ -> PowerOfTwo1.init ())
             }
@@ -153,7 +146,6 @@ module rec Switcher =
                 mainContent = Content.Course.main
                 buttonColorClass = "submit-button submit-button-pot"
                 questionContent = Content.Common.question
-                footerList = [ ("footerHomeDiv", true); ("footerAboutDiv", true); ("footerTermsDiv", true) ]
                 widthClass = "course"
                 initFunc = (fun _ -> PowerOfTwo2.init ())
             }
@@ -169,7 +161,6 @@ module rec Switcher =
                 mainContent = Content.Course.main
                 buttonColorClass = "submit-button submit-button-add"
                 questionContent = Content.Common.columnAdditionFormat
-                footerList = [ ("footerHomeDiv", true); ("footerAboutDiv", true); ("footerTermsDiv", true) ]
                 widthClass = "course"
                 initFunc = (fun _ -> Addition.init ())
             }
@@ -185,7 +176,6 @@ module rec Switcher =
                 mainContent = Content.Course.main
                 buttonColorClass = "submit-button submit-button-sub"
                 questionContent = Content.Common.columnAdditionFormat
-                footerList = [ ("footerHomeDiv", true); ("footerAboutDiv", true); ("footerTermsDiv", true) ]
                 widthClass = "course"
                 initFunc = (fun _ -> Subtraction.init ())
             }
@@ -201,7 +191,6 @@ module rec Switcher =
                 mainContent = Content.Course.main
                 buttonColorClass = "submit-button submit-button-cmp"
                 questionContent = Content.Complement.question
-                footerList = [ ("footerHomeDiv", true); ("footerAboutDiv", true); ("footerTermsDiv", true) ]
                 widthClass = "course"
                 initFunc = (fun _ -> Complement.init ())
             }
@@ -217,7 +206,6 @@ module rec Switcher =
                 mainContent = IroIroiro.main
                 buttonColorClass = "submit-button submit-button-d2b"
                 questionContent = ""
-                footerList = [ ("footerHomeDiv", true); ("footerAboutDiv", true); ("footerTermsDiv", true) ]
                 widthClass = "course"
                 initFunc = (fun _ -> IroIroiro.init ())
             }
@@ -233,7 +221,6 @@ module rec Switcher =
                 mainContent = Content.About.main
                 buttonColorClass = ""
                 questionContent = ""
-                footerList = [ ("footerHomeDiv", true); ("footerAboutDiv", false); ("footerTermsDiv", true) ]
                 widthClass = "course"
                 initFunc = (fun _ -> About.setLinks ())
             }
@@ -249,7 +236,6 @@ module rec Switcher =
                 mainContent = Content.Terms.main
                 buttonColorClass = ""
                 questionContent = ""
-                footerList = [ ("footerHomeDiv", true); ("footerAboutDiv", true); ("footerTermsDiv", false) ]
                 widthClass = "course"
                 initFunc = (fun _ -> ())
             }
@@ -265,7 +251,6 @@ module rec Switcher =
                 mainContent = Content.Course.main
                 buttonColorClass = "submit-button submit-button-not"
                 questionContent = Content.Common.question
-                footerList = [ ("footerHomeDiv", true); ("footerAboutDiv", true); ("footerTermsDiv", true) ]
                 widthClass = "course"
                 initFunc = (fun _ -> NotFound.init ())
             }
@@ -299,12 +284,6 @@ module rec Switcher =
 
         if initial_object.buttonColorClass <> "" then
             (document.querySelector "#submitButton").className <- initial_object.buttonColorClass
-
-        initial_object.footerList
-        |> List.map (fun (x, y) -> (document.getElementById x, y))
-        |> List.filter (fun (x, y) -> x.classList.contains "no-display" = y)
-        |> List.map (fun (x, _) -> x.classList.toggle "no-display")
-        |> ignore
 
         initial_object.initFunc()
 
