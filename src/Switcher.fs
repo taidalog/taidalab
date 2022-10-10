@@ -22,7 +22,6 @@ module rec Switcher =
           mainContent : string
           buttonColorClass : string
           questionContent : string
-//          footerList : (string * bool) list
           widthClass : string
           initFunc : unit -> unit }
     
@@ -255,6 +254,17 @@ module rec Switcher =
                 initFunc = (fun _ -> NotFound.init ())
             }
 
+    let (|InnerPage|OuterPage|) url =
+            let m = regMatch "^http://localhost:8080/" url
+            match m with
+            | true -> InnerPage
+            | false -> OuterPage
+    
+    let isInnerPage url =
+        match url with
+        | InnerPage ->  true
+        | OuterPage -> false
+    
     let initPage initial_object =
         document.title <- initial_object.title
 
@@ -267,9 +277,14 @@ module rec Switcher =
         
         let aside = document.querySelector "aside"
         aside.innerHTML <- initial_object.asideContent
-        JS.Constructors.Array?from(aside.getElementsByTagName "a")
+        aside.getElementsByTagName "a"
+        |> (fun x -> JS.Constructors.Array?from(x))
         |> Array.toList
-        |> List.map overwriteAnchorClick
+        |> List.filter (fun (x : Browser.Types.HTMLAnchorElement) ->
+            match x.href with
+            | InnerPage -> true
+            | OuterPage -> false)
+        |> List.map (fun x -> overwriteAnchorClick (fun _ -> pushPage x.href))
         |> ignore
 
         let main = document.querySelector "main"
@@ -284,7 +299,7 @@ module rec Switcher =
 
         if initial_object.buttonColorClass <> "" then
             (document.querySelector "#submitButton").className <- initial_object.buttonColorClass
-
+        
         initial_object.initFunc()
 
     let pushPage pathname =
@@ -297,10 +312,13 @@ module rec Switcher =
         window.history.replaceState(null, "", initialObject.pathname)
         initPage initialObject
 
-    let overwriteAnchorClick (htmlAnchorElement : Browser.Types.HTMLAnchorElement) =
-        htmlAnchorElement.onclick <- (fun ev ->
+    let idToAnchor id =
+        document.getElementById id :?> Browser.Types.HTMLAnchorElement
+    
+    let overwriteAnchorClick action (anchor : Browser.Types.HTMLAnchorElement) =
+        anchor.onclick <- (fun ev ->
             ev.preventDefault()
-            pushPage htmlAnchorElement.pathname)
+            action())
 
     let setHomeButtons () =
         (document.getElementById "buttonED2B1").onclick <- (fun _ -> pushPage "/endless-binary/dec2bin-1/")
@@ -312,24 +330,24 @@ module rec Switcher =
         (document.getElementById "buttonEBAD").onclick <- (fun _ -> pushPage "/endless-binary/addition/")
         (document.getElementById "buttonEBSB").onclick <- (fun _ -> pushPage "/endless-binary/subtraction/")
         (document.getElementById "buttonECMP").onclick <- (fun _ -> pushPage "/endless-binary/complement/")
-    
-    let setFooterLinks () =
-        ["footerHome"; "footerAbout"; "footerTerms"]
-        |> List.map (fun x -> document.getElementById x :?> Browser.Types.HTMLAnchorElement)
-        |> List.map overwriteAnchorClick
+
+    let switchOverwriteAnchor actionTrue actionFalse anchor =
+        anchor
+        |> (fun (x : Browser.Types.HTMLAnchorElement) -> (isInnerPage x.href, x))
+        |> (fun (b, x) ->
+            match (b, x) with
+            | (true, x) -> (actionTrue, x)
+            | (false, x) -> (actionFalse, x))
+        |> (fun (action, x) -> action x)
 
 
     module About =
 
         let setLinks () =
-            let anchors = (document.getElementById "explanation").getElementsByTagName "a"
-            [0 ..(anchors.length - 1)]
-            |> List.map double
-            |> List.map (fun i -> anchors.item(i) :?> Browser.Types.HTMLAnchorElement)
-            |> List.map (fun x ->
-                x.onclick <- (fun ev ->
-                    ev.preventDefault()
-                    pushPage x.pathname))
+            (document.getElementById "explanation").getElementsByTagName "a"
+            |> (fun x -> JS.Constructors.Array?from(x))
+            |> Array.toList
+            |> List.map (fun (x : Browser.Types.HTMLAnchorElement) -> overwriteAnchorClick (fun _ -> pushPage x.pathname) x)
             |> ignore
 
 
@@ -402,20 +420,3 @@ module rec Switcher =
                 false)
             
             printfn "Initialization ends."
-        
-        let setFooterLinks () =
-            ["footerHome"; "footerAbout"; "footerTerms"]
-            |> List.map (fun x -> document.getElementById x :?> Browser.Types.HTMLAnchorElement)
-            |> List.map (fun x -> x.onclick <- (fun ev ->
-                ev.preventDefault()
-                replacePage x.pathname
-                ))
-            |> ignore
-
-            ["versionNumber"; "footerFSharp"; "footerFable"]
-            |> List.map (fun x -> document.getElementById x :?> Browser.Types.HTMLAnchorElement)
-            |> List.map (fun x -> x.onclick <- (fun ev ->
-                ev.preventDefault()
-                window.location.replace(x.href)
-                ))
-            |> ignore
