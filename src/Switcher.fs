@@ -18,7 +18,6 @@ module rec Switcher =
           headerContent : string
           headerColorClass : string
           headerTitle : string
-          asideContent: string
           mainContent : string
           buttonColorClass : string
           questionContent : string
@@ -36,7 +35,6 @@ module rec Switcher =
                 headerContent = Content.Common.header
                 headerColorClass = "header-home"
                 headerTitle = "<h1>taidalab</h1>"
-                asideContent = Content.Common.aside
                 mainContent = Taidalab.Home.main
                 buttonColorClass = ""
                 questionContent = ""
@@ -51,7 +49,6 @@ module rec Switcher =
                 headerContent = Content.Common.header
                 headerColorClass = "header-home"
                 headerTitle = "<h1>10進数↔2進数 | taidalab</h1>"
-                asideContent = Content.Common.aside
                 mainContent = Content.Home.main
                 buttonColorClass = ""
                 questionContent = ""
@@ -66,7 +63,6 @@ module rec Switcher =
                 headerContent = Content.Common.header
                 headerColorClass = "header-d2b"
                 headerTitle = "<h1>10進数→2進数 (1)</h1>"
-                asideContent = Content.Common.aside
                 mainContent = Content.Course.main
                 buttonColorClass = "submit-button submit-button-d2b"
                 questionContent = Content.Common.question
@@ -81,7 +77,6 @@ module rec Switcher =
                 headerContent = Content.Common.header
                 headerColorClass = "header-d2b"
                 headerTitle = "<h1>10進数→2進数 (2)</h1>"
-                asideContent = Content.Common.aside
                 mainContent = Content.Course.main
                 buttonColorClass = "submit-button submit-button-d2b"
                 questionContent = Content.Common.question
@@ -96,7 +91,6 @@ module rec Switcher =
                 headerContent = Content.Common.header
                 headerColorClass = "header-b2d"
                 headerTitle = "<h1>2進数→10進数 (1)</h1>"
-                asideContent = Content.Common.aside
                 mainContent = Content.Course.main
                 buttonColorClass = "submit-button submit-button-b2d"
                 questionContent = Content.Common.question
@@ -111,7 +105,6 @@ module rec Switcher =
                 headerContent = Content.Common.header
                 headerColorClass = "header-b2d"
                 headerTitle = "<h1>2進数→10進数 (2)</h1>"
-                asideContent = Content.Common.aside
                 mainContent = Content.Course.main
                 buttonColorClass = "submit-button submit-button-b2d"
                 questionContent = Content.Common.question
@@ -126,7 +119,6 @@ module rec Switcher =
                 headerContent = Content.Common.header
                 headerColorClass = "header-pot"
                 headerTitle = "<h1>2のn乗</h1>"
-                asideContent = Content.Common.aside
                 mainContent = Content.Course.main
                 buttonColorClass = "submit-button submit-button-pot"
                 questionContent = Content.Common.question
@@ -141,7 +133,6 @@ module rec Switcher =
                 headerContent = Content.Common.header
                 headerColorClass = "header-pot"
                 headerTitle = "<h1>2のn乗 - 1</h1>"
-                asideContent = Content.Common.aside
                 mainContent = Content.Course.main
                 buttonColorClass = "submit-button submit-button-pot"
                 questionContent = Content.Common.question
@@ -156,7 +147,6 @@ module rec Switcher =
                 headerContent = Content.Common.header
                 headerColorClass = "header-add"
                 headerTitle = "<h1>加算</h1>"
-                asideContent = Content.Common.aside
                 mainContent = Content.Course.main
                 buttonColorClass = "submit-button submit-button-add"
                 questionContent = Content.Common.columnAdditionFormat
@@ -171,7 +161,6 @@ module rec Switcher =
                 headerContent = Content.Common.header
                 headerColorClass = "header-sub"
                 headerTitle = "<h1>減算</h1>"
-                asideContent = Content.Common.aside
                 mainContent = Content.Course.main
                 buttonColorClass = "submit-button submit-button-sub"
                 questionContent = Content.Common.columnAdditionFormat
@@ -186,7 +175,6 @@ module rec Switcher =
                 headerContent = Content.Common.header
                 headerColorClass = "header-cmp"
                 headerTitle = "<h1>補数</h1>"
-                asideContent = Content.Common.aside
                 mainContent = Content.Course.main
                 buttonColorClass = "submit-button submit-button-cmp"
                 questionContent = Content.Complement.question
@@ -201,7 +189,6 @@ module rec Switcher =
                 headerContent = Content.Common.header
                 headerColorClass = "header-d2b"
                 headerTitle = "<h1>色相ローテーション</h1>"
-                asideContent = Content.Common.aside
                 mainContent = IroIroiro.main
                 buttonColorClass = "submit-button submit-button-d2b"
                 questionContent = ""
@@ -216,7 +203,6 @@ module rec Switcher =
                 headerContent = Content.Common.header
                 headerColorClass = "header-home"
                 headerTitle = "<h1>about</h1>"
-                asideContent = Content.Common.aside
                 mainContent = Content.About.main
                 buttonColorClass = ""
                 questionContent = ""
@@ -231,7 +217,6 @@ module rec Switcher =
                 headerContent = Content.Common.header
                 headerColorClass = "header-home"
                 headerTitle = "<h1>ご利用について</h1>"
-                asideContent = Content.Common.aside
                 mainContent = Content.Terms.main
                 buttonColorClass = ""
                 questionContent = ""
@@ -246,7 +231,6 @@ module rec Switcher =
                 headerContent = Content.Common.header
                 headerColorClass = "header-not"
                 headerTitle = "<h1>404: Page Not Found</h1>"
-                asideContent = Content.Common.aside
                 mainContent = Content.Course.main
                 buttonColorClass = "submit-button submit-button-not"
                 questionContent = Content.Common.question
@@ -274,18 +258,6 @@ module rec Switcher =
         
         let headerContainer = document.querySelector "#headerContainer"
         headerContainer.innerHTML <- initial_object.headerTitle
-        
-        let aside = document.querySelector "aside"
-        aside.innerHTML <- initial_object.asideContent
-        aside.getElementsByTagName "a"
-        |> (fun x -> JS.Constructors.Array?from(x))
-        |> Array.toList
-        |> List.filter (fun (x : Browser.Types.HTMLAnchorElement) ->
-            match x.href with
-            | InnerPage -> true
-            | OuterPage -> false)
-        |> List.map (fun x -> overwriteAnchorClick (fun _ -> pushPage x.href))
-        |> ignore
 
         let main = document.querySelector "main"
         main.className <- initial_object.widthClass

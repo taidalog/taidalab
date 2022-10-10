@@ -16,6 +16,7 @@ module Main =
         printfn "%s" "The begining of DOMContentLoaded"
         document.body.innerHTML <- """<header></header><div class="main-container"><main></main><aside></aside></div><footer></footer>"""
         (document.querySelector "footer").innerHTML <- Content.Common.footer
+        (document.querySelector "aside").innerHTML <- Content.Common.aside
         printfn "%s" window.location.pathname
         let initObj = newInitObject window.location.pathname
         initPage initObj |> ignore
