@@ -30,17 +30,14 @@ header h1 {
 
 main {
     padding-top: 20px;
+    padding-left: 100px;
     order: 2;
-}
-
-main.home, header.home .header-container {
     max-width: 76%;
-    margin: 0 auto;
 }
 
-.header-container, main {
-    max-width: 600px;
+.header-container {
     margin: 0 auto;
+    padding-left: 20%;
 }
 
 

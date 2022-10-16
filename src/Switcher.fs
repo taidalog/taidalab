@@ -21,7 +21,6 @@ module rec Switcher =
           mainContent : string
           buttonColorClass : string
           questionContent : string
-          widthClass : string
           initFunc : unit -> unit }
     
     let newInitObject pathname =
@@ -38,7 +37,6 @@ module rec Switcher =
                 mainContent = Taidalab.Home.main
                 buttonColorClass = ""
                 questionContent = ""
-                widthClass = "home"
                 initFunc = (fun _ -> ())
             }
         | "/endless-binary/" ->
@@ -52,7 +50,6 @@ module rec Switcher =
                 mainContent = Content.Home.main
                 buttonColorClass = ""
                 questionContent = ""
-                widthClass = "home"
                 initFunc = (fun _ -> setHomeButtons ())
             }
         | "/endless-binary/dec2bin-1/" ->
@@ -66,7 +63,6 @@ module rec Switcher =
                 mainContent = Content.Course.main
                 buttonColorClass = "submit-button submit-button-d2b"
                 questionContent = Content.Common.question
-                widthClass = "course"
                 initFunc = (fun _ -> Dec2Bin1.init ())
             }
         | "/endless-binary/dec2bin-2/" ->
@@ -80,7 +76,6 @@ module rec Switcher =
                 mainContent = Content.Course.main
                 buttonColorClass = "submit-button submit-button-d2b"
                 questionContent = Content.Common.question
-                widthClass = "course"
                 initFunc = (fun _ -> Dec2Bin2.init ())
             }
         | "/endless-binary/bin2dec-1/" ->
@@ -94,7 +89,6 @@ module rec Switcher =
                 mainContent = Content.Course.main
                 buttonColorClass = "submit-button submit-button-b2d"
                 questionContent = Content.Common.question
-                widthClass = "course"
                 initFunc = (fun _ -> Bin2Dec1.init ())
             }
         | "/endless-binary/bin2dec-2/" ->
@@ -108,7 +102,6 @@ module rec Switcher =
                 mainContent = Content.Course.main
                 buttonColorClass = "submit-button submit-button-b2d"
                 questionContent = Content.Common.question
-                widthClass = "course"
                 initFunc = (fun _ -> Bin2Dec2.init ())
             }
         | "/endless-binary/power-of-two-1/" ->
@@ -122,7 +115,6 @@ module rec Switcher =
                 mainContent = Content.Course.main
                 buttonColorClass = "submit-button submit-button-pot"
                 questionContent = Content.Common.question
-                widthClass = "course"
                 initFunc = (fun _ -> PowerOfTwo1.init ())
             }
         | "/endless-binary/power-of-two-2/" ->
@@ -136,7 +128,6 @@ module rec Switcher =
                 mainContent = Content.Course.main
                 buttonColorClass = "submit-button submit-button-pot"
                 questionContent = Content.Common.question
-                widthClass = "course"
                 initFunc = (fun _ -> PowerOfTwo2.init ())
             }
         | "/endless-binary/addition/" ->
@@ -150,7 +141,6 @@ module rec Switcher =
                 mainContent = Content.Course.main
                 buttonColorClass = "submit-button submit-button-add"
                 questionContent = Content.Common.columnAdditionFormat
-                widthClass = "course"
                 initFunc = (fun _ -> Addition.init ())
             }
         | "/endless-binary/subtraction/" ->
@@ -164,7 +154,6 @@ module rec Switcher =
                 mainContent = Content.Course.main
                 buttonColorClass = "submit-button submit-button-sub"
                 questionContent = Content.Common.columnAdditionFormat
-                widthClass = "course"
                 initFunc = (fun _ -> Subtraction.init ())
             }
         | "/endless-binary/complement/" ->
@@ -178,7 +167,6 @@ module rec Switcher =
                 mainContent = Content.Course.main
                 buttonColorClass = "submit-button submit-button-cmp"
                 questionContent = Content.Complement.question
-                widthClass = "course"
                 initFunc = (fun _ -> Complement.init ())
             }
         | "/iro-iroiro/" ->
@@ -192,7 +180,6 @@ module rec Switcher =
                 mainContent = IroIroiro.main
                 buttonColorClass = "submit-button submit-button-d2b"
                 questionContent = ""
-                widthClass = "course"
                 initFunc = (fun _ -> IroIroiro.init ())
             }
         | "/about/" ->
@@ -206,7 +193,6 @@ module rec Switcher =
                 mainContent = Content.About.main
                 buttonColorClass = ""
                 questionContent = ""
-                widthClass = "course"
                 initFunc = (fun _ -> About.setLinks ())
             }
         | "/terms/" ->
@@ -220,7 +206,6 @@ module rec Switcher =
                 mainContent = Content.Terms.main
                 buttonColorClass = ""
                 questionContent = ""
-                widthClass = "course"
                 initFunc = (fun _ -> ())
             }
         | _ ->
@@ -234,7 +219,6 @@ module rec Switcher =
                 mainContent = Content.Course.main
                 buttonColorClass = "submit-button submit-button-not"
                 questionContent = Content.Common.question
-                widthClass = "course"
                 initFunc = (fun _ -> NotFound.init ())
             }
 
@@ -254,17 +238,13 @@ module rec Switcher =
 
         let header = document.querySelector "header"
         header.innerHTML <- initial_object.headerContent
-        header.className <- initial_object.headerColorClass + " " + initial_object.widthClass
+        header.className <- initial_object.headerColorClass
         
         let headerContainer = document.querySelector "#headerContainer"
         headerContainer.innerHTML <- initial_object.headerTitle
 
         let main = document.querySelector "main"
-        main.className <- initial_object.widthClass
         main.innerHTML <- initial_object.mainContent
-        
-        let footer = document.querySelector "footer"
-        footer.className <- initial_object.widthClass
 
         if initial_object.questionContent <> "" then
             (document.querySelector "#questionArea").innerHTML <- initial_object.questionContent
