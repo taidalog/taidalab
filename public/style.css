@@ -407,6 +407,19 @@ details:hover {
     background-color: #86b5e5;
 }
 
+.header-iro {
+    background-color: #ac657c;
+}
+
+.submit-button-iro {
+    color: #331e25;
+    background: #fe95b7;
+}
+
+.submit-button-iro:hover {
+    background-color: #e586a5;
+}
+
 .header-not {
     background-color: #808080;
 }
@@ -591,6 +604,10 @@ aside a:hover {
 
 .aside-cmp:hover {
     background-color: #6588ac;
+}
+
+.aside-iro:hover {
+    background-color: #ac657c;
 }
 
 .aside-ctc:hover {

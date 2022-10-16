@@ -130,7 +130,7 @@ module Content =
                         <li><a class="aside-sub" href="/endless-binary/subtraction/">減算</a></li>
                         <li><a class="aside-cmp" href="/endless-binary/complement/">補数</a></li>
                     </ul>
-                <li><a class="aside-home" id="asideIroIroiro" href="/iro-iroiro/">色相ローテーション</a></li>
+                <li><a class="aside-iro" id="asideIroIroiro" href="/iro-iroiro/">色相ローテーション</a></li>
                 <li><a class="aside-ctc" id="asideSoon" href="#">Comming soon...</a></li>
             </ul>
             <ul>

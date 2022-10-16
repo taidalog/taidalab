@@ -175,10 +175,10 @@ module rec Switcher =
                 pathname = "/iro-iroiro/"
                 title = "色相ローテーション - taidalab"
                 headerContent = Content.Common.header
-                headerColorClass = "header-d2b"
+                headerColorClass = "header-iro"
                 headerTitle = "<h1>色相ローテーション</h1>"
                 mainContent = IroIroiro.main
-                buttonColorClass = "submit-button submit-button-d2b"
+                buttonColorClass = "submit-button submit-button-iro"
                 questionContent = ""
                 initFunc = (fun _ -> IroIroiro.init ())
             }
