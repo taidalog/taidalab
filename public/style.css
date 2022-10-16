@@ -562,5 +562,37 @@ aside a {
 
 aside a:hover {
     color: #ffffff;
+    border-radius: 4px;
+}
+
+.aside-home:hover {
     background-color: #65a2ac;
+}
+
+.aside-d2b:hover {
+    background-color: #65a2ac;
+}
+
+.aside-b2d:hover {
+    background-color: #65ac86;
+}
+
+.aside-pot:hover {
+    background-color: #a665ac;
+}
+
+.aside-add:hover {
+    background-color: #656eac;
+}
+
+.aside-sub:hover {
+    background-color: #656eac;
+}
+
+.aside-cmp:hover {
+    background-color: #6588ac;
+}
+
+.aside-ctc:hover {
+    background-color: #aaac65;
 }
