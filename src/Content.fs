@@ -119,6 +119,17 @@ module Content =
         let aside = """
             <ul>
                 <li><a id="asideEndlessBinary" href="/endless-binary/">10進数↔2進数の反復練習</a></li>
+                <ul>
+                    <li><a href="/endless-binary/dec2bin-1/">10進数→2進数 (1)</a></li>
+                    <li><a href="/endless-binary/dec2bin-2/">10進数→2進数 (2)</a></li>
+                    <li><a href="/endless-binary/bin2dec-1/">2進数→10進数 (1)</a></li>
+                    <li><a href="/endless-binary/bin2dec-2/">2進数→10進数 (2)</a></li>
+                    <li><a href="/endless-binary/power-of-two-1/">2のn乗</a></li>
+                    <li><a href="/endless-binary/power-of-two-2/">2のn乗 - 1</a></li>
+                    <li><a href="/endless-binary/addition/">加算</a></li>
+                    <li><a href="/endless-binary/subtraction/">減算</a></li>
+                    <li><a href="/endless-binary/complement/">補数</a></li>
+                </ul>
                 <li><a id="asideIroIroiro" href="/iro-iroiro/">色相ローテーション</a></li>
                 <li><a id="asideSoon" href="#">Comming soon...</a></li>
             </ul>
