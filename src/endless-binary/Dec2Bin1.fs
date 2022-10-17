@@ -59,21 +59,49 @@ module Dec2Bin1 =
         ||> (fun x y -> Math.Pow(2.0, x) + Math.Pow(2.0, y))
         |> int
 
+    let newAnimationStyle name duration timing delay iteration fill state =
+        sprintf
+            """animation-name: %s; animation-duration: %s; animation-timing-function: %s; animation-delay: %s; animation-iteration-count: %s; animation-fill-mode: %s; animation-play-state: %s;"""
+            name
+            duration
+            timing
+            delay
+            iteration
+            fill
+            state
+
 
     let newColumnAddition answer quotients_and_remainders =
+        let indexedList =
+            quotients_and_remainders
+            |> List.mapi (fun i (q, r) -> (i, q, r))
         let first =
             sprintf """2<span class="column-addition-row">%s</span>""" (answer |> string |> padStart " " 3 |> escapeSpace)
         let body =
-            quotients_and_remainders
+            indexedList
             |> List.rev
             |> List.tail
             |> List.rev
-            |> List.map (fun ((q : int), r) -> sprintf """2<span class="column-addition-row">%s</span>...%d""" (q |> string  |> padStart " " 3 |> escapeSpace) r)
+            |> List.map (fun (i, (q : int), r) ->
+                sprintf
+                    """<span id="c%d" style="opacity: 0; %s">2<span style="text-decoration: underline;">)</span></span><span id="a%d" style="opacity: 0; %s"><span style="%s">%s</span>...%d</span>"""
+                    i
+                    (newAnimationStyle "fade-in" "1s" "ease-in" (((i * 2 + 1) |> string) + "s") "1" "forwards" "running")
+                    i
+                    (newAnimationStyle "fade-in" "1s" "ease-in" (((i * 2) |> string) + "s") "1" "forwards" "running")
+                    (newAnimationStyle "draw-line" "1s" "ease-in" (((i * 2 + 1) |> string) + "s") "1" "forwards" "running")
+                    (q |> string  |> padStart " " 3 |> escapeSpace)
+                    r)
         let foot =
-            quotients_and_remainders
-            |> List.rev
-            |> List.head
-            |> (fun ((q : int), r) -> sprintf """<span class="column-addition-row-last">%s</span>...%d""" (q |> string |> padStart " " 5 |> escapeSpace) r)
+            indexedList
+            |> List.last
+            |> (fun (i, (q : int), r) ->
+                sprintf
+                    """<span id="a%d" style="opacity: 0; %s"><span class="column-addition-row-last">%s</span>...%d</span>"""
+                    i
+                    (newAnimationStyle "fade-in" "1s" "ease-in" (((i * 2) |> string) + "s") "1" "forwards" "running")
+                    (q |> string |> padStart " " 5 |> escapeSpace)
+                    r)
         first :: (body @ [foot]) |> List.reduce (fun x  y -> sprintf "%s<br>%s" x y)
 
 
