@@ -59,6 +59,11 @@ module Dec2Bin1 =
         ||> (fun x y -> Math.Pow(2.0, x) + Math.Pow(2.0, y))
         |> int
 
+
+    let hint content=
+        sprintf """<details id="hintDetails"><summary>ヒント: </summary>%s</details>""" content
+    
+
     let newAnimationStyle name duration timing delay iteration fill state =
         sprintf
             """animation-name: %s; animation-duration: %s; animation-timing-function: %s; animation-delay: %s; animation-iteration-count: %s; animation-fill-mode: %s; animation-play-state: %s;"""
@@ -102,11 +107,13 @@ module Dec2Bin1 =
                     (newAnimationStyle "fade-in" "1s" "ease-in" (((i * 2) |> string) + "s") "1" "forwards" "running")
                     (q |> string |> padStart " " 5 |> escapeSpace)
                     r)
-        first :: (body @ [foot]) |> List.reduce (fun x  y -> sprintf "%s<br>%s" x y)
+        first :: (body @ [foot])
+        |> List.reduce (fun x  y -> sprintf "%s<br>%s" x y)
 
 
     let newHintRepeatDivision number quotients_and_remainders =
-        let msg = """
+        sprintf
+            """
             <div class="history-indented">
                 <p>
                     10進数を、商が 1 になるまで 2 で割り続けます。<br>
@@ -114,9 +121,10 @@ module Dec2Bin1 =
                     商と余りを下から順に繋げると、2進数になります。
                 </p>
             </div>
-            <div class="history-indented column-addition-area">"""
-        let columnAddition = newColumnAddition number quotients_and_remainders
-        sprintf "%s%s</div>" msg columnAddition
+            <div id="hint1" class="history-indented column-addition-area">
+                %s
+            </div>"""
+            (newColumnAddition number quotients_and_remainders)
 
 
     let newHintRepeatAddition number (power_of_twos : int list) =
@@ -137,7 +145,7 @@ module Dec2Bin1 =
 
 
     let newHint number quotients_and_remainders power_of_twos =
-        """<details><summary>ヒント: </summary><h2>考え方 1</h2>""" + newHintRepeatDivision number quotients_and_remainders + """<h2>考え方 2</h2>""" + newHintRepeatAddition number power_of_twos + """</details>"""
+        """<details id="hintDetails"><summary>ヒント: </summary><h2>考え方 1</h2>""" + newHintRepeatDivision number quotients_and_remainders + """<h2>考え方 2</h2>""" + newHintRepeatAddition number power_of_twos + """</details>"""
 
 
     let rec checkAnswer answer (last_answers : int list) =
@@ -204,6 +212,10 @@ module Dec2Bin1 =
                 
                 (document.getElementById "questionSpan").innerText <- string nextNumber
                 (document.getElementById "hintArea").innerHTML <- nextHint
+                (document.getElementById "hint1").onclick <- (fun _ ->
+                    (document.getElementById "hint1").innerHTML <-
+                        newColumnAddition nextNumber quotientsAndRemainders
+                    (document.getElementById "hintDetails").setAttribute ("open", "true"))
                 
                 numberInput.value <- ""
 
@@ -241,6 +253,10 @@ module Dec2Bin1 =
         (document.getElementById "dstRadix").innerText <- string destinationRadix
         (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
         (document.getElementById "hintArea").innerHTML <- newHint initNumber quotientsAndRemainders powerOfTwos
+        (document.getElementById "hint1").onclick <- (fun _ ->
+            (document.getElementById "hint1").innerHTML <-
+                newColumnAddition initNumber quotientsAndRemainders
+            (document.getElementById "hintDetails").setAttribute ("open", "true"))
         (document.getElementById "submitButton").onclick <- (fun _ ->
             checkAnswer (string initNumber) [initNumber]
             false)
