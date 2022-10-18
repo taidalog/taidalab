@@ -240,8 +240,8 @@ module rec Switcher =
         header.innerHTML <- initial_object.headerContent
         header.className <- initial_object.headerColorClass
         
-        let headerContainer = document.querySelector "#headerContainer"
-        headerContainer.innerHTML <- initial_object.headerTitle
+        let headerTitle = document.querySelector "#headerTitle"
+        headerTitle.innerHTML <- initial_object.headerTitle
 
         let main = document.querySelector "main"
         main.innerHTML <- initial_object.mainContent

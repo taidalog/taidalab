@@ -632,3 +632,53 @@ aside a:hover {
 .aside-ctc:hover {
     background-color: #aaac65;
 }
+
+
+.hamburger-button {
+    display: none;
+}
+
+.header-title {
+    padding-left: 50px;
+}
+
+
+/*
+    Hamburger button.
+*/
+.hamburger-button {
+    display: block;
+    position: absolute;
+    z-index: 3;
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: transparent;
+}
+
+.hamburger-button:hover {
+    background-color: #9ec9cf;
+}
+
+.bar {
+    width: 20px;
+    height: 2px;
+    display: block;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: aliceblue;
+}    
+
+.bar-top {
+    top: 10px;
+}
+
+.bar-mid {
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.bar-bottom {
+    bottom: 10px;
+}
