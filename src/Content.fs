@@ -116,7 +116,7 @@ module Content =
     module Common =
         let header = """
             <div id="headerContainer" class="header-container">
-                <button class="hamburger-button">
+                <button id="hamburgerButton" class="hamburger-button">
                     <span class="bar bar-top"></span>
                     <span class="bar bar-mid"></span>
                     <span class="bar bar-bottom"></span>
