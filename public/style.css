@@ -37,7 +37,7 @@ main {
 
 .header-container {
     margin: 0 auto;
-    padding-left: 20%;
+    padding-left: max(20%, 260px);
 }
 
 
@@ -638,47 +638,63 @@ aside a:hover {
     display: none;
 }
 
-.header-title {
-    padding-left: 50px;
-}
 
+@media (max-width: 799px) {
+    .header-container {
+        padding-left: 0px;
+    }
 
-/*
-    Hamburger button.
-*/
-.hamburger-button {
-    display: block;
-    position: absolute;
-    z-index: 3;
-    width: 40px;
-    height: 40px;
-    border: none;
-    background: transparent;
-}
+    .header-title {
+        padding-left: 50px;
+    }
 
-.hamburger-button:hover {
-    background-color: #9ec9cf;
-}
+    aside {
+        position: fixed;
+        left: -800px;
+    }
 
-.bar {
-    width: 20px;
-    height: 2px;
-    display: block;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: aliceblue;
-}    
+    main {
+        width: 94%;
+        padding-left: 0px;
+    }
 
-.bar-top {
-    top: 10px;
-}
+    /*
+        Hamburger button.
+    */
+    .hamburger-button {
+        display: block;
+        position: absolute;
+        z-index: 3;
+        width: 40px;
+        height: 40px;
+        border: none;
+        background: transparent;
+    }
 
-.bar-mid {
-    top: 50%;
-    transform: translate(-50%, -50%);
-}
+    .hamburger-button:hover {
+        background-color: #9ec9cf;
+    }
 
-.bar-bottom {
-    bottom: 10px;
+    .bar {
+        width: 20px;
+        height: 2px;
+        display: block;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: aliceblue;
+    }    
+
+    .bar-top {
+        top: 10px;
+    }
+
+    .bar-mid {
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .bar-bottom {
+        bottom: 10px;
+    }
 }
