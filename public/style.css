@@ -12,10 +12,15 @@ html {
 }
 
 body {
-    margin-top: 0;
-    margin-right: 0;
-    margin-left: 0;
-    margin-bottom: 20px;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+.body-container {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
 }
 
 header {
@@ -70,7 +75,8 @@ main {
     <footer> of all pages.
 */
 footer {
-    margin: 20px auto;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 
 footer a {
@@ -571,12 +577,13 @@ dd {
 
 .main-container {
     display: flex;
+    flex: 1;
 }
 
 aside {
     width: 20%;
     min-width: 260px;
-    min-height: 80vh;
+
     background-color: aliceblue;
     order: 1;
 }

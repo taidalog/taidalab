@@ -14,7 +14,7 @@ module Main =
 
     window.addEventListener("DOMContentLoaded", (fun _ ->
         printfn "%s" "The begining of DOMContentLoaded"
-        document.body.innerHTML <- """<header></header><div class="main-container"><main></main><aside></aside></div><footer></footer>"""
+        document.body.innerHTML <- """<div class="body-container"><header></header><div class="main-container"><main></main><aside></aside></div><footer></footer></div>"""
         (document.querySelector "footer").innerHTML <- Content.Common.footer
         (document.querySelector "aside").innerHTML <- Content.Common.aside
         printfn "%s" window.location.pathname
