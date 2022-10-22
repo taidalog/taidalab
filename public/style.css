@@ -707,7 +707,7 @@ aside.active {
     }
 
     .hamburger-button:hover {
-        background-color: #9ec9cf;
+        background-color: rgba(255, 255, 255, 0.25);
     }
 
     .bar {
