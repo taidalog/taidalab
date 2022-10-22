@@ -505,12 +505,15 @@ dd {
     Settings for responsive design.
 */
 @media (max-width: 999px) {
+    main {
+        padding-left: 20px;
+    }
+
     .button-container {
         grid-template-columns: 1fr 1fr 1fr;
         grid-template-rows: 200px 200px 200px;
     }
 }
-
 
 @media (max-width: 799px) {    
     main {
