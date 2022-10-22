@@ -6,6 +6,10 @@
     https://github.com/taidalog/taidalab/blob/main/LICENSE
  */
 @charset "UTF-8";
+
+/*
+    Common in the all pages.
+*/
 html {
     font-family: sans-serif;
     font-size: 100%;
@@ -28,9 +32,90 @@ header {
     color: #ffffff;
 }
 
+.header-container {
+    margin: 0 auto;
+    padding-left: max(20%, 260px);
+}
+
 header h1 {
     font-size: 1.5rem;
     max-height: 40px;
+}
+
+.main-container {
+    display: flex;
+    flex: 1;
+}
+
+aside {
+    width: 20%;
+    min-width: 260px;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    background-color: aliceblue;
+}
+
+aside::-webkit-scrollbar {
+    display: none;
+}
+
+aside ul {
+    list-style: none;
+}
+
+aside a {
+    color: #000000;
+    padding: 5px;
+    display: block;
+    text-decoration: none;
+}
+
+aside a:hover {
+    color: #ffffff;
+    border-radius: 4px;
+}
+
+aside.active {
+    left: 0px;
+    z-index: 1;
+    transition: all 0.5s ease-in-out 0s;
+}
+
+.aside-home:hover {
+    background-color: #65a2ac;
+}
+
+.aside-d2b:hover {
+    background-color: #65a2ac;
+}
+
+.aside-b2d:hover {
+    background-color: #65ac86;
+}
+
+.aside-pot:hover {
+    background-color: #a665ac;
+}
+
+.aside-add:hover {
+    background-color: #656eac;
+}
+
+.aside-sub:hover {
+    background-color: #656eac;
+}
+
+.aside-cmp:hover {
+    background-color: #6588ac;
+}
+
+.aside-iro:hover {
+    background-color: #ac657c;
+}
+
+.aside-ctc:hover {
+    background-color: #aaac65;
 }
 
 main {
@@ -39,14 +124,27 @@ main {
     max-width: 76%;
 }
 
-.header-container {
+footer {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+footer a {
+    text-decoration: none;
+}
+
+.footer-container {
+    width: 90%;
+    max-width: 800px;
     margin: 0 auto;
-    padding-left: max(20%, 260px);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 
 /*
-    <main> of Home page.
+    <main> of /endless-binary/ page.
 */
 .button-container {
     padding: 5px 0;
@@ -69,35 +167,13 @@ main {
     cursor: pointer;
 }
 
-
-/*
-    <footer> of all pages.
-*/
-footer {
-    padding-top: 20px;
-    padding-bottom: 20px;
-}
-
-footer a {
-    text-decoration: none;
-}
-
-.footer-container {
-    width: 90%;
-    max-width: 800px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
 .no-display {
     display: none;
 }
 
 
 /*
-    <main> of Course pages.
+    <main> of /endless-binary/* pages.
 */
 .question-area {
     padding: 5px 0;
@@ -198,41 +274,6 @@ details:hover {
     color: red;
 }
 
-.display-order-1 {
-    order: 1;
-}
-
-.display-order-2 {
-    order: 2;
-}
-
-.display-order-3 {
-    order: 3;
-}
-
-.display-order-4 {
-    order: 4;
-}
-
-.display-order-5 {
-    order: 5;
-}
-
-.display-order-6 {
-    order: 6;
-}
-
-.display-order-7 {
-    order: 7;
-}
-
-.display-order-8 {
-    order: 8;
-}
-
-.display-order-9 {
-    order: 9;
-}
 
 @keyframes fade-in {
     0% {
@@ -614,83 +655,10 @@ dd {
     }
 }
 
-.main-container {
-    display: flex;
-    flex: 1;
-}
 
-aside {
-    width: 20%;
-    min-width: 260px;
-    overflow-y: scroll;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    background-color: aliceblue;
-}
-
-aside::-webkit-scrollbar {
-    display: none;
-}
-
-aside ul {
-    list-style: none;
-}
-
-aside a {
-    color: #000000;
-    padding: 5px;
-    display: block;
-    text-decoration: none;
-}
-
-aside a:hover {
-    color: #ffffff;
-    border-radius: 4px;
-}
-
-aside.active {
-    left: 0px;
-    z-index: 1;
-    transition: all 0.5s ease-in-out 0s;
-}
-
-.aside-home:hover {
-    background-color: #65a2ac;
-}
-
-.aside-d2b:hover {
-    background-color: #65a2ac;
-}
-
-.aside-b2d:hover {
-    background-color: #65ac86;
-}
-
-.aside-pot:hover {
-    background-color: #a665ac;
-}
-
-.aside-add:hover {
-    background-color: #656eac;
-}
-
-.aside-sub:hover {
-    background-color: #656eac;
-}
-
-.aside-cmp:hover {
-    background-color: #6588ac;
-}
-
-.aside-iro:hover {
-    background-color: #ac657c;
-}
-
-.aside-ctc:hover {
-    background-color: #aaac65;
-}
-
-
+/*
+    Related to the hamburger button.
+*/
 .hamburger-button {
     display: none;
 }
@@ -770,4 +738,44 @@ aside.active {
     .bar-bottom {
         bottom: 10px;
     }
+}
+
+
+/*
+    General classes.
+*/
+.display-order-1 {
+    order: 1;
+}
+
+.display-order-2 {
+    order: 2;
+}
+
+.display-order-3 {
+    order: 3;
+}
+
+.display-order-4 {
+    order: 4;
+}
+
+.display-order-5 {
+    order: 5;
+}
+
+.display-order-6 {
+    order: 6;
+}
+
+.display-order-7 {
+    order: 7;
+}
+
+.display-order-8 {
+    order: 8;
+}
+
+.display-order-9 {
+    order: 9;
 }
