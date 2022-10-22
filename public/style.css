@@ -291,31 +291,42 @@ details:hover {
     IroIroiro
 */
 .color-div {
-    margin: 10px;
+    margin: 10px 0;
+    padding: 10px;
     width: 94%;
-    max-width: 600px;
-    height: 150px;
+    max-width: 580px;
+    height: 130px;
 }
 
-.iro-iroiro .input-area {
+.iro-input-area {
     padding: 5px 0;
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    flex-direction: row
 }
 
-.iro-iroiro .number-input {
+.iro-number-input {
     font-size: 1.25rem;
-    border: 2px solid;
-    border-radius: 4px;
-    margin-bottom: 5px;
-    padding: 2px 5px;
+    border: none;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 10px;
+    padding-right: 0;
     height: 32px;
-    width: 60px;
+    width: 4rem;
 }
 
-.iro-iroiro .number-input:invalid {
+.iro-number-input-6rem {
+    width: 6rem;
+}
+
+.iro-number-input:invalid {
     background-color: lightpink;
+}
+
+.iro-input-wrapper {
+    margin: 0;
+    padding: 5px;
+    border-bottom: 2px solid;
 }
 
 
@@ -557,6 +568,20 @@ dd {
 /*
     Settings for responsive design.
 */
+@media (max-width: 1199px) {
+    .iro-input-area {
+        flex-direction: column
+    }
+
+    .iro-input-area .display-order-2 {
+        margin-top: 10px;
+    }
+
+    .submit-button-iro {
+        margin-top: 15px;
+    }
+}
+
 @media (max-width: 999px) {
     main {
         padding-left: 20px;
@@ -643,6 +668,27 @@ dd {
     .submit-button {
         width: 100%;
         margin-top: 15px;
+    }
+
+    .color-div {
+        margin: 10px auto;
+        width: calc(100% - 20px);
+    }
+}
+
+@media (max-width: 370px) {
+    .input-area-iro-shorter,
+    .input-area-iro-wider {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .input-area-iro-shorter .iro-input-wrapper {
+        max-width: 7rem;
+    }
+
+    .input-area-iro-wider .iro-input-wrapper {
+        max-width: 10rem;
     }
 }
 

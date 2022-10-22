@@ -9,13 +9,19 @@ open Browser.Dom
 
 module IroIroiro =
     let main = """
-        <form id="inputArea" class="iro-iroiro input-area">
-            <label for="rInput">R:<input type="number" id="rInput" class="iro-iroiro number-input consolas" min="0" max="255"></label>
-            <label for="gInput">G:<input type="number" id="gInput" class="iro-iroiro number-input consolas" min="0" max="255"></label>
-            <label for="bInput">B:<input type="number" id="bInput" class="iro-iroiro number-input consolas" min="0" max="255"></label>
-            <label for="intervalInput">Interval:<input type="number" id="intervalInput" class="iro-iroiro number-input consolas"></label>
-            <label for="limitInput">Limit:<input type="number" id="limitInput" class="iro-iroiro number-input consolas" value="100"></label>
-            <button type="button" id="submitButton" class="submit-button d2b-button">確認</button>
+        <form id="inputArea" class="iro-input-area">
+            <span class="display-order-1 input-area-iro-shorter">
+                <span class="iro-input-wrapper"><label for="rInput">R:<input type="number" id="rInput" class="iro-number-input consolas" min="0" max="255"></label></span>
+                <span class="iro-input-wrapper"><label for="gInput">G:<input type="number" id="gInput" class="iro-number-input consolas" min="0" max="255"></label></span>
+                <span class="iro-input-wrapper"><label for="bInput">B:<input type="number" id="bInput" class="iro-number-input consolas" min="0" max="255"></label></span>
+            </span>
+            <span class="display-order-2 input-area-iro-wider">
+                <span class="iro-input-wrapper"><label for="intervalInput">Interval:<input type="number" id="intervalInput" class="iro-number-input consolas"></label></span>
+                <span class="iro-input-wrapper"><label for="limitInput">Limit:<input type="number" id="limitInput" class="iro-number-input iro-number-input-6rem consolas" value="100"></label></span>
+            </span>
+            <span class="display-order-3">
+                <button type="button" id="submitButton" class="submit-button d2b-button">確認</button>
+            </span>
         </form>
         <div id="errorArea" class="error-area"></div>
         <div id="outputArea" class="output-area"></div>
