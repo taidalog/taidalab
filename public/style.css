@@ -28,7 +28,6 @@ body {
 }
 
 header {
-    padding: 1px;
     color: #ffffff;
 }
 
@@ -147,7 +146,6 @@ footer a {
     <main> of /endless-binary/ page.
 */
 .button-container {
-    padding: 5px 0;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: 200px 200px 200px;
@@ -175,10 +173,6 @@ footer a {
 /*
     <main> of /endless-binary/* pages.
 */
-.question-area {
-    padding: 5px 0;
-}
-
 .question-number {
     font-size: 1.5rem;
     font-weight: bold;
@@ -195,7 +189,6 @@ footer a {
     font-size: 1.25rem;
     border: 2px solid;
     border-radius: 4px;
-    margin-bottom: 5px;
     padding: 2px 5px;
     height: 32px;
 }
@@ -215,7 +208,7 @@ footer a {
     border-radius: 4px;
     width: 200px;
     height: 40px;
-    margin-bottom: 20px;
+    margin-bottom: 20px; /**/
     position: relative;
     cursor: pointer;
 }
@@ -241,7 +234,7 @@ details:hover {
 }
 
 .history-area {
-    padding: 10px 0;
+    margin-top: 10px;
 }
 
 .history-indented {
@@ -622,15 +615,13 @@ dd {
 
     .footer-container {
         margin: 0 auto;
-        padding-left: 0;
-        padding-right: 0;
+        padding: 0;
         width: 100%;
         flex-direction: column;
         text-align: center;
     }
 
     .button-container {
-        padding: 5px 0;
         display: flex;
         flex-direction: column;
         gap: 10px;
@@ -651,7 +642,7 @@ dd {
     
     .submit-button {
         width: 100%;
-        margin-top: 10px;
+        margin-top: 15px;
     }
 }
 
