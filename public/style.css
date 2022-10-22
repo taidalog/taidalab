@@ -513,11 +513,11 @@ dd {
 
 
 @media (max-width: 799px) {    
-    main.home {
+    main {
         margin: 0 auto;
     }
 
-    footer.home {
+    footer {
         max-width: 94%;
     }
 
