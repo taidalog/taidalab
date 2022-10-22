@@ -516,9 +516,17 @@ dd {
     main {
         margin: 0 auto;
     }
-
+    
     footer {
-        max-width: 94%;
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .footer-container {
+        max-width: 100%;
+        margin: 0 auto;
+        padding-left: 5px;
+        padding-right: 5px;
     }
 
     .button-container {
@@ -539,11 +547,25 @@ dd {
         margin: 0 auto;
     }
     
-    main, footer {
+    main {
         max-width: 90%;
         margin: 0 auto;
     }
-    
+
+    footer {
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .footer-container {
+        margin: 0 auto;
+        padding-left: 0;
+        padding-right: 0;
+        width: 100%;
+        flex-direction: column;
+        text-align: center;
+    }
+
     .button-container {
         padding: 5px 0;
         display: flex;
@@ -567,11 +589,6 @@ dd {
     .submit-button {
         width: 100%;
         margin-top: 10px;
-    }
-
-    .footer-container {
-        flex-direction: column;
-        text-align: center;
     }
 }
 
