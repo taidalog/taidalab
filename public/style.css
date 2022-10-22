@@ -36,7 +36,6 @@ header h1 {
 main {
     padding-top: 20px;
     padding-left: 100px;
-    order: 2;
     max-width: 76%;
 }
 
@@ -123,13 +122,11 @@ footer a {
     margin-bottom: 5px;
     padding: 2px 5px;
     height: 32px;
-    order: 1;
 }
 
 .binary-radix {
     margin: 0 5px;
     line-height: 40px;
-    order: 2;
 }
 
 .submit-button {
@@ -145,12 +142,10 @@ footer a {
     margin-bottom: 20px;
     position: relative;
     cursor: pointer;
-    order: 3;
 }
 
 .hint-area {
     width: 100%;
-    order: 4;
 }
 
 details:hover {
@@ -197,13 +192,47 @@ details:hover {
 
 .error-area {
     width: 100%;
-    order: 5;
 }
 
 .warning {
     color: red;
 }
 
+.display-order-1 {
+    order: 1;
+}
+
+.display-order-2 {
+    order: 2;
+}
+
+.display-order-3 {
+    order: 3;
+}
+
+.display-order-4 {
+    order: 4;
+}
+
+.display-order-5 {
+    order: 5;
+}
+
+.display-order-6 {
+    order: 6;
+}
+
+.display-order-7 {
+    order: 7;
+}
+
+.display-order-8 {
+    order: 8;
+}
+
+.display-order-9 {
+    order: 9;
+}
 
 @keyframes fade-in {
     0% {
@@ -249,7 +278,6 @@ details:hover {
     padding: 2px 5px;
     height: 32px;
     width: 60px;
-    order: 1;
 }
 
 .iro-iroiro .number-input:invalid {
@@ -258,12 +286,11 @@ details:hover {
 
 
 /*
-    Colors and orders of buttons on home.
+    Colors of buttons on home.
     course-button-<identifier>
 */
 .course-button-d2b1 {
     background-color: #65a2ac;
-    order: 1;
 }
 
 .course-button-d2b1:hover {
@@ -272,7 +299,6 @@ details:hover {
 
 .course-button-d2b2 {
     background-color: #65a2ac;
-    order: 2;
 }
 
 .course-button-d2b2:hover {
@@ -281,7 +307,6 @@ details:hover {
 
 .course-button-b2d1 {
     background-color: #65ac86;
-    order: 3;
 }
 
 .course-button-b2d1:hover {
@@ -290,7 +315,6 @@ details:hover {
 
 .course-button-b2d2 {
     background-color: #65ac86;
-    order: 4;
 }
 
 .course-button-b2d2:hover {
@@ -299,7 +323,6 @@ details:hover {
 
 .course-button-pot1 {
     background-color: #a665ac;
-    order: 5;
 }
 
 .course-button-pot1:hover {
@@ -308,7 +331,6 @@ details:hover {
 
 .course-button-pot2 {
     background-color: #a665ac;
-    order: 6;
 }
 
 .course-button-pot2:hover {
@@ -317,7 +339,6 @@ details:hover {
 
 .course-button-add {
     background-color: #656eac;
-    order: 7;
 }
 
 .course-button-add:hover {
@@ -326,7 +347,6 @@ details:hover {
 
 .course-button-sub {
     background-color: #656eac;
-    order: 8;
 }
 
 .course-button-sub:hover {
@@ -335,7 +355,6 @@ details:hover {
 
 .course-button-cmp {
     background-color: #6588ac;
-    order: 9;
 }
 
 .course-button-cmp:hover {
@@ -607,7 +626,6 @@ aside {
     scrollbar-width: none;
     -ms-overflow-style: none;
     background-color: aliceblue;
-    order: 1;
 }
 
 aside::-webkit-scrollbar {

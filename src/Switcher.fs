@@ -61,7 +61,7 @@ module rec Switcher =
                 headerColorClass = "header-d2b"
                 headerTitle = "<h1>10進数→2進数 (1)</h1>"
                 mainContent = Content.Course.main
-                buttonColorClass = "submit-button submit-button-d2b"
+                buttonColorClass = "submit-button display-order-3 submit-button-d2b"
                 questionContent = Content.Common.question
                 initFunc = (fun _ -> Dec2Bin1.init ())
             }
@@ -74,7 +74,7 @@ module rec Switcher =
                 headerColorClass = "header-d2b"
                 headerTitle = "<h1>10進数→2進数 (2)</h1>"
                 mainContent = Content.Course.main
-                buttonColorClass = "submit-button submit-button-d2b"
+                buttonColorClass = "submit-button display-order-3 submit-button-d2b"
                 questionContent = Content.Common.question
                 initFunc = (fun _ -> Dec2Bin2.init ())
             }
@@ -87,7 +87,7 @@ module rec Switcher =
                 headerColorClass = "header-b2d"
                 headerTitle = "<h1>2進数→10進数 (1)</h1>"
                 mainContent = Content.Course.main
-                buttonColorClass = "submit-button submit-button-b2d"
+                buttonColorClass = "submit-button display-order-3 submit-button-b2d"
                 questionContent = Content.Common.question
                 initFunc = (fun _ -> Bin2Dec1.init ())
             }
@@ -100,7 +100,7 @@ module rec Switcher =
                 headerColorClass = "header-b2d"
                 headerTitle = "<h1>2進数→10進数 (2)</h1>"
                 mainContent = Content.Course.main
-                buttonColorClass = "submit-button submit-button-b2d"
+                buttonColorClass = "submit-button display-order-3 submit-button-b2d"
                 questionContent = Content.Common.question
                 initFunc = (fun _ -> Bin2Dec2.init ())
             }
@@ -113,7 +113,7 @@ module rec Switcher =
                 headerColorClass = "header-pot"
                 headerTitle = "<h1>2のn乗</h1>"
                 mainContent = Content.Course.main
-                buttonColorClass = "submit-button submit-button-pot"
+                buttonColorClass = "submit-button display-order-3 submit-button-pot"
                 questionContent = Content.Common.question
                 initFunc = (fun _ -> PowerOfTwo1.init ())
             }
@@ -126,7 +126,7 @@ module rec Switcher =
                 headerColorClass = "header-pot"
                 headerTitle = "<h1>2のn乗 - 1</h1>"
                 mainContent = Content.Course.main
-                buttonColorClass = "submit-button submit-button-pot"
+                buttonColorClass = "submit-button display-order-3 submit-button-pot"
                 questionContent = Content.Common.question
                 initFunc = (fun _ -> PowerOfTwo2.init ())
             }
@@ -139,7 +139,7 @@ module rec Switcher =
                 headerColorClass = "header-add"
                 headerTitle = "<h1>加算</h1>"
                 mainContent = Content.Course.main
-                buttonColorClass = "submit-button submit-button-add"
+                buttonColorClass = "submit-button display-order-3 submit-button-add"
                 questionContent = Content.Common.columnAdditionFormat
                 initFunc = (fun _ -> Addition.init ())
             }
@@ -152,7 +152,7 @@ module rec Switcher =
                 headerColorClass = "header-sub"
                 headerTitle = "<h1>減算</h1>"
                 mainContent = Content.Course.main
-                buttonColorClass = "submit-button submit-button-sub"
+                buttonColorClass = "submit-button display-order-3 submit-button-sub"
                 questionContent = Content.Common.columnAdditionFormat
                 initFunc = (fun _ -> Subtraction.init ())
             }
@@ -165,7 +165,7 @@ module rec Switcher =
                 headerColorClass = "header-cmp"
                 headerTitle = "<h1>補数</h1>"
                 mainContent = Content.Course.main
-                buttonColorClass = "submit-button submit-button-cmp"
+                buttonColorClass = "submit-button display-order-3 submit-button-cmp"
                 questionContent = Content.Complement.question
                 initFunc = (fun _ -> Complement.init ())
             }
@@ -217,7 +217,7 @@ module rec Switcher =
                 headerColorClass = "header-not"
                 headerTitle = "<h1>404: Page Not Found</h1>"
                 mainContent = Content.Course.main
-                buttonColorClass = "submit-button submit-button-not"
+                buttonColorClass = "submit-button display-order-3 submit-button-not"
                 questionContent = Content.Common.question
                 initFunc = (fun _ -> NotFound.init ())
             }
