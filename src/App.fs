@@ -26,10 +26,33 @@ module Main =
             |> (fun (p, h, a) -> (p <> "/404/", isInnerPage h, a))
             |> (fun (p, h, a) ->
                 match (p, h, a) with
-                | (true, true, a) -> (fun _ -> overwriteAnchorClick (fun _ -> pushPage a.pathname) a)
-                | (true, false, a) -> (fun _ -> ())
-                | (false, true, a) -> (fun _ -> overwriteAnchorClick (fun _ -> replacePage a.pathname) a)
-                | (false, false, a) -> (fun _ -> overwriteAnchorClick (fun _ -> window.location.replace a.pathname) a))
+                | (true, true, a) ->
+                    (fun _ ->
+                        overwriteAnchorClick
+                            (fun _ ->
+                                pushPage a.pathname
+                                (document.querySelector "aside").classList.remove "active" |> ignore
+                                (document.getElementById "barrier").classList.remove "active" |> ignore)
+                            a)
+                | (true, false, a) ->
+                    (fun _ ->
+                        ())
+                | (false, true, a) ->
+                    (fun _ ->
+                        overwriteAnchorClick
+                            (fun _ ->
+                                replacePage a.pathname
+                                (document.querySelector "aside").classList.remove "active" |> ignore
+                                (document.getElementById "barrier").classList.remove "active" |> ignore)
+                                a)
+                | (false, false, a) ->
+                    (fun _ ->
+                        overwriteAnchorClick
+                            (fun _ ->
+                                window.location.replace a.pathname
+                                (document.querySelector "aside").classList.remove "active" |> ignore
+                                (document.getElementById "barrier").classList.remove "active" |> ignore)
+                                a))
             |> (fun f -> f())
 
         (document.querySelector "aside").getElementsByTagName "a"
