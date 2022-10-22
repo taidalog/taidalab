@@ -583,9 +583,15 @@ dd {
 aside {
     width: 20%;
     min-width: 260px;
-
+    overflow-y: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
     background-color: aliceblue;
     order: 1;
+}
+
+aside::-webkit-scrollbar {
+    display: none;
 }
 
 aside ul {
@@ -664,6 +670,7 @@ aside.active {
     aside {
         position: fixed;
         left: -800px;
+        height: calc(100% - 80px);
     }
 
     main {
