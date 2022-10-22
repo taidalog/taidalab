@@ -241,7 +241,11 @@ module rec Switcher =
         header.className <- initial_object.headerColorClass
         (document.getElementById "hamburgerButton").onclick <- (fun _ ->
             (document.querySelector "aside").classList.toggle "active" |> ignore
-        )
+            (document.getElementById "barrier").classList.toggle "active" |> ignore)
+        
+        (document.getElementById "barrier").onclick <- (fun _ ->
+            (document.querySelector "aside").classList.remove "active" |> ignore
+            (document.getElementById "barrier").classList.remove "active" |> ignore)
         
         let headerTitle = document.querySelector "#headerTitle"
         headerTitle.innerHTML <- initial_object.headerTitle
