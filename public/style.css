@@ -29,6 +29,7 @@ body {
 
 header {
     color: #ffffff;
+    height: 40px;
 }
 
 .header-container {
@@ -38,7 +39,8 @@ header {
 
 header h1 {
     font-size: 1.5rem;
-    max-height: 40px;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 .main-container {
@@ -640,6 +642,10 @@ dd {
     .header-container {
         max-width: 94%;
         margin: 0 auto;
+    }
+
+    header h1 {
+        font-size: 1rem;
     }
     
     main {
