@@ -327,6 +327,8 @@ details:hover {
 .iro-number-input {
     font-size: 1.25rem;
     border: none;
+    border-bottom: 2px solid;
+    border-radius: 0px;
     padding-top: 2px;
     padding-bottom: 2px;
     padding-left: 10px;
@@ -345,8 +347,7 @@ details:hover {
 
 .iro-input-wrapper {
     margin: 0;
-    padding: 5px;
-    border-bottom: 2px solid;
+    margin-right: 10px;
 }
 
 
