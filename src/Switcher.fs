@@ -223,7 +223,7 @@ module rec Switcher =
             }
 
     let (|InnerPage|OuterPage|) url =
-            let m = regMatch "^http://localhost:8080/" url
+            let m = regMatch "^http://taidalog.html.xdomain.jp/" url
             match m with
             | true -> InnerPage
             | false -> OuterPage
