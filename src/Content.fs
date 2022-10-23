@@ -149,7 +149,7 @@ module Content =
 
         let aside = """
             <ul>
-                <li><a class="aside-home" id="asideEndlessBinary" href="/endless-binary/">10進数↔2進数の反復練習</a></li>
+                <li><a class="aside-home" id="asideEndlessBinary" href="/endless-binary/">10進数↔︎2進数の反復練習</a></li>
                     <ul>
                         <li><a class="aside-d2b" href="/endless-binary/dec2bin-1/">10進数→2進数 (1)</a></li>
                         <li><a class="aside-d2b" href="/endless-binary/dec2bin-2/">10進数→2進数 (2)</a></li>
