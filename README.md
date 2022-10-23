@@ -1,23 +1,23 @@
 # taidalab
 
-Version 2.2.2
+Version 3.0.0
 
 [Japanese README](README.ja.md)
 
-Really simple Web application for repeated practice of decimal-to-binary conversion.
+A Web application for repeated practice of decimal-binary conversion and so on.
+
 
 ## Features
 
 - Repeats providing conversion or calculation quizzes between decimal numbers and binary numbers.
+- Generates colors based on the input RGB value, keeping the hue of the original color.
 
 
 ## Usage
 
 1. Visit [taidalab](http://taidalog.html.xdomain.jp/)
-1. Press the button to the quiz you want to solve.
-1. A question will be shown.
-1. Enter the answer and press the button, or just press [Enter] or [return] key.
-1. The result will be shown. When your answer is correct, a next decimal number will be shown. When wrong, you can try again.
+1. Click a link in the menu on the left side of the screen (Desktop mode), or click the hamburger button (a button with three horizontal lines) on the upper left corner, then click a link (Mobile mode).
+1. Fill in the form and press the button
 
 
 ## Terms of Service
