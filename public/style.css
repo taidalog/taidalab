@@ -777,7 +777,7 @@ dd {
     aside {
         position: fixed;
         left: -800px;
-        height: calc(100% - 80px);
+        height: calc(100% - 50px);
         z-index: 3;
     }
 
