@@ -118,7 +118,8 @@ module Dec2Bin1 =
                 <p>
                     10進数を、商が 1 になるまで 2 で割り続けます。<br>
                     この時、余りを商の右に書いておきます。<br>
-                    商と余りを下から順に繋げると、2進数になります。
+                    商と余りを下から順に繋げると、2進数になります。<br>
+                    ※この下の筆算をクリックすると動きます。
                 </p>
             </div>
             <div id="hint1" class="history-indented column-addition-area">
