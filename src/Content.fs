@@ -15,7 +15,7 @@ module Content =
                 <button type="button" id="buttonEB2D1" class="btn course-button-b2d1 display-order-3">2進数→10進数 (1)</button>
                 <button type="button" id="buttonEB2D2" class="btn course-button-b2d2 display-order-4">2進数→10進数 (2)</button>
                 <button type="button" id="buttonEPOT1" class="btn course-button-pot1 display-order-5">2のn乗</button>
-                <button type="button" id="buttonEPOT2" class="btn course-button-pot2 display-order-6">2のn乗 - 1</button>
+                <button type="button" id="buttonEPOT2" class="btn course-button-pot2 display-order-6">2のn乗-1</button>
                 <button type="button" id="buttonEBAD" class="btn course-button-add display-order-7">加算</button>
                 <button type="button" id="buttonEBSB" class="btn course-button-sub display-order-8">減算</button>
                 <button type="button" id="buttonECMP" class="btn course-button-cmp display-order-9">補数</button>
@@ -73,7 +73,7 @@ module Content =
                     2<sup>n</sup> の2進数を覚えると10進数からの変換を早く行えるので、まずはこのコースから始めてみてください。<br>
                     ヒント付きなので、考え方も身に付けられます。
                 </dd>
-                <dt><a href="/endless-binary/power-of-two-2/">2のn乗 - 1</a></dt>
+                <dt><a href="/endless-binary/power-of-two-2/">2のn乗-1</a></dt>
                 <dd>
                     2<sup>n</sup> - 1 (0&le;n&le;7) の10進数から2進数への変換をエンドレスで練習できます。<br>
                     2<sup>n</sup> - 1 の2進数を通して、2進数の繰り上がりや繰り下がりを覚えられます。<br>
@@ -133,12 +133,12 @@ module Content =
                         <li><a class="aside-b2d" href="/endless-binary/bin2dec-1/">2進数→10進数 (1)</a></li>
                         <li><a class="aside-b2d" href="/endless-binary/bin2dec-2/">2進数→10進数 (2)</a></li>
                         <li><a class="aside-pot" href="/endless-binary/power-of-two-1/">2のn乗</a></li>
-                        <li><a class="aside-pot" href="/endless-binary/power-of-two-2/">2のn乗 - 1</a></li>
+                        <li><a class="aside-pot" href="/endless-binary/power-of-two-2/">2のn乗-1</a></li>
                         <li><a class="aside-add" href="/endless-binary/addition/">加算</a></li>
                         <li><a class="aside-sub" href="/endless-binary/subtraction/">減算</a></li>
                         <li><a class="aside-cmp" href="/endless-binary/complement/">補数</a></li>
                     </ul>
-                <li><a class="aside-iro" id="asideIroIroiro" href="/iro-iroiro/">色相ローテーション</a></li>
+                <li><a class="aside-iro" id="asideIroIroiro" href="/iro-iroiro/">色いろいろ</a></li>
                 <li><a class="aside-ctc" id="asideSoon" href="#">Comming soon...</a></li>
             </ul>
             <ul>
