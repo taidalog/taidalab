@@ -30,6 +30,7 @@ body {
 header {
     color: #ffffff;
     height: 50px;
+    min-height: 50px;
     display: flex;
     align-items: center;
 }
@@ -761,6 +762,7 @@ dd {
 @media (max-width: 799px) {
     header {
         height: 40px;
+        min-height: 40px;
     }
 
     .header-container {
