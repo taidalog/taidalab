@@ -20,6 +20,11 @@ A Web application for repeated practice of decimal-binary conversion and so on.
 1. Fill in the form and press the button
 
 
+## Recommended environment
+
+- Mozilla FireFox 106.0.1
+
+
 ## Terms of Service
 
 - The copyright is owned by the creator (I).
