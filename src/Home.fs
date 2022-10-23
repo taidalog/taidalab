@@ -8,5 +8,8 @@ namespace Taidalab
 module Home =
     let main = """
         <div class="home-center">
-            <p>What taidalog has created.<br>What you had been looking for.</p>
+            <p>
+                <span class="home-title">taidalab</span><br>
+                Where taidalog's programs are waiting for you.
+            </p>
         </div>"""
