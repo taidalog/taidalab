@@ -29,7 +29,7 @@ body {
 
 header {
     color: #ffffff;
-    height: 40px;
+    height: 50px;
     display: flex;
     align-items: center;
 }
@@ -759,6 +759,10 @@ dd {
 }
 
 @media (max-width: 799px) {
+    header {
+        height: 40px;
+    }
+
     .header-container {
         padding-left: 0px;
     }
