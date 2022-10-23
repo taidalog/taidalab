@@ -141,6 +141,20 @@ footer a {
     justify-content: space-between;
 }
 
+/*
+    Home
+*/
+.home-center {
+    color: #325156;
+    text-align: center;
+    font-size: 2rem;
+    font-family: serif;
+}
+
+.home-title {
+    font-size: 2.5rem;
+}
+
 
 /*
     <main> of /endless-binary/ page.
@@ -646,6 +660,16 @@ dd {
         text-align: center;
     }
 
+    .home-center {
+        text-align: center;
+        font-size: 1.5rem;
+        font-family: serif;
+    }
+    
+    .home-title {
+        font-size: 2rem;
+    }
+
     .button-container {
         display: flex;
         flex-direction: column;
@@ -677,6 +701,16 @@ dd {
 }
 
 @media (max-width: 370px) {
+    .home-center {
+        text-align: center;
+        font-size: 1rem;
+        font-family: serif;
+    }
+    
+    .home-title {
+        font-size: 1.75rem;
+    }
+
     .input-area-iro-shorter,
     .input-area-iro-wider {
         display: flex;
