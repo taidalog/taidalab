@@ -30,7 +30,7 @@ A Web application for repeated practice of decimal-binary conversion and so on.
 
 ## Known Issue
 
-- 
+- Some CSS animations can't be played on iOS.
 
 
 ## License
