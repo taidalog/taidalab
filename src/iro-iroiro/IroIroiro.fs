@@ -9,7 +9,7 @@ open Browser.Dom
 
 module IroIroiro =
     let main = """
-        <form id="inputArea" class="iro-input-area">
+        <form id="inputArea" class="iro-input-area" autocomplete="off">
             <span class="display-order-1 input-area-iro-shorter">
                 <span class="iro-input-wrapper"><label for="rInput">R:<input type="number" id="rInput" class="iro-number-input consolas" min="0" max="255"></label></span>
                 <span class="iro-input-wrapper"><label for="gInput">G:<input type="number" id="gInput" class="iro-number-input consolas" min="0" max="255"></label></span>

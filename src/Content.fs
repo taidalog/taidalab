@@ -25,7 +25,7 @@ module Content =
     module Course =
         let main = """
             <div id="questionArea" class="question-area"></div>
-            <form id="inputArea" class="input-area">
+            <form id="inputArea" class="input-area" autocomplete="off">
                 <input type="text" id="numberInput" class="number-input display-order-1 consolas">
                 <span id="binaryRadix" class="binary-radix display-order-2"></span>
                 <button type="button" id="submitButton" class="submit-button display-order-3 d2b-button">確認</button>
