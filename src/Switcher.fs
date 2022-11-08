@@ -169,6 +169,19 @@ module rec Switcher =
                 questionContent = Content.Complement.question
                 initFunc = (fun _ -> Complement.init ())
             }
+        | "/endless-binary/dec2hex/" ->
+            printfn "%s" "/endless-binary/dec2hex/"
+            {
+                pathname = "/endless-binary/dec2hex/"
+                title = "10進数→16進数 - taidalab"
+                headerContent = Content.Common.header
+                headerColorClass = "header-d2h"
+                headerTitle = "<h1>10進数→16進数 - taidalab</h1>"
+                mainContent = Content.Course.main
+                buttonColorClass = "submit-button display-order-3 submit-button-d2h"
+                questionContent = Content.Common.question
+                initFunc = (fun _ -> Dec2Hex.init ())
+            }
         | "/iro-iroiro/" ->
             printfn "%s" "/iro-iroiro/"
             {
@@ -223,7 +236,7 @@ module rec Switcher =
             }
 
     let (|InnerPage|OuterPage|) url =
-            let m = regMatch "^http://taidalog.html.xdomain.jp/" url
+            let m = regMatch "^http://localhost:8080/" url
             match m with
             | true -> InnerPage
             | false -> OuterPage
@@ -289,6 +302,7 @@ module rec Switcher =
         (document.getElementById "buttonEBAD").onclick <- (fun _ -> pushPage "/endless-binary/addition/")
         (document.getElementById "buttonEBSB").onclick <- (fun _ -> pushPage "/endless-binary/subtraction/")
         (document.getElementById "buttonECMP").onclick <- (fun _ -> pushPage "/endless-binary/complement/")
+        (document.getElementById "buttonED2H").onclick <- (fun _ -> pushPage "/endless-binary/dec2hex/")
 
     let switchOverwriteAnchor actionTrue actionFalse anchor =
         anchor
