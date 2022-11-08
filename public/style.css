@@ -115,6 +115,10 @@ aside.active {
     background-color: #6588ac;
 }
 
+.aside-d2h:hover {
+    background-color: #65aca0;
+}
+
 .aside-iro:hover {
     background-color: #ac657c;
 }
@@ -427,6 +431,14 @@ details:hover {
     background-color: #5a7a9a;
 }
 
+.course-button-d2h {
+    background-color: #65aca0;
+}
+
+.course-button-d2h:hover {
+    background-color: #5a9a90;
+}
+
 
 /*
     Colors for headers and check buttons.
@@ -515,6 +527,19 @@ details:hover {
 
 .submit-button-cmp:hover {
     background-color: #86b5e5;
+}
+
+.header-d2h {
+    background-color: #65aca0;
+}
+
+.submit-button-d2h {
+    color: #1e3330;
+    background: #95feec;
+}
+
+.submit-button-d2h:hover {
+    background-color: #86e5d5;
 }
 
 .header-iro {
@@ -866,4 +891,8 @@ dd {
 
 .display-order-9 {
     order: 9;
+}
+
+.display-order-10 {
+    order: 10;
 }
