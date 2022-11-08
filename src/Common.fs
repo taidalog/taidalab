@@ -31,12 +31,19 @@ module Common =
     let testDecimalString input =
         let reCorrect = "^[0-9]+$"
         Regex.Match(input, reCorrect).Success
+    
+    let testHexString input =
+        let reCorrect = "^[0-9A-Fa-f]+$"
+        Regex.Match(input, reCorrect).Success
 
     let toBinary (number: int) =
         System.Convert.ToString(number, 2)
     
     let toDecimal (number: string) =
         System.Convert.ToInt32(number, 2)
+    
+    let hexToDecimal (number: string) =
+        System.Convert.ToInt32(number, 16)
 
     let newErrorMessageBin answer input =
         if input = "" then
@@ -51,6 +58,14 @@ module Common =
             sprintf """<span class="warning">%s の10進法表記を入力してください。</span>""" answer
         else if testDecimalString input = false then
             sprintf """<span class="warning">'%s' は10進数ではありません。使えるのは半角の 0123456789 のみです。</span>""" input
+        else
+            ""
+    
+    let newErrorMessageHex answer input =
+        if input = "" then
+            sprintf """<span class="warning">%s の16進法表記を入力してください。</span>""" answer
+        else if testHexString input = false then
+            sprintf """<span class="warning">'%s' は16進数ではありません。使えるのは半角の 0123456789ABCDEF のみです。</span>""" input
         else
             ""
     
