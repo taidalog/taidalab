@@ -182,6 +182,19 @@ module rec Switcher =
                 questionContent = Content.Common.question
                 initFunc = (fun _ -> Dec2Hex.init ())
             }
+        | "/endless-binary/hex2dec/" ->
+            printfn "%s" "/endless-binary/hex2dec/"
+            {
+                pathname = "/endless-binary/hex2dec/"
+                title = "16進数→10進数 - taidalab"
+                headerContent = Content.Common.header
+                headerColorClass = "header-d2h"
+                headerTitle = "<h1>16進数→10進数 - taidalab</h1>"
+                mainContent = Content.Course.main
+                buttonColorClass = "submit-button display-order-3 submit-button-d2h"
+                questionContent = Content.Common.question
+                initFunc = (fun _ -> Hex2Dec.init ())
+            }
         | "/iro-iroiro/" ->
             printfn "%s" "/iro-iroiro/"
             {

@@ -20,6 +20,7 @@ module Content =
                 <button type="button" id="buttonEBSB" class="btn course-button-sub display-order-8">減算</button>
                 <button type="button" id="buttonECMP" class="btn course-button-cmp display-order-9">補数</button>
                 <button type="button" id="buttonED2H" class="btn course-button-d2h display-order-10">10進数→16進数</button>
+                <button type="button" id="buttonEH2D" class="btn course-button-d2h display-order-11">16進数→10進数</button>
             </form>"""
 
 
@@ -106,7 +107,13 @@ module Content =
                 <dd>
                     10進数から16進数への変換をエンドレスで練習できます。<br>
                     出題範囲は n (0&le;n&le;255) です。<br>
-                    ヒントはありませんので、慣れてからどうぞ。
+                    ヒント付きなので、考え方も身に付けられます。
+                </dd>
+                <dt><a href="/endless-binary/hex2dec/">16進数→10進数</a></dt>
+                <dd>
+                    16進数から10進数への変換をエンドレスで練習できます。<br>
+                    出題範囲は n (0&le;n&le;255) です。<br>
+                    ヒント付きなので、考え方も身に付けられます。
                 </dd>
                 <dt><a href="/iro-iroiro/">色いろいろ</a></dt>
                 <dd>
@@ -168,6 +175,7 @@ module Content =
                         <li><a class="aside-sub" href="/endless-binary/subtraction/">減算</a></li>
                         <li><a class="aside-cmp" href="/endless-binary/complement/">補数</a></li>
                         <li><a class="aside-d2h" href="/endless-binary/dec2hex/">10進数→16進数</a></li>
+                        <li><a class="aside-d2h" href="/endless-binary/hex2dec/">16進数→10進数</a></li>
                     </ul>
                 <li><a class="aside-iro" id="asideIroIroiro" href="/iro-iroiro/">色いろいろ</a></li>
                 <li><a class="aside-ctc" id="asideSoon" href="#">Comming soon...</a></li>

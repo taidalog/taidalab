@@ -14,6 +14,7 @@
     <Compile Include="endless-binary/Subtraction.fs" />
     <Compile Include="endless-binary/Complement.fs" />
     <Compile Include="endless-binary/Dec2Hex.fs" />
+    <Compile Include="endless-binary/Hex2Dec.fs" />
     <Compile Include="iro-iroiro/IroIroiro.fs" />
     <Compile Include="Home.fs" />
     <Compile Include="Content.fs" />

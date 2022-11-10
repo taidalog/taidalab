@@ -41,6 +41,9 @@ module Common =
     
     let toDecimal (number: string) =
         System.Convert.ToInt32(number, 2)
+
+    let toHex (number: int) =
+        System.Convert.ToString(number, 16).ToUpper()
     
     let hexToDecimal (number: string) =
         System.Convert.ToInt32(number, 16)
