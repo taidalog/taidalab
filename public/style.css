@@ -900,3 +900,43 @@ dd {
 .display-order-11 {
     order: 11;
 }
+
+.hint-table {
+    display: flex;
+    flex-direction: column;
+}
+
+.hint-table-row {
+    display: flex;
+}
+
+.hint-table-digit {
+    width: 3rem;
+    min-width: 3rem;
+    text-align: center;
+    margin: 1px 4px;
+}
+
+.green {
+    background-color: #95fec6;
+}
+
+.palegreen {
+    background-color: #cccccc;
+}
+
+.large {
+    font-size: 3rem;
+}
+
+.hint-table-container {
+    width: 3rem;
+    min-width: 3rem;
+    line-height: 100%;
+}
+
+.middle {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: normal;
+}
