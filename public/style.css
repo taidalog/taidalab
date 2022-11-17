@@ -709,12 +709,13 @@ dd {
     .button-container {
         display: flex;
         flex-direction: column;
-        gap: 10px;
+        gap: 0px;
     }
     
     .btn {
         font-size: 1.25rem;
         height: 60px;
+        margin: 5px 0px;
     }
 
     .number-input {
