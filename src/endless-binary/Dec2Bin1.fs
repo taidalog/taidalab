@@ -79,8 +79,8 @@ module Dec2Bin1 =
             """
             width height content
 
-    let svgText x y  text =
-        sprintf """<text x="%d" y="%d" font-family="Courier New" font-size="20">%s</text>""" x y text
+    let svgText x y opacity text =
+        sprintf """<text x="%d" y="%d" font-family="Courier New" font-size="20" opacity="%f">%s</text>""" x y opacity text
     
     let svgPath d stroke strokeWidth fill opacity animation  =
         sprintf """<path d="%s" stroke="%s" stroke-width=%d fill="%s" opacity="%f">%s</path>""" d stroke strokeWidth fill opacity animation
@@ -98,7 +98,7 @@ module Dec2Bin1 =
 
     let newSvgDivisor x y index option =
         Option.map
-            (fun option -> svgText x y (sprintf "%s%s" (string option) (svgAnimate "stroke" "ease-in" "" "" (index |> double |> delayMs |> (fun x -> x * 1000.) |> int) 500 "1" "freeze")))
+            (fun option -> svgText x y 0. (sprintf "%s%s" (string option) (svgAnimate "stroke" "ease-in" "" "" (index |> double |> delayMs |> (fun x -> x * 1000.) |> int) 500 "1" "freeze")))
             option
     
     let newArrow x y width1 height1 width2 height2 =
@@ -126,19 +126,37 @@ module Dec2Bin1 =
         |> List.mapi (fun i (a, b, c, d) ->
             Option.map
                 (fun x ->
-                    svgText 0 (20 * (i + 1)) (string x))
+                    svgText
+                        0
+                        (20 * (i + 1))
+                        0.
+                        (sprintf "%d%s" x (svgAnimate "opacity" "linear" "0.0" "1.0" 1000 500 "1" "freeze")))
                 a,
             Option.map
                 (fun x ->
-                    svgPath (sprintf "M 12,%d q 10,8 0,16 h 48" ((20 * i) + 6)) "#000000" 1 "none" 1. "")
+                    svgPath
+                        (sprintf "M 12,%d q 10,8 0,16 h 48" ((20 * i) + 6))
+                        "#000000"
+                        1
+                        "none"
+                        0.
+                        (svgAnimate "opacity" "linear" "0.0" "1.0" 1000 500 "1" "freeze"))
                 b,
             Option.map
                 (fun x ->
-                    svgText (20 / 2 * 2) (20 * (i + 1)) (x |> string |> (padStart " " 3) |> escapeSpace))
+                    svgText
+                        (20 / 2 * 2)
+                        (20 * (i + 1))
+                        0.
+                        (sprintf "%s%s" (x |> string |> (padStart " " 3) |> escapeSpace) (svgAnimate "opacity" "linear" "0.0" "1.0" 1000 500 "1" "freeze")))
                 c,
             Option.map
                 (fun x ->
-                    svgText (20 / 2 * 6) (20 * (i + 1)) (sprintf "…%d" x))
+                    svgText
+                        (20 / 2 * 6)
+                        (20 * (i + 1))
+                        0.
+                        (sprintf "…%d%s" x (svgAnimate "opacity" "linear" "0.0" "1.0" 1000 500 "1" "freeze")))
                 d)
         |> List.map (fun (a, b, c, d) ->
             sprintf
