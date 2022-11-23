@@ -58,8 +58,7 @@ module Main =
         (document.querySelector "aside").getElementsByTagName "a"
         |> (fun x -> JS.Constructors.Array?from(x))
         |> Array.toList
-        |> List.map (switchAnchorAction initObj.pathname)
-        |> ignore
+        |> List.iter (switchAnchorAction initObj.pathname)
 
         printfn "%s" "The end of DOMContentLoaded"
     ))

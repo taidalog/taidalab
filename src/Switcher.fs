@@ -333,8 +333,7 @@ module rec Switcher =
             (document.getElementById "explanation").getElementsByTagName "a"
             |> (fun x -> JS.Constructors.Array?from(x))
             |> Array.toList
-            |> List.map (fun (x : Browser.Types.HTMLAnchorElement) -> overwriteAnchorClick (fun _ -> pushPage x.pathname) x)
-            |> ignore
+            |> List.iter (fun (x : Browser.Types.HTMLAnchorElement) -> overwriteAnchorClick (fun _ -> pushPage x.pathname) x)
 
 
     module NotFound =
