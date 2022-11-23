@@ -82,8 +82,8 @@ module Dec2Bin1 =
     let svgText x y  text =
         sprintf """<text x="%d" y="%d" font-family="Courier New" font-size="20">%s</text>""" x y text
     
-    let svgPath d stroke strokeWidth fill animation  =
-        sprintf """<path d="%s" stroke="%s" stroke-width=%d fill="%s">%s</path>""" d stroke strokeWidth fill animation
+    let svgPath d stroke strokeWidth fill opacity animation  =
+        sprintf """<path d="%s" stroke="%s" stroke-width=%d fill="%s" opacity="%f">%s</path>""" d stroke strokeWidth fill opacity animation
     
     let svgPolyline points stroke strokeWidth fill animation =
         sprintf """<polylie points="%s" stroke="%s" stroke-width=%d fill="%s">%s</polyline>""" points stroke strokeWidth fill animation
@@ -105,7 +105,7 @@ module Dec2Bin1 =
         let d = sprintf "M %f,%f h %f v %f h -7 l 16,-20 16,20 h -7 v %f h %f Z" x y width1 height1 height2 width2
         let animationStroke = svgAnimate "stroke" "ease-in" "none" "#0000ff" 10000 500 "1"
         let animationFill = svgAnimate "fill" "ease-in" "none" "#aaddff" 10000 500 "1"
-        svgPath d "#0000ff" 1 "#aaddff" (animationStroke + animationFill)
+        svgPath d "#0000ff" 1 "#aaddff" 1. (animationStroke + animationFill)
     
     let numOpt num =
         (Some 2, Some 1, Some num, None)
@@ -131,7 +131,7 @@ module Dec2Bin1 =
                 a,
             Option.map
                 (fun x ->
-                    svgPath (sprintf "M 12,%d q 10,8 0,16 h 48" ((20 * i) + 6)) "#000000" 1 "none" "")
+                    svgPath (sprintf "M 12,%d q 10,8 0,16 h 48" ((20 * i) + 6)) "#000000" 1 "none" 1. "")
                 b,
             Option.map
                 (fun x ->
