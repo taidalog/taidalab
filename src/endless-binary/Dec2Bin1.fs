@@ -89,7 +89,7 @@ module Dec2Bin1 =
         sprintf """<polylie points="%s" stroke="%s" stroke-width=%d fill="%s">%s</polyline>""" points stroke strokeWidth fill animation
     
     let svgAnimate attributeName calcMode fromState toState beginMs durMs repeatCount =
-        sprintf """<animate attributeMode="%s" calcMode="%s" from="%s" to="%s" begin="%dms" dur="%dms" repeatCount="%s"/>""" attributeName calcMode fromState toState beginMs durMs repeatCount
+        sprintf """<animate attributeName="%s" calcMode="%s" from="%s" to="%s" begin="%dms" dur="%dms" repeatCount="%s"/>""" attributeName calcMode fromState toState beginMs durMs repeatCount
     
     let delayMs index =
         match index with
