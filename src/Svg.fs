@@ -42,4 +42,6 @@ module Svg =
     let animateOpacity beginMs durMs =
         animate "opacity" "linear" "0" "1" beginMs durMs "1" "freeze"
     
-    
+    let newArrow x y width1 height1 width2 height2 beginMs stroke fill=
+        let d = sprintf "M %f,%f h %f v %f h -7 l 16,-20 16,20 h -7 v %f h %f Z" x y width1 height1 height2 width2
+        path d stroke 1 fill 0. (animateOpacity beginMs 500)

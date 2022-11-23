@@ -59,21 +59,13 @@ module Dec2Bin1 =
         ||> (fun x y -> Math.Pow(2.0, x) + Math.Pow(2.0, y))
         |> int
 
-        
+    
     let delayMs index =
         index * 2500 - 500 |> abs
+    
 
-    let newSvgDivisor x y index option =
-        Option.map
-            (fun option -> Svg.text x y 0. (sprintf "%s%s" (string option) (Svg.animate "stroke" "ease-in" "" "" (index |> delayMs) 500 "1" "freeze")))
-            option
-    
-    let newArrow x y width1 height1 width2 height2 beginMs =
-        let d = sprintf "M %f,%f h %f v %f h -7 l 16,-20 16,20 h -7 v %f h %f Z" x y width1 height1 height2 width2
-        Svg.path d "#0000ff" 1 "#aaddff" 0. (Svg.animateOpacity beginMs 500)
-    
     let newArrowBin fontSize lineCount =
-        newArrow
+        Svg.newArrow
             (fontSize |> double |> (fun x -> x / 2. * 4.))
             (lineCount |> (fun x -> (fontSize * (x - 1)) + 6) |> double)
             (fontSize |> double |> (fun x -> x / 2. * 3.))
@@ -150,7 +142,7 @@ module Dec2Bin1 =
                 (Option.defaultValue "" d))
         |> List.fold
             (fun x y -> sprintf "%s%s" x y)
-            (newArrowBin fontSize (List.length divRems))
+            (newArrowBin fontSize (List.length divRems) "#0000ff" "#aaddff")
         |> (Svg.frame
                 (fontSize / 2 * 10)
                 (divRems |> List.length |> (fun x -> fontSize * (x + 1))))
