@@ -7,232 +7,235 @@ namespace Taidalab
 
 open System
 open Browser.Dom
-open Taidalab.Common
+open Taidalab.Number
+open Taidalab.Text
+open Taidalab.EndlessBinary
 
-module Dec2Hex =
+module EndlessBinary =
+    module Dec2Hex =
 
-    let rec repeatDivision dividend divisor =
-        let quotient = int (dividend / divisor)
-        let remainder = dividend - (quotient * divisor)
-        if quotient < divisor then
-            [(quotient, remainder)]
-        else
-            [(quotient, remainder)] @ repeatDivision quotient divisor
+        let rec repeatDivision dividend divisor =
+            let quotient = int (dividend / divisor)
+            let remainder = dividend - (quotient * divisor)
+            if quotient < divisor then
+                [(quotient, remainder)]
+            else
+                [(quotient, remainder)] @ repeatDivision quotient divisor
 
 
-    let newArrowHex fontSize lineCount stroke fill =
-        Svg.newArrow
-            (fontSize |> double |> (fun x -> x / 2. * 4.))
-            (lineCount |> (fun x -> (fontSize * (x - 1)) + 6) |> double)
-            (fontSize |> double |> (fun x -> x / 2. * 4.))
-            (lineCount |> double |> (fun x -> 17.85 * x - 35.) |> ((*) -1.))
-            -58.
-            (17.85 * (lineCount |> double) - 15.)
-            (lineCount - 1 |> delayMs |> ((+) 1500))
-            stroke
-            fill
+        let newArrowHex fontSize lineCount stroke fill =
+            Svg.newArrow
+                (fontSize |> double |> (fun x -> x / 2. * 4.))
+                (lineCount |> (fun x -> (fontSize * (x - 1)) + 6) |> double)
+                (fontSize |> double |> (fun x -> x / 2. * 4.))
+                (lineCount |> double |> (fun x -> 17.85 * x - 35.) |> ((*) -1.))
+                -58.
+                (17.85 * (lineCount |> double) - 15.)
+                (lineCount - 1 |> delayMs |> ((+) 1500))
+                stroke
+                fill
 
-    
-    let newHintAnimation divisor num fontSize =
-        let divRems =
-            (numOpt divisor num) :: (divRemOpt divisor (repeatDivision num divisor))
-        divRems
-        |> List.mapi (fun i (a, b, c, d) ->
-            Option.map // divisor
-                (fun x ->
-                    Svg.text
-                        0
-                        (fontSize * (i + 1))
-                        0.
-                        (sprintf "%d%s" x (Svg.animateOpacity (i |> delayMs |> (fun x -> if i = 0 then x + 1000 else x + 2000)) 500)))
-                a,
-            Option.map // line
-                (fun x ->
-                    Svg.path
-                        (sprintf
-                            "M %d,%d q %d,%f 0,%f h %f"
-                            (fontSize / 2 * 2 + 4)
-                            ((fontSize * i) + 6)
-                            (fontSize / 2)
-                            (double fontSize * 0.4)
-                            (double fontSize * 0.8)
-                            (double fontSize / 2.* 4.8))
-                        "#000000"
-                        1
-                        "none"
-                        0.
-                        (Svg.animateOpacity (i |> delayMs |> (fun x -> if i = 0 then x + 500 else x + 1500)) 500))
-                b,
-            Option.map // dividend
-                (fun x ->
-                    Svg.text
-                        (fontSize / 2 * 3)
-                        (fontSize * (i + 1))
-                        0.
-                        (sprintf "%s%s" (x |> string |> (padStart " " 3) |> escapeSpace) (Svg.animateOpacity (i |> delayMs) 500)))
-                c,
-            Option.map // remainder
-                (fun x ->
-                    Svg.text
-                        (fontSize / 2 * 7)
-                        (fontSize * (i + 1))
-                        0.
-                        (sprintf "…%d%s" x (Svg.animateOpacity (i |> delayMs |> ((+) 500)) 500)))
-                d)
-        |> List.map (fun (a, b, c, d) ->
+        
+        let newHintAnimation divisor num fontSize =
+            let divRems =
+                (numOpt divisor num) :: (divRemOpt divisor (repeatDivision num divisor))
+            divRems
+            |> List.mapi (fun i (a, b, c, d) ->
+                Option.map // divisor
+                    (fun x ->
+                        Svg.text
+                            0
+                            (fontSize * (i + 1))
+                            0.
+                            (sprintf "%d%s" x (Svg.animateOpacity (i |> delayMs |> (fun x -> if i = 0 then x + 1000 else x + 2000)) 500)))
+                    a,
+                Option.map // line
+                    (fun x ->
+                        Svg.path
+                            (sprintf
+                                "M %d,%d q %d,%f 0,%f h %f"
+                                (fontSize / 2 * 2 + 4)
+                                ((fontSize * i) + 6)
+                                (fontSize / 2)
+                                (double fontSize * 0.4)
+                                (double fontSize * 0.8)
+                                (double fontSize / 2.* 4.8))
+                            "#000000"
+                            1
+                            "none"
+                            0.
+                            (Svg.animateOpacity (i |> delayMs |> (fun x -> if i = 0 then x + 500 else x + 1500)) 500))
+                    b,
+                Option.map // dividend
+                    (fun x ->
+                        Svg.text
+                            (fontSize / 2 * 3)
+                            (fontSize * (i + 1))
+                            0.
+                            (sprintf "%s%s" (x |> string |> (padStart " " 3) |> escapeSpace) (Svg.animateOpacity (i |> delayMs) 500)))
+                    c,
+                Option.map // remainder
+                    (fun x ->
+                        Svg.text
+                            (fontSize / 2 * 7)
+                            (fontSize * (i + 1))
+                            0.
+                            (sprintf "…%d%s" x (Svg.animateOpacity (i |> delayMs |> ((+) 500)) 500)))
+                    d)
+            |> List.map (fun (a, b, c, d) ->
+                sprintf
+                    "%s%s%s%s"
+                    (Option.defaultValue "" a)
+                    (Option.defaultValue "" b)
+                    (Option.defaultValue "" c)
+                    (Option.defaultValue "" d))
+            |> List.fold
+                (fun x y -> sprintf "%s%s" x y)
+                (newArrowHex fontSize (List.length divRems) "#1e3330" "#95feec")
+            |> (Svg.frame
+                    (fontSize / 2 * 11)
+                    (divRems |> List.length |> (fun x -> fontSize * (x + 1))))
+        
+
+        let newHintRepeatDivision divisor number fontSize =
             sprintf
-                "%s%s%s%s"
-                (Option.defaultValue "" a)
-                (Option.defaultValue "" b)
-                (Option.defaultValue "" c)
-                (Option.defaultValue "" d))
-        |> List.fold
-            (fun x y -> sprintf "%s%s" x y)
-            (newArrowHex fontSize (List.length divRems) "#1e3330" "#95feec")
-        |> (Svg.frame
-                (fontSize / 2 * 11)
-                (divRems |> List.length |> (fun x -> fontSize * (x + 1))))
-    
-
-    let newHintRepeatDivision divisor number fontSize =
-        sprintf
-            """
-            <div class="history-indented">
-                <p>
-                    10進数を、商が 16 未満になるまで 16 で割り続けます。<br>
-                    この時、余りを商の右に書いておきます。<br>
-                    商と余りのうち、10~15 をそれぞれ A~F に変換し、<br>
-                    下から順に繋げると、16進数になります。<br>
-                    ※この下の筆算をクリックすると動きます。
-                </p>
-            </div>
-            <div id="hint1" class="history-indented column-addition-area">
-                %s
-            </div>
-            """
-            (newHintAnimation divisor number fontSize)
+                """
+                <div class="history-indented">
+                    <p>
+                        10進数を、商が 16 未満になるまで 16 で割り続けます。<br>
+                        この時、余りを商の右に書いておきます。<br>
+                        商と余りのうち、10~15 をそれぞれ A~F に変換し、<br>
+                        下から順に繋げると、16進数になります。<br>
+                        ※この下の筆算をクリックすると動きます。
+                    </p>
+                </div>
+                <div id="hint1" class="history-indented column-addition-area">
+                    %s
+                </div>
+                """
+                (newHintAnimation divisor number fontSize)
 
 
-    let newHint divisor number fontSize =
-        sprintf
-            """
-            <details id="hintDetails"><summary>ヒント: </summary>
-                <h2>考え方 1</h2>
-                %s
-            </details>
-            """
-            (newHintRepeatDivision divisor number fontSize)
+        let newHint divisor number fontSize =
+            sprintf
+                """
+                <details id="hintDetails"><summary>ヒント: </summary>
+                    <h2>考え方 1</h2>
+                    %s
+                </details>
+                """
+                (newHintRepeatDivision divisor number fontSize)
 
 
-    let rec checkAnswer answer (last_answers : int list) =
-        // Getting the user input.
-        let numberInput = document.getElementById "numberInput" :?> Browser.Types.HTMLInputElement
-        let hex = escapeHtml numberInput.value
-        printfn "hex: %s" hex
-        
-        numberInput.focus()
-        
-        // Making an error message.
-        let errorMessage = newErrorMessageHex answer hex
-        (document.getElementById "errorArea").innerHTML <- errorMessage
-        
-        // Exits when the input was invalid.
-        if errorMessage <> "" then
-            ()
-        else
-            // Converting the input in order to use in the history message.
-            let hexDigit = 2
-            let destinationRadix = 16
-            let taggedHex = padWithZero hexDigit hex |> colorLeadingZero
-            let dec = hexToDecimal hex
-            printfn "taggedHex: %s" taggedHex
-            printfn "dec: %d" dec
+        let rec checkAnswer answer (last_answers : int list) =
+            // Getting the user input.
+            let numberInput = document.getElementById "numberInput" :?> Browser.Types.HTMLInputElement
+            let hex = escapeHtml numberInput.value
+            printfn "hex: %s" hex
             
-            let decimalDigit = 3
-            let spacePaddedDec =
-                dec
-                |> string
-                |> padStart " " decimalDigit
-                |> escapeSpace
+            numberInput.focus()
             
-            // Making a new history and updating the history with the new one.
-            let sourceRadix = 10
-            let outputArea = document.getElementById "outputArea" :?> Browser.Types.HTMLParagraphElement
-            let historyMessage =
-                newHistory (dec = int answer) taggedHex destinationRadix spacePaddedDec sourceRadix
-                |> (fun x -> concatinateStrings "<br>" x outputArea.innerHTML)
-            printfn "historyMessage: \n%s" historyMessage
-            outputArea.innerHTML <- historyMessage
+            // Making an error message.
+            let errorMessage = newErrorMessageHex answer hex
+            (document.getElementById "errorArea").innerHTML <- errorMessage
             
-            if dec <> int answer then
+            // Exits when the input was invalid.
+            if errorMessage <> "" then
                 ()
             else
-                // Making the next question.
-                printfn "last_answers : %A" last_answers
+                // Converting the input in order to use in the history message.
+                let hexDigit = 2
+                let destinationRadix = 16
+                let taggedHex = padWithZero hexDigit hex |> colorLeadingZero
+                let dec = hexToDecimal hex
+                printfn "taggedHex: %s" taggedHex
+                printfn "dec: %d" dec
                 
-                let nextNumber =
-                    newNumber
-                        (fun _ -> getRandomBetween 0 255)
-                        (fun n -> List.contains n last_answers = false)
-                printfn "nextNumber : %d" nextNumber
-                printfn "List.contains nextNumber last_answers : %b" (List.contains nextNumber last_answers)
-
-                let quotientsAndRemainders = repeatDivision nextNumber 16
-                printfn "quotientsAndRemainders: %A" quotientsAndRemainders
-
-                let nextHint = newHint 16 nextNumber 20
-                printfn "nextHint: \n%s" nextHint
+                let decimalDigit = 3
+                let spacePaddedDec =
+                    dec
+                    |> string
+                    |> padStart " " decimalDigit
+                    |> escapeSpace
                 
-                (document.getElementById "questionSpan").innerText <- string nextNumber
-                (document.getElementById "hintArea").innerHTML <- nextHint
-                (document.getElementById "hint1").onclick <- (fun _ ->
-                    (document.getElementById "hint1").innerHTML <-
-                        newHintAnimation 16 nextNumber 20
-                    (document.getElementById "hintDetails").setAttribute ("open", "true"))
+                // Making a new history and updating the history with the new one.
+                let sourceRadix = 10
+                let outputArea = document.getElementById "outputArea" :?> Browser.Types.HTMLParagraphElement
+                let historyMessage =
+                    newHistory (dec = int answer) taggedHex destinationRadix spacePaddedDec sourceRadix
+                    |> (fun x -> concatinateStrings "<br>" x outputArea.innerHTML)
+                printfn "historyMessage: \n%s" historyMessage
+                outputArea.innerHTML <- historyMessage
                 
-                numberInput.value <- ""
+                if dec <> int answer then
+                    ()
+                else
+                    // Making the next question.
+                    printfn "last_answers : %A" last_answers
+                    
+                    let nextNumber =
+                        newNumber
+                            (fun _ -> getRandomBetween 0 255)
+                            (fun n -> List.contains n last_answers = false)
+                    printfn "nextNumber : %d" nextNumber
+                    printfn "List.contains nextNumber last_answers : %b" (List.contains nextNumber last_answers)
 
-                // Updating `lastAnswers`.
-                // These numbers will not be used for the next question.
-                let answersToKeep = Math.Min(10, List.length last_answers + 1)
-                let lastAnswers = (nextNumber :: last_answers).[0..(answersToKeep - 1)]
+                    let quotientsAndRemainders = repeatDivision nextNumber 16
+                    printfn "quotientsAndRemainders: %A" quotientsAndRemainders
 
-                // Setting the next answer to the check button.
-                (document.getElementById "submitButton").onclick <- (fun _ ->
-                    checkAnswer (string nextNumber) lastAnswers
-                    false)
-                (document.getElementById "inputArea").onsubmit <- (fun _ ->
-                    checkAnswer (string nextNumber) lastAnswers
-                    false)
+                    let nextHint = newHint 16 nextNumber 20
+                    printfn "nextHint: \n%s" nextHint
+                    
+                    (document.getElementById "questionSpan").innerText <- string nextNumber
+                    (document.getElementById "hintArea").innerHTML <- nextHint
+                    (document.getElementById "hint1").onclick <- (fun _ ->
+                        (document.getElementById "hint1").innerHTML <-
+                            newHintAnimation 16 nextNumber 20
+                        (document.getElementById "hintDetails").setAttribute ("open", "true"))
+                    
+                    numberInput.value <- ""
+
+                    // Updating `lastAnswers`.
+                    // These numbers will not be used for the next question.
+                    let answersToKeep = Math.Min(10, List.length last_answers + 1)
+                    let lastAnswers = (nextNumber :: last_answers).[0..(answersToKeep - 1)]
+
+                    // Setting the next answer to the check button.
+                    (document.getElementById "submitButton").onclick <- (fun _ ->
+                        checkAnswer (string nextNumber) lastAnswers
+                        false)
+                    (document.getElementById "inputArea").onsubmit <- (fun _ ->
+                        checkAnswer (string nextNumber) lastAnswers
+                        false)
 
 
-    let init ()  =
-        // Initialization.
-        printfn "Initialization starts."
+        let init ()  =
+            // Initialization.
+            printfn "Initialization starts."
 
-        let initNumber = getRandomBetween 0 255
-        printfn "initNumber : %d" initNumber
+            let initNumber = getRandomBetween 0 255
+            printfn "initNumber : %d" initNumber
 
-        let quotientsAndRemainders = repeatDivision initNumber 16
-        printfn "quotients and remainders : %A" quotientsAndRemainders
+            let quotientsAndRemainders = repeatDivision initNumber 16
+            printfn "quotients and remainders : %A" quotientsAndRemainders
 
-        let sourceRadix = 10
-        let destinationRadix = 16
+            let sourceRadix = 10
+            let destinationRadix = 16
 
-        (document.getElementById "questionSpan").innerText <- string initNumber
-        (document.getElementById "srcRadix").innerText <- sprintf "(%d)" sourceRadix
-        (document.getElementById "dstRadix").innerText <- string destinationRadix
-        (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
-        (document.getElementById "hintArea").innerHTML <- newHint 16 initNumber 20
-        (document.getElementById "hint1").onclick <- (fun _ ->
-            (document.getElementById "hint1").innerHTML <-
-                newHintAnimation 16 initNumber 20
-            (document.getElementById "hintDetails").setAttribute ("open", "true"))
-        (document.getElementById "submitButton").onclick <- (fun _ ->
-            checkAnswer (string initNumber) [initNumber]
-            false)
-        (document.getElementById "inputArea").onsubmit <- (fun _ ->
-            checkAnswer (string initNumber) [initNumber]
-            false)
-        
-        printfn "Initialization ends."
+            (document.getElementById "questionSpan").innerText <- string initNumber
+            (document.getElementById "srcRadix").innerText <- sprintf "(%d)" sourceRadix
+            (document.getElementById "dstRadix").innerText <- string destinationRadix
+            (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
+            (document.getElementById "hintArea").innerHTML <- newHint 16 initNumber 20
+            (document.getElementById "hint1").onclick <- (fun _ ->
+                (document.getElementById "hint1").innerHTML <-
+                    newHintAnimation 16 initNumber 20
+                (document.getElementById "hintDetails").setAttribute ("open", "true"))
+            (document.getElementById "submitButton").onclick <- (fun _ ->
+                checkAnswer (string initNumber) [initNumber]
+                false)
+            (document.getElementById "inputArea").onsubmit <- (fun _ ->
+                checkAnswer (string initNumber) [initNumber]
+                false)
+            
+            printfn "Initialization ends."

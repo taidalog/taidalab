@@ -6,7 +6,8 @@
 namespace Taidalab
 
 open Browser.Dom
-open Taidalab.Common
+open Taidalab.Text
+open Taidalab.EndlessBinary
 open Fable.Core
 open Fable.Core.JsInterop
 
