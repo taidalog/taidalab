@@ -4,6 +4,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Common.fs" />
+    <Compile Include="Svg.fs" />
     <Compile Include="endless-binary/Dec2Bin1.fs" />
     <Compile Include="endless-binary/Dec2Bin2.fs" />
     <Compile Include="endless-binary/Bin2Dec1.fs" />
