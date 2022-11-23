@@ -6,150 +6,6 @@
 namespace Taidalab
 
 module Content =
-
-    module Home =
-        let main = """
-            <form class="button-container">
-                <button type="button" id="buttonED2B1" class="btn course-button-d2b1 display-order-1">10進数→2進数 (1)</button>
-                <button type="button" id="buttonED2B2" class="btn course-button-d2b2 display-order-2">10進数→2進数 (2)</button>
-                <button type="button" id="buttonEB2D1" class="btn course-button-b2d1 display-order-3">2進数→10進数 (1)</button>
-                <button type="button" id="buttonEB2D2" class="btn course-button-b2d2 display-order-4">2進数→10進数 (2)</button>
-                <button type="button" id="buttonEPOT1" class="btn course-button-pot1 display-order-5">2のn乗</button>
-                <button type="button" id="buttonEPOT2" class="btn course-button-pot2 display-order-6">2のn乗-1</button>
-                <button type="button" id="buttonEBAD" class="btn course-button-add display-order-7">加算</button>
-                <button type="button" id="buttonEBSB" class="btn course-button-sub display-order-8">減算</button>
-                <button type="button" id="buttonECMP" class="btn course-button-cmp display-order-9">補数</button>
-                <button type="button" id="buttonED2H" class="btn course-button-d2h display-order-10">10進数→16進数</button>
-                <button type="button" id="buttonEH2D" class="btn course-button-d2h display-order-11">16進数→10進数</button>
-            </form>"""
-
-
-    module Course =
-        let main = """
-            <div id="questionArea" class="question-area"></div>
-            <form id="inputArea" class="input-area" autocomplete="off">
-                <input type="text" id="numberInput" class="number-input display-order-1 consolas">
-                <span id="binaryRadix" class="binary-radix display-order-2"></span>
-                <button type="button" id="submitButton" class="submit-button display-order-3 d2b-button">確認</button>
-                <div id="hintArea" class="hint-area display-order-4"></div>
-                <div id="errorArea" class="error-area display-order-5"></div>
-            </form>
-            <div class="history-area">
-                結果:
-                <div class="history-indented consolas">
-                    <span id="outputArea"></span>
-                </div>
-            </div>"""
-
-
-    module About =
-        let main = """
-            <p>
-                このサイトは、taidalog が作成したプログラム置き場です。<br>
-                F# で書いたものを Fable で JavaScript にトランスパイルしています。<br>
-                10進数と2進数の変換を反復練習するためのツールや、RGB値を入力して色相を変換するツールを公開しています。
-            </p>
-            <dl id="explanation">
-                <dt><a href="/endless-binary/dec2bin-1/">10進数→2進数 (1)</a></dt>
-                <dd>
-                    10進数から2進数への変換をエンドレスで練習できます。<br>
-                    出題範囲は n (0&le;n&le;255) で、2の累乗の数同士の和になっています。<br>
-                    ヒント付きなので、考え方も身に付けられます。
-                </dd>
-                <dt><a href="/endless-binary/dec2bin-2/">10進数→2進数 (2)</a></dt>
-                <dd>
-                    10進数から2進数への変換をエンドレスで練習できます。<br>
-                    出題範囲は n (0&le;n&le;255) です。<br>
-                    ヒントはありませんので、慣れてからどうぞ。
-                </dd>
-                <dt><a href="/endless-binary/bin2dec-1/">2進数→10進数 (1)</a></dt>
-                <dd>
-                    2<sup>n</sup> (0&le;n&le;7) の2進数から10進数への変換をエンドレスで練習できます。<br>
-                    ヒント付きなので、考え方も身に付けられます。
-                </dd>
-                <dt><a href="/endless-binary/bin2dec-2/">2進数→10進数 (2)</a></dt>
-                <dd>
-                    2進数から10進数への変換をエンドレスで練習できます。<br>
-                    出題範囲は n (0&le;n&le;255) です。<br>
-                    ヒントはありませんので、慣れてからどうぞ。
-                </dd>
-                <dt><a href="/endless-binary/power-of-two-1/">2のn乗</a></dt>
-                <dd>
-                    2<sup>n</sup> (0&le;n&le;7) の10進数から2進数への変換をエンドレスで練習できます。<br>
-                    2<sup>n</sup> の2進数を覚えると10進数からの変換を早く行えるので、まずはこのコースから始めてみてください。<br>
-                    ヒント付きなので、考え方も身に付けられます。
-                </dd>
-                <dt><a href="/endless-binary/power-of-two-2/">2のn乗-1</a></dt>
-                <dd>
-                    2<sup>n</sup> - 1 (0&le;n&le;7) の10進数から2進数への変換をエンドレスで練習できます。<br>
-                    2<sup>n</sup> - 1 の2進数を通して、2進数の繰り上がりや繰り下がりを覚えられます。<br>
-                    ヒント付きなので、考え方も身に付けられます。
-                </dd>
-                <dt><a href="/endless-binary/addition/">加算</a></dt>
-                <dd>
-                    2進数同士の足し算をエンドレスで練習できます。<br>
-                    出題範囲は m, n (2 &le; m + n &le; 255) で、繰り上がりもあります。<br>
-                    ヒント付きなので、考え方も身に付けられます。
-                </dd>
-                <dt><a href="/endless-binary/subtraction/">減算</a></dt>
-                <dd>
-                    2進数同士の引き算をエンドレスで練習できます。<br>
-                    出題範囲は m, n (2 &le; m + n &le; 255) で、繰り下がりもあります。<br>
-                    ヒント付きなので、考え方も身に付けられます。
-                </dd>
-                <dt><a href="/endless-binary/complement/">補数</a></dt>
-                <dd>
-                    2進数の補数（2の補数）を求める練習ができます。<br>
-                    出題範囲は n (1 &le; n &le; 15) です。<br>
-                    ヒント付きなので、考え方も身に付けられます。
-                </dd>
-                <dt><a href="/endless-binary/dec2hex/">10進数→16進数</a></dt>
-                <dd>
-                    10進数から16進数への変換をエンドレスで練習できます。<br>
-                    出題範囲は n (0&le;n&le;255) です。<br>
-                    ヒント付きなので、考え方も身に付けられます。
-                </dd>
-                <dt><a href="/endless-binary/hex2dec/">16進数→10進数</a></dt>
-                <dd>
-                    16進数から10進数への変換をエンドレスで練習できます。<br>
-                    出題範囲は n (0&le;n&le;255) です。<br>
-                    ヒント付きなので、考え方も身に付けられます。
-                </dd>
-                <dt><a href="/iro-iroiro/">色いろいろ</a></dt>
-                <dd>
-                    RGB値などを入力すると、その色の色相（色の雰囲気）を変更しながら色をローテーションします。<br>
-                    綺麗です。<br>
-                    入力する値は以下の通りです。
-                    <ul>
-                        <li>R: 赤のRGB値 (0 &le; R &le; 255)</li>
-                        <li>G: 緑のRGB値 (0 &le; G &le; 255)</li>
-                        <li>B: 青のRGB値 (0 &le; B &le; 255)</li>
-                        <li>
-                            Interval: RGB値を変化させる間隔。(0 &le; Interval &le; 255)<br>
-                            小さいと色がグラデーションのようになり、大きいとカラフルになります。
-                        </li>
-                        <li>
-                            Limit: (1 &le; Limit)色をローテーションさせる回数。<br>
-                            あまり大きくすると時間がかかってしまいます。100位にしておいてください。
-                        </li>
-                    </ul>
-                </dd>
-            </dl>"""
-
-
-    module Terms =
-        let main = """
-            <p>著作権は作成者 (taidalog) が所有しています。</p>
-            <p>利用に必要な通信料等は利用者の負担となります。</p>
-            <p>当サイトを利用したことにより、コンピュータウィルス等による被害やデータの損失、その他いかなる不利益が生じた場合も、作成者は一切の責任を負いません。</p>
-            <p>ソースコードの利用は可能ですが、再頒布時には著作権表示とライセンス表示を消さずに残しておいてください。</p>
-            <p>2022年6月11日</p>"""
-
-
-    module Complement =
-        let question = """4ビットの2進数 <span id="questionSpan" class="question-number"></span><sub id="srcRadix"></sub> の補数は？"""
-
-
     module Common =
         let header = """
             <div id="headerContainer" class="header-container">
@@ -197,31 +53,65 @@ module Content =
                 <div class="item"><a id="versionNumber" href="https://github.com/taidalog/taidalab/releases">%s</a></div>
                 <div class="item">taidalab is written in <a id="footerFSharp" href="https://fsharp.org/">F#</a> and transpiled by <a id="footerFable" href="https://fable.io">Fable</a>. Thank you!</div>
             </small>""" version
-        
-        let columnAdditionFormat = """
-            <div class="calculation-area" id="calculationArea">
-                <div class="first-row" id="">
-                    <span class="digit-area question-number" id="firstRowDigit8"></span>
-                    <span class="digit-area question-number" id="firstRowDigit7"></span>
-                    <span class="digit-area question-number" id="firstRowDigit6"></span>
-                    <span class="digit-area question-number" id="firstRowDigit5"></span>
-                    <span class="digit-area question-number" id="firstRowDigit4"></span>
-                    <span class="digit-area question-number" id="firstRowDigit3"></span>
-                    <span class="digit-area question-number" id="firstRowDigit2"></span>
-                    <span class="digit-area question-number" id="firstRowDigit1"></span>
-                    <span class=""><sub id="firstRowSrcRadix"></sub></span>
-                </div>
-                <div class="second-row" id="secondRow">
-                    <span class="question-number" id="operator"></span>
-                    <span class="digit-area question-number" id="secondRowDigit8"></span>
-                    <span class="digit-area question-number" id="secondRowDigit7"></span>
-                    <span class="digit-area question-number" id="secondRowDigit6"></span>
-                    <span class="digit-area question-number" id="secondRowDigit5"></span>
-                    <span class="digit-area question-number" id="secondRowDigit4"></span>
-                    <span class="digit-area question-number" id="secondRowDigit3"></span>
-                    <span class="digit-area question-number" id="secondRowDigit2"></span>
-                    <span class="digit-area question-number" id="secondRowDigit1"></span>
-                    <span class=""><sub id="secondRowSrcRadix"></sub></span>
-                </div>
-                <div class="under-line"></div>
-            </div>"""
+
+
+module EndlessBinary =
+    let main = """
+        <div id="questionArea" class="question-area"></div>
+        <form id="inputArea" class="input-area" autocomplete="off">
+            <input type="text" id="numberInput" class="number-input display-order-1 consolas">
+            <span id="binaryRadix" class="binary-radix display-order-2"></span>
+            <button type="button" id="submitButton" class="submit-button display-order-3 d2b-button">確認</button>
+            <div id="hintArea" class="hint-area display-order-4"></div>
+            <div id="errorArea" class="error-area display-order-5"></div>
+        </form>
+        <div class="history-area">
+            結果:
+            <div class="history-indented consolas">
+                <span id="outputArea"></span>
+            </div>
+        </div>"""
+    
+    let columnAdditionFormat = """
+        <div class="calculation-area" id="calculationArea">
+            <div class="first-row" id="">
+                <span class="digit-area question-number" id="firstRowDigit8"></span>
+                <span class="digit-area question-number" id="firstRowDigit7"></span>
+                <span class="digit-area question-number" id="firstRowDigit6"></span>
+                <span class="digit-area question-number" id="firstRowDigit5"></span>
+                <span class="digit-area question-number" id="firstRowDigit4"></span>
+                <span class="digit-area question-number" id="firstRowDigit3"></span>
+                <span class="digit-area question-number" id="firstRowDigit2"></span>
+                <span class="digit-area question-number" id="firstRowDigit1"></span>
+                <span class=""><sub id="firstRowSrcRadix"></sub></span>
+            </div>
+            <div class="second-row" id="secondRow">
+                <span class="question-number" id="operator"></span>
+                <span class="digit-area question-number" id="secondRowDigit8"></span>
+                <span class="digit-area question-number" id="secondRowDigit7"></span>
+                <span class="digit-area question-number" id="secondRowDigit6"></span>
+                <span class="digit-area question-number" id="secondRowDigit5"></span>
+                <span class="digit-area question-number" id="secondRowDigit4"></span>
+                <span class="digit-area question-number" id="secondRowDigit3"></span>
+                <span class="digit-area question-number" id="secondRowDigit2"></span>
+                <span class="digit-area question-number" id="secondRowDigit1"></span>
+                <span class=""><sub id="secondRowSrcRadix"></sub></span>
+            </div>
+            <div class="under-line"></div>
+        </div>"""
+
+    module Home =
+        let main = """
+            <form class="button-container">
+                <button type="button" id="buttonED2B1" class="btn course-button-d2b1 display-order-1">10進数→2進数 (1)</button>
+                <button type="button" id="buttonED2B2" class="btn course-button-d2b2 display-order-2">10進数→2進数 (2)</button>
+                <button type="button" id="buttonEB2D1" class="btn course-button-b2d1 display-order-3">2進数→10進数 (1)</button>
+                <button type="button" id="buttonEB2D2" class="btn course-button-b2d2 display-order-4">2進数→10進数 (2)</button>
+                <button type="button" id="buttonEPOT1" class="btn course-button-pot1 display-order-5">2のn乗</button>
+                <button type="button" id="buttonEPOT2" class="btn course-button-pot2 display-order-6">2のn乗-1</button>
+                <button type="button" id="buttonEBAD" class="btn course-button-add display-order-7">加算</button>
+                <button type="button" id="buttonEBSB" class="btn course-button-sub display-order-8">減算</button>
+                <button type="button" id="buttonECMP" class="btn course-button-cmp display-order-9">補数</button>
+                <button type="button" id="buttonED2H" class="btn course-button-d2h display-order-10">10進数→16進数</button>
+                <button type="button" id="buttonEH2D" class="btn course-button-d2h display-order-11">16進数→10進数</button>
+            </form>"""
