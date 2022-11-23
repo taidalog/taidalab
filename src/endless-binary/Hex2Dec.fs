@@ -25,7 +25,7 @@ module Hex2Dec =
         |> List.mapi (fun i c -> (c, (hex |> String.length) - i))
         |> List.map (fun (c, n) -> 
             sprintf """<span class="hint-table-digit">%d</span>""" n,
-            sprintf """<span class="hint-table-digit green large">%c</span>""" c,
+            sprintf """<span class="hint-table-digit green-h2d large">%c</span>""" c,
             sprintf """<span class="hint-table-digit palegreen">%d<sup>%d</sup></span>""" 16 (n - 1))
     
     let newHintTable (a, b, c) =
