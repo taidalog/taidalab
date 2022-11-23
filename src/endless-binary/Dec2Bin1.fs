@@ -72,8 +72,8 @@ module Dec2Bin1 =
         let d = sprintf "M %f,%f h %f v %f h -7 l 16,-20 16,20 h -7 v %f h %f Z" x y width1 height1 height2 width2
         Svg.path d "#0000ff" 1 "#aaddff" 0. (Svg.animateOpacity beginMs 500)
     
-    let numOpt num =
-        (Some 2, Some 1, Some num, None)
+    let numOpt radix num =
+        (Some radix, Some 1, Some num, None)
     
     let divRemOpt divisor divRem =
         match divRem |> List.rev with
@@ -85,23 +85,30 @@ module Dec2Bin1 =
                 t |> List.map (fun (x, y) -> (Some divisor, Some 1, Some x, Some y))
             inner_h :: inner_t |> List.rev
     
-    let newHintAnimation divisor num =
+    let newHintAnimation divisor num fontSize =
         let divRems =
-            (numOpt num) :: (divRemOpt divisor (repeatDivision num divisor))
+            (numOpt divisor num) :: (divRemOpt divisor (repeatDivision num divisor))
         divRems
         |> List.mapi (fun i (a, b, c, d) ->
             Option.map // divisor
                 (fun x ->
                     Svg.text
                         0
-                        (20 * (i + 1))
+                        (fontSize * (i + 1))
                         0.
                         (sprintf "%d%s" x (Svg.animateOpacity (i |> delayMs |> (fun x -> if i = 0 then x + 1000 else x + 2000)) 500)))
                 a,
             Option.map // line
                 (fun x ->
                     Svg.path
-                        (sprintf "M 12,%d q 10,8 0,16 h 48" ((20 * i) + 6))
+                        (sprintf
+                            "M %d,%d q %d,%f 0,%f h %f"
+                            (fontSize / 2 + 2)
+                            ((fontSize * i) + 6)
+                            (fontSize / 2)
+                            (double fontSize * 0.4)
+                            (double fontSize * 0.8)
+                            (double fontSize / 2.* 4.8))
                         "#000000"
                         1
                         "none"
@@ -111,16 +118,16 @@ module Dec2Bin1 =
             Option.map // dividend
                 (fun x ->
                     Svg.text
-                        (20 / 2 * 2)
-                        (20 * (i + 1))
+                        (fontSize / 2 * 2)
+                        (fontSize * (i + 1))
                         0.
                         (sprintf "%s%s" (x |> string |> (padStart " " 3) |> escapeSpace) (Svg.animateOpacity (i |> delayMs) 500)))
                 c,
             Option.map // remainder
                 (fun x ->
                     Svg.text
-                        (20 / 2 * 6)
-                        (20 * (i + 1))
+                        (fontSize / 2 * 6)
+                        (fontSize * (i + 1))
                         0.
                         (sprintf "…%d%s" x (Svg.animateOpacity (i |> delayMs |> ((+) 500)) 500)))
                 d)
@@ -133,10 +140,17 @@ module Dec2Bin1 =
                 (Option.defaultValue "" d))
         |> List.fold
             (fun x y -> sprintf "%s%s" x y)
-            (newArrow 40. (List.length divRems |> (fun x -> (20 * (x - 1)) + 6) |> double) 30. (List.length divRems |> double |> (fun x -> 17.85 * x - 35.) |> ((*) -1.)) -48. (17.85 * (List.length divRems |> double) - 15.) (List.length divRems - 1 |> delayMs |> ((+) 1500)))
+            (newArrow
+                (fontSize |> double |> (fun x -> x / 2. * 4.))
+                (List.length divRems |> (fun x -> (fontSize * (x - 1)) + 6) |> double)
+                (fontSize |> double |> (fun x -> x / 2. * 3.))
+                (List.length divRems |> double |> (fun x -> 17.85 * x - 35.) |> ((*) -1.))
+                -48.
+                (17.85 * (List.length divRems |> double) - 15.)
+                (List.length divRems - 1 |> delayMs |> ((+) 1500)))
         |> (Svg.frame
-                (20 / 2 * 10)
-                (divRems |> List.length |> (fun x -> (x + 1) * 20)))
+                (fontSize / 2 * 10)
+                (divRems |> List.length |> (fun x -> fontSize * (x + 1))))
     
     let hint content=
         sprintf """<details id="hintDetails"><summary>ヒント: </summary>%s</details>""" content
@@ -155,7 +169,7 @@ module Dec2Bin1 =
             <div id="hint1" class="history-indented column-addition-area">
                 %s
             </div>"""
-            (newHintAnimation divisor number)
+            (newHintAnimation divisor number 20)
 
 
     let newHintRepeatAddition number (power_of_twos : int list) =
@@ -256,7 +270,7 @@ module Dec2Bin1 =
                 (document.getElementById "hintArea").innerHTML <- nextHint
                 (document.getElementById "hint1").onclick <- (fun _ ->
                     (document.getElementById "hint1").innerHTML <-
-                        newHintAnimation 2 nextNumber
+                        newHintAnimation 2 nextNumber 20
                     (document.getElementById "hintDetails").setAttribute ("open", "true"))
                 
                 numberInput.value <- ""
@@ -297,7 +311,7 @@ module Dec2Bin1 =
         (document.getElementById "hintArea").innerHTML <- (newHint 2 initNumber powerOfTwos)
         (document.getElementById "hint1").onclick <- (fun _ ->
             (document.getElementById "hint1").innerHTML <-
-                newHintAnimation 2 initNumber
+                newHintAnimation 2 initNumber 20
             (document.getElementById "hintDetails").setAttribute ("open", "true"))
         (document.getElementById "submitButton").onclick <- (fun _ ->
             checkAnswer (string initNumber) [initNumber]
