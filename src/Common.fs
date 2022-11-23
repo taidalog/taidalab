@@ -162,3 +162,6 @@ module Common =
             let inner_t =
                 t |> List.map (fun (x, y) -> (Some divisor, Some 1, Some x, Some y))
             inner_h :: inner_t |> List.rev
+    
+    let applyToTuples3 f (a1, b1, c1) (a2, b2, c2) =
+        f a1 a2, f b1 b2, f c1 c2

@@ -51,9 +51,6 @@ module Bin2Dec1 =
             </div>
             """
             a b c
-    
-    let applyToTuples3 f (a1, b1, c1) (a2, b2, c2) =
-        f a1 a2, f b1 b2, f c1 c2
 
     let hintTable binary_string =
         tableComponents binary_string
