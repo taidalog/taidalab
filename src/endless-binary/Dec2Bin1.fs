@@ -91,6 +91,9 @@ module Dec2Bin1 =
     let svgAnimate attributeName calcMode fromState toState beginMs durMs repeatCount fill =
         sprintf """<animate attributeName="%s" calcMode="%s" from="%s" to="%s" begin="%dms" dur="%dms" repeatCount="%s" fill="%s" />""" attributeName calcMode fromState toState beginMs durMs repeatCount fill
     
+    let svgAnimateOpacity beginMs durMs =
+        svgAnimate "opacity" "linear" "0" "1" beginMs durMs "1" "freeze"
+    
     let delayMs index =
         match index with
         | 0. -> 0.5
@@ -103,8 +106,7 @@ module Dec2Bin1 =
     
     let newArrow x y width1 height1 width2 height2 =
         let d = sprintf "M %f,%f h %f v %f h -7 l 16,-20 16,20 h -7 v %f h %f Z" x y width1 height1 height2 width2
-        let animationOpacity = svgAnimate "opacity" "linear" "0.0" "1.0" 1000 500 "1" "freeze"
-        svgPath d "#0000ff" 1 "#aaddff" 0. animationOpacity
+        svgPath d "#0000ff" 1 "#aaddff" 0. (svgAnimateOpacity 1000 500)
     
     let numOpt num =
         (Some 2, Some 1, Some num, None)
@@ -130,7 +132,7 @@ module Dec2Bin1 =
                         0
                         (20 * (i + 1))
                         0.
-                        (sprintf "%d%s" x (svgAnimate "opacity" "linear" "0.0" "1.0" 1000 500 "1" "freeze")))
+                        (sprintf "%d%s" x (svgAnimateOpacity 1000 500)))
                 a,
             Option.map
                 (fun x ->
@@ -140,7 +142,7 @@ module Dec2Bin1 =
                         1
                         "none"
                         0.
-                        (svgAnimate "opacity" "linear" "0.0" "1.0" 1000 500 "1" "freeze"))
+                        (svgAnimateOpacity 1000 500))
                 b,
             Option.map
                 (fun x ->
@@ -148,7 +150,7 @@ module Dec2Bin1 =
                         (20 / 2 * 2)
                         (20 * (i + 1))
                         0.
-                        (sprintf "%s%s" (x |> string |> (padStart " " 3) |> escapeSpace) (svgAnimate "opacity" "linear" "0.0" "1.0" 1000 500 "1" "freeze")))
+                        (sprintf "%s%s" (x |> string |> (padStart " " 3) |> escapeSpace) (svgAnimateOpacity 1000 500)))
                 c,
             Option.map
                 (fun x ->
@@ -156,7 +158,7 @@ module Dec2Bin1 =
                         (20 / 2 * 6)
                         (20 * (i + 1))
                         0.
-                        (sprintf "…%d%s" x (svgAnimate "opacity" "linear" "0.0" "1.0" 1000 500 "1" "freeze")))
+                        (sprintf "…%d%s" x (svgAnimateOpacity 1000 500)))
                 d)
         |> List.map (fun (a, b, c, d) ->
             sprintf
