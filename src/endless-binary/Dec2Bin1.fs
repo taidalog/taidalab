@@ -64,7 +64,7 @@ module Dec2Bin1 =
         index * 2500 - 500 |> abs
     
 
-    let newArrowBin fontSize lineCount =
+    let newArrowBin fontSize lineCount stroke fill=
         Svg.newArrow
             (fontSize |> double |> (fun x -> x / 2. * 4.))
             (lineCount |> (fun x -> (fontSize * (x - 1)) + 6) |> double)
@@ -73,6 +73,8 @@ module Dec2Bin1 =
             -48.
             (17.85 * (lineCount |> double) - 15.)
             (lineCount - 1 |> delayMs |> ((+) 1500))
+            stroke
+            fill
     
     let numOpt radix num =
         (Some radix, Some 1, Some num, None)
