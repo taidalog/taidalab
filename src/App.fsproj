@@ -17,6 +17,8 @@
     <Compile Include="endless-binary/Hex2Dec.fs" />
     <Compile Include="iro-iroiro/IroIroiro.fs" />
     <Compile Include="Home.fs" />
+    <Compile Include="About.fs" />
+    <Compile Include="Terms.fs" />
     <Compile Include="Content.fs" />
     <Compile Include="Switcher.fs" />
     <Compile Include="App.fs" />
