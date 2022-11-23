@@ -1,6 +1,6 @@
 # taidalab
 
-Version 3.2.0
+Version 3.3.0
 
 [Japanese README](README.ja.md)
 
@@ -10,7 +10,7 @@ A Web application for repeated practice of decimal-binary conversion and so on.
 ## Features
 
 - Repeats providing conversion or calculation quizzes between decimal numbers and binary numbers.
-- Generates colors based on the input RGB value, keeping the hue of the original color.
+- Generates colors based on the input RGB value, changing the hue of the original color.
 
 
 ## Usage
@@ -22,7 +22,7 @@ A Web application for repeated practice of decimal-binary conversion and so on.
 
 ## Recommended environment
 
-- Mozilla FireFox 106.0.1
+- Mozilla FireFox 106.0.1 or later.
 
 
 ## Terms of Service
@@ -35,7 +35,7 @@ A Web application for repeated practice of decimal-binary conversion and so on.
 
 ## Known Issue
 
-- Some CSS animations can't be played on iOS.
+- 
 
 
 ## License
