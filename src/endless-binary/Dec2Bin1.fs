@@ -223,7 +223,7 @@ module Dec2Bin1 =
         |> List.reduce (fun x  y -> sprintf "%s<br>%s" x y)
 
 
-    let newHintRepeatDivision number quotients_and_remainders =
+    let newHintRepeatDivision divisor number =
         sprintf
             """
             <div class="history-indented">
@@ -237,7 +237,7 @@ module Dec2Bin1 =
             <div id="hint1" class="history-indented column-addition-area">
                 %s
             </div>"""
-            (newColumnAddition number quotients_and_remainders)
+            (newHintAnimation divisor number)
 
 
     let newHintRepeatAddition number (power_of_twos : int list) =
@@ -257,8 +257,19 @@ module Dec2Bin1 =
         hint
 
 
-    let newHint number quotients_and_remainders power_of_twos =
-        """<details id="hintDetails"><summary>ヒント: </summary><h2>考え方 1</h2>""" + newHintRepeatDivision number quotients_and_remainders + """<h2>考え方 2</h2>""" + newHintRepeatAddition number power_of_twos + """</details>"""
+    let newHint divisor number power_of_twos =
+        sprintf
+            """
+            <details id="hintDetails">
+                <summary>ヒント: </summary>
+                <h2>考え方 1</h2>
+                %s
+                <h2>考え方 2</h2>
+                %s
+            </details>
+            """
+            (newHintRepeatDivision divisor number)
+            (newHintRepeatAddition number power_of_twos)
 
 
     let rec checkAnswer answer (last_answers : int list) =
@@ -320,14 +331,14 @@ module Dec2Bin1 =
                 let powerOfTwos = devideIntoPowerOfTwo nextNumber
                 printfn "powerOfTwos: %A" powerOfTwos
 
-                let nextHint = newHint nextNumber quotientsAndRemainders powerOfTwos
+                let nextHint = newHint 2 nextNumber powerOfTwos
                 printfn "nextHint: \n%s" nextHint
                 
                 (document.getElementById "questionSpan").innerText <- string nextNumber
                 (document.getElementById "hintArea").innerHTML <- nextHint
                 (document.getElementById "hint1").onclick <- (fun _ ->
                     (document.getElementById "hint1").innerHTML <-
-                        newColumnAddition nextNumber quotientsAndRemainders
+                        newHintAnimation 2 nextNumber
                     (document.getElementById "hintDetails").setAttribute ("open", "true"))
                 
                 numberInput.value <- ""
@@ -365,10 +376,10 @@ module Dec2Bin1 =
         (document.getElementById "srcRadix").innerText <- sprintf "(%d)" sourceRadix
         (document.getElementById "dstRadix").innerText <- string destinationRadix
         (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
-        (document.getElementById "hintArea").innerHTML <- (newHint initNumber quotientsAndRemainders powerOfTwos) + (newHintAnimation 2 initNumber)
+        (document.getElementById "hintArea").innerHTML <- (newHint 2 initNumber powerOfTwos)
         (document.getElementById "hint1").onclick <- (fun _ ->
             (document.getElementById "hint1").innerHTML <-
-                newColumnAddition initNumber quotientsAndRemainders
+                newHintAnimation 2 initNumber
             (document.getElementById "hintDetails").setAttribute ("open", "true"))
         (document.getElementById "submitButton").onclick <- (fun _ ->
             checkAnswer (string initNumber) [initNumber]
