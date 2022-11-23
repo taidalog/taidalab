@@ -144,7 +144,7 @@ module Dec2Bin1 =
                 (Option.defaultValue "" d))
         |> List.fold
             (fun x y -> sprintf "%s%s" x y)
-            (newArrowBin fontSize (List.length divRems) "#0000ff" "#aaddff")
+            (newArrowBin fontSize (List.length divRems) "#191970" "#b0e0e6")
         |> (Svg.frame
                 (fontSize / 2 * 10)
                 (divRems |> List.length |> (fun x -> fontSize * (x + 1))))
