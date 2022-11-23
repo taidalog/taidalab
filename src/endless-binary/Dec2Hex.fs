@@ -20,58 +20,81 @@ module Dec2Hex =
             [(quotient, remainder)] @ repeatDivision quotient divisor
 
 
-    let hint content=
-        sprintf """<details id="hintDetails"><summary>ヒント: </summary>%s</details>""" content
+    let newArrowHex fontSize lineCount stroke fill =
+        Svg.newArrow
+            (fontSize |> double |> (fun x -> x / 2. * 4.))
+            (lineCount |> (fun x -> (fontSize * (x - 1)) + 6) |> double)
+            (fontSize |> double |> (fun x -> x / 2. * 4.))
+            (lineCount |> double |> (fun x -> 17.85 * x - 35.) |> ((*) -1.))
+            -58.
+            (17.85 * (lineCount |> double) - 15.)
+            (lineCount - 1 |> delayMs |> ((+) 1500))
+            stroke
+            fill
+
+    
+    let newHintAnimation divisor num fontSize =
+        let divRems =
+            (numOpt divisor num) :: (divRemOpt divisor (repeatDivision num divisor))
+        divRems
+        |> List.mapi (fun i (a, b, c, d) ->
+            Option.map // divisor
+                (fun x ->
+                    Svg.text
+                        0
+                        (fontSize * (i + 1))
+                        0.
+                        (sprintf "%d%s" x (Svg.animateOpacity (i |> delayMs |> (fun x -> if i = 0 then x + 1000 else x + 2000)) 500)))
+                a,
+            Option.map // line
+                (fun x ->
+                    Svg.path
+                        (sprintf
+                            "M %d,%d q %d,%f 0,%f h %f"
+                            (fontSize / 2 * 2 + 4)
+                            ((fontSize * i) + 6)
+                            (fontSize / 2)
+                            (double fontSize * 0.4)
+                            (double fontSize * 0.8)
+                            (double fontSize / 2.* 4.8))
+                        "#000000"
+                        1
+                        "none"
+                        0.
+                        (Svg.animateOpacity (i |> delayMs |> (fun x -> if i = 0 then x + 500 else x + 1500)) 500))
+                b,
+            Option.map // dividend
+                (fun x ->
+                    Svg.text
+                        (fontSize / 2 * 3)
+                        (fontSize * (i + 1))
+                        0.
+                        (sprintf "%s%s" (x |> string |> (padStart " " 3) |> escapeSpace) (Svg.animateOpacity (i |> delayMs) 500)))
+                c,
+            Option.map // remainder
+                (fun x ->
+                    Svg.text
+                        (fontSize / 2 * 7)
+                        (fontSize * (i + 1))
+                        0.
+                        (sprintf "…%d%s" x (Svg.animateOpacity (i |> delayMs |> ((+) 500)) 500)))
+                d)
+        |> List.map (fun (a, b, c, d) ->
+            sprintf
+                "%s%s%s%s"
+                (Option.defaultValue "" a)
+                (Option.defaultValue "" b)
+                (Option.defaultValue "" c)
+                (Option.defaultValue "" d))
+        |> List.fold
+            (fun x y -> sprintf "%s%s" x y)
+            (newArrowHex fontSize (List.length divRems) "#1e3330" "#95feec")
+        |> (Svg.frame
+                (fontSize / 2 * 11)
+                (divRems |> List.length |> (fun x -> fontSize * (x + 1))))
     
 
-    let newAnimationStyle name duration timing delay iteration fill state =
-        sprintf
-            """animation-name: %s; animation-duration: %s; animation-timing-function: %s; animation-delay: %s; animation-iteration-count: %s; animation-fill-mode: %s; animation-play-state: %s;"""
-            name
-            duration
-            timing
-            delay
-            iteration
-            fill
-            state
-
-
-    let newColumnAddition answer quotients_and_remainders =
-        let indexedList =
-            quotients_and_remainders
-            |> List.mapi (fun i (q, r) -> (i, q, r))
-        let first =
-            sprintf """16<span class="column-addition-row">%s</span>""" (answer |> string |> padStart " " 3 |> escapeSpace)
-        let body =
-            indexedList
-            |> List.rev
-            |> List.tail
-            |> List.rev
-            |> List.map (fun (i, (q : int), r) ->
-                sprintf
-                    """<span id="c%d" style="opacity: 0; %s">16<span style="text-decoration: underline;">)</span></span><span id="a%d" style="opacity: 0; %s"><span style="%s">%s</span>...%d</span>"""
-                    i
-                    (newAnimationStyle "fade-in" "1s" "ease-in" (((i * 2 + 1) |> string) + "s") "1" "forwards" "running")
-                    i
-                    (newAnimationStyle "fade-in" "1s" "ease-in" (((i * 2) |> string) + "s") "1" "forwards" "running")
-                    (newAnimationStyle "draw-line" "1s" "ease-in" (((i * 2 + 1) |> string) + "s") "1" "forwards" "running")
-                    (q |> string  |> padStart " " 3 |> escapeSpace)
-                    r)
-        let foot =
-            indexedList
-            |> List.last
-            |> (fun (i, (q : int), r) ->
-                sprintf
-                    """<span id="a%d" style="opacity: 0; %s"><span class="column-addition-row-last">%s</span>...%d</span>"""
-                    i
-                    (newAnimationStyle "fade-in" "1s" "ease-in" (((i * 2) |> string) + "s") "1" "forwards" "running")
-                    (q |> string |> padStart " " 5 |> escapeSpace)
-                    r)
-        first :: (body @ [foot])
-        |> List.reduce (fun x  y -> sprintf "%s<br>%s" x y)
-
-
-    let newHintRepeatDivision number quotients_and_remainders =
+    let newHintRepeatDivision divisor number fontSize =
         sprintf
             """
             <div class="history-indented">
@@ -87,10 +110,10 @@ module Dec2Hex =
                 %s
             </div>
             """
-            (newColumnAddition number quotients_and_remainders)
+            (newHintAnimation divisor number fontSize)
 
 
-    let newHint number quotients_and_remainders =
+    let newHint divisor number fontSize =
         sprintf
             """
             <details id="hintDetails"><summary>ヒント: </summary>
@@ -98,7 +121,7 @@ module Dec2Hex =
                 %s
             </details>
             """
-            (newHintRepeatDivision number quotients_and_remainders)
+            (newHintRepeatDivision divisor number fontSize)
 
 
     let rec checkAnswer answer (last_answers : int list) =
@@ -157,14 +180,14 @@ module Dec2Hex =
                 let quotientsAndRemainders = repeatDivision nextNumber 16
                 printfn "quotientsAndRemainders: %A" quotientsAndRemainders
 
-                let nextHint = newHint nextNumber quotientsAndRemainders
+                let nextHint = newHint 16 nextNumber 20
                 printfn "nextHint: \n%s" nextHint
                 
                 (document.getElementById "questionSpan").innerText <- string nextNumber
                 (document.getElementById "hintArea").innerHTML <- nextHint
                 (document.getElementById "hint1").onclick <- (fun _ ->
                     (document.getElementById "hint1").innerHTML <-
-                        newColumnAddition nextNumber quotientsAndRemainders
+                        newHintAnimation 16 nextNumber 20
                     (document.getElementById "hintDetails").setAttribute ("open", "true"))
                 
                 numberInput.value <- ""
@@ -200,10 +223,10 @@ module Dec2Hex =
         (document.getElementById "srcRadix").innerText <- sprintf "(%d)" sourceRadix
         (document.getElementById "dstRadix").innerText <- string destinationRadix
         (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
-        (document.getElementById "hintArea").innerHTML <- newHint initNumber quotientsAndRemainders
+        (document.getElementById "hintArea").innerHTML <- newHint 16 initNumber 20
         (document.getElementById "hint1").onclick <- (fun _ ->
             (document.getElementById "hint1").innerHTML <-
-                newColumnAddition initNumber quotientsAndRemainders
+                newHintAnimation 16 initNumber 20
             (document.getElementById "hintDetails").setAttribute ("open", "true"))
         (document.getElementById "submitButton").onclick <- (fun _ ->
             checkAnswer (string initNumber) [initNumber]
