@@ -1,4 +1,4 @@
-﻿// taidalab Version 3.2.0
+﻿// taidalab Version 3.3.0
 // https://github.com/taidalog/taidalab
 // Copyright (c) 2022 taidalog
 // This software is licensed under the MIT License.
