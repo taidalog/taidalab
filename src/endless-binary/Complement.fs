@@ -13,7 +13,8 @@ open Taidalab.EndlessBinary
 
 module EndlessBinary =
     module Complement =
-
+        let question = """4ビットの2進数 <span id="questionSpan" class="question-number"></span><sub id="srcRadix"></sub> の補数は？"""
+        
         let rec checkAnswer (question : string) answer (last_answers : int list) (hint_format : string) =
             // Getting the user input.
             let numberInput = document.getElementById "numberInput" :?> Browser.Types.HTMLInputElement
