@@ -103,9 +103,8 @@ module Dec2Bin1 =
     
     let newArrow x y width1 height1 width2 height2 =
         let d = sprintf "M %f,%f h %f v %f h -7 l 16,-20 16,20 h -7 v %f h %f Z" x y width1 height1 height2 width2
-        let animationStroke = svgAnimate "stroke" "ease-in" "none" "#0000ff" 10000 500 "1" "freeze"
-        let animationFill = svgAnimate "fill" "ease-in" "none" "#aaddff" 10000 500 "1" "freeze"
-        svgPath d "#0000ff" 1 "#aaddff" 1. (animationStroke + animationFill)
+        let animationOpacity = svgAnimate "opacity" "linear" "0.0" "1.0" 1000 500 "1" "freeze"
+        svgPath d "#0000ff" 1 "#aaddff" 0. animationOpacity
     
     let numOpt num =
         (Some 2, Some 1, Some num, None)
