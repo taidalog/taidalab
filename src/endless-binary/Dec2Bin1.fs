@@ -168,7 +168,9 @@ module Dec2Bin1 =
         |> List.fold
             (fun x y -> sprintf "%s%s" x y)
             (newArrow 40. (List.length divRems |> (fun x -> (20 * (x - 1)) + 6) |> double) 30. (List.length divRems |> double |> (fun x -> 17.85 * x - 35.) |> ((*) -1.)) -48. (17.85 * (List.length divRems |> double) - 15.) (List.length divRems - 1 |> delayMs |> ((+) 1500)))
-        |> (svgFrame 400 400)
+        |> (svgFrame
+                (20 / 2 * 10)
+                (divRems |> List.length |> (fun x -> (x + 1) * 20)))
     
     let hint content=
         sprintf """<details id="hintDetails"><summary>ヒント: </summary>%s</details>""" content
