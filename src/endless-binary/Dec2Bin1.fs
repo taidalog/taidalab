@@ -95,18 +95,16 @@ module Dec2Bin1 =
         svgAnimate "opacity" "linear" "0" "1" beginMs durMs "1" "freeze"
     
     let delayMs index =
-        match index with
-        | 0. -> 0.5
-        | _ -> index * 2.5
+        index * 2500 - 500 |> abs
 
     let newSvgDivisor x y index option =
         Option.map
-            (fun option -> svgText x y 0. (sprintf "%s%s" (string option) (svgAnimate "stroke" "ease-in" "" "" (index |> double |> delayMs |> (fun x -> x * 1000.) |> int) 500 "1" "freeze")))
+            (fun option -> svgText x y 0. (sprintf "%s%s" (string option) (svgAnimate "stroke" "ease-in" "" "" (index |> delayMs) 500 "1" "freeze")))
             option
     
-    let newArrow x y width1 height1 width2 height2 =
+    let newArrow x y width1 height1 width2 height2 beginMs =
         let d = sprintf "M %f,%f h %f v %f h -7 l 16,-20 16,20 h -7 v %f h %f Z" x y width1 height1 height2 width2
-        svgPath d "#0000ff" 1 "#aaddff" 0. (svgAnimateOpacity 1000 500)
+        svgPath d "#0000ff" 1 "#aaddff" 0. (svgAnimateOpacity beginMs 500)
     
     let numOpt num =
         (Some 2, Some 1, Some num, None)
@@ -126,15 +124,15 @@ module Dec2Bin1 =
             (numOpt num) :: (divRemOpt divisor (repeatDivision num divisor))
         divRems
         |> List.mapi (fun i (a, b, c, d) ->
-            Option.map
+            Option.map // divisor
                 (fun x ->
                     svgText
                         0
                         (20 * (i + 1))
                         0.
-                        (sprintf "%d%s" x (svgAnimateOpacity 1000 500)))
+                        (sprintf "%d%s" x (svgAnimateOpacity (i |> delayMs |> (fun x -> if i = 0 then x + 1000 else x + 2000)) 500)))
                 a,
-            Option.map
+            Option.map // line
                 (fun x ->
                     svgPath
                         (sprintf "M 12,%d q 10,8 0,16 h 48" ((20 * i) + 6))
@@ -142,23 +140,23 @@ module Dec2Bin1 =
                         1
                         "none"
                         0.
-                        (svgAnimateOpacity 1000 500))
+                        (svgAnimateOpacity (i |> delayMs |> (fun x -> if i = 0 then x + 500 else x + 1500)) 500))
                 b,
-            Option.map
+            Option.map // dividend
                 (fun x ->
                     svgText
                         (20 / 2 * 2)
                         (20 * (i + 1))
                         0.
-                        (sprintf "%s%s" (x |> string |> (padStart " " 3) |> escapeSpace) (svgAnimateOpacity 1000 500)))
+                        (sprintf "%s%s" (x |> string |> (padStart " " 3) |> escapeSpace) (svgAnimateOpacity (i |> delayMs) 500)))
                 c,
-            Option.map
+            Option.map // remainder
                 (fun x ->
                     svgText
                         (20 / 2 * 6)
                         (20 * (i + 1))
                         0.
-                        (sprintf "…%d%s" x (svgAnimateOpacity 1000 500)))
+                        (sprintf "…%d%s" x (svgAnimateOpacity (i |> delayMs |> ((+) 500)) 500)))
                 d)
         |> List.map (fun (a, b, c, d) ->
             sprintf
@@ -169,7 +167,7 @@ module Dec2Bin1 =
                 (Option.defaultValue "" d))
         |> List.fold
             (fun x y -> sprintf "%s%s" x y)
-            (newArrow 40. (((20 * (List.length divRems - 1)) + 6) |> double) 30. ((17.85 * (List.length divRems |> double) - 35.) * -1.) -48. (17.85 * (List.length divRems |> double) - 15.))
+            (newArrow 40. (List.length divRems |> (fun x -> (20 * (x - 1)) + 6) |> double) 30. (List.length divRems |> double |> (fun x -> 17.85 * x - 35.) |> ((*) -1.)) -48. (17.85 * (List.length divRems |> double) - 15.) (List.length divRems - 1 |> delayMs |> ((+) 1500)))
         |> (svgFrame 400 400)
     
     let hint content=
