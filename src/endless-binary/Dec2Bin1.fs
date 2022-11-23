@@ -60,6 +60,99 @@ module Dec2Bin1 =
         |> int
 
 
+    type TextProp =
+        TextProp of width : int * height : int * content : string
+    
+    type PathProp =
+        PathProp of d : string * stroke : string * strokeWidth : int * fill : string * content : string
+    
+    type AnimateProp =
+        AnimateProp of attributeName : string * calcMode : string * fromState : string * toState : string * beginMs : int * durMs : int * repeatCount : string
+    
+    let svgFrame width height content =
+        sprintf
+            """
+            <?xml version="1.0" standalone="no"?>
+            <svg width="%d" height="%d" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                %s
+            </svg>
+            """
+            width height content
+
+    let svgText x y  text =
+        sprintf """<text x="%d" y="%d" font-family="Courier New" font-size="20">%s</text>""" x y text
+    
+    let svgPath d stroke strokeWidth fill animation  =
+        sprintf """<path d="%s" stroke="%s" stroke-width=%d fill="%s">%s</path>""" d stroke strokeWidth fill animation
+    
+    let svgPolyline points stroke strokeWidth fill animation =
+        sprintf """<polylie points="%s" stroke="%s" stroke-width=%d fill="%s">%s</polyline>""" points stroke strokeWidth fill animation
+    
+    let svgAnimate attributeName calcMode fromState toState beginMs durMs repeatCount =
+        sprintf """<animate attributeMode="%s" calcMode="%s" from="%s" to="%s" begin="%dms" dur="%dms" repeatCount="%s"/>""" attributeName calcMode fromState toState beginMs durMs repeatCount
+    
+    let delayMs index =
+        match index with
+        | 0. -> 0.5
+        | _ -> index * 2.5
+
+    let newSvgDivisor x y index option =
+        Option.map
+            (fun option -> svgText x y (sprintf "%s%s" (string option) (svgAnimate "stroke" "ease-in" "" "" (index |> double |> delayMs |> (fun x -> x * 1000.) |> int) 500 "1")))
+            option
+    
+    let newArrow x y width1 height1 width2 height2 =
+        let d = sprintf "M %f,%f h %f v %f h -7 l 16,-20 16,20 h -7 v %f h %f Z" x y width1 height1 height2 width2
+        let animationStroke = svgAnimate "stroke" "ease-in" "none" "#0000ff" 10000 500 "1"
+        let animationFill = svgAnimate "fill" "ease-in" "none" "#aaddff" 10000 500 "1"
+        svgPath d "#0000ff" 1 "#aaddff" (animationStroke + animationFill)
+    
+    let numOpt num =
+        (Some 2, Some 1, Some num, None)
+    
+    let divRemOpt divisor divRem =
+        match divRem |> List.rev with
+        | [] -> [ (None, None, None, None) ]
+        | h::t ->
+            let inner_h =
+                h |> (fun (x, y) -> (None, None, Some x, Some y))
+            let inner_t =
+                t |> List.map (fun (x, y) -> (Some divisor, Some 1, Some x, Some y))
+            inner_h :: inner_t |> List.rev
+    
+    let newHintAnimation divisor num =
+        let divRems =
+            (numOpt num) :: (divRemOpt divisor (repeatDivision num divisor))
+        divRems
+        |> List.mapi (fun i (a, b, c, d) ->
+            Option.map
+                (fun x ->
+                    svgText 0 (20 * (i + 1)) (string x))
+                a,
+            Option.map
+                (fun x ->
+                    svgPath (sprintf "M 12,%d q 10,8 0,16 h 48" ((20 * i) + 6)) "#000000" 1 "none" "")
+                b,
+            Option.map
+                (fun x ->
+                    svgText (20 / 2 * 2) (20 * (i + 1)) (x |> string |> (padStart " " 3) |> escapeSpace))
+                c,
+            Option.map
+                (fun x ->
+                    svgText (20 / 2 * 6) (20 * (i + 1)) (sprintf "…%d" x))
+                d)
+        |> List.map (fun (a, b, c, d) ->
+            sprintf
+                "%s%s%s%s"
+                (Option.defaultValue "" a)
+                (Option.defaultValue "" b)
+                (Option.defaultValue "" c)
+                (Option.defaultValue "" d))
+        |> List.fold
+            (fun x y -> sprintf "%s%s" x y)
+            (newArrow 40. (((20 * (List.length divRems - 1)) + 6) |> double) 30. ((17.85 * (List.length divRems |> double) - 35.) * -1.) -48. (17.85 * (List.length divRems |> double) - 15.))
+        |> (svgFrame 400 400)
+    
     let hint content=
         sprintf """<details id="hintDetails"><summary>ヒント: </summary>%s</details>""" content
     
@@ -253,7 +346,7 @@ module Dec2Bin1 =
         (document.getElementById "srcRadix").innerText <- sprintf "(%d)" sourceRadix
         (document.getElementById "dstRadix").innerText <- string destinationRadix
         (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
-        (document.getElementById "hintArea").innerHTML <- newHint initNumber quotientsAndRemainders powerOfTwos
+        (document.getElementById "hintArea").innerHTML <- (newHint initNumber quotientsAndRemainders powerOfTwos) + (newHintAnimation 2 initNumber)
         (document.getElementById "hint1").onclick <- (fun _ ->
             (document.getElementById "hint1").innerHTML <-
                 newColumnAddition initNumber quotientsAndRemainders
