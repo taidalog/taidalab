@@ -146,3 +146,19 @@ module Common =
 
         for i in 1..(String.length bin2) do
             sprintf "secondRowDigit%d" i |> (fun x -> (document.getElementById x).innerText <- string (bin2.[String.length bin2 - i]))
+
+    let delayMs index =
+        index * 2500 - 500 |> abs
+    
+    let numOpt radix num =
+        (Some radix, Some 1, Some num, None)
+    
+    let divRemOpt divisor divRem =
+        match divRem |> List.rev with
+        | [] -> [ (None, None, None, None) ]
+        | h::t ->
+            let inner_h =
+                h |> (fun (x, y) -> (None, None, Some x, Some y))
+            let inner_t =
+                t |> List.map (fun (x, y) -> (Some divisor, Some 1, Some x, Some y))
+            inner_h :: inner_t |> List.rev

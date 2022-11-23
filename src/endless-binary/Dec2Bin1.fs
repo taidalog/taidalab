@@ -58,10 +58,6 @@ module Dec2Bin1 =
         ||> (fun x y -> double x, double y)
         ||> (fun x y -> Math.Pow(2.0, x) + Math.Pow(2.0, y))
         |> int
-
-    
-    let delayMs index =
-        index * 2500 - 500 |> abs
     
 
     let newArrowBin fontSize lineCount stroke fill=
@@ -75,19 +71,7 @@ module Dec2Bin1 =
             (lineCount - 1 |> delayMs |> ((+) 1500))
             stroke
             fill
-    
-    let numOpt radix num =
-        (Some radix, Some 1, Some num, None)
-    
-    let divRemOpt divisor divRem =
-        match divRem |> List.rev with
-        | [] -> [ (None, None, None, None) ]
-        | h::t ->
-            let inner_h =
-                h |> (fun (x, y) -> (None, None, Some x, Some y))
-            let inner_t =
-                t |> List.map (fun (x, y) -> (Some divisor, Some 1, Some x, Some y))
-            inner_h :: inner_t |> List.rev
+
     
     let newHintAnimation divisor num fontSize =
         let divRems =
