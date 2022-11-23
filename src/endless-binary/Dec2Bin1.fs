@@ -88,8 +88,8 @@ module Dec2Bin1 =
     let svgPolyline points stroke strokeWidth fill animation =
         sprintf """<polylie points="%s" stroke="%s" stroke-width=%d fill="%s">%s</polyline>""" points stroke strokeWidth fill animation
     
-    let svgAnimate attributeName calcMode fromState toState beginMs durMs repeatCount =
-        sprintf """<animate attributeName="%s" calcMode="%s" from="%s" to="%s" begin="%dms" dur="%dms" repeatCount="%s"/>""" attributeName calcMode fromState toState beginMs durMs repeatCount
+    let svgAnimate attributeName calcMode fromState toState beginMs durMs repeatCount fill =
+        sprintf """<animate attributeName="%s" calcMode="%s" from="%s" to="%s" begin="%dms" dur="%dms" repeatCount="%s" fill="%s" />""" attributeName calcMode fromState toState beginMs durMs repeatCount fill
     
     let delayMs index =
         match index with
@@ -98,13 +98,13 @@ module Dec2Bin1 =
 
     let newSvgDivisor x y index option =
         Option.map
-            (fun option -> svgText x y (sprintf "%s%s" (string option) (svgAnimate "stroke" "ease-in" "" "" (index |> double |> delayMs |> (fun x -> x * 1000.) |> int) 500 "1")))
+            (fun option -> svgText x y (sprintf "%s%s" (string option) (svgAnimate "stroke" "ease-in" "" "" (index |> double |> delayMs |> (fun x -> x * 1000.) |> int) 500 "1" "freeze")))
             option
     
     let newArrow x y width1 height1 width2 height2 =
         let d = sprintf "M %f,%f h %f v %f h -7 l 16,-20 16,20 h -7 v %f h %f Z" x y width1 height1 height2 width2
-        let animationStroke = svgAnimate "stroke" "ease-in" "none" "#0000ff" 10000 500 "1"
-        let animationFill = svgAnimate "fill" "ease-in" "none" "#aaddff" 10000 500 "1"
+        let animationStroke = svgAnimate "stroke" "ease-in" "none" "#0000ff" 10000 500 "1" "freeze"
+        let animationFill = svgAnimate "fill" "ease-in" "none" "#aaddff" 10000 500 "1" "freeze"
         svgPath d "#0000ff" 1 "#aaddff" 1. (animationStroke + animationFill)
     
     let numOpt num =
