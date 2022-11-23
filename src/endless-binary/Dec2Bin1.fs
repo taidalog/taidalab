@@ -72,6 +72,16 @@ module Dec2Bin1 =
         let d = sprintf "M %f,%f h %f v %f h -7 l 16,-20 16,20 h -7 v %f h %f Z" x y width1 height1 height2 width2
         Svg.path d "#0000ff" 1 "#aaddff" 0. (Svg.animateOpacity beginMs 500)
     
+    let newArrowBin fontSize lineCount =
+        newArrow
+            (fontSize |> double |> (fun x -> x / 2. * 4.))
+            (lineCount |> (fun x -> (fontSize * (x - 1)) + 6) |> double)
+            (fontSize |> double |> (fun x -> x / 2. * 3.))
+            (lineCount |> double |> (fun x -> 17.85 * x - 35.) |> ((*) -1.))
+            -48.
+            (17.85 * (lineCount |> double) - 15.)
+            (lineCount - 1 |> delayMs |> ((+) 1500))
+    
     let numOpt radix num =
         (Some radix, Some 1, Some num, None)
     
@@ -140,14 +150,7 @@ module Dec2Bin1 =
                 (Option.defaultValue "" d))
         |> List.fold
             (fun x y -> sprintf "%s%s" x y)
-            (newArrow
-                (fontSize |> double |> (fun x -> x / 2. * 4.))
-                (List.length divRems |> (fun x -> (fontSize * (x - 1)) + 6) |> double)
-                (fontSize |> double |> (fun x -> x / 2. * 3.))
-                (List.length divRems |> double |> (fun x -> 17.85 * x - 35.) |> ((*) -1.))
-                -48.
-                (17.85 * (List.length divRems |> double) - 15.)
-                (List.length divRems - 1 |> delayMs |> ((+) 1500)))
+            (newArrowBin fontSize (List.length divRems))
         |> (Svg.frame
                 (fontSize / 2 * 10)
                 (divRems |> List.length |> (fun x -> fontSize * (x + 1))))
