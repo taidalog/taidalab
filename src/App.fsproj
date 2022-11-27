@@ -4,6 +4,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Common.fs" />
+    <Compile Include="Content.fs" />
+    <Compile Include="InitObject.fs" />
+    <Compile Include="Page.fs" />
+    <Compile Include="endless-binary/EndlessBinary.fs" />
     <Compile Include="endless-binary/Dec2Bin1.fs" />
     <Compile Include="endless-binary/Dec2Bin2.fs" />
     <Compile Include="endless-binary/Bin2Dec1.fs" />
@@ -19,7 +23,7 @@
     <Compile Include="Home.fs" />
     <Compile Include="About.fs" />
     <Compile Include="Terms.fs" />
-    <Compile Include="Content.fs" />
+    <Compile Include="NotFound.fs" />
     <Compile Include="Switcher.fs" />
     <Compile Include="App.fs" />
   </ItemGroup>
