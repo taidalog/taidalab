@@ -18,51 +18,22 @@ module Main =
         (document.querySelector "footer").innerHTML <- Content.Common.footer
         (document.querySelector "aside").innerHTML <- Content.Common.aside
         printfn "%s" window.location.pathname
-        let initObj = newInitObject window.location.pathname
-        initPage initObj |> ignore
 
-        let switchAnchorAction pathname (anchor : Browser.Types.HTMLAnchorElement) =
-            (pathname, anchor.href, anchor)
-            |> (fun (p, h, a) -> (p <> "/404/", isInnerPage h, a))
-            |> (fun (p, h, a) ->
-                match (p, h, a) with
-                | (true, true, a) ->
-                    (fun _ ->
-                        overwriteAnchorClick
-                            (fun _ ->
-                                pushPage a.pathname
-                                (document.querySelector "aside").classList.remove "active" |> ignore
-                                (document.getElementById "barrier").classList.remove "active" |> ignore)
-                            a)
-                | (true, false, a) ->
-                    (fun _ ->
-                        ())
-                | (false, true, a) ->
-                    (fun _ ->
-                        overwriteAnchorClick
-                            (fun _ ->
-                                replacePage a.pathname
-                                (document.querySelector "aside").classList.remove "active" |> ignore
-                                (document.getElementById "barrier").classList.remove "active" |> ignore)
-                                a)
-                | (false, false, a) ->
-                    (fun _ ->
-                        overwriteAnchorClick
-                            (fun _ ->
-                                window.location.replace a.pathname
-                                (document.querySelector "aside").classList.remove "active" |> ignore
-                                (document.getElementById "barrier").classList.remove "active" |> ignore)
-                                a))
-            |> (fun f -> f())
+        let pathname = window.location.pathname
+        pathname
+        |> Switcher.initPageFromPathname
+        |> ignore
 
         (document.querySelector "aside").getElementsByTagName "a"
         |> (fun x -> JS.Constructors.Array?from(x))
         |> Array.toList
-        |> List.iter (switchAnchorAction initObj.pathname)
+        |> List.iter (Switcher.switchAnchorAction pathname)
 
         printfn "%s" "The end of DOMContentLoaded"
     ))
 
     window.addEventListener("popstate", (fun _ ->
-        newInitObject window.location.pathname |> initPage
+        window.location.pathname
+        |> Switcher.initPageFromPathname
+        |> ignore
     ))
