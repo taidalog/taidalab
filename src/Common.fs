@@ -20,17 +20,35 @@ module Number =
             newNumber generator tester
 
 module Dec =
+    open System.Text.RegularExpressions
+
+    let validate input =
+        let reCorrect = "^[0-9]+$"
+        Regex.Match(input, reCorrect).Success
+    
     let toBin (number: int) =
         System.Convert.ToString(number, 2)
     
     let toHex (number: int) =
         System.Convert.ToString(number, 16).ToUpper()
-    
+
 module Bin =
+    open System.Text.RegularExpressions
+    
+    let validate input =
+        let reCorrect = "^[01]+$"
+        Regex.Match(input, reCorrect).Success
+    
     let toDec (number: string) =
         System.Convert.ToInt32(number, 2)
     
 module Hex =
+    open System.Text.RegularExpressions
+    
+    let validate input =
+        let reCorrect = "^[0-9A-Fa-f]+$"
+        Regex.Match(input, reCorrect).Success
+
     let ToDec (number: string) =
         System.Convert.ToInt32(number, 16)
     
@@ -91,24 +109,10 @@ module Tuple =
         f a1 a2, f b1 b2, f c1 c2
 
 module EndlessBinary =
-    open System.Text.RegularExpressions
-
-    let testBinaryString input =
-        let reCorrect = "^[01]+$"
-        Regex.Match(input, reCorrect).Success
-
-    let testDecimalString input =
-        let reCorrect = "^[0-9]+$"
-        Regex.Match(input, reCorrect).Success
-    
-    let testHexString input =
-        let reCorrect = "^[0-9A-Fa-f]+$"
-        Regex.Match(input, reCorrect).Success
-
     let newErrorMessageBin answer input =
         if input = "" then
             sprintf """<span class="warning">%s の2進法表記を入力してください。</span>""" answer
-        else if testBinaryString input = false then
+        else if Bin.validate input = false then
             sprintf """<span class="warning">'%s' は2進数ではありません。使えるのは半角の 0 と 1 のみです。</span>""" input
         else
             ""
@@ -116,7 +120,7 @@ module EndlessBinary =
     let newErrorMessageDec answer input =
         if input = "" then
             sprintf """<span class="warning">%s の10進法表記を入力してください。</span>""" answer
-        else if testDecimalString input = false then
+        else if Dec.validate input = false then
             sprintf """<span class="warning">'%s' は10進数ではありません。使えるのは半角の 0123456789 のみです。</span>""" input
         else
             ""
@@ -124,7 +128,7 @@ module EndlessBinary =
     let newErrorMessageHex answer input =
         if input = "" then
             sprintf """<span class="warning">%s の16進法表記を入力してください。</span>""" answer
-        else if testHexString input = false then
+        else if Hex.validate input = false then
             sprintf """<span class="warning">'%s' は16進数ではありません。使えるのは半角の 0123456789ABCDEF のみです。</span>""" input
         else
             ""
@@ -137,6 +141,8 @@ module EndlessBinary =
                 "history-wrong"
         sprintf "<span class =\"%s\">%s<sub>(%d)</sub> = %s<sub>(%d)</sub></span>" historyClassName input destination_radix converted_input source_radix
 
+    open System.Text.RegularExpressions
+    
     let splitBinaryStringBy digit str =
         let pattern = sprintf "([01])(?=([01]{%d})+(?![01]))" digit
         let regex = new Regex(pattern)

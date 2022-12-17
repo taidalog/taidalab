@@ -55,7 +55,7 @@ module EndlessBinary =
             let errorMessage =
                 if bin = "" then
                     sprintf """<span class="warning">%s<small>(%d)</small> - %s<small>(%d)</small> の2進法表記を入力してください。</span>""" (Dec.toBin num1) sourceRadix (Dec.toBin num2) sourceRadix
-                else if testBinaryString bin = false then
+                else if Bin.validate bin = false then
                     sprintf """<span class="warning">'%s' は2進数ではありません。使えるのは半角の 0 と 1 のみです。</span>""" bin
                 else
                     ""
