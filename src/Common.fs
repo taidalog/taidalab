@@ -19,6 +19,21 @@ module Number =
         else
             newNumber generator tester
 
+module Dec =
+    let toBin (number: int) =
+        System.Convert.ToString(number, 2)
+    
+    let toHex (number: int) =
+        System.Convert.ToString(number, 16).ToUpper()
+    
+module Bin =
+    let toDec (number: string) =
+        System.Convert.ToInt32(number, 2)
+    
+module Hex =
+    let ToDec (number: string) =
+        System.Convert.ToInt32(number, 16)
+    
 module Text =
     open System.Text.RegularExpressions
 
@@ -90,18 +105,6 @@ module EndlessBinary =
         let reCorrect = "^[0-9A-Fa-f]+$"
         Regex.Match(input, reCorrect).Success
 
-    let toBinary (number: int) =
-        System.Convert.ToString(number, 2)
-    
-    let toDecimal (number: string) =
-        System.Convert.ToInt32(number, 2)
-
-    let toHex (number: int) =
-        System.Convert.ToString(number, 16).ToUpper()
-    
-    let hexToDecimal (number: string) =
-        System.Convert.ToInt32(number, 16)
-
     let newErrorMessageBin answer input =
         if input = "" then
             sprintf """<span class="warning">%s の2進法表記を入力してください。</span>""" answer
@@ -141,8 +144,8 @@ module EndlessBinary =
 
     open Browser.Dom
     let setColumnAddition number1 number2 =
-        let bin1 = toBinary number1
-        let bin2 = toBinary number2
+        let bin1 = Dec.toBin number1
+        let bin2 = Dec.toBin number2
         printfn "%s" bin1
         printfn "%s" bin2
 

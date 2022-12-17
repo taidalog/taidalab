@@ -35,7 +35,7 @@ module EndlessBinary =
                 let binaryDigit = 8
                 let destinationRadix = 2
                 let taggedBin = bin |> padWithZero binaryDigit |> colorLeadingZero
-                let dec = toDecimal bin
+                let dec = Bin.toDec bin
                 printfn "taggedBin: %s" taggedBin
                 printfn "dec: %d" dec
                 

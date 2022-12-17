@@ -37,7 +37,7 @@ module EndlessBinary =
                 printfn "taggedBin: %s" taggedBin
                 
                 let destinationRadix = 2
-                let dec = toDecimal bin
+                let dec = Bin.toDec bin
                 printfn "dec: %d" dec
                 
                 let decimalDigit = 3

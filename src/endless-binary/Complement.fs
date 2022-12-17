@@ -40,7 +40,7 @@ module EndlessBinary =
                 ()
             else
 
-                let inputValueAsInt = toDecimal inputValue
+                let inputValueAsInt = Bin.toDec inputValue
                 
                 let historyClassName =
                     if inputValueAsInt = answer then
@@ -52,7 +52,7 @@ module EndlessBinary =
                 let digit = 4
                 let taggedInputValue = inputValue |> padWithZero digit |> colorLeadingZero
                 let sourceRadix = 2
-                let bin = toBinary inputValueAsInt
+                let bin = Dec.toBin inputValueAsInt
                 
                 // Making a new history and updating the history with the new one.
                 let destinationRadix = 10
@@ -74,7 +74,7 @@ module EndlessBinary =
                     printfn "nextNumber: %A" nextNumber
 
                     let nextAnswer = 16 - nextNumber
-                    let nextBin = nextNumber |> toBinary |> padStart "0" 4
+                    let nextBin = nextNumber |> Dec.toBin |> padStart "0" 4
                     printfn "nextAnswer: %A" nextAnswer
                     printfn "nextBin: %A" nextBin
                     
@@ -110,7 +110,7 @@ module EndlessBinary =
 
             let initNumber = getRandomBetween 1 15
             let initAnswer = 16 - initNumber
-            let initBin = initNumber |> toBinary |> padStart "0" 4
+            let initBin = initNumber |> Dec.toBin |> padStart "0" 4
             printfn "initNumber: %A" initNumber
             printfn "initAnswer: %A" initAnswer
             printfn "initBin: %A" initBin

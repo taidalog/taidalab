@@ -147,7 +147,7 @@ module EndlessBinary =
                 let hexDigit = 2
                 let destinationRadix = 16
                 let taggedHex = padWithZero hexDigit hex |> colorLeadingZero
-                let dec = hexToDecimal hex
+                let dec = Hex.ToDec hex
                 printfn "taggedHex: %s" taggedHex
                 printfn "dec: %d" dec
                 

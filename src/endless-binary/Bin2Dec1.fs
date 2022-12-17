@@ -113,7 +113,7 @@ module EndlessBinary =
                 let spacePaddedInputValue = inputValue |> padStart " " digit |> escapeSpace
                 
                 let sourceRadix = 2
-                let bin = toBinary inputValueAsInt
+                let bin = Dec.toBin inputValueAsInt
                 let binaryDigit = 8
                 let taggedBin = padWithZero binaryDigit bin |> colorLeadingZero
 
@@ -136,7 +136,7 @@ module EndlessBinary =
                             (fun n -> List.contains n last_answers = false)
                     printfn "%d" nextNumber
 
-                    let nextBin = toBinary nextNumber
+                    let nextBin = Dec.toBin nextNumber
                     let splitBin = splitBinaryStringBy 4 nextBin
                     printfn "%s" nextBin
                     printfn "%s" splitBin
@@ -169,7 +169,7 @@ module EndlessBinary =
             // Initialization.
             let initIndexNumber = getRandomBetween 0 7
             let initNumber = Math.Pow(2.0, double initIndexNumber) |> int
-            let initBin = toBinary initNumber
+            let initBin = Dec.toBin initNumber
             let splitBin = splitBinaryStringBy 4 initBin
             printfn "%A" initIndexNumber
             printfn "%A" initNumber

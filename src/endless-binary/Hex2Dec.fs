@@ -19,7 +19,7 @@ module EndlessBinary =
             hex
             |> Seq.toList
             |> List.rev
-            |> List.mapi (fun i c -> sprintf """(%d * 16<sup>%d</sup>)""" (c |> string |> hexToDecimal)i)
+            |> List.mapi (fun i c -> sprintf """(%d * 16<sup>%d</sup>)""" (c |> string |> Hex.ToDec)i)
             |> List.rev
             |> String.concat " + "
         
@@ -116,7 +116,7 @@ module EndlessBinary =
                 let spacePaddedInputValue = inputValue |> padStart " " digit |> escapeSpace
                 
                 let sourceRadix = 16
-                let hex = toHex inputValueAsInt
+                let hex = Dec.toHex inputValueAsInt
                 let hexDigit = 2
                 let taggedHex = padWithZero hexDigit hex |> colorLeadingZero
 
@@ -139,7 +139,7 @@ module EndlessBinary =
                             (fun n -> List.contains n last_answers = false)
                     printfn "%d" nextNumber
 
-                    let nextHex = toHex nextNumber
+                    let nextHex = Dec.toHex nextNumber
                     printfn "%s" nextHex
                                     
                     (document.getElementById "questionSpan").innerText <- nextHex
@@ -168,7 +168,7 @@ module EndlessBinary =
         let init  () =
             // Initialization.
             let initNumber = getRandomBetween 0 255
-            let initHex = toHex initNumber
+            let initHex = Dec.toHex initNumber
             printfn "%A" initNumber
             printfn "%A" initHex
 

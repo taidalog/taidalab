@@ -20,7 +20,7 @@ module EndlessBinary =
                     (fun _ -> getRandomBetween 1 255)
                     (fun n ->
                         let pattern = "^1+0+$"
-                        let bin = toBinary n
+                        let bin = Dec.toBin n
                         (String.length bin = 8) && (regMatch pattern bin) = false)
             let number2 =
                 newNumber
@@ -58,7 +58,7 @@ module EndlessBinary =
             // Making an error message.
             let errorMessage =
                 if bin = "" then
-                    sprintf """<span class="warning">%s<small>(%d)</small> %s %s<small>(%d)</small> の2進法表記を入力してください。</span>""" (toBinary num1) sourceRadix "+" (toBinary num2) sourceRadix
+                    sprintf """<span class="warning">%s<small>(%d)</small> %s %s<small>(%d)</small> の2進法表記を入力してください。</span>""" (Dec.toBin num1) sourceRadix "+" (Dec.toBin num2) sourceRadix
                 else if testBinaryString bin = false then
                     sprintf """<span class="warning">"'%s'" は2進数ではありません。使えるのは半角の 0 と 1 のみです。</span>""" bin
                 else
@@ -77,7 +77,7 @@ module EndlessBinary =
                 printfn "taggedBin: %s" taggedBin
                 
                 let decDigit = 3
-                let dec = toDecimal bin
+                let dec = Bin.toDec bin
                 let spacePaddedDec = dec |> string |> padStart " " decDigit |> escapeSpace
                 printfn "dec: %d" dec
                 printfn "spacePaddedInputValue: %s" spacePaddedDec
@@ -101,11 +101,11 @@ module EndlessBinary =
 
                     printfn "%A" last_answers
                     printfn "number1: %d" number1
-                    printfn "number1 |> toBinary: %s" (number1 |> toBinary)
+                    printfn "number1 |> Dec.toBin: %s" (number1 |> Dec.toBin)
                     printfn "number2: %d" number2
-                    printfn "number2 |> toBinary: %s" (number2 |> toBinary)
+                    printfn "number2 |> Dec.toBin: %s" (number2 |> Dec.toBin)
                     printfn "number1 + number2: %d" (number1 + number2)
-                    printfn "number1 + number2 |> toBinary: %s" (number1 + number2 |> toBinary)
+                    printfn "number1 + number2 |> Dec.toBin: %s" (number1 + number2 |> Dec.toBin)
                     setColumnAddition number1 number2
 
                     let nextHint = newHintAdd ()
@@ -143,11 +143,11 @@ module EndlessBinary =
 
             let (number1, number2) = newNumbersAdd ()
             printfn "number1: %d" number1
-            printfn "number1 |> toBinary: %s" (number1 |> toBinary)
+            printfn "number1 |> Dec.toBin: %s" (number1 |> Dec.toBin)
             printfn "number2: %d" number2
-            printfn "number2 |> toBinary: %s" (number2 |> toBinary)
+            printfn "number2 |> Dec.toBin: %s" (number2 |> Dec.toBin)
             printfn "number1 + number2: %d" (number1 + number2)
-            printfn "number1 + number2 |> toBinary: %s" (number1 + number2 |> toBinary)
+            printfn "number1 + number2 |> Dec.toBin: %s" (number1 + number2 |> Dec.toBin)
             setColumnAddition number1 number2
 
             (document.getElementById "submitButton").onclick <- (fun _ ->

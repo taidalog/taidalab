@@ -31,7 +31,7 @@ module NotFound =
             let binaryDigit = 9
             let destinationRadix = 2
             let taggedBin = padWithZero binaryDigit bin |> colorLeadingZero
-            let dec = toDecimal bin
+            let dec = Bin.toDec bin
             printfn "%s" taggedBin
             printfn "%d" dec
             

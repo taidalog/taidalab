@@ -41,7 +41,7 @@ module EndlessBinary =
                 printfn "spacePaddedInputValue: %s" spacePaddedInputValue
 
                 let sourceRadix = 2
-                let bin = toBinary inputValueAsInt
+                let bin = Dec.toBin inputValueAsInt
                 let binaryDigit = 8
                 let taggedBin = padWithZero binaryDigit bin |> colorLeadingZero
                 printfn "inputValue -> binary: %s" bin
@@ -65,7 +65,7 @@ module EndlessBinary =
                             (fun n -> List.contains n last_answers = false)
                     printfn "nextNumber: %d" nextNumber
 
-                    let nextBin = toBinary nextNumber
+                    let nextBin = Dec.toBin nextNumber
                     let splitBin = splitBinaryStringBy 4 nextBin
                     printfn "nextBin: %s" nextBin
                     printfn "splitBin: %s" splitBin
@@ -91,7 +91,7 @@ module EndlessBinary =
         let init () =
             // Initialization.
             let initNumber = getRandomBetween 0 255
-            let initBin = toBinary initNumber
+            let initBin = Dec.toBin initNumber
             let splitBin = splitBinaryStringBy 4 initBin
             printfn "initNumber %d" initNumber
             printfn "initBin %s" initBin
