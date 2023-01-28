@@ -1,6 +1,6 @@
 // taidalab Version 3.3.3
 // https://github.com/taidalog/taidalab
-// Copyright (c) 2022 taidalog
+// Copyright (c) 2022-2023 taidalog
 // This software is licensed under the MIT License.
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
 namespace Taidalab
@@ -53,7 +53,7 @@ module Content =
 
         let footer = sprintf """
             <small class="footer-container">
-                <div class="item">&copy; 2022 taidalog</div>
+                <div class="item">&copy; 2022-2023 taidalog</div>
                 <div class="item"><a id="versionNumber" href="https://github.com/taidalog/taidalab/releases">%s</a></div>
                 <div class="item">Powered by <a id="footerFSharp" href="https://fsharp.org/">F#</a> and <a id="footerFable" href="https://fable.io">Fable</a>. Thank you!</div>
             </small>""" version
