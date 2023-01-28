@@ -40,6 +40,11 @@ Version 3.3.3
 - 
 
 
+## リリースノート
+
+[Releases](https://github.com/taidalog/taidalab/releases)
+
+
 ## License
 
 This application is licensed under MIT License.

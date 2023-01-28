@@ -38,6 +38,11 @@ A Web application for repeated practice of decimal-binary conversion and so on.
 - 
 
 
+## Release Notes
+
+[Releases](https://github.com/taidalog/taidalab/releases)
+
+
 ## License
 
 This application is licensed under MIT License.
