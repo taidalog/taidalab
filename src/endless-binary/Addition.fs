@@ -23,7 +23,7 @@ module EndlessBinary =
                     (fun n ->
                         let pattern = "^1+0+$"
                         let bin = Dec.toBin n
-                        (String.length bin = 8) && (regMatch pattern bin) = false)
+                        (String.length bin = 8) && (Regex.isMatch pattern bin) = false)
             let number2 =
                 newNumber
                     (fun _ -> getRandomBetween 1 (255 - number1))

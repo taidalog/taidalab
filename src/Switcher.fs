@@ -8,6 +8,7 @@ namespace Taidalab
 open Browser.Dom
 open Taidalab.Text
 open Taidalab.EndlessBinary
+open Fermata
 
 module rec Switcher =
     let switch pathname =
@@ -37,7 +38,7 @@ module rec Switcher =
         |> Page.init
 
     let (|InnerPage|OuterPage|) url =
-            let m = regMatch "^http://localhost:8080/" url
+            let m = Regex.isMatch "^http://localhost:8080/" url
             match m with
             | true -> InnerPage
             | false -> OuterPage

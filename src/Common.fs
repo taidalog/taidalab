@@ -23,9 +23,6 @@ module Number =
 
 module Text =
     open System.Text.RegularExpressions
-
-    let regMatch pattern str =
-        Regex.Match(str, pattern).Success
     
     let concatinateStrings joint fst snd =
         match (fst, snd) with
