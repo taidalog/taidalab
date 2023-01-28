@@ -43,7 +43,7 @@ module EndlessBinary =
                 printfn "userInputToDec: %d" userInputToDec
                 
                 let decimalDigit = 3
-                let spacePaddedDec = userInputToDec |> string |> padStart " " decimalDigit |> escapeSpace
+                let spacePaddedDec = userInputToDec |> string |> Fermata.String.padLeft decimalDigit ' ' |> escapeSpace
                 
                 // Making a new history and updating the history with the new one.
                 let sourceRadix = 10

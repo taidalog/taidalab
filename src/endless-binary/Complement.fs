@@ -76,7 +76,7 @@ module EndlessBinary =
                     printfn "nextNumber: %A" nextNumber
 
                     let nextAnswer = 16 - nextNumber
-                    let nextBin = nextNumber |> Dec.toBin |> padStart "0" 4
+                    let nextBin = nextNumber |> Dec.toBin |> Fermata.String.padLeft 4 '0'
                     printfn "nextAnswer: %A" nextAnswer
                     printfn "nextBin: %A" nextBin
                     
@@ -112,7 +112,7 @@ module EndlessBinary =
 
             let initNumber = getRandomBetween 1 15
             let initAnswer = 16 - initNumber
-            let initBin = initNumber |> Dec.toBin |> padStart "0" 4
+            let initBin = initNumber |> Dec.toBin |> Fermata.String.padLeft 4 '0'
             printfn "initNumber: %A" initNumber
             printfn "initAnswer: %A" initAnswer
             printfn "initBin: %A" initBin

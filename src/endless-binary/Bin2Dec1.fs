@@ -112,7 +112,7 @@ module EndlessBinary =
                 
                 // Converting the input in order to use in the history message.
                 let digit = 3
-                let spacePaddedInputValue = inputValue |> padStart " " digit |> escapeSpace
+                let spacePaddedInputValue = inputValue |> Fermata.String.padLeft digit ' ' |> escapeSpace
                 
                 let sourceRadix = 2
                 let bin = Dec.toBin inputValueAsInt

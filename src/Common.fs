@@ -49,15 +49,8 @@ module Text =
     let escapeSpace (input : string) =
         input.Replace(" ", "&nbsp;")
     
-    let padStart padString digit text =
-        if digit <= (String.length text) then
-            text
-        else
-            String.replicate (digit - (String.length text)) padString
-            |> (fun x -> x + text)
-
     let padWithZero binaryDigit text =
-        padStart "0" binaryDigit text
+        Fermata.String.padLeft binaryDigit '0' text
 
     let colorLeadingZero str =
         let pattern = "(^0+)"

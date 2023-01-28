@@ -80,7 +80,7 @@ module EndlessBinary =
                 
                 let decDigit = 3
                 let dec = Bin.toDec bin
-                let spacePaddedDec = dec |> string |> padStart " " decDigit |> escapeSpace
+                let spacePaddedDec = dec |> string |> Fermata.String.padLeft decDigit ' ' |> escapeSpace
                 printfn "dec: %d" dec
                 printfn "spacePaddedInputValue: %s" spacePaddedDec
                 

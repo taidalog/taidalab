@@ -114,7 +114,7 @@ module EndlessBinary =
                             (fontSize / 2 * 2)
                             (fontSize * (i + 1))
                             0.
-                            (sprintf "%s%s" (x |> string |> (padStart " " 3) |> escapeSpace) (Svg.animateOpacity (i |> delayMs) 500)))
+                            (sprintf "%s%s" (x |> string |> (Fermata.String.padLeft 3 ' ') |> escapeSpace) (Svg.animateOpacity (i |> delayMs) 500)))
                     c,
                 Option.map // remainder
                     (fun x ->
@@ -218,7 +218,7 @@ module EndlessBinary =
                 let spacePaddedDec =
                     dec
                     |> string
-                    |> padStart " " decimalDigit
+                    |> Fermata.String.padLeft decimalDigit ' '
                     |> escapeSpace
                 
                 // Making a new history and updating the history with the new one.
