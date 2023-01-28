@@ -10,6 +10,8 @@ open Browser.Dom
 open Taidalab.Number
 open Taidalab.Text
 open Taidalab.EndlessBinary
+open Fermata
+open Fermata.RadixConversion
 
 module EndlessBinary =
     module Dec2Hex =
@@ -147,7 +149,7 @@ module EndlessBinary =
                 let hexDigit = 2
                 let destinationRadix = 16
                 let taggedHex = padWithZero hexDigit hex |> colorLeadingZero
-                let dec = Hex.ToDec hex
+                let dec = Hex.toDec hex
                 printfn "taggedHex: %s" taggedHex
                 printfn "dec: %d" dec
                 

@@ -8,6 +8,8 @@ namespace Taidalab
 open Browser.Dom
 open Taidalab.Text
 open Taidalab.EndlessBinary
+open Fermata
+open Fermata.RadixConversion
 
 module NotFound =
 

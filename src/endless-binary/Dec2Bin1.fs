@@ -11,6 +11,8 @@ open Browser.Dom
 open Taidalab.Number
 open Taidalab.Text
 open Taidalab.EndlessBinary
+open Fermata
+open Fermata.RadixConversion
 
 module EndlessBinary =
     module Dec2Bin1 =

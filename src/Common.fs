@@ -6,6 +6,8 @@
 namespace Taidalab
 
 open System
+open Fermata
+open Fermata.RadixConversion
 
 module Number =
     let getRandomBetween min max =
@@ -19,39 +21,6 @@ module Number =
         else
             newNumber generator tester
 
-module Dec =
-    open System.Text.RegularExpressions
-
-    let validate input =
-        let reCorrect = "^[0-9]+$"
-        Regex.Match(input, reCorrect).Success
-    
-    let toBin (number: int) =
-        System.Convert.ToString(number, 2)
-    
-    let toHex (number: int) =
-        System.Convert.ToString(number, 16).ToUpper()
-
-module Bin =
-    open System.Text.RegularExpressions
-    
-    let validate input =
-        let reCorrect = "^[01]+$"
-        Regex.Match(input, reCorrect).Success
-    
-    let toDec (number: string) =
-        System.Convert.ToInt32(number, 2)
-    
-module Hex =
-    open System.Text.RegularExpressions
-    
-    let validate input =
-        let reCorrect = "^[0-9A-Fa-f]+$"
-        Regex.Match(input, reCorrect).Success
-
-    let ToDec (number: string) =
-        System.Convert.ToInt32(number, 16)
-    
 module Text =
     open System.Text.RegularExpressions
 

@@ -11,6 +11,8 @@ open Taidalab.Number
 open Taidalab.Text
 open Taidalab.Tuple
 open Taidalab.EndlessBinary
+open Fermata
+open Fermata.RadixConversion
 
 module EndlessBinary =
     module Hex2Dec =
@@ -19,7 +21,7 @@ module EndlessBinary =
             hex
             |> Seq.toList
             |> List.rev
-            |> List.mapi (fun i c -> sprintf """(%d * 16<sup>%d</sup>)""" (c |> string |> Hex.ToDec)i)
+            |> List.mapi (fun i c -> sprintf """(%d * 16<sup>%d</sup>)""" (c |> string |> Hex.toDec)i)
             |> List.rev
             |> String.concat " + "
         

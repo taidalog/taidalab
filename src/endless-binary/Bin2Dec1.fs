@@ -11,6 +11,8 @@ open Taidalab.Number
 open Taidalab.Text
 open Taidalab.Tuple
 open Taidalab.EndlessBinary
+open Fermata
+open Fermata.RadixConversion
 
 module EndlessBinary =
     module Bin2Dec1 =
