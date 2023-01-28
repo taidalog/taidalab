@@ -1,6 +1,6 @@
 # taidalab
 
-Version 3.3.1
+Version 3.3.2
 
 [Japanese README](README.ja.md)
 
