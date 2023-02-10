@@ -6,7 +6,6 @@
 namespace Taidalab
 
 open System
-open System.Text.RegularExpressions
 open Browser.Dom
 open Taidalab.Number
 open Taidalab.Text
@@ -18,11 +17,8 @@ module EndlessBinary =
     module Dec2Bin1 =
 
         let countOneBit binaryString =
-            let bitCount = Regex.Matches(binaryString, "1")
-            if bitCount = null then
-                0
-            else
-                bitCount.Count
+            binaryString
+            |> Seq.countWith (fun c -> c = '1')
 
 
         let devideIntoPowerOfTwo (number : int) =
