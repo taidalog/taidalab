@@ -49,7 +49,7 @@ module EndlessBinary =
                 let outputArea = document.getElementById "outputArea"
                 let historyMessage =
                     newHistory (dec = answer) taggedBin destinationRadix spacePaddedDec sourceRadix
-                    |> (fun x-> concatinateStrings "<br>" x outputArea.innerHTML)
+                    |> (fun x-> concatinateStrings "<br>" [x; outputArea.innerHTML])
                 // printfn "historyMessage: %s" historyMessage
                 outputArea.innerHTML <- historyMessage
                 

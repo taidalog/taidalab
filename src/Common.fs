@@ -24,12 +24,10 @@ module Number =
 module Text =
     open System.Text.RegularExpressions
     
-    let concatinateStrings joint fst snd =
-        match (fst, snd) with
-        | (f, s) when s = "" -> f
-        | (f, s) when f = "" -> s
-        | (f, s) when f = "" && s = "" -> ""
-        | _-> sprintf "%s%s%s" fst joint snd
+    let concatinateStrings joint strings =
+        strings
+        |> List.filter (fun x -> (String.IsNullOrEmpty x) = false)
+        |> String.concat joint
     
     let replaceWithPairs (pairs : (string * string) list) (original : string) =
         (original, pairs)

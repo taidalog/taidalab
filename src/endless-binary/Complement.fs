@@ -61,7 +61,7 @@ module EndlessBinary =
                 let outputArea = document.getElementById "outputArea"
                 let historyMessage =
                     sprintf """<span class ="%s">%s<sub>(%d)</sub></span>""" historyClassName taggedInputValue sourceRadix
-                    |> (fun x -> concatinateStrings "<br>" x outputArea.innerHTML)
+                    |> (fun x -> concatinateStrings "<br>" [x; outputArea.innerHTML])
                 outputArea.innerHTML <- historyMessage
                 //printfn "historyMessage: %s" historyMessage
                 

@@ -49,7 +49,7 @@ module NotFound =
             let outputArea = document.getElementById "outputArea" :?> Browser.Types.HTMLParagraphElement
             let historyMessage =
                 newHistory (dec = int answer) taggedBin destinationRadix spacePaddedDec sourceRadix
-                |> (fun x -> concatinateStrings "<br>" x outputArea.innerHTML)
+                |> (fun x -> concatinateStrings "<br>" [x; outputArea.innerHTML])
             printfn "%s" historyMessage
             outputArea.innerHTML <- historyMessage
             

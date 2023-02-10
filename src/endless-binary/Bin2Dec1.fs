@@ -124,7 +124,7 @@ module EndlessBinary =
                 let outputArea = document.getElementById "outputArea"
                 let historyMessage =
                     newHistory (inputValueAsInt = answer) spacePaddedInputValue destinationRadix taggedBin sourceRadix
-                    |> (fun x -> concatinateStrings "<br>" x outputArea.innerHTML)
+                    |> (fun x -> concatinateStrings "<br>" [x; outputArea.innerHTML])
                 printfn "%A" historyMessage
                 outputArea.innerHTML <- historyMessage
                 
