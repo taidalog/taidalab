@@ -101,9 +101,10 @@ module EndlessBinary =
     open System.Text.RegularExpressions
     
     let splitBinaryStringBy digit str =
-        let pattern = sprintf "([01])(?=([01]{%d})+(?![01]))" digit
-        let regex = new Regex(pattern)
-        regex.Replace(str, "$1 ")
+        str
+        |> String.chunkBySizeRight digit
+        |> Seq.toList
+        |> String.concat " "
 
     open Browser.Dom
     let setColumnAddition number1 number2 =
