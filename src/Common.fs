@@ -97,8 +97,6 @@ module EndlessBinary =
             else
                 "history-wrong"
         sprintf "<span class =\"%s\">%s<sub>(%d)</sub> = %s<sub>(%d)</sub></span>" historyClassName input destination_radix converted_input source_radix
-
-    open System.Text.RegularExpressions
     
     let splitBinaryStringBy digit str =
         str
