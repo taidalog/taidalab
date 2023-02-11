@@ -6,6 +6,7 @@
 namespace Taidalab
 
 open Browser.Dom
+open Fermata
 
 module IroIroiro =
     let main = """
@@ -45,14 +46,6 @@ module IroIroiro =
     let (|Positive|Negative|) num =
         if num >= 0 then Positive else Negative
     
-    let keepWithin n min max =
-        if n > max then
-            (max, max - n)
-        else if n < min then
-            (min, min - n)
-        else
-            (n, 0)
-    
     let fromRgbToRank r g b =
         [ (PrimaryColors.Red, r); (PrimaryColors.Green, g); (PrimaryColors.Blue, b) ]
         |> List.map (fun (color, value) ->
@@ -74,7 +67,8 @@ module IroIroiro =
             let (addedMed, gap) =
                 rgbList
                 |> List.find (fun x -> x.Color = colorToModify)
-                |> (fun x -> keepWithin (x.Value + value) min max)
+                |> (fun x -> x.Value + value |> Math.clampGap min max)
+                |> (fun (x, y) -> x, -y)
             printfn "addedMed: %d" addedMed
             printfn "gap: %d" gap
             
