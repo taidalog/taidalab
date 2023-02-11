@@ -122,11 +122,26 @@ module EndlessBinary =
 
             let hintFormat = """
                 <details><summary>ヒント:</summary>
-                    <p class="history-indented">2進数の補数（2の補数）は、
-                        ある2進数の 0 と 1 を反転させて１を足したものです。<br>
-                        {0} の 0 と 1 を反転させると<br>
-                        {1} になります。<br>
-                        これに 1 を足したものが {0} の補数（2の補数）です。
+                    <p class="history-indented">
+                        ある2進数に足すと桁が1つ上がる、最も小さい数のことを、<br>
+                        元の2進数に対する「2の補数」と呼びます。
+                    </p>
+                    <p class="history-indented">
+                        たとえば、4ビットの2進数 1010<sub>(2)</sub> に 0110<sub>(2)</sub> を足すと<br>
+                        1桁上がって5ビットの2進数 10000<sub>(2)</sub> になります。<br>
+                        この 0110<sub>(2)</sub> を、元の 1010<sub>(2)</sub> に対する2の補数と呼びます。<br>
+                    </p>
+                    <p class="history-indented">
+                        2の補数は、2進数の負の数を表すのに使われます。</sub><br>
+                        1010<sub>(2)</sub> (=10<sub>(10)</sub>) の2の補数 0110<sub>(2)</sub> は-10<sub>(10)</sub> を表します。
+                    </p>
+                    <p class="history-indented">
+                        2の補数を求めるには、元の2進数の各ビットの<br>
+                        0 と 1 を反転させた数に 1 を足します。<br>
+                        今回の問題で説明すると、<br>
+                        {0}<sub>(2)</sub> の 0 と 1 を反転させると<br>
+                        {1}<sub>(2)</sub> になります。これに 1 を足したものが<br>
+                        {0}<sub>(2)</sub> の2の補数です。
                     </p>
                 </details>"""
             let hint = String.Format(hintFormat, initBin, reversedBin)
