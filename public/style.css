@@ -127,6 +127,10 @@ aside.active {
     background-color: #aaac65;
 }
 
+.aside-nws:hover {
+    background-color: #7c65ac;
+}
+
 main {
     padding-top: 20px;
     padding-left: 100px;
@@ -555,6 +559,19 @@ details:hover {
     background-color: #e586a5;
 }
 
+.header-nws {
+    background-color: #7c65ac;
+}
+
+.submit-button-nws {
+    color: #251e33;
+    background: #b795fe;
+}
+
+.submit-button-nws:hover {
+    background-color: #a586e5;
+}
+
 .header-not {
     background-color: #808080;
 }
@@ -944,4 +961,17 @@ dd {
     display: inline-block;
     vertical-align: middle;
     line-height: normal;
+}
+
+.device {
+    position: absolute;
+}
+
+.device-image {
+    position: relative;
+}
+
+.device-note {
+    font-size: 0.8rem;
+    font-family: monospace;
 }
