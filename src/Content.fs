@@ -38,6 +38,7 @@ module Content =
                         <li><a class="aside-d2h" href="/endless-binary/hex2dec/">16進数→10進数</a></li>
                     </ul>
                 <li><a class="aside-iro" id="asideIroIroiro" href="/iro-iroiro/">色いろいろ</a></li>
+                <li><a class="aside-nws" id="asideNetworkSimulator" href="/network-simulator/">ネットワークシミュレータ</a></li>
                 <li><a class="aside-ctc" id="asideSoon" href="#">Comming soon...</a></li>
             </ul>
             <ul>

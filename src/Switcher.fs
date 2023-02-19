@@ -27,6 +27,7 @@ module rec Switcher =
         | "/endless-binary/dec2hex/" -> (pathname, EndlessBinary.Course.main, Dec2Hex.init)
         | "/endless-binary/hex2dec/" -> (pathname, EndlessBinary.Course.main, Hex2Dec.init)
         | "/iro-iroiro/" -> (pathname, IroIroiro.main, IroIroiro.init)
+        | "/network-simulator/" -> (pathname, NetworkSimulator.main, NetworkSimulator.init)
         | "/about/" -> (pathname, Taidalab.About.main, (fun _ -> ()))
         | "/terms/" -> (pathname , Taidalab.Terms.main , (fun _ -> ()))
         | _ -> ("/404/", EndlessBinary.Course.main, NotFound.init)

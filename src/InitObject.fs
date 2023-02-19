@@ -202,6 +202,19 @@ module InitObject =
                 questionContent = ""
                 initFunc = f
             }
+        | "/network-simulator/" ->
+            printfn "%s" "/network-simulator/"
+            {
+                pathname = "/network-simulator/"
+                title = "ネットワークシミュレータ - taidalab"
+                headerContent = Content.Common.header
+                headerColorClass = "header-nws"
+                headerTitle = "<h1>ネットワークシミュレータ - taidalab</h1>"
+                mainContent = main
+                buttonColorClass = "submit-button submit-button-nws"
+                questionContent = ""
+                initFunc = f
+            }
         | "/about/" ->
             printfn "%s" "/about/"
             {

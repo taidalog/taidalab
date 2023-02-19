@@ -20,6 +20,7 @@
     <Compile Include="endless-binary/Dec2Hex.fs" />
     <Compile Include="endless-binary/Hex2Dec.fs" />
     <Compile Include="iro-iroiro/IroIroiro.fs" />
+    <Compile Include="network-simulator/NetworkSimulator.fs" />
     <Compile Include="Home.fs" />
     <Compile Include="About.fs" />
     <Compile Include="Terms.fs" />
