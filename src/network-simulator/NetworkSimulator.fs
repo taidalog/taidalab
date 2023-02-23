@@ -14,14 +14,14 @@ module NetworkSimulator =
         <form id="inputArea" class="iro-input-area" autocomplete="off">
             <span class="display-order-1 input-area-iro-shorter">
                 <span class="iro-input-wrapper">
-                    <label for="intervalInput">Source:<input type="text" id="sourceInput" class="number-input display-order-1 consolas"></label>
+                    <label for="intervalInput">Source IPv4:<input type="text" id="sourceInput" class="number-input display-order-1 consolas"></label>
                 </span>
                 <span class="iro-input-wrapper">
-                    <label for="limitInput">Destination:<input type="text" id="destinationInput" class="number-input display-order-1 consolas"></label>
+                    <label for="limitInput">Destination IPv4:<input type="text" id="destinationInput" class="number-input display-order-1 consolas"></label>
                 </span>
             </span>
             <span class="display-order-2">
-                <button type="button" id="submitButton" class="submit-button d2b-button">確認</button>
+                <button type="button" id="submitButton" class="submit-button d2b-button">ping</button>
             </span>
         </form>
         <div id="errorArea" class="error-area"></div>
@@ -30,8 +30,8 @@ module NetworkSimulator =
         """
 
     let isOver (offset: float) (area1: Area) (area2: Area): bool =
-        printfn "DEBUG: area1 = left: %f top: %f width: %f height: %f" area1.X area1.Y area1.Width area1.Height
-        printfn "DEBUG: area2  = left: %f top: %f width: %f height: %f" area2.X area2.Y area2.Width area2.Height
+        //printfn "DEBUG: area1 = left: %f top: %f width: %f height: %f" area1.X area1.Y area1.Width area1.Height
+        //printfn "DEBUG: area2  = left: %f top: %f width: %f height: %f" area2.X area2.Y area2.Width area2.Height
         let topLeft =
             area2.X >= area1.X - offset &&
             area2.X <= area1.X + area1.Width + offset &&
@@ -59,22 +59,37 @@ module NetworkSimulator =
         topLeft || topRight || bottomLeft || bottomRight
     
     let getNetNeighbors (cables: Cable list) (devices: Device list) (source: Device) : Device list =
-        cables |> List.length |> printfn "%d cables."
-        cables |> List.iter (fun x -> printfn "%s (%b)" x.Name (x.Area |> isOver 0. source.Area))
+        //cables |> List.length |> printfn "%d cables."
+        //cables |> List.iter (fun x -> printfn "%s (%b)" x.Name (x.Area |> isOver 0. source.Area))
         let connectedCables =
             cables |> List.filter (fun c -> c.Area |> isOver 0. source.Area)
-        connectedCables |> List.iter (fun x -> printfn "getNetNeighbor': %s is connected to %s" source.Name x.Name)
+        //connectedCables |> List.iter (fun x -> printfn "getNetNeighbor': %s is connected to %s" source.Name x.Name)
         connectedCables
         |> List.collect
             (fun c ->
-                printfn "%s is connected to below:" c.Name
+                //printfn "%s is connected to below:" c.Name
                 devices
                 |> List.filter (fun d ->
-                    printfn "%s (%b)" d.Name (isOver 0. d.Area c.Area && d.IPv4 <> source.IPv4)
+                    //printfn "%s (%b)" d.Name (isOver 0. d.Area c.Area && d.IPv4 <> source.IPv4)
                     isOver 0. d.Area c.Area &&
                     d.IPv4 <> source.IPv4
                     ))
 
+    let rec ping (cables: Cable list) (devices: Device list) (source: Device) (ttl: int) (destinationIPv4: IPv4) : bool =
+        let neighbors = getNetNeighbors cables devices source
+        neighbors |> List.iter (fun x -> printfn "ping: %s is connected to %s" source.Name x.Name)
+        
+        let found = neighbors |> List.exists (fun x -> x.IPv4 = destinationIPv4)
+        printfn "ping: destination IPv4 found = %b" found
+
+        if found then
+            true
+        else if ttl = 0 then
+            false
+        else
+            neighbors
+            |> List.exists (fun x -> ping cables devices x (ttl - 1) destinationIPv4)
+    
     let init () =
         let devices =
             [
@@ -135,8 +150,8 @@ module NetworkSimulator =
                 |> List.filter Option.isSome
                 |> List.map (fun (Some (x: Device)) -> x)
             
-            devices' |> List.length |> printfn "%d devices."
-            devices' |> List.iter (fun x -> printfn "%s, %s" x.Name (x.IPv4.ToString()))
+            //devices' |> List.length |> printfn "%d devices."
+            //devices' |> List.iter (fun x -> printfn "%s, %s" x.Name (x.IPv4.ToString()))
 
             let lanCables' =
                 document.getElementById("playArea").getElementsByClassName("cable-container")
@@ -146,15 +161,15 @@ module NetworkSimulator =
                 |> List.filter Option.isSome
                 |> List.map (fun (Some (x: Cable)) -> x)
             
-            lanCables' |> List.length |> printfn "%d cables."
-            lanCables' |> List.iter (fun x -> printfn "%s" x.Name)
+            //lanCables' |> List.length |> printfn "%d cables."
+            //lanCables' |> List.iter (fun x -> printfn "%s" x.Name)
 
             let sourceInput = document.getElementById("sourceInput") :?> Browser.Types.HTMLInputElement
 
             let source =
                 devices'
                 |> List.find (fun x -> x.IPv4.ToString() = sourceInput.value)
-            source.Name |> printfn "Source: %s"
+            //source.Name |> printfn "Source: %s"
 
             let lanCablesWithSource =
                 lanCables'
@@ -171,11 +186,8 @@ module NetworkSimulator =
                 |> (fun x -> outputArea.innerHTML <- x)
                 |> ignore
                 
-                let neighbors': Device list =
-                    getNetNeighbors lanCables' devices' source
-                neighbors' |> List.iter (fun x -> printfn "getNetNeighbor: %s is connected to %s" source.Name x.Name)
-
-                neighbors'
-                |> List.map (fun x -> sprintf "%s is connected to %s" source.Name x.Name)
-                |> String.concat "<br>"
-                |> (fun x -> outputArea.innerHTML <- outputArea.innerHTML + "<br>" + x)
+                let destinationInput = document.getElementById("destinationInput") :?> Browser.Types.HTMLInputElement
+                let destinationIPv4 = destinationInput.value |> IPv4.ofDotDecimal
+                ping lanCables' devices' source 10 destinationIPv4
+                |> sprintf "%s> ping %s -> %b" source.Name (destinationIPv4.ToString())
+                |> (fun x -> outputArea.innerHTML <- x)
