@@ -24,7 +24,7 @@ module NetworkSimulator =
                 <button type="button" id="submitButton" class="submit-button d2b-button">ping</button>
             </span>
         </form>
-        <div id="errorArea" class="error-area"></div>
+        <div id="errorArea" class="error-area warning"></div>
         <div id="outputArea" class="output-area"></div>
         <div id="playArea" class="play-area"></div>
         """
@@ -164,30 +164,36 @@ module NetworkSimulator =
             //lanCables' |> List.length |> printfn "%d cables."
             //lanCables' |> List.iter (fun x -> printfn "%s" x.Name)
 
+            let errorArea = document.getElementById "errorArea" :?> Browser.Types.HTMLDivElement
+            let outputArea = document.getElementById "outputArea" :?> Browser.Types.HTMLDivElement
             let sourceInput = document.getElementById("sourceInput") :?> Browser.Types.HTMLInputElement
+
+            errorArea.innerText<- ""
+            outputArea.innerText<- ""
 
             let source =
                 devices'
-                |> List.find (fun x -> x.IPv4.ToString() = sourceInput.value)
+                |> List.tryFind (fun x -> x.IPv4.ToString() = sourceInput.value)
             //source.Name |> printfn "Source: %s"
 
-            let lanCablesWithSource =
-                lanCables'
-                |> List.filter (fun (x: Cable) -> x.Area |> isOver 0. source.Area)
-
-            let outputArea = document.getElementById "outputArea" :?> Browser.Types.HTMLDivElement
-            
-            match lanCablesWithSource with
-            | [] -> outputArea.innerText <- sprintf "%s is connected to no lan cable." source.Name
-            | _ ->
-                lanCablesWithSource
-                |> List.map (fun x -> sprintf "%s is connected to %s" source.Name x.Name)
-                |> String.concat "<br>"
-                |> (fun x -> outputArea.innerHTML <- x)
-                |> ignore
-                
-                let destinationInput = document.getElementById("destinationInput") :?> Browser.Types.HTMLInputElement
-                let destinationIPv4 = destinationInput.value |> IPv4.ofDotDecimal
-                ping lanCables' devices' source 10 destinationIPv4
-                |> sprintf "%s> ping %s -> %b" source.Name (destinationIPv4.ToString())
-                |> (fun x -> outputArea.innerHTML <- x)
+            match source with
+            | None ->
+                errorArea.innerText<- sprintf "Input source IPv4."
+                sourceInput.focus()
+            | Some source' ->
+                let lanCablesWithSource =
+                    lanCables'
+                    |> List.filter (fun (x: Cable) -> x.Area |> isOver 0. source'.Area)
+                match lanCablesWithSource with
+                | [] -> errorArea.innerText <- sprintf "%s is connected to no lan cable." source'.Name
+                | _ ->
+                    let destinationInput = document.getElementById("destinationInput") :?> Browser.Types.HTMLInputElement
+                    match destinationInput.value with
+                    | "" ->
+                        errorArea.innerText<- sprintf "Input destination IPv4."
+                        destinationInput.focus()
+                    | _ ->
+                        let destinationIPv4 = destinationInput.value |> IPv4.ofDotDecimal
+                        ping lanCables' devices' source' 10 destinationIPv4
+                        |> sprintf "%s> ping %s -> %b" source'.Name (destinationIPv4.ToString())
+                        |> (fun x -> outputArea.innerText <- x)
