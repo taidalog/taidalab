@@ -166,4 +166,6 @@ module NetworkSimulator =
             neighbors' |> List.iter (fun x -> printfn "%s" x.Name)
 
             neighbors'
-            |> List.iter (fun x -> x |> (fun x -> printfn "%s -> %s" source.Name x.Name))
+            |> List.map (fun x -> sprintf "%s is connected to %s" source.Name x.Name)
+            |> String.concat "<br>"
+            |> (fun x -> outputArea.innerHTML <- outputArea.innerHTML + "<br>" + x)
