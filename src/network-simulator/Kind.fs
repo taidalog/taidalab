@@ -12,3 +12,14 @@ type Kind =
     | Hub
     | ProxyServer
     | LANCable
+
+module Kind =
+    let ofString str =
+        match str with
+        | "Client" -> Some Kind.Client
+        | "Server" -> Some Kind.Server
+        | "Router" -> Some Kind.Router
+        | "Hub" -> Some Kind.Hub
+        | "ProxyServer" -> Some Kind.ProxyServer
+        | "LANCable" -> Some Kind.LANCable
+        | _ -> None
