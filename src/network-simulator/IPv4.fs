@@ -10,6 +10,7 @@ type IPv4 =
       Octet2 : byte
       Octet3 : byte
       Octet4 : byte }
+    override this.ToString() = sprintf "%d.%d.%d.%d" this.Octet1 this.Octet2 this.Octet3 this.Octet4
 
 module IPv4 =
     let ofBytes byte1 byte2 byte3 byte4 : IPv4 =
