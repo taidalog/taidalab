@@ -121,6 +121,13 @@ module NetworkSimulator =
         
         document.getElementById("playArea").innerHTML <- deviceElements + cableElements
         
+        let onMouseMove (elm: Browser.Types.HTMLElement) (svg: Browser.Types.HTMLElement) (event: Browser.Types.Event) =
+            let event = event :?> Browser.Types.MouseEvent
+            let top = (event.clientY - svg.getBoundingClientRect().height / 2.)
+            let left = (event.clientX - svg.getBoundingClientRect().width / 2.)
+            let styleString = sprintf "top: %fpx; left: %fpx;" top left
+            elm.setAttribute("style", styleString)
+        
         List.append
             (devices |> List.map (fun x -> x.Id))
             (cables |> List.map (fun x -> x.Id))
@@ -128,17 +135,12 @@ module NetworkSimulator =
         |> List.iter (fun x ->
             let svg = document.getElementById(x.id + "Svg")
             svg.ondragstart <- fun _ -> false
+            let onMouseMove' = onMouseMove x svg
             svg.onmousedown <- fun _ ->
-                let onMouseMove (event: Browser.Types.Event) =
-                    let event = event :?> Browser.Types.MouseEvent
-                    let top = (event.clientY - svg.getBoundingClientRect().height / 2.)
-                    let left = (event.clientX - svg.getBoundingClientRect().width / 2.)
-                    let styleString = sprintf "top: %fpx; left: %fpx;" top left
-                    x.setAttribute("style", styleString)
-                document.addEventListener("mousemove", onMouseMove)
+                document.addEventListener("mousemove", onMouseMove')
                 svg.onmouseup <- fun _ ->
                     printfn "mouse up!"
-                    document.removeEventListener("mousemove", onMouseMove))
+                    document.removeEventListener("mousemove", onMouseMove'))
         
         let submitButton = document.getElementById("submitButton") :?> Browser.Types.HTMLButtonElement
         submitButton.onclick <- fun _ ->
