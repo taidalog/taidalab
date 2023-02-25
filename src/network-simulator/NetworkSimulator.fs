@@ -8,6 +8,7 @@ namespace Taidalab
 open Browser.Dom
 open Fable.Core
 open Fable.Core.JsInterop
+open Fermata
 
 module NetworkSimulator =
     let main = """
@@ -91,14 +92,17 @@ module NetworkSimulator =
             |> List.exists (fun x -> ping cables devices x (ttl - 1) destinationIPv4)
     
     let init () =
+        let playArea = document.getElementById "playArea"
+        let playAreaRect = playArea.getBoundingClientRect()
+
         let devices =
             [
-                Device.create "device001" Kind.Client { Area.X = 0.; Y = 0.; Width = 200.; Height = 100. } "Client (1)" "10.0.0.1" "255.255.255.0"
-                Device.create "device002" Kind.Client { Area.X = 0.; Y = 0.; Width = 200.; Height = 100. } "Client (2)" "10.0.0.2" "255.255.255.0"
-                Device.create "device003" Kind.Router { Area.X = 0.; Y = 0.; Width = 200.; Height = 100. } "Router (1)" "10.0.0.3" "255.255.255.0"
-                Device.create "device004" Kind.Client { Area.X = 0.; Y = 0.; Width = 200.; Height = 100. } "Client (3)" "10.0.0.18" "255.255.255.240"
-                Device.create "device005" Kind.Router { Area.X = 0.; Y = 0.; Width = 200.; Height = 100. } "Router (2)" "10.0.0.17" "255.255.255.240"
-                Device.create "device006" Kind.Client { Area.X = 0.; Y = 0.; Width = 200.; Height = 100. } "Client (4)" "10.0.0.19" "255.255.255.240"
+                Device.create "device001" Kind.Client "Client (1)" "10.0.0.1" "255.255.255.0" { Area.X = 0.; Y = 0.; Width = 200.; Height = 100. } { Point.X = 0. + playAreaRect.left; Y = 100. + playAreaRect.top }
+                Device.create "device002" Kind.Client "Client (2)" "10.0.0.2" "255.255.255.0" { Area.X = 0.; Y = 0.; Width = 200.; Height = 100. } { Point.X = 150. + playAreaRect.left; Y = 100. + playAreaRect.top }
+                Device.create "device003" Kind.Router "Router (1)" "10.0.0.3" "255.255.255.0" { Area.X = 0.; Y = 0.; Width = 200.; Height = 100. } { Point.X = 300. + playAreaRect.left; Y = 100. + playAreaRect.top }
+                Device.create "device004" Kind.Client "Client (3)" "10.0.0.18" "255.255.255.240" { Area.X = 0.; Y = 0.; Width = 200.; Height = 100. } { Point.X = 450. + playAreaRect.left; Y = 100. + playAreaRect.top }
+                Device.create "device005" Kind.Router "Router (2)" "10.0.0.17" "255.255.255.240" { Area.X = 0.; Y = 0.; Width = 200.; Height = 100. } { Point.X = 600. + playAreaRect.left; Y = 100. + playAreaRect.top }
+                Device.create "device006" Kind.Client "Client (4)" "10.0.0.19" "255.255.255.240" { Area.X = 0.; Y = 0.; Width = 200.; Height = 100. } { Point.X = 750. + playAreaRect.left; Y = 100. + playAreaRect.top }
             ]
         
         let deviceElements =
@@ -108,10 +112,10 @@ module NetworkSimulator =
 
         let cables =
             [
-                Cable.create "lancable001" Kind.LANCable { Area.X = 0.; Y = 0.; Width = 200.; Height = 100. } "LAN cable (1)" "5,95 195,5"
-                Cable.create "lancable002" Kind.LANCable { Area.X = 0.; Y = 0.; Width = 200.; Height = 100. } "LAN cable (2)" "5,5 195,95"
-                Cable.create "lancable003" Kind.LANCable { Area.X = 0.; Y = 0.; Width = 200.; Height = 5. } "LAN cable (3)" "5,2 195,2"
-                Cable.create "lancable004" Kind.LANCable { Area.X = 0.; Y = 0.; Width = 5.; Height = 100. } "LAN cable (4)" "2,5 2,95"
+                Cable.create "lancable001" Kind.LANCable "LAN cable (1)" "5,95 195,5" { Area.X = 0.; Y = 0.; Width = 200.; Height = 100. } { Point.X = 0. + playAreaRect.left; Y = 0. + playAreaRect.top }
+                Cable.create "lancable002" Kind.LANCable "LAN cable (2)" "5,5 195,95" { Area.X = 0.; Y = 0.; Width = 200.; Height = 100. } { Point.X = 200. + playAreaRect.left; Y = 0. + playAreaRect.top }
+                Cable.create "lancable003" Kind.LANCable "LAN cable (3)" "5,2 195,2" { Area.X = 0.; Y = 0.; Width = 200.; Height = 5. } { Point.X = 400. + playAreaRect.left; Y = 0. + playAreaRect.top }
+                Cable.create "lancable004" Kind.LANCable "LAN cable (4)" "2,5 2,95" { Area.X = 0.; Y = 0.; Width = 5.; Height = 100. } { Point.X = 600. + playAreaRect.left; Y = 0. + playAreaRect.top }
             ]
         
         let cableElements =
