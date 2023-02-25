@@ -6,35 +6,38 @@
 namespace Taidalab
 
 open Browser.Dom
+open Fermata
 
 type Device =
     { Id : string
       Kind : Kind
-      Area : Area
       Name : string
       IPv4 : IPv4
       SubnetMask : IPv4
-      NetworkAddress : IPv4 }
+      NetworkAddress : IPv4
+      Area : Area
+      Position : Point }
 
 module Device =
-    let create id kind area name ipv4 subnetMask : Device =
+    let create id kind name ipv4 subnetMask area position : Device =
         let ipv4 = IPv4.ofDotDecimal ipv4
         let subnetMask = IPv4.ofDotDecimal subnetMask
         let networkAddress = IPv4.getSubnet subnetMask ipv4
 
         { Device.Id = id
           Device.Kind = kind
-          Device.Area = area
           Device.Name = name
           Device.IPv4 = ipv4
           Device.SubnetMask = subnetMask
-          Device.NetworkAddress =  networkAddress }
+          Device.NetworkAddress =  networkAddress
+          Device.Area = area
+          Device.Position = position }
 
     let toElement (device: Device) : string =
         match device.Kind with
         | Kind.Client ->
             $"""
-            <div id="%s{device.Id}" class="device device-container device-note">
+            <div id="%s{device.Id}" class="device device-container device-note" style="top: %f{device.Position.Y}px; left: %f{device.Position.X}px;">
                 <svg id="%s{device.Id}Svg" class="device-image" width="100" height="100" xmlns="http://www.w3.org/2000/svg">
                     <g>
                     <title>%s{device.Name}</title>
@@ -58,7 +61,7 @@ module Device =
             </div>"""
         | Kind.Router ->
             $"""
-            <div id="%s{device.Id}" class="device device-container device-note">
+            <div id="%s{device.Id}" class="device device-container device-note" style="top: %f{device.Position.Y}px; left: %f{device.Position.X}px;">
               <svg id="%s{device.Id}Svg" class="device-image" width="100" height="35" xmlns="http://www.w3.org/2000/svg">
                 <g>
                   <title>%s{device.Name}</title>
@@ -95,7 +98,27 @@ module Device =
             let svg = document.getElementById(id + "Svg")
             let rect = svg.getBoundingClientRect()
             Area.ofFloats rect.left rect.top rect.width rect.height
+        
+        let position =
+            let x =
+                let left =
+                    elm.getAttribute("style")
+                    |> Regex.match' """left: (\d+\.?\d+)px;"""
+                    |> fun m -> (m.Groups.Item 1).Value
+                left |> printfn "%A"
+                left |> float |> printfn "%f"
+                left |> float
+            let y =
+                let top =
+                    elm.getAttribute("style")
+                    |> Regex.match' """top: (\d+\.?\d+)px;"""
+                    |> fun m -> (m.Groups.Item 1).Value
+                top |> printfn "%A"
+                top |> float |> printfn "%f"
+                top |> float
+            { Point.X = x; Y = y }
+        position |> printfn "%A"
 
         match kind with
-        | Some (x: Kind) -> Some (create id x area name ipv4 subnetMask)
+        | Some (x: Kind) -> Some (create id x name ipv4 subnetMask area position)
         | None -> None
