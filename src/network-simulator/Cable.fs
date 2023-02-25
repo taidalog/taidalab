@@ -63,23 +63,16 @@ module Cable =
         
         let position =
             let x =
-                let left =
-                    elm.getAttribute("style")
-                    |> Regex.match' """left: (\d+\.?\d+)px;"""
-                    |> fun m -> (m.Groups.Item 1).Value
-                left |> printfn "%A"
-                left |> float |> printfn "%f"
-                left |> float
+                elm.getAttribute("style")
+                |> Regex.match' """left: (\d+\.?\d+)px;"""
+                |> fun m -> (m.Groups.Item 1).Value
+                |> float
             let y =
-                let top =
-                    elm.getAttribute("style")
-                    |> Regex.match' """top: (\d+\.?\d+)px;"""
-                    |> fun m -> (m.Groups.Item 1).Value
-                top |> printfn "%A"
-                top |> float |> printfn "%f"
-                top |> float
-            { Point.X = x; Y = y }
-        position |> printfn "%A"
+                elm.getAttribute("style")
+                |> Regex.match' """top: (\d+\.?\d+)px;"""
+                |> fun m -> (m.Groups.Item 1).Value
+                |> float
+            Point.ofFloats x y
 
         match kind with
         | Some x -> Some (create id x name points area position)
