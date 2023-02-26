@@ -147,11 +147,10 @@ module NetworkSimulator =
                     document.removeEventListener("mousemove", onMouseMove'))
         
         devices
-        |> List.map (fun x -> x.Id)
         |> List.iter (fun x ->
-            let nameElement = document.getElementById (x + "Name")
+            let nameElement = document.getElementById (x.Id + "Name")
             nameElement.addEventListener("blur", (fun _ ->
-                let titleElement = document.getElementById (x + "Title")
+                let titleElement = document.getElementById (x.Id + "Title")
                 titleElement.textContent <- nameElement.innerText)))
 
         let submitButton = document.getElementById("submitButton") :?> Browser.Types.HTMLButtonElement
