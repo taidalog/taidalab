@@ -40,7 +40,7 @@ module Device =
             <div id="%s{device.Id}" class="device device-container device-note" style="top: %f{device.Position.Y}px; left: %f{device.Position.X}px;">
                 <svg id="%s{device.Id}Svg" class="device-image" width="100" height="100" xmlns="http://www.w3.org/2000/svg">
                     <g>
-                    <title>%s{device.Name}</title>
+                    <title id="%s{device.Id}Title">%s{device.Name}</title>
                     <path d="m 20,10 l 60,0 l 0,45 l -60,0 l 0,-45 z" fill="none" stroke-width="5" stroke="#000"/>
                     <path d="m 20,60 l -15,30 l 90,0 l -15,-30" stroke="#000" fill="#fff" stroke-width="5"/>
                     <path d="m 28,65 l  -8,16 l 60,0 l  -8,-16  z" stroke="#000" fill="#000" stroke-width="5"/>
@@ -54,9 +54,9 @@ module Device =
                     </g>
                 </svg>
                 <br>
-                <span id="%s{device.Id}Name" class="">%s{device.Name}</span><br>
-                IPv4: <span id="%s{device.Id}IPv4" class="">%s{device.IPv4.ToString()}</span><br>
-                SubnetMask: <span id="%s{device.Id}SubnetMask" class="">%s{device.SubnetMask.ToString()}</span>
+                <span id="%s{device.Id}Name" class="" contentEditable="true">%s{device.Name}</span><br>
+                IPv4: <span id="%s{device.Id}IPv4" class="" contentEditable="true">%s{device.IPv4.ToString()}</span><br>
+                SubnetMask: <span id="%s{device.Id}SubnetMask" class="" contentEditable="true">%s{device.SubnetMask.ToString()}</span>
                 <span id="%s{device.Id}Kind" class="no-display">%s{device.Kind |> string}</span>
             </div>"""
         | Kind.Router ->
@@ -64,7 +64,7 @@ module Device =
             <div id="%s{device.Id}" class="device device-container device-note" style="top: %f{device.Position.Y}px; left: %f{device.Position.X}px;">
               <svg id="%s{device.Id}Svg" class="device-image" width="100" height="35" xmlns="http://www.w3.org/2000/svg">
                 <g>
-                  <title>%s{device.Name}</title>
+                  <title id="%s{device.Id}Title">%s{device.Name}</title>
                   <path d="m 50,0 l 50,0 l 0,35 l -100,0 l 0,-35 l 50,0 z" stroke="#000000" fill="#000000"/>
                   <path d="m 20,15 l 3,0 l 0,3 l 3,0 l 0,7 l -10,0 l 0,-7 l 3,0 l 0,-3 l 3,0 z" stroke="#000000" fill="#ffffff"/>
                   <path d="m 40,15 l 3,0 l 0,3 l 3,0 l 0,7 l -10,0 l 0,-7 l 3,0 l 0,-3 l 3,0 z" stroke="#000000" fill="#ffffff"/>
@@ -73,9 +73,9 @@ module Device =
                 </g>
               </svg>
               <br>
-              <span id="%s{device.Id}Name" class="">%s{device.Name}</span><br>
-              IPv4: <span id="%s{device.Id}IPv4" class="">%s{device.IPv4.ToString()}</span><br>
-              SubnetMask: <span id="%s{device.Id}SubnetMask" class="">%s{device.SubnetMask.ToString()}</span>
+              <span id="%s{device.Id}Name" class="" contentEditable="true">%s{device.Name}</span><br>
+              IPv4: <span id="%s{device.Id}IPv4" class="" contentEditable="true">%s{device.IPv4.ToString()}</span><br>
+              SubnetMask: <span id="%s{device.Id}SubnetMask" class="" contentEditable="true">%s{device.SubnetMask.ToString()}</span>
               <span id="%s{device.Id}Kind" class="no-display">%s{device.Kind |> string}</span>
             </div>
             """
