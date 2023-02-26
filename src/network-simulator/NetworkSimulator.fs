@@ -133,12 +133,12 @@ module NetworkSimulator =
 
         let devices =
             [
-                Device.create "device001" Kind.Client "Client (1)" "10.0.0.1" "255.255.255.0" { Area.X = 0.; Y = 0.; Width = 200.; Height = 100. } { Point.X = 0. + playAreaRect.left; Y = 100. + playAreaRect.top }
-                Device.create "device002" Kind.Client "Client (2)" "10.0.0.2" "255.255.255.0" { Area.X = 0.; Y = 0.; Width = 200.; Height = 100. } { Point.X = 150. + playAreaRect.left; Y = 100. + playAreaRect.top }
-                Device.create "device003" Kind.Router "Router (1)" "10.0.0.3" "255.255.255.0" { Area.X = 0.; Y = 0.; Width = 200.; Height = 100. } { Point.X = 300. + playAreaRect.left; Y = 100. + playAreaRect.top }
-                Device.create "device004" Kind.Client "Client (3)" "10.0.0.18" "255.255.255.240" { Area.X = 0.; Y = 0.; Width = 200.; Height = 100. } { Point.X = 450. + playAreaRect.left; Y = 100. + playAreaRect.top }
-                Device.create "device005" Kind.Router "Router (2)" "10.0.0.17" "255.255.255.240" { Area.X = 0.; Y = 0.; Width = 200.; Height = 100. } { Point.X = 600. + playAreaRect.left; Y = 100. + playAreaRect.top }
-                Device.create "device006" Kind.Client "Client (4)" "10.0.0.19" "255.255.255.240" { Area.X = 0.; Y = 0.; Width = 200.; Height = 100. } { Point.X = 750. + playAreaRect.left; Y = 100. + playAreaRect.top }
+                Device.create "device1" Kind.Client "Client (1)" "10.0.0.1" "255.255.255.0" { Area.X = 0.; Y = 0.; Width = 200.; Height = 100. } { Point.X = 0. + playAreaRect.left; Y = 100. + playAreaRect.top }
+                Device.create "device2" Kind.Client "Client (2)" "10.0.0.2" "255.255.255.0" { Area.X = 0.; Y = 0.; Width = 200.; Height = 100. } { Point.X = 150. + playAreaRect.left; Y = 100. + playAreaRect.top }
+                Device.create "device3" Kind.Router "Router (1)" "10.0.0.3" "255.255.255.0" { Area.X = 0.; Y = 0.; Width = 200.; Height = 100. } { Point.X = 300. + playAreaRect.left; Y = 100. + playAreaRect.top }
+                Device.create "device4" Kind.Client "Client (3)" "10.0.0.18" "255.255.255.240" { Area.X = 0.; Y = 0.; Width = 200.; Height = 100. } { Point.X = 450. + playAreaRect.left; Y = 100. + playAreaRect.top }
+                Device.create "device5" Kind.Router "Router (2)" "10.0.0.17" "255.255.255.240" { Area.X = 0.; Y = 0.; Width = 200.; Height = 100. } { Point.X = 600. + playAreaRect.left; Y = 100. + playAreaRect.top }
+                Device.create "device6" Kind.Client "Client (4)" "10.0.0.19" "255.255.255.240" { Area.X = 0.; Y = 0.; Width = 200.; Height = 100. } { Point.X = 750. + playAreaRect.left; Y = 100. + playAreaRect.top }
             ]
         
         let deviceElements =
@@ -148,10 +148,10 @@ module NetworkSimulator =
 
         let cables =
             [
-                Cable.create "lancable001" Kind.LANCable "LAN cable (1)" "5,95 195,5" { Area.X = 0.; Y = 0.; Width = 200.; Height = 100. } { Point.X = 0. + playAreaRect.left; Y = 0. + playAreaRect.top }
-                Cable.create "lancable002" Kind.LANCable "LAN cable (2)" "5,5 195,95" { Area.X = 0.; Y = 0.; Width = 200.; Height = 100. } { Point.X = 200. + playAreaRect.left; Y = 0. + playAreaRect.top }
-                Cable.create "lancable003" Kind.LANCable "LAN cable (3)" "5,2 195,2" { Area.X = 0.; Y = 0.; Width = 200.; Height = 5. } { Point.X = 400. + playAreaRect.left; Y = 0. + playAreaRect.top }
-                Cable.create "lancable004" Kind.LANCable "LAN cable (4)" "2,5 2,95" { Area.X = 0.; Y = 0.; Width = 5.; Height = 100. } { Point.X = 600. + playAreaRect.left; Y = 0. + playAreaRect.top }
+                Cable.create "lancable1" Kind.LANCable "LAN cable (1)" "5,95 195,5" { Area.X = 0.; Y = 0.; Width = 200.; Height = 100. } { Point.X = 0. + playAreaRect.left; Y = 0. + playAreaRect.top }
+                Cable.create "lancable2" Kind.LANCable "LAN cable (2)" "5,5 195,95" { Area.X = 0.; Y = 0.; Width = 200.; Height = 100. } { Point.X = 200. + playAreaRect.left; Y = 0. + playAreaRect.top }
+                Cable.create "lancable3" Kind.LANCable "LAN cable (3)" "5,2 195,2" { Area.X = 0.; Y = 0.; Width = 200.; Height = 5. } { Point.X = 400. + playAreaRect.left; Y = 0. + playAreaRect.top }
+                Cable.create "lancable4" Kind.LANCable "LAN cable (4)" "2,5 2,95" { Area.X = 0.; Y = 0.; Width = 5.; Height = 100. } { Point.X = 600. + playAreaRect.left; Y = 0. + playAreaRect.top }
             ]
         
         let cableElements =
@@ -242,15 +242,15 @@ module NetworkSimulator =
                 playArea.getElementsByClassName("device-container")
                 |> (fun x -> JS.Constructors.Array?from(x))
                 |> Array.length
-
-            let id = sprintf $"device%d{deviceCount}"
             
-            deviceCount
+            let nextNumber = deviceCount + 1
+            let id = sprintf $"device%d{nextNumber}"
+            nextNumber
             |> (fun n ->
                 Device.create
                     id
                     Kind.Client
-                    (sprintf $"Client-%d{n}")
+                    (sprintf $"Client (%d{n})")
                     "10.0.0.1"
                     "255.255.255.0"
                     { Area.X = 0.; Y = 0.; Width = 200.; Height = 100. }
