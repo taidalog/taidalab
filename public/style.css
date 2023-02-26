@@ -981,6 +981,14 @@ dd {
     cursor: pointer;
 }
 
+.device-prop-ipv4::before {
+    content: "IPv4: ";
+}
+
+.device-prop-subnetmask::before {
+    content: "SubnetMask: ";
+}
+
 .lan-cable {
     cursor: pointer;
 }
