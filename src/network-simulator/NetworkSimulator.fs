@@ -91,6 +91,37 @@ module NetworkSimulator =
             neighbors
             |> List.exists (fun x -> ping cables devices x (ttl - 1) destinationIPv4)
     
+    let onMouseMove (elm: Browser.Types.HTMLElement) (svg: Browser.Types.HTMLElement) (event: Browser.Types.Event) =
+        let event = event :?> Browser.Types.MouseEvent
+        let top = (event.clientY - svg.getBoundingClientRect().height / 2.)
+        let left = (event.clientX - svg.getBoundingClientRect().width / 2.)
+        let styleString = sprintf "top: %fpx; left: %fpx;" top left
+        elm.setAttribute("style", styleString)
+    
+    let setMouseMoveEvent (x: Browser.Types.HTMLElement) : unit =
+        let svg = document.getElementById(x.id + "Svg")
+        svg.ondragstart <- fun _ -> false
+        let onMouseMove' = onMouseMove x svg
+        svg.onmousedown <- fun _ ->
+            document.addEventListener("mousemove", onMouseMove')
+            svg.onmouseup <- fun _ ->
+                printfn "mouse up!"
+                document.removeEventListener("mousemove", onMouseMove')
+    
+    let resetTitleOnNameChange (x: Browser.Types.HTMLElement) : unit =
+        let nameElement = document.getElementById (x.id + "Name")
+        nameElement.addEventListener("blur", (fun _ ->
+            let titleElement = document.getElementById (x.id + "Title")
+            titleElement.textContent <- nameElement.innerText))
+    
+    let setToQuitEditOnEnter (x: Browser.Types.HTMLElement) : unit =
+        x.children
+        |> (fun x -> JS.Constructors.Array?from(x))
+        |> Array.filter (fun (x: Browser.Types.HTMLElement) -> x.contentEditable = "true")
+        |> Array.iter (fun x -> 
+            x.onkeydown <- (fun event ->
+                if event.key = "Enter" || event.key = "Escape" then x.blur()))
+
     let init () =
         let playArea = document.getElementById "playArea"
         let playAreaRect = playArea.getBoundingClientRect()
@@ -125,42 +156,19 @@ module NetworkSimulator =
         
         document.getElementById("playArea").innerHTML <- deviceElements + cableElements
         
-        let onMouseMove (elm: Browser.Types.HTMLElement) (svg: Browser.Types.HTMLElement) (event: Browser.Types.Event) =
-            let event = event :?> Browser.Types.MouseEvent
-            let top = (event.clientY - svg.getBoundingClientRect().height / 2.)
-            let left = (event.clientX - svg.getBoundingClientRect().width / 2.)
-            let styleString = sprintf "top: %fpx; left: %fpx;" top left
-            elm.setAttribute("style", styleString)
-        
         List.append
             (devices |> List.map (fun x -> x.Id))
             (cables |> List.map (fun x -> x.Id))
         |> List.map document.getElementById
-        |> List.iter (fun x ->
-            let svg = document.getElementById(x.id + "Svg")
-            svg.ondragstart <- fun _ -> false
-            let onMouseMove' = onMouseMove x svg
-            svg.onmousedown <- fun _ ->
-                document.addEventListener("mousemove", onMouseMove')
-                svg.onmouseup <- fun _ ->
-                    printfn "mouse up!"
-                    document.removeEventListener("mousemove", onMouseMove'))
+        |> List.iter setMouseMoveEvent
         
         devices
-        |> List.iter (fun x ->
-            let nameElement = document.getElementById (x.Id + "Name")
-            nameElement.addEventListener("blur", (fun _ ->
-                let titleElement = document.getElementById (x.Id + "Title")
-                titleElement.textContent <- nameElement.innerText)))
+        |> List.map (fun x -> document.getElementById x.Id)
+        |> List.iter resetTitleOnNameChange
         
         devices
-        |> List.iter (fun x ->
-            document.getElementById(x.Id).children
-            |> (fun x -> JS.Constructors.Array?from(x))
-            |> Array.filter (fun (x: Browser.Types.HTMLElement) -> x.contentEditable = "true")
-            |> Array.iter (fun x -> 
-                x.onkeydown <- (fun event ->
-                    if event.key = "Enter" || event.key = "Escape" then x.blur())))
+        |> List.map (fun x -> document.getElementById(x.Id))
+        |> List.iter setToQuitEditOnEnter
 
         let submitButton = document.getElementById("submitButton") :?> Browser.Types.HTMLButtonElement
         submitButton.onclick <- fun _ ->
