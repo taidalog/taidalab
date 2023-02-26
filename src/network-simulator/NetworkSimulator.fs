@@ -253,7 +253,7 @@ module NetworkSimulator =
                     (sprintf $"Client (%d{n})")
                     "10.0.0.1"
                     "255.255.255.0"
-                    { Area.X = 0.; Y = 0.; Width = 200.; Height = 100. }
+                    { Area.X = 0.; Y = 0.; Width = 100.; Height = 100. }
                     { Point.X = 0. + playAreaRect.left; Y = 0. + playAreaRect.top })
             |> Device.toHTMLElement
             |> (fun x -> playArea.appendChild(x))
