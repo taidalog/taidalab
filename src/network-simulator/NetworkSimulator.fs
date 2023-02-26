@@ -25,6 +25,11 @@ module NetworkSimulator =
                 <button type="button" id="submitButton" class="submit-button d2b-button">ping</button>
             </span>
         </form>
+        <form>
+            <button type="button" id="addClientButton" class="submit-button d2b-button display-order-3">add a client</button>
+            <button type="button" id="addRouterButton" class="submit-button d2b-button display-order-4">add a router</button>
+            <button type="button" id="addLANCableButton" class="submit-button d2b-button display-order-5">add a LAN cable</button>
+        </form>
         <div id="errorArea" class="error-area warning"></div>
         <div id="outputArea" class="output-area"></div>
         <div id="playArea" class="play-area"></div>
@@ -227,3 +232,38 @@ module NetworkSimulator =
                         ping lanCables' devices' source' 10 destinationIPv4
                         |> sprintf "%s> ping %s -> %b" source'.Name (destinationIPv4.ToString())
                         |> (fun x -> outputArea.innerText <- x)
+        
+        let addClientButton = document.getElementById("addClientButton") :?> Browser.Types.HTMLButtonElement
+        addClientButton.onclick <- fun _ ->
+            let playArea = document.getElementById "playArea"
+            let playAreaRect = playArea.getBoundingClientRect()
+   
+            let deviceCount =
+                playArea.getElementsByClassName("device-container")
+                |> (fun x -> JS.Constructors.Array?from(x))
+                |> Array.length
+
+            let id = sprintf $"device%d{deviceCount}"
+            
+            deviceCount
+            |> (fun n ->
+                Device.create
+                    id
+                    Kind.Client
+                    (sprintf $"Client-%d{n}")
+                    "10.0.0.1"
+                    "255.255.255.0"
+                    { Area.X = 0.; Y = 0.; Width = 200.; Height = 100. }
+                    { Point.X = 0. + playAreaRect.left; Y = 0. + playAreaRect.top })
+            |> Device.toHTMLElement
+            |> (fun x -> playArea.appendChild(x))
+            |> ignore
+
+            document.getElementById id
+            |> setMouseMoveEvent
+            
+            document.getElementById id
+            |> resetTitleOnNameChange
+
+            document.getElementById id
+            |> setToQuitEditOnEnter
