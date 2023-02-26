@@ -149,15 +149,9 @@ module NetworkSimulator =
         devices
         |> List.map (fun x -> x.Id)
         |> List.iter (fun x ->
-            printfn "%s" x
             let nameElement = document.getElementById (x + "Name")
-            printfn "%s" nameElement.id
             nameElement.addEventListener("blur", (fun _ ->
                 let titleElement = document.getElementById (x + "Title")
-                printfn "%s" nameElement.innerText
-                printfn "%s" titleElement.id
-                printfn "%s" titleElement.innerText
-                printfn "%s" titleElement.innerHTML
                 titleElement.textContent <- nameElement.innerText)))
 
         let submitButton = document.getElementById("submitButton") :?> Browser.Types.HTMLButtonElement
