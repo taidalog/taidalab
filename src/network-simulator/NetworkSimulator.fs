@@ -152,6 +152,15 @@ module NetworkSimulator =
             nameElement.addEventListener("blur", (fun _ ->
                 let titleElement = document.getElementById (x.Id + "Title")
                 titleElement.textContent <- nameElement.innerText)))
+        
+        devices
+        |> List.iter (fun x ->
+            document.getElementById(x.Id).children
+            |> (fun x -> JS.Constructors.Array?from(x))
+            |> Array.filter (fun (x: Browser.Types.HTMLElement) -> x.contentEditable = "true")
+            |> Array.iter (fun x -> 
+                x.onkeydown <- (fun event ->
+                    if event.key = "Enter" || event.key = "Escape" then x.blur())))
 
         let submitButton = document.getElementById("submitButton") :?> Browser.Types.HTMLButtonElement
         submitButton.onclick <- fun _ ->
