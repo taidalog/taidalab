@@ -55,8 +55,8 @@ module Device =
                 </svg>
                 <br>
                 <span id="%s{device.Id}Name" class="device-prop" contentEditable="true">%s{device.Name}</span><br>
-                IPv4: <span id="%s{device.Id}IPv4" class="device-prop" contentEditable="true">%s{device.IPv4.ToString()}</span><br>
-                SubnetMask: <span id="%s{device.Id}SubnetMask" class="device-prop" contentEditable="true">%s{device.SubnetMask.ToString()}</span>
+                <span id="%s{device.Id}IPv4" class="device-prop device-prop-ipv4" contentEditable="true">%s{device.IPv4.ToString()}</span><br>
+                <span id="%s{device.Id}SubnetMask" class="device-prop device-prop-subnetmask" contentEditable="true">%s{device.SubnetMask.ToString()}</span>
                 <span id="%s{device.Id}Kind" class="no-display">%s{device.Kind |> string}</span>
             </div>"""
         | Kind.Router ->
@@ -74,8 +74,8 @@ module Device =
               </svg>
               <br>
               <span id="%s{device.Id}Name" class="device-prop" contentEditable="true">%s{device.Name}</span><br>
-              IPv4: <span id="%s{device.Id}IPv4" class="device-prop" contentEditable="true">%s{device.IPv4.ToString()}</span><br>
-              SubnetMask: <span id="%s{device.Id}SubnetMask" class="device-prop" contentEditable="true">%s{device.SubnetMask.ToString()}</span>
+              <span id="%s{device.Id}IPv4" class="device-propdevice-prop-ipv4" contentEditable="true">%s{device.IPv4.ToString()}</span><br>
+              <span id="%s{device.Id}SubnetMask" class="device-prop device-prop-subnetmask" contentEditable="true">%s{device.SubnetMask.ToString()}</span>
               <span id="%s{device.Id}Kind" class="no-display">%s{device.Kind |> string}</span>
             </div>
             """
