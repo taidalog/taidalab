@@ -133,12 +133,12 @@ module NetworkSimulator =
 
         let devices =
             [
-                Device.create "device1" Kind.Client "Client (1)" "10.0.0.1" "255.255.255.0" { Area.X = 0.; Y = 0.; Width = 200.; Height = 100. } { Point.X = 0. + playAreaRect.left; Y = 100. + playAreaRect.top }
-                Device.create "device2" Kind.Client "Client (2)" "10.0.0.2" "255.255.255.0" { Area.X = 0.; Y = 0.; Width = 200.; Height = 100. } { Point.X = 150. + playAreaRect.left; Y = 100. + playAreaRect.top }
-                Device.create "device3" Kind.Router "Router (1)" "10.0.0.3" "255.255.255.0" { Area.X = 0.; Y = 0.; Width = 200.; Height = 100. } { Point.X = 300. + playAreaRect.left; Y = 100. + playAreaRect.top }
-                Device.create "device4" Kind.Client "Client (3)" "10.0.0.18" "255.255.255.240" { Area.X = 0.; Y = 0.; Width = 200.; Height = 100. } { Point.X = 450. + playAreaRect.left; Y = 100. + playAreaRect.top }
-                Device.create "device5" Kind.Router "Router (2)" "10.0.0.17" "255.255.255.240" { Area.X = 0.; Y = 0.; Width = 200.; Height = 100. } { Point.X = 600. + playAreaRect.left; Y = 100. + playAreaRect.top }
-                Device.create "device6" Kind.Client "Client (4)" "10.0.0.19" "255.255.255.240" { Area.X = 0.; Y = 0.; Width = 200.; Height = 100. } { Point.X = 750. + playAreaRect.left; Y = 100. + playAreaRect.top }
+                Device.create "device1" Kind.Client "Client (1)" "10.0.0.1" "255.255.255.0" { Area.X = 0.; Y = 0.; Width = 100.; Height = 100. } { Point.X = 0. + playAreaRect.left; Y = 100. + playAreaRect.top }
+                Device.create "device2" Kind.Client "Client (2)" "10.0.0.2" "255.255.255.0" { Area.X = 0.; Y = 0.; Width = 100.; Height = 100. } { Point.X = 150. + playAreaRect.left; Y = 100. + playAreaRect.top }
+                Device.create "device3" Kind.Router "Router (1)" "10.0.0.3" "255.255.255.0" { Area.X = 0.; Y = 0.; Width = 100.; Height = 35. } { Point.X = 300. + playAreaRect.left; Y = 100. + playAreaRect.top }
+                Device.create "device4" Kind.Client "Client (3)" "10.0.0.18" "255.255.255.240" { Area.X = 0.; Y = 0.; Width = 100.; Height = 100. } { Point.X = 450. + playAreaRect.left; Y = 100. + playAreaRect.top }
+                Device.create "device5" Kind.Router "Router (2)" "10.0.0.17" "255.255.255.240" { Area.X = 0.; Y = 0.; Width = 100.; Height = 35. } { Point.X = 600. + playAreaRect.left; Y = 100. + playAreaRect.top }
+                Device.create "device6" Kind.Client "Client (4)" "10.0.0.19" "255.255.255.240" { Area.X = 0.; Y = 0.; Width = 100.; Height = 100. } { Point.X = 750. + playAreaRect.left; Y = 100. + playAreaRect.top }
             ]
         
         let deviceElements =
