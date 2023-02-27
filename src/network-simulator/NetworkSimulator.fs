@@ -233,6 +233,40 @@ module NetworkSimulator =
                         |> sprintf "%s> ping %s -> %b" source'.Name (destinationIPv4.ToString())
                         |> (fun x -> outputArea.innerText <- x)
         
+        let addRouterButton = document.getElementById("addRouterButton") :?> Browser.Types.HTMLButtonElement
+        addRouterButton.onclick <- fun _ ->
+            let playArea = document.getElementById "playArea"
+            let playAreaRect = playArea.getBoundingClientRect()
+   
+            let deviceCount =
+                playArea.getElementsByClassName("device-container")
+                |> (fun x -> JS.Constructors.Array?from(x))
+                |> Array.length
+            
+            let nextNumber = deviceCount + 1
+            let id = sprintf $"device%d{nextNumber}"
+            nextNumber
+            |> (fun n ->
+                Device.create
+                    id
+                    Kind.Router
+                    (sprintf $"Router (%d{n})")
+                    "10.0.0.1"
+                    "255.255.255.0"
+                    { Area.X = 0.; Y = 0.; Width = 100.; Height = 35. }
+                    { Point.X = 0. + playAreaRect.left; Y = 0. + playAreaRect.top })
+            |> Device.toHTMLElement
+            |> (fun x -> playArea.appendChild(x))
+            |> ignore
+
+            document.getElementById id
+            |> setMouseMoveEvent
+            
+            document.getElementById id
+            |> resetTitleOnNameChange
+
+            document.getElementById id
+            |> setToQuitEditOnEnter
         let addClientButton = document.getElementById("addClientButton") :?> Browser.Types.HTMLButtonElement
         addClientButton.onclick <- fun _ ->
             let playArea = document.getElementById "playArea"
