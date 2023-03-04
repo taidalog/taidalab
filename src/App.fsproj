@@ -19,9 +19,9 @@
     <Compile Include="endless-binary/Complement.fs" />
     <Compile Include="endless-binary/Dec2Hex.fs" />
     <Compile Include="endless-binary/Hex2Dec.fs" />
+    <Compile Include="network-simulator/Point.fs" />
     <Compile Include="iro-iroiro/IroIroiro.fs" />
     <Compile Include="network-simulator/Area.fs" />
-    <Compile Include="network-simulator/Point.fs" />
     <Compile Include="network-simulator/IPv4.fs" />
     <Compile Include="network-simulator/Kind.fs" />
     <Compile Include="network-simulator/Cable.fs" />
