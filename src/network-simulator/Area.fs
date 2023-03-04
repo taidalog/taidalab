@@ -17,3 +17,12 @@ module Area =
           Area.Y = y
           Area.Width = width
           Area.Height = height }
+    
+    let ofPoints (point1: Point) (point2: Point) : Area =
+        ofFloats (min point1.X point2.X) (min point1.Y point2.Y) (point1.X - point2.X |> abs) (point1.Y - point2.Y |> abs)
+    
+    let expand (x: float) (y: float) (area: Area) : Area =
+        { area with Area.Width = area.Width + x; Area.Height = area.Height + y }
+    
+    let shift (x: float) (y: float) (area: Area) : Area =
+        { area with Area.X = area.X + x; Area.Y = area.Y + y }
