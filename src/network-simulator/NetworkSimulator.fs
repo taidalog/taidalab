@@ -127,6 +127,113 @@ module NetworkSimulator =
             x.onkeydown <- (fun event ->
                 if event.key = "Enter" || event.key = "Escape" then x.blur()))
 
+    let updatePoints point1 point2 newPoint =
+        (point1, point2)
+        |> Tuple.map (Point.distance newPoint)
+        |> fun (f1, f2) ->
+            if f1 <= f2 then
+//                printfn "new, 2"
+                (newPoint, point2)
+            else
+//                printfn "1, new"
+                (point1, newPoint)
+    
+    let resizeCable (container: Browser.Types.HTMLElement) (svg: Browser.Types.HTMLElement) (polyline: Browser.Types.HTMLElement) (event: Browser.Types.Event) : unit =
+        let event = event :?> Browser.Types.MouseEvent
+
+        // Getting current end points of the cable.
+        let point1, point2 =
+            polyline.getAttribute("points")
+            |> fun x -> x.Split([|' '|])
+            |> Array.map Point.ofString
+            |> fun xs -> Array.head xs, Array.last xs
+        printfn "point1 = X: %f Y: %f" point1.X point1.Y
+        printfn "point2 = X: %f Y: %f" point2.X point2.Y
+
+        // Getting the `playArea` element, which contains the cable.
+        let playArea = document.getElementById "playArea"
+        printfn "event.clientX: %f" event.clientX
+        printfn "event.clientY: %f" event.clientY
+        printfn "playArea.clientLeft: %f" playArea.clientLeft
+        printfn "playArea.clientTop: %f" playArea.clientTop
+
+        let style = container.getAttribute("style")
+        let styleLeft =
+            style
+            |> Regex.match' """left: (\d+\.?\d+)px;"""
+            |> fun m -> (m.Groups.Item 1).Value
+            |> float
+        let styleTop =
+            style
+            |> Regex.match' """top: (\d+\.?\d+)px;"""
+            |> fun m -> (m.Groups.Item 1).Value
+            |> float
+
+        // Building the new end points with the cursor position.
+        let updatedPoints =
+            Point.ofFloats (event.clientX - styleLeft) (event.clientY - styleTop)
+            |> updatePoints point1 point2
+        
+        updatedPoints |> (fun (p1, p2) -> printfn "updatedPoints: (%f, %f), (%f, %f)" p1.X p1.Y p2.X p2.Y)
+
+        // Building the new cable area.
+        let updatedArea = updatedPoints ||> Area.ofPoints |> Area.expand (5. * 2.) (5. * 2.)
+        updatedArea |> (fun x -> printfn "updatedArea: X = %f, Y = %f, Width = %f, Height = %f)" x.X x.Y x.Width x.Height)
+
+        updatedPoints
+        |> fun (p1, p2) -> $"%f{p1.X},%f{p1.Y} %f{p2.X},%f{p2.Y}"
+        |> fun x -> polyline.setAttribute("points", x)
+
+//        updatedArea
+//        |> fun x -> $"top: %f{x.X}; left: %f{x.Y};"
+//        |> fun x -> container.setAttribute("style", x)
+
+        updatedArea
+        |> fun x -> $"0 0 %f{x.Width} %f{x.Height}"
+        |> fun x -> svg.setAttribute("viewBox", x)
+        svg.setAttribute("style", "background-color: red;")
+        
+        svg.setAttribute("width", $"%f{updatedArea.Width}px")
+        svg.setAttribute("height", $"%f{updatedArea.Height}px")
+    
+    let setMouseMoveEventCable (container: Browser.Types.HTMLElement) : unit =
+        let cable = Cable.ofHTMLElement container
+        match cable with
+        | None -> ()
+        | Some cable' ->
+            let svg = document.getElementById(container.id + "Svg")
+            let polyline: Browser.Types.HTMLElement =
+                container.getElementsByTagName "polyline"
+                |> (fun x -> JS.Constructors.Array?from(x))
+                |> Array.head
+            svg.ondragstart <- fun _ -> false
+            svg.onmousedown <- fun e ->
+                let playArea = document.getElementById "playArea"
+                printfn "playArea (offsetLeft: %f, offsetTop: %f)" playArea.offsetLeft playArea.offsetTop
+                printfn "clicked at (offsetX: %f, offset.Y: %f)" e.offsetX e.offsetY
+                printfn "clicked at (clientX: %f, clientt.Y: %f)" e.clientX e.clientY
+                printfn "cable.Points: %A" cable'.Points
+                let point1, point2 =
+                    cable'.Points
+                    |> fun x -> x.Split([|' '|])
+                    |> Array.map Point.ofString
+                    |> fun xs -> Array.head xs, Array.last xs
+                let cursorPoint = Point.ofFloats e.offsetX e.offsetY
+                let minDistance =
+                    [point1; point2]
+                    |> List.map (Point.distance cursorPoint)
+                    |> List.min
+                printfn "distance: %f" minDistance
+                let onMouseMove' =
+                    if minDistance < 5. then
+                        resizeCable container svg polyline
+                    else
+                        onMouseMove container svg
+                document.addEventListener("mousemove", onMouseMove')
+                svg.onmouseup <- fun _ ->
+                    printfn "mouse up!"
+                    document.removeEventListener("mousemove", onMouseMove')
+    
     let init () =
         let playArea = document.getElementById "playArea"
         let playAreaRect = playArea.getBoundingClientRect()
@@ -161,9 +268,8 @@ module NetworkSimulator =
         
         document.getElementById("playArea").innerHTML <- deviceElements + cableElements
         
-        List.append
-            (devices |> List.map (fun x -> x.Id))
-            (cables |> List.map (fun x -> x.Id))
+        devices
+        |> List.map (fun x -> x.Id)
         |> List.map document.getElementById
         |> List.iter setMouseMoveEvent
         
@@ -174,6 +280,11 @@ module NetworkSimulator =
         devices
         |> List.map (fun x -> document.getElementById(x.Id))
         |> List.iter setToQuitEditOnEnter
+
+        cables
+        |> List.map (fun x -> x.Id)
+        |> List.map document.getElementById
+        |> List.iter setMouseMoveEventCable
 
         let submitButton = document.getElementById("submitButton") :?> Browser.Types.HTMLButtonElement
         submitButton.onclick <- fun _ ->
