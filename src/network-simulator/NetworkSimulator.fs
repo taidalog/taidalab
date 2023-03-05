@@ -256,10 +256,10 @@ module NetworkSimulator =
                 Device.create "device6" Kind.Client "Client (4)" "10.0.0.19" "255.255.255.240" { Area.X = 0.; Y = 0.; Width = 100.; Height = 100. } { Point.X = 750. + playAreaRect.left; Y = 100. + playAreaRect.top }
             ]
         
-        let deviceElements =
-            devices
-            |> List.map Device.toElement
-            |> String.concat ""
+        devices
+        |> List.map Device.toHTMLElement
+        |> List.map (fun x -> document.getElementById("playArea").appendChild(x))
+        |> ignore
 
         let cables =
             [
@@ -269,12 +269,10 @@ module NetworkSimulator =
                 Cable.create "lancable4" Kind.LANCable "LAN cable (4)" "2,5 2,95" { Area.X = 0.; Y = 0.; Width = 5.; Height = 100. } { Point.X = 600. + playAreaRect.left; Y = 0. + playAreaRect.top }
             ]
         
-        let cableElements =
-            cables
-            |> List.map Cable.toElement
-            |> String.concat ""
-        
-        document.getElementById("playArea").innerHTML <- deviceElements + cableElements
+        cables
+        |> List.map Cable.toHTMLElement
+        |> List.map (fun x -> document.getElementById("playArea").appendChild(x))
+        |> ignore
         
         devices
         |> List.map (fun x -> x.Id)

@@ -32,19 +32,19 @@ module Cable =
           Cable.Area = area
           Cable.Position = position }
     
-    let toElement (cable: Cable) : string =
-        $"""
-        <div id="%s{cable.Id}" class="device cable-container lan-cable" style="top: %f{cable.Position.Y}px; left: %f{cable.Position.X}px;">
-            <svg id="%s{cable.Id}Svg" class="device lan-cable" viewBox="%f{cable.Area.X} %f{cable.Area.Y} %f{cable.Area.Width} %f{cable.Area.Height}" width="%f{cable.Area.Width}px" height="%f{cable.Area.Height}px" xmlns="http://www.w3.org/2000/svg">
-                <g>
-                    <title>%s{cable.Name}</title>
-                    <polyline id="%s{cable.Id}Polyline" stroke="#00aeda" stroke-width="5" fill="none" points="%s{cable.Points}"/>
-                </g>
-            </svg>
-            <span id="%s{cable.Id}Name" class="no-display">%s{cable.Name}</span>
-            <span id="%s{cable.Id}Kind" class="no-display">%s{cable.Kind |> string}</span>
-        </div>
-        """
+//    let toElement (cable: Cable) : string =
+//        $"""
+//        <div id="%s{cable.Id}" class="device cable-container lan-cable" style="top: %f{cable.Position.Y}px; left: %f{cable.Position.X}px;">
+//            <svg id="%s{cable.Id}Svg" class="device lan-cable" viewBox="%f{cable.Area.X} %f{cable.Area.Y} %f{cable.Area.Width} %f{cable.Area.Height}" width="%f{cable.Area.Width}px" height="%f{cable.Area.Height}px" xmlns="http://www.w3.org/2000/svg">
+//                <g>
+//                    <title>%s{cable.Name}</title>
+//                    <polyline id="%s{cable.Id}Polyline" stroke="#00aeda" stroke-width="5" fill="none" points="%s{cable.Points}"/>
+//                </g>
+//            </svg>
+//            <span id="%s{cable.Id}Name" class="no-display">%s{cable.Name}</span>
+//            <span id="%s{cable.Id}Kind" class="no-display">%s{cable.Kind |> string}</span>
+//        </div>
+//        """
     
     let toHTMLElement (cable: Cable) : Browser.Types.HTMLElement =
         match cable.Kind with
