@@ -147,8 +147,8 @@ module NetworkSimulator =
             |> fun x -> x.Split([|' '|])
             |> Array.map Point.ofString
             |> fun xs -> Array.head xs, Array.last xs
-        printfn "point1 = X: %f Y: %f" point1.X point1.Y
-        printfn "point2 = X: %f Y: %f" point2.X point2.Y
+        printfn "point1:\t%O" point1
+        printfn "point2:\t%O" point2
 
         // Getting the `playArea` element, which contains the cable.
         let playArea = document.getElementById "playArea"
@@ -174,11 +174,11 @@ module NetworkSimulator =
             Point.ofFloats (event.clientX - styleLeft) (event.clientY - styleTop)
             |> updatePoints point1 point2
         
-        updatedPoints |> (fun (p1, p2) -> printfn "updatedPoints: (%f, %f), (%f, %f)" p1.X p1.Y p2.X p2.Y)
+        updatedPoints |> (fun (p1, p2) -> printfn "updatedPoints:\t(%O), (%O)" p1 p2)
 
         // Building the new cable area.
         let updatedArea = updatedPoints ||> Area.ofPoints |> Area.expand (5. * 2.) (5. * 2.)
-        updatedArea |> (fun x -> printfn "updatedArea: X = %f, Y = %f, Width = %f, Height = %f)" x.X x.Y x.Width x.Height)
+        printfn "updatedArea:\t%O" updatedArea
 
         updatedPoints
         |> fun (p1, p2) -> $"%f{p1.X},%f{p1.Y} %f{p2.X},%f{p2.Y}"
@@ -212,7 +212,7 @@ module NetworkSimulator =
                 printfn "playArea (offsetLeft: %f, offsetTop: %f)" playArea.offsetLeft playArea.offsetTop
                 printfn "clicked at (offsetX: %f, offset.Y: %f)" e.offsetX e.offsetY
                 printfn "clicked at (clientX: %f, clientt.Y: %f)" e.clientX e.clientY
-                printfn "cable.Points: %A" cable'.Points
+                printfn "cable.Points: %s" cable'.Points
                 let point1, point2 =
                     cable'.Points
                     |> fun x -> x.Split([|' '|])

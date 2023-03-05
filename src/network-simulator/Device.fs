@@ -8,6 +8,7 @@ namespace Taidalab
 open Browser.Dom
 open Fermata
 
+[<StructuredFormatDisplay("{DisplayText}")>]
 type Device =
     { Id : string
       Kind : Kind
@@ -17,6 +18,10 @@ type Device =
       NetworkAddress : IPv4
       Area : Area
       Position : Point }
+    member this.DisplayText = this.ToString()
+    override this.ToString() =
+        sprintf "Id = %s; Kind = %s; Name = %s; IPv4 = %O; SubnetMask = %O; Area = %O; Position = %O"
+            this.Id (string this.Kind) this.Name this.IPv4 this.SubnetMask this.Area this.Position
 
 module Device =
     let create id kind name ipv4 subnetMask area position : Device =

@@ -7,9 +7,12 @@ namespace Taidalab
 
 open System
 
+[<StructuredFormatDisplay("{DisplayText}")>]
 type Point =
     { X : float
       Y : float }
+    member this.DisplayText = this.ToString()
+    override this.ToString() = sprintf "X = %f; Y = %f" this.X this.Y
 
 module Point =
     let ofFloats x y =

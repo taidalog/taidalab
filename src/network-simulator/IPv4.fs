@@ -5,11 +5,13 @@
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
 namespace Taidalab
 
+[<StructuredFormatDisplay("{DisplayText}")>]
 type IPv4 =
     { Octet1 : byte
       Octet2 : byte
       Octet3 : byte
       Octet4 : byte }
+    member this.DisplayText = this.ToString()
     override this.ToString() = sprintf "%d.%d.%d.%d" this.Octet1 this.Octet2 this.Octet3 this.Octet4
 
 module IPv4 =

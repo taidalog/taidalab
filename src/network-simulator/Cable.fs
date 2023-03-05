@@ -10,6 +10,7 @@ open Fable.Core
 open Fable.Core.JsInterop
 open Fermata
 
+[<StructuredFormatDisplay("{DisplayText}")>]
 type Cable =
     { Id : string
       Kind : Kind
@@ -17,6 +18,10 @@ type Cable =
       Points : string
       Area : Area
       Position : Point }
+    member this.DisplayText = this.ToString()
+    override this.ToString() =
+        sprintf "Id = %s; Kind = %s; Name = %s; Points = %s; Area = %O; Posirion = %O"
+            this.Id (string this.Kind) this.Name this.Points this.Area this.Position
 
 module Cable =
     let create id kind name points area position : Cable =

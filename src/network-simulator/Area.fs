@@ -5,11 +5,14 @@
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
 namespace Taidalab
 
+[<StructuredFormatDisplay("{DisplayText}")>]
 type Area =
     { X : float
       Y : float
       Width : float
       Height : float }
+    member this.DisplayText = this.ToString()
+    override this.ToString() = sprintf "X = %f; Y = %f; Width = %f; Height = %f" this.X this.Y this.Width this.Height
 
 module Area =
     let ofFloats x y width height =
