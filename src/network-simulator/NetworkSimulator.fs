@@ -132,10 +132,9 @@ module NetworkSimulator =
         |> Tuple.map (Point.distance newPoint)
         |> fun (f1, f2) ->
             if f1 <= f2 then
-//                printfn "new, 2"
-                (newPoint, point2)
+                let shiftedPoint = point2 |> Point.shift (newPoint.X - point1.X) (newPoint.Y - point1.Y)
+                (point1, shiftedPoint)
             else
-//                printfn "1, new"
                 (point1, newPoint)
     
     let resizeCable (container: Browser.Types.HTMLElement) (svg: Browser.Types.HTMLElement) (polyline: Browser.Types.HTMLElement) (event: Browser.Types.Event) : unit =
