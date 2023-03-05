@@ -190,10 +190,10 @@ module NetworkSimulator =
         updatedArea
         |> fun x -> $"0 0 %f{x.Width} %f{x.Height}"
         |> fun x -> svg.setAttribute("viewBox", x)
-        svg.setAttribute("style", "background-color: red;")
         
         svg.setAttribute("width", $"%f{updatedArea.Width}px")
         svg.setAttribute("height", $"%f{updatedArea.Height}px")
+//        svg.setAttribute("style", "background-color: red;")
     
     let setMouseMoveEventCable (container: Browser.Types.HTMLElement) : unit =
         let cable = Cable.ofHTMLElement container
@@ -263,7 +263,7 @@ module NetworkSimulator =
 
         let cables =
             [
-                Cable.create "lancable1" Kind.LANCable "LAN cable (1)" "5,95 195,5" { Area.X = 0.; Y = 0.; Width = 200.; Height = 100. } { Point.X = 0. + playAreaRect.left; Y = 0. + playAreaRect.top }
+                Cable.create "lancable1" Kind.LANCable "LAN cable (1)" "5,5 195,95" { Area.X = 0.; Y = 0.; Width = 200.; Height = 100. } { Point.X = 0. + playAreaRect.left; Y = 0. + playAreaRect.top }
                 Cable.create "lancable2" Kind.LANCable "LAN cable (2)" "5,5 195,95" { Area.X = 0.; Y = 0.; Width = 200.; Height = 100. } { Point.X = 200. + playAreaRect.left; Y = 0. + playAreaRect.top }
                 Cable.create "lancable3" Kind.LANCable "LAN cable (3)" "5,2 195,2" { Area.X = 0.; Y = 0.; Width = 200.; Height = 5. } { Point.X = 400. + playAreaRect.left; Y = 0. + playAreaRect.top }
                 Cable.create "lancable4" Kind.LANCable "LAN cable (4)" "2,5 2,95" { Area.X = 0.; Y = 0.; Width = 5.; Height = 100. } { Point.X = 600. + playAreaRect.left; Y = 0. + playAreaRect.top }
