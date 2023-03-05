@@ -46,6 +46,62 @@ module Cable =
         </div>
         """
     
+    let toHTMLElement (cable: Cable) : Browser.Types.HTMLElement =
+        match cable.Kind with
+        | Kind.LANCable ->
+            let container = document.createElement("div")
+            container.id <- cable.Id
+            container.className <- "device cable-container lan-cable"
+            container.setAttribute("style", $"top: %f{cable.Position.Y}px; left: %f{cable.Position.X}px;")
+
+            let svg = document.createElementNS("http://www.w3.org/2000/svg", "svg")
+            svg.id <- $"%s{cable.Id}Svg"
+            svg.classList.add("device")
+            svg.classList.add("device")
+            svg.setAttribute("viewBox", $"%f{cable.Area.X} %f{cable.Area.Y} %f{cable.Area.Width} %f{cable.Area.Height}")
+            svg.setAttribute("width", $"%f{cable.Area.Width}px")
+            svg.setAttribute("height", $"%f{cable.Area.Height}px")
+
+            let g = document.createElementNS("http://www.w3.org/2000/svg", "g")
+
+            let title = document.createElementNS("http://www.w3.org/2000/svg", "title")
+            title.id <- $"%s{cable.Id}Title"
+            title.textContent <- $"%s{cable.Name}"
+
+            let polyline = document.createElementNS("http://www.w3.org/2000/svg", "polyline")
+            polyline.id <- $"{cable.Id}Polyline"
+            polyline.setAttribute("points", $"%s{cable.Points}")
+            polyline.setAttribute("fill", "none")
+            polyline.setAttribute("stroke", "#00aeda")
+            polyline.setAttribute("stroke-width", "5")
+
+            g.appendChild(title) |> ignore
+            g.appendChild(polyline) |> ignore
+
+            svg.appendChild(g) |> ignore
+
+            let br1 = document.createElement("br")
+
+            let spanName = document.createElement("span")
+            spanName.id <- $"%s{cable.Id}Name"
+            spanName.className <- "no-display"
+            spanName.textContent <- $"%s{cable.Name}"
+
+            let br2 = document.createElement("br")
+
+            let spanKind = document.createElement("span")
+            spanKind.id <- $"%s{cable.Id}Kind"
+            spanKind.className <- "no-display"
+            spanKind.textContent <- $"%s{cable.Kind |> string}"
+            
+            container.appendChild(svg) |> ignore
+            container.appendChild(br1) |> ignore
+            container.appendChild(spanName) |> ignore
+            container.appendChild(br2) |> ignore
+            container.appendChild(spanKind) |> ignore
+
+            container
+    
     let ofHTMLElement (elm: Browser.Types.HTMLElement) : Cable option=
         let id = elm.id
         
