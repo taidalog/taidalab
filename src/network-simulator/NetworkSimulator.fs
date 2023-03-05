@@ -202,22 +202,34 @@ module NetworkSimulator =
         | Some cable' ->
             let svg = document.getElementById(container.id + "Svg")
             svg.ondragstart <- fun _ -> false
-            svg.onmousedown <- fun e ->
+            svg.onmousedown <- fun event ->
                 let playArea = document.getElementById "playArea"
                 printfn "playArea (offsetLeft: %f, offsetTop: %f)" playArea.offsetLeft playArea.offsetTop
-                printfn "clicked at (offsetX: %f, offset.Y: %f)" e.offsetX e.offsetY
-                printfn "clicked at (clientX: %f, clientt.Y: %f)" e.clientX e.clientY
+                printfn "clicked at (offsetX: %f, offset.Y: %f)" event.offsetX event.offsetY
+                printfn "clicked at (clientX: %f, clientt.Y: %f)" event.clientX event.clientY
                 printfn "cable.Points: %s" cable'.Points
                 let point1, point2 =
-                    cable'.Points
-                    |> fun x -> x.Split([|' '|])
-                    |> Array.map Point.ofString
-                    |> fun xs -> Array.head xs, Array.last xs
-                let cursorPoint = Point.ofFloats e.offsetX e.offsetY
+//                    cable'.Points
+                    document.getElementById(container.id)
+                    |> Cable.ofHTMLElement
+                    |> fun x ->
+                        match x with
+                        | None -> None, None
+                        | Some x ->
+                            x.Points
+                            |> fun x -> x.Split([|' '|])
+                            |> Array.map Point.ofString
+                            |> fun xs -> Some (Array.head xs), Some (Array.last xs)
+                let cursorPoint = Point.ofFloats event.offsetX event.offsetY
                 let minDistance =
                     [point1; point2]
-                    |> List.map (Point.distance cursorPoint)
-                    |> List.min
+                    |> fun xs ->
+                        match xs with
+                        | var when xs |> List.forall Option.isSome ->
+                            xs
+                            |> List.map (Option.map (Point.distance cursorPoint))
+                            |> List.min
+                            |> (fun x -> Option.get x)
                 printfn "distance: %f" minDistance
                 let onMouseMove' =
                     if minDistance < 5. then
