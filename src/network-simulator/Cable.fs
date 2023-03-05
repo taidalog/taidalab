@@ -38,7 +38,7 @@ module Cable =
             <svg id="%s{cable.Id}Svg" class="device lan-cable" viewBox="%f{cable.Area.X} %f{cable.Area.Y} %f{cable.Area.Width} %f{cable.Area.Height}" width="%f{cable.Area.Width}px" height="%f{cable.Area.Height}px" xmlns="http://www.w3.org/2000/svg">
                 <g>
                     <title>%s{cable.Name}</title>
-                    <polyline stroke="#00aeda" stroke-width="5" fill="none" points="%s{cable.Points}"/>
+                    <polyline id="%s{cable.Id}Polyline" stroke="#00aeda" stroke-width="5" fill="none" points="%s{cable.Points}"/>
                 </g>
             </svg>
             <span id="%s{cable.Id}Name" class="no-display">%s{cable.Name}</span>

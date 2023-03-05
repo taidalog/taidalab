@@ -201,10 +201,6 @@ module NetworkSimulator =
         | None -> ()
         | Some cable' ->
             let svg = document.getElementById(container.id + "Svg")
-            let polyline: Browser.Types.HTMLElement =
-                container.getElementsByTagName "polyline"
-                |> (fun x -> JS.Constructors.Array?from(x))
-                |> Array.head
             svg.ondragstart <- fun _ -> false
             svg.onmousedown <- fun e ->
                 let playArea = document.getElementById "playArea"
@@ -225,6 +221,7 @@ module NetworkSimulator =
                 printfn "distance: %f" minDistance
                 let onMouseMove' =
                     if minDistance < 5. then
+                        let polyline = document.getElementById(container.id + "Polyline")
                         resizeCable container svg polyline
                     else
                         onMouseMove container svg
