@@ -384,6 +384,7 @@ module NetworkSimulator =
 
             document.getElementById id
             |> setToQuitEditOnEnter
+        
         let addClientButton = document.getElementById("addClientButton") :?> Browser.Types.HTMLButtonElement
         addClientButton.onclick <- fun _ ->
             let playArea = document.getElementById "playArea"
@@ -418,3 +419,31 @@ module NetworkSimulator =
 
             document.getElementById id
             |> setToQuitEditOnEnter
+        
+        let addLANCableButton = document.getElementById("addLANCableButton") :?> Browser.Types.HTMLButtonElement
+        addLANCableButton.onclick <- fun _ ->
+            let playArea = document.getElementById "playArea"
+            let playAreaRect = playArea.getBoundingClientRect()
+   
+            let cableCount =
+                playArea.getElementsByClassName("cable-container")
+                |> (fun x -> JS.Constructors.Array?from(x))
+                |> Array.length
+            
+            let nextNumber = cableCount + 1
+            let id = sprintf $"cable%d{nextNumber}"
+            nextNumber
+            |> (fun n ->
+                Cable.create
+                    id
+                    Kind.LANCable
+                    (sprintf $"LAN cable (%d{n})")
+                    "5,5 195,95"
+                    { Area.X = 0.; Y = 0.; Width = 200.; Height = 100. }
+                    { Point.X = 0. + playAreaRect.left; Y = 0. + playAreaRect.top })
+            |> Cable.toHTMLElement
+            |> (fun x -> playArea.appendChild(x))
+            |> ignore
+
+            document.getElementById id
+            |> setMouseMoveEventCable
