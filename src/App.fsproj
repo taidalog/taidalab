@@ -25,6 +25,9 @@
     <Compile Include="network-simulator/IPv4.fs" />
     <Compile Include="network-simulator/Kind.fs" />
     <Compile Include="network-simulator/Cable.fs" />
+    <Compile Include="network-simulator/Client.fs" />
+    <Compile Include="network-simulator/Router.fs" />
+    <Compile Include="network-simulator/Hub.fs" />
     <Compile Include="network-simulator/Device.fs" />
     <Compile Include="network-simulator/NetworkSimulator.fs" />
     <Compile Include="Home.fs" />
