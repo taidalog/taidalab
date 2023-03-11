@@ -61,6 +61,10 @@ module Text =
         else
             re.Replace(str,"""<span class="zero-grey">$1</span>""")
 
+module String =
+    let split (separator: char) (str: string) : string list =
+        str.Split([|separator|]) |> Array.toList
+
 module Tuple =
     let applyToTuples3 f (a1, b1, c1) (a2, b2, c2) =
         f a1 a2, f b1 b2, f c1 c2
