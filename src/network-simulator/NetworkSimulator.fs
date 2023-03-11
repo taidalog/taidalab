@@ -67,26 +67,52 @@ module NetworkSimulator =
     let getNetNeighbors (cables: Cable list) (devices: Device list) (source: Device) : Device list =
         //cables |> List.length |> printfn "%d cables."
         //cables |> List.iter (fun x -> printfn "%s (%b)" x.Name (x.Area |> isOver 0. source.Area))
+        let sourceArea = source |> Device.getArea
+//        printfn "%A" sourceArea
         let connectedCables =
-            cables |> List.filter (fun c -> c.Area |> isOver 0. source.Area)
-        //connectedCables |> List.iter (fun x -> printfn "getNetNeighbor': %s is connected to %s" source.Name x.Name)
-        connectedCables
-        |> List.collect
-            (fun c ->
-                //printfn "%s is connected to below:" c.Name
-                devices
-                |> List.filter (fun d ->
-                    //printfn "%s (%b)" d.Name (isOver 0. d.Area c.Area && d.IPv4 <> source.IPv4)
-                    isOver 0. d.Area c.Area &&
-                    d.IPv4 <> source.IPv4
-                    ))
+            cables |> List.filter (fun c -> c.Area |> isOver 0. sourceArea)
+//        connectedCables |> List.iter (fun x -> printfn "getNetNeighbor': source is connected to %s" x.Name)
+        
+        let connectedClientsAndRouters =
+            connectedCables
+            |> List.collect
+                (fun c ->
+//                    printfn "%s is connected to below:" c.Name
+                    devices
+                    |> List.filter (fun d -> Device.isClient d || Device.isRouter d)
+                    |> List.filter (fun d ->
+                        //printfn "%s (%b)" d.Name (isOver 0. d.Area c.Area && d.IPv4 <> source.IPv4)
+                        let dArea = d |> Device.getArea
+                        let dIPv4 = d |> Device.getIPv4AsList
+                        isOver 0. dArea c.Area &&
+                        dIPv4 |> List.forall (fun x -> (Device.hasIPv4 (x.ToString()) source) = false)))
+        
+        let connectedHubs =
+            connectedCables
+            |> List.collect
+                (fun c ->
+                    devices
+                    |> List.filter Device.isHub
+                    |> List.filter (fun d ->
+                        let dArea = d |> Device.getArea
+                        isOver 0. dArea c.Area &&
+                        (Device.getId d) <> (Device.getId source)))
+
+        
+        List.concat [connectedClientsAndRouters; connectedHubs]
 
     let rec ping (cables: Cable list) (devices: Device list) (source: Device) (ttl: int) (destinationIPv4: IPv4) : bool =
         let neighbors = getNetNeighbors cables devices source
-        neighbors |> List.iter (fun x -> printfn "ping: %s is connected to %s" source.Name x.Name)
+        let sourceName device =
+            match device with
+            | Client d -> d.Name
+            | Router d -> d.Name
+            | Hub d -> d.Name
+
+        neighbors |> List.iter (fun x -> printfn "ping: %s is connected to %s" (sourceName source) (sourceName x))
         
-        let found = neighbors |> List.exists (fun x -> x.IPv4 = destinationIPv4)
-        printfn "ping: destination IPv4 found = %b" found
+        let found = neighbors |> List.exists (Device.hasIPv4 (destinationIPv4.ToString()))// (fun x -> x.IPv4 = destinationIPv4)
+        //printfn "ping: destination IPv4 found = %b" found
 
         if found then
             true
@@ -110,7 +136,7 @@ module NetworkSimulator =
         svg.onmousedown <- fun _ ->
             document.addEventListener("mousemove", onMouseMove')
             svg.onmouseup <- fun _ ->
-                printfn "mouse up!"
+                //printfn "mouse up!"
                 document.removeEventListener("mousemove", onMouseMove')
     
     let resetTitleOnNameChange (x: Browser.Types.HTMLElement) : unit =
@@ -146,15 +172,15 @@ module NetworkSimulator =
             |> fun x -> x.Split([|' '|])
             |> Array.map Point.ofString
             |> fun xs -> Array.head xs, Array.last xs
-        printfn "point1:\t%O" point1
-        printfn "point2:\t%O" point2
+        //printfn "point1:\t%O" point1
+        //printfn "point2:\t%O" point2
 
         // Getting the `playArea` element, which contains the cable.
         let playArea = document.getElementById "playArea"
-        printfn "event.clientX: %f" event.clientX
-        printfn "event.clientY: %f" event.clientY
-        printfn "playArea.clientLeft: %f" playArea.clientLeft
-        printfn "playArea.clientTop: %f" playArea.clientTop
+        //printfn "event.clientX: %f" event.clientX
+        //printfn "event.clientY: %f" event.clientY
+        //printfn "playArea.clientLeft: %f" playArea.clientLeft
+        //printfn "playArea.clientTop: %f" playArea.clientTop
 
         let style = container.getAttribute("style")
         let styleLeft =
@@ -173,11 +199,11 @@ module NetworkSimulator =
             Point.ofFloats (event.clientX - styleLeft) (event.clientY - styleTop)
             |> updatePoints point1 point2
         
-        updatedPoints |> (fun (p1, p2) -> printfn "updatedPoints:\t(%O), (%O)" p1 p2)
+        //updatedPoints |> (fun (p1, p2) -> printfn "updatedPoints:\t(%O), (%O)" p1 p2)
 
         // Building the new cable area.
         let updatedArea = updatedPoints ||> Area.ofPoints |> Area.expand (5. * 2.) (5. * 2.)
-        printfn "updatedArea:\t%O" updatedArea
+        //printfn "updatedArea:\t%O" updatedArea
 
         updatedPoints
         |> fun (p1, p2) -> $"%f{p1.X},%f{p1.Y} %f{p2.X},%f{p2.Y}"
@@ -204,10 +230,10 @@ module NetworkSimulator =
             svg.ondragstart <- fun _ -> false
             svg.onmousedown <- fun event ->
                 let playArea = document.getElementById "playArea"
-                printfn "playArea (offsetLeft: %f, offsetTop: %f)" playArea.offsetLeft playArea.offsetTop
-                printfn "clicked at (offsetX: %f, offset.Y: %f)" event.offsetX event.offsetY
-                printfn "clicked at (clientX: %f, clientt.Y: %f)" event.clientX event.clientY
-                printfn "cable.Points: %s" cable'.Points
+                //printfn "playArea (offsetLeft: %f, offsetTop: %f)" playArea.offsetLeft playArea.offsetTop
+                //printfn "clicked at (offsetX: %f, offset.Y: %f)" event.offsetX event.offsetY
+                //printfn "clicked at (clientX: %f, clientt.Y: %f)" event.clientX event.clientY
+                //printfn "cable.Points: %s" cable'.Points
                 let point1, point2 =
 //                    cable'.Points
                     document.getElementById(container.id)
@@ -230,7 +256,7 @@ module NetworkSimulator =
                             |> List.map (Option.map (Point.distance cursorPoint))
                             |> List.min
                             |> (fun x -> Option.get x)
-                printfn "distance: %f" minDistance
+                //printfn "distance: %f" minDistance
                 let onMouseMove' =
                     if minDistance < 5. then
                         let polyline = document.getElementById(container.id + "Polyline")
@@ -239,7 +265,7 @@ module NetworkSimulator =
                         onMouseMove container svg
                 document.addEventListener("mousemove", onMouseMove')
                 svg.onmouseup <- fun _ ->
-                    printfn "mouse up!"
+                    //printfn "mouse up!"
                     document.removeEventListener("mousemove", onMouseMove')
     
     let init () =
@@ -248,12 +274,13 @@ module NetworkSimulator =
 
         let devices =
             [
-                Device.create "device1" Kind.Client "Client (1)" "10.0.0.1" "255.255.255.0" { Area.X = 0.; Y = 0.; Width = 100.; Height = 100. } { Point.X = 0. + playAreaRect.left; Y = 100. + playAreaRect.top }
-                Device.create "device2" Kind.Client "Client (2)" "10.0.0.2" "255.255.255.0" { Area.X = 0.; Y = 0.; Width = 100.; Height = 100. } { Point.X = 150. + playAreaRect.left; Y = 100. + playAreaRect.top }
-                Device.create "device3" Kind.Router "Router (1)" "10.0.0.3" "255.255.255.0" { Area.X = 0.; Y = 0.; Width = 100.; Height = 35. } { Point.X = 300. + playAreaRect.left; Y = 100. + playAreaRect.top }
-                Device.create "device4" Kind.Client "Client (3)" "10.0.0.18" "255.255.255.240" { Area.X = 0.; Y = 0.; Width = 100.; Height = 100. } { Point.X = 450. + playAreaRect.left; Y = 100. + playAreaRect.top }
-                Device.create "device5" Kind.Router "Router (2)" "10.0.0.17" "255.255.255.240" { Area.X = 0.; Y = 0.; Width = 100.; Height = 35. } { Point.X = 600. + playAreaRect.left; Y = 100. + playAreaRect.top }
-                Device.create "device6" Kind.Client "Client (4)" "10.0.0.19" "255.255.255.240" { Area.X = 0.; Y = 0.; Width = 100.; Height = 100. } { Point.X = 750. + playAreaRect.left; Y = 100. + playAreaRect.top }
+                Client <| Client.create "device1" "Client (1)" "10.0.0.1" "255.255.255.0" { Area.X = 0.; Y = 0.; Width = 100.; Height = 100. } { Point.X = 0. + playAreaRect.left; Y = 100. + playAreaRect.top }
+                Client <| Client.create "device2" "Client (2)" "10.0.0.2" "255.255.255.0" { Area.X = 0.; Y = 0.; Width = 100.; Height = 100. } { Point.X = 150. + playAreaRect.left; Y = 100. + playAreaRect.top }
+                Router <| Router.create "device3" "Router (1)" "10.0.0.3" "255.255.255.0" { Area.X = 0.; Y = 0.; Width = 100.; Height = 35. } { Point.X = 300. + playAreaRect.left; Y = 100. + playAreaRect.top }
+                Client <| Client.create "device4" "Client (3)" "10.0.0.18" "255.255.255.240" { Area.X = 0.; Y = 0.; Width = 100.; Height = 100. } { Point.X = 450. + playAreaRect.left; Y = 100. + playAreaRect.top }
+                Router <| Router.create "device5" "Router (2)" "10.0.0.17" "255.255.255.240" { Area.X = 0.; Y = 0.; Width = 100.; Height = 35. } { Point.X = 600. + playAreaRect.left; Y = 100. + playAreaRect.top }
+                Client <| Client.create "device6" "Client (4)" "10.0.0.19" "255.255.255.240" { Area.X = 0.; Y = 0.; Width = 100.; Height = 100. } { Point.X = 750. + playAreaRect.left; Y = 100. + playAreaRect.top }
+                Hub <| Hub.create "device7" "Hub (1)" { Area.X = 0.; Y = 0.; Width = 100.; Height = 35. } { Point.X = 900. + playAreaRect.left; Y = 100. + playAreaRect.top }
             ]
         
         devices
@@ -274,18 +301,22 @@ module NetworkSimulator =
         |> List.map (fun x -> document.getElementById("playArea").appendChild(x))
         |> ignore
         
-        devices
-        |> List.map (fun x -> x.Id)
-        |> List.map document.getElementById
-        |> List.iter setMouseMoveEvent
+        let deviceElements =
+            devices
+            |> List.filter (fun x -> Device.isClient x || Device.isRouter x || Device.isHub x)
+            |> List.map (fun x ->
+                match x with
+                | Client d -> d.Id
+                | Router d -> d.Id
+                | Hub d -> d.Id)
+            |> List.map document.getElementById
         
-        devices
-        |> List.map (fun x -> document.getElementById x.Id)
-        |> List.iter resetTitleOnNameChange
-        
-        devices
-        |> List.map (fun x -> document.getElementById(x.Id))
-        |> List.iter setToQuitEditOnEnter
+        deviceElements
+        |> List.iter
+            (fun x ->
+                setMouseMoveEvent x
+                resetTitleOnNameChange x
+                setToQuitEditOnEnter x)
 
         cables
         |> List.map (fun x -> x.Id)
@@ -325,7 +356,8 @@ module NetworkSimulator =
 
             let source =
                 devices'
-                |> List.tryFind (fun x -> x.IPv4.ToString() = sourceInput.value)
+                |> List.filter (fun x -> Device.isClient x || Device.isRouter x)
+                |> List.tryFind (Device.hasIPv4 sourceInput.value)
             //source.Name |> printfn "Source: %s"
 
             match source with
@@ -333,11 +365,13 @@ module NetworkSimulator =
                 errorArea.innerText<- sprintf "Input source IPv4."
                 sourceInput.focus()
             | Some source' ->
+                let sourceArea = (fun x -> match x with | Client d -> d.Area | Router d -> d.Area) source'
+                let sourceName = (fun x -> match x with | Client d -> d.Name | Router d -> d.Name) source'
                 let lanCablesWithSource =
                     lanCables'
-                    |> List.filter (fun (x: Cable) -> x.Area |> isOver 0. source'.Area)
+                    |> List.filter (fun (x: Cable) -> x.Area |> isOver 0. sourceArea)
                 match lanCablesWithSource with
-                | [] -> errorArea.innerText <- sprintf "%s is connected to no lan cable." source'.Name
+                | [] -> errorArea.innerText <- sprintf "%s is connected to no lan cable." sourceName
                 | _ ->
                     let destinationInput = document.getElementById("destinationInput") :?> Browser.Types.HTMLInputElement
                     match destinationInput.value with
@@ -347,7 +381,7 @@ module NetworkSimulator =
                     | _ ->
                         let destinationIPv4 = destinationInput.value |> IPv4.ofDotDecimal
                         ping lanCables' devices' source' 10 destinationIPv4
-                        |> sprintf "%s> ping %s -> %b" source'.Name (destinationIPv4.ToString())
+                        |> sprintf "%s> ping %s -> %b" sourceName (destinationIPv4.ToString())
                         |> (fun x -> outputArea.innerText <- x)
         
         let addRouterButton = document.getElementById("addRouterButton") :?> Browser.Types.HTMLButtonElement
@@ -364,15 +398,14 @@ module NetworkSimulator =
             let id = sprintf $"device%d{nextNumber}"
             nextNumber
             |> (fun n ->
-                Device.create
+                Router.create
                     id
-                    Kind.Router
                     (sprintf $"Router (%d{n})")
                     "10.0.0.1"
                     "255.255.255.0"
                     { Area.X = 0.; Y = 0.; Width = 100.; Height = 35. }
                     { Point.X = 0. + playAreaRect.left; Y = 0. + playAreaRect.top })
-            |> Device.toHTMLElement
+            |> Router.toHTMLElement
             |> (fun x -> playArea.appendChild(x))
             |> ignore
 
@@ -399,15 +432,14 @@ module NetworkSimulator =
             let id = sprintf $"device%d{nextNumber}"
             nextNumber
             |> (fun n ->
-                Device.create
+                Client.create
                     id
-                    Kind.Client
                     (sprintf $"Client (%d{n})")
                     "10.0.0.1"
                     "255.255.255.0"
                     { Area.X = 0.; Y = 0.; Width = 100.; Height = 100. }
                     { Point.X = 0. + playAreaRect.left; Y = 0. + playAreaRect.top })
-            |> Device.toHTMLElement
+            |> Client.toHTMLElement
             |> (fun x -> playArea.appendChild(x))
             |> ignore
 
