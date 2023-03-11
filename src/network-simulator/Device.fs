@@ -45,6 +45,12 @@ module Device =
         | Hub _ -> true
         | _ -> false
     
+    let getId (device: Device) : string =
+        match device with
+        | Client d -> d.Id
+        | Router d -> d.Id
+        | Hub d -> d.Id
+
     let hasIPv4 (ipv4String: string) (device: Device) : bool =
         match device with
         | Client d -> d.IPv4.ToString() = ipv4String
