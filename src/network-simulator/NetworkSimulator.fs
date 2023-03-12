@@ -216,17 +216,9 @@ module NetworkSimulator =
         |> List.map (fun x -> document.getElementById("playArea").appendChild(x))
         |> ignore
         
-        let deviceElements =
-            devices
-            |> List.filter (fun x -> Device.isClient x || Device.isRouter x || Device.isHub x)
-            |> List.map (fun x ->
-                match x with
-                | Client d -> d.Id
-                | Router d -> d.Id
-                | Hub d -> d.Id)
-            |> List.map document.getElementById
-        
-        deviceElements
+        devices
+        |> List.map Device.id
+        |> List.map document.getElementById
         |> List.iter
             (fun x ->
                 setMouseMoveEvent x
@@ -283,11 +275,11 @@ module NetworkSimulator =
                 errorArea.innerText<- sprintf "Input source IPv4."
                 sourceInput.focus()
             | Some source' ->
-                let sourceArea = (fun x -> match x with | Client d -> d.Area | Router d -> d.Area) source'
-                let sourceName = (fun x -> match x with | Client d -> d.Name | Router d -> d.Name) source'
+                let sourceArea = source' |> Device.area
+                let sourceName = source' |> Device.name
                 let lanCablesWithSource =
                     lanCables'
-                    |> List.filter (fun (x: Cable) -> x.Area |> Area.isOver 0. sourceArea)
+                    |> List.filter (fun x -> x.Area |> Area.isOver 0. sourceArea)
                 match lanCablesWithSource with
                 | [] -> errorArea.innerText <- sprintf "%s is connected to no lan cable." sourceName
                 | _ ->
