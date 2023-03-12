@@ -299,57 +299,20 @@ module NetworkSimulator =
                         |> sprintf "%s> ping %s -> %b" sourceName (destinationIPv4.ToString())
                         |> (fun x -> outputArea.innerText <- x)
         
-        let addRouterButton = document.getElementById("addRouterButton") :?> Browser.Types.HTMLButtonElement
-        addRouterButton.onclick <- fun _ ->
-            let playArea = document.getElementById "playArea"
-            let playAreaRect = playArea.getBoundingClientRect()
-   
-            let deviceCount =
-                playArea.getElementsByClassName("device-container")
-                |> (fun x -> JS.Constructors.Array?from(x))
-                |> Array.length
-            
-            let nextNumber = deviceCount + 1
-            let id = sprintf $"device%d{nextNumber}"
-            nextNumber
-            |> (fun n ->
-                Router.create
-                    id
-                    (sprintf $"Router (%d{n})")
-                    "10.0.0.1"
-                    "255.255.255.0"
-                    { Area.X = 0.; Y = 0.; Width = 100.; Height = 35. }
-                    { Point.X = 0. + playAreaRect.left; Y = 0. + playAreaRect.top })
-            |> Router.toHTMLElement
-            |> (fun x -> playArea.appendChild(x))
-            |> ignore
-
-            document.getElementById id
-            |> setMouseMoveEvent
-            
-            document.getElementById id
-            |> resetTitleOnNameChange
-
-            document.getElementById id
-            |> setToQuitEditOnEnter
-        
         let addClientButton = document.getElementById("addClientButton") :?> Browser.Types.HTMLButtonElement
         addClientButton.onclick <- fun _ ->
             let playArea = document.getElementById "playArea"
             let playAreaRect = playArea.getBoundingClientRect()
    
-            let deviceCount =
-                playArea.getElementsByClassName("device-container")
-                |> (fun x -> JS.Constructors.Array?from(x))
-                |> Array.length
-            
+            let deviceCount = playArea.getElementsByClassName("device-container").length
             let nextNumber = deviceCount + 1
-            let id = sprintf $"device%d{nextNumber}"
+            let id = $"device%d{nextNumber}"
+            
             nextNumber
             |> (fun n ->
                 Client.create
                     id
-                    (sprintf $"Client (%d{n})")
+                    $"Client (%d{n})"
                     "10.0.0.1"
                     "255.255.255.0"
                     { Area.X = 0.; Y = 0.; Width = 100.; Height = 100. }
@@ -367,23 +330,51 @@ module NetworkSimulator =
             document.getElementById id
             |> setToQuitEditOnEnter
         
+        let addRouterButton = document.getElementById("addRouterButton") :?> Browser.Types.HTMLButtonElement
+        addRouterButton.onclick <- fun _ ->
+            let playArea = document.getElementById "playArea"
+            let playAreaRect = playArea.getBoundingClientRect()
+   
+            let deviceCount = playArea.getElementsByClassName("device-container").length
+            let nextNumber = deviceCount + 1
+            let id = $"device%d{nextNumber}"
+
+            nextNumber
+            |> (fun n ->
+                Router.create
+                    id
+                    $"Router (%d{n})"
+                    "10.0.0.1"
+                    "255.255.255.0"
+                    { Area.X = 0.; Y = 0.; Width = 100.; Height = 35. }
+                    { Point.X = 0. + playAreaRect.left; Y = 0. + playAreaRect.top })
+            |> Router.toHTMLElement
+            |> (fun x -> playArea.appendChild(x))
+            |> ignore
+
+            document.getElementById id
+            |> setMouseMoveEvent
+            
+            document.getElementById id
+            |> resetTitleOnNameChange
+
+            document.getElementById id
+            |> setToQuitEditOnEnter
+        
         let addHubButton = document.getElementById("addHubButton") :?> Browser.Types.HTMLButtonElement
         addHubButton.onclick <- fun _ ->
             let playArea = document.getElementById "playArea"
             let playAreaRect = playArea.getBoundingClientRect()
    
-            let deviceCount =
-                playArea.getElementsByClassName("device-container")
-                |> (fun x -> JS.Constructors.Array?from(x))
-                |> Array.length
-            
+            let deviceCount = playArea.getElementsByClassName("device-container").length
             let nextNumber = deviceCount + 1
-            let id = sprintf $"device%d{nextNumber}"
+            let id = $"device%d{nextNumber}"
+
             nextNumber
             |> (fun n ->
                 Hub.create
                     id
-                    (sprintf $"Hub (%d{n})")
+                    $"Hub (%d{n})"
                     { Area.X = 0.; Y = 0.; Width = 100.; Height = 35. }
                     { Point.X = 0. + playAreaRect.left; Y = 0. + playAreaRect.top })
             |> Hub.toHTMLElement
@@ -404,19 +395,16 @@ module NetworkSimulator =
             let playArea = document.getElementById "playArea"
             let playAreaRect = playArea.getBoundingClientRect()
    
-            let cableCount =
-                playArea.getElementsByClassName("cable-container")
-                |> (fun x -> JS.Constructors.Array?from(x))
-                |> Array.length
-            
+            let cableCount = playArea.getElementsByClassName("cable-container").length
             let nextNumber = cableCount + 1
-            let id = sprintf $"cable%d{nextNumber}"
+            let id = $"cable%d{nextNumber}"
+
             nextNumber
             |> (fun n ->
                 Cable.create
                     id
                     Kind.LANCable
-                    (sprintf $"LAN cable (%d{n})")
+                    $"LAN cable (%d{n})"
                     "5,5 195,95"
                     { Area.X = 0.; Y = 0.; Width = 200.; Height = 100. }
                     { Point.X = 0. + playAreaRect.left; Y = 0. + playAreaRect.top })
