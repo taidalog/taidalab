@@ -23,7 +23,7 @@ module NetworkSimulator =
                 </span>
             </span>
             <span class="display-order-2">
-                <button type="button" id="submitButton" class="submit-button d2b-button">ping</button>
+                <button type="submit" id="submitButton" class="submit-button d2b-button">ping</button>
             </span>
         </form>
         <form>
@@ -293,7 +293,11 @@ module NetworkSimulator =
                         ping lanCables' devices' source' 10 destinationIPv4
                         |> sprintf "%s> ping %s -> %b" sourceName (destinationIPv4.ToString())
                         |> (fun x -> outputArea.innerText <- x)
-                        destinationInput.focus()
+                        match document.activeElement.id with
+                        | "sourceInput" -> sourceInput.focus()
+                        | "destinationInput" -> destinationInput.focus()
+                        | _ -> ()
+            false
         
         let addClientButton = document.getElementById("addClientButton") :?> Browser.Types.HTMLButtonElement
         addClientButton.onclick <- fun _ ->
