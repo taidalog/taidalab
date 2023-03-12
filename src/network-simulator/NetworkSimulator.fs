@@ -8,6 +8,7 @@ namespace Taidalab
 open Browser.Dom
 open Fable.Core
 open Fable.Core.JsInterop
+open Taidalab.TCPIP
 open Fermata
 
 module NetworkSimulator =
@@ -34,93 +35,6 @@ module NetworkSimulator =
         <div id="outputArea" class="output-area"></div>
         <div id="playArea" class="play-area"></div>
         """
-
-    let isOver (offset: float) (area1: Area) (area2: Area): bool =
-        //printfn "DEBUG: area1 = left: %f top: %f width: %f height: %f" area1.X area1.Y area1.Width area1.Height
-        //printfn "DEBUG: area2  = left: %f top: %f width: %f height: %f" area2.X area2.Y area2.Width area2.Height
-        let topLeft =
-            area2.X >= area1.X - offset &&
-            area2.X <= area1.X + area1.Width + offset &&
-            area2.Y >= area1.Y - offset &&
-            area2.Y <= area1.Y + area1.Height + offset
-        
-        let topRight =
-            area2.X + area2.Width >= area1.X - offset &&
-            area2.X + area2.Width <= area1.X + area1.Width + offset &&
-            area2.Y >= area1.Y - offset &&
-            area2.Y <= area1.Y + area1.Height + offset
-        
-        let bottomLeft =
-            area2.X >= area1.X - offset &&
-            area2.X <= area1.X + area1.Width + offset &&
-            area2.Y + area2.Height >= area1.Y - offset &&
-            area2.Y + area2.Height <= area1.Y + area1.Height + offset
-        
-        let bottomRight =
-            area2.X + area2.Width >= area1.X - offset &&
-            area2.X + area2.Width <= area1.X + area1.Width + offset &&
-            area2.Y + area2.Height >= area1.Y - offset &&
-            area2.Y + area2.Height <= area1.Y + area1.Height + offset
-        
-        topLeft || topRight || bottomLeft || bottomRight
-    
-    let getNetNeighbors (cables: Cable list) (devices: Device list) (source: Device) : Device list =
-        //cables |> List.length |> printfn "%d cables."
-        //cables |> List.iter (fun x -> printfn "%s (%b)" x.Name (x.Area |> isOver 0. source.Area))
-        let sourceArea = source |> Device.getArea
-//        printfn "%A" sourceArea
-        let connectedCables =
-            cables |> List.filter (fun c -> c.Area |> isOver 0. sourceArea)
-//        connectedCables |> List.iter (fun x -> printfn "getNetNeighbor': source is connected to %s" x.Name)
-        
-        let connectedClientsAndRouters =
-            connectedCables
-            |> List.collect
-                (fun c ->
-//                    printfn "%s is connected to below:" c.Name
-                    devices
-                    |> List.filter (fun d -> Device.isClient d || Device.isRouter d)
-                    |> List.filter (fun d ->
-                        //printfn "%s (%b)" d.Name (isOver 0. d.Area c.Area && d.IPv4 <> source.IPv4)
-                        let dArea = d |> Device.getArea
-                        let dIPv4 = d |> Device.getIPv4AsList
-                        isOver 0. dArea c.Area &&
-                        dIPv4 |> List.forall (fun x -> (Device.hasIPv4 (x.ToString()) source) = false)))
-        
-        let connectedHubs =
-            connectedCables
-            |> List.collect
-                (fun c ->
-                    devices
-                    |> List.filter Device.isHub
-                    |> List.filter (fun d ->
-                        let dArea = d |> Device.getArea
-                        isOver 0. dArea c.Area &&
-                        (Device.getId d) <> (Device.getId source)))
-
-        
-        List.concat [connectedClientsAndRouters; connectedHubs]
-
-    let rec ping (cables: Cable list) (devices: Device list) (source: Device) (ttl: int) (destinationIPv4: IPv4) : bool =
-        let neighbors = getNetNeighbors cables devices source
-        let sourceName device =
-            match device with
-            | Client d -> d.Name
-            | Router d -> d.Name
-            | Hub d -> d.Name
-
-        neighbors |> List.iter (fun x -> printfn "ping: %s is connected to %s" (sourceName source) (sourceName x))
-        
-        let found = neighbors |> List.exists (Device.hasIPv4 (destinationIPv4.ToString()))// (fun x -> x.IPv4 = destinationIPv4)
-        //printfn "ping: destination IPv4 found = %b" found
-
-        if found then
-            true
-        else if ttl = 0 then
-            false
-        else
-            neighbors
-            |> List.exists (fun x -> ping cables devices x (ttl - 1) destinationIPv4)
     
     let onMouseMove (elm: Browser.Types.HTMLElement) (svg: Browser.Types.HTMLElement) (event: Browser.Types.Event) =
         let event = event :?> Browser.Types.MouseEvent
@@ -369,7 +283,7 @@ module NetworkSimulator =
                 let sourceName = (fun x -> match x with | Client d -> d.Name | Router d -> d.Name) source'
                 let lanCablesWithSource =
                     lanCables'
-                    |> List.filter (fun (x: Cable) -> x.Area |> isOver 0. sourceArea)
+                    |> List.filter (fun (x: Cable) -> x.Area |> Area.isOver 0. sourceArea)
                 match lanCablesWithSource with
                 | [] -> errorArea.innerText <- sprintf "%s is connected to no lan cable." sourceName
                 | _ ->

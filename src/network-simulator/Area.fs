@@ -29,3 +29,38 @@ module Area =
     
     let shift (x: float) (y: float) (area: Area) : Area =
         { area with Area.X = area.X + x; Area.Y = area.Y + y }
+    
+    let includes (area: Area) (point: Point) : bool =
+        point.X >= area.X &&
+        point.X <= area.X + area.Width &&
+        point.Y >= area.Y &&
+        point.Y <= area.Y + area.Height
+    
+    let isOver (offset: float) (area1: Area) (area2: Area): bool =
+        //printfn "DEBUG: area1 = left: %f top: %f width: %f height: %f" area1.X area1.Y area1.Width area1.Height
+        //printfn "DEBUG: area2  = left: %f top: %f width: %f height: %f" area2.X area2.Y area2.Width area2.Height
+        let topLeft =
+            area2.X >= area1.X - offset &&
+            area2.X <= area1.X + area1.Width + offset &&
+            area2.Y >= area1.Y - offset &&
+            area2.Y <= area1.Y + area1.Height + offset
+        
+        let topRight =
+            area2.X + area2.Width >= area1.X - offset &&
+            area2.X + area2.Width <= area1.X + area1.Width + offset &&
+            area2.Y >= area1.Y - offset &&
+            area2.Y <= area1.Y + area1.Height + offset
+        
+        let bottomLeft =
+            area2.X >= area1.X - offset &&
+            area2.X <= area1.X + area1.Width + offset &&
+            area2.Y + area2.Height >= area1.Y - offset &&
+            area2.Y + area2.Height <= area1.Y + area1.Height + offset
+        
+        let bottomRight =
+            area2.X + area2.Width >= area1.X - offset &&
+            area2.X + area2.Width <= area1.X + area1.Width + offset &&
+            area2.Y + area2.Height >= area1.Y - offset &&
+            area2.Y + area2.Height <= area1.Y + area1.Height + offset
+        
+        topLeft || topRight || bottomLeft || bottomRight
