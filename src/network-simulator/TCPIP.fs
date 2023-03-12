@@ -30,7 +30,7 @@ module TCPIP =
         let hubTester (source: Device) (previous: Device) (cable: Cable) (device: Device) : bool =
             (Device.id device) <> (Device.id source) &&
             Area.isOver 0. (Device.area device) cable.Area &&
-            (List.intersection (Device.NetworkAddresses previous) (Device.NetworkAddresses device)) <> []
+            (List.intersection (Device.networkAddresses previous) (Device.networkAddresses device)) <> []
         
         connectedCables
         |> List.collect
