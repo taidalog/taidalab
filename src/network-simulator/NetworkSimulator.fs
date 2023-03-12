@@ -238,7 +238,7 @@ module NetworkSimulator =
                 |> Array.toList
                 |> List.map Device.ofHTMLElement
                 |> List.filter Option.isSome
-                |> List.map (fun (Some (x: Device)) -> x)
+                |> List.map Option.get
             
             //devices' |> List.length |> printfn "%d devices."
             //devices' |> List.iter (fun x -> printfn "%s, %s" x.Name (x.IPv4.ToString()))
@@ -249,7 +249,7 @@ module NetworkSimulator =
                 |> Array.toList
                 |> List.map Cable.ofHTMLElement
                 |> List.filter Option.isSome
-                |> List.map (fun (Some (x: Cable)) -> x)
+                |> List.map Option.get
             
             //lanCables' |> List.length |> printfn "%d cables."
             //lanCables' |> List.iter (fun x -> printfn "%s" x.Name)
