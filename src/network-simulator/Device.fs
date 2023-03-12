@@ -45,7 +45,7 @@ module Device =
         | Hub _ -> true
         | _ -> false
     
-    let getId (device: Device) : string =
+    let id (device: Device) : string =
         match device with
         | Client d -> d.Id
         | Router d -> d.Id
@@ -57,19 +57,25 @@ module Device =
         | Router d -> d.IPv4 |> List.contains ipv4
         | _ -> false
 
-    let getIPv4AsList device : IPv4 list =
+    let IPv4s device : IPv4 list =
         match device with
         | Client d -> [d.IPv4]
         | Router d -> d.IPv4
     
-    let tryGetIPv4AsList device : IPv4 list option =
+    let tryGetIPv4s device : IPv4 list option =
         match device with
-        | Client _ -> device |> getIPv4AsList |> Some
-        | Router _ -> device |> getIPv4AsList |> Some
+        | Client _ -> device |> IPv4s |> Some
+        | Router _ -> device |> IPv4s |> Some
         | _ -> None
     
-    let getArea (device: Device) : Area =
+    let area (device: Device) : Area =
         match device with
         | Client d -> d.Area
         | Router d -> d.Area
         | Hub d -> d.Area
+    
+    let name device =
+        match device with
+        | Client d -> d.Name
+        | Router d -> d.Name
+        | Hub d -> d.Name
