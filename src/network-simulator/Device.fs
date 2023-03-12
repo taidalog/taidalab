@@ -61,6 +61,7 @@ module Device =
         match device with
         | Client d -> [d.IPv4]
         | Router d -> d.IPv4
+        | Hub d -> []
     
     let tryGetIPv4s device : IPv4 list option =
         match device with
