@@ -301,6 +301,7 @@ module NetworkSimulator =
                         ping lanCables' devices' source' 10 destinationIPv4
                         |> sprintf "%s> ping %s -> %b" sourceName (destinationIPv4.ToString())
                         |> (fun x -> outputArea.innerText <- x)
+                        destinationInput.focus()
         
         let addClientButton = document.getElementById("addClientButton") :?> Browser.Types.HTMLButtonElement
         addClientButton.onclick <- fun _ ->
