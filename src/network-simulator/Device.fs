@@ -51,10 +51,10 @@ module Device =
         | Router d -> d.Id
         | Hub d -> d.Id
 
-    let hasIPv4 (ipv4String: string) (device: Device) : bool =
+    let hasIPv4 (ipv4: IPv4) (device: Device) : bool =
         match device with
-        | Client d -> d.IPv4.ToString() = ipv4String
-        | Router d -> d.IPv4 |> List.exists (fun x -> x.ToString() = ipv4String)
+        | Client d -> d.IPv4 = ipv4
+        | Router d -> d.IPv4 |> List.contains ipv4
         | _ -> false
 
     let getIPv4AsList device : IPv4 list =

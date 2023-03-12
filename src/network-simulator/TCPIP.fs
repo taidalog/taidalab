@@ -27,7 +27,7 @@ module TCPIP =
                         let dArea = d |> Device.getArea
                         let dIPv4 = d |> Device.getIPv4AsList
                         Area.isOver 0. dArea c.Area &&
-                        dIPv4 |> List.forall (fun x -> (Device.hasIPv4 (x.ToString()) source) = false)))
+                        dIPv4 |> List.forall (fun x -> (Device.hasIPv4 x source) = false)))
         
         let connectedHubs =
             connectedCables
@@ -53,7 +53,7 @@ module TCPIP =
 
         neighbors |> List.iter (fun x -> printfn "ping: %s is connected to %s" (sourceName source) (sourceName x))
         
-        let found = neighbors |> List.exists (Device.hasIPv4 (destinationIPv4.ToString()))// (fun x -> x.IPv4 = destinationIPv4)
+        let found = neighbors |> List.exists (Device.hasIPv4 destinationIPv4)// (fun x -> x.IPv4 = destinationIPv4)
         //printfn "ping: destination IPv4 found = %b" found
 
         if found then
