@@ -117,9 +117,7 @@ module Cable =
             Area.ofFloats rect.left rect.top rect.width rect.height
         
         let points =
-            elm.getElementsByTagName("polyline")
-            |> fun x -> JS.Constructors.Array?from(x)
-            |> Array.item 0
+            document.getElementById(id + "Polyline")
             |> fun (x: Browser.Types.HTMLElement) -> x.getAttribute("points")
         
         let position =
