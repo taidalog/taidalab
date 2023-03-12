@@ -270,9 +270,12 @@ module NetworkSimulator =
             outputArea.innerText<- ""
 
             let source =
-                devices'
-                |> List.filter (fun x -> Device.isClient x || Device.isRouter x)
-                |> List.tryFind (Device.hasIPv4 (sourceInput.value |> IPv4.ofDotDecimal))
+                sourceInput.value
+                |> IPv4.tryOfDotDecimal
+                |> Option.bind (fun x ->
+                    devices'
+                    |> List.filter (fun d -> Device.isClient d || Device.isRouter d)
+                    |> List.tryFind (Device.hasIPv4 x))
             //source.Name |> printfn "Source: %s"
 
             match source with
