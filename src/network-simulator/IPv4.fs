@@ -5,6 +5,8 @@
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
 namespace Taidalab
 
+open Fermata
+
 [<StructuredFormatDisplay("{DisplayText}")>]
 type IPv4 =
     { Octet1 : byte
@@ -15,6 +17,9 @@ type IPv4 =
     override this.ToString() = sprintf "%d.%d.%d.%d" this.Octet1 this.Octet2 this.Octet3 this.Octet4
 
 module IPv4 =
+    let validate (str: string) : bool =
+        Regex.isMatch "^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$" str
+
     let ofBytes byte1 byte2 byte3 byte4 : IPv4 =
         { IPv4.Octet1 = byte1
           IPv4.Octet2 = byte2
@@ -26,6 +31,11 @@ module IPv4 =
             dotDecimal.Split([|'.'|])
             |> Array.map byte
         ofBytes (bytes.[0]) (bytes.[1]) (bytes.[2]) (bytes.[3])
+    
+    let tryOfDotDecimal (dotDecimal: string) : IPv4 option =
+        match validate dotDecimal with
+        | false -> None
+        | true -> dotDecimal |> ofDotDecimal |> Some
     
     let getSubnet (subnetmask: IPv4) (ipv4: IPv4) : IPv4 =
         ofBytes
