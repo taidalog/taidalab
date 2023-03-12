@@ -303,7 +303,9 @@ module NetworkSimulator =
         addClientButton.onclick <- fun _ ->
             let playArea = document.getElementById "playArea"
             let playAreaRect = playArea.getBoundingClientRect()
-   
+
+            let firstCable = playArea.getElementsByClassName("cable-container").item 0
+
             let deviceCount = playArea.getElementsByClassName("device-container").length
             let nextNumber = deviceCount + 1
             let id = $"device%d{nextNumber}"
@@ -318,7 +320,7 @@ module NetworkSimulator =
                     { Area.X = 0.; Y = 0.; Width = 100.; Height = 100. }
                     { Point.X = 0. + playAreaRect.left; Y = 0. + playAreaRect.top })
             |> Client.toHTMLElement
-            |> (fun x -> playArea.appendChild(x))
+            |> (fun x -> playArea.insertBefore(x, firstCable))
             |> ignore
 
             document.getElementById id
@@ -334,7 +336,9 @@ module NetworkSimulator =
         addRouterButton.onclick <- fun _ ->
             let playArea = document.getElementById "playArea"
             let playAreaRect = playArea.getBoundingClientRect()
-   
+
+            let firstCable = playArea.getElementsByClassName("cable-container").item 0
+
             let deviceCount = playArea.getElementsByClassName("device-container").length
             let nextNumber = deviceCount + 1
             let id = $"device%d{nextNumber}"
@@ -349,7 +353,7 @@ module NetworkSimulator =
                     { Area.X = 0.; Y = 0.; Width = 100.; Height = 35. }
                     { Point.X = 0. + playAreaRect.left; Y = 0. + playAreaRect.top })
             |> Router.toHTMLElement
-            |> (fun x -> playArea.appendChild(x))
+            |> (fun x -> playArea.insertBefore(x, firstCable))
             |> ignore
 
             document.getElementById id
@@ -365,6 +369,8 @@ module NetworkSimulator =
         addHubButton.onclick <- fun _ ->
             let playArea = document.getElementById "playArea"
             let playAreaRect = playArea.getBoundingClientRect()
+
+            let firstCable = playArea.getElementsByClassName("cable-container").item 0
    
             let deviceCount = playArea.getElementsByClassName("device-container").length
             let nextNumber = deviceCount + 1
@@ -378,7 +384,7 @@ module NetworkSimulator =
                     { Area.X = 0.; Y = 0.; Width = 100.; Height = 35. }
                     { Point.X = 0. + playAreaRect.left; Y = 0. + playAreaRect.top })
             |> Hub.toHTMLElement
-            |> (fun x -> playArea.appendChild(x))
+            |> (fun x -> playArea.insertBefore(x, firstCable))
             |> ignore
 
             document.getElementById id
