@@ -29,7 +29,8 @@ module NetworkSimulator =
         <form>
             <button type="button" id="addClientButton" class="submit-button d2b-button display-order-3">add a client</button>
             <button type="button" id="addRouterButton" class="submit-button d2b-button display-order-4">add a router</button>
-            <button type="button" id="addLANCableButton" class="submit-button d2b-button display-order-5">add a LAN cable</button>
+            <button type="button" id="addHubButton" class="submit-button d2b-button display-order-5">add a Hub</button>
+            <button type="button" id="addLANCableButton" class="submit-button d2b-button display-order-6">add a LAN cable</button>
         </form>
         <div id="errorArea" class="error-area warning"></div>
         <div id="outputArea" class="output-area"></div>
@@ -354,6 +355,38 @@ module NetworkSimulator =
                     { Area.X = 0.; Y = 0.; Width = 100.; Height = 100. }
                     { Point.X = 0. + playAreaRect.left; Y = 0. + playAreaRect.top })
             |> Client.toHTMLElement
+            |> (fun x -> playArea.appendChild(x))
+            |> ignore
+
+            document.getElementById id
+            |> setMouseMoveEvent
+            
+            document.getElementById id
+            |> resetTitleOnNameChange
+
+            document.getElementById id
+            |> setToQuitEditOnEnter
+        
+        let addHubButton = document.getElementById("addHubButton") :?> Browser.Types.HTMLButtonElement
+        addHubButton.onclick <- fun _ ->
+            let playArea = document.getElementById "playArea"
+            let playAreaRect = playArea.getBoundingClientRect()
+   
+            let deviceCount =
+                playArea.getElementsByClassName("device-container")
+                |> (fun x -> JS.Constructors.Array?from(x))
+                |> Array.length
+            
+            let nextNumber = deviceCount + 1
+            let id = sprintf $"device%d{nextNumber}"
+            nextNumber
+            |> (fun n ->
+                Hub.create
+                    id
+                    (sprintf $"Hub (%d{n})")
+                    { Area.X = 0.; Y = 0.; Width = 100.; Height = 35. }
+                    { Point.X = 0. + playAreaRect.left; Y = 0. + playAreaRect.top })
+            |> Hub.toHTMLElement
             |> (fun x -> playArea.appendChild(x))
             |> ignore
 
