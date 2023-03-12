@@ -69,6 +69,18 @@ module Device =
         | Router _ -> device |> IPv4s |> Some
         | _ -> None
     
+    let NetworkAddresses device : IPv4 list =
+        match device with
+        | Client d -> [d.NetworkAddress]
+        | Router d -> d.NetworkAddress
+        | Hub d -> []
+    
+    let tryGetNetworkSddresses device : IPv4 list option =
+        match device with
+        | Client _ -> device |> NetworkAddresses |> Some
+        | Router _ -> device |> NetworkAddresses |> Some
+        | _ -> None
+    
     let area (device: Device) : Area =
         match device with
         | Client d -> d.Area
