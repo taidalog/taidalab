@@ -264,10 +264,10 @@ module NetworkSimulator =
 
             let errorArea = document.getElementById "errorArea" :?> Browser.Types.HTMLDivElement
             let outputArea = document.getElementById "outputArea" :?> Browser.Types.HTMLDivElement
-            let sourceInput = document.getElementById("sourceInput") :?> Browser.Types.HTMLInputElement
+            let sourceInput = document.getElementById "sourceInput" :?> Browser.Types.HTMLInputElement
 
-            errorArea.innerText<- ""
-            outputArea.innerText<- ""
+            errorArea.innerText <- ""
+            outputArea.innerText <- ""
 
             let source =
                 sourceInput.value
