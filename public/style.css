@@ -945,3 +945,11 @@ dd {
     vertical-align: middle;
     line-height: normal;
 }
+
+.aside-summary {
+    list-style: none;
+}
+
+.aside-summary::-webkit-details-marker {
+    list-style: none;
+}
