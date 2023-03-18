@@ -30,3 +30,9 @@ module Point =
     let shift (x: float) (y: float) (point: Point) : Point =
         { Point.X = point.X + x
           Point.Y = point.Y + y }
+    
+    let relativePosition (point1: Point) (point2: Point) : Directions =
+        (if point1.Y > point2.Y then Directions.Up else Directions.None) |||
+        (if point1.Y < point2.Y then Directions.Down else Directions.None) |||
+        (if point1.X > point2.X then Directions.Left else Directions.None) |||
+        (if point1.X < point2.X then Directions.Right else Directions.None)
