@@ -78,6 +78,15 @@ module NetworkSimulator =
             else
                 (point1, newPoint)
     
+    let touchedAndUntouched point1 point2 newPoint =
+        (point1, point2)
+        |> Tuple.map (Point.distance newPoint)
+        |> fun (d1, d2) ->
+            if d1 <= d2 then
+                (point1, point2)
+            else
+                (point2, point1)
+
     let resizeCable (container: Browser.Types.HTMLElement) (svg: Browser.Types.HTMLElement) (polyline: Browser.Types.HTMLElement) (event: Browser.Types.Event) : unit =
         let event = event :?> Browser.Types.MouseEvent
 
@@ -87,54 +96,43 @@ module NetworkSimulator =
             |> fun x -> x.Split([|' '|])
             |> Array.map Point.ofString
             |> fun xs -> Array.head xs, Array.last xs
-        //printfn "point1:\t%O" point1
-        //printfn "point2:\t%O" point2
 
-        // Getting the `playArea` element, which contains the cable.
-        let playArea = document.getElementById "playArea"
-        //printfn "event.clientX: %f" event.clientX
-        //printfn "event.clientY: %f" event.clientY
-        //printfn "playArea.clientLeft: %f" playArea.clientLeft
-        //printfn "playArea.clientTop: %f" playArea.clientTop
+        let touchedPoint, untouchedPoint =
+            Point.ofFloats (event.clientX - container.offsetLeft) (event.clientY - container.offsetTop)
+            |> touchedAndUntouched point1 point2
+        
+        let touchedPointPosition = touchedPoint |> Point.relativePosition untouchedPoint
 
-        let style = container.getAttribute("style")
-        let styleLeft =
-            style
-            |> Regex.match' """left: (\d+\.?\d+)px;"""
-            |> fun m -> (m.Groups.Item 1).Value
-            |> float
-        let styleTop =
-            style
-            |> Regex.match' """top: (\d+\.?\d+)px;"""
-            |> fun m -> (m.Groups.Item 1).Value
-            |> float
-
+        let xMoving = event.clientX - (container.offsetLeft + touchedPoint.X)
+        let yMoving = event.clientY - (container.offsetTop + touchedPoint.Y)
+        
         // Building the new end points with the cursor position.
         let updatedPoints =
-            Point.ofFloats (event.clientX - styleLeft) (event.clientY - styleTop)
-            |> updatePoints point1 point2
+            if touchedPointPosition &&& (Directions.Up ||| Directions.Left) <> Directions.None then
+                let shiftedPoint2 = point2 |> Point.shift -xMoving -yMoving // Up &&& Left
+                (point1, shiftedPoint2) // dummy
+            else
+                Point.ofFloats (event.clientX - container.offsetLeft) (event.clientY - container.offsetTop)
+                |> updatePoints point1 point2
         
-        //updatedPoints |> (fun (p1, p2) -> printfn "updatedPoints:\t(%O), (%O)" p1 p2)
-
-        // Building the new cable area.
-        let updatedArea = updatedPoints ||> Area.ofPoints |> Area.expand (5. * 2.) (5. * 2.)
-        //printfn "updatedArea:\t%O" updatedArea
-
         updatedPoints
         |> fun (p1, p2) -> $"%f{p1.X},%f{p1.Y} %f{p2.X},%f{p2.Y}"
         |> fun x -> polyline.setAttribute("points", x)
 
-//        updatedArea
-//        |> fun x -> $"top: %f{x.X}; left: %f{x.Y};"
-//        |> fun x -> container.setAttribute("style", x)
+        if touchedPointPosition &&& (Directions.Up ||| Directions.Left) <> Directions.None then
+            $"top: %f{container.offsetTop + yMoving}px; left: %f{container.offsetLeft + xMoving}px;"
+            |> fun x -> container.setAttribute("style", x)
+        else
+            ()
 
+        let updatedArea = updatedPoints ||> Area.ofPoints |> Area.expand (5. * 2.) (5. * 2.)
         updatedArea
         |> fun x -> $"0 0 %f{x.Width} %f{x.Height}"
         |> fun x -> svg.setAttribute("viewBox", x)
         
         svg.setAttribute("width", $"%f{updatedArea.Width}px")
         svg.setAttribute("height", $"%f{updatedArea.Height}px")
-//        svg.setAttribute("style", "background-color: red;")
+        svg.setAttribute("style", "background-color: red;")
     
     let setMouseMoveEventCable (container: Browser.Types.HTMLElement) : unit =
         let cable = Cable.ofHTMLElement container
