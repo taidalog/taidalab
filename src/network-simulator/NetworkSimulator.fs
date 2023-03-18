@@ -118,15 +118,14 @@ module NetworkSimulator =
         |> fun (p1, p2) -> $"%f{p1.X},%f{p1.Y} %f{p2.X},%f{p2.Y}"
         |> fun x -> polyline.setAttribute("points", x)
 
-        if touchedPointPosition &&& (Directions.Up ||| Directions.Left) <> Directions.None then
-            $"top: %f{container.offsetTop + yMoving}px; left: %f{container.offsetLeft + xMoving}px;"
-            |> fun x -> container.setAttribute("style", x)
-
         let updatedArea = updatedPoints ||> Area.ofPoints |> Area.expand (5. * 2.) (5. * 2.)
         svg.setAttribute("viewBox", $"0 0 %f{updatedArea.Width} %f{updatedArea.Height}")
         svg.setAttribute("width", $"%f{updatedArea.Width}px")
         svg.setAttribute("height", $"%f{updatedArea.Height}px")
         svg.setAttribute("style", "background-color: red;")
+
+        if touchedPointPosition &&& (Directions.Up ||| Directions.Left) <> Directions.None then
+            container.setAttribute("style", $"top: %f{container.offsetTop + yMoving}px; left: %f{container.offsetLeft + xMoving}px;")
     
     let setMouseMoveEventCable (container: Browser.Types.HTMLElement) : unit =
         let cable = Cable.ofHTMLElement container
@@ -136,13 +135,7 @@ module NetworkSimulator =
             let svg = document.getElementById(container.id + "Svg")
             svg.ondragstart <- fun _ -> false
             svg.onmousedown <- fun event ->
-                let playArea = document.getElementById "playArea"
-                //printfn "playArea (offsetLeft: %f, offsetTop: %f)" playArea.offsetLeft playArea.offsetTop
-                //printfn "clicked at (offsetX: %f, offset.Y: %f)" event.offsetX event.offsetY
-                //printfn "clicked at (clientX: %f, clientt.Y: %f)" event.clientX event.clientY
-                //printfn "cable.Points: %s" cable'.Points
                 let point1, point2 =
-//                    cable'.Points
                     document.getElementById(container.id)
                     |> Cable.ofHTMLElement
                     |> fun x ->
@@ -163,7 +156,6 @@ module NetworkSimulator =
                             |> List.map (Option.map (Point.distance cursorPoint))
                             |> List.min
                             |> (fun x -> Option.get x)
-                //printfn "distance: %f" minDistance
                 let onMouseMove' =
                     if minDistance < 5. then
                         let polyline = document.getElementById(container.id + "Polyline")
