@@ -969,7 +969,7 @@ dd {
 
 .device-image {
     position: relative;
-    cursor: pointer;
+    cursor: move;
 }
 
 .device-note {
@@ -990,5 +990,5 @@ dd {
 }
 
 .lan-cable {
-    cursor: pointer;
+    cursor: move;
 }
