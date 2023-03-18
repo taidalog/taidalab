@@ -93,9 +93,9 @@ module NetworkSimulator =
         // Getting current end points of the cable.
         let point1, point2 =
             polyline.getAttribute("points")
-            |> fun x -> x.Split([|' '|])
-            |> Array.map Point.ofString
-            |> fun xs -> Array.head xs, Array.last xs
+            |> String.split ' '
+            |> List.map Point.ofString
+            |> fun xs -> List.head xs, List.last xs
 
         let touchedPoint, untouchedPoint =
             Point.ofFloats (event.clientX - container.offsetLeft) (event.clientY - container.offsetTop)
@@ -109,8 +109,7 @@ module NetworkSimulator =
         // Building the new end points with the cursor position.
         let updatedPoints =
             if touchedPointPosition &&& (Directions.Up ||| Directions.Left) <> Directions.None then
-                let shiftedPoint2 = point2 |> Point.shift -xMoving -yMoving // Up &&& Left
-                (point1, shiftedPoint2) // dummy
+                point1, point2 |> Point.shift -xMoving -yMoving // Up &&& Left
             else
                 Point.ofFloats (event.clientX - container.offsetLeft) (event.clientY - container.offsetTop)
                 |> updatePoints point1 point2
@@ -122,14 +121,9 @@ module NetworkSimulator =
         if touchedPointPosition &&& (Directions.Up ||| Directions.Left) <> Directions.None then
             $"top: %f{container.offsetTop + yMoving}px; left: %f{container.offsetLeft + xMoving}px;"
             |> fun x -> container.setAttribute("style", x)
-        else
-            ()
 
         let updatedArea = updatedPoints ||> Area.ofPoints |> Area.expand (5. * 2.) (5. * 2.)
-        updatedArea
-        |> fun x -> $"0 0 %f{x.Width} %f{x.Height}"
-        |> fun x -> svg.setAttribute("viewBox", x)
-        
+        svg.setAttribute("viewBox", $"0 0 %f{updatedArea.Width} %f{updatedArea.Height}")
         svg.setAttribute("width", $"%f{updatedArea.Width}px")
         svg.setAttribute("height", $"%f{updatedArea.Height}px")
         svg.setAttribute("style", "background-color: red;")
