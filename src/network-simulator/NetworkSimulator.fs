@@ -73,8 +73,7 @@ module NetworkSimulator =
         |> Tuple.map (Point.distance newPoint)
         |> fun (f1, f2) ->
             if f1 <= f2 then
-                let shiftedPoint = point2 |> Point.shift (newPoint.X - point1.X) (newPoint.Y - point1.Y)
-                (point1, shiftedPoint)
+                (point1, point2 |> Point.shift (newPoint.X - point1.X) (newPoint.Y - point1.Y))
             else
                 (point1, newPoint)
     
@@ -143,9 +142,9 @@ module NetworkSimulator =
                         | None -> None, None
                         | Some x ->
                             x.Points
-                            |> fun x -> x.Split([|' '|])
-                            |> Array.map Point.ofString
-                            |> fun xs -> Some (Array.head xs), Some (Array.last xs)
+                            |> String.split ' '
+                            |> List.map Point.ofString
+                            |> fun xs -> Some (List.head xs), Some (List.last xs)
                 let cursorPoint = Point.ofFloats event.offsetX event.offsetY
                 let minDistance =
                     [point1; point2]
@@ -155,7 +154,7 @@ module NetworkSimulator =
                             xs
                             |> List.map (Option.map (Point.distance cursorPoint))
                             |> List.min
-                            |> (fun x -> Option.get x)
+                            |> Option.get
                 let onMouseMove' =
                     if minDistance < 5. then
                         let polyline = document.getElementById(container.id + "Polyline")
