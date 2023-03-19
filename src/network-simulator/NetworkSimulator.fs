@@ -95,27 +95,62 @@ module NetworkSimulator =
             |> String.split ' '
             |> List.map Point.ofString
             |> fun xs -> List.head xs, List.last xs
-
-        let touchedPoint, untouchedPoint =
-            Point.ofFloats (event.clientX - container.offsetLeft) (event.clientY - container.offsetTop)
-            |> touchedAndUntouched point1 point2
         
-        let touchedPointPosition = touchedPoint |> Point.relativePosition untouchedPoint
+        let cursorPoint = Point.ofFloats (event.clientX - container.offsetLeft) (event.clientY - container.offsetTop)
+        printfn "point1:\t%O" point1
+        printfn "point2:\t%O" point2
+        printfn "cursorPoint:\t%O" cursorPoint
 
-        let xMoving = event.clientX - (container.offsetLeft + touchedPoint.X)
-        let yMoving = event.clientY - (container.offsetTop + touchedPoint.Y)
+        let touchedPoint, untouchedPoint = cursorPoint |> touchedAndUntouched point1 point2
+        printfn "touchedPoint:\t%O" touchedPoint
+        printfn "untouchedPoint:\t%O" untouchedPoint
+
+        let touchedPointPosition = touchedPoint |> Point.relativePosition untouchedPoint
+        printfn "touchedPointPosition:\t%O" touchedPointPosition
+
+        let xMoving = cursorPoint.X - touchedPoint.X
+        let yMoving = cursorPoint.Y - touchedPoint.Y
+        printfn "xMoving:\t%f, yMoving:\t%f" xMoving yMoving
         
         // Building the new end points with the cursor position.
         let updatedPoints =
-            if touchedPointPosition &&& (Directions.Up ||| Directions.Left) <> Directions.None then
-                point1, point2 |> Point.shift -xMoving -yMoving // Up &&& Left
-            else
-                Point.ofFloats (event.clientX - container.offsetLeft) (event.clientY - container.offsetTop)
-                |> updatePoints point1 point2
+            match touchedPointPosition with
+            | Directions.Up ->
+                printfn "touchedPointRelativePosition:\tUp" |> ignore
+                touchedPoint, untouchedPoint |> Point.shift -xMoving -yMoving
+            | Directions.Down ->
+                printfn "touchedPointRelativePosition:\tDown" |> ignore
+                cursorPoint |> updatePoints untouchedPoint touchedPoint
+            | Directions.Left ->
+                printfn "touchedPointRelativePosition:\tLeft" |> ignore
+                touchedPoint, untouchedPoint |> Point.shift -xMoving -yMoving
+            | Directions.Right ->
+                printfn "touchedPointRelativePosition:\tRight" |> ignore
+                cursorPoint |> updatePoints point1 point2
+            | var when var = (Directions.Up ||| Directions.Left) ->
+                printfn "touchedPointRelativePosition:\tUpLeft" |> ignore
+                touchedPoint, untouchedPoint |> Point.shift -xMoving -yMoving
+            | var when var = (Directions.Up ||| Directions.Right) ->
+                printfn "touchedPointRelativePosition:\tUpRight" |> ignore
+                untouchedPoint |> Point.shift 0. -yMoving, touchedPoint |> Point.shift xMoving 0.
+            | var when var = (Directions.Down ||| Directions.Left) ->
+                printfn "touchedPointRelativePosition:\tDownLeft" |> ignore
+                touchedPoint |> Point.shift 0. yMoving, untouchedPoint |> Point.shift -xMoving 0.
+            | var when var = (Directions.Down ||| Directions.Right) ->
+                printfn "touchedPointRelativePosition:\tDownRight" |> ignore
+                cursorPoint |> updatePoints untouchedPoint touchedPoint
+            | _ ->
+                printfn "touchedPointRelativePosition:\t_" |> ignore
+                cursorPoint |> updatePoints point1 point2
         
+        printfn "updatedPoints:\t(%O), (%O)" <|| updatedPoints
+        
+        // Updating the cable points.
         updatedPoints
         |> fun (p1, p2) -> $"%f{p1.X},%f{p1.Y} %f{p2.X},%f{p2.Y}"
         |> fun x -> polyline.setAttribute("points", x)
+
+//        printfn "container.offsetTop:\t%f, container.offsetLeft:\t%f" container.offsetTop container.offsetLeft
 
         let updatedArea = updatedPoints ||> Area.ofPoints |> Area.expand (5. * 2.) (5. * 2.)
         svg.setAttribute("viewBox", $"0 0 %f{updatedArea.Width} %f{updatedArea.Height}")
@@ -123,8 +158,49 @@ module NetworkSimulator =
         svg.setAttribute("height", $"%f{updatedArea.Height}px")
         svg.setAttribute("style", "background-color: red;")
 
-        if touchedPointPosition &&& (Directions.Up ||| Directions.Left) <> Directions.None then
+        printfn "updatedArea:\t%O" <| updatedArea
+
+        // Shifting the cable container.
+        match touchedPointPosition with
+        | Directions.Up ->
             container.setAttribute("style", $"top: %f{container.offsetTop + yMoving}px; left: %f{container.offsetLeft + xMoving}px;")
+        //| Directions.Down ->
+        | Directions.Left ->
+            container.setAttribute("style", $"top: %f{container.offsetTop + yMoving}px; left: %f{container.offsetLeft + xMoving}px;")
+        //| Directions.Right ->
+        | var when var = (Directions.Up ||| Directions.Left) ->
+            container.setAttribute("style", $"top: %f{container.offsetTop + yMoving}px; left: %f{container.offsetLeft + xMoving}px;")
+        | var when var = (Directions.Up ||| Directions.Right) ->
+            container.setAttribute("style", $"top: %f{container.offsetTop + yMoving}px; left: %f{container.offsetLeft}px;")
+        | var when var = (Directions.Down ||| Directions.Left) ->
+            container.setAttribute("style", $"top: %f{container.offsetTop}px; left: %f{container.offsetLeft + xMoving}px;")
+        //| var when var = (Directions.Down ||| Directions.Right) ->
+        | _ -> ()
+        
+        let touchedPointPosition' = updatedPoints ||> Point.relativePosition
+        printfn "touchedPointPosition':\t%O" touchedPointPosition'
+
+        // Resizing and shifting the cable container.
+        match touchedPointPosition' with
+        | Directions.Up ->
+            svg.setAttribute("width", $"%f{updatedArea.Width + -xMoving}px")
+            svg.setAttribute("height", $"%f{updatedArea.Height + -yMoving}px")
+            container.setAttribute("style", $"top: %f{container.offsetTop + yMoving}px; left: %f{container.offsetLeft + xMoving}px;")
+        //| Directions.Down ->
+        | Directions.Left ->
+            svg.setAttribute("width", $"%f{updatedArea.Width + -xMoving}px")
+            svg.setAttribute("height", $"%f{updatedArea.Height + -yMoving}px")
+            container.setAttribute("style", $"top: %f{container.offsetTop + yMoving}px; left: %f{container.offsetLeft + xMoving}px;")
+        //| Directions.Right ->
+        | var when var = (Directions.Up ||| Directions.Left) ->
+            svg.setAttribute("width", $"%f{updatedArea.Width + -xMoving}px")
+            svg.setAttribute("height", $"%f{updatedArea.Height + -yMoving}px")
+            container.setAttribute("style", $"top: %f{container.offsetTop + yMoving}px; left: %f{container.offsetLeft + xMoving}px;")
+        //| var when var = (Directions.Up ||| Directions.Right) ->
+        //| var when var = (Directions.Down ||| Directions.Left) ->
+        //| var when var = (Directions.Down ||| Directions.Right) ->
+        | _ -> ()
+        printfn ""
     
     let setMouseMoveEventCable (container: Browser.Types.HTMLElement) : unit =
         let cable = Cable.ofHTMLElement container
@@ -189,9 +265,9 @@ module NetworkSimulator =
         let cables =
             [
                 Cable.create "lancable1" Kind.LANCable "LAN cable (1)" "5,5 195,95" { Area.X = 0.; Y = 0.; Width = 200.; Height = 100. } { Point.X = 0. + playAreaRect.left; Y = 0. + playAreaRect.top }
-                Cable.create "lancable2" Kind.LANCable "LAN cable (2)" "5,5 195,95" { Area.X = 0.; Y = 0.; Width = 200.; Height = 100. } { Point.X = 200. + playAreaRect.left; Y = 0. + playAreaRect.top }
-                Cable.create "lancable3" Kind.LANCable "LAN cable (3)" "5,2 195,2" { Area.X = 0.; Y = 0.; Width = 200.; Height = 5. } { Point.X = 400. + playAreaRect.left; Y = 0. + playAreaRect.top }
-                Cable.create "lancable4" Kind.LANCable "LAN cable (4)" "2,5 2,95" { Area.X = 0.; Y = 0.; Width = 5.; Height = 100. } { Point.X = 600. + playAreaRect.left; Y = 0. + playAreaRect.top }
+                Cable.create "lancable2" Kind.LANCable "LAN cable (2)" "5,95 195,5" { Area.X = 0.; Y = 0.; Width = 200.; Height = 100. } { Point.X = 200. + playAreaRect.left; Y = 0. + playAreaRect.top }
+                Cable.create "lancable3" Kind.LANCable "LAN cable (3)" "5,5 195,5" { Area.X = 0.; Y = 0.; Width = 200.; Height = 10. } { Point.X = 400. + playAreaRect.left; Y = 0. + playAreaRect.top }
+                Cable.create "lancable4" Kind.LANCable "LAN cable (4)" "5,5 5,95" { Area.X = 0.; Y = 0.; Width = 10.; Height = 100. } { Point.X = 600. + playAreaRect.left; Y = 0. + playAreaRect.top }
             ]
         
         cables
