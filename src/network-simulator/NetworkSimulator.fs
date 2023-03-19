@@ -105,12 +105,12 @@ module NetworkSimulator =
         printfn "touchedPoint:\t%O" touchedPoint
         printfn "untouchedPoint:\t%O" untouchedPoint
 
-        let touchedPointPosition = touchedPoint |> Point.relativePosition untouchedPoint
-        printfn "touchedPointPosition:\t%O" touchedPointPosition
-
         let xMoving = cursorPoint.X - touchedPoint.X
         let yMoving = cursorPoint.Y - touchedPoint.Y
         printfn "xMoving:\t%f, yMoving:\t%f" xMoving yMoving
+
+        let touchedPointPosition = touchedPoint |> Point.relativePosition untouchedPoint
+        printfn "touchedPointPosition:\t%O" touchedPointPosition
         
         // Building the new end points with the cursor position.
         let updatedPoints =
@@ -126,7 +126,7 @@ module NetworkSimulator =
                 touchedPoint, untouchedPoint |> Point.shift -xMoving -yMoving
             | Directions.Right ->
                 printfn "touchedPointRelativePosition:\tRight" |> ignore
-                cursorPoint |> updatePoints point1 point2
+                cursorPoint |> updatePoints untouchedPoint touchedPoint
             | var when var = (Directions.Up ||| Directions.Left) ->
                 printfn "touchedPointRelativePosition:\tUpLeft" |> ignore
                 touchedPoint, untouchedPoint |> Point.shift -xMoving -yMoving
@@ -141,7 +141,7 @@ module NetworkSimulator =
                 cursorPoint |> updatePoints untouchedPoint touchedPoint
             | _ ->
                 printfn "touchedPointRelativePosition:\t_" |> ignore
-                cursorPoint |> updatePoints point1 point2
+                cursorPoint |> updatePoints untouchedPoint touchedPoint
         
         printfn "updatedPoints:\t(%O), (%O)" <|| updatedPoints
         
