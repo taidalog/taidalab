@@ -233,13 +233,10 @@ module NetworkSimulator =
                 let cursorPoint = Point.ofFloats event.offsetX event.offsetY
                 let minDistance =
                     [point1; point2]
-                    |> fun xs ->
-                        match xs with
-                        | var when xs |> List.forall Option.isSome ->
-                            xs
-                            |> List.map (Option.map (Point.distance cursorPoint))
-                            |> List.min
-                            |> Option.get
+                    |> List.filter Option.isSome
+                    |> List.map Option.get
+                    |> List.map (Point.distance cursorPoint)
+                    |> List.min
                 let onMouseMove' =
                     if minDistance < 5. then
                         let polyline = document.getElementById(container.id + "Polyline")
