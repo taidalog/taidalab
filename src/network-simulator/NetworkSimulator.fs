@@ -251,6 +251,15 @@ module NetworkSimulator =
                     //printfn "mouse up!"
                     document.removeEventListener("mousemove", onMouseMove')
     
+    type Errors =
+        | Empty
+        | WrongFormat
+    
+    let validateIPv4Input (input: string) : Result<IPv4,Errors> =
+        input
+        |> fun x -> if x = "" then Error Errors.Empty else Ok x
+        |> Result.bind (fun x -> if IPv4.validate x then Ok (IPv4.ofDotDecimal x) else Error Errors.WrongFormat)
+    
     let init () =
         let playArea = document.getElementById "playArea"
         let playAreaRect = playArea.getBoundingClientRect()
@@ -324,48 +333,51 @@ module NetworkSimulator =
 
             let errorArea = document.getElementById "errorArea" :?> Browser.Types.HTMLDivElement
             let outputArea = document.getElementById "outputArea" :?> Browser.Types.HTMLDivElement
-            let sourceInput = document.getElementById "sourceInput" :?> Browser.Types.HTMLInputElement
-
             errorArea.innerText <- ""
             outputArea.innerText <- ""
 
-            let source =
-                sourceInput.value
-                |> IPv4.tryOfDotDecimal
-                |> Option.bind (fun x ->
-                    devices'
-                    |> List.filter (fun d -> Device.isClient d || Device.isRouter d)
-                    |> List.tryFind (Device.hasIPv4 x))
-            //source.Name |> printfn "Source: %s"
+            let sourceInput = document.getElementById "sourceInput" :?> Browser.Types.HTMLInputElement
+            let destinationInput = document.getElementById "destinationInput" :?> Browser.Types.HTMLInputElement
+            let sourceIPv4 = validateIPv4Input sourceInput.value
+            let destinationIPv4 = validateIPv4Input destinationInput.value
 
-            match source with
-            | None ->
-                errorArea.innerText<- sprintf "送信元 IPv4 を入力してください。"
+            match sourceIPv4 with
+            | Error e ->
+                match e with
+                | Errors.Empty -> errorArea.innerText <- "送信元 IPv4 を入力してください。"
+                | Errors.WrongFormat -> errorArea.innerText <- "送信元 IPv4 の形式が正しくありません。"
                 sourceInput.focus()
-            | Some source' ->
-                let sourceArea = source' |> Device.area
-                let sourceName = source' |> Device.name
-                let lanCablesWithSource =
-                    lanCables'
-                    |> List.filter (fun x -> x.Area |> Area.isOver 0. sourceArea)
-                match lanCablesWithSource with
-                | [] -> errorArea.innerText <- sprintf "%s はLANケーブルに繋がっていません。" sourceName
-                | _ ->
-                    let destinationInput = document.getElementById("destinationInput") :?> Browser.Types.HTMLInputElement
-                    match destinationInput.value with
-                    | "" ->
-                        errorArea.innerText<- sprintf "送信先 IPv4 を入力してください。"
-                        destinationInput.focus()
-                    | _ ->
-                        let destinationIPv4 = destinationInput.value |> IPv4.ofDotDecimal
-                        ping lanCables' devices' source' 10 destinationIPv4
-                        |> fun b -> if b then (b, "history-correct") else (b, "history-wrong")
-                        |> fun (b, s) -> sprintf """<span class="%s">%s> ping %s -> %b""" s sourceName (destinationIPv4.ToString()) b
-                        |> (fun x -> outputArea.innerHTML <- x)
-                        match document.activeElement.id with
-                        | "sourceInput" -> sourceInput.focus()
-                        | "destinationInput" -> destinationInput.focus()
-                        | _ -> ()
+            | Ok sourceIPv4 ->
+                match destinationIPv4 with
+                | Error e ->
+                    match e with
+                    | Errors.Empty -> errorArea.innerText <- "送信先 IPv4 を入力してください。"
+                    | Errors.WrongFormat -> errorArea.innerText <- "送信先 IPv4 の形式が正しくありません。"
+                    destinationInput.focus()
+                | Ok destinationIPv4 ->
+                    let source =
+                        devices'
+                        |> List.filter (fun d -> Device.isClient d || Device.isRouter d)
+                        |> List.tryFind (Device.hasIPv4 sourceIPv4)
+                    match source with
+                    | None ->
+                        errorArea.innerText <- sprintf "IPv4 %s を持つデバイスが見つかりません。" (sourceIPv4.ToString())
+                        sourceInput.focus()
+                    | Some source ->
+                        let lanCablesWithSource =
+                            lanCables'
+                            |> List.filter (fun x -> x.Area |> Area.isOver 0. (Device.area source))
+                        match lanCablesWithSource with
+                        | [] -> errorArea.innerText <- sprintf "%s はLANケーブルに繋がっていません。" (Device.name source)
+                        | _ ->
+                            ping lanCables' devices' source 10 destinationIPv4
+                            |> fun b -> if b then (b, "history-correct") else (b, "history-wrong")
+                            |> fun (b, s) -> sprintf """<span class="%s">%s> ping %s -> %b""" s (Device.name source) (destinationIPv4.ToString()) b
+                            |> (fun x -> outputArea.innerHTML <- x)
+                            match document.activeElement.id with
+                            | "sourceInput" -> sourceInput.focus()
+                            | "destinationInput" -> destinationInput.focus()
+                            | _ -> ()
             false
         
         let addClientButton = document.getElementById("addClientButton") :?> Browser.Types.HTMLButtonElement
