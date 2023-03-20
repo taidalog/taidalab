@@ -23,14 +23,14 @@ module NetworkSimulator =
                 </span>
             </span>
             <span class="display-order-2">
-                <button type="submit" id="submitButton" class="submit-button d2b-button">ping</button>
+                <button type="submit" id="submitButton" class="submit-button">ping</button>
             </span>
         </form>
         <form>
-            <button type="button" id="addClientButton" class="submit-button d2b-button display-order-3">クライアントを追加</button>
-            <button type="button" id="addRouterButton" class="submit-button d2b-button display-order-4">ルータを追加</button>
-            <button type="button" id="addHubButton" class="submit-button d2b-button display-order-5">ハブを追加</button>
-            <button type="button" id="addLANCableButton" class="submit-button d2b-button display-order-6">LANケーブルを追加</button>
+            <button type="button" id="addClientButton" class="submit-button submit-button-gray display-order-3">クライアントを追加</button>
+            <button type="button" id="addRouterButton" class="submit-button submit-button-gray display-order-4">ルータを追加</button>
+            <button type="button" id="addHubButton" class="submit-button submit-button-gray display-order-5">ハブを追加</button>
+            <button type="button" id="addLANCableButton" class="submit-button submit-button-gray display-order-6">LANケーブルを追加</button>
         </form>
         <div id="errorArea" class="error-area warning"></div>
         <div id="outputArea" class="output-area"></div>

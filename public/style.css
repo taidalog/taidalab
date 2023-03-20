@@ -585,6 +585,14 @@ details:hover {
     background-color: #aaaaaa;
 }
 
+.submit-button-gray {
+    background: #e9e9ed;
+}
+
+.submit-button-gray:hover {
+    background-color: #d0d0d7;
+}
+
 
 /*
     <main> of Addition course and Subtraction course.
