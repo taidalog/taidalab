@@ -16,10 +16,10 @@ module NetworkSimulator =
         <form id="inputArea" class="iro-input-area" autocomplete="off">
             <span class="display-order-1 input-area-iro-shorter">
                 <span class="iro-input-wrapper">
-                    <label for="intervalInput">Source IPv4:<input type="text" id="sourceInput" class="number-input display-order-1 consolas"></label>
+                    <label for="intervalInput">送信元 IPv4:<input type="text" id="sourceInput" class="number-input display-order-1 consolas"></label>
                 </span>
                 <span class="iro-input-wrapper">
-                    <label for="limitInput">Destination IPv4:<input type="text" id="destinationInput" class="number-input display-order-1 consolas"></label>
+                    <label for="limitInput">送信先 IPv4:<input type="text" id="destinationInput" class="number-input display-order-1 consolas"></label>
                 </span>
             </span>
             <span class="display-order-2">
@@ -27,10 +27,10 @@ module NetworkSimulator =
             </span>
         </form>
         <form>
-            <button type="button" id="addClientButton" class="submit-button d2b-button display-order-3">add a client</button>
-            <button type="button" id="addRouterButton" class="submit-button d2b-button display-order-4">add a router</button>
-            <button type="button" id="addHubButton" class="submit-button d2b-button display-order-5">add a Hub</button>
-            <button type="button" id="addLANCableButton" class="submit-button d2b-button display-order-6">add a LAN cable</button>
+            <button type="button" id="addClientButton" class="submit-button d2b-button display-order-3">クライアントを追加</button>
+            <button type="button" id="addRouterButton" class="submit-button d2b-button display-order-4">ルータを追加</button>
+            <button type="button" id="addHubButton" class="submit-button d2b-button display-order-5">ハブを追加</button>
+            <button type="button" id="addLANCableButton" class="submit-button d2b-button display-order-6">LANケーブルを追加</button>
         </form>
         <div id="errorArea" class="error-area warning"></div>
         <div id="outputArea" class="output-area"></div>
@@ -257,13 +257,13 @@ module NetworkSimulator =
 
         let devices =
             [
-                Client <| Client.create "device1" "Client (1)" "10.0.0.1" "255.255.255.0" { Area.X = 0.; Y = 0.; Width = 100.; Height = 100. } { Point.X = 0. + playAreaRect.left; Y = 100. + playAreaRect.top }
-                Client <| Client.create "device2" "Client (2)" "10.0.0.2" "255.255.255.0" { Area.X = 0.; Y = 0.; Width = 100.; Height = 100. } { Point.X = 150. + playAreaRect.left; Y = 100. + playAreaRect.top }
-                Router <| Router.create "device3" "Router (1)" "10.0.0.254" "255.255.255.0" { Area.X = 0.; Y = 0.; Width = 100.; Height = 35. } { Point.X = 300. + playAreaRect.left; Y = 100. + playAreaRect.top }
-                Client <| Client.create "device4" "Client (3)" "10.0.1.18" "255.255.255.240" { Area.X = 0.; Y = 0.; Width = 100.; Height = 100. } { Point.X = 450. + playAreaRect.left; Y = 100. + playAreaRect.top }
-                Client <| Client.create "device5" "Client (4)" "10.0.1.19" "255.255.255.240" { Area.X = 0.; Y = 0.; Width = 100.; Height = 100. } { Point.X = 600. + playAreaRect.left; Y = 100. + playAreaRect.top }
-                Router <| Router.create "device6" "Router (2)" "10.0.1.30" "255.255.255.240" { Area.X = 0.; Y = 0.; Width = 100.; Height = 35. } { Point.X = 750. + playAreaRect.left; Y = 100. + playAreaRect.top }
-                Hub <| Hub.create "device7" "Hub (1)" { Area.X = 0.; Y = 0.; Width = 100.; Height = 35. } { Point.X = 900. + playAreaRect.left; Y = 100. + playAreaRect.top }
+                Client <| Client.create "device1" "クライアント(1)" "10.0.0.1" "255.255.255.0" { Area.X = 0.; Y = 0.; Width = 100.; Height = 100. } { Point.X = 0. + playAreaRect.left; Y = 100. + playAreaRect.top }
+                Client <| Client.create "device2" "クライアント(2)" "10.0.0.2" "255.255.255.0" { Area.X = 0.; Y = 0.; Width = 100.; Height = 100. } { Point.X = 150. + playAreaRect.left; Y = 100. + playAreaRect.top }
+                Router <| Router.create "device3" "ルータ(1)" "10.0.0.254" "255.255.255.0" { Area.X = 0.; Y = 0.; Width = 100.; Height = 35. } { Point.X = 300. + playAreaRect.left; Y = 100. + playAreaRect.top }
+                Client <| Client.create "device4" "クライアント(3)" "10.0.1.18" "255.255.255.240" { Area.X = 0.; Y = 0.; Width = 100.; Height = 100. } { Point.X = 450. + playAreaRect.left; Y = 100. + playAreaRect.top }
+                Client <| Client.create "device5" "クライアント(4)" "10.0.1.19" "255.255.255.240" { Area.X = 0.; Y = 0.; Width = 100.; Height = 100. } { Point.X = 600. + playAreaRect.left; Y = 100. + playAreaRect.top }
+                Router <| Router.create "device6" "ルータ(2)" "10.0.1.30" "255.255.255.240" { Area.X = 0.; Y = 0.; Width = 100.; Height = 35. } { Point.X = 750. + playAreaRect.left; Y = 100. + playAreaRect.top }
+                Hub <| Hub.create "device7" "ハブ(1)" { Area.X = 0.; Y = 0.; Width = 100.; Height = 35. } { Point.X = 900. + playAreaRect.left; Y = 100. + playAreaRect.top }
             ]
         
         devices
@@ -273,10 +273,10 @@ module NetworkSimulator =
 
         let cables =
             [
-                Cable.create "lancable1" Kind.LANCable "LAN cable (1)" "5,5 195,95" { Area.X = 0.; Y = 0.; Width = 200.; Height = 100. } { Point.X = 0. + playAreaRect.left; Y = 0. + playAreaRect.top }
-                Cable.create "lancable2" Kind.LANCable "LAN cable (2)" "5,95 195,5" { Area.X = 0.; Y = 0.; Width = 200.; Height = 100. } { Point.X = 200. + playAreaRect.left; Y = 0. + playAreaRect.top }
-                Cable.create "lancable3" Kind.LANCable "LAN cable (3)" "5,5 195,5" { Area.X = 0.; Y = 0.; Width = 200.; Height = 10. } { Point.X = 400. + playAreaRect.left; Y = 0. + playAreaRect.top }
-                Cable.create "lancable4" Kind.LANCable "LAN cable (4)" "5,5 5,95" { Area.X = 0.; Y = 0.; Width = 10.; Height = 100. } { Point.X = 600. + playAreaRect.left; Y = 0. + playAreaRect.top }
+                Cable.create "lancable1" Kind.LANCable "LANケーブル(1)" "5,5 195,95" { Area.X = 0.; Y = 0.; Width = 200.; Height = 100. } { Point.X = 0. + playAreaRect.left; Y = 0. + playAreaRect.top }
+                Cable.create "lancable2" Kind.LANCable "LANケーブル(2)" "5,95 195,5" { Area.X = 0.; Y = 0.; Width = 200.; Height = 100. } { Point.X = 200. + playAreaRect.left; Y = 0. + playAreaRect.top }
+                Cable.create "lancable3" Kind.LANCable "LANケーブル(3)" "5,5 195,5" { Area.X = 0.; Y = 0.; Width = 200.; Height = 10. } { Point.X = 400. + playAreaRect.left; Y = 0. + playAreaRect.top }
+                Cable.create "lancable4" Kind.LANCable "LANケーブル(4)" "5,5 5,95" { Area.X = 0.; Y = 0.; Width = 10.; Height = 100. } { Point.X = 600. + playAreaRect.left; Y = 0. + playAreaRect.top }
             ]
         
         cables
@@ -340,7 +340,7 @@ module NetworkSimulator =
 
             match source with
             | None ->
-                errorArea.innerText<- sprintf "Input source IPv4."
+                errorArea.innerText<- sprintf "送信元 IPv4 を入力してください。"
                 sourceInput.focus()
             | Some source' ->
                 let sourceArea = source' |> Device.area
@@ -349,12 +349,12 @@ module NetworkSimulator =
                     lanCables'
                     |> List.filter (fun x -> x.Area |> Area.isOver 0. sourceArea)
                 match lanCablesWithSource with
-                | [] -> errorArea.innerText <- sprintf "%s is connected to no lan cable." sourceName
+                | [] -> errorArea.innerText <- sprintf "%s はLANケーブルに繋がっていません。" sourceName
                 | _ ->
                     let destinationInput = document.getElementById("destinationInput") :?> Browser.Types.HTMLInputElement
                     match destinationInput.value with
                     | "" ->
-                        errorArea.innerText<- sprintf "Input destination IPv4."
+                        errorArea.innerText<- sprintf "送信先 IPv4 を入力してください。"
                         destinationInput.focus()
                     | _ ->
                         let destinationIPv4 = destinationInput.value |> IPv4.ofDotDecimal
@@ -382,7 +382,7 @@ module NetworkSimulator =
             |> (fun n ->
                 Client.create
                     id
-                    $"Client (%d{n})"
+                    $"クライアント(%d{n})"
                     "10.0.0.1"
                     "255.255.255.0"
                     { Area.X = 0.; Y = 0.; Width = 100.; Height = 100. }
@@ -415,7 +415,7 @@ module NetworkSimulator =
             |> (fun n ->
                 Router.create
                     id
-                    $"Router (%d{n})"
+                    $"ルータ(%d{n})"
                     "10.0.0.1"
                     "255.255.255.0"
                     { Area.X = 0.; Y = 0.; Width = 100.; Height = 35. }
@@ -448,7 +448,7 @@ module NetworkSimulator =
             |> (fun n ->
                 Hub.create
                     id
-                    $"Hub (%d{n})"
+                    $"ハブ(%d{n})"
                     { Area.X = 0.; Y = 0.; Width = 100.; Height = 35. }
                     { Point.X = 0. + playAreaRect.left; Y = 0. + playAreaRect.top })
             |> Hub.toHTMLElement
@@ -478,7 +478,7 @@ module NetworkSimulator =
                 Cable.create
                     id
                     Kind.LANCable
-                    $"LAN cable (%d{n})"
+                    $"LANケーブル(%d{n})"
                     "5,5 195,95"
                     { Area.X = 0.; Y = 0.; Width = 200.; Height = 100. }
                     { Point.X = 0. + playAreaRect.left; Y = 0. + playAreaRect.top })
