@@ -387,9 +387,18 @@ module NetworkSimulator =
 
             let firstCable = playArea.getElementsByClassName("cable-container").item 0
 
-            let deviceCount = playArea.getElementsByClassName("device-container").length
-            let nextNumber = deviceCount + 1
-            let id = $"device%d{nextNumber}"
+            let clientCount =
+                playArea.getElementsByClassName "device-container"
+                |> (fun x -> JS.Constructors.Array?from(x))
+                |> Array.toList
+                |> List.map Device.ofHTMLElement
+                |> List.filter Option.isSome
+                |> List.map Option.get
+                |> List.filter Device.isClient
+                |> List.length
+            
+            let nextNumber = clientCount + 1
+            let id = $"client%d{nextNumber}"
             
             nextNumber
             |> (fun n ->
@@ -420,9 +429,18 @@ module NetworkSimulator =
 
             let firstCable = playArea.getElementsByClassName("cable-container").item 0
 
-            let deviceCount = playArea.getElementsByClassName("device-container").length
-            let nextNumber = deviceCount + 1
-            let id = $"device%d{nextNumber}"
+            let routerCount =
+                playArea.getElementsByClassName "device-container"
+                |> (fun x -> JS.Constructors.Array?from(x))
+                |> Array.toList
+                |> List.map Device.ofHTMLElement
+                |> List.filter Option.isSome
+                |> List.map Option.get
+                |> List.filter Device.isRouter
+                |> List.length
+            
+            let nextNumber = routerCount + 1
+            let id = $"router%d{nextNumber}"
 
             nextNumber
             |> (fun n ->
@@ -453,9 +471,18 @@ module NetworkSimulator =
 
             let firstCable = playArea.getElementsByClassName("cable-container").item 0
    
-            let deviceCount = playArea.getElementsByClassName("device-container").length
-            let nextNumber = deviceCount + 1
-            let id = $"device%d{nextNumber}"
+            let hubCount =
+                playArea.getElementsByClassName "device-container"
+                |> (fun x -> JS.Constructors.Array?from(x))
+                |> Array.toList
+                |> List.map Device.ofHTMLElement
+                |> List.filter Option.isSome
+                |> List.map Option.get
+                |> List.filter Device.isHub
+                |> List.length
+            
+            let nextNumber = hubCount + 1
+            let id = $"hub%d{nextNumber}"
 
             nextNumber
             |> (fun n ->
