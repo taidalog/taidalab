@@ -359,8 +359,9 @@ module NetworkSimulator =
                     | _ ->
                         let destinationIPv4 = destinationInput.value |> IPv4.ofDotDecimal
                         ping lanCables' devices' source' 10 destinationIPv4
-                        |> sprintf "%s> ping %s -> %b" sourceName (destinationIPv4.ToString())
-                        |> (fun x -> outputArea.innerText <- x)
+                        |> fun b -> if b then (b, "history-correct") else (b, "history-wrong")
+                        |> fun (b, s) -> sprintf """<span class="%s">%s> ping %s -> %b""" s sourceName (destinationIPv4.ToString()) b
+                        |> (fun x -> outputArea.innerHTML <- x)
                         match document.activeElement.id with
                         | "sourceInput" -> sourceInput.focus()
                         | "destinationInput" -> destinationInput.focus()
