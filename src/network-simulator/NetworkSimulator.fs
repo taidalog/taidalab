@@ -37,38 +37,38 @@ module NetworkSimulator =
         <div id="playArea" class="play-area"></div>
         """
     
-    let onMouseMove (elm: Browser.Types.HTMLElement) (svg: Browser.Types.HTMLElement) (event: Browser.Types.Event) =
+    let onMouseMove (container: Browser.Types.HTMLElement) (svg: Browser.Types.HTMLElement) (event: Browser.Types.Event) : unit =
         let event = event :?> Browser.Types.MouseEvent
         let top = (event.pageY - svg.getBoundingClientRect().height / 2.)
         let left = (event.pageX - svg.getBoundingClientRect().width / 2.)
         let styleString = sprintf "top: %fpx; left: %fpx;" top left
-        elm.setAttribute("style", styleString)
+        container.setAttribute("style", styleString)
     
-    let setMouseMoveEvent (x: Browser.Types.HTMLElement) : unit =
-        let svg = document.getElementById(x.id + "Svg")
+    let setMouseMoveEvent (container: Browser.Types.HTMLElement) : unit =
+        let svg = document.getElementById(container.id + "Svg")
         svg.ondragstart <- fun _ -> false
-        let onMouseMove' = onMouseMove x svg
+        let onMouseMove' = onMouseMove container svg
         svg.onmousedown <- fun _ ->
             document.addEventListener("mousemove", onMouseMove')
             svg.onmouseup <- fun _ ->
                 //printfn "mouse up!"
                 document.removeEventListener("mousemove", onMouseMove')
     
-    let resetTitleOnNameChange (x: Browser.Types.HTMLElement) : unit =
-        let nameElement = document.getElementById (x.id + "Name")
+    let resetTitleOnNameChange (container: Browser.Types.HTMLElement) : unit =
+        let nameElement = document.getElementById (container.id + "Name")
         nameElement.addEventListener("blur", (fun _ ->
-            let titleElement = document.getElementById (x.id + "Title")
+            let titleElement = document.getElementById (container.id + "Title")
             titleElement.textContent <- nameElement.innerText))
     
-    let setToQuitEditOnEnter (x: Browser.Types.HTMLElement) : unit =
-        x.children
+    let setToQuitEditOnEnter (container: Browser.Types.HTMLElement) : unit =
+        container.children
         |> (fun x -> JS.Constructors.Array?from(x))
         |> Array.filter (fun (x: Browser.Types.HTMLElement) -> x.contentEditable = "true")
         |> Array.iter (fun x -> 
             x.onkeydown <- (fun event ->
                 if event.key = "Enter" || event.key = "Escape" then x.blur()))
 
-    let updatePoints point1 point2 newPoint =
+    let updatePoints (point1: Point) (point2: Point) (newPoint: Point) : (Point * Point) =
         (point1, point2)
         |> Tuple.map (Point.distance newPoint)
         |> fun (f1, f2) ->
@@ -77,7 +77,7 @@ module NetworkSimulator =
             else
                 (point1, newPoint)
     
-    let touchedAndUntouched point1 point2 newPoint =
+    let touchedAndUntouched (point1: Point) (point2: Point) (newPoint: Point) : (Point * Point) =
         (point1, point2)
         |> Tuple.map (Point.distance newPoint)
         |> fun (d1, d2) ->
