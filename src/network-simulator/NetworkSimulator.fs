@@ -368,8 +368,8 @@ module NetworkSimulator =
                         | [] -> errorArea.innerText <- sprintf "%s はLANケーブルに繋がっていません。" (Device.name source)
                         | _ ->
                             ping lanCables' devices' source 10 destinationIPv4
-                            |> fun b -> if b then (b, "history-correct") else (b, "history-wrong")
-                            |> fun (b, s) -> sprintf """<span class="%s">%s> ping %s -> %b""" s (Device.name source) (destinationIPv4.ToString()) b
+                            |> fun b -> if b then ("history-correct", "通信成功！") else ("history-wrong", "通信失敗…")
+                            |> fun (className, success) -> sprintf """<span class="%s">%s [%s] -> %s %s""" className (Device.name source) (sourceIPv4.ToString()) (destinationIPv4.ToString()) success
                             |> (fun x -> outputArea.innerHTML <- x)
                             match document.activeElement.id with
                             | "sourceInput" -> sourceInput.focus()
