@@ -279,10 +279,10 @@ module NetworkSimulator =
 
         let cables =
             [
-                Cable.create "lancable1" Kind.LANCable "LANケーブル(1)" "5,5 195,45" { Area.X = 0.; Y = 0.; Width = 200.; Height = 50. } { Point.X = 100. + playAreaRect.left; Y = 0. + playAreaRect.top }
-                Cable.create "lancable2" Kind.LANCable "LANケーブル(2)" "5,5 195,45" { Area.X = 0.; Y = 0.; Width = 200.; Height = 50. } { Point.X = 300. + playAreaRect.left; Y = 0. + playAreaRect.top }
-                Cable.create "lancable3" Kind.LANCable "LANケーブル(3)" "5,5 195,45" { Area.X = 0.; Y = 0.; Width = 200.; Height = 50. } { Point.X = 500. + playAreaRect.left; Y = 0. + playAreaRect.top }
-                Cable.create "lancable4" Kind.LANCable "LANケーブル(4)" "5,5 195,45" { Area.X = 0.; Y = 0.; Width = 200.; Height = 50. } { Point.X = 700. + playAreaRect.left; Y = 0. + playAreaRect.top }
+                Cable.create "lancable1" Kind.LANCable "LANケーブル(1)" "5,5 195,45" { Area.X = 0.; Y = 0.; Width = 200.; Height = 50. } { Point.X = 100. + playAreaRect.left; Y = 30. + playAreaRect.top }
+                Cable.create "lancable2" Kind.LANCable "LANケーブル(2)" "5,5 195,45" { Area.X = 0.; Y = 0.; Width = 200.; Height = 50. } { Point.X = 300. + playAreaRect.left; Y = 30. + playAreaRect.top }
+                Cable.create "lancable3" Kind.LANCable "LANケーブル(3)" "5,5 195,45" { Area.X = 0.; Y = 0.; Width = 200.; Height = 50. } { Point.X = 500. + playAreaRect.left; Y = 30. + playAreaRect.top }
+                Cable.create "lancable4" Kind.LANCable "LANケーブル(4)" "5,5 195,45" { Area.X = 0.; Y = 0.; Width = 200.; Height = 50. } { Point.X = 700. + playAreaRect.left; Y = 30. + playAreaRect.top }
             ]
         
         cables
