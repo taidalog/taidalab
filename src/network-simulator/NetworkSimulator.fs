@@ -365,7 +365,7 @@ module NetworkSimulator =
                             lanCables'
                             |> List.filter (fun x -> x.Area |> Area.isOver 0. (Device.area source))
                         match lanCablesWithSource with
-                        | [] -> errorArea.innerText <- sprintf "%s はLANケーブルに繋がっていません。" (Device.name source)
+                        | [] -> errorArea.innerText <- sprintf "%s [%s] はLANケーブルに繋がっていません。" (Device.name source) (sourceIPv4.ToString())
                         | _ ->
                             ping lanCables' devices' source 10 destinationIPv4
                             |> fun b -> if b then ("history-correct", "通信成功！") else ("history-wrong", "通信失敗…")
