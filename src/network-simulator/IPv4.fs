@@ -18,7 +18,8 @@ type IPv4 =
 
 module IPv4 =
     let validate (str: string) : bool =
-        Regex.isMatch "^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$" str
+        Regex.isMatch "^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$" str &&
+        str.Split([|'.'|]) |> Array.map int |> Array.forall (fun x -> x >= 0 && x <= 255)
 
     let ofBytes byte1 byte2 byte3 byte4 : IPv4 =
         { IPv4.Octet1 = byte1
