@@ -39,8 +39,8 @@ module NetworkSimulator =
     
     let onMouseMove (elm: Browser.Types.HTMLElement) (svg: Browser.Types.HTMLElement) (event: Browser.Types.Event) =
         let event = event :?> Browser.Types.MouseEvent
-        let top = (event.clientY - svg.getBoundingClientRect().height / 2.)
-        let left = (event.clientX - svg.getBoundingClientRect().width / 2.)
+        let top = (event.pageY - svg.getBoundingClientRect().height / 2.)
+        let left = (event.pageX - svg.getBoundingClientRect().width / 2.)
         let styleString = sprintf "top: %fpx; left: %fpx;" top left
         elm.setAttribute("style", styleString)
     
@@ -101,7 +101,7 @@ module NetworkSimulator =
             |> List.map Point.ofString
             |> fun xs -> List.head xs, List.last xs
         
-        let cursorPoint = Point.ofFloats (event.clientX - container.offsetLeft) (event.clientY - container.offsetTop)
+        let cursorPoint = Point.ofFloats (event.pageX - container.offsetLeft) (event.pageY - container.offsetTop)
 //        printfn "point1:\t%O" point1
 //        printfn "point2:\t%O" point2
 //        printfn "cursorPoint:\t%O" cursorPoint
