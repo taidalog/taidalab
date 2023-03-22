@@ -24,6 +24,9 @@ module Point =
         |> Array.map float
         |> fun xs -> ofFloats (Array.head xs) (Array.last xs)
     
+    let toCoordinate (point: Point) : string =
+        sprintf "%f,%f" point.X point.Y
+    
     let distance (p1: Point) (p2: Point) : float =
         Math.Sqrt((p1.X - p2.X) ** 2 + (p1.Y - p2.Y) ** 2)
     
