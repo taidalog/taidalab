@@ -227,8 +227,6 @@ module NetworkSimulator =
                         | None -> None, None
                         | Some x ->
                             x.Points
-                            |> String.split ' '
-                            |> List.map Point.ofString
                             |> fun xs -> Some (List.head xs), Some (List.last xs)
                 let cursorPoint = Point.ofFloats event.offsetX event.offsetY
                 let minDistance =
@@ -279,10 +277,10 @@ module NetworkSimulator =
 
         let cables =
             [
-                Cable.create "lancable1" Kind.LANCable "LANケーブル(1)" "5,5 195,45" { Area.X = 0.; Y = 0.; Width = 200.; Height = 50. } { Point.X = 100. + playAreaRect.left; Y = 30. + playAreaRect.top }
-                Cable.create "lancable2" Kind.LANCable "LANケーブル(2)" "5,5 195,45" { Area.X = 0.; Y = 0.; Width = 200.; Height = 50. } { Point.X = 300. + playAreaRect.left; Y = 30. + playAreaRect.top }
-                Cable.create "lancable3" Kind.LANCable "LANケーブル(3)" "5,5 195,45" { Area.X = 0.; Y = 0.; Width = 200.; Height = 50. } { Point.X = 500. + playAreaRect.left; Y = 30. + playAreaRect.top }
-                Cable.create "lancable4" Kind.LANCable "LANケーブル(4)" "5,5 195,45" { Area.X = 0.; Y = 0.; Width = 200.; Height = 50. } { Point.X = 700. + playAreaRect.left; Y = 30. + playAreaRect.top }
+                Cable.create "lancable1" Kind.LANCable "LANケーブル(1)" ("5,5 195,45" |> String.split ' ' |> List.map Point.ofString) { Area.X = 0.; Y = 0.; Width = 200.; Height = 50. } { Point.X = 100. + playAreaRect.left; Y = 30. + playAreaRect.top }
+                Cable.create "lancable2" Kind.LANCable "LANケーブル(2)" ("5,5 195,45" |> String.split ' ' |> List.map Point.ofString) { Area.X = 0.; Y = 0.; Width = 200.; Height = 50. } { Point.X = 300. + playAreaRect.left; Y = 30. + playAreaRect.top }
+                Cable.create "lancable3" Kind.LANCable "LANケーブル(3)" ("5,5 195,45" |> String.split ' ' |> List.map Point.ofString) { Area.X = 0.; Y = 0.; Width = 200.; Height = 50. } { Point.X = 500. + playAreaRect.left; Y = 30. + playAreaRect.top }
+                Cable.create "lancable4" Kind.LANCable "LANケーブル(4)" ("5,5 195,45" |> String.split ' ' |> List.map Point.ofString) { Area.X = 0.; Y = 0.; Width = 200.; Height = 50. } { Point.X = 700. + playAreaRect.left; Y = 30. + playAreaRect.top }
             ]
         
         cables
@@ -363,7 +361,7 @@ module NetworkSimulator =
                     | Some source ->
                         let lanCablesWithSource =
                             lanCables'
-                            |> List.filter (fun x -> x.Area |> Area.isOver 0. (Device.area source))
+                            |> List.filter (fun x -> x.Points |> List.exists (Area.includesPoint x.Area.X x.Area.Y (Device.area source)))
                         match lanCablesWithSource with
                         | [] -> errorArea.innerText <- sprintf "%s [%s] はLANケーブルに繋がっていません。" (Device.name source) (sourceIPv4.ToString())
                         | _ ->
@@ -516,7 +514,7 @@ module NetworkSimulator =
                     id
                     Kind.LANCable
                     $"LANケーブル(%d{n})"
-                    "5,5 195,45"
+                    ("5,5 195,45" |> String.split ' ' |> List.map Point.ofString)
                     { Area.X = 0.; Y = 0.; Width = 200.; Height = 50. }
                     { Point.X = 0. + playAreaRect.left; Y = 0. + playAreaRect.top })
             |> Cable.toHTMLElement
