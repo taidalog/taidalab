@@ -15,13 +15,13 @@ type Cable =
     { Id : string
       Kind : Kind
       Name : string
-      Points : string
+      Points : Point list
       Area : Area
       Position : Point }
     member this.DisplayText = this.ToString()
     override this.ToString() =
         sprintf "Id = %s; Kind = %s; Name = %s; Points = %s; Area = %O; Posirion = %O"
-            this.Id (string this.Kind) this.Name this.Points this.Area this.Position
+            this.Id (string this.Kind) this.Name (this.Points |> List.map (fun x -> x.ToString()) |> String.concat " ") this.Area this.Position
 
 module Cable =
     let create id kind name points area position : Cable =
@@ -68,7 +68,7 @@ module Cable =
 
         let polyline = document.createElementNS("http://www.w3.org/2000/svg", "polyline")
         polyline.id <- $"{cable.Id}Polyline"
-        polyline.setAttribute("points", $"%s{cable.Points}")
+        polyline.setAttribute("points", $"""%s{cable.Points |> List.map Point.toCoordinate |> String.concat " "}""")
         polyline.setAttribute("fill", "none")
         polyline.setAttribute("stroke", "#00aeda")
         polyline.setAttribute("stroke-width", "5")
@@ -117,6 +117,8 @@ module Cable =
         let points =
             document.getElementById(id + "Polyline")
             |> fun (x: Browser.Types.HTMLElement) -> x.getAttribute("points")
+            |> String.split ' '
+            |> List.map Point.ofString
         
         let position =
             let x =
