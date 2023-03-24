@@ -30,12 +30,11 @@ module Area =
     let shift (x: float) (y: float) (area: Area) : Area =
         { area with Area.X = area.X + x; Area.Y = area.Y + y }
     
-    let includesPoint xShift yShift (area: Area) (point: Point) : bool =
-        let point' = point |> Point.shift xShift yShift
-        point'.X >= area.X &&
-        point'.X <= area.X + area.Width &&
-        point'.Y >= area.Y &&
-        point'.Y <= area.Y + area.Height
+    let includesPoint (area: Area) (point: Point) : bool =
+        point.X >= area.X &&
+        point.X <= area.X + area.Width &&
+        point.Y >= area.Y &&
+        point.Y <= area.Y + area.Height
     
     let isOver (offset: float) (area1: Area) (area2: Area): bool =
         //printfn "DEBUG: area1 = left: %f top: %f width: %f height: %f" area1.X area1.Y area1.Width area1.Height
