@@ -442,7 +442,7 @@ module NetworkSimulator =
                 Router.create
                     id
                     $"ルータ(%d{n})"
-                    "10.0.0.1"
+                    "10.0.0.254"
                     "255.255.255.0"
                     { Area.X = 0.; Y = 0.; Width = 100.; Height = 35. }
                     { Point.X = 0. + playAreaRect.left; Y = 0. + playAreaRect.top })
