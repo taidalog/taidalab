@@ -7,30 +7,30 @@ namespace Taidalab
 
 module TCPIP =
     let getNetNeighbors (cables: Cable list) (devices: Device list) (source: Device) (previous: Device) : Device list =
-        cables |> List.length |> printfn "%d cables."
-        //cables |> List.iter (fun x -> printfn "%s (%b)" x.Name (x.Area |> Area.isOver 0. source.Area))
-        cables |> List.iter (fun x -> printfn "%s (%b)" x.Name (x.Points |> List.exists (Area.includesPoint x.Area.X x.Area.Y (Device.area source))))
+//        cables |> List.length |> printfn "%d cables."
+//        cables |> List.iter (fun x ->
+//            printfn "%s (%b)" x.Name (Cable.connedtedTo source x)
+//            printfn "%s" (x.Points |> List.map Point.toCoordinate |> String.concat " "))
 //        printfn "getNetNeighbors starts."
 //        printfn "getNetNeighbors: source:\t%s" (source |> Device.name)
 //        printfn "getNetNeighbors: previous:\t%s" (previous |> Device.name)
 
-        let sourceArea = source |> Device.area
+//        let sourceArea = source |> Device.area
 //        printfn "%A" sourceArea
-        let connectedCables =
-            cables |> List.filter (fun c -> c.Points |> List.exists (Area.includesPoint c.Area.X c.Area.Y sourceArea))
+        let connectedCables = cables |> List.filter (Cable.connedtedTo source)
 //        connectedCables |> List.iter (fun x -> printfn "getNetNeighbor': source is connected to %s" x.Name)
         
         let clientTester (source: Device) (cable: Cable) (device: Device) : bool =
             (Device.id device) <> (Device.id source) &&
-            cable.Points |> List.exists (Area.includesPoint cable.Area.X cable.Area.Y (Device.area device))
+            (cable |> Cable.connedtedTo device)
         
         let routerTester (source: Device) (cable: Cable) (device: Device) : bool =
             (Device.id device) <> (Device.id source) &&
-            cable.Points |> List.exists (Area.includesPoint cable.Area.X cable.Area.Y (Device.area device))
+            (cable |> Cable.connedtedTo device)
         
         let hubTester (source: Device) (previous: Device) (cable: Cable) (device: Device) : bool =
             (Device.id device) <> (Device.id source) &&
-            cable.Points |> List.exists (Area.includesPoint cable.Area.X cable.Area.Y (Device.area device)) &&
+            (cable |> Cable.connedtedTo device) &&
             (List.intersection (Device.networkAddresses previous) (Device.networkAddresses device)) <> []
         
         connectedCables

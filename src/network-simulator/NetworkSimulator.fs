@@ -361,7 +361,7 @@ module NetworkSimulator =
                     | Some source ->
                         let lanCablesWithSource =
                             lanCables'
-                            |> List.filter (fun x -> x.Points |> List.exists (Area.includesPoint x.Area.X x.Area.Y (Device.area source)))
+                            |> List.filter (Cable.connedtedTo source)
                         match lanCablesWithSource with
                         | [] -> errorArea.innerText <- sprintf "%s [%s] はLANケーブルに繋がっていません。" (Device.name source) (sourceIPv4.ToString())
                         | _ ->
