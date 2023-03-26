@@ -6,60 +6,45 @@
 namespace Taidalab
 
 module TCPIP =
-    let getNetNeighbors (cables: Cable list) (devices: Device list) (source: Device) (previous: Device) : Device list =
-//        cables |> List.length |> printfn "%d cables."
-//        cables |> List.iter (fun x ->
-//            printfn "%s (%b)" x.Name (Cable.connectedTo source x)
-//            printfn "%s" (x.Points |> List.map Point.toCoordinate |> String.concat " "))
-//        printfn "getNetNeighbors starts."
-//        printfn "getNetNeighbors: source:\t%s" (source |> Device.name)
-//        printfn "getNetNeighbors: previous:\t%s" (previous |> Device.name)
-
-//        let sourceArea = source |> Device.area
-//        printfn "%A" sourceArea
-        let connectedCables = cables |> List.filter (Cable.connectedTo source)
-//        connectedCables |> List.iter (fun x -> printfn "getNetNeighbor': source is connected to %s" x.Name)
+    let getNetNeighbors (cables: Cable list) (devices: Device list) (route: Device list) : Device list =
+        let current = route |> List.last
+        let last = route |> List.filter (Device.isHub >> not) |> List.tryLast
+//        printfn "current.NetworkAddresses:\t%O" (Device.networkAddresses current)
+//        printfn "last.NetworkAddresses:\t%O" (Device.networkAddresses (Option.get last))
         
-        let clientTester (source: Device) (cable: Cable) (device: Device) : bool =
-            (Device.id device) <> (Device.id source) &&
-            (cable |> Cable.connectedTo device)
-        
-        let routerTester (source: Device) (cable: Cable) (device: Device) : bool =
-            (Device.id device) <> (Device.id source) &&
-            (cable |> Cable.connectedTo device)
-        
-        let hubTester (source: Device) (previous: Device) (cable: Cable) (device: Device) : bool =
-            (Device.id device) <> (Device.id source) &&
-            (cable |> Cable.connectedTo device) &&
-            (List.intersection (Device.networkAddresses previous) (Device.networkAddresses device)) <> []
-        
-        connectedCables
+        cables
+        |> List.filter (Cable.connectedTo current)
         |> List.collect
             (fun c ->
-//                printfn "%s is connected to below:" c.Name
                 devices
-                |> List.filter (fun d ->
-                    match source with
-                    | Client _ -> clientTester source c d
-                    | Router _ -> routerTester source c d
-                    | Hub _ -> hubTester source previous c d))
+                |> List.filter (fun next -> next <> current && Cable.connectedTo next c)
+                |> List.filter (fun next ->
+                    Device.isHub next ||
+                    Device.isRouter current ||
+                    match last with
+                    | None -> false
+                    | Some last' ->
+                        List.intersection (Device.networkAddresses last') (Device.networkAddresses next) <> []))
 
+    let extendRoute (cables: Cable list) (devices: Device list) (route: Device list) : Device list list =
+        route
+        |> getNetNeighbors cables devices
+        |> List.map (fun x -> route @ [x])
+    
     let ping (cables: Cable list) (devices: Device list) (source: Device) (ttl: int) (destinationIPv4: IPv4) : bool =
-        let rec ping' (cables: Cable list) (devices: Device list) (source: Device) (previous: Device) (ttl: int) (destinationIPv4: IPv4) : bool =
-            let neighbors = getNetNeighbors cables devices source previous
-            
-//            printfn "ping starts."
-//            printfn "previous: %s" (previous |> Device.name)
-//            neighbors |> List.iter (fun x -> printfn "ping: %s is connected to %s" (Device.name source) (Device.name x))
-            
-            let found = neighbors |> List.exists (Device.hasIPv4 destinationIPv4)
-            //printfn "ping: destination IPv4 found = %b" found
+        let rec ping' (cables: Cable list) (devices: Device list) (route: Device list) (ttl: int) (destinationIPv4: IPv4) : bool =
+            //printfn "%A" (route |> List.map (fun x -> $"Name:\t{Device.name x}\tIPv4:\t{Device.IPv4s x}") |> String.concat "\n")
+            let routes = extendRoute cables devices route
+            let found =
+                routes
+                |> List.map List.last
+                |> List.exists (Device.hasIPv4 destinationIPv4)
 
             if found then
                 true
             else if ttl = 0 then
                 false
             else
-                neighbors
-                |> List.exists (fun x -> ping' cables devices x source (ttl - 1) destinationIPv4)
-        ping' cables devices source source ttl destinationIPv4
+                routes
+                |> List.exists (fun x -> ping' cables devices x (ttl - 1) destinationIPv4)
+        ping' cables devices [source] ttl destinationIPv4
