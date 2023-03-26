@@ -123,7 +123,7 @@ module Cable =
 
         container
     
-    let connedtedTo (device: Device) (cable: Cable) : bool =
+    let connectedTo (device: Device) (cable: Cable) : bool =
         cable.Points
         |> List.map (Point.shift cable.Area.X cable.Area.Y)
         |> List.exists (Area.includesPoint (Device.area device))
