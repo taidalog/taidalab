@@ -17,7 +17,8 @@ module TCPIP =
         |> List.collect
             (fun c ->
                 devices
-                |> List.filter (fun next -> next <> current && Cable.connectedTo next c)
+                |> List.filter (fun next -> (List.contains next route) = false)
+                |> List.filter (fun next -> Cable.connectedTo next c)
                 |> List.filter (fun next ->
                     Device.isHub next ||
                     Device.isRouter current ||
