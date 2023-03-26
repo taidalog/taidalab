@@ -367,7 +367,7 @@ module NetworkSimulator =
                         | _ ->
                             sprintf """<span class="history-lightgrey">%s [%s] -> %s 接続中…""" (Device.name source) (sourceIPv4.ToString()) (destinationIPv4.ToString())
                             |> fun x -> outputArea.innerHTML <- x
-                            ping lanCables' devices' 16 destinationIPv4 source
+                            ping lanCables' devices' 128 destinationIPv4 source
                             |> fun b -> if b then ("history-correct", "通信成功！") else ("history-wrong", "通信失敗…")
                             |> fun (className, success) -> sprintf """<span class="%s">%s [%s] -> %s %s""" className (Device.name source) (sourceIPv4.ToString()) (destinationIPv4.ToString()) success
                             |> fun x -> outputArea.innerHTML <- x
