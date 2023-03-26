@@ -31,8 +31,8 @@ module TCPIP =
         |> getNetNeighbors cables devices
         |> List.map (fun x -> route @ [x])
     
-    let ping (cables: Cable list) (devices: Device list) (source: Device) (ttl: int) (destinationIPv4: IPv4) : bool =
-        let rec ping' (cables: Cable list) (devices: Device list) (route: Device list) (ttl: int) (destinationIPv4: IPv4) : bool =
+    let ping (cables: Cable list) (devices: Device list) (ttl: int) (destinationIPv4: IPv4) (source: Device) : bool =
+        let rec ping' (cables: Cable list) (devices: Device list) (ttl: int) (destinationIPv4: IPv4) (route: Device list) : bool =
             //printfn "%A" (route |> List.map (fun x -> $"Name:\t{Device.name x}\tIPv4:\t{Device.IPv4s x}") |> String.concat "\n")
             let routes = extendRoute cables devices route
             let found =
@@ -46,5 +46,5 @@ module TCPIP =
                 false
             else
                 routes
-                |> List.exists (fun x -> ping' cables devices x (ttl - 1) destinationIPv4)
-        ping' cables devices [source] ttl destinationIPv4
+                |> List.exists (ping' cables devices (ttl - 1) destinationIPv4)
+        ping' cables devices ttl destinationIPv4 [source]
