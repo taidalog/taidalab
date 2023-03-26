@@ -283,6 +283,11 @@ details:hover {
     font-size: 18px;
 }
 
+.history-lightgrey {
+    background-color: lightgrey;
+    font-size: 18px;
+}
+
 .zero-grey {
     color: rgba(0, 0, 0, 0.5);
 }
