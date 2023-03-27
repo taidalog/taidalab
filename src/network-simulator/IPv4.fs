@@ -22,9 +22,9 @@ type Errors =
     | OutOfRange
 
 module IPv4 =
-    let isValid (str: string) : bool =
-        Regex.isMatch "^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$" str &&
-        str.Split([|'.'|]) |> Array.map int |> Array.forall (fun x -> x >= 0 && x <= 255)
+//    let isValid (str: string) : bool =
+//        Regex.isMatch "^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$" str &&
+//        str.Split([|'.'|]) |> Array.map int |> Array.forall (fun x -> x >= 0 && x <= 255)
 
     let ofBytes byte1 byte2 byte3 byte4 : IPv4 =
         { IPv4.Octet1 = byte1
@@ -38,10 +38,10 @@ module IPv4 =
             |> Array.map byte
         ofBytes (bytes.[0]) (bytes.[1]) (bytes.[2]) (bytes.[3])
     
-    let tryOfDotDecimal (dotDecimal: string) : IPv4 option =
-        match isValid dotDecimal with
-        | false -> None
-        | true -> dotDecimal |> ofDotDecimal |> Some
+//    let tryOfDotDecimal (dotDecimal: string) : IPv4 option =
+//        match isValid dotDecimal with
+//        | false -> None
+//        | true -> dotDecimal |> ofDotDecimal |> Some
     
     let validate (str: string) : Result<IPv4,Errors> =
         let validateNotEmpty str =
