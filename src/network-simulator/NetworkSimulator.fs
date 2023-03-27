@@ -246,15 +246,6 @@ module NetworkSimulator =
                     //printfn "mouse up!"
                     document.removeEventListener("mousemove", onMouseMove')
     
-    type Errors =
-        | Empty
-        | WrongFormat
-    
-    let validateIPv4Input (input: string) : Result<IPv4,Errors> =
-        input
-        |> fun x -> if x = "" then Error Errors.Empty else Ok x
-        |> Result.bind (fun x -> if IPv4.isValid x then Ok (IPv4.ofDotDecimal x) else Error Errors.WrongFormat)
-    
     let init () =
         let playArea = document.getElementById "playArea"
         let playAreaRect = playArea.getBoundingClientRect()
@@ -333,14 +324,15 @@ module NetworkSimulator =
 
             let sourceInput = document.getElementById "sourceInput" :?> Browser.Types.HTMLInputElement
             let destinationInput = document.getElementById "destinationInput" :?> Browser.Types.HTMLInputElement
-            let sourceIPv4 = validateIPv4Input sourceInput.value
-            let destinationIPv4 = validateIPv4Input destinationInput.value
+            let sourceIPv4 = IPv4.validate sourceInput.value
+            let destinationIPv4 = IPv4.validate destinationInput.value
 
             match sourceIPv4 with
             | Error e ->
                 match e with
                 | Errors.Empty -> errorArea.innerText <- "送信元 IPv4 を入力してください。"
                 | Errors.WrongFormat -> errorArea.innerText <- "送信元 IPv4 の形式が正しくありません。"
+                | Errors.OutOfRange -> errorArea.innerText <- "送信元 IPv4 の数値の範囲が正しくありません。"
                 sourceInput.focus()
             | Ok sourceIPv4 ->
                 match destinationIPv4 with
@@ -348,6 +340,7 @@ module NetworkSimulator =
                     match e with
                     | Errors.Empty -> errorArea.innerText <- "送信先 IPv4 を入力してください。"
                     | Errors.WrongFormat -> errorArea.innerText <- "送信先 IPv4 の形式が正しくありません。"
+                    | Errors.OutOfRange -> errorArea.innerText <- "送信先 IPv4 の数値の範囲が正しくありません。"
                     destinationInput.focus()
                 | Ok destinationIPv4 ->
                     let source =

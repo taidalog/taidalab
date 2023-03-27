@@ -16,6 +16,11 @@ type IPv4 =
     member this.DisplayText = this.ToString()
     override this.ToString() = sprintf "%d.%d.%d.%d" this.Octet1 this.Octet2 this.Octet3 this.Octet4
 
+type Errors =
+    | Empty
+    | WrongFormat
+    | OutOfRange
+
 module IPv4 =
     let isValid (str: string) : bool =
         Regex.isMatch "^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$" str &&
@@ -37,6 +42,28 @@ module IPv4 =
         match isValid dotDecimal with
         | false -> None
         | true -> dotDecimal |> ofDotDecimal |> Some
+    
+    let validate (str: string) : Result<IPv4,Errors> =
+        let validateNotEmpty str =
+            match str with
+            | "" -> Error Errors.Empty
+            | _ -> Ok str
+        let validateFormat str =
+            if Regex.isMatch "^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$" str then
+                Ok str
+            else
+                Error Errors.WrongFormat
+        let validateRange str =
+            if (str |> String.split '.' |> List.map int |> List.forall (fun x -> x >= 0 && x <= 255)) then
+                Ok str
+            else
+                Error Errors.OutOfRange
+        
+        Ok str
+        |> Result.bind validateNotEmpty
+        |> Result.bind validateFormat
+        |> Result.bind validateRange
+        |> Result.map ofDotDecimal
     
     let getSubnet (subnetmask: IPv4) (ipv4: IPv4) : IPv4 =
         ofBytes
