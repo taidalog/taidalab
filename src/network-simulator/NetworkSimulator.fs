@@ -67,6 +67,26 @@ module NetworkSimulator =
         |> Array.iter (fun x -> 
             x.onkeydown <- (fun event ->
                 if event.key = "Enter" || event.key = "Escape" then x.blur()))
+    
+    let setIPv4Validation (container: Browser.Types.HTMLElement) : unit =
+        ["IPv4"; "SubnetMask"]
+        |> List.map (fun x -> x, document.getElementById (container.id + x))
+        |> List.iter (fun (identifier, elm) ->
+            elm.addEventListener("blur", (fun _ ->
+            elm.innerText
+            |> IPv4.validate
+            |> fun x ->
+                let errorArea = document.getElementById "errorArea"
+                errorArea.innerText <- ""
+                match x with
+                | Ok _ -> ()
+                | Error e ->
+                    let name = document.getElementById(container.id + "Name").innerText
+                    match e with
+                    | Errors.Empty -> errorArea.innerText <- $"%s{name} の %s{identifier} を入力してください。"
+                    | Errors.WrongFormat -> errorArea.innerText <- $"%s{name} の %s{identifier} の形式が正しくありません。"
+                    | Errors.OutOfRange -> errorArea.innerText <- $"%s{name} の %s{identifier} の数値の範囲が正しくありません。"
+                    JS.setTimeout (fun _ -> elm.focus()) 0 |> ignore)))
 
     let updatePoints (point1: Point) (point2: Point) (newPoint: Point) : (Point * Point) =
         (point1, point2)
@@ -287,6 +307,12 @@ module NetworkSimulator =
                 setMouseMoveEvent x
                 resetTitleOnNameChange x
                 setToQuitEditOnEnter x)
+        
+        devices
+        |> List.filter (fun x -> Device.isClient x || Device.isRouter x)
+        |> List.map Device.id
+        |> List.map document.getElementById
+        |> List.iter setIPv4Validation
 
         cables
         |> List.map (fun x -> x.Id)
@@ -411,6 +437,9 @@ module NetworkSimulator =
 
             document.getElementById id
             |> setToQuitEditOnEnter
+
+            document.getElementById id
+            |> setIPv4Validation
         
         let addRouterButton = document.getElementById("addRouterButton") :?> Browser.Types.HTMLButtonElement
         addRouterButton.onclick <- fun _ ->
@@ -453,6 +482,9 @@ module NetworkSimulator =
 
             document.getElementById id
             |> setToQuitEditOnEnter
+
+            document.getElementById id
+            |> setIPv4Validation
         
         let addHubButton = document.getElementById("addHubButton") :?> Browser.Types.HTMLButtonElement
         addHubButton.onclick <- fun _ ->
