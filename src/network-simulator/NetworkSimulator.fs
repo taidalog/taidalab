@@ -266,6 +266,12 @@ module NetworkSimulator =
                     //printfn "mouse up!"
                     document.removeEventListener("mousemove", onMouseMove')
     
+    let removeOnRightClick (container: Browser.Types.HTMLElement) : unit =
+        //container.oncontextmenu <- fun event ->
+        container.oncontextmenu <- fun event ->
+            event.preventDefault()
+            document.getElementById("playArea").removeChild(container)
+    
     let init () =
         let playArea = document.getElementById "playArea"
         let playAreaRect = playArea.getBoundingClientRect()
@@ -317,7 +323,9 @@ module NetworkSimulator =
         cables
         |> List.map (fun x -> x.Id)
         |> List.map document.getElementById
-        |> List.iter setMouseMoveEventCable
+        |> List.iter (fun x ->
+            setMouseMoveEventCable x
+            removeOnRightClick x)
 
         let submitButton = document.getElementById("submitButton") :?> Browser.Types.HTMLButtonElement
         submitButton.onclick <- fun _ ->
