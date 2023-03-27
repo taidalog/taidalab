@@ -23,7 +23,10 @@ module Content =
 
         let aside = """
             <ul>
-                <li><a class="aside-home" id="asideEndlessBinary" href="/endless-binary/">10進数↔︎2進数の反復練習</a></li>
+                <details class="aside-details">
+                    <summary class="aside-summary">
+                        <a class="aside-home" id="asideEndlessBinary">10進数↔︎2進数の反復練習</a>
+                    </summary>
                     <ul>
                         <li><a class="aside-d2b" href="/endless-binary/dec2bin-1/">10進数→2進数 (1)</a></li>
                         <li><a class="aside-d2b" href="/endless-binary/dec2bin-2/">10進数→2進数 (2)</a></li>
@@ -37,6 +40,7 @@ module Content =
                         <li><a class="aside-d2h" href="/endless-binary/dec2hex/">10進数→16進数</a></li>
                         <li><a class="aside-d2h" href="/endless-binary/hex2dec/">16進数→10進数</a></li>
                     </ul>
+                </details>
                 <li><a class="aside-iro" id="asideIroIroiro" href="/iro-iroiro/">色いろいろ</a></li>
                 <li><a class="aside-nws" id="asideNetworkSimulator" href="/network-simulator/">ネットワークシミュレータ</a></li>
                 <li><a class="aside-ctc" id="asideSoon" href="#">Comming soon...</a></li>

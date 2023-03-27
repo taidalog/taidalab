@@ -1005,3 +1005,11 @@ dd {
 .lan-cable {
     cursor: move;
 }
+
+.aside-summary {
+    list-style: none;
+}
+
+.aside-summary::-webkit-details-marker {
+    list-style: none;
+}
