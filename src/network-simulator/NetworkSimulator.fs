@@ -253,7 +253,7 @@ module NetworkSimulator =
     let validateIPv4Input (input: string) : Result<IPv4,Errors> =
         input
         |> fun x -> if x = "" then Error Errors.Empty else Ok x
-        |> Result.bind (fun x -> if IPv4.validate x then Ok (IPv4.ofDotDecimal x) else Error Errors.WrongFormat)
+        |> Result.bind (fun x -> if IPv4.isValid x then Ok (IPv4.ofDotDecimal x) else Error Errors.WrongFormat)
     
     let init () =
         let playArea = document.getElementById "playArea"

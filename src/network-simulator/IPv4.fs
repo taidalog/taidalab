@@ -17,7 +17,7 @@ type IPv4 =
     override this.ToString() = sprintf "%d.%d.%d.%d" this.Octet1 this.Octet2 this.Octet3 this.Octet4
 
 module IPv4 =
-    let validate (str: string) : bool =
+    let isValid (str: string) : bool =
         Regex.isMatch "^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$" str &&
         str.Split([|'.'|]) |> Array.map int |> Array.forall (fun x -> x >= 0 && x <= 255)
 
@@ -34,7 +34,7 @@ module IPv4 =
         ofBytes (bytes.[0]) (bytes.[1]) (bytes.[2]) (bytes.[3])
     
     let tryOfDotDecimal (dotDecimal: string) : IPv4 option =
-        match validate dotDecimal with
+        match isValid dotDecimal with
         | false -> None
         | true -> dotDecimal |> ofDotDecimal |> Some
     
