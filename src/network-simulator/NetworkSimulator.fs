@@ -106,10 +106,10 @@ module NetworkSimulator =
             else
                 (point2, point1)
 
-    let inline (|Positive|Negative|Zero|) (n: ^a) =
-        if n > LanguagePrimitives.GenericZero<'a> then Positive
-        else if n < LanguagePrimitives.GenericZero<'a> then Negative
-        else Zero
+//    let inline (|Positive|Negative|Zero|) (n: ^a) =
+//        if n > LanguagePrimitives.GenericZero<'a> then Positive
+//        else if n < LanguagePrimitives.GenericZero<'a> then Negative
+//        else Zero
     
     let resizeCable (container: Browser.Types.HTMLElement) (svg: Browser.Types.HTMLElement) (polyline: Browser.Types.HTMLElement) (event: Browser.Types.Event) : unit =
         let event = event :?> Browser.Types.MouseEvent

@@ -49,8 +49,8 @@ module rec Switcher =
         | InnerPage ->  true
         | OuterPage -> false
     
-    let idToAnchor id =
-        document.getElementById id :?> Browser.Types.HTMLAnchorElement
+//    let idToAnchor id =
+//        document.getElementById id :?> Browser.Types.HTMLAnchorElement
     
     let overwriteAnchorClick action (anchor : Browser.Types.HTMLAnchorElement) =
         anchor.onclick <- (fun ev ->
@@ -74,14 +74,14 @@ module rec Switcher =
             (document.getElementById x).onclick <-
                 (fun _ -> y |> switch |||> InitObject.create |> Page.push))
     
-    let switchOverwriteAnchor actionTrue actionFalse anchor =
-        anchor
-        |> (fun (x : Browser.Types.HTMLAnchorElement) -> (isInnerPage x.href, x))
-        |> (fun (b, x) ->
-            match (b, x) with
-            | (true, x) -> (actionTrue, x)
-            | (false, x) -> (actionFalse, x))
-        |> (fun (action, x) -> action x)
+//    let switchOverwriteAnchor actionTrue actionFalse anchor =
+//        anchor
+//        |> (fun (x : Browser.Types.HTMLAnchorElement) -> (isInnerPage x.href, x))
+//        |> (fun (b, x) ->
+//            match (b, x) with
+//            | (true, x) -> (actionTrue, x)
+//            | (false, x) -> (actionFalse, x))
+//        |> (fun (action, x) -> action x)
     
     let switchAnchorAction pathname (anchor : Browser.Types.HTMLAnchorElement) =
             (pathname, anchor.href, anchor)
