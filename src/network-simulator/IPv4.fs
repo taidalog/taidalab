@@ -38,11 +38,6 @@ module IPv4 =
             |> Array.map byte
         ofBytes (bytes.[0]) (bytes.[1]) (bytes.[2]) (bytes.[3])
     
-//    let tryOfDotDecimal (dotDecimal: string) : IPv4 option =
-//        match isValid dotDecimal with
-//        | false -> None
-//        | true -> dotDecimal |> ofDotDecimal |> Some
-    
     let validate (str: string) : Result<IPv4,Errors> =
         let validateNotEmpty str =
             match str with
