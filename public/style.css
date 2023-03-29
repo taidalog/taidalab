@@ -70,7 +70,7 @@ aside ul {
 }
 
 aside a {
-    color: #000000;
+    color: #444444;
     padding: 5px;
     display: block;
     text-decoration: none;
@@ -168,10 +168,27 @@ footer a {
     margin: auto;
 }
 
+/*
+ * "Oooh Baby" is lisenced under the SIL Open Font License 1.1
+ * http://fonts.googleapis.com
+ * https://www.google.com/fonts/attribution
+ * http://scripts.sil.org/OFL
+ */
 .home-title {
-    font-size: 2.5rem;
+    font-size: 5rem;
+    font-family: 'Oooh Baby', cursive;
 }
 
+/*
+ * "Zen Kurenaido" is lisenced under the SIL Open Font License 1.1
+ * http://fonts.googleapis.com
+ * https://www.google.com/fonts/attribution
+ * http://scripts.sil.org/OFL
+ */
+.home-subtitle {
+    font-size: 1.75rem;
+    font-family: 'Zen Kurenaido', sans-serif;
+}
 
 /*
     <main> of /endless-binary/ page.
@@ -736,7 +753,7 @@ dd {
     }
     
     .home-title {
-        font-size: 2rem;
+        font-size: 4rem;
     }
 
     .button-container {
@@ -771,16 +788,6 @@ dd {
 }
 
 @media (max-width: 370px) {
-    .home-center {
-        text-align: center;
-        font-size: 1rem;
-        font-family: serif;
-    }
-    
-    .home-title {
-        font-size: 1.75rem;
-    }
-
     .input-area-iro-shorter,
     .input-area-iro-wider {
         display: flex;
