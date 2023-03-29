@@ -159,10 +159,13 @@ footer a {
     Home
 */
 .home-center {
+    max-width: 300px;
     color: #325156;
     text-align: center;
-    font-size: 2rem;
-    font-family: serif;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
 }
 
 .home-title {
