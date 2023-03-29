@@ -656,10 +656,21 @@ details:hover {
 /*
     About page.
 */
-dd {
-    margin-bottom: 12px;
+.explanation h3 {
+    font-size: 1rem;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
+.explanation dd {
+    margin-top: 0.25rem;
+    margin-left: 1rem;
+    margin-bottom: 2rem;
+}
+
+.explanation p {
+    margin-top: 0px;
+}
 
 /*
     Settings for responsive design.

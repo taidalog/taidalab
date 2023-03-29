@@ -14,79 +14,114 @@ module About =
             F# で書いたものを Fable で JavaScript にトランスパイルしています。F# 楽しい。
         </p>
         <h2>それぞれのページについて</h2>
-        <dl id="explanation">
-            <dt><a href="/endless-binary/dec2bin-1/">10進数→2進数 (1)</a></dt>
+        <dl id="explanation" class="explanation">
+            <dt>
+                <h3><a href="/endless-binary/dec2bin-1/">10進数→2進数 (1)</a></h3>
+            </dt>
             <dd>
                 10進数から2進数への変換をエンドレスで練習できます。<br>
                 出題範囲は n (0&le;n&le;255) で、2の累乗の数同士の和になっています。<br>
                 ヒント付きなので、考え方も身に付けられます。
             </dd>
-            <dt><a href="/endless-binary/dec2bin-2/">10進数→2進数 (2)</a></dt>
+            
+            <dt>
+                <h3><a href="/endless-binary/dec2bin-2/">10進数→2進数 (2)</a></h3>
+            </dt>
             <dd>
                 10進数から2進数への変換をエンドレスで練習できます。<br>
                 出題範囲は n (0&le;n&le;255) です。<br>
                 ヒントはありませんので、慣れてからどうぞ。
             </dd>
-            <dt><a href="/endless-binary/bin2dec-1/">2進数→10進数 (1)</a></dt>
+            
+            <dt>
+                <h3><a href="/endless-binary/bin2dec-1/">2進数→10進数 (1)</a></h3>
+            </dt>
             <dd>
                 2<sup>n</sup> (0&le;n&le;7) の2進数から10進数への変換をエンドレスで練習できます。<br>
                 ヒント付きなので、考え方も身に付けられます。
             </dd>
-            <dt><a href="/endless-binary/bin2dec-2/">2進数→10進数 (2)</a></dt>
+
+            <dt>
+                <h3><a href="/endless-binary/bin2dec-2/">2進数→10進数 (2)</a></h3>
+            </dt>
             <dd>
                 2進数から10進数への変換をエンドレスで練習できます。<br>
                 出題範囲は n (0&le;n&le;255) です。<br>
                 ヒントはありませんので、慣れてからどうぞ。
             </dd>
-            <dt><a href="/endless-binary/power-of-two-1/">2のn乗</a></dt>
+
+            <dt>
+                <h3><a href="/endless-binary/power-of-two-1/">2のn乗</a></h3>
+            </dt>
             <dd>
                 2<sup>n</sup> (0&le;n&le;7) の10進数から2進数への変換をエンドレスで練習できます。<br>
                 2<sup>n</sup> の2進数を覚えると10進数からの変換を早く行えるので、まずはこのコースから始めてみてください。<br>
                 ヒント付きなので、考え方も身に付けられます。
             </dd>
-            <dt><a href="/endless-binary/power-of-two-2/">2のn乗-1</a></dt>
+            
+            <dt>
+                <h3><a href="/endless-binary/power-of-two-2/">2のn乗-1</a></h3>
+            </dt>
             <dd>
                 2<sup>n</sup> - 1 (0&le;n&le;7) の10進数から2進数への変換をエンドレスで練習できます。<br>
                 2<sup>n</sup> - 1 の2進数を通して、2進数の繰り上がりや繰り下がりを覚えられます。<br>
                 ヒント付きなので、考え方も身に付けられます。
             </dd>
-            <dt><a href="/endless-binary/addition/">加算</a></dt>
+
+            <dt>
+                <h3><a href="/endless-binary/addition/">加算</a></h3>
+            </dt>
             <dd>
                 2進数同士の足し算をエンドレスで練習できます。<br>
                 出題範囲は m, n (2 &le; m + n &le; 255) で、繰り上がりもあります。<br>
                 ヒント付きなので、考え方も身に付けられます。
             </dd>
-            <dt><a href="/endless-binary/subtraction/">減算</a></dt>
+
+            <dt>
+                <h3><a href="/endless-binary/subtraction/">減算</a></h3>
+            </dt>
             <dd>
                 2進数同士の引き算をエンドレスで練習できます。<br>
                 出題範囲は m, n (2 &le; m + n &le; 255) で、繰り下がりもあります。<br>
                 ヒント付きなので、考え方も身に付けられます。
             </dd>
-            <dt><a href="/endless-binary/complement/">補数</a></dt>
+            
+            <dt>
+                <h3><a href="/endless-binary/complement/">補数</a></h3>
+            </dt>
             <dd>
                 2進数の補数（2の補数）を求める練習ができます。<br>
                 出題範囲は n (1 &le; n &le; 15) です。<br>
                 ヒント付きなので、考え方も身に付けられます。
             </dd>
-            <dt><a href="/endless-binary/dec2hex/">10進数→16進数</a></dt>
+
+            <dt>
+                <h3><a href="/endless-binary/dec2hex/">10進数→16進数</a></h3>
+            </dt>
             <dd>
                 10進数から16進数への変換をエンドレスで練習できます。<br>
                 出題範囲は n (0&le;n&le;255) です。<br>
                 ヒント付きなので、考え方も身に付けられます。
             </dd>
-            <dt><a href="/endless-binary/hex2dec/">16進数→10進数</a></dt>
+
+            <dt>
+                <h3><a href="/endless-binary/hex2dec/">16進数→10進数</a></h3>
+            </dt>
             <dd>
                 16進数から10進数への変換をエンドレスで練習できます。<br>
                 出題範囲は n (0&le;n&le;255) です。<br>
                 ヒント付きなので、考え方も身に付けられます。
             </dd>
+            
             <dt>
                 <h3><a href="/iro-iroiro/">色いろいろ</a></h3>
             </dt>
             <dd>
                 <p>
                     RGB値などを入力すると、その色の色相（色の雰囲気）を変更しながら色をローテーションします。<br>
-                    綺麗です。<br>
+                    綺麗です。
+                </p>
+                <p>
                     入力する値は以下の通りです。
                     <ul>
                         <li>R: 赤のRGB値 (0 &le; R &le; 255)</li>
@@ -103,6 +138,7 @@ module About =
                     </ul>
                 </p>
             </dd>
+            
             <dt>
                 <h3><a href="/network-simulator/">ネットワークシミュレータ</a></h3>
             </dt>
