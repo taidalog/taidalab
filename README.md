@@ -4,20 +4,21 @@ Version 3.3.3
 
 [Japanese README](README.ja.md)
 
-A Web application for repeated practice of decimal-binary conversion and so on.
+A Web application for learning Informatics I, one of the subject taught in Japanese senior high school.
 
 
 ## Features
 
 - Repeats providing conversion or calculation quizzes between decimal numbers and binary numbers.
 - Generates colors based on the input RGB value, changing the hue of the original color.
+- Simulates connecting and communicating of network devices.
 
 
 ## Usage
 
-1. Visit [taidalab](http://taidalog.html.xdomain.jp/)
+1. Visit [taidalab](http://taidalog.html.xdomain.jp/).
 1. Click a link in the menu on the left side of the screen (Desktop mode), or click the hamburger button (a button with three horizontal lines) on the upper left corner, then click a link (Mobile mode).
-1. Fill in the form and press the button
+1. Fill in the form and press the button. For more details, visit the About page.
 
 
 ## Recommended environment
