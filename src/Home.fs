@@ -10,6 +10,6 @@ module Home =
         <div class="home-center">
             <p>
                 <span class="home-title">taidalab</span><br>
-                <span class="home-subtitle">「情報Ⅰ」学習サイト</span>
+                <span class="home-subtitle">「情報I」学習サイト</span>
             </p>
         </div>"""
