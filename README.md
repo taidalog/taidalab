@@ -4,7 +4,7 @@ Version 4.0.0
 
 [Japanese README](README.ja.md)
 
-A Web application for learning Informatics I, one of the subject taught in Japanese senior high school.
+A Web application for learning Informatics I, one of the subjects taught in Japanese senior high school.
 
 
 ## Features
