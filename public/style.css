@@ -1032,5 +1032,5 @@ details:hover {
 }
 
 .aside-summary::-webkit-details-marker {
-    list-style: none;
+    display: none;
 }
