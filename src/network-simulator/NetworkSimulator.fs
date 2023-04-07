@@ -557,4 +557,6 @@ module NetworkSimulator =
             |> ignore
 
             document.getElementById id
-            |> setMouseMoveEventCable
+            |> (fun x ->
+                setMouseMoveEventCable x
+                removeOnRightClick x)
