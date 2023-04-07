@@ -611,7 +611,8 @@ details:hover {
 }
 
 .submit-button-gray {
-    background: #e9e9ed;
+    background-color: #e9e9ed;
+    width: 160px;
 }
 
 .submit-button-gray:hover {
@@ -1033,4 +1034,13 @@ details:hover {
 
 .aside-summary::-webkit-details-marker {
     display: none;
+}
+
+.material-symbols-outlined.symbols18 {
+    font-size: 18px;
+}
+
+.icon-vertical-center {
+    display: inline-flex;
+    align-items: center;
 }

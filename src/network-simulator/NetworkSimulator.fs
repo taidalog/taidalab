@@ -27,10 +27,30 @@ module NetworkSimulator =
             </span>
         </form>
         <form>
-            <button type="button" id="addClientButton" class="submit-button submit-button-gray display-order-3">クライアントを追加</button>
-            <button type="button" id="addRouterButton" class="submit-button submit-button-gray display-order-4">ルータを追加</button>
-            <button type="button" id="addHubButton" class="submit-button submit-button-gray display-order-5">ハブを追加</button>
-            <button type="button" id="addLANCableButton" class="submit-button submit-button-gray display-order-6">LANケーブルを追加</button>
+            <button type="button" id="addClientButton" class="submit-button submit-button-gray display-order-3">
+                <span class="icon-vertical-center">
+                    <span class="material-symbols-outlined symbols18">add_circle</span>
+                    クライアント
+                </span>
+            </button>
+            <button type="button" id="addRouterButton" class="submit-button submit-button-gray display-order-4">
+                <span class="icon-vertical-center">
+                    <span class="material-symbols-outlined symbols18">add_circle</span>
+                    ルータ
+                </span>
+            </button>
+            <button type="button" id="addHubButton" class="submit-button submit-button-gray display-order-5">
+                <span class="icon-vertical-center">
+                    <span class="material-symbols-outlined symbols18">add_circle</span>
+                    ハブ
+                </span>
+            </button>
+            <button type="button" id="addLANCableButton" class="submit-button submit-button-gray display-order-6">
+                <span class="icon-vertical-center">
+                    <span class="material-symbols-outlined symbols18">add_circle</span>
+                    LANケーブル
+                </span>
+            </button>
         </form>
         <div id="errorArea" class="error-area warning"></div>
         <div id="outputArea" class="output-area"></div>
