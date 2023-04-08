@@ -15,6 +15,11 @@ open Fermata.RadixConversion
 
 module EndlessBinary =
     module Dec2Bin2 =
+        let help = """
+            10進数から2進数への変換をエンドレスで練習できます。<br>
+            出題範囲は n (0&le;n&le;255) です。<br>
+            ヒントはありませんので、慣れてからどうぞ。
+            """
 
         let rec checkAnswer answer (last_answers : int list) =
             // Getting the user input.
@@ -96,3 +101,9 @@ module EndlessBinary =
             (document.getElementById "inputArea").onsubmit <- (fun _ ->
                 checkAnswer initNumber [initNumber]
                 false)
+            
+            (document.getElementById "helpButton").onclick <- (fun _ ->
+                (document.getElementById "helpWindow").classList.toggle "active" |> ignore)
+            
+            (document.getElementById "helpWindow").onclick <- (fun _ ->
+                (document.getElementById "helpWindow").classList.remove "active" |> ignore)

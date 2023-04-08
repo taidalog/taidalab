@@ -15,6 +15,12 @@ open Fermata.RadixConversion
 
 module EndlessBinary =
     module Complement =
+        let help = """
+            2進数の補数（2の補数）を求める練習ができます。<br>
+            出題範囲は n (1 &le; n &le; 15) です。<br>
+            ヒント付きなので、考え方も身に付けられます。
+            """
+
         let question = """4ビットの2進数 <span id="questionSpan" class="question-number"></span><sub id="srcRadix"></sub> の補数は？"""
         
         let rec checkAnswer (question : string) answer (last_answers : int list) (hint_format : string) =
@@ -156,3 +162,9 @@ module EndlessBinary =
             (document.getElementById "inputArea").onsubmit <- (fun _ ->
                 checkAnswer initBin initAnswer [initNumber] hintFormat
                 false)
+            
+            (document.getElementById "helpButton").onclick <- (fun _ ->
+                (document.getElementById "helpWindow").classList.toggle "active" |> ignore)
+            
+            (document.getElementById "helpWindow").onclick <- (fun _ ->
+                (document.getElementById "helpWindow").classList.remove "active" |> ignore)

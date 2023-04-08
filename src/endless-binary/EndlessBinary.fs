@@ -23,8 +23,34 @@ module EndlessBinary =
             </form>"""
     
     module Course =
-        let main = """
-            <div id="questionArea" class="question-area"></div>
+        let main help = $"""
+            <span id="questionArea" class="question-area"></span>
+            <span id="helpButton" class="material-symbols-outlined help-button">
+                help
+            </span>
+            <form id="inputArea" class="input-area" autocomplete="off">
+                <input type="text" id="numberInput" class="number-input display-order-1 consolas">
+                <span id="binaryRadix" class="binary-radix display-order-2"></span>
+                <button type="button" id="submitButton" class="submit-button display-order-3 d2b-button">確認</button>
+                <div id="hintArea" class="hint-area display-order-4"></div>
+                <div id="errorArea" class="error-area display-order-5"></div>
+            </form>
+            <div class="history-area">
+                結果:
+                <div class="history-indented consolas">
+                    <span id="outputArea"></span>
+                </div>
+            </div>
+            <div id="helpWindow" class="help-window">
+                %s{help}
+                <p class="help-color-nws">このヘルプメッセージはクリックで消えます。</p>
+            </div>"""
+        
+        let main404 = """
+            <span id="questionArea" class="question-area"></span>
+            <span id="helpButton" class="material-symbols-outlined help-button">
+                help
+            </span>
             <form id="inputArea" class="input-area" autocomplete="off">
                 <input type="text" id="numberInput" class="number-input display-order-1 consolas">
                 <span id="binaryRadix" class="binary-radix display-order-2"></span>

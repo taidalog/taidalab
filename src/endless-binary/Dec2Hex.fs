@@ -15,6 +15,11 @@ open Fermata.RadixConversion
 
 module EndlessBinary =
     module Dec2Hex =
+        let help = """
+            10進数から16進数への変換をエンドレスで練習できます。<br>
+            出題範囲は n (0&le;n&le;255) です。<br>
+            ヒント付きなので、考え方も身に付けられます。
+            """
 
         let rec repeatDivision dividend divisor =
             let quotient = int (dividend / divisor)
@@ -239,5 +244,11 @@ module EndlessBinary =
             (document.getElementById "inputArea").onsubmit <- (fun _ ->
                 checkAnswer (string initNumber) [initNumber]
                 false)
+            
+            (document.getElementById "helpButton").onclick <- (fun _ ->
+                (document.getElementById "helpWindow").classList.toggle "active" |> ignore)
+            
+            (document.getElementById "helpWindow").onclick <- (fun _ ->
+                (document.getElementById "helpWindow").classList.remove "active" |> ignore)
             
             printfn "Initialization ends."

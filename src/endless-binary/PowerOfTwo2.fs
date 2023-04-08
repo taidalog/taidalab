@@ -15,6 +15,11 @@ open Fermata.RadixConversion
 
 module EndlessBinary =
     module PowerOfTwo2 =
+        let help = """
+            2<sup>n</sup> - 1 (0&le;n&le;7) の10進数から2進数への変換をエンドレスで練習できます。<br>
+            2<sup>n</sup> - 1 の2進数を通して、2進数の繰り上がりや繰り下がりを覚えられます。<br>
+            ヒント付きなので、考え方も身に付けられます。
+            """
 
         let rec checkAnswer answer hint_format (last_answers: int list) =
             // Getting the user input.
@@ -108,3 +113,9 @@ module EndlessBinary =
             (document.getElementById "inputArea").onsubmit <- (fun _ ->
                 checkAnswer (string initNumber) hintFormat [initIndexNumber]
                 false)
+            
+            (document.getElementById "helpButton").onclick <- (fun _ ->
+                (document.getElementById "helpWindow").classList.toggle "active" |> ignore)
+            
+            (document.getElementById "helpWindow").onclick <- (fun _ ->
+                (document.getElementById "helpWindow").classList.remove "active" |> ignore)

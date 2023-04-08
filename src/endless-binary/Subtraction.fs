@@ -15,6 +15,11 @@ open Fermata.RadixConversion
 
 module EndlessBinary =
     module Subtraction =
+        let help = """
+            2進数同士の引き算をエンドレスで練習できます。<br>
+            出題範囲は m, n (2 &le; m + n &le; 255) で、繰り下がりもあります。<br>
+            ヒント付きなので、考え方も身に付けられます。
+            """
 
         let newNumbersSub () =
             let number1 = getRandomBetween 1 255
@@ -154,3 +159,9 @@ module EndlessBinary =
             (document.getElementById "inputArea").onsubmit <- (fun _ ->
                 checkAnswer (number1 - number2) number1 number2 [number1; number2]
                 false)
+            
+            (document.getElementById "helpButton").onclick <- (fun _ ->
+                (document.getElementById "helpWindow").classList.toggle "active" |> ignore)
+            
+            (document.getElementById "helpWindow").onclick <- (fun _ ->
+                (document.getElementById "helpWindow").classList.remove "active" |> ignore)

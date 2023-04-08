@@ -9,7 +9,30 @@ open Browser.Dom
 open Fermata
 
 module IroIroiro =
-    let main = """
+    let help = """
+        <p>
+            RGB値などを入力すると、その色の色相（色の雰囲気）を変更しながら色をローテーションします。<br>
+            綺麗です。
+        </p>
+        <p>
+            入力する値は以下の通りです。
+            <ul>
+                <li>R: 赤のRGB値 (0 &le; R &le; 255)</li>
+                <li>G: 緑のRGB値 (0 &le; G &le; 255)</li>
+                <li>B: 青のRGB値 (0 &le; B &le; 255)</li>
+                <li>
+                    Interval: RGB値を変化させる間隔。(0 &le; Interval &le; 255)<br>
+                    小さいと色がグラデーションのようになり、大きいとカラフルになります。
+                </li>
+                <li>
+                    Limit: (1 &le; Limit)色をローテーションさせる回数。<br>
+                    あまり大きくすると時間がかかってしまいます。100位にしておいてください。
+                </li>
+            </ul>
+        </p>
+    """
+
+    let main = $"""
         <form id="inputArea" class="iro-input-area" autocomplete="off">
             <span class="display-order-1 input-area-iro-shorter">
                 <span class="iro-input-wrapper"><label for="rInput">R:<input type="number" id="rInput" class="iro-number-input consolas" min="0" max="255"></label></span>
@@ -23,9 +46,16 @@ module IroIroiro =
             <span class="display-order-3">
                 <button type="button" id="submitButton" class="submit-button d2b-button">確認</button>
             </span>
+            <span id="helpButton" class="material-symbols-outlined help-button display-order-4">
+                help
+            </span>
         </form>
         <div id="errorArea" class="error-area"></div>
         <div id="outputArea" class="output-area"></div>
+        <div id="helpWindow" class="help-window">
+            %s{help}
+            <p class="help-color-nws">このヘルプメッセージはクリックで消えます。</p>
+        </div>
         """
     
     type PrimaryColors =
@@ -230,5 +260,10 @@ module IroIroiro =
         // Initialization.
         printfn "Initialization starts."
         (document.getElementById "submitButton").onclick <- (fun _ -> start())
+        (document.getElementById "helpButton").onclick <- (fun _ ->
+            (document.getElementById "helpWindow").classList.toggle "active" |> ignore)
+        
+        (document.getElementById "helpWindow").onclick <- (fun _ ->
+            (document.getElementById "helpWindow").classList.remove "active" |> ignore)
         //(document.getElementById "inputArea").onsubmit <- (fun _ -> start())
         printfn "Initialization ends."

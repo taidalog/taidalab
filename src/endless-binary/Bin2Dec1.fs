@@ -16,6 +16,10 @@ open Fermata.RadixConversion
 
 module EndlessBinary =
     module Bin2Dec1 =
+        let help = """
+            2<sup>n</sup> (0&le;n&le;7) の2進数から10進数への変換をエンドレスで練習できます。<br>
+            ヒント付きなので、考え方も身に付けられます。
+            """
 
         let writeAdditionFormula binary_string =
             binary_string
@@ -214,3 +218,9 @@ module EndlessBinary =
             (document.getElementById "inputArea").onsubmit <- (fun _ ->
                 checkAnswer initNumber splitBin [initNumber] hintFormat
                 false)
+            
+            (document.getElementById "helpButton").onclick <- (fun _ ->
+                (document.getElementById "helpWindow").classList.toggle "active" |> ignore)
+            
+            (document.getElementById "helpWindow").onclick <- (fun _ ->
+                (document.getElementById "helpWindow").classList.remove "active" |> ignore)
