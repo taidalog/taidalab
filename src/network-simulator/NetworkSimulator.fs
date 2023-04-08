@@ -44,7 +44,7 @@ module NetworkSimulator =
             <span class="display-order-2">
                 <button type="submit" id="submitButton" class="submit-button">ping</button>
             </span>
-            <span id="helpButtonNWS" class="material-symbols-outlined help-button display-order-3">
+            <span id="helpButton" class="material-symbols-outlined help-button display-order-3">
                 help
             </span>
         </form>
@@ -77,7 +77,7 @@ module NetworkSimulator =
         <div id="errorArea" class="error-area warning"></div>
         <div id="outputArea" class="output-area"></div>
         <div id="playArea" class="play-area"></div>
-        <div id="helpWindowNWS" class="help-window">
+        <div id="helpWindow" class="help-window">
             %s{help}
             <p class="help-color-nws">このヘルプメッセージはクリックで消えます。</p>
         </div>
@@ -319,11 +319,11 @@ module NetworkSimulator =
             document.getElementById("playArea").removeChild(container)
     
     let init () =
-        (document.getElementById "helpButtonNWS").onclick <- (fun _ ->
-            (document.getElementById "helpWindowNWS").classList.toggle "active" |> ignore)
+        (document.getElementById "helpButton").onclick <- (fun _ ->
+            (document.getElementById "helpWindow").classList.toggle "active" |> ignore)
         
-        (document.getElementById "helpWindowNWS").onclick <- (fun _ ->
-            (document.getElementById "helpWindowNWS").classList.remove "active" |> ignore)
+        (document.getElementById "helpWindow").onclick <- (fun _ ->
+            (document.getElementById "helpWindow").classList.remove "active" |> ignore)
         
         let playArea = document.getElementById "playArea"
         let playAreaRect = playArea.getBoundingClientRect()
