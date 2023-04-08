@@ -12,7 +12,26 @@ open Taidalab.TCPIP
 open Fermata
 
 module NetworkSimulator =
-    let main = """
+    let help = """
+        <p>
+            IP アドレスを用いた通信の簡単なシミュレーションができます。<br>
+            「クライアント」や「ルータ」、「ハブ」といったデバイスをマウスでドラッグして配置したり、<br>
+            「LAN ケーブル」を伸ばしてデバイス同士を接続したりして通信させることができます。
+        </p>
+        <p>
+            LAN ケーブルの端にカーソルを合わせてドラッグすると、長さや角度を調節できます。<br>
+            あまり速く動かすと位置がズレます。ゆっくり動かしてください。<br>
+            LAN ケーブルの端がデバイスに乗っていると「繋がっている」と認識します。<br>
+        </p>
+        <p>
+            デバイス同士が LAN ケーブルで繋がっている状態で、「送信元 IPv4」と「送信先 IPv4」を入力して<br>
+            「ping」ボタンをクリックすると、通信が成功したかどうかが表示されます。<br>
+            通信に失敗した場合は、デバイス同士の接続の仕方を変えてみたり、<br>
+            クライアントやルータの IP アドレスをクリックして設定しなおしたりしてください。
+        </p>
+    """
+
+    let main = $"""
         <form id="inputArea" class="iro-input-area" autocomplete="off">
             <span class="display-order-1 input-area-iro-shorter">
                 <span class="iro-input-wrapper">
@@ -55,6 +74,10 @@ module NetworkSimulator =
         <div id="errorArea" class="error-area warning"></div>
         <div id="outputArea" class="output-area"></div>
         <div id="playArea" class="play-area"></div>
+        <div id="helpWindowNWS" class="help-window help-window-nws">
+            %s{help}
+            <p>このヘルプメッセージはクリックで消えます。</p>
+        </div>
         """
     
     let onMouseMove (container: Browser.Types.HTMLElement) (svg: Browser.Types.HTMLElement) (event: Browser.Types.Event) : unit =
