@@ -59,7 +59,7 @@ module Text =
         if leadingZeros.Success = false then
             str
         else
-            re.Replace(str,"""<span class="zero-grey">$1</span>""")
+            re.Replace(str,"""<span class="zero-gray">$1</span>""")
 
 module String =
     let split (separator: char) (str: string) : string list =

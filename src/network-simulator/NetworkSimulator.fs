@@ -412,7 +412,7 @@ module NetworkSimulator =
                         match lanCablesWithSource with
                         | [] -> errorArea.innerText <- sprintf "%s [%s] はLANケーブルに繋がっていません。" (Device.name source) (sourceIPv4.ToString())
                         | _ ->
-                            sprintf """<span class="history-lightgrey">%s [%s] -> %s 接続中…""" (Device.name source) (sourceIPv4.ToString()) (destinationIPv4.ToString())
+                            sprintf """<span class="history-lightgray">%s [%s] -> %s 接続中…""" (Device.name source) (sourceIPv4.ToString()) (destinationIPv4.ToString())
                             |> fun x -> outputArea.innerHTML <- x
                             ping lanCables' devices' 128 destinationIPv4 source
                             |> fun b -> if b then ("history-correct", "通信成功！") else ("history-wrong", "通信失敗…")
