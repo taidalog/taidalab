@@ -1075,3 +1075,7 @@ details:hover {
     overflow-y: auto;
     scrollbar-width: thin;
 }
+
+.help-color-nws {
+    color: #7c65ac;
+}

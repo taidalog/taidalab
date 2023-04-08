@@ -79,7 +79,7 @@ module NetworkSimulator =
         <div id="playArea" class="play-area"></div>
         <div id="helpWindowNWS" class="help-window">
             %s{help}
-            <p>このヘルプメッセージはクリックで消えます。</p>
+            <p class="help-color-nws">このヘルプメッセージはクリックで消えます。</p>
         </div>
         """
     
