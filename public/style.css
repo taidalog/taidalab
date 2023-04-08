@@ -1061,7 +1061,7 @@ details:hover {
     opacity: 0.95;
     width: fit-content;
     height: fit-content;
-    max-width: 60%;
+    max-width: 80%;
     max-height: 60%;
     position: absolute;
     top: 0;
@@ -1072,4 +1072,6 @@ details:hover {
     padding: 2rem;
     cursor: pointer;
     box-shadow: 0px 0px 5px 1px #999;
+    overflow-y: auto;
+    scrollbar-width: thin;
 }
