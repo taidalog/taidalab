@@ -1046,7 +1046,17 @@ details:hover {
     align-items: center;
 }
 
+.help-button {
+    font-size: 18px;
+    cursor: pointer;
+}
+
 .help-window {
+    display: none;
+}
+
+.help-window.active {
+    display: block;
     background-color: #ffffff;
     opacity: 0.95;
     width: fit-content;
