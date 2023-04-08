@@ -4,7 +4,7 @@ Version 4.0.0
 
 [English README](README.md)
 
-高等学校「情報Ⅰ」の学習用 Web アプリケーション。
+高等学校「情報&#8544;」の学習用 Web アプリケーション。
 
 
 ## 機能
