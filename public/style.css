@@ -1071,8 +1071,5 @@ details:hover {
     margin: auto;
     padding: 2rem;
     cursor: pointer;
-}
-
-.help-window-nws {
-    border: 5px solid #b795fe;
+    box-shadow: 0px 0px 5px 1px #999;
 }

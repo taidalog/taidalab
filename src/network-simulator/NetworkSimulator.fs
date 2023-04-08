@@ -77,7 +77,7 @@ module NetworkSimulator =
         <div id="errorArea" class="error-area warning"></div>
         <div id="outputArea" class="output-area"></div>
         <div id="playArea" class="play-area"></div>
-        <div id="helpWindowNWS" class="help-window help-window-nws">
+        <div id="helpWindowNWS" class="help-window">
             %s{help}
             <p>このヘルプメッセージはクリックで消えます。</p>
         </div>
@@ -320,14 +320,10 @@ module NetworkSimulator =
     
     let init () =
         (document.getElementById "helpButtonNWS").onclick <- (fun _ ->
-            (document.getElementById "helpWindowNWS").classList.toggle "active" |> ignore
-            //(document.getElementById "barrier").classList.toggle "active" |> ignore
-            )
+            (document.getElementById "helpWindowNWS").classList.toggle "active" |> ignore)
         
         (document.getElementById "helpWindowNWS").onclick <- (fun _ ->
-            (document.getElementById "helpWindowNWS").classList.remove "active" |> ignore
-            //(document.getElementById "barrier").classList.remove "active" |> ignore
-            )
+            (document.getElementById "helpWindowNWS").classList.remove "active" |> ignore)
         
         let playArea = document.getElementById "playArea"
         let playAreaRect = playArea.getBoundingClientRect()
