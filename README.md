@@ -1,6 +1,6 @@
 # taidalab
 
-Version 4.0.0
+Version 4.1.0
 
 [Japanese README](README.ja.md)
 
@@ -18,7 +18,7 @@ A Web application for learning Informatics &#8544;, one of the subjects taught i
 
 1. Visit [taidalab](http://taidalog.html.xdomain.jp/).
 1. Click a link in the menu on the left side of the screen (Desktop mode), or click the hamburger button (a button with three horizontal lines) on the upper left corner, then click a link (Mobile mode).
-1. Fill in the form and press the button. For more details, visit the About page.
+1. Fill in the form and press the button. For more details, click the Help button on each page or visit the About page.
 
 
 ## Recommended environment
