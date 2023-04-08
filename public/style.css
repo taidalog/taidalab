@@ -1076,6 +1076,42 @@ details:hover {
     scrollbar-width: thin;
 }
 
+.help-color-d2b {
+    color: #65a2ac;
+}
+
+.help-color-b2d {
+    color: #65ac86;
+}
+
+.help-color-pot {
+    color: #a665ac;
+}
+
+.help-color-add {
+    color: #656eac;
+}
+
+.help-color-sub {
+    color: #656eac;
+}
+
+.help-color-cmp {
+    color: #6588ac;
+}
+
+.help-color-d2h {
+    color: #65aca0;
+}
+
+.help-color-iro {
+    color: #ac657c;
+}
+
 .help-color-nws {
     color: #7c65ac;
+}
+
+.help-color-ctc {
+    color: #aaac65;
 }

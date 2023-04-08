@@ -23,7 +23,7 @@ module EndlessBinary =
             </form>"""
     
     module Course =
-        let main help = $"""
+        let main help colorClass = $"""
             <span id="questionArea" class="question-area"></span>
             <span id="helpButton" class="material-symbols-outlined help-button">
                 help
@@ -43,7 +43,7 @@ module EndlessBinary =
             </div>
             <div id="helpWindow" class="help-window">
                 %s{help}
-                <p class="help-color-nws">このヘルプメッセージはクリックで消えます。</p>
+                <p class="%s{colorClass}">このヘルプメッセージはクリックで消えます。</p>
             </div>"""
         
         let main404 = """
