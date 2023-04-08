@@ -11,6 +11,19 @@ module Content =
 
 
     module Common =
+        let body = """
+            <div class="body-container">
+                <div id="barrier" class="barrier"></div>
+                <div id="helpBarrier" class="help-barrier"></div>
+                <header></header>
+                <div class="main-container">
+                    <aside></aside>
+                    <main></main>
+                </div>
+                <footer></footer>
+            </div>
+            """
+        
         let header = """
             <div id="headerContainer" class="header-container">
                 <button id="hamburgerButton" class="hamburger-button">

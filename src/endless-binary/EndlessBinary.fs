@@ -43,7 +43,7 @@ module EndlessBinary =
             </div>
             <div id="helpWindow" class="help-window">
                 %s{help}
-                <p class="%s{colorClass}">このヘルプメッセージはクリックで消えます。</p>
+                <p class="%s{colorClass}">このヘルプは、他の場所をクリックすると消えます。</p>
             </div>"""
         
         let main404 = """

@@ -115,7 +115,9 @@ module EndlessBinary =
                 false)
             
             (document.getElementById "helpButton").onclick <- (fun _ ->
-                (document.getElementById "helpWindow").classList.toggle "active" |> ignore)
+                ["helpWindow"; "helpBarrier"]
+                |> List.iter (fun x -> (document.getElementById x).classList.toggle "active" |> ignore))
             
-            (document.getElementById "helpWindow").onclick <- (fun _ ->
-                (document.getElementById "helpWindow").classList.remove "active" |> ignore)
+            (document.getElementById "helpBarrier").onclick <- (fun _ ->
+                ["helpWindow"; "helpBarrier"]
+                |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore))
