@@ -5,6 +5,8 @@
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
 namespace Taidalab
 
+open Fermata
+
 module TCPIP =
     let getNetNeighbors (cables: Cable list) (devices: Device list) (route: Device list) : Device list =
         let current = route |> List.last
