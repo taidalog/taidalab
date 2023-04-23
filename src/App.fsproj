@@ -3,7 +3,10 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Common.fs" />
+    <Compile Include="common/Number.fs" />
+    <Compile Include="common/Svg.fs" />
+    <Compile Include="common/Text.fs" />
+    <Compile Include="common/Tuple.fs" />
     <Compile Include="Content.fs" />
     <Compile Include="InitObject.fs" />
     <Compile Include="Page.fs" />
