@@ -67,29 +67,35 @@ module EndlessBinary =
                     <span id="outputArea"></span>
                 </div>
             </div>"""
-    let newErrorMessageBin answer input =
-        if input = "" then
-            sprintf """<span class="warning">%s の2進法表記を入力してください。</span>""" answer
-        else if Bin.validate input = false then
-            sprintf """<span class="warning">'%s' は2進数ではありません。使えるのは半角の 0 と 1 のみです。</span>""" input
-        else
-            ""
-
-    let newErrorMessageDec answer input =
-        if input = "" then
-            sprintf """<span class="warning">%s の10進法表記を入力してください。</span>""" answer
-        else if Dec.validate input = false then
-            sprintf """<span class="warning">'%s' は10進数ではありません。使えるのは半角の 0123456789 のみです。</span>""" input
-        else
-            ""
     
-    let newErrorMessageHex answer input =
-        if input = "" then
-            sprintf """<span class="warning">%s の16進法表記を入力してください。</span>""" answer
-        else if Hex.validate input = false then
-            sprintf """<span class="warning">'%s' は16進数ではありません。使えるのは半角の 0123456789ABCDEF のみです。</span>""" input
-        else
-            ""
+    [<RequireQualifiedAccess>]
+    module Dec =
+        let validate (input : string) : Result<int,Errors.Errors> =
+            Ok input
+            |> Result.bind Validators.validateNotEmptyString
+            |> Result.bind (Validators.validateFormat "^[0-9]+$")
+            |> Result.map int
+    
+    let newErrorMessageBin answer input (error: Errors.Errors) =
+        match error with
+        | Errors.EmptyString
+        | Errors.NullOrEmpty -> sprintf """<span class="warning">%s の2進法表記を入力してください。</span>""" answer
+        | Errors.WrongFormat -> sprintf """<span class="warning">'%s' は2進数ではありません。使えるのは半角の 0 と 1 のみです。</span>""" input
+        | Errors.OutOfRange -> sprintf """<span class="warning">'%s' は入力できる数値の範囲を越えています。入力できるのは xxx ~ yyy の間です。</span>""" input
+        
+    let newErrorMessageDec answer input (error: Errors.Errors) =
+        match error with
+        | Errors.EmptyString
+        | Errors.NullOrEmpty -> sprintf """<span class="warning">%s の10進法表記を入力してください。</span>""" answer
+        | Errors.WrongFormat -> sprintf """<span class="warning">'%s' は10進数ではありません。使えるのは半角の 0123456789 のみです。</span>""" input
+        | Errors.OutOfRange -> sprintf """<span class="warning">'%s' は入力できる数値の範囲を越えています。入力できるのは xxx ~ yyy の間です。</span>""" input
+    
+    let newErrorMessageHex answer input (error: Errors.Errors) =
+        match error with
+        | Errors.EmptyString
+        | Errors.NullOrEmpty -> sprintf """<span class="warning">%s の16進法表記を入力してください。</span>""" answer
+        | Errors.WrongFormat -> sprintf """<span class="warning">'%s' は16進数ではありません。使えるのは半角の 0123456789ABCDEF のみです。</span>""" input
+        | Errors.OutOfRange -> sprintf """<span class="warning">'%s' は入力できる数値の範囲を越えています。入力できるのは xxx ~ yyy の間です。</span>""" input
 
     let newHistory correct input destination_radix converted_input source_radix =
         let historyClassName =
