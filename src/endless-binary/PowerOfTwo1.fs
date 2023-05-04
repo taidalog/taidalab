@@ -24,42 +24,40 @@ module EndlessBinary =
         let rec checkAnswer answer hint_format (last_answers : int list) =
             // Getting the user input.
             let numberInput = document.getElementById "numberInput" :?> Browser.Types.HTMLInputElement
-            let userInput = escapeHtml numberInput.value
-            printfn "userInput: %s" userInput
+            let input = numberInput.value |> escapeHtml
+            let bin: Result<string,Errors.Errors> = input |> Validators.validateBin
+            printfn "input: %s" input
 
             numberInput.focus()
 
-            // Making an error message.
-            let errorMessage = newErrorMessageBin answer userInput
-            (document.getElementById "errorArea").innerHTML <- errorMessage
-            
-            // Exits when the input was invalid.
-            if errorMessage <> "" then
-                ()
-            else
-                
+            match bin with
+            | Error (error: Errors.Errors) ->
+                // Making an error message.
+                (document.getElementById "errorArea").innerHTML <- newErrorMessageBin answer input error
+            | Ok (bin: string) ->
+                (document.getElementById "errorArea").innerHTML <- ""
                 // Converting the input in order to use in the history message.
                 let binaryDigit = 8
-                let taggedBin = userInput  |> padWithZero binaryDigit |> colorLeadingZero
+                let taggedBin = bin |> padWithZero binaryDigit |> colorLeadingZero
                 printfn "taggedBin: %s" taggedBin
                 
                 let destinationRadix = 2
-                let userInputToDec = Bin.toDec userInput
-                printfn "userInputToDec: %d" userInputToDec
+                let dec = Bin.toDec bin
+                printfn "dec: %d" dec
                 
                 let decimalDigit = 3
-                let spacePaddedDec = userInputToDec |> string |> Fermata.String.padLeft decimalDigit ' ' |> escapeSpace
+                let spacePaddedDec = dec |> string |> Fermata.String.padLeft decimalDigit ' ' |> escapeSpace
                 
                 // Making a new history and updating the history with the new one.
                 let sourceRadix = 10
                 let outputArea = document.getElementById "outputArea"
                 let historyMessage =
-                    newHistory (userInputToDec = int answer) taggedBin destinationRadix spacePaddedDec sourceRadix
+                    newHistory (dec = int answer) taggedBin destinationRadix spacePaddedDec sourceRadix
                     |> (fun x -> concatinateStrings "<br>" [x; outputArea.innerHTML])
                 printfn "historyMessage: %s" historyMessage
                 outputArea.innerHTML <- historyMessage
                 
-                if userInputToDec = int answer then
+                if dec = int answer then
                     // Making the next question.
                     printfn "last_answers: %A" last_answers
 

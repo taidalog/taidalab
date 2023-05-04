@@ -24,20 +24,18 @@ module EndlessBinary =
         let rec checkAnswer answer hint_format (last_answers: int list) =
             // Getting the user input.
             let numberInput = document.getElementById "numberInput" :?> Browser.Types.HTMLInputElement
-            let bin = escapeHtml numberInput.value
-            printfn "bin: %s" bin
+            let input = numberInput.value |> escapeHtml
+            let bin: Result<string,Errors.Errors> = input |> Validators.validateBin
+            printfn "bin: %A" bin
 
             numberInput.focus()
 
-            // Making an error message.
-            let errorMessage = newErrorMessageBin answer bin
-            (document.getElementById "errorArea").innerHTML <- errorMessage
-            
-            // Exits when the input was invalid.
-            if errorMessage <> "" then
-                ()
-            else
-
+            match bin with
+            | Error (error: Errors.Errors) ->
+                // Making an error message.
+                (document.getElementById "errorArea").innerHTML <- newErrorMessageBin answer input error
+            | Ok (bin: string) ->
+                (document.getElementById "errorArea").innerHTML <- ""
                 // Converting the input in order to use in the history message.
                 let binaryDigit = 8
                 let taggedBin = bin |> padWithZero binaryDigit |> colorLeadingZero

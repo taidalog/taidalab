@@ -102,28 +102,30 @@ module EndlessBinary =
         let rec checkAnswer answer (question : string) (last_answers : int list) =
             // Getting the user input.
             let numberInput = document.getElementById "numberInput" :?> Browser.Types.HTMLInputElement
-            let inputValue = escapeHtml numberInput.value
-            printfn "inputValue: %s" inputValue
+            let input = numberInput.value |> escapeHtml
+            let dec: Result<int,Errors.Errors> = input |> Validators.validateDec
+            printfn "input: %s" input
 
             numberInput.focus()
 
-            // Making an error message.
-            let errorMessage = newErrorMessageDec question inputValue
-            (document.getElementById "errorArea").innerHTML <- errorMessage
-            
-            // Exits when the input was invalid.
-            if errorMessage <> "" then
-                ()
-            else
-                let inputValueAsInt = int inputValue
-                printfn "inputValueAsInt: %d" inputValueAsInt
+            match dec with
+            | Error (error: Errors.Errors) ->
+                // Making an error message.
+                (document.getElementById "errorArea").innerHTML <- newErrorMessageDec question input error
+            | Ok (dec: int) ->
+                //let inputValueAsInt = int inputValue
+                //printfn "inputValueAsInt: %d" inputValueAsInt
 
                 // Converting the input in order to use in the history message.
                 let digit = 3
-                let spacePaddedInputValue = inputValue |> Fermata.String.padLeft digit ' ' |> escapeSpace
+                let spacePaddedInputValue =
+                    dec
+                    |> string
+                    |> Fermata.String.padLeft digit ' '
+                    |> escapeSpace
                 
                 let sourceRadix = 16
-                let hex = Dec.toHex inputValueAsInt
+                let hex = Dec.toHex dec
                 let hexDigit = 2
                 let taggedHex = padWithZero hexDigit hex |> colorLeadingZero
 
@@ -131,12 +133,12 @@ module EndlessBinary =
                 let destinationRadix = 10
                 let outputArea = document.getElementById "outputArea"
                 let historyMessage =
-                    newHistory (inputValueAsInt = answer) spacePaddedInputValue destinationRadix taggedHex sourceRadix
+                    newHistory (dec = answer) spacePaddedInputValue destinationRadix taggedHex sourceRadix
                     |> (fun x -> concatinateStrings "<br>" [x; outputArea.innerHTML])
                 printfn "%A" historyMessage
                 outputArea.innerHTML <- historyMessage
                 
-                if inputValueAsInt = answer then
+                if dec = answer then
                     // Making the next question.
                     printfn "%A" last_answers
 

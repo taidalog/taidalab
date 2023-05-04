@@ -24,45 +24,43 @@ module EndlessBinary =
         let rec checkAnswer answer (question : string) last_answers =
             // Getting the user input.
             let numberInput = document.getElementById "numberInput" :?> Browser.Types.HTMLInputElement
-            let inputValue = escapeHtml numberInput.value
-            printfn "inputValue: %s" inputValue
+            let input = numberInput.value |> escapeHtml
+            let dec: Result<int,Errors.Errors> = input |> Validators.validateDec
+            printfn "input: %s" input
             
             numberInput.focus()
 
-            // Making an error message.
-            let questionWithoutSpace = question.Replace(" ", "")
-            let errorMessage = newErrorMessageDec questionWithoutSpace inputValue
-            (document.getElementById "errorArea").innerHTML <- errorMessage
-            
-            // Exits when the input was invalid.
-            if errorMessage <> "" then
-                ()
-            else
-                
-                let inputValueAsInt = int inputValue
-                printfn "inputValueAsInt: %d" inputValueAsInt
+            match dec with
+            | Error (error: Errors.Errors) ->
+                // Making an error message.
+                //let questionWithoutSpace = question.Replace(" ", "")
+                (document.getElementById "errorArea").innerHTML <- newErrorMessageDec question input error
+            | Ok (dec: int) ->                
+                (document.getElementById "errorArea").innerHTML <- ""
+                //let inputValueAsInt = int inputValue
+                //printfn "inputValueAsInt: %d" inputValueAsInt
 
                 // Converting the input in order to use in the history message.
                 let digit = 3
-                let spacePaddedInputValue = inputValue |> Fermata.String.padLeft digit ' ' |> escapeSpace
+                let spacePaddedInputValue = dec |> string |> Fermata.String.padLeft digit ' ' |> escapeSpace
                 printfn "spacePaddedInputValue: %s" spacePaddedInputValue
 
                 let sourceRadix = 2
-                let bin = Dec.toBin inputValueAsInt
+                let bin = Dec.toBin dec
                 let binaryDigit = 8
-                let taggedBin = padWithZero binaryDigit bin |> colorLeadingZero
+                let taggedBin = bin |> padWithZero binaryDigit |> colorLeadingZero
                 printfn "inputValue -> binary: %s" bin
 
                 // Making a new history and updating the history with the new one.
                 let destinationRadix = 10
                 let outputArea = document.getElementById("outputArea")
                 let historyMessage =
-                    newHistory (inputValueAsInt = answer) spacePaddedInputValue destinationRadix taggedBin sourceRadix
+                    newHistory (dec = answer) spacePaddedInputValue destinationRadix taggedBin sourceRadix
                     |> (fun x -> concatinateStrings "<br>" [x; outputArea.innerHTML])
                 //printfn "historyMessage: %s" historyMessage
                 outputArea.innerHTML <- historyMessage
                 
-                if inputValueAsInt = answer then
+                if dec = answer then
                     // Making the next question.
                     printfn "last_answers: %A" last_answers
                     

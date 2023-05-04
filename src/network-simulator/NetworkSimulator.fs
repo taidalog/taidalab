@@ -140,7 +140,8 @@ module NetworkSimulator =
                 | Error e ->
                     let name = document.getElementById(container.id + "Name").innerText
                     match e with
-                    | Errors.Empty -> errorArea.innerText <- $"%s{name} の %s{identifier} を入力してください。"
+                    | Errors.NullOrEmpty
+                    | Errors.EmptyString -> errorArea.innerText <- $"%s{name} の %s{identifier} を入力してください。"
                     | Errors.WrongFormat -> errorArea.innerText <- $"%s{name} の %s{identifier} の形式が正しくありません。"
                     | Errors.OutOfRange -> errorArea.innerText <- $"%s{name} の %s{identifier} の数値の範囲が正しくありません。"
                     JS.setTimeout (fun _ -> elm.focus()) 0 |> ignore)))
@@ -429,7 +430,8 @@ module NetworkSimulator =
             match sourceIPv4 with
             | Error e ->
                 match e with
-                | Errors.Empty -> errorArea.innerText <- "送信元 IPv4 を入力してください。"
+                | Errors.NullOrEmpty
+                | Errors.EmptyString -> errorArea.innerText <- "送信元 IPv4 を入力してください。"
                 | Errors.WrongFormat -> errorArea.innerText <- "送信元 IPv4 の形式が正しくありません。"
                 | Errors.OutOfRange -> errorArea.innerText <- "送信元 IPv4 の数値の範囲が正しくありません。"
                 sourceInput.focus()
@@ -437,7 +439,8 @@ module NetworkSimulator =
                 match destinationIPv4 with
                 | Error e ->
                     match e with
-                    | Errors.Empty -> errorArea.innerText <- "送信先 IPv4 を入力してください。"
+                    | Errors.NullOrEmpty
+                    | Errors.EmptyString -> errorArea.innerText <- "送信先 IPv4 を入力してください。"
                     | Errors.WrongFormat -> errorArea.innerText <- "送信先 IPv4 の形式が正しくありません。"
                     | Errors.OutOfRange -> errorArea.innerText <- "送信先 IPv4 の数値の範囲が正しくありません。"
                     destinationInput.focus()

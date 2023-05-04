@@ -137,23 +137,22 @@ module EndlessBinary =
         let rec checkAnswer answer (last_answers : int list) =
             // Getting the user input.
             let numberInput = document.getElementById "numberInput" :?> Browser.Types.HTMLInputElement
-            let hex = escapeHtml numberInput.value
-            printfn "hex: %s" hex
+            let input = numberInput.value |> escapeHtml
+            let hex: Result<string,Errors.Errors> = input |> Validators.validateHex
+            printfn "hex: %A" hex
             
             numberInput.focus()
             
-            // Making an error message.
-            let errorMessage = newErrorMessageHex answer hex
-            (document.getElementById "errorArea").innerHTML <- errorMessage
-            
-            // Exits when the input was invalid.
-            if errorMessage <> "" then
-                ()
-            else
+            match hex with
+            | Error (error: Errors.Errors) ->
+                // Making an error message.
+                (document.getElementById "errorArea").innerHTML <- newErrorMessageHex answer input error
+            | Ok (hex: string) ->
+                (document.getElementById "errorArea").innerHTML <- ""
                 // Converting the input in order to use in the history message.
                 let hexDigit = 2
                 let destinationRadix = 16
-                let taggedHex = padWithZero hexDigit hex |> colorLeadingZero
+                let taggedHex = hex |> padWithZero hexDigit |> colorLeadingZero
                 let dec = Hex.toDec hex
                 printfn "taggedHex: %s" taggedHex
                 printfn "dec: %d" dec
