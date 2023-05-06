@@ -34,7 +34,7 @@ module EndlessBinary =
             numberInput.focus()
             
             match bin with
-            | Error error ->
+            | Error (error: Errors.Errors) ->
                 // Making an error message.
                 match error with
                 | Fermata.Errors.Errors.EmptyString
