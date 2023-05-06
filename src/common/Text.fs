@@ -39,3 +39,8 @@ module Text =
         str
         |> String.splitWith ((=) '1')
         |> fun (left, right) -> $"""<span class="zero-gray">%s{left}</span>%s{right}"""
+    
+    let colorLeadingZeroHex str =
+        str
+        |> String.splitWith ((<>) '0')
+        |> fun (left, right) -> $"""<span class="zero-gray">%s{left}</span>%s{right}"""
