@@ -6,6 +6,7 @@
 namespace Taidalab
 
 open Browser.Dom
+open Browser.Types
 open Fermata
 
 module IroIroiro =
@@ -200,11 +201,11 @@ module IroIroiro =
             errorArea.innerHTML <- ""
 
             //
-            let rInput = (document.getElementById "rInput" :?> Browser.Types.HTMLInputElement).value
-            let gInput = (document.getElementById "gInput" :?> Browser.Types.HTMLInputElement).value
-            let bInput = (document.getElementById "bInput" :?> Browser.Types.HTMLInputElement).value
-            let intervalInput = (document.getElementById "intervalInput" :?> Browser.Types.HTMLInputElement).value
-            let limitInput = (document.getElementById "limitInput" :?> Browser.Types.HTMLInputElement).value
+            let rInput = (document.getElementById "rInput" :?> HTMLInputElement).value
+            let gInput = (document.getElementById "gInput" :?> HTMLInputElement).value
+            let bInput = (document.getElementById "bInput" :?> HTMLInputElement).value
+            let intervalInput = (document.getElementById "intervalInput" :?> HTMLInputElement).value
+            let limitInput = (document.getElementById "limitInput" :?> HTMLInputElement).value
             (rInput, gInput, bInput) |> printfn "initial: %A"
 
             let parseResult =

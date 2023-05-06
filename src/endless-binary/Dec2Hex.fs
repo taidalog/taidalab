@@ -7,6 +7,7 @@ namespace Taidalab
 
 open System
 open Browser.Dom
+open Browser.Types
 open Taidalab.Number
 open Taidalab.Text
 open Taidalab.EndlessBinary
@@ -136,7 +137,7 @@ module EndlessBinary =
 
         let rec checkAnswer answer (last_answers : int list) =
             // Getting the user input.
-            let numberInput = document.getElementById "numberInput" :?> Browser.Types.HTMLInputElement
+            let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
             let input = numberInput.value |> escapeHtml
             let hex: Result<string,Errors.Errors> = input |> Hex.validate
             printfn "hex: %A" hex
@@ -166,7 +167,7 @@ module EndlessBinary =
                 
                 // Making a new history and updating the history with the new one.
                 let sourceRadix = 10
-                let outputArea = document.getElementById "outputArea" :?> Browser.Types.HTMLParagraphElement
+                let outputArea = document.getElementById "outputArea" :?> HTMLParagraphElement
                 let historyMessage =
                     newHistory (dec = int answer) taggedHex destinationRadix spacePaddedDec sourceRadix
                     |> (fun x -> concatinateStrings "<br>" [x; outputArea.innerHTML])

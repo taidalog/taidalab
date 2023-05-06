@@ -7,6 +7,7 @@ namespace Taidalab
 
 open System
 open Browser.Dom
+open Browser.Types
 open Taidalab.Number
 open Taidalab.Text
 open Taidalab.EndlessBinary
@@ -25,7 +26,7 @@ module EndlessBinary =
         
         let rec checkAnswer (question : string) answer (last_answers : int list) (hint_format : string) =
             // Getting the user input.
-            let numberInput = document.getElementById "numberInput" :?> Browser.Types.HTMLInputElement
+            let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
             let inputValue = escapeHtml numberInput.value
             printfn "inputValue: %s" inputValue
 

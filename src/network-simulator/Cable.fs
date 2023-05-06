@@ -6,8 +6,7 @@
 namespace Taidalab
 
 open Browser.Dom
-open Fable.Core
-open Fable.Core.JsInterop
+open Browser.Types
 open Fermata
 
 [<StructuredFormatDisplay("{DisplayText}")>]
@@ -32,7 +31,7 @@ module Cable =
           Cable.Area = area
           Cable.Position = position }
     
-    let ofHTMLElement (elm: Browser.Types.HTMLElement) : Cable option =
+    let ofHTMLElement (elm: HTMLElement) : Cable option =
         let id = elm.id
         
         let name = document.getElementById(id + "Name").innerText
@@ -48,7 +47,7 @@ module Cable =
         
         let points =
             document.getElementById(id + "Polyline")
-            |> fun (x: Browser.Types.HTMLElement) -> x.getAttribute("points")
+            |> fun (x: HTMLElement) -> x.getAttribute("points")
             |> String.split ' '
             |> List.map Point.ofString
         
@@ -69,7 +68,7 @@ module Cable =
         | Some x -> Some (create id x name points area position)
         | None -> None
     
-    let toHTMLElement (cable: Cable) : Browser.Types.HTMLElement =
+    let toHTMLElement (cable: Cable) : HTMLElement =
         let container = document.createElement("div")
         container.id <- cable.Id
         container.className <- "device cable-container lan-cable"

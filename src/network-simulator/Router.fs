@@ -6,6 +6,7 @@
 namespace Taidalab
 
 open Browser.Dom
+open Browser.Types
 open Fermata
 
 [<StructuredFormatDisplay("{DisplayText}")>]
@@ -46,7 +47,7 @@ module Router =
           Router.Area = area
           Router.Position = position }
     
-    let ofHTMLElement (elm: Browser.Types.HTMLElement) : Router =
+    let ofHTMLElement (elm: HTMLElement) : Router =
         let id = elm.id
         
         let name = document.getElementById(id + "Name").innerText
@@ -75,7 +76,7 @@ module Router =
 
         create id name ipv4 subnetMask area position
     
-    let toHTMLElement (router: Router) : Browser.Types.HTMLElement =
+    let toHTMLElement (router: Router) : HTMLElement =
         let container = document.createElement("div")
         container.id <- router.Id
         container.className <- "device device-container device-note"

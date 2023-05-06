@@ -6,6 +6,7 @@
 namespace Taidalab
 
 open Browser.Dom
+open Browser.Types
 open Fermata
 
 type Device =
@@ -14,7 +15,7 @@ type Device =
     | Hub of Hub
 
 module Device =
-    let ofHTMLElement (element: Browser.Types.HTMLElement) : Device option =
+    let ofHTMLElement (element: HTMLElement) : Device option =
         let id = element.id
         let kind = document.getElementById(id + "Kind").innerText
 
@@ -24,7 +25,7 @@ module Device =
         | "Hub" -> element |> Hub.ofHTMLElement |> Hub |> Some
         | _ -> None
     
-    let toHTMLElement (device: Device) : Browser.Types.HTMLElement =
+    let toHTMLElement (device: Device) : HTMLElement =
         match device with
         | Client d -> d |> Client.toHTMLElement
         | Router d -> d |> Router.toHTMLElement

@@ -6,6 +6,7 @@
 namespace Taidalab
 
 open Browser.Dom
+open Browser.Types
 open Taidalab.Text
 open Taidalab.EndlessBinary
 open Fermata
@@ -15,7 +16,7 @@ module NotFound =
 
     let rec checkAnswer answer =
         // Getting the user input.
-        let numberInput = document.getElementById "numberInput" :?> Browser.Types.HTMLInputElement
+        let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
         let input = numberInput.value |> escapeHtml
         let bin: Result<string,Errors.Errors> = input |> Bin.validate
         printfn "%A" bin
@@ -45,7 +46,7 @@ module NotFound =
             
             // Making a new history and updating the history with the new one.
             let sourceRadix = 10
-            let outputArea = document.getElementById "outputArea" :?> Browser.Types.HTMLParagraphElement
+            let outputArea = document.getElementById "outputArea" :?> HTMLParagraphElement
             let historyMessage =
                 newHistory (dec = int answer) taggedBin destinationRadix spacePaddedDec sourceRadix
                 |> (fun x -> concatinateStrings "<br>" [x; outputArea.innerHTML])

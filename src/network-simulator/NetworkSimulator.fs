@@ -6,6 +6,7 @@
 namespace Taidalab
 
 open Browser.Dom
+open Browser.Types
 open Fable.Core
 open Fable.Core.JsInterop
 open Taidalab.TCPIP
@@ -94,14 +95,14 @@ module NetworkSimulator =
         </div>
         """
     
-    let onMouseMove (container: Browser.Types.HTMLElement) (svg: Browser.Types.HTMLElement) (event: Browser.Types.Event) : unit =
-        let event = event :?> Browser.Types.MouseEvent
+    let onMouseMove (container: HTMLElement) (svg: HTMLElement) (event: Event) : unit =
+        let event = event :?> MouseEvent
         let top = (event.pageY - svg.getBoundingClientRect().height / 2.)
         let left = (event.pageX - svg.getBoundingClientRect().width / 2.)
         let styleString = sprintf "top: %fpx; left: %fpx;" top left
         container.setAttribute("style", styleString)
     
-    let setMouseMoveEvent (container: Browser.Types.HTMLElement) : unit =
+    let setMouseMoveEvent (container: HTMLElement) : unit =
         let svg = document.getElementById(container.id + "Svg")
         svg.ondragstart <- fun _ -> false
         let onMouseMove' = onMouseMove container svg
@@ -111,21 +112,21 @@ module NetworkSimulator =
                 //printfn "mouse up!"
                 document.removeEventListener("mousemove", onMouseMove')
     
-    let resetTitleOnNameChange (container: Browser.Types.HTMLElement) : unit =
+    let resetTitleOnNameChange (container: HTMLElement) : unit =
         let nameElement = document.getElementById (container.id + "Name")
         nameElement.addEventListener("blur", (fun _ ->
             let titleElement = document.getElementById (container.id + "Title")
             titleElement.textContent <- nameElement.innerText))
     
-    let setToQuitEditOnEnter (container: Browser.Types.HTMLElement) : unit =
+    let setToQuitEditOnEnter (container: HTMLElement) : unit =
         container.children
         |> (fun x -> JS.Constructors.Array?from(x))
-        |> Array.filter (fun (x: Browser.Types.HTMLElement) -> x.contentEditable = "true")
+        |> Array.filter (fun (x: HTMLElement) -> x.contentEditable = "true")
         |> Array.iter (fun x -> 
             x.onkeydown <- (fun event ->
                 if event.key = "Enter" || event.key = "Escape" then x.blur()))
     
-    let setIPv4Validation (container: Browser.Types.HTMLElement) : unit =
+    let setIPv4Validation (container: HTMLElement) : unit =
         ["IPv4"; "SubnetMask"]
         |> List.map (fun x -> x, document.getElementById (container.id + x))
         |> List.iter (fun (identifier, elm) ->
@@ -169,8 +170,8 @@ module NetworkSimulator =
 //        else if n < LanguagePrimitives.GenericZero<'a> then Negative
 //        else Zero
     
-    let resizeCable (container: Browser.Types.HTMLElement) (svg: Browser.Types.HTMLElement) (polyline: Browser.Types.HTMLElement) (event: Browser.Types.Event) : unit =
-        let event = event :?> Browser.Types.MouseEvent
+    let resizeCable (container: HTMLElement) (svg: HTMLElement) (polyline: HTMLElement) (event: Event) : unit =
+        let event = event :?> MouseEvent
 
         // Getting current end points of the cable.
         let point1, point2 =
@@ -289,7 +290,7 @@ module NetworkSimulator =
         | _ -> ()
 //        printfn ""
     
-    let setMouseMoveEventCable (container: Browser.Types.HTMLElement) : unit =
+    let setMouseMoveEventCable (container: HTMLElement) : unit =
         let cable = Cable.ofHTMLElement container
         match cable with
         | None -> ()
@@ -324,7 +325,7 @@ module NetworkSimulator =
                     //printfn "mouse up!"
                     document.removeEventListener("mousemove", onMouseMove')
     
-    let removeOnRightClick (container: Browser.Types.HTMLElement) : unit =
+    let removeOnRightClick (container: HTMLElement) : unit =
         //container.oncontextmenu <- fun event ->
         container.oncontextmenu <- fun event ->
             event.preventDefault()
@@ -393,7 +394,7 @@ module NetworkSimulator =
             setMouseMoveEventCable x
             removeOnRightClick x)
 
-        let submitButton = document.getElementById("submitButton") :?> Browser.Types.HTMLButtonElement
+        let submitButton = document.getElementById("submitButton") :?> HTMLButtonElement
         submitButton.onclick <- fun _ ->
             let devices' =
                 document.getElementById("playArea").getElementsByClassName("device-container")
@@ -417,13 +418,13 @@ module NetworkSimulator =
             //lanCables' |> List.length |> printfn "%d cables."
             //lanCables' |> List.iter (fun x -> printfn "%s" x.Name)
 
-            let errorArea = document.getElementById "errorArea" :?> Browser.Types.HTMLDivElement
-            let outputArea = document.getElementById "outputArea" :?> Browser.Types.HTMLDivElement
+            let errorArea = document.getElementById "errorArea" :?> HTMLDivElement
+            let outputArea = document.getElementById "outputArea" :?> HTMLDivElement
             errorArea.innerText <- ""
             outputArea.innerText <- ""
 
-            let sourceInput = document.getElementById "sourceInput" :?> Browser.Types.HTMLInputElement
-            let destinationInput = document.getElementById "destinationInput" :?> Browser.Types.HTMLInputElement
+            let sourceInput = document.getElementById "sourceInput" :?> HTMLInputElement
+            let destinationInput = document.getElementById "destinationInput" :?> HTMLInputElement
             let sourceIPv4 = IPv4.validate sourceInput.value
             let destinationIPv4 = IPv4.validate destinationInput.value
 
@@ -472,7 +473,7 @@ module NetworkSimulator =
                             | _ -> ()
             false
         
-        let addClientButton = document.getElementById("addClientButton") :?> Browser.Types.HTMLButtonElement
+        let addClientButton = document.getElementById("addClientButton") :?> HTMLButtonElement
         addClientButton.onclick <- fun _ ->
             let playArea = document.getElementById "playArea"
             let playAreaRect = playArea.getBoundingClientRect()
@@ -517,7 +518,7 @@ module NetworkSimulator =
             document.getElementById id
             |> setIPv4Validation
         
-        let addRouterButton = document.getElementById("addRouterButton") :?> Browser.Types.HTMLButtonElement
+        let addRouterButton = document.getElementById("addRouterButton") :?> HTMLButtonElement
         addRouterButton.onclick <- fun _ ->
             let playArea = document.getElementById "playArea"
             let playAreaRect = playArea.getBoundingClientRect()
@@ -562,7 +563,7 @@ module NetworkSimulator =
             document.getElementById id
             |> setIPv4Validation
         
-        let addHubButton = document.getElementById("addHubButton") :?> Browser.Types.HTMLButtonElement
+        let addHubButton = document.getElementById("addHubButton") :?> HTMLButtonElement
         addHubButton.onclick <- fun _ ->
             let playArea = document.getElementById "playArea"
             let playAreaRect = playArea.getBoundingClientRect()
@@ -602,7 +603,7 @@ module NetworkSimulator =
             document.getElementById id
             |> setToQuitEditOnEnter
         
-        let addLANCableButton = document.getElementById("addLANCableButton") :?> Browser.Types.HTMLButtonElement
+        let addLANCableButton = document.getElementById("addLANCableButton") :?> HTMLButtonElement
         addLANCableButton.onclick <- fun _ ->
             let playArea = document.getElementById "playArea"
             let playAreaRect = playArea.getBoundingClientRect()

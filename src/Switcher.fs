@@ -6,7 +6,7 @@
 namespace Taidalab
 
 open Browser.Dom
-open Taidalab.Text
+open Browser.Types
 open Taidalab.EndlessBinary
 open Fermata
 
@@ -50,9 +50,9 @@ module rec Switcher =
         | OuterPage -> false
     
 //    let idToAnchor id =
-//        document.getElementById id :?> Browser.Types.HTMLAnchorElement
+//        document.getElementById id :?> HTMLAnchorElement
     
-    let overwriteAnchorClick action (anchor : Browser.Types.HTMLAnchorElement) =
+    let overwriteAnchorClick action (anchor : HTMLAnchorElement) =
         anchor.onclick <- (fun ev ->
             ev.preventDefault()
             action())
@@ -76,14 +76,14 @@ module rec Switcher =
     
 //    let switchOverwriteAnchor actionTrue actionFalse anchor =
 //        anchor
-//        |> (fun (x : Browser.Types.HTMLAnchorElement) -> (isInnerPage x.href, x))
+//        |> (fun (x : HTMLAnchorElement) -> (isInnerPage x.href, x))
 //        |> (fun (b, x) ->
 //            match (b, x) with
 //            | (true, x) -> (actionTrue, x)
 //            | (false, x) -> (actionFalse, x))
 //        |> (fun (action, x) -> action x)
     
-    let switchAnchorAction pathname (anchor : Browser.Types.HTMLAnchorElement) =
+    let switchAnchorAction pathname (anchor : HTMLAnchorElement) =
             (pathname, anchor.href, anchor)
             |> (fun (p, h, a) -> (p <> "/404/", isInnerPage h, a))
             |> (fun (p, h, a) ->

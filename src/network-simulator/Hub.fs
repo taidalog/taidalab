@@ -6,6 +6,7 @@
 namespace Taidalab
 
 open Browser.Dom
+open Browser.Types
 open Fermata
 
 [<StructuredFormatDisplay("{DisplayText}")>]
@@ -26,7 +27,7 @@ module Hub =
           Hub.Area = area
           Hub.Position = position }
     
-    let ofHTMLElement (elm: Browser.Types.HTMLElement) : Hub =
+    let ofHTMLElement (elm: HTMLElement) : Hub =
         let id = elm.id
         
         let name = document.getElementById(id + "Name").innerText
@@ -51,7 +52,7 @@ module Hub =
 
         create id name area position
     
-    let toHTMLElement (hub: Hub) : Browser.Types.HTMLElement =
+    let toHTMLElement (hub: Hub) : HTMLElement =
         let container = document.createElement("div")
         container.id <- hub.Id
         container.className <- "device device-container device-note"
