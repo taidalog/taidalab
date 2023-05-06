@@ -180,7 +180,7 @@ module EndlessBinary =
                 <p class="history-indented">
                     <ol style="padding-left: 4rem;">
                         <li>10進法の数を「2<sup>n</sup> の数同士の足し算」に変換して、</li>
-                        <li>それぞれの 2<sup>n</sup> 数を2進法で表し、</li>
+                        <li>それぞれの 2<sup>n</sup> の数を2進法で表し、</li>
                         <li>足し合わせる</li>
                     </ol>
                 </p>
@@ -200,7 +200,7 @@ module EndlessBinary =
                 <p class="history-indented">
                     次に、それぞれの 2<sup>n</sup> の数を2進法で表します。<br>
                     2<sup>n</sup> の数を2進法で表すには、1 の後に 0 を n 個続けます。<br>
-                    そのため、2<sup>%s{additionIndex}</sup> は2進法で
+                    そのため、%s{additionIndex} は2進法で
                 </p>
                 <p class="history-indented hint-bgcolor-gray">
                     &nbsp;&nbsp;%s{additionBin}<br>
