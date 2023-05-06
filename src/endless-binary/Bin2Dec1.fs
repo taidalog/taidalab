@@ -22,16 +22,16 @@ module EndlessBinary =
             ヒント付きなので、考え方も身に付けられます。
             """
 
-        let writeAdditionFormula binary_string =
-            binary_string
+        let writeAdditionFormula binaryString =
+            binaryString
             |> Seq.toList
-            |> List.mapi (fun i c -> sprintf """(%c * 2<sup>%d</sup>)""" c (String.length binary_string - i - 1))
+            |> List.mapi (fun i c -> sprintf """(%c * 2<sup>%d</sup>)""" c (String.length binaryString - i - 1))
             |> String.concat " + "
         
-        let tableComponents binary_string =
-            binary_string
+        let tableComponents binaryString =
+            binaryString
             |> Seq.toList
-            |> List.mapi (fun i c -> (c, i, (String.length binary_string) - i))
+            |> List.mapi (fun i c -> (c, i, (String.length binaryString) - i))
             |> List.map (fun (c, i, r) -> 
                 sprintf """<span class="hint-table-digit">%d</span>""" r,
                 sprintf """<span class="hint-table-digit green large">%c</span>""" c,
@@ -40,7 +40,7 @@ module EndlessBinary =
         let newHintTable (a, b, c) =
             sprintf
                 """
-                <div class="hint-table">
+                <div class="hint-table" style="padding-left: 2rem;">
                     <div class="hint-table-row">
                         %s
                         <div class="hint-table-container">
@@ -75,24 +75,30 @@ module EndlessBinary =
             $"""
             <details><summary>ヒント:</summary>
                 <p class="history-indented">
-                    10進数は、一番右の桁から<br>
+                    10進法で表現した数は、一番右の桁から<br>
                     1の位、10の位、100の位、1000の位...となっています。<br>
                     これを「10<sup>n</sup>の位」の形で表すと、<br>
                     10<sup>0</sup>の位、10<sup>1</sup>の位、10<sup>2</sup>の位、10<sup>3</sup>の位...となります。<br>
                 </p>
                 <p class="history-indented">
-                    同様に、2進数は一番右の桁から<br>
+                    同様に、2進法で表現した数は、一番右の桁から<br>
                     1の位、2の位、4の位、8の位...となっています。<br>
                     これを「2<sup>n</sup>の位」の形で表すと、<br>
                     2<sup>0</sup>の位、2<sup>1</sup>の位、2<sup>2</sup>の位、2<sup>3</sup>の位...となります。
                 </p>
                 <p class="history-indented">
                     この 10<sup>0</sup>、10<sup>1</sup>、10<sup>2</sup>、10<sup>3</sup>...や 2<sup>0</sup>、2<sup>1</sup>、2<sup>2</sup>、2<sup>3</sup>...という数を、その桁の「重み」と呼びます。<br>
-                    2進数を10進数に変換するには、それぞれの桁の数と重みをかけ算し、それを合計します。<br>
-                    ですので、%s{binaryString}<sub>(2)</sub>を10進数に変換するには、以下のように計算します。<br>
-                    %s{formula}
-                    <br>
+                </p>
+                <p class="history-indented">
                     %s{table}
+                </p>
+                <p class="history-indented">
+                    2進法で表現した数を10進法で表現しなおすには、それぞれの桁の数と重みをかけ算し、それを合計します。<br>
+                    %s{binaryString}<sub>(2)</sub> の場合、以下のように計算します。
+                </p>
+                <p class="history-indented hint-bgcolor-gray">
+                    &nbsp;&nbsp;%s{formula}<br>
+                    = %d{Bin.toDec binaryString}<sub>(10)</sub>
                 </p>
             </details>
             """
