@@ -43,7 +43,7 @@ module EndlessBinary =
         let newHintTable (a, b, c) =
             sprintf
                 """
-                <div class="hint-table">
+                <div class="hint-table" style="padding-left: 2rem;">
                     <div class="hint-table-row">
                         %s
                         <div class="hint-table-container">
@@ -53,7 +53,7 @@ module EndlessBinary =
                     <div class="hint-table-row">
                         %s
                         <div class="hint-table-container">
-                            <span class="middle">ビット</span>
+                            <span class="middle">数</span>
                         </div>
                     </div>
                     <div class="hint-table-row">
@@ -74,31 +74,36 @@ module EndlessBinary =
             |> newHintTable
         
         let hintFormat hex formula table =
-            sprintf
-                """<details><summary>ヒント:</summary>
-                    <p class="history-indented">
-                        10進数は、一番右の桁から<br>
-                        1の位、10の位、100の位、1000の位...となっています。<br>
-                        これを「10<sup>n</sup>の位」の形で表すと、<br>
-                        10<sup>0</sup>の位、10<sup>1</sup>の位、10<sup>2</sup>の位、10<sup>3</sup>の位...となります。<br>
-                    </p>
-                    <p class="history-indented">
-                        同様に、16進数は一番右の桁から<br>
-                        1の位、16の位、256の位...となっています。<br>
-                        これを「16<sup>n</sup>の位」の形で表すと、<br>
-                        16<sup>0</sup>の位、16<sup>1</sup>の位、16<sup>2</sup>の位...となります。
-                    </p>
-                    <p class="history-indented">
-                        この 10<sup>0</sup>、10<sup>1</sup>、10<sup>2</sup>、10<sup>3</sup>...や 16<sup>0</sup>、16<sup>1</sup>、16<sup>2</sup>...という数を、その桁の「重み」と呼びます。<br>
-                        16進数を10進数に変換するには、それぞれの桁の数と重みをかけ算し、それを合計します。<br>
-                        ですので、%s<sub>(16)</sub>を10進数に変換するには、以下のように計算します。<br>
-                        ※ 16進数にA~Fのアルファベットがある場合は、それぞれ10<sub>(10)</sub>~15<sub>(10)</sub>を表しています。<br>
-                        %s
-                        <br>
-                        %s
-                    </p>
-                </details>"""
-                hex formula table
+            $"""<details>
+                <summary>ヒント:</summary>
+                <p class="history-indented">
+                    10進法で表現した数は、一番右の桁から<br>
+                    1の位、10の位、100の位、1000の位...となっています。<br>
+                    これを「10<sup>n</sup>の位」の形で表すと、<br>
+                    10<sup>0</sup>の位、10<sup>1</sup>の位、10<sup>2</sup>の位、10<sup>3</sup>の位...となります。
+                </p>
+                <p class="history-indented">
+                    同様に、16進法で表現した数は、一番右の桁から<br>
+                    1の位、16の位、256の位...となっています。<br>
+                    これを「16<sup>n</sup>の位」の形で表すと、<br>
+                    16<sup>0</sup>の位、16<sup>1</sup>の位、16<sup>2</sup>の位...となります。
+                </p>
+                <p class="history-indented">
+                    この 10<sup>0</sup>、10<sup>1</sup>、10<sup>2</sup>、10<sup>3</sup>...や 16<sup>0</sup>、16<sup>1</sup>、16<sup>2</sup>...という数を、その桁の「重み」と呼びます。
+                </p>
+                <p class="history-indented">
+                    %s{table}
+                </p>
+                <p class="history-indented">
+                    16進法で表現した数を10進法で表現しなおすには、それぞれの桁の数と重みをかけ算し、それを合計します。<br>
+                    %s{hex}<sub>(16)</sub>の場合、以下のように計算します。<br>
+                    ※ 16進数にA~Fのアルファベットがある場合は、それぞれ10<sub>(10)</sub>~15<sub>(10)</sub>を表しています。
+                </p>
+                <p class="history-indented hint-bgcolor-gray">
+                    &nbsp;&nbsp;%s{formula}<br>
+                    = %d{hex |> Hex.toDec}
+                </p>
+            </details>"""
         
         let rec checkAnswer answer (question : string) (last_answers : int list) =
             // Getting the user input.
