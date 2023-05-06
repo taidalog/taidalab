@@ -73,6 +73,7 @@ module EndlessBinary =
                     sprintf """<span class="warning">'%s' は2進数ではありません。使えるのは半角の 0 と 1 のみです。</span>""" input
                 |> fun x -> (document.getElementById "errorArea").innerHTML <- x
             | Ok (bin: string) ->
+                (document.getElementById "errorArea").innerHTML <- ""
                 let dec = Bin.toDec bin
                 
                 let historyClassName =

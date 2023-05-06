@@ -118,9 +118,8 @@ module EndlessBinary =
                 // Making an error message.
                 (document.getElementById "errorArea").innerHTML <- newErrorMessageDec question input error
             | Ok (dec: int) ->
-                //let inputValueAsInt = int inputValue
-                //printfn "inputValueAsInt: %d" inputValueAsInt
-
+                (document.getElementById "errorArea").innerHTML <- ""
+                
                 // Converting the input in order to use in the history message.
                 let digit = 3
                 let spacePaddedInputValue =
