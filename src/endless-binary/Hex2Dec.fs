@@ -103,7 +103,7 @@ module EndlessBinary =
             // Getting the user input.
             let numberInput = document.getElementById "numberInput" :?> Browser.Types.HTMLInputElement
             let input = numberInput.value |> escapeHtml
-            let dec: Result<int,Errors.Errors> = input |> Validators.validateDec
+            let dec: Result<int,Errors.Errors> = input |> Dec.validate
             printfn "input: %s" input
 
             numberInput.focus()

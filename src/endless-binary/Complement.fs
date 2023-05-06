@@ -36,7 +36,7 @@ module EndlessBinary =
                 if inputValue = "" then
                     let questionWithoutSpace = question.Replace(" ", "")
                     sprintf """<span class="warning">%s の補数を、2進法表記で入力してください。</span>""" questionWithoutSpace
-                else if Bin.validate inputValue = false then
+                else if Bin.isValid inputValue = false then
                     sprintf """<span class="warning">'%s' は2進数ではありません。使えるのは半角の 0 と 1 のみです。</span>""" inputValue
                 else
                     ""

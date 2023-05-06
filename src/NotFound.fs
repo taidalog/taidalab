@@ -17,7 +17,7 @@ module NotFound =
         // Getting the user input.
         let numberInput = document.getElementById "numberInput" :?> Browser.Types.HTMLInputElement
         let input = numberInput.value |> escapeHtml
-        let bin: Result<string,Errors.Errors> = input |> Validators.validateBin
+        let bin: Result<string,Errors.Errors> = input |> Bin.validate
         printfn "%A" bin
         
         numberInput.focus()
