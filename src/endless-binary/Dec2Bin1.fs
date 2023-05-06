@@ -161,12 +161,18 @@ module EndlessBinary =
                 (newHintAnimation divisor number 20)
 
         let newHintRepeatAddition number (power_of_twos : int list) =
-            let largerNumber = power_of_twos.[0]
-            let smallerNumber = power_of_twos.[1]
-            let additionDec = ""
+            let additionDec = power_of_twos |> List.map string |> String.concat " + "
             let log2 i = Math.Log(double i, 2.0)
-            let largerIndex = largerNumber |> log2 |> Math.Truncate |> int
-            let smallerIndex = smallerNumber |> log2 |> Math.Truncate |> int
+            let additionIndex =
+                power_of_twos
+                |> List.map (log2 >> Math.Truncate >> int)
+                |> List.map (sprintf "2<sup>%d</sup>")
+                |> String.concat " + "
+            let additionBin =
+                power_of_twos
+                |> List.map Dec.toBin
+                |> List.map (sprintf "%s<sub>(2)</sub>")
+                |> String.concat " + "
             $"""
                 <p class="history-indented">
                     10進法で表現した数を2進法で表現しなおすには、<br>
@@ -185,8 +191,8 @@ module EndlessBinary =
                     %d{number}<sub>(10)</sub> を 2<sup>n</sup> の数同士の足し算に変換すると
                 </p>
                 <p class="history-indented" style="background-color: #f0f0f0;">
-                    &nbsp;&nbsp;%d{largerNumber} + %d{smallerNumber}<br>
-                    = 2<sup>%d{largerIndex}</sup> + 2<sup>%d{smallerIndex}</sup>
+                    &nbsp;&nbsp;%s{additionDec}<br>
+                    = %s{additionIndex}
                 </p>
                 <p class="history-indented">
                     になります。<br>
@@ -194,16 +200,16 @@ module EndlessBinary =
                 <p class="history-indented">
                     次に、それぞれの 2<sup>n</sup> の数を2進法で表します。<br>
                     2<sup>n</sup> の数を2進法で表すには、1 の後に 0 を n 個続けます。<br>
-                    そのため、2<sup>%d{largerIndex}</sup> + 2<sup>%d{smallerIndex}</sup> は2進法で
+                    そのため、2<sup>%s{additionIndex}</sup> は2進法で
                 </p>
                 <p class="history-indented" style="background-color: #f0f0f0;">
-                    &nbsp;&nbsp;%s{"1" + (String.replicate largerIndex"0")}<sub>(2)</sub> + %s{"1" + (String.replicate smallerIndex"0")}<sub>(2)</sub><br>
+                    &nbsp;&nbsp;%s{additionBin}<br>
                 </p>
                 <p class="history-indented">
                     と表現できます。最後にこれを計算すると
                 </p>
                 <p class="history-indented" style="background-color: #f0f0f0;">
-                    &nbsp;&nbsp;%s{"1" + (String.replicate largerIndex"0")}<sub>(2)</sub> + %s{"1" + (String.replicate smallerIndex"0")}<sub>(2)</sub><br>
+                    &nbsp;&nbsp;%s{additionBin}<br>
                     = %s{number |> Dec.toBin}<sub>(2)</sub>
                 </p>
                 <p class="history-indented">
