@@ -21,6 +21,20 @@ module EndlessBinary =
             2<sup>n</sup> (0&le;n&le;7) の2進数から10進数への変換をエンドレスで練習できます。<br>
             ヒント付きなので、考え方も身に付けられます。
             """
+        
+        let newNumberWithOneOrTwoOne () : int =
+            let generator () : (int * int) =
+                let generator' () : int =
+                    // Generates a number that is zero, or that is power of two and less than 255.
+                    getRandomBetween 0 8
+                    |> (float >> (fun x -> 2. ** x) >> int)
+                    |> Dec.toBin
+                    |> String.padLeft 9 '0'
+                    |> String.tail
+                    |> Bin.toDec
+                generator'(), generator'()
+            let tester (x, y) : bool = x <> y
+            newNumber generator tester ||> (+)
 
         let writeAdditionFormula binaryString =
             binaryString
@@ -146,10 +160,10 @@ module EndlessBinary =
                     // Making the next question.
                     //printfn "%A" last_answers
 
-                    let nextNumber =
-                        newNumber
-                            (fun _ -> getRandomBetween 0 7 |> double |> (fun x -> Math.Pow(2.0, x)) |> int)
-                            (fun n -> List.contains n last_answers = false)
+                    let nextNumber = newNumberWithOneOrTwoOne ()
+//                        newNumber
+//                            (fun _ -> getRandomBetween 0 7 |> double |> (fun x -> Math.Pow(2.0, x)) |> int)
+//                            (fun n -> List.contains n last_answers = false)
                     //printfn "%d" nextNumber
 
                     let nextBin = Dec.toBin nextNumber
@@ -177,8 +191,9 @@ module EndlessBinary =
 
         let init  () =
             // Initialization.
-            let initIndexNumber = getRandomBetween 0 7
-            let initNumber = Math.Pow(2.0, double initIndexNumber) |> int
+//            let initIndexNumber = getRandomBetween 0 7
+//            let initNumber = Math.Pow(2.0, double initIndexNumber) |> int
+            let initNumber = newNumberWithOneOrTwoOne ()
             let initBin = Dec.toBin initNumber
             let splitBin = splitBinaryStringBy 4 initBin
             //printfn "%A" initIndexNumber
