@@ -105,21 +105,30 @@ module EndlessBinary =
 
     open Browser.Dom
     let setColumnAddition number1 number2 =
-        let bin1 = Dec.toBin number1
-        let bin2 = Dec.toBin number2
-        printfn "%s" bin1
-        printfn "%s" bin2
-
-        for i in 1..8 do
-            sprintf "firstRowDigit%d" i |> (fun x -> (document.getElementById x).innerText <- "")
-            sprintf "secondRowDigit%d" i |> (fun x -> (document.getElementById x).innerText <- "")
-
-        for i in 1..(String.length bin1) do
-            sprintf "firstRowDigit%d" i |> (fun x -> (document.getElementById x).innerText <- string (bin1.[String.length bin1 - i]))
-
-        for i in 1..(String.length bin2) do
-            sprintf "secondRowDigit%d" i |> (fun x -> (document.getElementById x).innerText <- string (bin2.[String.length bin2 - i]))
-
+        let bin1 =
+            number1
+            |> Dec.toBin
+            |> Seq.map string
+            |> Seq.padLeft 8 ""
+        
+        let bin2 =
+            number2
+            |> Dec.toBin
+            |> Seq.map string
+            |> Seq.padLeft 8 ""
+        //printfn "%s" bin1
+        //printfn "%s" bin2
+        
+        bin1 |> Seq.iteri (fun i x ->
+            $"firstRowDigit%d{8 - i}"
+            |> document.getElementById
+            |> fun elm -> elm.innerText <- x)
+        
+        bin2 |> Seq.iteri (fun i x ->
+            $"secondRowDigit%d{8 - i}"
+            |> document.getElementById
+            |> fun elm -> elm.innerText <- x)
+    
     let delayMs index =
         index * 2500 - 500 |> abs
     
