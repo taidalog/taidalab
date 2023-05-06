@@ -148,9 +148,10 @@ module EndlessBinary =
                 """
                 <div class="history-indented">
                     <p>
-                        10進数を、商が 1 になるまで 2 で割り続けます。<br>
+                        10進法で表現した数を2進法で表現しなおすには、<br>
+                        10進法の数を、商が 1 になるまで 2 で割り続けます。<br>
                         この時、余りを商の右に書いておきます。<br>
-                        商と余りを下から順に繋げると、2進数になります。<br>
+                        商と余りを下から順に繋げると、2進法の数になります。<br>
                         ※この下の筆算をクリックすると動きます。
                     </p>
                 </div>
@@ -159,23 +160,55 @@ module EndlessBinary =
                 </div>"""
                 (newHintAnimation divisor number 20)
 
-
         let newHintRepeatAddition number (power_of_twos : int list) =
             let largerNumber = power_of_twos.[0]
             let smallerNumber = power_of_twos.[1]
-            let hintFormat = """
+            let additionDec = ""
+            let log2 i = Math.Log(double i, 2.0)
+            let largerIndex = largerNumber |> log2 |> Math.Truncate |> int
+            let smallerIndex = smallerNumber |> log2 |> Math.Truncate |> int
+            $"""
                 <p class="history-indented">
-                    {0}<sub>(10)</sub> 以下で最大の2の累乗は {1}<sub>(10)</sub><br>
-                    {0}<sub>(10)</sub> - {1}<sub>(10)</sub> = {2}<sub>(10)</sub><br>
-                    {2}<sub>(10)</sub> 以下で最大の2の累乗は {3}<sub>(10)</sub><br>
-                    {2}<sub>(10)</sub> - {3}<sub>(10)</sub> = {4}<sub>(10)</sub><br>
-                    よって、{0}<sub>(10)</sub> = {1}<sub>(10)</sub> + {3}<sub>(10)</sub><br>
-                    または、{0}<sub>(10)</sub> = 2<sup>{5}</sup><sub>(10)</sub> + 2<sup>{6}</sup><sub>(10)</sub>
+                    10進法で表現した数を2進法で表現しなおすには、<br>
+                </p>
+                <p class="history-indented">
+                    <ol style="padding-left: 4rem;">
+                        <li>10進法の数を「2<sup>n</sup> の数同士の足し算」に変換して、</li>
+                        <li>それぞれの 2<sup>n</sup> 数を2進法で表し、</li>
+                        <li>足し合わせる</li>
+                    </ol>
+                </p>
+                <p class="history-indented">
+                    という方法もあります。
+                </p>
+                <p class="history-indented">
+                    %d{number}<sub>(10)</sub> を 2<sup>n</sup> の数同士の足し算に変換すると
+                </p>
+                <p class="history-indented" style="background-color: #f0f0f0;">
+                    &nbsp;&nbsp;%d{largerNumber} + %d{smallerNumber}<br>
+                    = 2<sup>%d{largerIndex}</sup> + 2<sup>%d{smallerIndex}</sup>
+                </p>
+                <p class="history-indented">
+                    になります。<br>
+                </p>
+                <p class="history-indented">
+                    次に、それぞれの 2<sup>n</sup> の数を2進法で表します。<br>
+                    2<sup>n</sup> の数を2進法で表すには、1 の後に 0 を n 個続けます。<br>
+                    そのため、2<sup>%d{largerIndex}</sup> + 2<sup>%d{smallerIndex}</sup> は2進法で
+                </p>
+                <p class="history-indented" style="background-color: #f0f0f0;">
+                    &nbsp;&nbsp;%s{"1" + (String.replicate largerIndex"0")}<sub>(2)</sub> + %s{"1" + (String.replicate smallerIndex"0")}<sub>(2)</sub><br>
+                </p>
+                <p class="history-indented">
+                    と表現できます。最後にこれを計算すると
+                </p>
+                <p class="history-indented" style="background-color: #f0f0f0;">
+                    &nbsp;&nbsp;%s{"1" + (String.replicate largerIndex"0")}<sub>(2)</sub> + %s{"1" + (String.replicate smallerIndex"0")}<sub>(2)</sub><br>
+                    = %s{number |> Dec.toBin}<sub>(2)</sub>
+                </p>
+                <p class="history-indented">
+                    になります。
                 </p>"""
-            let hint = String.Format(hintFormat, number, largerNumber, number - largerNumber, smallerNumber, number - largerNumber - smallerNumber, string (int (Math.Log(double largerNumber, 2.0))), string (int (Math.Log(double smallerNumber, 2.0))))
-            //printfn "%s" hint
-            hint
-
 
         let newHint divisor number power_of_twos =
             sprintf
