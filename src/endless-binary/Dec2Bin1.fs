@@ -21,9 +21,9 @@ module EndlessBinary =
             ヒント付きなので、考え方も身に付けられます。
             """
         
-        let countOneBit binaryString =
-            binaryString
-            |> Seq.countWith (fun c -> c = '1')
+//        let countOneBit binaryString =
+//            binaryString
+//            |> Seq.countWith (fun c -> c = '1')
 
 
         let devideIntoPowerOfTwo (number : int) =
@@ -139,8 +139,8 @@ module EndlessBinary =
                     (fontSize / 2 * 10)
                     (divRems |> List.length |> (fun x -> fontSize * (x + 1))))
         
-        let hint content=
-            sprintf """<details id="hintDetails"><summary>ヒント: </summary>%s</details>""" content
+//        let hint content=
+//            sprintf """<details id="hintDetails"><summary>ヒント: </summary>%s</details>""" content
 
         let newHintRepeatDivision divisor number =
             sprintf
