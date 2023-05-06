@@ -21,8 +21,18 @@ module EndlessBinary =
             2<sup>n</sup> の2進数を覚えると10進数からの変換を早く行えるので、まずはこのコースから始めてみてください。<br>
             ヒント付きなので、考え方も身に付けられます。
             """
+        
+        let hint answer index =
+            $"""
+            <details>
+                <summary>ヒント: </summary>
+                <p class="history-indented">
+                    2<sup>n</sup> の数を2進法で表現するには、1 の後に 0 を n 個続けます。<br>
+                    %d{answer}<sub>(10)</sub> は 2<sup>%d{index}</sup> なので、1 の後ろに 0 を %d{index} 個つけます。
+                </p>
+            </details>"""
 
-        let rec checkAnswer answer hint_format (last_answers : int list) =
+        let rec checkAnswer answer (last_answers : int list) =
             // Getting the user input.
             let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
             let input = numberInput.value |> escapeHtml
@@ -68,12 +78,9 @@ module EndlessBinary =
                             (fun n -> List.contains n last_answers = false)
                     let nextAnswer = nextIndexNumber |> double |> (fun x -> Math.Pow(2.0, x)) |> int
                     //printfn "nextAnswer: %d" nextAnswer
-
-                    let nextHint = String.Format(hint_format, nextAnswer, nextIndexNumber)
-                    //printfn "nextHint: %s" nextHint
                     
                     (document.getElementById "questionSpan").innerText <- string nextAnswer
-                    (document.getElementById "hintArea").innerHTML <- nextHint
+                    (document.getElementById "hintArea").innerHTML <- hint nextAnswer nextIndexNumber
                     numberInput.value <- ""
 
                     // Updating `lastAnswers`.
@@ -83,28 +90,16 @@ module EndlessBinary =
 
                     // Setting the next answer to the check button.
                     (document.getElementById "submitButton").onclick <- (fun _ ->
-                        checkAnswer (string nextAnswer) hint_format lastAnswers
+                        checkAnswer (string nextAnswer) lastAnswers
                         false)
                     (document.getElementById "inputArea").onsubmit <- (fun _ ->
-                        checkAnswer (string nextAnswer) hint_format lastAnswers
+                        checkAnswer (string nextAnswer) lastAnswers
                         false)
-
 
         let init () =
             // Initialization.
             let initIndexNumber = getRandomBetween 0 7
             let initAnswer = Math.Pow(2.0, double initIndexNumber) |> int
-
-            let hintFormat = """
-                <details>
-                    <summary>ヒント: </summary>
-                    <p class="history-indented">
-                        {0}<sub>(10)</sub> = 2<sup>{1}</sup><br>
-                        10進法で2<sup>n</sup>になる数は、<br>
-                        2進法では1の後ろに0をn個つけます。
-                    </p>
-                </details>"""
-            let hint = String.Format(hintFormat, initAnswer, initIndexNumber)
 
             let sourceRadix = 10
             let destinationRadix = 2
@@ -113,12 +108,12 @@ module EndlessBinary =
             (document.getElementById "srcRadix").innerText <- sprintf "(%d)" sourceRadix
             (document.getElementById "dstRadix").innerText <- string destinationRadix
             (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
-            (document.getElementById "hintArea").innerHTML <- hint
+            (document.getElementById "hintArea").innerHTML <- hint initAnswer initIndexNumber
             (document.getElementById "submitButton").onclick <- (fun _ ->
-                checkAnswer (string initAnswer) hintFormat [initIndexNumber]
+                checkAnswer (string initAnswer) [initIndexNumber]
                 false)
             (document.getElementById "inputArea").onsubmit <- (fun _ ->
-                checkAnswer (string initAnswer) hintFormat [initIndexNumber]
+                checkAnswer (string initAnswer) [initIndexNumber]
                 false)
             
             (document.getElementById "helpButton").onclick <- (fun _ ->
