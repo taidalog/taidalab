@@ -97,7 +97,7 @@ module IroIroiro =
             let (addedMed, gap) =
                 rgbList
                 |> List.find (fun x -> x.Color = colorToModify)
-                |> (fun x -> x.Value + value |> Math.clampGap min max)
+                |> (fun x -> x.Value + value |> Bound.clampGap min max)
                 |> (fun (x, y) -> x, -y)
             printfn "addedMed: %d" addedMed
             printfn "gap: %d" gap
