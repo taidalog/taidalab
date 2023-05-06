@@ -9,11 +9,9 @@ open System
 open Fermata
 
 module Text =
-    open System.Text.RegularExpressions
-    
     let concatinateStrings joint strings =
         strings
-        |> List.filter (fun x -> (String.IsNullOrEmpty x) = false)
+        |> List.filter (String.IsNullOrEmpty >> not)
         |> String.concat joint
     
     let replaceWithPairs (pairs : (string * string) list) (original : string) =
@@ -36,14 +34,8 @@ module Text =
     
     let padWithZero binaryDigit text =
         Fermata.String.padLeft binaryDigit '0' text
-
+    
     let colorLeadingZero str =
-        let pattern = "(^0+)"
-        let re = new Regex(pattern)
-        let leadingZeros = re.Match(str)
-        printfn "leadingZeros : %A" leadingZeros
-
-        if leadingZeros.Success = false then
-            str
-        else
-            re.Replace(str,"""<span class="zero-gray">$1</span>""")
+        str
+        |> String.splitWith ((=) '1')
+        |> fun (left, right) -> $"""<span class="zero-gray">%s{left}</span>%s{right}"""
