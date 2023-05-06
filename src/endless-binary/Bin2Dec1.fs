@@ -18,7 +18,8 @@ open Fermata.RadixConversion
 module EndlessBinary =
     module Bin2Dec1 =
         let help = """
-            2<sup>n</sup> (0&le;n&le;7) の2進数から10進数への変換をエンドレスで練習できます。<br>
+            2進数から10進数への変換をエンドレスで練習できます。<br>
+            出題範囲は n (0&le;n&le;255) で、2の累乗の数同士の和になっています。<br>
             ヒント付きなので、考え方も身に付けられます。
             """
         
