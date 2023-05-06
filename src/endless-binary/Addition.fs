@@ -67,14 +67,10 @@ module EndlessBinary =
             match bin with
             | Error (error: Errors.Errors) ->
                 // Making an error message.
-                match error with
-                | Fermata.Errors.Errors.EmptyString
-                | Fermata.Errors.Errors.NullOrEmpty
-                | Fermata.Errors.Errors.OutOfRange ->
-                    sprintf """<span class="warning">%s<small>(%d)</small> %s %s<small>(%d)</small> の2進法表記を入力してください。</span>"""
-                        (Dec.toBin num1) sourceRadix "+" (Dec.toBin num2) sourceRadix
-                | Fermata.Errors.Errors.WrongFormat ->
-                    sprintf """<span class="warning">"'%s'" は2進数ではありません。使えるのは半角の 0 と 1 のみです。</span>""" input
+                newErrorMessageBin
+                    $"%s{Dec.toBin num1}<sub>(%d{sourceRadix})</sub> + %s{Dec.toBin num2}<sub>(%d{sourceRadix})</sub>"
+                    input
+                    error
                 |> fun x -> (document.getElementById "errorArea").innerHTML <- x
             | Ok (bin: string) ->
                 (document.getElementById "errorArea").innerHTML <- ""
