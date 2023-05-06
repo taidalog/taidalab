@@ -34,11 +34,10 @@ module EndlessBinary =
         let tableComponentsHex hex =
             hex
             |> Seq.toList
-            |> List.mapi (fun i c -> (c, (hex |> String.length) - i))
-            |> List.map (fun (c, n) -> 
-                sprintf """<span class="hint-table-digit">%d</span>""" n,
-                sprintf """<span class="hint-table-digit green-h2d large">%c</span>""" c,
-                sprintf """<span class="hint-table-digit palegreen">%d<sup>%d</sup></span>""" 16 (n - 1))
+            |> List.mapi (fun i c ->
+                $"""<span class="hint-table-digit">%d{(hex |> String.length) - i}</span>""",
+                $"""<span class="hint-table-digit green-h2d large">%c{c}</span>""",
+                $"""<span class="hint-table-digit palegreen">%d{16}<sup>%d{(hex |> String.length) - i - 1}</sup></span>""")
         
         let newHintTable (a, b, c) =
             sprintf
