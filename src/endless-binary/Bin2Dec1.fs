@@ -31,11 +31,10 @@ module EndlessBinary =
         let tableComponents binaryString =
             binaryString
             |> Seq.toList
-            |> List.mapi (fun i c -> (c, i, (String.length binaryString) - i))
-            |> List.map (fun (c, i, r) -> 
-                sprintf """<span class="hint-table-digit">%d</span>""" r,
-                sprintf """<span class="hint-table-digit green large">%c</span>""" c,
-                sprintf """<span class="hint-table-digit palegreen">%d<sup>%d</sup></span>""" 2 (r - 1))
+            |> List.mapi (fun i c ->
+                $"""<span class="hint-table-digit">%d{(String.length binaryString) - i}</span>""",
+                $"""<span class="hint-table-digit green large">%c{c}</span>""",
+                $"""<span class="hint-table-digit palegreen">%d{2}<sup>%d{(String.length binaryString) - i - 1}</sup></span>""")
 
         let newHintTable (a, b, c) =
             sprintf
