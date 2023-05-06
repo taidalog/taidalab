@@ -269,6 +269,10 @@ details:hover {
     cursor: pointer;
 }
 
+.hint-bgcolor-gray {
+    background-color: #f0f0f0;
+}
+
 .column-addition-area {
     font-family: 'Courier New', Courier, monospace;
 }
