@@ -265,7 +265,7 @@ footer a {
     width: 100%;
 }
 
-details:hover {
+details summary:hover {
     cursor: pointer;
 }
 
