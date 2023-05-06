@@ -27,41 +27,39 @@ module EndlessBinary =
         let rec checkAnswer (question : string) answer (last_answers : int list) (hint_format : string) =
             // Getting the user input.
             let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
-            let inputValue = escapeHtml numberInput.value
+            let input = numberInput.value |> escapeHtml
+            let bin: Result<string,Errors.Errors> = input |> Bin.validate
             //printfn "inputValue: %s" inputValue
 
             numberInput.focus()
             
-            // Making an error message.
-            let errorMessage =
-                if inputValue = "" then
-                    let questionWithoutSpace = question.Replace(" ", "")
-                    sprintf """<span class="warning">%s の補数を、2進法表記で入力してください。</span>""" questionWithoutSpace
-                else if Bin.isValid inputValue = false then
-                    sprintf """<span class="warning">'%s' は2進数ではありません。使えるのは半角の 0 と 1 のみです。</span>""" inputValue
-                else
-                    ""
-
-            (document.getElementById "errorArea").innerHTML <- errorMessage
-            
-            // Exits when the input was invalid.
-            if errorMessage <> "" then
-                ()
-            else
-
-                let inputValueAsInt = Bin.toDec inputValue
+            match bin with
+            | Error error ->
+                // Making an error message.
+                match error with
+                | Fermata.Errors.Errors.EmptyString
+                | Fermata.Errors.Errors.NullOrEmpty
+                | Fermata.Errors.Errors.OutOfRange ->
+                    question
+                    |> String.replace "" ""
+                    |> sprintf """<span class="warning">%s の補数を、2進法表記で入力してください。</span>"""
+                | Fermata.Errors.Errors.WrongFormat ->
+                    sprintf """<span class="warning">'%s' は2進数ではありません。使えるのは半角の 0 と 1 のみです。</span>""" input
+                |> fun x -> (document.getElementById "errorArea").innerHTML <- x
+            | Ok (bin: string) ->
+                let dec = Bin.toDec bin
                 
                 let historyClassName =
-                    if inputValueAsInt = answer then
+                    if dec = answer then
                         "history-correct"
                     else
                         "history-wrong"
                 
                 // Converting the input in order to use in the history message.
                 let digit = 4
-                let taggedInputValue = inputValue |> padWithZero digit |> colorLeadingZero
+                let taggedInputValue = bin |> padWithZero digit |> colorLeadingZero
                 let sourceRadix = 2
-                //let bin = Dec.toBin inputValueAsInt
+                //let bin = Dec.toBin dec
                 
                 // Making a new history and updating the history with the new one.
                 //let destinationRadix = 10
@@ -72,7 +70,7 @@ module EndlessBinary =
                 outputArea.innerHTML <- historyMessage
                 //printfn "historyMessage: %s" historyMessage
                 
-                if inputValueAsInt = answer then
+                if dec = answer then
                     // Making the next question.
                     //printfn "last_answers: %A" last_answers
                     

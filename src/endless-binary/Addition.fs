@@ -56,29 +56,28 @@ module EndlessBinary =
         let rec checkAnswer answer num1 num2 (last_answers : int list) =
             // Getting the user input.
             let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
-            let bin = escapeHtml numberInput.value
+            let input = numberInput.value |> escapeHtml
+            let bin: Result<string,Errors.Errors> = input |> Bin.validate
             //printfn "bin: %s" bin
             
             numberInput.focus()
 
             let sourceRadix = 2
             
-            // Making an error message.
-            let errorMessage =
-                if bin = "" then
-                    sprintf """<span class="warning">%s<small>(%d)</small> %s %s<small>(%d)</small> の2進法表記を入力してください。</span>""" (Dec.toBin num1) sourceRadix "+" (Dec.toBin num2) sourceRadix
-                else if Bin.isValid bin = false then
-                    sprintf """<span class="warning">"'%s'" は2進数ではありません。使えるのは半角の 0 と 1 のみです。</span>""" bin
-                else
-                    ""
-
-            (document.getElementById "errorArea").innerHTML <-  errorMessage
-            
-            // Exits when the input was invalid.
-            if errorMessage <> "" then
-                ()
-            else
-                
+            match bin with
+            | Error error ->
+                // Making an error message.
+                match error with
+                | Fermata.Errors.Errors.EmptyString
+                | Fermata.Errors.Errors.NullOrEmpty
+                | Fermata.Errors.Errors.OutOfRange ->
+                    sprintf """<span class="warning">%s<small>(%d)</small> %s %s<small>(%d)</small> の2進法表記を入力してください。</span>"""
+                        (Dec.toBin num1) sourceRadix "+" (Dec.toBin num2) sourceRadix
+                | Fermata.Errors.Errors.WrongFormat ->
+                    sprintf """<span class="warning">"'%s'" は2進数ではありません。使えるのは半角の 0 と 1 のみです。</span>""" input
+                |> fun x -> (document.getElementById "errorArea").innerHTML <- x
+            | Ok (bin: string) ->
+                (document.getElementById "errorArea").innerHTML <- ""
                 // Converting the input in order to use in the history message.
                 let binaryDigit = 8
                 let taggedBin = bin |> padWithZero binaryDigit |> colorLeadingZero 
