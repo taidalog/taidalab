@@ -53,7 +53,7 @@ module EndlessBinary =
             // Getting the user input.
             let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
             let bin = escapeHtml numberInput.value
-            printfn "bin: %s" bin
+            //printfn "bin: %s" bin
             
             numberInput.focus()
 
@@ -78,13 +78,13 @@ module EndlessBinary =
                 // Converting the input in order to use in the history message.
                 let binaryDigit = 8
                 let taggedBin = bin |> padWithZero binaryDigit |> colorLeadingZero
-                printfn "taggedBin: %s" taggedBin
+                //printfn "taggedBin: %s" taggedBin
 
                 let decDigit = 3
                 let dec = Bin.toDec bin
                 let spacePaddedDec = dec |> string |> Fermata.String.padLeft decDigit ' ' |> escapeSpace
-                printfn "dec: %d" dec
-                printfn "spacePaddedInputValue: %s" spacePaddedDec
+                //printfn "dec: %d" dec
+                //printfn "spacePaddedInputValue: %s" spacePaddedDec
                 
                 // Making a new history and updating the history with the new one.
                 let destinationRadix = 10
@@ -92,7 +92,7 @@ module EndlessBinary =
                 let historyMessage =
                     newHistory (dec = answer) taggedBin sourceRadix spacePaddedDec destinationRadix
                     |> (fun x -> concatinateStrings "<br>" [x; outputArea.innerHTML])
-                // printfn "historyMessage: `n%s" historyMessage
+                //printfn "historyMessage: `n%s" historyMessage
                 outputArea.innerHTML <- historyMessage
                 
                 if dec = answer then
@@ -103,18 +103,18 @@ module EndlessBinary =
                             (fun (n1, n2) ->
                                 List.contains n1 last_answers = false && List.contains n2 last_answers = false)
 
-                    printfn "last_answers: %A" last_answers
-                    printfn "number1: %d" number1
-                    printfn "number1 |> Dec.toBin: %s" (number1 |> Dec.toBin)
-                    printfn "number2: %d" number2
-                    printfn "number2 |> Dec.toBin: %s" (number2 |> Dec.toBin)
-                    printfn "number1 - number2: %d" (number1 - number2)
-                    printfn "number1 - number2 |> Dec.toBin: %s" (number1 - number2 |> Dec.toBin)
+                    //printfn "last_answers: %A" last_answers
+                    //printfn "number1: %d" number1
+                    //printfn "number1 |> Dec.toBin: %s" (number1 |> Dec.toBin)
+                    //printfn "number2: %d" number2
+                    //printfn "number2 |> Dec.toBin: %s" (number2 |> Dec.toBin)
+                    //printfn "number1 - number2: %d" (number1 - number2)
+                    //printfn "number1 - number2 |> Dec.toBin: %s" (number1 - number2 |> Dec.toBin)
                     setColumnAddition number1 number2
 
                     let nextHint = newHintSub ()
                     (document.getElementById "hintArea").innerHTML <- nextHint
-                    // printfn "nextHint: `n%s" nextHint
+                    //printfn "nextHint: `n%s" nextHint
 
                     numberInput.value <- ""
 
@@ -146,12 +146,12 @@ module EndlessBinary =
             (document.getElementById "hintArea").innerHTML <- hint
 
             let (number1, number2) = newNumbersSub ()
-            printfn "number1: %d" number1
-            printfn "number1 |> Dec.toBin: %s" (number1 |> Dec.toBin)
-            printfn "number2: %d" number2
-            printfn "number2 |> Dec.toBin: %s" (number2 |> Dec.toBin)
-            printfn "number1 - number2: %d" (number1 - number2)
-            printfn "number1 - number2 |> Dec.toBin: %s" (number1 - number2 |> Dec.toBin)
+            //printfn "number1: %d" number1
+            //printfn "number1 |> Dec.toBin: %s" (number1 |> Dec.toBin)
+            //printfn "number2: %d" number2
+            //printfn "number2 |> Dec.toBin: %s" (number2 |> Dec.toBin)
+            //printfn "number1 - number2: %d" (number1 - number2)
+            //printfn "number1 - number2 |> Dec.toBin: %s" (number1 - number2 |> Dec.toBin)
             setColumnAddition number1 number2
 
             (document.getElementById "submitButton").onclick <- (fun _ ->

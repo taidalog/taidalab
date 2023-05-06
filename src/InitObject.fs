@@ -21,7 +21,7 @@ module InitObject =
         printfn "%A" pathname
         match pathname with
         | "/" ->
-            printfn "%s" "/"
+            //printfn "%s" "/"
             {
                 pathname = "/"
                 title = "taidalab"
@@ -34,7 +34,7 @@ module InitObject =
                 initFunc = f
             }
         | "/endless-binary/" ->
-            printfn "%s" "/endless-binary/"
+            //printfn "%s" "/endless-binary/"
             {
                 pathname = "/endless-binary/"
                 title = "10進数↔2進数 - taidalab"
@@ -47,7 +47,7 @@ module InitObject =
                 initFunc = f
             }
         | "/endless-binary/dec2bin-1/" ->
-            printfn "%s" "/endless-binary/dec2bin-1/"
+            //printfn "%s" "/endless-binary/dec2bin-1/"
             {
                 pathname = "/endless-binary/dec2bin-1/"
                 title = "10進数→2進数 (1) - taidalab"
@@ -60,7 +60,7 @@ module InitObject =
                 initFunc = f
             }
         | "/endless-binary/dec2bin-2/" ->
-            printfn "%s" "/endless-binary/dec2bin-2/"
+            //printfn "%s" "/endless-binary/dec2bin-2/"
             {
                 pathname = "/endless-binary/dec2bin-2/"
                 title = "10進数→2進数 (2) - taidalab"
@@ -73,7 +73,7 @@ module InitObject =
                 initFunc = f
             }
         | "/endless-binary/bin2dec-1/" ->
-            printfn "%s" "/endless-binary/bin2dec-1/"
+            //printfn "%s" "/endless-binary/bin2dec-1/"
             {
                 pathname = "/endless-binary/bin2dec-1/"
                 title = "2進数→10進数 (1) - taidalab"
@@ -86,7 +86,7 @@ module InitObject =
                 initFunc = f
             }
         | "/endless-binary/bin2dec-2/" ->
-            printfn "%s" "/endless-binary/bin2dec-2/"
+            //printfn "%s" "/endless-binary/bin2dec-2/"
             {
                 pathname = "/endless-binary/bin2dec-2/"
                 title = "2進数→10進数 (2) - taidalab"
@@ -99,7 +99,7 @@ module InitObject =
                 initFunc = f
             }
         | "/endless-binary/power-of-two-1/" ->
-            printfn "%s" "/endless-binary/power-of-two-1/"
+            //printfn "%s" "/endless-binary/power-of-two-1/"
             {
                 pathname = "/endless-binary/power-of-two-1/"
                 title = "2のn乗 - taidalab"
@@ -112,7 +112,7 @@ module InitObject =
                 initFunc = f
             }
         | "/endless-binary/power-of-two-2/" ->
-            printfn "%s" "/endless-binary/power-of-two-2/"
+            //printfn "%s" "/endless-binary/power-of-two-2/"
             {
                 pathname = "/endless-binary/power-of-two-2/"
                 title = "2のn乗-1 - taidalab"
@@ -125,7 +125,7 @@ module InitObject =
                 initFunc = f
             }
         | "/endless-binary/addition/" ->
-            printfn "%s" "/endless-binary/addition/"
+            //printfn "%s" "/endless-binary/addition/"
             {
                 pathname = "/endless-binary/addition/"
                 title = "加算 - taidalab"
@@ -138,7 +138,7 @@ module InitObject =
                 initFunc = f
             }
         | "/endless-binary/subtraction/" ->
-            printfn "%s" "/endless-binary/subtraction/"
+            //printfn "%s" "/endless-binary/subtraction/"
             {
                 pathname = "/endless-binary/subtraction/"
                 title = "減算 - taidalab"
@@ -151,7 +151,7 @@ module InitObject =
                 initFunc = f
             }
         | "/endless-binary/complement/" ->
-            printfn "%s" "/endless-binary/complement/"
+            //printfn "%s" "/endless-binary/complement/"
             {
                 pathname = "/endless-binary/complement/"
                 title = "補数 - taidalab"
@@ -164,7 +164,7 @@ module InitObject =
                 initFunc = f
             }
         | "/endless-binary/dec2hex/" ->
-            printfn "%s" "/endless-binary/dec2hex/"
+            //printfn "%s" "/endless-binary/dec2hex/"
             {
                 pathname = "/endless-binary/dec2hex/"
                 title = "10進数→16進数 - taidalab"
@@ -177,7 +177,7 @@ module InitObject =
                 initFunc = f
             }
         | "/endless-binary/hex2dec/" ->
-            printfn "%s" "/endless-binary/hex2dec/"
+            //printfn "%s" "/endless-binary/hex2dec/"
             {
                 pathname = "/endless-binary/hex2dec/"
                 title = "16進数→10進数 - taidalab"
@@ -190,7 +190,7 @@ module InitObject =
                 initFunc = f
             }
         | "/iro-iroiro/" ->
-            printfn "%s" "/iro-iroiro/"
+            //printfn "%s" "/iro-iroiro/"
             {
                 pathname = "/iro-iroiro/"
                 title = "色いろいろ - taidalab"
@@ -203,7 +203,7 @@ module InitObject =
                 initFunc = f
             }
         | "/network-simulator/" ->
-            printfn "%s" "/network-simulator/"
+            //printfn "%s" "/network-simulator/"
             {
                 pathname = "/network-simulator/"
                 title = "ネットワークシミュレータ - taidalab"
@@ -216,7 +216,7 @@ module InitObject =
                 initFunc = f
             }
         | "/about/" ->
-            printfn "%s" "/about/"
+            //printfn "%s" "/about/"
             {
                 pathname = "/about/"
                 title = "about - taidalab"
@@ -229,7 +229,7 @@ module InitObject =
                 initFunc = f
             }
         | "/terms/" ->
-            printfn "%s" "/terms/"
+            //printfn "%s" "/terms/"
             {
                 pathname = "/terms/"
                 title = "ご利用について - taidalab"
@@ -242,7 +242,7 @@ module InitObject =
                 initFunc = f
             }
         | _ ->
-            printfn "%s" "default"
+            //printfn "%s" "default"
             {
                 pathname = "/404/"
                 title = "404: Page Not Found - taidalab"

@@ -140,7 +140,7 @@ module EndlessBinary =
             let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
             let input = numberInput.value |> escapeHtml
             let hex: Result<string,Errors.Errors> = input |> Hex.validate
-            printfn "hex: %A" hex
+            //printfn "hex: %A" hex
             
             numberInput.focus()
             
@@ -155,8 +155,8 @@ module EndlessBinary =
                 let destinationRadix = 16
                 let taggedHex = hex |> padWithZero hexDigit |> colorLeadingZero
                 let dec = Hex.toDec hex
-                printfn "taggedHex: %s" taggedHex
-                printfn "dec: %d" dec
+                //printfn "taggedHex: %s" taggedHex
+                //printfn "dec: %d" dec
                 
                 let decimalDigit = 3
                 let spacePaddedDec =
@@ -171,27 +171,27 @@ module EndlessBinary =
                 let historyMessage =
                     newHistory (dec = int answer) taggedHex destinationRadix spacePaddedDec sourceRadix
                     |> (fun x -> concatinateStrings "<br>" [x; outputArea.innerHTML])
-                printfn "historyMessage: \n%s" historyMessage
+                //printfn "historyMessage: \n%s" historyMessage
                 outputArea.innerHTML <- historyMessage
                 
                 if dec <> int answer then
                     ()
                 else
                     // Making the next question.
-                    printfn "last_answers : %A" last_answers
+                    //printfn "last_answers : %A" last_answers
                     
                     let nextNumber =
                         newNumber
                             (fun _ -> getRandomBetween 0 255)
                             (fun n -> List.contains n last_answers = false)
-                    printfn "nextNumber : %d" nextNumber
-                    printfn "List.contains nextNumber last_answers : %b" (List.contains nextNumber last_answers)
+                    //printfn "nextNumber : %d" nextNumber
+                    //printfn "List.contains nextNumber last_answers : %b" (List.contains nextNumber last_answers)
 
                     let quotientsAndRemainders = repeatDivision nextNumber 16
-                    printfn "quotientsAndRemainders: %A" quotientsAndRemainders
+                    //printfn "quotientsAndRemainders: %A" quotientsAndRemainders
 
                     let nextHint = newHint 16 nextNumber 20
-                    printfn "nextHint: \n%s" nextHint
+                    //printfn "nextHint: \n%s" nextHint
                     
                     (document.getElementById "questionSpan").innerText <- string nextNumber
                     (document.getElementById "hintArea").innerHTML <- nextHint
@@ -218,13 +218,13 @@ module EndlessBinary =
 
         let init ()  =
             // Initialization.
-            printfn "Initialization starts."
+            //printfn "Initialization starts."
 
             let initNumber = getRandomBetween 0 255
-            printfn "initNumber : %d" initNumber
+            //printfn "initNumber : %d" initNumber
 
             let quotientsAndRemainders = repeatDivision initNumber 16
-            printfn "quotients and remainders : %A" quotientsAndRemainders
+            //printfn "quotients and remainders : %A" quotientsAndRemainders
 
             let sourceRadix = 10
             let destinationRadix = 16
@@ -253,4 +253,4 @@ module EndlessBinary =
                 ["helpWindow"; "helpBarrier"]
                 |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore))
             
-            printfn "Initialization ends."
+            //printfn "Initialization ends."

@@ -27,7 +27,7 @@ module EndlessBinary =
             let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
             let input = numberInput.value |> escapeHtml
             let bin: Result<string,Errors.Errors> = input |> Bin.validate
-            printfn "input: %s" input
+            //printfn "input: %s" input
 
             numberInput.focus()
 
@@ -40,11 +40,11 @@ module EndlessBinary =
                 // Converting the input in order to use in the history message.
                 let binaryDigit = 8
                 let taggedBin = bin |> padWithZero binaryDigit |> colorLeadingZero
-                printfn "taggedBin: %s" taggedBin
+                //printfn "taggedBin: %s" taggedBin
                 
                 let destinationRadix = 2
                 let dec = Bin.toDec bin
-                printfn "dec: %d" dec
+                //printfn "dec: %d" dec
                 
                 let decimalDigit = 3
                 let spacePaddedDec = dec |> string |> Fermata.String.padLeft decimalDigit ' ' |> escapeSpace
@@ -55,19 +55,19 @@ module EndlessBinary =
                 let historyMessage =
                     newHistory (dec = int answer) taggedBin destinationRadix spacePaddedDec sourceRadix
                     |> (fun x -> concatinateStrings "<br>" [x; outputArea.innerHTML])
-                printfn "historyMessage: %s" historyMessage
+                //printfn "historyMessage: %s" historyMessage
                 outputArea.innerHTML <- historyMessage
                 
                 if dec = int answer then
                     // Making the next question.
-                    printfn "last_answers: %A" last_answers
+                    //printfn "last_answers: %A" last_answers
 
                     let nextIndexNumber =
                         newNumber
                             (fun _ -> getRandomBetween 0 7)
                             (fun n -> List.contains n last_answers = false)
                     let nextAnswer = nextIndexNumber |> double |> (fun x -> Math.Pow(2.0, x)) |> int
-                    printfn "nextAnswer: %d" nextAnswer
+                    //printfn "nextAnswer: %d" nextAnswer
 
                     let nextHint = String.Format(hint_format, nextAnswer, nextIndexNumber)
                     //printfn "nextHint: %s" nextHint

@@ -197,7 +197,7 @@ module EndlessBinary =
             let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
             let input = numberInput.value |> escapeHtml
             let bin: Result<string,Errors.Errors> = input |> Bin.validate
-            printfn "bin: %A" bin
+            //printfn "bin: %A" bin
             
             numberInput.focus()
             
@@ -213,8 +213,8 @@ module EndlessBinary =
                 let destinationRadix = 2
                 let taggedBin = padWithZero binaryDigit bin |> colorLeadingZero
                 let dec = Bin.toDec bin
-                printfn "taggedBin: %s" taggedBin
-                printfn "dec: %d" dec
+                //printfn "taggedBin: %s" taggedBin
+                //printfn "dec: %d" dec
                 
                 let decimalDigit = 3
                 let spacePaddedDec =
@@ -229,30 +229,30 @@ module EndlessBinary =
                 let historyMessage =
                     newHistory (dec = int answer) taggedBin destinationRadix spacePaddedDec sourceRadix
                     |> (fun x -> concatinateStrings "<br>" [x; outputArea.innerHTML])
-                printfn "historyMessage: \n%s" historyMessage
+                //printfn "historyMessage: \n%s" historyMessage
                 outputArea.innerHTML <- historyMessage
                 
                 if dec <> int answer then
                     ()
                 else
                     // Making the next question.
-                    printfn "last_answers : %A" last_answers
+                    //printfn "last_answers : %A" last_answers
                     
                     let nextNumber =
                         newNumber
                             (fun _ -> newNumberWithTwoOne ())
                             (fun n -> List.contains n last_answers = false)
-                    printfn "nextNumber : %d" nextNumber
-                    printfn "List.contains nextNumber last_answers : %b" (List.contains nextNumber last_answers)
+                    //printfn "nextNumber : %d" nextNumber
+                    //printfn "List.contains nextNumber last_answers : %b" (List.contains nextNumber last_answers)
 
                     let quotientsAndRemainders = repeatDivision nextNumber 2
-                    printfn "quotientsAndRemainders: %A" quotientsAndRemainders
+                    //printfn "quotientsAndRemainders: %A" quotientsAndRemainders
                     
                     let powerOfTwos = devideIntoPowerOfTwo nextNumber
-                    printfn "powerOfTwos: %A" powerOfTwos
+                    //printfn "powerOfTwos: %A" powerOfTwos
 
                     let nextHint = newHint 2 nextNumber powerOfTwos
-                    printfn "nextHint: \n%s" nextHint
+                    //printfn "nextHint: \n%s" nextHint
                     
                     (document.getElementById "questionSpan").innerText <- string nextNumber
                     (document.getElementById "hintArea").innerHTML <- nextHint
@@ -279,15 +279,15 @@ module EndlessBinary =
 
         let init ()  =
             // Initialization.
-            printfn "Initialization starts."
+            //printfn "Initialization starts."
 
             let initNumber = newNumberWithTwoOne ()
-            printfn "initNumber : %d" initNumber
+            //printfn "initNumber : %d" initNumber
 
             let quotientsAndRemainders = repeatDivision initNumber 2
             let powerOfTwos = devideIntoPowerOfTwo initNumber
-            printfn "quotients and remainders : %A" quotientsAndRemainders
-            printfn "power of twos : %A" powerOfTwos
+            //printfn "quotients and remainders : %A" quotientsAndRemainders
+            //printfn "power of twos : %A" powerOfTwos
 
             let sourceRadix = 10
             let destinationRadix = 2
@@ -316,4 +316,4 @@ module EndlessBinary =
                 ["helpWindow"; "helpBarrier"]
                 |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore))
             
-            printfn "Initialization ends."
+            //printfn "Initialization ends."

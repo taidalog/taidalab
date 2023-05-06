@@ -101,7 +101,7 @@ module EndlessBinary =
             let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
             let input = numberInput.value |> escapeHtml
             let dec: Result<int,Errors.Errors> = input |> Dec.validate
-            printfn "input: %s" input
+            //printfn "input: %s" input
 
             numberInput.focus()
             
@@ -133,30 +133,30 @@ module EndlessBinary =
                 let historyMessage =
                     newHistory (dec = answer) spacePaddedInputValue destinationRadix taggedBin sourceRadix
                     |> (fun x -> concatinateStrings "<br>" [x; outputArea.innerHTML])
-                printfn "%A" historyMessage
+                //printfn "%A" historyMessage
                 outputArea.innerHTML <- historyMessage
                 
                 if dec = answer then
                     // Making the next question.
-                    printfn "%A" last_answers
+                    //printfn "%A" last_answers
 
                     let nextNumber =
                         newNumber
                             (fun _ -> getRandomBetween 0 7 |> double |> (fun x -> Math.Pow(2.0, x)) |> int)
                             (fun n -> List.contains n last_answers = false)
-                    printfn "%d" nextNumber
+                    //printfn "%d" nextNumber
 
                     let nextBin = Dec.toBin nextNumber
                     let splitBin = splitBinaryStringBy 4 nextBin
-                    printfn "%s" nextBin
-                    printfn "%s" splitBin
+                    //printfn "%s" nextBin
+                    //printfn "%s" splitBin
                     
                     (document.getElementById "questionSpan").innerText <- splitBin
                     
                     //let nextAddtionFormula = writeAdditionFormula nextBin
                     //let nextHint = String.Format(hint_format, nextBin, nextAddtionFormula)
                     let nextHint = formatHint nextBin (writeAdditionFormula nextBin) (hintTable nextBin)
-                    printfn "%s" nextHint
+                    //printfn "%s" nextHint
                     
                     (document.getElementById "hintArea").innerHTML <- nextHint
                     numberInput.value <- ""
@@ -181,10 +181,10 @@ module EndlessBinary =
             let initNumber = Math.Pow(2.0, double initIndexNumber) |> int
             let initBin = Dec.toBin initNumber
             let splitBin = splitBinaryStringBy 4 initBin
-            printfn "%A" initIndexNumber
-            printfn "%A" initNumber
-            printfn "%A" initBin
-            printfn "%A" splitBin
+            //printfn "%A" initIndexNumber
+            //printfn "%A" initNumber
+            //printfn "%A" initBin
+            //printfn "%A" splitBin
 
             //let addtionFormula = writeAdditionFormula initBin
 

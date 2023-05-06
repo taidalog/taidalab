@@ -27,7 +27,7 @@ module EndlessBinary =
             let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
             let input = numberInput.value |> escapeHtml
             let bin: Result<string,Errors.Errors> = input |> Bin.validate
-            printfn "bin: %A" bin
+            //printfn "bin: %A" bin
             
             numberInput.focus()
             
@@ -43,8 +43,8 @@ module EndlessBinary =
                 let destinationRadix = 2
                 let taggedBin = bin |> padWithZero binaryDigit |> colorLeadingZero
                 let dec = Bin.toDec bin
-                printfn "taggedBin: %s" taggedBin
-                printfn "dec: %d" dec
+                //printfn "taggedBin: %s" taggedBin
+                //printfn "dec: %d" dec
                 
                 let decimalDigit = 3
                 let spacePaddedDec = dec |> string |> Fermata.String.padLeft decimalDigit ' ' |> escapeSpace
@@ -55,18 +55,18 @@ module EndlessBinary =
                 let historyMessage =
                     newHistory (dec = answer) taggedBin destinationRadix spacePaddedDec sourceRadix
                     |> (fun x-> concatinateStrings "<br>" [x; outputArea.innerHTML])
-                // printfn "historyMessage: %s" historyMessage
+                //printfn "historyMessage: %s" historyMessage
                 outputArea.innerHTML <- historyMessage
                 
                 if dec = answer then
                     // Making the next question.
-                    printfn "last_answers: %A" last_answers
+                    //printfn "last_answers: %A" last_answers
 
                     let nextNumber =
                         newNumber
                             (fun _ -> getRandomBetween 0 255)
                             (fun n -> List.contains n last_answers = false)
-                    printfn "nextNumber: %d" nextNumber
+                    //printfn "nextNumber: %d" nextNumber
 
                     (document.getElementById "questionSpan").innerText <- string nextNumber
                     numberInput.value <- ""

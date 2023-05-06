@@ -28,7 +28,7 @@ module EndlessBinary =
             // Getting the user input.
             let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
             let inputValue = escapeHtml numberInput.value
-            printfn "inputValue: %s" inputValue
+            //printfn "inputValue: %s" inputValue
 
             numberInput.focus()
             
@@ -74,27 +74,27 @@ module EndlessBinary =
                 
                 if inputValueAsInt = answer then
                     // Making the next question.
-                    printfn "last_answers: %A" last_answers
+                    //printfn "last_answers: %A" last_answers
                     
                     let nextNumber =
                         newNumber
                             (fun _ -> getRandomBetween 1 15)
                             (fun n -> List.contains n last_answers = false)
-                    printfn "nextNumber: %A" nextNumber
+                    //printfn "nextNumber: %A" nextNumber
 
                     let nextAnswer = 16 - nextNumber
                     let nextBin = nextNumber |> Dec.toBin |> Fermata.String.padLeft 4 '0'
-                    printfn "nextAnswer: %A" nextAnswer
-                    printfn "nextBin: %A" nextBin
+                    //printfn "nextAnswer: %A" nextAnswer
+                    //printfn "nextBin: %A" nextBin
                     
                     (document.getElementById "questionSpan").innerText <- nextBin
                     
                     let reversedBin = nextBin |> String.collect (fun c -> if c = '1' then "0" else "1")
-                    printfn "reversedBin: %s" reversedBin
+                    //printfn "reversedBin: %s" reversedBin
 
                     let nextHint = String.Format(hint_format, nextBin, reversedBin)
                     (document.getElementById "hintArea").innerHTML <- nextHint
-                    // printfn "nextHint: %s" nextHint
+                    //printfn "nextHint: %s" nextHint
                     
                     numberInput.value <- ""
 
@@ -120,12 +120,12 @@ module EndlessBinary =
             let initNumber = getRandomBetween 1 15
             let initAnswer = 16 - initNumber
             let initBin = initNumber |> Dec.toBin |> Fermata.String.padLeft 4 '0'
-            printfn "initNumber: %A" initNumber
-            printfn "initAnswer: %A" initAnswer
-            printfn "initBin: %A" initBin
+            //printfn "initNumber: %A" initNumber
+            //printfn "initAnswer: %A" initAnswer
+            //printfn "initBin: %A" initBin
 
             let reversedBin = initBin |> String.collect (fun c -> if c = '1' then "0" else "1")
-            printfn "reversedBin: %A" reversedBin
+            //printfn "reversedBin: %A" reversedBin
 
             let hintFormat = """
                 <details><summary>ヒント:</summary>

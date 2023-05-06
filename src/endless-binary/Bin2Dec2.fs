@@ -27,7 +27,7 @@ module EndlessBinary =
             let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
             let input = numberInput.value |> escapeHtml
             let dec: Result<int,Errors.Errors> = input |> Dec.validate
-            printfn "input: %s" input
+            //printfn "input: %s" input
             
             numberInput.focus()
 
@@ -44,13 +44,13 @@ module EndlessBinary =
                 // Converting the input in order to use in the history message.
                 let digit = 3
                 let spacePaddedInputValue = dec |> string |> Fermata.String.padLeft digit ' ' |> escapeSpace
-                printfn "spacePaddedInputValue: %s" spacePaddedInputValue
+                //printfn "spacePaddedInputValue: %s" spacePaddedInputValue
 
                 let sourceRadix = 2
                 let bin = Dec.toBin dec
                 let binaryDigit = 8
                 let taggedBin = bin |> padWithZero binaryDigit |> colorLeadingZero
-                printfn "inputValue -> binary: %s" bin
+                //printfn "inputValue -> binary: %s" bin
 
                 // Making a new history and updating the history with the new one.
                 let destinationRadix = 10
@@ -63,18 +63,18 @@ module EndlessBinary =
                 
                 if dec = answer then
                     // Making the next question.
-                    printfn "last_answers: %A" last_answers
+                    //printfn "last_answers: %A" last_answers
                     
                     let nextNumber =
                         newNumber
                             (fun _ -> getRandomBetween 0 255)
                             (fun n -> List.contains n last_answers = false)
-                    printfn "nextNumber: %d" nextNumber
+                    //printfn "nextNumber: %d" nextNumber
 
                     let nextBin = Dec.toBin nextNumber
                     let splitBin = splitBinaryStringBy 4 nextBin
-                    printfn "nextBin: %s" nextBin
-                    printfn "splitBin: %s" splitBin
+                    //printfn "nextBin: %s" nextBin
+                    //printfn "splitBin: %s" splitBin
                     
                     (document.getElementById "questionSpan").innerText <- splitBin
 
@@ -99,9 +99,9 @@ module EndlessBinary =
             let initNumber = getRandomBetween 0 255
             let initBin = Dec.toBin initNumber
             let splitBin = splitBinaryStringBy 4 initBin
-            printfn "initNumber %d" initNumber
-            printfn "initBin %s" initBin
-            printfn "splitBin %s" splitBin
+            //printfn "initNumber %d" initNumber
+            //printfn "initBin %s" initBin
+            //printfn "splitBin %s" splitBin
             
             let sourceRadix = 2
             let destinationRadix = 10

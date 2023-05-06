@@ -100,8 +100,8 @@ module IroIroiro =
                 |> List.find (fun x -> x.Color = colorToModify)
                 |> (fun x -> x.Value + value |> Bound.clampGap min max)
                 |> (fun (x, y) -> x, -y)
-            printfn "addedMed: %d" addedMed
-            printfn "gap: %d" gap
+            //printfn "addedMed: %d" addedMed
+            //printfn "gap: %d" gap
             
             let newRankedRgb =
                 rgbList
@@ -112,7 +112,7 @@ module IroIroiro =
                         x)
                 |> fromRankToRgb
                 |||> fromRgbToRank
-            printfn "newRankedRgb: %A" newRankedRgb
+            //printfn "newRankedRgb: %A" newRankedRgb
 
             let rankToAdd =
                 if gap > 0 then
@@ -121,7 +121,7 @@ module IroIroiro =
                     Some Rank.Max
                 else
                     None
-            printfn "rankToAdd: %A" rankToAdd
+            //printfnfnfn "rankToAdd: %A" rankToAdd
 
             let nextColorToModify =
                 match rankToAdd with
@@ -137,7 +137,7 @@ module IroIroiro =
             | Some c -> loop newRankedRgb min max gap c
         
         let rankedRgbs = fromRgbToRank r g b
-        printfn "rankedRgbs: %A" rankedRgbs
+        //printfn "rankedRgbs: %A" rankedRgbs
         
         let getValueByRank rgbList rank =
             rgbList
@@ -145,24 +145,24 @@ module IroIroiro =
             |> (fun x -> x.Value)
 
         let min = getValueByRank rankedRgbs Rank.Min
-        printfn "min: %d" min
+        //printfnfn "min: %d" min
         
         let max = getValueByRank rankedRgbs Rank.Max
-        printfn "max: %d" max
+        //printfn "max: %d" max
 
         loop rankedRgbs min max interval colorToModify
 
     let rec repeatGetNextRgb  r g b interval limit colorToModify acc =
-        printfn "r: %d  g: %d  b: %d" r g b
-        printfn "colorToModify: %A" colorToModify
+        //printfn "r: %d  g: %d  b: %d" r g b
+        //printfn "colorToModify: %A" colorToModify
         
         let (resRgb, lastModifiedColor) = getNextRgb r g b interval colorToModify
         let (resR, resG, resB) = resRgb |> fromRankToRgb
-        printfn "resRgb: %A" resRgb
-        printfn "lastModifiedColor: %A" lastModifiedColor
+        //printfn "resRgb: %A" resRgb
+        //printfn "lastModifiedColor: %A" lastModifiedColor
         
         let nextInterval = interval * (if colorToModify = lastModifiedColor then 1 else -1)
-        printfn "nextInterval: %d" nextInterval
+        //printfn "nextInterval: %d" nextInterval
 
         let nextColorToModify =
             if lastModifiedColor = colorToModify then
@@ -175,7 +175,7 @@ module IroIroiro =
                         match nextInterval with
                         | Positive -> Rank.Min
                         | Negative -> Rank.Max
-                printfn "nextRankToModify: %A" nextRankToModify
+                //printfnfnfn "nextRankToModify: %A" nextRankToModify
                 
                 match nextRankToModify with
                 | Rank.Med ->
@@ -187,9 +187,9 @@ module IroIroiro =
                     |> List.filter (fun x -> x.Color <> lastModifiedColor)
                     |> List.find (fun x -> x.Rank = nextRankToModify)
                     |> (fun x -> x.Color)
-        printfn "nextColorToModify: %A" nextColorToModify
-        printfn "The end of repeatGetNextRgb at limit: %d" limit
-        printfn "\n"
+        //printfn "nextColorToModify: %A" nextColorToModify
+        //printfn "The end of repeatGetNextRgb at limit: %d" limit
+        //printfn "\n"
 
         match limit with
         | 0 -> acc @ [(resR, resG, resB)]
@@ -206,7 +206,7 @@ module IroIroiro =
             let bInput = (document.getElementById "bInput" :?> HTMLInputElement).value
             let intervalInput = (document.getElementById "intervalInput" :?> HTMLInputElement).value
             let limitInput = (document.getElementById "limitInput" :?> HTMLInputElement).value
-            (rInput, gInput, bInput) |> printfn "initial: %A"
+            //(rInput, gInput, bInput) |> printfn "initial: %A"
 
             let parseResult =
                 [
@@ -259,7 +259,7 @@ module IroIroiro =
 
     let init () =
         // Initialization.
-        printfn "Initialization starts."
+        //printfn "Initialization starts."
         (document.getElementById "submitButton").onclick <- (fun _ -> start())
 
         (document.getElementById "helpButton").onclick <- (fun _ ->
@@ -271,4 +271,4 @@ module IroIroiro =
             |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore))
         
         //(document.getElementById "inputArea").onsubmit <- (fun _ -> start())
-        printfn "Initialization ends."
+        //printfn "Initialization ends."
