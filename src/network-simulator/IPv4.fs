@@ -6,7 +6,7 @@
 namespace Taidalab
 
 open Fermata
-open Taidalab.Validators
+open Fermata.Validators
 
 [<StructuredFormatDisplay("{DisplayText}")>]
 type IPv4 =
@@ -16,11 +16,6 @@ type IPv4 =
       Octet4 : byte }
     member this.DisplayText = this.ToString()
     override this.ToString() = sprintf "%d.%d.%d.%d" this.Octet1 this.Octet2 this.Octet3 this.Octet4
-
-//type Errors =
-//    | Empty
-//    | WrongFormat
-//    | OutOfRange
 
 module IPv4 =
 //    let isValid (str: string) : bool =
@@ -39,27 +34,18 @@ module IPv4 =
             |> Array.map byte
         ofBytes (bytes.[0]) (bytes.[1]) (bytes.[2]) (bytes.[3])
     
-    let validate (str: string) : Result<IPv4,Errors.Errors> =
-//        let validateNotEmpty str =
-//            match str with
-//            | "" -> Error Errors.EmptyString
-//            | _ -> Ok str
-//        let validateFormat str =
-//            if Regex.isMatch "^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$" str then
-//                Ok str
-//            else
-//                Error Errors.WrongFormat
-        let validateRange str =
+    let validate (str: string) : Result<IPv4,Fermata.Errors.Errors> =
+        let validateRangeAll str =
             if (str |> String.split '.' |> List.map int |> List.forall (fun x -> x >= 0 && x <= 255)) then
                 Ok str
             else
-                Error Errors.OutOfRange
+                Error Fermata.Errors.Errors.OutOfRange
         
         Ok str
         |> Result.bind validateNotEmptyString
         |> Result.bind validateNotNullOrEmpty
         |> Result.bind (validateFormat "^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$")
-        |> Result.bind validateRange
+        |> Result.bind validateRangeAll
         |> Result.map ofDotDecimal
     
     let getSubnet (subnetmask: IPv4) (ipv4: IPv4) : IPv4 =
