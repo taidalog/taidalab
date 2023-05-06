@@ -68,14 +68,6 @@ module EndlessBinary =
                 </div>
             </div>"""
     
-    [<RequireQualifiedAccess>]
-    module Dec =
-        let validate (input : string) : Result<int,Errors.Errors> =
-            Ok input
-            |> Result.bind Validators.validateNotEmptyString
-            |> Result.bind (Validators.validateFormat "^[0-9]+$")
-            |> Result.map int
-    
     let newErrorMessageBin answer input (error: Errors.Errors) =
         match error with
         | Errors.EmptyString
