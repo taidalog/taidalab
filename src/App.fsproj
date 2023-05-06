@@ -7,7 +7,6 @@
     <Compile Include="common/Svg.fs" />
     <Compile Include="common/Text.fs" />
     <Compile Include="common/Tuple.fs" />
-    <Compile Include="common/Validators.fs" />
     <Compile Include="Content.fs" />
     <Compile Include="InitObject.fs" />
     <Compile Include="Page.fs" />
