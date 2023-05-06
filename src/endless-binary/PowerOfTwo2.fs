@@ -21,8 +21,17 @@ module EndlessBinary =
             2<sup>n</sup> - 1 の2進数を通して、2進数の繰り上がりや繰り下がりを覚えられます。<br>
             ヒント付きなので、考え方も身に付けられます。
             """
+        
+        let hint number index = 
+            $"""
+            <details>
+                <summary>ヒント: </summary>
+                <span class="history-indented">
+                    %d{number}<sub>(10)</sub> = %d{number + 1}<sub>(10)</sub> - 1<sub>(10)</sub> = 2<sup>%d{index}</sup> - 1<sub>(10)</sub>
+                </span>
+            </details>"""
 
-        let rec checkAnswer answer hint_format (last_answers: int list) =
+        let rec checkAnswer answer (last_answers: int list) =
             // Getting the user input.
             let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
             let input = numberInput.value |> escapeHtml
@@ -70,10 +79,7 @@ module EndlessBinary =
                     //printfn "nextAnswer: %d" nextNumber
 
                     (document.getElementById "questionSpan").innerText <- string nextNumber
-                    
-                    let nextHint = String.Format(hint_format, nextNumber, (nextNumber + 1), nextIndexNumber)
-                    (document.getElementById "hintArea").innerHTML <- nextHint
-                    //printfn "nextHint: %s" nextHint
+                    (document.getElementById "hintArea").innerHTML <- hint nextNumber nextIndexNumber
 
                     numberInput.value <- ""
 
@@ -84,20 +90,17 @@ module EndlessBinary =
 
                     // Setting the next answer to the check button.
                     (document.getElementById "submitButton").onclick <- (fun _ ->
-                        checkAnswer (string nextNumber) hint_format lastAnswers
+                        checkAnswer (string nextNumber) lastAnswers
                         false)
                     (document.getElementById "inputArea").onsubmit <- (fun _ ->
-                        checkAnswer (string nextNumber) hint_format lastAnswers
+                        checkAnswer (string nextNumber) lastAnswers
                         false)
-
-
+        
         let init () =
             // Initialization.
             let initIndexNumber = getRandomBetween 1 8
             let initNumber = (Math.Pow(2.0, (double initIndexNumber)) |> int) - 1
-            let hintFormat = """<details><summary>ヒント: </summary><span class="history-indented">{0}<sub>(10)</sub> = {1}<sub>(10)</sub> - 1<sub>(10)</sub> = 2<sup>{2}</sup> - 1<sub>(10)</sub></span></details>"""
-            let hint = String.Format(hintFormat, initNumber, (initNumber + 1), initIndexNumber)
-
+            
             let sourceRadix = 10
             let destinationRadix = 2
 
@@ -105,12 +108,12 @@ module EndlessBinary =
             (document.getElementById "srcRadix").innerText <- sprintf "(%d)" sourceRadix
             (document.getElementById "dstRadix").innerText <- string destinationRadix
             (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
-            (document.getElementById "hintArea").innerHTML <- hint
+            (document.getElementById "hintArea").innerHTML <- hint initNumber initIndexNumber
             (document.getElementById "submitButton").onclick <- (fun _ ->
-                checkAnswer (string initNumber) hintFormat [initIndexNumber]
+                checkAnswer (string initNumber) [initIndexNumber]
                 false)
             (document.getElementById "inputArea").onsubmit <- (fun _ ->
-                checkAnswer (string initNumber) hintFormat [initIndexNumber]
+                checkAnswer (string initNumber) [initIndexNumber]
                 false)
             
             (document.getElementById "helpButton").onclick <- (fun _ ->

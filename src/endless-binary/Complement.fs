@@ -24,7 +24,33 @@ module EndlessBinary =
 
         let question = """4ビットの2進数 <span id="questionSpan" class="question-number"></span><sub id="srcRadix"></sub> の補数は？"""
         
-        let rec checkAnswer (question : string) answer (last_answers : int list) (hint_format : string) =
+        let hint bin reversedBin =
+            $"""
+            <details><summary>ヒント:</summary>
+                <p class="history-indented">
+                    ある2進数に足すと桁が1つ上がる、最も小さい数のことを、<br>
+                    元の2進数に対する<span style="background-color: #95c9fe;">「2の補数」</span>と呼びます。
+                </p>
+                <p class="history-indented">
+                    たとえば、4ビットの2進数 1010<sub>(2)</sub> に 0110<sub>(2)</sub></span> を足すと<br>
+                    1桁上がって5ビットの2進数 10000<sub>(2)</sub> になります。<br>
+                    この 0110<sub>(2)</sub> を、元の 1010<sub>(2)</sub> に対する2の補数と呼びます。<br>
+                </p>
+                <p class="history-indented">
+                    2の補数は、<span style="background-color: #95c9fe;">2進数の負の数を表すのに使われます。</sub></span><br>
+                    1010<sub>(2)</sub> (=10<sub>(10)</sub>) の2の補数 0110<sub>(2)</sub> は-10<sub>(10)</sub> を表します。
+                </p>
+                <p class="history-indented">
+                    2の補数を求めるには、元の2進数の各ビットの<br>
+                    <span style="background-color: #95c9fe;">0 と 1 を反転させた数に 1 を足します。</span><br>
+                    今回の問題で説明すると、<br>
+                    %s{bin}<sub>(2)</sub> の 0 と 1 を反転させると<br>
+                    %s{reversedBin}<sub>(2)</sub> になります。これに 1 を足したものが<br>
+                    %s{bin}<sub>(2)</sub> の2の補数です。
+                </p>
+            </details>"""
+        
+        let rec checkAnswer (question : string) answer (last_answers : int list) =
             // Getting the user input.
             let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
             let input = numberInput.value |> escapeHtml
@@ -90,9 +116,7 @@ module EndlessBinary =
                     let reversedBin = nextBin |> String.collect (fun c -> if c = '1' then "0" else "1")
                     //printfn "reversedBin: %s" reversedBin
 
-                    let nextHint = String.Format(hint_format, nextBin, reversedBin)
-                    (document.getElementById "hintArea").innerHTML <- nextHint
-                    //printfn "nextHint: %s" nextHint
+                    (document.getElementById "hintArea").innerHTML <- hint nextBin reversedBin
                     
                     numberInput.value <- ""
 
@@ -103,10 +127,10 @@ module EndlessBinary =
 
                     // Setting the next answer to the check button.
                     (document.getElementById "submitButton").onclick <- (fun _ ->
-                        checkAnswer nextBin nextAnswer lastAnswers hint_format
+                        checkAnswer nextBin nextAnswer lastAnswers
                         false)
                     (document.getElementById "inputArea").onsubmit <- (fun _ ->
-                        checkAnswer nextBin nextAnswer lastAnswers hint_format
+                        checkAnswer nextBin nextAnswer lastAnswers
                         false)
 
 
@@ -125,41 +149,15 @@ module EndlessBinary =
             let reversedBin = initBin |> String.collect (fun c -> if c = '1' then "0" else "1")
             //printfn "reversedBin: %A" reversedBin
 
-            let hintFormat = """
-                <details><summary>ヒント:</summary>
-                    <p class="history-indented">
-                        ある2進数に足すと桁が1つ上がる、最も小さい数のことを、<br>
-                        元の2進数に対する<span style="background-color: #95c9fe;">「2の補数」</span>と呼びます。
-                    </p>
-                    <p class="history-indented">
-                        たとえば、4ビットの2進数 1010<sub>(2)</sub> に 0110<sub>(2)</sub></span> を足すと<br>
-                        1桁上がって5ビットの2進数 10000<sub>(2)</sub> になります。<br>
-                        この 0110<sub>(2)</sub> を、元の 1010<sub>(2)</sub> に対する2の補数と呼びます。<br>
-                    </p>
-                    <p class="history-indented">
-                        2の補数は、<span style="background-color: #95c9fe;">2進数の負の数を表すのに使われます。</sub></span><br>
-                        1010<sub>(2)</sub> (=10<sub>(10)</sub>) の2の補数 0110<sub>(2)</sub> は-10<sub>(10)</sub> を表します。
-                    </p>
-                    <p class="history-indented">
-                        2の補数を求めるには、元の2進数の各ビットの<br>
-                        <span style="background-color: #95c9fe;">0 と 1 を反転させた数に 1 を足します。</span><br>
-                        今回の問題で説明すると、<br>
-                        {0}<sub>(2)</sub> の 0 と 1 を反転させると<br>
-                        {1}<sub>(2)</sub> になります。これに 1 を足したものが<br>
-                        {0}<sub>(2)</sub> の2の補数です。
-                    </p>
-                </details>"""
-            let hint = String.Format(hintFormat, initBin, reversedBin)
-
             (document.getElementById "questionSpan").innerText <- initBin
             (document.getElementById "srcRadix").innerText <- sprintf "(%d)" sourceRadix
             (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
-            (document.getElementById "hintArea").innerHTML <- hint
+            (document.getElementById "hintArea").innerHTML <- hint initBin reversedBin
             (document.getElementById "submitButton").onclick <- (fun _ ->
-                checkAnswer initBin initAnswer [initNumber] hintFormat
+                checkAnswer initBin initAnswer [initNumber]
                 false)
             (document.getElementById "inputArea").onsubmit <- (fun _ ->
-                checkAnswer initBin initAnswer [initNumber] hintFormat
+                checkAnswer initBin initAnswer [initNumber]
                 false)
             
             (document.getElementById "helpButton").onclick <- (fun _ ->

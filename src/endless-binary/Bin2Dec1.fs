@@ -63,40 +63,41 @@ module EndlessBinary =
                 """
                 a b c
 
-        let hintTable binary_string =
-            tableComponents binary_string
+        let hintTable binaryString =
+            binaryString
+            |> tableComponents
             |> List.fold (fun x y -> applyToTuples3 (fun a1 a2 -> sprintf"%s%s" a1 a2) x y) ("", "", "")
             |> newHintTable
         
-        let formatHint binary_string formula table =
-            sprintf
-                """
-                <details><summary>ヒント:</summary>
-                    <p class="history-indented">
-                        10進数は、一番右の桁から<br>
-                        1の位、10の位、100の位、1000の位...となっています。<br>
-                        これを「10<sup>n</sup>の位」の形で表すと、<br>
-                        10<sup>0</sup>の位、10<sup>1</sup>の位、10<sup>2</sup>の位、10<sup>3</sup>の位...となります。<br>
-                    </p>
-                    <p class="history-indented">
-                        同様に、2進数は一番右の桁から<br>
-                        1の位、2の位、4の位、8の位...となっています。<br>
-                        これを「2<sup>n</sup>の位」の形で表すと、<br>
-                        2<sup>0</sup>の位、2<sup>1</sup>の位、2<sup>2</sup>の位、2<sup>3</sup>の位...となります。
-                    </p>
-                    <p class="history-indented">
-                        この 10<sup>0</sup>、10<sup>1</sup>、10<sup>2</sup>、10<sup>3</sup>...や 2<sup>0</sup>、2<sup>1</sup>、2<sup>2</sup>、2<sup>3</sup>...という数を、その桁の「重み」と呼びます。<br>
-                        2進数を10進数に変換するには、それぞれの桁の数と重みをかけ算し、それを合計します。<br>
-                        ですので、%s<sub>(2)</sub>を10進数に変換するには、以下のように計算します。<br>
-                        %s
-                        <br>
-                        %s
-                    </p>
-                </details>
-                """
-                binary_string formula table
+        let hint binaryString =
+            let formula = writeAdditionFormula binaryString
+            let table = hintTable binaryString
+            $"""
+            <details><summary>ヒント:</summary>
+                <p class="history-indented">
+                    10進数は、一番右の桁から<br>
+                    1の位、10の位、100の位、1000の位...となっています。<br>
+                    これを「10<sup>n</sup>の位」の形で表すと、<br>
+                    10<sup>0</sup>の位、10<sup>1</sup>の位、10<sup>2</sup>の位、10<sup>3</sup>の位...となります。<br>
+                </p>
+                <p class="history-indented">
+                    同様に、2進数は一番右の桁から<br>
+                    1の位、2の位、4の位、8の位...となっています。<br>
+                    これを「2<sup>n</sup>の位」の形で表すと、<br>
+                    2<sup>0</sup>の位、2<sup>1</sup>の位、2<sup>2</sup>の位、2<sup>3</sup>の位...となります。
+                </p>
+                <p class="history-indented">
+                    この 10<sup>0</sup>、10<sup>1</sup>、10<sup>2</sup>、10<sup>3</sup>...や 2<sup>0</sup>、2<sup>1</sup>、2<sup>2</sup>、2<sup>3</sup>...という数を、その桁の「重み」と呼びます。<br>
+                    2進数を10進数に変換するには、それぞれの桁の数と重みをかけ算し、それを合計します。<br>
+                    ですので、%s{binaryString}<sub>(2)</sub>を10進数に変換するには、以下のように計算します。<br>
+                    %s{formula}
+                    <br>
+                    %s{table}
+                </p>
+            </details>
+            """
         
-        let rec checkAnswer answer (question : string) (last_answers : int list) (hint_format : string) =
+        let rec checkAnswer answer (question : string) (last_answers : int list) =
             // Getting the user input.
             let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
             let input = numberInput.value |> escapeHtml
@@ -152,13 +153,7 @@ module EndlessBinary =
                     //printfn "%s" splitBin
                     
                     (document.getElementById "questionSpan").innerText <- splitBin
-                    
-                    //let nextAddtionFormula = writeAdditionFormula nextBin
-                    //let nextHint = String.Format(hint_format, nextBin, nextAddtionFormula)
-                    let nextHint = formatHint nextBin (writeAdditionFormula nextBin) (hintTable nextBin)
-                    //printfn "%s" nextHint
-                    
-                    (document.getElementById "hintArea").innerHTML <- nextHint
+                    (document.getElementById "hintArea").innerHTML <- hint nextBin
                     numberInput.value <- ""
 
                     // Updating `lastAnswers`.
@@ -168,10 +163,10 @@ module EndlessBinary =
 
                     // Setting the next answer to the check button.
                     (document.getElementById "submitButton").onclick <- (fun _ ->
-                        checkAnswer nextNumber splitBin lastAnswers hint_format
+                        checkAnswer nextNumber splitBin lastAnswers
                         false)
                     (document.getElementById "inputArea").onsubmit <- (fun _ ->
-                        checkAnswer nextNumber splitBin lastAnswers hint_format
+                        checkAnswer nextNumber splitBin lastAnswers
                         false)
 
 
@@ -186,28 +181,6 @@ module EndlessBinary =
             //printfn "%A" initBin
             //printfn "%A" splitBin
 
-            //let addtionFormula = writeAdditionFormula initBin
-
-            let hintFormat = """
-                <details><summary>ヒント:</summary>
-                    <p class="history-indented">
-                        10進数は、一番右の桁から<br>
-                        1の位、10の位、100の位、1000の位...つまり、<br>
-                        10<sup>0</sup>の位、10<sup>1</sup>の位、10<sup>2</sup>の位、10<sup>3</sup>の位...となっています。
-                    </p>
-                    <p class="history-indented">
-                        同様に、2進数は一番右の桁から<br>
-                        1の位、2の位、4の位、8の位...つまり、<br>
-                        2<sup>0</sup>の位、2<sup>1</sup>の位、2<sup>2</sup>の位、2<sup>3</sup>の位...となっています。
-                    </p>
-                    <p class="history-indented">
-                        ですので、{0}<sub>(2)</sub>を10進数に変換するには、以下のように計算します。<br>
-                        {1}
-                    </p>
-                </details>"""
-    //        let hint = String.Format(hintFormat, initBin, addtionFormula)
-            let hint = formatHint initBin (writeAdditionFormula initBin) (hintTable initBin)
-
             let sourceRadix = 2
             let destinationRadix = 10
 
@@ -215,12 +188,12 @@ module EndlessBinary =
             (document.getElementById "srcRadix").innerText <- sprintf "(%d)" sourceRadix
             (document.getElementById "dstRadix").innerText <- string destinationRadix
             (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
-            (document.getElementById "hintArea").innerHTML <- hint
+            (document.getElementById "hintArea").innerHTML <- hint initBin
             (document.getElementById "submitButton").onclick <- (fun _ ->
-                checkAnswer initNumber splitBin [initNumber] hintFormat
+                checkAnswer initNumber splitBin [initNumber]
                 false)
             (document.getElementById "inputArea").onsubmit <- (fun _ ->
-                checkAnswer initNumber splitBin [initNumber] hintFormat
+                checkAnswer initNumber splitBin [initNumber]
                 false)
             
             (document.getElementById "helpButton").onclick <- (fun _ ->
