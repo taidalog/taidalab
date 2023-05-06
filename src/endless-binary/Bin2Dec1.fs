@@ -153,8 +153,8 @@ module EndlessBinary =
                     
                     (document.getElementById "questionSpan").innerText <- splitBin
                     
-                    let nextAddtionFormula = writeAdditionFormula nextBin
-    //                let nextHint = String.Format(hint_format, nextBin, nextAddtionFormula)
+                    //let nextAddtionFormula = writeAdditionFormula nextBin
+                    //let nextHint = String.Format(hint_format, nextBin, nextAddtionFormula)
                     let nextHint = formatHint nextBin (writeAdditionFormula nextBin) (hintTable nextBin)
                     printfn "%s" nextHint
                     
@@ -186,7 +186,7 @@ module EndlessBinary =
             printfn "%A" initBin
             printfn "%A" splitBin
 
-            let addtionFormula = writeAdditionFormula initBin
+            //let addtionFormula = writeAdditionFormula initBin
 
             let hintFormat = """
                 <details><summary>ヒント:</summary>

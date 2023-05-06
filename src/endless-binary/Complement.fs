@@ -61,10 +61,10 @@ module EndlessBinary =
                 let digit = 4
                 let taggedInputValue = inputValue |> padWithZero digit |> colorLeadingZero
                 let sourceRadix = 2
-                let bin = Dec.toBin inputValueAsInt
+                //let bin = Dec.toBin inputValueAsInt
                 
                 // Making a new history and updating the history with the new one.
-                let destinationRadix = 10
+                //let destinationRadix = 10
                 let outputArea = document.getElementById "outputArea"
                 let historyMessage =
                     sprintf """<span class ="%s">%s<sub>(%d)</sub></span>""" historyClassName taggedInputValue sourceRadix
