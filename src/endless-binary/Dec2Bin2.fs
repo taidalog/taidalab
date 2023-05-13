@@ -101,7 +101,7 @@ module EndlessBinary =
                         false)
 
 
-        let init' (questionGenerator: 'c list -> 'c) (hintGenerator: 'a -> 'b) (additional: 'c -> unit) : unit =
+        let init' (questionGenerator: 'c list -> 'c) (hintGenerator: 'a -> 'b) (additional: 'c -> unit) checker : unit =
             // Initialization.
             let initNumber = questionGenerator []
             let sourceRadix = 10
@@ -113,10 +113,10 @@ module EndlessBinary =
             (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
             (document.getElementById "hintArea").innerHTML <- hintGenerator initNumber
             (document.getElementById "submitButton").onclick <- (fun _ ->
-                checkAnswer question hint additional (string initNumber) [initNumber]
+                checker question hint additional (string initNumber) [initNumber]
                 false)
             (document.getElementById "inputArea").onsubmit <- (fun _ ->
-                checkAnswer question hint additional (string initNumber) [initNumber]
+                checker question hint additional (string initNumber) [initNumber]
                 false)
             additional initNumber
             
@@ -128,4 +128,4 @@ module EndlessBinary =
                 ["helpWindow"; "helpBarrier"]
                 |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore))
         
-        let init () = init' question hint additional
+        let init () = init' question hint additional checkAnswer
