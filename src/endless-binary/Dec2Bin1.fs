@@ -230,8 +230,21 @@ module EndlessBinary =
                 (newHintRepeatDivision divisor number)
                 (newHintRepeatAddition number power_of_twos)
 
+        let hint number =
+            newHint 2 number (devideIntoPowerOfTwo number)
+        
+        let question lastAnswers : int =
+            newNumber
+                (fun _ -> newNumberWithTwoOne ())
+                (fun n -> List.contains n lastAnswers = false)
 
-        let rec checkAnswer answer (last_answers : int list) =
+        let additional number : unit =
+            (document.getElementById "hint1").onclick <- (fun _ ->
+                (document.getElementById "hint1").innerHTML <-
+                    newHintAnimation 2 number 20
+                (document.getElementById "hintDetails").setAttribute ("open", "true"))
+        
+        let rec checkAnswer (questionGenerator: 'c list -> 'c) (hintGenerator: 'a -> 'b) (additional: 'c -> unit) (answer: string) (last_answers : int list) =
             // Getting the user input.
             let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
             let input = numberInput.value |> escapeHtml
@@ -250,7 +263,7 @@ module EndlessBinary =
                 // Converting the input in order to use in the history message.
                 let binaryDigit = 8
                 let destinationRadix = 2
-                let taggedBin = padWithZero binaryDigit bin |> colorLeadingZero
+                let taggedBin = bin |> padWithZero binaryDigit |> colorLeadingZero
                 let dec = Bin.toDec bin
                 //printfn "taggedBin: %s" taggedBin
                 //printfn "dec: %d" dec
@@ -277,28 +290,22 @@ module EndlessBinary =
                     // Making the next question.
                     //printfn "last_answers : %A" last_answers
                     
-                    let nextNumber =
-                        newNumber
-                            (fun _ -> newNumberWithTwoOne ())
-                            (fun n -> List.contains n last_answers = false)
+                    let nextNumber = questionGenerator last_answers
                     //printfn "nextNumber : %d" nextNumber
                     //printfn "List.contains nextNumber last_answers : %b" (List.contains nextNumber last_answers)
 
-                    let quotientsAndRemainders = repeatDivision nextNumber 2
+                    //let quotientsAndRemainders = repeatDivision nextNumber 2
                     //printfn "quotientsAndRemainders: %A" quotientsAndRemainders
                     
-                    let powerOfTwos = devideIntoPowerOfTwo nextNumber
+                    //let powerOfTwos = devideIntoPowerOfTwo nextNumber
                     //printfn "powerOfTwos: %A" powerOfTwos
 
-                    let nextHint = newHint 2 nextNumber powerOfTwos
+                    //let nextHint = hint nextNumber
                     //printfn "nextHint: \n%s" nextHint
                     
                     (document.getElementById "questionSpan").innerText <- string nextNumber
-                    (document.getElementById "hintArea").innerHTML <- nextHint
-                    (document.getElementById "hint1").onclick <- (fun _ ->
-                        (document.getElementById "hint1").innerHTML <-
-                            newHintAnimation 2 nextNumber 20
-                        (document.getElementById "hintDetails").setAttribute ("open", "true"))
+                    (document.getElementById "hintArea").innerHTML <- hintGenerator nextNumber
+                    additional nextNumber
                     
                     numberInput.value <- ""
 
@@ -309,22 +316,22 @@ module EndlessBinary =
 
                     // Setting the next answer to the check button.
                     (document.getElementById "submitButton").onclick <- (fun _ ->
-                        checkAnswer (string nextNumber) lastAnswers
+                        checkAnswer questionGenerator hintGenerator additional (string nextNumber) lastAnswers
                         false)
                     (document.getElementById "inputArea").onsubmit <- (fun _ ->
-                        checkAnswer (string nextNumber) lastAnswers
+                        checkAnswer questionGenerator hintGenerator additional (string nextNumber) lastAnswers
                         false)
 
 
-        let init ()  =
+        let init () =
             // Initialization.
             //printfn "Initialization starts."
 
-            let initNumber = newNumberWithTwoOne ()
+            let initNumber = question []
             //printfn "initNumber : %d" initNumber
 
-            let quotientsAndRemainders = repeatDivision initNumber 2
-            let powerOfTwos = devideIntoPowerOfTwo initNumber
+            //let quotientsAndRemainders = repeatDivision initNumber 2
+            //let powerOfTwos = devideIntoPowerOfTwo initNumber
             //printfn "quotients and remainders : %A" quotientsAndRemainders
             //printfn "power of twos : %A" powerOfTwos
 
@@ -335,17 +342,14 @@ module EndlessBinary =
             (document.getElementById "srcRadix").innerText <- sprintf "(%d)" sourceRadix
             (document.getElementById "dstRadix").innerText <- string destinationRadix
             (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
-            (document.getElementById "hintArea").innerHTML <- (newHint 2 initNumber powerOfTwos)
-            (document.getElementById "hint1").onclick <- (fun _ ->
-                (document.getElementById "hint1").innerHTML <-
-                    newHintAnimation 2 initNumber 20
-                (document.getElementById "hintDetails").setAttribute ("open", "true"))
+            (document.getElementById "hintArea").innerHTML <- hint initNumber
             (document.getElementById "submitButton").onclick <- (fun _ ->
-                checkAnswer (string initNumber) [initNumber]
+                checkAnswer question hint additional (string initNumber) [initNumber]
                 false)
             (document.getElementById "inputArea").onsubmit <- (fun _ ->
-                checkAnswer (string initNumber) [initNumber]
+                checkAnswer question hint additional (string initNumber) [initNumber]
                 false)
+            additional initNumber
             
             (document.getElementById "helpButton").onclick <- (fun _ ->
                 ["helpWindow"; "helpBarrier"]
