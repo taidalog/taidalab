@@ -323,11 +323,11 @@ module EndlessBinary =
                         false)
 
 
-        let init () =
+        let init' (questionGenerator: 'c list -> 'c) (hintGenerator: 'a -> 'b) (additional: 'c -> unit) : unit =
             // Initialization.
             //printfn "Initialization starts."
 
-            let initNumber = question []
+            let initNumber = questionGenerator []
             //printfn "initNumber : %d" initNumber
 
             //let quotientsAndRemainders = repeatDivision initNumber 2
@@ -342,7 +342,7 @@ module EndlessBinary =
             (document.getElementById "srcRadix").innerText <- sprintf "(%d)" sourceRadix
             (document.getElementById "dstRadix").innerText <- string destinationRadix
             (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
-            (document.getElementById "hintArea").innerHTML <- hint initNumber
+            (document.getElementById "hintArea").innerHTML <- hintGenerator initNumber
             (document.getElementById "submitButton").onclick <- (fun _ ->
                 checkAnswer question hint additional (string initNumber) [initNumber]
                 false)
@@ -360,3 +360,5 @@ module EndlessBinary =
                 |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore))
             
             //printfn "Initialization ends."
+        
+        let init () = init' question hint additional
