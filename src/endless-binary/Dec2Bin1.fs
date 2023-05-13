@@ -344,10 +344,10 @@ module EndlessBinary =
             (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
             (document.getElementById "hintArea").innerHTML <- hintGenerator initNumber
             (document.getElementById "submitButton").onclick <- (fun _ ->
-                checker question hint additional (string initNumber) [initNumber]
+                checker questionGenerator hintGenerator additional (string initNumber) [initNumber]
                 false)
             (document.getElementById "inputArea").onsubmit <- (fun _ ->
-                checker question hint additional (string initNumber) [initNumber]
+                checker questionGenerator hintGenerator additional (string initNumber) [initNumber]
                 false)
             additional initNumber
             
