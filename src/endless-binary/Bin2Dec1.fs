@@ -117,7 +117,14 @@ module EndlessBinary =
             </details>
             """
         
-        let rec checkAnswer answer (question : string) (last_answers : int list) =
+        let question' lastAnswers : int =
+            newNumber
+                newNumberWithOneOrTwoOne
+                (fun n -> List.contains n lastAnswers = false)
+        
+        let additional number : unit = ()
+        
+        let rec checkAnswer (questionGenerator: 'c list -> 'c) (hintGenerator: 'a -> 'b) (additional: 'c -> unit) (answer: string) (question: string) (last_answers : int list) =
             // Getting the user input.
             let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
             let input = numberInput.value |> escapeHtml
@@ -152,16 +159,16 @@ module EndlessBinary =
                 let destinationRadix = 10
                 let outputArea = document.getElementById "outputArea"
                 let historyMessage =
-                    newHistory (dec = answer) spacePaddedInputValue destinationRadix taggedBin sourceRadix
+                    newHistory (dec = int answer) spacePaddedInputValue destinationRadix taggedBin sourceRadix
                     |> (fun x -> concatinateStrings "<br>" [x; outputArea.innerHTML])
                 //printfn "%A" historyMessage
                 outputArea.innerHTML <- historyMessage
                 
-                if dec = answer then
+                if dec = int answer then
                     // Making the next question.
                     //printfn "%A" last_answers
 
-                    let nextNumber = newNumberWithOneOrTwoOne ()
+                    let nextNumber = questionGenerator last_answers
 //                        newNumber
 //                            (fun _ -> getRandomBetween 0 7 |> double |> (fun x -> Math.Pow(2.0, x)) |> int)
 //                            (fun n -> List.contains n last_answers = false)
@@ -173,7 +180,7 @@ module EndlessBinary =
                     //printfn "%s" splitBin
                     
                     (document.getElementById "questionSpan").innerText <- splitBin
-                    (document.getElementById "hintArea").innerHTML <- hint nextBin
+                    (document.getElementById "hintArea").innerHTML <- hintGenerator nextBin
                     numberInput.value <- ""
 
                     // Updating `lastAnswers`.
@@ -183,18 +190,18 @@ module EndlessBinary =
 
                     // Setting the next answer to the check button.
                     (document.getElementById "submitButton").onclick <- (fun _ ->
-                        checkAnswer nextNumber splitBin lastAnswers
+                        checkAnswer questionGenerator hintGenerator additional (string nextNumber) splitBin lastAnswers
                         false)
                     (document.getElementById "inputArea").onsubmit <- (fun _ ->
-                        checkAnswer nextNumber splitBin lastAnswers
+                        checkAnswer questionGenerator hintGenerator additional (string nextNumber) splitBin lastAnswers
                         false)
 
 
-        let init  () =
+        let init' (questionGenerator: 'c list -> 'c) (hintGenerator: 'a -> 'b) (additional: 'c -> unit) checker : unit =
             // Initialization.
 //            let initIndexNumber = getRandomBetween 0 7
 //            let initNumber = Math.Pow(2.0, double initIndexNumber) |> int
-            let initNumber = newNumberWithOneOrTwoOne ()
+            let initNumber = questionGenerator []
             let initBin = Dec.toBin initNumber
             let splitBin = splitBinaryStringBy 4 initBin
             //printfn "%A" initIndexNumber
@@ -209,12 +216,12 @@ module EndlessBinary =
             (document.getElementById "srcRadix").innerText <- sprintf "(%d)" sourceRadix
             (document.getElementById "dstRadix").innerText <- string destinationRadix
             (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
-            (document.getElementById "hintArea").innerHTML <- hint initBin
+            (document.getElementById "hintArea").innerHTML <- hintGenerator initBin
             (document.getElementById "submitButton").onclick <- (fun _ ->
-                checkAnswer initNumber splitBin [initNumber]
+                checker questionGenerator hintGenerator additional (string initNumber) splitBin [initNumber]
                 false)
             (document.getElementById "inputArea").onsubmit <- (fun _ ->
-                checkAnswer initNumber splitBin [initNumber]
+                checker questionGenerator hintGenerator additional (string initNumber) splitBin [initNumber]
                 false)
             
             (document.getElementById "helpButton").onclick <- (fun _ ->
@@ -224,3 +231,5 @@ module EndlessBinary =
             (document.getElementById "helpBarrier").onclick <- (fun _ ->
                 ["helpWindow"; "helpBarrier"]
                 |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore))
+
+        let init () = init' question' hint additional checkAnswer
