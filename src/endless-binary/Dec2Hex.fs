@@ -22,15 +22,6 @@ module EndlessBinary =
             ヒント付きなので、考え方も身に付けられます。
             """
 
-        let rec repeatDivision dividend divisor =
-            let quotient = int (dividend / divisor)
-            let remainder = dividend - (quotient * divisor)
-            if quotient < divisor then
-                [(quotient, remainder)]
-            else
-                [(quotient, remainder)] @ repeatDivision quotient divisor
-
-
         let newArrowHex fontSize lineCount stroke fill =
             Svg.newArrow
                 (fontSize |> double |> (fun x -> x / 2. * 4.))
@@ -46,7 +37,7 @@ module EndlessBinary =
         
         let newHintAnimation divisor num fontSize =
             let divRems =
-                (numOpt divisor num) :: (divRemOpt divisor (repeatDivision num divisor))
+                (numOpt divisor num) :: (divRemOpt divisor (Dec2Bin1.repeatDivision num divisor))
             divRems
             |> List.mapi (fun i (a, b, c, d) ->
                 Option.map // divisor
@@ -135,123 +126,18 @@ module EndlessBinary =
                 """
                 (newHintRepeatDivision divisor number fontSize)
 
+        let hint number =
+            newHint 16 number 20
+        
+        let question lastAnswers : int =
+            newNumber
+                (fun _ -> getRandomBetween 0 255)
+                (fun n -> List.contains n lastAnswers = false)
 
-        let rec checkAnswer answer (last_answers : int list) =
-            // Getting the user input.
-            let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
-            let input = numberInput.value |> escapeHtml
-            let hex: Result<string,Errors.Errors> = input |> Hex.validate
-            //printfn "hex: %A" hex
-            
-            numberInput.focus()
-            
-            match hex with
-            | Error (error: Errors.Errors) ->
-                // Making an error message.
-                (document.getElementById "errorArea").innerHTML <- newErrorMessageHex answer input error
-            | Ok (hex: string) ->
-                (document.getElementById "errorArea").innerHTML <- ""
-                // Converting the input in order to use in the history message.
-                let hexDigit = 2
-                let destinationRadix = 16
-                let taggedHex = hex |> padWithZero hexDigit |> colorLeadingZero
-                let dec = Hex.toDec hex
-                //printfn "taggedHex: %s" taggedHex
-                //printfn "dec: %d" dec
-                
-                let decimalDigit = 3
-                let spacePaddedDec =
-                    dec
-                    |> string
-                    |> Fermata.String.padLeft decimalDigit ' '
-                    |> escapeSpace
-                
-                // Making a new history and updating the history with the new one.
-                let sourceRadix = 10
-                let outputArea = document.getElementById "outputArea" :?> HTMLParagraphElement
-                let historyMessage =
-                    newHistory (dec = int answer) taggedHex destinationRadix spacePaddedDec sourceRadix
-                    |> (fun x -> concatinateStrings "<br>" [x; outputArea.innerHTML])
-                //printfn "historyMessage: \n%s" historyMessage
-                outputArea.innerHTML <- historyMessage
-                
-                if dec <> int answer then
-                    ()
-                else
-                    // Making the next question.
-                    //printfn "last_answers : %A" last_answers
-                    
-                    let nextNumber =
-                        newNumber
-                            (fun _ -> getRandomBetween 0 255)
-                            (fun n -> List.contains n last_answers = false)
-                    //printfn "nextNumber : %d" nextNumber
-                    //printfn "List.contains nextNumber last_answers : %b" (List.contains nextNumber last_answers)
-
-                    let quotientsAndRemainders = repeatDivision nextNumber 16
-                    //printfn "quotientsAndRemainders: %A" quotientsAndRemainders
-
-                    let nextHint = newHint 16 nextNumber 20
-                    //printfn "nextHint: \n%s" nextHint
-                    
-                    (document.getElementById "questionSpan").innerText <- string nextNumber
-                    (document.getElementById "hintArea").innerHTML <- nextHint
-                    (document.getElementById "hint1").onclick <- (fun _ ->
-                        (document.getElementById "hint1").innerHTML <-
-                            newHintAnimation 16 nextNumber 20
-                        (document.getElementById "hintDetails").setAttribute ("open", "true"))
-                    
-                    numberInput.value <- ""
-
-                    // Updating `lastAnswers`.
-                    // These numbers will not be used for the next question.
-                    let answersToKeep = Math.Min(10, List.length last_answers + 1)
-                    let lastAnswers = (nextNumber :: last_answers).[0..(answersToKeep - 1)]
-
-                    // Setting the next answer to the check button.
-                    (document.getElementById "submitButton").onclick <- (fun _ ->
-                        checkAnswer (string nextNumber) lastAnswers
-                        false)
-                    (document.getElementById "inputArea").onsubmit <- (fun _ ->
-                        checkAnswer (string nextNumber) lastAnswers
-                        false)
-
-
-        let init ()  =
-            // Initialization.
-            //printfn "Initialization starts."
-
-            let initNumber = getRandomBetween 0 255
-            //printfn "initNumber : %d" initNumber
-
-            let quotientsAndRemainders = repeatDivision initNumber 16
-            //printfn "quotients and remainders : %A" quotientsAndRemainders
-
-            let sourceRadix = 10
-            let destinationRadix = 16
-
-            (document.getElementById "questionSpan").innerText <- string initNumber
-            (document.getElementById "srcRadix").innerText <- sprintf "(%d)" sourceRadix
-            (document.getElementById "dstRadix").innerText <- string destinationRadix
-            (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
-            (document.getElementById "hintArea").innerHTML <- newHint 16 initNumber 20
+        let additional number : unit =
             (document.getElementById "hint1").onclick <- (fun _ ->
                 (document.getElementById "hint1").innerHTML <-
-                    newHintAnimation 16 initNumber 20
+                    newHintAnimation 16 number 20
                 (document.getElementById "hintDetails").setAttribute ("open", "true"))
-            (document.getElementById "submitButton").onclick <- (fun _ ->
-                checkAnswer (string initNumber) [initNumber]
-                false)
-            (document.getElementById "inputArea").onsubmit <- (fun _ ->
-                checkAnswer (string initNumber) [initNumber]
-                false)
-            
-            (document.getElementById "helpButton").onclick <- (fun _ ->
-                ["helpWindow"; "helpBarrier"]
-                |> List.iter (fun x -> (document.getElementById x).classList.toggle "active" |> ignore))
-            
-            (document.getElementById "helpBarrier").onclick <- (fun _ ->
-                ["helpWindow"; "helpBarrier"]
-                |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore))
-            
-            //printfn "Initialization ends."
+
+        let init () = Dec2Bin1.init' question hint Hex.validate Hex.toDec (padWithZero 8 >> colorLeadingZero) additional 10 16 Dec2Bin1.checkAnswer

@@ -244,47 +244,47 @@ module EndlessBinary =
                     newHintAnimation 2 number 20
                 (document.getElementById "hintDetails").setAttribute ("open", "true"))
         
-        let rec checkAnswer (questionGenerator: 'c list -> 'c) (hintGenerator: 'a -> 'b) (additional: 'c -> unit) (answer: string) (last_answers : int list) =
+        let rec checkAnswer (questionGenerator: 'c list -> 'c) (hintGenerator: 'a -> 'b) validator converter tagger (additional: 'c -> unit) sourceRadix destinationRadix (answer: string) (last_answers : int list) =
             // Getting the user input.
             let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
             let input = numberInput.value |> escapeHtml
-            let bin: Result<string,Errors.Errors> = input |> Bin.validate
+            let validated: Result<string,Errors.Errors> = input |> validator
             //printfn "bin: %A" bin
             
             numberInput.focus()
             
-            match bin with
+            match validated with
             | Error (error: Errors.Errors) ->
                 // Making an error message.
                 (document.getElementById "errorArea").innerHTML <- newErrorMessageBin answer input error
-            | Ok (bin: string) ->
+            | Ok validated ->
                 (document.getElementById "errorArea").innerHTML <- ""
 
                 // Converting the input in order to use in the history message.
-                let binaryDigit = 8
-                let destinationRadix = 2
-                let taggedBin = bin |> padWithZero binaryDigit |> colorLeadingZero
-                let dec = Bin.toDec bin
+                //let binaryDigit = 8
+                //let destinationRadix = 2
+                let colored = validated |> tagger //padWithZero binaryDigit |> colorLeadingZero
+                let converted = validated |> converter
                 //printfn "taggedBin: %s" taggedBin
                 //printfn "dec: %d" dec
                 
                 let decimalDigit = 3
-                let spacePaddedDec =
-                    dec
+                let spacePadded =
+                    converted
                     |> string
                     |> Fermata.String.padLeft decimalDigit ' '
                     |> escapeSpace
                 
                 // Making a new history and updating the history with the new one.
-                let sourceRadix = 10
+                //let sourceRadix = 10
                 let outputArea = document.getElementById "outputArea" :?> HTMLParagraphElement
                 let historyMessage =
-                    newHistory (dec = int answer) taggedBin destinationRadix spacePaddedDec sourceRadix
+                    newHistory (converted = int answer) colored destinationRadix spacePadded sourceRadix
                     |> (fun x -> concatinateStrings "<br>" [x; outputArea.innerHTML])
                 //printfn "historyMessage: \n%s" historyMessage
                 outputArea.innerHTML <- historyMessage
                 
-                if dec <> int answer then
+                if converted <> int answer then
                     ()
                 else
                     // Making the next question.
@@ -316,14 +316,14 @@ module EndlessBinary =
 
                     // Setting the next answer to the check button.
                     (document.getElementById "submitButton").onclick <- (fun _ ->
-                        checkAnswer questionGenerator hintGenerator additional (string nextNumber) lastAnswers
+                        checkAnswer questionGenerator hintGenerator validator converter tagger additional sourceRadix destinationRadix (string nextNumber) lastAnswers
                         false)
                     (document.getElementById "inputArea").onsubmit <- (fun _ ->
-                        checkAnswer questionGenerator hintGenerator additional (string nextNumber) lastAnswers
+                        checkAnswer questionGenerator hintGenerator validator converter tagger additional sourceRadix destinationRadix (string nextNumber) lastAnswers
                         false)
 
 
-        let init' (questionGenerator: 'c list -> 'c) (hintGenerator: 'a -> 'b) (additional: 'c -> unit) checker : unit =
+        let init' (questionGenerator: 'c list -> 'c) (hintGenerator: 'a -> 'b) validator converter tagger (additional: 'c -> unit) sourceRadix destinationRadix checker : unit =
             // Initialization.
             //printfn "Initialization starts."
 
@@ -335,8 +335,8 @@ module EndlessBinary =
             //printfn "quotients and remainders : %A" quotientsAndRemainders
             //printfn "power of twos : %A" powerOfTwos
 
-            let sourceRadix = 10
-            let destinationRadix = 2
+            //let sourceRadix = 10
+            //let destinationRadix = 2
 
             (document.getElementById "questionSpan").innerText <- string initNumber
             (document.getElementById "srcRadix").innerText <- sprintf "(%d)" sourceRadix
@@ -344,10 +344,10 @@ module EndlessBinary =
             (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
             (document.getElementById "hintArea").innerHTML <- hintGenerator initNumber
             (document.getElementById "submitButton").onclick <- (fun _ ->
-                checker questionGenerator hintGenerator additional (string initNumber) [initNumber]
+                checker questionGenerator hintGenerator validator converter tagger additional sourceRadix destinationRadix (string initNumber) [initNumber]
                 false)
             (document.getElementById "inputArea").onsubmit <- (fun _ ->
-                checker questionGenerator hintGenerator additional (string initNumber) [initNumber]
+                checker questionGenerator hintGenerator validator converter tagger additional sourceRadix destinationRadix (string initNumber) [initNumber]
                 false)
             additional initNumber
             
@@ -361,4 +361,4 @@ module EndlessBinary =
             
             //printfn "Initialization ends."
         
-        let init () = init' question hint additional checkAnswer
+        let init () = init' question hint Bin.validate Bin.toDec (padWithZero 8 >> colorLeadingZero) additional 10 2 checkAnswer
