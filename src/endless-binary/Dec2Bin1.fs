@@ -244,7 +244,7 @@ module EndlessBinary =
                     newHintAnimation 2 number 20
                 (document.getElementById "hintDetails").setAttribute ("open", "true"))
         
-        let rec checkAnswer (questionGenerator: 'c list -> 'c) (hintGenerator: 'a -> 'b) validator converter tagger (additional: 'c -> unit) sourceRadix destinationRadix (answer: string) (last_answers : int list) =
+        let rec checkAnswer (questionGenerator: 'c list -> 'c) (hintGenerator: 'a -> 'b) validator converter tagger (additional: 'c -> unit) sourceRadix destinationRadix (answersToKeep: int) (answer: string) (last_answers : int list) =
             // Getting the user input.
             let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
             let input = numberInput.value |> escapeHtml
@@ -311,19 +311,20 @@ module EndlessBinary =
 
                     // Updating `lastAnswers`.
                     // These numbers will not be used for the next question.
-                    let answersToKeep = Math.Min(10, List.length last_answers + 1)
-                    let lastAnswers = (nextNumber :: last_answers).[0..(answersToKeep - 1)]
+                    //let answersToKeep = Math.Min(10, List.length last_answers + 1)
+                    //let lastAnswers = (nextNumber :: last_answers).[0..(answersToKeep - 1)]
+                    let lastAnswers' = (nextNumber :: last_answers) |> List.truncate answersToKeep
 
                     // Setting the next answer to the check button.
                     (document.getElementById "submitButton").onclick <- (fun _ ->
-                        checkAnswer questionGenerator hintGenerator validator converter tagger additional sourceRadix destinationRadix (string nextNumber) lastAnswers
+                        checkAnswer questionGenerator hintGenerator validator converter tagger additional sourceRadix destinationRadix answersToKeep (string nextNumber) lastAnswers'
                         false)
                     (document.getElementById "inputArea").onsubmit <- (fun _ ->
-                        checkAnswer questionGenerator hintGenerator validator converter tagger additional sourceRadix destinationRadix (string nextNumber) lastAnswers
+                        checkAnswer questionGenerator hintGenerator validator converter tagger additional sourceRadix destinationRadix answersToKeep (string nextNumber) lastAnswers'
                         false)
 
 
-        let init' (questionGenerator: 'c list -> 'c) (hintGenerator: 'a -> 'b) validator converter tagger (additional: 'c -> unit) sourceRadix destinationRadix checker : unit =
+        let init' (questionGenerator: 'c list -> 'c) (hintGenerator: 'a -> 'b) validator converter tagger (additional: 'c -> unit) sourceRadix destinationRadix (answersToKeep: int) checker : unit =
             // Initialization.
             //printfn "Initialization starts."
 
@@ -344,10 +345,10 @@ module EndlessBinary =
             (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
             (document.getElementById "hintArea").innerHTML <- hintGenerator initNumber
             (document.getElementById "submitButton").onclick <- (fun _ ->
-                checker questionGenerator hintGenerator validator converter tagger additional sourceRadix destinationRadix (string initNumber) [initNumber]
+                checker questionGenerator hintGenerator validator converter tagger additional sourceRadix destinationRadix answersToKeep (string initNumber) [initNumber]
                 false)
             (document.getElementById "inputArea").onsubmit <- (fun _ ->
-                checker questionGenerator hintGenerator validator converter tagger additional sourceRadix destinationRadix (string initNumber) [initNumber]
+                checker questionGenerator hintGenerator validator converter tagger additional sourceRadix destinationRadix answersToKeep (string initNumber) [initNumber]
                 false)
             additional initNumber
             
@@ -361,4 +362,4 @@ module EndlessBinary =
             
             //printfn "Initialization ends."
         
-        let init () = init' question hint Bin.validate Bin.toDec (padWithZero 8 >> colorLeadingZero) additional 10 2 checkAnswer
+        let init () = init' question hint Bin.validate Bin.toDec (padWithZero 8 >> colorLeadingZero) additional 10 2 10 checkAnswer

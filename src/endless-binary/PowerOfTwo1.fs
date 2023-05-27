@@ -45,4 +45,4 @@ module EndlessBinary =
         let additional number : unit =
             ()
         
-        let init () = Dec2Bin1.init' question hint Bin.validate Bin.toDec (padWithZero 8 >> colorLeadingZero) additional 10 2 Dec2Bin1.checkAnswer
+        let init () = Dec2Bin1.init' question hint Bin.validate Bin.toDec (padWithZero 8 >> colorLeadingZero) additional 10 2 10 Dec2Bin1.checkAnswer
