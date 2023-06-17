@@ -22,21 +22,6 @@ module EndlessBinary =
             ヒント付きなので、考え方も身に付けられます。
             """
 
-        let newNumbersAdd () =
-            let number1 =
-                newNumber
-                    (fun _ -> getRandomBetween 1 255)
-                    (fun n ->
-                        let pattern = "^1+0+$"
-                        let bin = Dec.toBin n
-                        (String.length bin = 8) && (Regex.isMatch pattern bin) = false)
-            let number2 =
-                newNumber
-                    (fun _ -> getRandomBetween 1 (255 - number1))
-                    (fun n -> (n <> number1) && ((n &&& number1) <> 0))
-            (number1, number2)
-
-
         let newHintAdd ()  =
             let hint = """
                 <details><summary>ヒント: </summary>
@@ -51,9 +36,36 @@ module EndlessBinary =
                     </p>
                 </details>"""
             hint
+        
+        let newNumbersAdd digit =
+            let max = (digit |> float |> fun x -> 2.0 ** x |> int) - 1
+            let number1 =
+                newNumber
+                    (fun _ -> getRandomBetween 1 max)
+                    (if digit < 4 then
+                        (fun n -> n |> Dec.toBin |> String.length = digit)
+                    else
+                        (fun n ->
+                            let pattern = "^1+0+$"
+                            let bin = Dec.toBin n
+                            (String.length bin = digit) && (Regex.isMatch pattern bin) = false))
+            let number2 =
+                let max' = if digit < 4 then max else max - number1
+                newNumber
+                    (fun _ -> getRandomBetween 1 max')
+                    (if digit < 4
+                    then (fun _ -> true)
+                    else (fun n -> (n <> number1) && ((n &&& number1) <> 0)))
+            (number1, number2)
+        
+        let question digit lastAnswers : int * int =
+            newNumber
+                (fun _ -> newNumbersAdd digit)
+                (if digit < 4
+                then (fun _ -> true)
+                else (fun (x, y) -> List.contains x lastAnswers = false && List.contains y lastAnswers = false))
 
-
-        let rec checkAnswer answer num1 num2 (last_answers : int list) =
+        let rec checkAnswer (questionGenerator: 'c list -> 'd) answer num1 num2 (last_answers : int list) =
             // Getting the user input.
             let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
             let input = numberInput.value |> escapeHtml
@@ -96,11 +108,11 @@ module EndlessBinary =
                 
                 if dec = answer then
                     // Making the next question.
-                    let (number1, number2) =
-                        newNumber
-                            (fun _ -> newNumbersAdd ())
-                            (fun (n1, n2) ->
-                                List.contains n1 last_answers = false && List.contains n2 last_answers = false)
+                    let (number1, number2) = questionGenerator last_answers
+                        //newNumber
+                        //    (fun _ -> newNumbersAdd 4)
+                        //    (fun (n1, n2) ->
+                        //        List.contains n1 last_answers = false && List.contains n2 last_answers = false)
 
                     //printfn "%A" last_answers
                     //printfn "number1: %d" number1
@@ -124,10 +136,10 @@ module EndlessBinary =
 
                     // Setting the next answer to the check button.
                     (document.getElementById "submitButton").onclick <- (fun _ ->
-                        checkAnswer (number1 + number2) number1 number2 lastAnswers
+                        checkAnswer questionGenerator (number1 + number2) number1 number2 lastAnswers
                         false)
                     (document.getElementById "inputArea").onsubmit <- (fun _ ->
-                        checkAnswer (number1 + number2) number1 number2 lastAnswers
+                        checkAnswer questionGenerator (number1 + number2) number1 number2 lastAnswers
                         false)
 
 
@@ -136,6 +148,7 @@ module EndlessBinary =
             let sourceRadix = 2
             let destinationRadix = 2
             let hint = newHintAdd ()
+            let digit = 2
 
             (document.getElementById "numberInput").className <-  "number-input question-number eight-digit"
             (document.getElementById "operator").innerText <-  "+)"
@@ -144,7 +157,7 @@ module EndlessBinary =
             (document.getElementById "binaryRadix").innerHTML <-  sprintf "<sub>(%d)</sub>" destinationRadix
             (document.getElementById "hintArea").innerHTML <-  hint
 
-            let (number1, number2) = newNumbersAdd ()
+            let (number1, number2) = question digit [] //newNumbersAdd digit
             //printfn "number1: %d" number1
             //printfn "number1 |> Dec.toBin: %s" (number1 |> Dec.toBin)
             //printfn "number2: %d" number2
@@ -154,10 +167,10 @@ module EndlessBinary =
             setColumnAddition number1 number2
 
             (document.getElementById "submitButton").onclick <- (fun _ ->
-                checkAnswer (number1 + number2) number1 number2 [number1; number2]
+                checkAnswer (question digit) (number1 + number2) number1 number2 [number1; number2]
                 false)
             (document.getElementById "inputArea").onsubmit <- (fun _ ->
-                checkAnswer (number1 + number2) number1 number2 [number1; number2]
+                checkAnswer (question digit) (number1 + number2) number1 number2 [number1; number2]
                 false)
             
             (document.getElementById "helpButton").onclick <- (fun _ ->
