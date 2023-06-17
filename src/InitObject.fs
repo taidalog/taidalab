@@ -241,6 +241,19 @@ module InitObject =
                 questionContent = ""
                 initFunc = f
             }
+        | "/information-policy/" ->
+            //printfn "%s" "/information-policy/"
+            {
+                pathname = "/information-policy/"
+                title = "情報の外部送信について - taidalab"
+                headerContent = Content.Common.header
+                headerColorClass = "header-home"
+                headerTitle = "<h1>情報の外部送信について - taidalab</h1>"
+                mainContent = main
+                buttonColorClass = ""
+                questionContent = ""
+                initFunc = f
+            }
         | _ ->
             //printfn "%s" "default"
             {

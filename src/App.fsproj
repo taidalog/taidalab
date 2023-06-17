@@ -38,6 +38,7 @@
     <Compile Include="Home.fs" />
     <Compile Include="About.fs" />
     <Compile Include="Terms.fs" />
+    <Compile Include="InformationPolicy.fs" />
     <Compile Include="NotFound.fs" />
     <Compile Include="Switcher.fs" />
     <Compile Include="App.fs" />

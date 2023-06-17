@@ -30,6 +30,7 @@ module rec Switcher =
         | "/network-simulator/" -> (pathname, NetworkSimulator.main, NetworkSimulator.init)
         | "/about/" -> (pathname, Taidalab.About.main, (fun _ -> ()))
         | "/terms/" -> (pathname , Taidalab.Terms.main , (fun _ -> ()))
+        | "/information-policy/" -> (pathname , Taidalab.InformationPolicy.main , (fun _ -> ()))
         | _ -> ("/404/", EndlessBinary.Course.main404, NotFound.init)
 
     let initPageFromPathname pathname =
