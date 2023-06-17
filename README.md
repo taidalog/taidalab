@@ -9,7 +9,7 @@ A Web application for learning Informatics &#8544;, one of the subjects taught i
 
 ## Features
 
-- Repeats providing conversion or calculation quizzes between decimal numbers and binary numbers.
+- Repeats providing conversion or calculation quizzes among decimal numbers, binary numbers and hexadecimal numbers.
 - Generates colors based on the input RGB value, changing the hue of the original color.
 - Simulates connecting and communicating of network devices.
 
