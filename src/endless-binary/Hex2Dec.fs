@@ -131,7 +131,7 @@ module EndlessBinary =
                 let sourceRadix = 16
                 let hex = Dec.toHex dec
                 let hexDigit = 2
-                let taggedHex = padWithZero hexDigit hex |> colorLeadingZeroHex
+                let taggedHex = padWithZero hexDigit hex |> colorLeadingZero
 
                 // Making a new history and updating the history with the new one.
                 let destinationRadix = 10

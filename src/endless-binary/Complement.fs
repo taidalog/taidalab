@@ -84,7 +84,7 @@ module EndlessBinary =
                 
                 // Converting the input in order to use in the history message.
                 let digit = 4
-                let taggedInputValue = bin |> padWithZero digit |> colorLeadingZero
+                let taggedInputValue = bin |> padWithZero digit
                 let sourceRadix = 2
                 //let bin = Dec.toBin dec
                 
