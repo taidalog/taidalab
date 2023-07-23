@@ -231,9 +231,9 @@ module EndlessBinary =
             ||> (+)
             |> int
         
-        let question lastAnswers : int =
+        let question (digit: int) (lastAnswers: int list) : int =
             newNumber
-                (fun _ -> newNumberWithTwoOne 0 7)
+                (fun _ -> newNumberWithTwoOne 0 digit)
                 (fun n -> List.contains n lastAnswers = false)
 
         let additional number : unit =
@@ -360,4 +360,5 @@ module EndlessBinary =
             
             //printfn "Initialization ends."
         
-        let init () = init' question hint Bin.validate Bin.toDec (padWithZero 8 >> colorLeadingZero) additional 10 2 10 checkAnswer
+        let init () = init' (question 8) hint Bin.validate Bin.toDec (padWithZero 8 >> colorLeadingZero) additional 10 2 10 checkAnswer
+        let init4 () = init' (question 4) hint Bin.validate Bin.toDec (padWithZero 4 >> colorLeadingZero) additional 10 2 2 checkAnswer
