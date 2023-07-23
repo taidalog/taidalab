@@ -59,6 +59,19 @@ module InitObject =
                 questionContent = Content.Common.question
                 initFunc = f
             }
+        | "/endless-binary/dec2bin-1/4/" ->
+            //printfn "%s" "/endless-binary/dec2bin-1/"
+            {
+                pathname = "/endless-binary/dec2bin-1/4/"
+                title = "10進数→2進数 (1) - taidalab"
+                headerContent = Content.Common.header
+                headerColorClass = "header-d2b"
+                headerTitle = "<h1>10進数→2進数 (1) - taidalab</h1>"
+                mainContent = main // Content.Course.main
+                buttonColorClass = "submit-button display-order-3 submit-button-d2b"
+                questionContent = Content.Common.question
+                initFunc = f
+            }
         | "/endless-binary/dec2bin-2/" ->
             //printfn "%s" "/endless-binary/dec2bin-2/"
             {
@@ -128,6 +141,19 @@ module InitObject =
             //printfn "%s" "/endless-binary/addition/"
             {
                 pathname = "/endless-binary/addition/"
+                title = "加算 - taidalab"
+                headerContent = Content.Common.header
+                headerColorClass = "header-add"
+                headerTitle = "<h1>加算 - taidalab</h1>"
+                mainContent = main // Content.Course.main
+                buttonColorClass = "submit-button display-order-3 submit-button-add"
+                questionContent = Content.Common.columnAdditionFormat
+                initFunc = f
+            }
+        | "/endless-binary/addition/4/" ->
+            //printfn "%s" "/endless-binary/addition/"
+            {
+                pathname = "/endless-binary/addition/4/"
                 title = "加算 - taidalab"
                 headerContent = Content.Common.header
                 headerColorClass = "header-add"
