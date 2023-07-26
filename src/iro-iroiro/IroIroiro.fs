@@ -23,11 +23,11 @@ module IroIroiro =
                 <li>G: 緑のRGB値 (0 &le; G &le; 255)</li>
                 <li>B: 青のRGB値 (0 &le; B &le; 255)</li>
                 <li>
-                    Interval: RGB値を変化させる間隔。(0 &le; Interval &le; 255)<br>
+                    間隔: RGB値を変化させる間隔。(0 &le; Interval &le; 255)<br>
                     小さいと色がグラデーションのようになり、大きいとカラフルになります。
                 </li>
                 <li>
-                    Limit: (1 &le; Limit)色をローテーションさせる回数。<br>
+                    回数: (1 &le; Limit)色をローテーションさせる回数。<br>
                     あまり大きくすると時間がかかってしまいます。100位にしておいてください。
                 </li>
             </ul>
@@ -43,8 +43,8 @@ module IroIroiro =
                 <span class="iro-input-wrapper"><label for="bInput">B:<input type="number" id="bInput" class="iro-number-input consolas" min="0" max="255"></label></span>
             </span>
             <span class="display-order-2 input-area-iro-wider">
-                <span class="iro-input-wrapper"><label for="intervalInput">Interval:<input type="number" id="intervalInput" class="iro-number-input consolas"></label></span>
-                <span class="iro-input-wrapper"><label for="limitInput">Limit:<input type="number" id="limitInput" class="iro-number-input iro-number-input-6rem consolas" value="100"></label></span>
+                <span class="iro-input-wrapper"><label for="intervalInput">間隔:<input type="number" id="intervalInput" class="iro-number-input consolas"></label></span>
+                <span class="iro-input-wrapper"><label for="limitInput">回数:<input type="number" id="limitInput" class="iro-number-input iro-number-input-6rem consolas" value="100"></label></span>
             </span>
             <span class="display-order-3">
                 <button type="button" id="submitButton" class="submit-button d2b-button">確認</button>
@@ -230,7 +230,15 @@ module IroIroiro =
         | h :: t ->
             parseResult
             |> List.map (fun (name, _, (_, _)) -> name)
-            |> List.map (sprintf """<span class="warning">%s has an invalid value.</span>""")
+            |> List.map (fun name ->
+                match name with
+                | "R" -> name
+                | "G" -> name
+                | "B" -> name
+                | "Interval" -> "間隔"
+                | "Limit" -> "回数"
+                | _ -> "")
+            |> List.map (sprintf """<span class="warning">%s の値が正しくありません。</span>""")
             |> List.reduce (fun x y -> sprintf "%s<br>%s" x y)
             |> (fun s -> errorArea.innerHTML <- s)
 
