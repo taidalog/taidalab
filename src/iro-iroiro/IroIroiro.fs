@@ -94,27 +94,27 @@ module IroIroiro =
         let r =
             rankedRgb
             |> List.find (fun x -> x.Color = PrimaryColors.Red)
-            |> (fun x -> x.Value)
+            |> fun x -> x.Value
 
         let g =
             rankedRgb
             |> List.find (fun x -> x.Color = PrimaryColors.Green)
-            |> (fun x -> x.Value)
+            |> fun x -> x.Value
 
         let b =
             rankedRgb
             |> List.find (fun x -> x.Color = PrimaryColors.Blue)
-            |> (fun x -> x.Value)
+            |> fun x -> x.Value
 
         (r, g, b)
 
     let getNextRgb r g b interval colorToModify =
         let rec loop rgbList min max value colorToModify =
-            let (addedMed, gap) =
+            let addedMed, gap =
                 rgbList
                 |> List.find (fun x -> x.Color = colorToModify)
-                |> (fun x -> x.Value + value |> Bound.clampGap min max)
-                |> (fun (x, y) -> x, -y)
+                |> fun x -> x.Value + value |> Bound.clampGap min max
+                |> fun (x, y) -> x, -y
             //printfn "addedMed: %d" addedMed
             //printfn "gap: %d" gap
 
@@ -142,7 +142,7 @@ module IroIroiro =
                     newRankedRgb
                     |> List.filter (fun x -> x.Color <> colorToModify)
                     |> List.find (fun x -> x.Rank = rnk)
-                    |> (fun x -> (Some x.Color))
+                    |> fun x -> Some x.Color
 
             match nextColorToModify with
             | None -> (newRankedRgb, colorToModify)
@@ -166,8 +166,8 @@ module IroIroiro =
         //printfn "r: %d  g: %d  b: %d" r g b
         //printfn "colorToModify: %A" colorToModify
 
-        let (resRgb, lastModifiedColor) = getNextRgb r g b interval colorToModify
-        let (resR, resG, resB) = resRgb |> fromRankToRgb
+        let resRgb, lastModifiedColor = getNextRgb r g b interval colorToModify
+        let resR, resG, resB = resRgb |> fromRankToRgb
         //printfn "resRgb: %A" resRgb
         //printfn "lastModifiedColor: %A" lastModifiedColor
 
@@ -193,7 +193,7 @@ module IroIroiro =
                     resRgb
                     |> List.filter (fun x -> x.Color <> lastModifiedColor)
                     |> List.find (fun x -> x.Rank = nextRankToModify)
-                    |> (fun x -> x.Color)
+                    |> fun x -> x.Color
         //printfn "nextColorToModify: %A" nextColorToModify
         //printfn "The end of repeatGetNextRgb at limit: %d" limit
         //printfn "\n"
@@ -240,12 +240,12 @@ module IroIroiro =
                 | _ -> "")
             |> List.map (sprintf """<span class="warning">%s の値が正しくありません。</span>""")
             |> List.reduce (fun x y -> $"%s{x}<br>%s{y}")
-            |> (fun s -> errorArea.innerHTML <- s)
+            |> fun s -> errorArea.innerHTML <- s
 
             h
-            |> (fun (_, id, (_, _)) -> id)
-            |> (fun id -> (document.getElementById id))
-            |> (fun el -> el.focus () |> ignore)
+            |> fun (_, id, (_, _)) -> id
+            |> fun id -> (document.getElementById id)
+            |> fun el -> el.focus () |> ignore
         | [] ->
             let r = rInput |> int
             let g = gInput |> int
@@ -257,7 +257,7 @@ module IroIroiro =
                 fromRgbToRank r g b
                 |> List.sortBy (fun x -> x.Value)
                 |> List.item 1
-                |> (fun x -> x.Color)
+                |> fun x -> x.Color
 
             //
             let ress = repeatGetNextRgb r g b interval limit colorToModify [ (r, g, b) ]
@@ -270,7 +270,7 @@ module IroIroiro =
                 |> List.reduce (fun x y -> $"%s{x}\n%s{y}")
 
             //
-            let outputArea = (document.getElementById "outputArea")
+            let outputArea = document.getElementById "outputArea"
             outputArea.innerHTML <- output
 
 
