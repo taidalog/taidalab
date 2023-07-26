@@ -44,7 +44,7 @@ module IroIroiro =
                 <span class="iro-input-wrapper"><label for="bInput">B:<input type="number" id="bInput" class="iro-number-input consolas" min="0" max="255"></label></span>
             </span>
             <span class="display-order-2 input-area-iro-wider">
-                <span class="iro-input-wrapper"><label for="stepInput">間隔:<input type="number" id="stepInput" class="iro-number-input consolas"></label></span>
+                <span class="iro-input-wrapper"><label for="stepInput">変化量:<input type="number" id="stepInput" class="iro-number-input consolas"></label></span>
                 <span class="iro-input-wrapper"><label for="limitInput">回数:<input type="number" id="limitInput" class="iro-number-input iro-number-input-6rem consolas" value="100"></label></span>
             </span>
             <span class="display-order-3">
