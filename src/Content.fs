@@ -42,14 +42,12 @@ module Content =
                     </summary>
                     <ul>
                         <li><a class="aside-d2b" href="/endless-binary/dec2bin-1/">10進数→2進数 (1)</a></li>
-                        <li><a class="aside-d2b" href="/endless-binary/dec2bin-1/4/">10進数→2進数 (1)4</a></li>
                         <li><a class="aside-d2b" href="/endless-binary/dec2bin-2/">10進数→2進数 (2)</a></li>
                         <li><a class="aside-b2d" href="/endless-binary/bin2dec-1/">2進数→10進数 (1)</a></li>
                         <li><a class="aside-b2d" href="/endless-binary/bin2dec-2/">2進数→10進数 (2)</a></li>
                         <li><a class="aside-pot" href="/endless-binary/power-of-two-1/">2のn乗</a></li>
                         <li><a class="aside-pot" href="/endless-binary/power-of-two-2/">2のn乗-1</a></li>
                         <li><a class="aside-add" href="/endless-binary/addition/">加算</a></li>
-                        <li><a class="aside-add" href="/endless-binary/addition/4/">加算4</a></li>
                         <li><a class="aside-sub" href="/endless-binary/subtraction/">減算</a></li>
                         <li><a class="aside-cmp" href="/endless-binary/complement/">補数</a></li>
                         <li><a class="aside-d2h" href="/endless-binary/dec2hex/">10進数→16進数</a></li>
