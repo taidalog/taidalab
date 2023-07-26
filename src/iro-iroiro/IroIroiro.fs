@@ -8,6 +8,7 @@ namespace Taidalab
 open Browser.Dom
 open Browser.Types
 open Fermata
+open Taidalab.RankedRgb
 
 module IroIroiro =
     let help =
@@ -61,52 +62,7 @@ module IroIroiro =
         </div>
         """
 
-    type PrimaryColors =
-        | Red = 0
-        | Green = 1
-        | Blue = 2
-
-    type Rank =
-        | Min = 0
-        | Med = 1
-        | Max = 2
-
-    type RankedRgb =
-        { Color: PrimaryColors
-          Value: int
-          Rank: Rank }
-
     let (|Positive|Negative|) num = if num >= 0 then Positive else Negative
-
-    let fromRgbToRank r g b =
-        [ (PrimaryColors.Red, r); (PrimaryColors.Green, g); (PrimaryColors.Blue, b) ]
-        |> List.map (fun (color, value) ->
-            match value with
-            | var when var = (List.min [ r; g; b ]) -> (color, value, Rank.Min)
-            | var when var = (List.max [ r; g; b ]) -> (color, value, Rank.Max)
-            | _ -> (color, value, Rank.Med))
-        |> List.map (fun (color, value, rank) ->
-            ({ RankedRgb.Color = color
-               RankedRgb.Value = value
-               RankedRgb.Rank = rank }))
-
-    let fromRankToRgb rankedRgb =
-        let r =
-            rankedRgb
-            |> List.find (fun x -> x.Color = PrimaryColors.Red)
-            |> fun x -> x.Value
-
-        let g =
-            rankedRgb
-            |> List.find (fun x -> x.Color = PrimaryColors.Green)
-            |> fun x -> x.Value
-
-        let b =
-            rankedRgb
-            |> List.find (fun x -> x.Color = PrimaryColors.Blue)
-            |> fun x -> x.Value
-
-        (r, g, b)
 
     let getNextRgb r g b interval colorToModify =
         let rec loop rgbList min max value colorToModify =
@@ -125,8 +81,8 @@ module IroIroiro =
                         { x with Value = addedMed }
                     else
                         x)
-                |> fromRankToRgb
-                |||> fromRgbToRank
+                |> RankedRgb.toInts
+                |||> RankedRgb.ofInts
             //printfn "newRankedRgb: %A" newRankedRgb
 
             let rankToAdd =
@@ -148,7 +104,7 @@ module IroIroiro =
             | None -> (newRankedRgb, colorToModify)
             | Some c -> loop newRankedRgb min max gap c
 
-        let rankedRgbs = fromRgbToRank r g b
+        let rankedRgbs = RankedRgb.ofInts r g b
         //printfn "rankedRgbs: %A" rankedRgbs
 
         let getValueByRank rgbList rank =
@@ -167,7 +123,7 @@ module IroIroiro =
         //printfn "colorToModify: %A" colorToModify
 
         let resRgb, lastModifiedColor = getNextRgb r g b interval colorToModify
-        let resR, resG, resB = resRgb |> fromRankToRgb
+        let resR, resG, resB = resRgb |> RankedRgb.toInts
         //printfn "resRgb: %A" resRgb
         //printfn "lastModifiedColor: %A" lastModifiedColor
 
@@ -254,7 +210,7 @@ module IroIroiro =
             let limit = limitInput |> int
 
             let colorToModify =
-                fromRgbToRank r g b
+                RankedRgb.ofInts r g b
                 |> List.sortBy (fun x -> x.Value)
                 |> List.item 1
                 |> fun x -> x.Color
