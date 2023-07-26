@@ -176,24 +176,15 @@ module IroIroiro =
             [ ("R", "rInput", rInput)
               ("G", "gInput", gInput)
               ("B", "bInput", bInput)
-              ("Step", "stepInput", stepInput)
-              ("Limit", "limitInput", limitInput) ]
+              ("変化量", "stepInput", stepInput)
+              ("回数", "limitInput", limitInput) ]
             |> List.map (fun (name, id, s) -> (name, id, System.Int32.TryParse s))
             |> List.filter (fun (_, _, (b, _)) -> b = false)
 
         match parseResult with
         | h :: t ->
             parseResult
-            |> List.map (fun (name, _, (_, _)) -> name)
-            |> List.map (fun name ->
-                match name with
-                | "R" -> name
-                | "G" -> name
-                | "B" -> name
-                | "Step" -> "間隔"
-                | "Limit" -> "回数"
-                | _ -> "")
-            |> List.map (sprintf """<span class="warning">%s の値が正しくありません。</span>""")
+            |> List.map (fun (name, _, (_, _)) -> $"""<span class="warning">%s{name} の値が正しくありません。</span>""")
             |> List.reduce (fun x y -> $"%s{x}<br>%s{y}")
             |> fun s -> errorArea.innerHTML <- s
 
