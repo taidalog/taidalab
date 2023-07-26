@@ -24,11 +24,11 @@ module IroIroiro =
                 <li>G: 緑のRGB値 (0 &le; G &le; 255)</li>
                 <li>B: 青のRGB値 (0 &le; B &le; 255)</li>
                 <li>
-                    間隔: RGB値を変化させる間隔。(0 &le; Interval &le; 255)<br>
+                    変化量: RGB値を変化させる量。(0 &le; 変化量 &le; 255)<br>
                     この値が小さいと色の変化が小さく、グラデーションのようになり、大きいと色が大きく変化し、カラフルになります。
                 </li>
                 <li>
-                    回数: 色をローテーションさせる回数。(1 &le; Limit)<br>
+                    回数: 色をローテーションさせる回数。(1 &le; 回数)<br>
                     あまり大きくすると時間がかかってしまいます。100位にしておいてください。
                 </li>
             </ul>
@@ -44,7 +44,7 @@ module IroIroiro =
                 <span class="iro-input-wrapper"><label for="bInput">B:<input type="number" id="bInput" class="iro-number-input consolas" min="0" max="255"></label></span>
             </span>
             <span class="display-order-2 input-area-iro-wider">
-                <span class="iro-input-wrapper"><label for="intervalInput">間隔:<input type="number" id="intervalInput" class="iro-number-input consolas"></label></span>
+                <span class="iro-input-wrapper"><label for="stepInput">間隔:<input type="number" id="stepInput" class="iro-number-input consolas"></label></span>
                 <span class="iro-input-wrapper"><label for="limitInput">回数:<input type="number" id="limitInput" class="iro-number-input iro-number-input-6rem consolas" value="100"></label></span>
             </span>
             <span class="display-order-3">
@@ -64,7 +64,7 @@ module IroIroiro =
 
     let (|Positive|Negative|) num = if num >= 0 then Positive else Negative
 
-    let getNextRgb r g b interval colorToModify =
+    let getNextRgb r g b step colorToModify =
         let rec loop rgbList min max value colorToModify =
             let addedMed, gap =
                 rgbList
@@ -116,19 +116,19 @@ module IroIroiro =
         let max = getValueByRank rankedRgbs Rank.Max
         //printfn "max: %d" max
 
-        loop rankedRgbs min max interval colorToModify
+        loop rankedRgbs min max step colorToModify
 
-    let rec repeatGetNextRgb r g b interval limit colorToModify acc =
+    let rec repeatGetNextRgb r g b step limit colorToModify acc =
         //printfn "r: %d  g: %d  b: %d" r g b
         //printfn "colorToModify: %A" colorToModify
 
-        let resRgb, lastModifiedColor = getNextRgb r g b interval colorToModify
+        let resRgb, lastModifiedColor = getNextRgb r g b step colorToModify
         let resR, resG, resB = resRgb |> RankedRgb.toInts
         //printfn "resRgb: %A" resRgb
         //printfn "lastModifiedColor: %A" lastModifiedColor
 
-        let nextInterval = interval * (if colorToModify = lastModifiedColor then 1 else -1)
-        //printfn "nextInterval: %d" nextInterval
+        let nextStep = step * (if colorToModify = lastModifiedColor then 1 else -1)
+        //printfn "nextStep: %d" nextStep
 
         let nextColorToModify =
             if lastModifiedColor = colorToModify then
@@ -138,7 +138,7 @@ module IroIroiro =
                     match (List.tryFind (fun x -> x.Rank = Rank.Med) resRgb) with
                     | Some m -> m.Rank
                     | None ->
-                        match nextInterval with
+                        match nextStep with
                         | Positive -> Rank.Min
                         | Negative -> Rank.Max
                 //printfnfnfn "nextRankToModify: %A" nextRankToModify
@@ -156,7 +156,7 @@ module IroIroiro =
 
         match limit with
         | 0 -> acc @ [ (resR, resG, resB) ]
-        | _ -> repeatGetNextRgb resR resG resB nextInterval (limit - 1) nextColorToModify (acc @ [ (resR, resG, resB) ])
+        | _ -> repeatGetNextRgb resR resG resB nextStep (limit - 1) nextColorToModify (acc @ [ (resR, resG, resB) ])
 
     let start () =
         let errorArea = document.getElementById "errorArea"
@@ -167,8 +167,7 @@ module IroIroiro =
         let gInput = (document.getElementById "gInput" :?> HTMLInputElement).value
         let bInput = (document.getElementById "bInput" :?> HTMLInputElement).value
 
-        let intervalInput =
-            (document.getElementById "intervalInput" :?> HTMLInputElement).value
+        let stepInput = (document.getElementById "stepInput" :?> HTMLInputElement).value
 
         let limitInput = (document.getElementById "limitInput" :?> HTMLInputElement).value
         //(rInput, gInput, bInput) |> printfn "initial: %A"
@@ -177,7 +176,7 @@ module IroIroiro =
             [ ("R", "rInput", rInput)
               ("G", "gInput", gInput)
               ("B", "bInput", bInput)
-              ("Interval", "intervalInput", intervalInput)
+              ("Step", "stepInput", stepInput)
               ("Limit", "limitInput", limitInput) ]
             |> List.map (fun (name, id, s) -> (name, id, System.Int32.TryParse s))
             |> List.filter (fun (_, _, (b, _)) -> b = false)
@@ -191,7 +190,7 @@ module IroIroiro =
                 | "R" -> name
                 | "G" -> name
                 | "B" -> name
-                | "Interval" -> "間隔"
+                | "Step" -> "間隔"
                 | "Limit" -> "回数"
                 | _ -> "")
             |> List.map (sprintf """<span class="warning">%s の値が正しくありません。</span>""")
@@ -206,7 +205,7 @@ module IroIroiro =
             let r = rInput |> int
             let g = gInput |> int
             let b = bInput |> int
-            let interval = intervalInput |> int
+            let step = stepInput |> int
             let limit = limitInput |> int
 
             let colorToModify =
@@ -216,7 +215,7 @@ module IroIroiro =
                 |> fun x -> x.Color
 
             //
-            let ress = repeatGetNextRgb r g b interval limit colorToModify [ (r, g, b) ]
+            let ress = repeatGetNextRgb r g b step limit colorToModify [ (r, g, b) ]
 
             let output =
                 ress
