@@ -12,28 +12,24 @@ open Taidalab.Switcher
 
 module Main =
 
-    window.addEventListener("DOMContentLoaded", (fun _ ->
-        printfn "%s" "The begining of DOMContentLoaded"
-        document.body.innerHTML <- Content.Common.body
-        (document.querySelector "footer").innerHTML <- Content.Common.footer
-        (document.querySelector "aside").innerHTML <- Content.Common.aside
-        printfn "%s" window.location.pathname
+    window.addEventListener (
+        "DOMContentLoaded",
+        (fun _ ->
+            printfn "%s" "The begining of DOMContentLoaded"
+            document.body.innerHTML <- Content.Common.body
+            (document.querySelector "footer").innerHTML <- Content.Common.footer
+            (document.querySelector "aside").innerHTML <- Content.Common.aside
+            printfn "%s" window.location.pathname
 
-        let pathname = window.location.pathname
-        pathname
-        |> Switcher.initPageFromPathname
-        |> ignore
+            let pathname = window.location.pathname
+            pathname |> Switcher.initPageFromPathname |> ignore
 
-        (document.querySelector "aside").getElementsByTagName "a"
-        |> (fun x -> JS.Constructors.Array?from(x))
-        |> Array.toList
-        |> List.iter (Switcher.switchAnchorAction pathname)
+            (document.querySelector "aside").getElementsByTagName "a"
+            |> (fun x -> JS.Constructors.Array?from(x))
+            |> Array.toList
+            |> List.iter (Switcher.switchAnchorAction pathname)
 
-        printfn "%s" "The end of DOMContentLoaded"
-    ))
+            printfn "%s" "The end of DOMContentLoaded")
+    )
 
-    window.addEventListener("popstate", (fun _ ->
-        window.location.pathname
-        |> Switcher.initPageFromPathname
-        |> ignore
-    ))
+    window.addEventListener ("popstate", (fun _ -> window.location.pathname |> Switcher.initPageFromPathname |> ignore))

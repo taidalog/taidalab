@@ -10,31 +10,27 @@ open Fermata
 
 module Text =
     let concatinateStrings joint strings =
-        strings
-        |> List.filter (String.IsNullOrEmpty >> not)
-        |> String.concat joint
-    
-    let replaceWithPairs (pairs : (string * string) list) (original : string) =
+        strings |> List.filter (String.IsNullOrEmpty >> not) |> String.concat joint
+
+    let replaceWithPairs (pairs: (string * string) list) (original: string) =
         (original, pairs)
-        ||> List.fold (fun original (oldString, newString) ->
-            original.Replace(oldString, newString))
-    
+        ||> List.fold (fun original (oldString, newString) -> original.Replace(oldString, newString))
+
     let escapeHtml input =
-        let replacements = [
-            ("&", "&amp;")
-            ("<", "&lt;")
-            (">", "&gt;")
-            ("\"", "&quot;")
-            ("'", "&#39;")
-        ]
+        let replacements =
+            [ ("&", "&amp;")
+              ("<", "&lt;")
+              (">", "&gt;")
+              ("\"", "&quot;")
+              ("'", "&#39;") ]
+
         replaceWithPairs replacements input
-    
-    let escapeSpace (input : string) =
-        input.Replace(" ", "&nbsp;")
-    
+
+    let escapeSpace (input: string) = input.Replace(" ", "&nbsp;")
+
     let padWithZero binaryDigit text =
         Fermata.String.padLeft binaryDigit '0' text
-    
+
     let colorLeadingZero str =
         str
         |> (String.rev >> String.tail >> String.rev)

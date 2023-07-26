@@ -14,6 +14,7 @@ module Number =
 
     let rec newNumber generator tester =
         let candidate = generator ()
+
         if tester candidate then
             candidate
         else

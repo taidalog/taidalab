@@ -7,11 +7,13 @@ namespace Taidalab
 
 module Content =
     module Complement =
-        let question = """4ビットの2進数 <span id="questionSpan" class="question-number"></span><sub id="srcRadix"></sub> の補数は？"""
+        let question =
+            """4ビットの2進数 <span id="questionSpan" class="question-number"></span><sub id="srcRadix"></sub> の補数は？"""
 
 
     module Common =
-        let body = """
+        let body =
+            """
             <div class="body-container">
                 <div id="barrier" class="barrier"></div>
                 <div id="helpBarrier" class="help-barrier"></div>
@@ -21,10 +23,10 @@ module Content =
                     <main></main>
                 </div>
                 <footer></footer>
-            </div>
+            </div>"""
+
+        let header =
             """
-        
-        let header = """
             <div id="headerContainer" class="header-container">
                 <button id="hamburgerButton" class="hamburger-button">
                     <span class="bar bar-top"></span>
@@ -34,7 +36,8 @@ module Content =
                 <div id="headerTitle" class="header-title"></div>
             </div>"""
 
-        let aside = """
+        let aside =
+            """
             <ul>
                 <details class="aside-details">
                     <summary class="aside-summary">
@@ -66,18 +69,23 @@ module Content =
                 <li><a class="aside-home" id="asideRepo" href="https://github.com/taidalog/taidalab">Repository on GitHub</a></li>
             </ul>"""
 
-        let question = """<span id="questionSpan" class="question-number"></span><sub id="srcRadix"></sub> を<span id="dstRadix"></span>進法で表すと？"""
-        
+        let question =
+            """<span id="questionSpan" class="question-number"></span><sub id="srcRadix"></sub> を<span id="dstRadix"></span>進法で表すと？"""
+
         let version = "Version 4.3.0"
 
-        let footer = sprintf """
-            <small class="footer-container">
-                <div class="item">&copy; 2022-2023 taidalog</div>
-                <div class="item"><a id="versionNumber" href="https://github.com/taidalog/taidalab/releases">%s</a></div>
-                <div class="item">Powered by <a id="footerFSharp" href="https://fsharp.org/">F#</a> and <a id="footerFable" href="https://fable.io">Fable</a>. Thank you!</div>
-            </small>""" version
-        
-        let columnAdditionFormat = """
+        let footer =
+            sprintf
+                """
+                <small class="footer-container">
+                    <div class="item">&copy; 2022-2023 taidalog</div>
+                    <div class="item"><a id="versionNumber" href="https://github.com/taidalog/taidalab/releases">%s</a></div>
+                    <div class="item">Powered by <a id="footerFSharp" href="https://fsharp.org/">F#</a> and <a id="footerFable" href="https://fable.io">Fable</a>. Thank you!</div>
+                </small>"""
+                version
+
+        let columnAdditionFormat =
+            """
             <div class="calculation-area" id="calculationArea">
                 <div class="first-row" id="">
                     <span class="digit-area question-number" id="firstRowDigit8"></span>

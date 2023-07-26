@@ -6,7 +6,8 @@
 namespace Taidalab
 
 module Home =
-    let main = """
+    let main =
+        """
         <div class="home-center">
             <p>
                 <span class="home-title">taidalab</span><br>

@@ -6,7 +6,8 @@
 namespace Taidalab
 
 module InformationPolicy =
-    let main = """
+    let main =
+        """
         <h2>情報の外部送信について</h2>
         <p>アクセス状況の分析のため、当サイトでは「Google アナリティクス」というサービスを利用しています。それに伴い、以下のような利用者のアクセス情報を外部へ送信しています。</p>
         <h2>送信情報</h2>

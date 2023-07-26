@@ -16,29 +16,30 @@ open Fermata.RadixConversion
 
 module EndlessBinary =
     module Dec2Bin1 =
-        let help = """
+        let help =
+            """
             10進数から2進数への変換をエンドレスで練習できます。<br>
             出題範囲は n (0&le;n&le;255) で、2の累乗の数同士の和になっています。<br>
             ヒント付きなので、考え方も身に付けられます。
             """
-        
-//        let countOneBit binaryString =
-//            binaryString
-//            |> Seq.countWith (fun c -> c = '1')
+
+        //        let countOneBit binaryString =
+        //            binaryString
+        //            |> Seq.countWith (fun c -> c = '1')
 
 
-        let devideIntoPowerOfTwo (number : int) =
-            let getMaxPowerOfTwo (number : int) =
+        let devideIntoPowerOfTwo (number: int) =
+            let getMaxPowerOfTwo (number: int) =
                 let indexNumber = Math.Log(double number, 2.0) |> int |> double
                 Math.Pow(2.0, indexNumber) |> int
 
             let rec loop acc number =
                 match number with
                 | 0 -> acc
-                | 1 -> acc @ [1]
+                | 1 -> acc @ [ 1 ]
                 | _ ->
                     let max = getMaxPowerOfTwo number
-                    loop (acc @ [max]) (number - max)
+                    loop (acc @ [ max ]) (number - max)
 
             loop [] number
 
@@ -46,12 +47,13 @@ module EndlessBinary =
         let rec repeatDivision dividend divisor =
             let quotient = int (dividend / divisor)
             let remainder = dividend - (quotient * divisor)
-            if quotient < divisor then
-                [(quotient, remainder)]
-            else
-                [(quotient, remainder)] @ repeatDivision quotient divisor
 
-        let newArrowBin fontSize lineCount stroke fill=
+            if quotient < divisor then
+                [ (quotient, remainder) ]
+            else
+                [ (quotient, remainder) ] @ repeatDivision quotient divisor
+
+        let newArrowBin fontSize lineCount stroke fill =
             Svg.newArrow
                 (fontSize |> double |> (fun x -> x / 2. * 4.))
                 (lineCount |> (fun x -> (fontSize * (x - 1)) + 6) |> double)
@@ -63,10 +65,11 @@ module EndlessBinary =
                 stroke
                 fill
 
-        
+
         let newHintAnimation divisor num fontSize =
             let divRems =
                 (numOpt divisor num) :: (divRemOpt divisor (repeatDivision num divisor))
+
             divRems
             |> List.mapi (fun i (a, b, c, d) ->
                 Option.map // divisor
@@ -75,7 +78,12 @@ module EndlessBinary =
                             0
                             (fontSize * (i + 1))
                             0.
-                            (sprintf "%d%s" x (Svg.animateOpacity (i |> delayMs |> (fun x -> if i = 0 then x + 1000 else x + 2000)) 500)))
+                            (sprintf
+                                "%d%s"
+                                x
+                                (Svg.animateOpacity
+                                    (i |> delayMs |> (fun x -> if i = 0 then x + 1000 else x + 2000))
+                                    500)))
                     a,
                 Option.map // line
                     (fun x ->
@@ -87,7 +95,7 @@ module EndlessBinary =
                                 (fontSize / 2)
                                 (double fontSize * 0.4)
                                 (double fontSize * 0.8)
-                                (double fontSize / 2.* 4.8))
+                                (double fontSize / 2. * 4.8))
                             "#000000"
                             1
                             "none"
@@ -100,7 +108,10 @@ module EndlessBinary =
                             (fontSize / 2 * 2)
                             (fontSize * (i + 1))
                             0.
-                            (sprintf "%s%s" (x |> string |> (Fermata.String.padLeft 3 ' ') |> escapeSpace) (Svg.animateOpacity (i |> delayMs) 500)))
+                            (sprintf
+                                "%s%s"
+                                (x |> string |> (Fermata.String.padLeft 3 ' ') |> escapeSpace)
+                                (Svg.animateOpacity (i |> delayMs) 500)))
                     c,
                 Option.map // remainder
                     (fun x ->
@@ -120,12 +131,10 @@ module EndlessBinary =
             |> List.fold
                 (fun x y -> sprintf "%s%s" x y)
                 (newArrowBin fontSize (List.length divRems) "#191970" "#b0e0e6")
-            |> (Svg.frame
-                    (fontSize / 2 * 10)
-                    (divRems |> List.length |> (fun x -> fontSize * (x + 1))))
-        
-//        let hint content=
-//            sprintf """<details id="hintDetails"><summary>ヒント: </summary>%s</details>""" content
+            |> (Svg.frame (fontSize / 2 * 10) (divRems |> List.length |> (fun x -> fontSize * (x + 1))))
+
+        //        let hint content=
+        //            sprintf """<details id="hintDetails"><summary>ヒント: </summary>%s</details>""" content
 
         let newHintRepeatDivision divisor number =
             sprintf
@@ -144,19 +153,22 @@ module EndlessBinary =
                 </div>"""
                 (newHintAnimation divisor number 20)
 
-        let newHintRepeatAddition number (power_of_twos : int list) =
+        let newHintRepeatAddition number (power_of_twos: int list) =
             let additionDec = power_of_twos |> List.map string |> String.concat " + "
             let log2 i = Math.Log(double i, 2.0)
+
             let additionIndex =
                 power_of_twos
                 |> List.map (log2 >> Math.Truncate >> int)
                 |> List.map (sprintf "2<sup>%d</sup>")
                 |> String.concat " + "
+
             let additionBin =
                 power_of_twos
                 |> List.map Dec.toBin
                 |> List.map (sprintf "%s<sub>(2)</sub>")
                 |> String.concat " + "
+
             $"""
                 <p class="history-indented">
                     10進法で表現した数を2進法で表現しなおすには、<br>
@@ -216,43 +228,55 @@ module EndlessBinary =
 
         let hint number =
             newHint 2 number (devideIntoPowerOfTwo number)
-        
+
         let newNumberWithTwoOne min max =
             let rec newTwoRandomNumbers min max =
                 let rand = new Random()
                 let index1 = rand.Next(min, max)
                 let index2 = rand.Next(min, max)
+
                 if index1 <> index2 then
                     (index1, index2)
                 else
                     newTwoRandomNumbers min max
+
             newTwoRandomNumbers min max
             |> Tuple.map (double >> (fun x -> 2.0 ** x))
             ||> (+)
             |> int
-        
+
         let question (digit: int) (lastAnswers: int list) : int =
-            newNumber
-                (fun _ -> newNumberWithTwoOne 0 digit)
-                (fun n -> List.contains n lastAnswers = false)
+            newNumber (fun _ -> newNumberWithTwoOne 0 digit) (fun n -> List.contains n lastAnswers = false)
 
         let additional number : unit =
-            (document.getElementById "hint1").onclick <- (fun _ ->
-                (document.getElementById "hint1").innerHTML <-
-                    newHintAnimation 2 number 20
-                (document.getElementById "hintDetails").setAttribute ("open", "true"))
-        
-        let rec checkAnswer (questionGenerator: 'c list -> 'c) (hintGenerator: 'a -> 'b) validator converter tagger (additional: 'c -> unit) sourceRadix destinationRadix (answersToKeep: int) (answer: string) (last_answers : int list) =
+            (document.getElementById "hint1").onclick <-
+                (fun _ ->
+                    (document.getElementById "hint1").innerHTML <- newHintAnimation 2 number 20
+                    (document.getElementById "hintDetails").setAttribute ("open", "true"))
+
+        let rec checkAnswer
+            (questionGenerator: 'c list -> 'c)
+            (hintGenerator: 'a -> 'b)
+            validator
+            converter
+            tagger
+            (additional: 'c -> unit)
+            sourceRadix
+            destinationRadix
+            (answersToKeep: int)
+            (answer: string)
+            (last_answers: int list)
+            =
             // Getting the user input.
             let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
             let input = numberInput.value |> escapeHtml
-            let validated: Result<string,Errors.Errors> = input |> validator
+            let validated: Result<string, Errors.Errors> = input |> validator
             //printfn "bin: %A" bin
-            
-            numberInput.focus()
-            
+
+            numberInput.focus ()
+
             match validated with
-            | Error (error: Errors.Errors) ->
+            | Error(error: Errors.Errors) ->
                 // Making an error message.
                 (document.getElementById "errorArea").innerHTML <- newErrorMessageBin answer input error
             | Ok validated ->
@@ -265,46 +289,45 @@ module EndlessBinary =
                 let converted = validated |> converter
                 //printfn "taggedBin: %s" taggedBin
                 //printfn "dec: %d" dec
-                
+
                 let decimalDigit = 3
+
                 let spacePadded =
-                    converted
-                    |> string
-                    |> Fermata.String.padLeft decimalDigit ' '
-                    |> escapeSpace
-                
+                    converted |> string |> Fermata.String.padLeft decimalDigit ' ' |> escapeSpace
+
                 // Making a new history and updating the history with the new one.
                 //let sourceRadix = 10
                 let outputArea = document.getElementById "outputArea" :?> HTMLParagraphElement
+
                 let historyMessage =
                     newHistory (converted = int answer) colored destinationRadix spacePadded sourceRadix
-                    |> (fun x -> concatinateStrings "<br>" [x; outputArea.innerHTML])
+                    |> (fun x -> concatinateStrings "<br>" [ x; outputArea.innerHTML ])
                 //printfn "historyMessage: \n%s" historyMessage
                 outputArea.innerHTML <- historyMessage
-                
+
                 if converted <> int answer then
                     ()
                 else
                     // Making the next question.
                     //printfn "last_answers : %A" last_answers
-                    
+
                     let nextNumber = questionGenerator last_answers
                     //printfn "nextNumber : %d" nextNumber
                     //printfn "List.contains nextNumber last_answers : %b" (List.contains nextNumber last_answers)
 
                     //let quotientsAndRemainders = repeatDivision nextNumber 2
                     //printfn "quotientsAndRemainders: %A" quotientsAndRemainders
-                    
+
                     //let powerOfTwos = devideIntoPowerOfTwo nextNumber
                     //printfn "powerOfTwos: %A" powerOfTwos
 
                     //let nextHint = hint nextNumber
                     //printfn "nextHint: \n%s" nextHint
-                    
+
                     (document.getElementById "questionSpan").innerText <- string nextNumber
                     (document.getElementById "hintArea").innerHTML <- hintGenerator nextNumber
                     additional nextNumber
-                    
+
                     numberInput.value <- ""
 
                     // Updating `lastAnswers`.
@@ -314,15 +337,53 @@ module EndlessBinary =
                     let lastAnswers' = (nextNumber :: last_answers) |> List.truncate answersToKeep
 
                     // Setting the next answer to the check button.
-                    (document.getElementById "submitButton").onclick <- (fun _ ->
-                        checkAnswer questionGenerator hintGenerator validator converter tagger additional sourceRadix destinationRadix answersToKeep (string nextNumber) lastAnswers'
-                        false)
-                    (document.getElementById "inputArea").onsubmit <- (fun _ ->
-                        checkAnswer questionGenerator hintGenerator validator converter tagger additional sourceRadix destinationRadix answersToKeep (string nextNumber) lastAnswers'
-                        false)
+                    (document.getElementById "submitButton").onclick <-
+                        (fun _ ->
+                            checkAnswer
+                                questionGenerator
+                                hintGenerator
+                                validator
+                                converter
+                                tagger
+                                additional
+                                sourceRadix
+                                destinationRadix
+                                answersToKeep
+                                (string nextNumber)
+                                lastAnswers'
+
+                            false)
+
+                    (document.getElementById "inputArea").onsubmit <-
+                        (fun _ ->
+                            checkAnswer
+                                questionGenerator
+                                hintGenerator
+                                validator
+                                converter
+                                tagger
+                                additional
+                                sourceRadix
+                                destinationRadix
+                                answersToKeep
+                                (string nextNumber)
+                                lastAnswers'
+
+                            false)
 
 
-        let init' (questionGenerator: 'c list -> 'c) (hintGenerator: 'a -> 'b) validator converter tagger (additional: 'c -> unit) sourceRadix destinationRadix (answersToKeep: int) checker : unit =
+        let init'
+            (questionGenerator: 'c list -> 'c)
+            (hintGenerator: 'a -> 'b)
+            validator
+            converter
+            tagger
+            (additional: 'c -> unit)
+            sourceRadix
+            destinationRadix
+            (answersToKeep: int)
+            checker
+            : unit =
             // Initialization.
             //printfn "Initialization starts."
 
@@ -342,23 +403,77 @@ module EndlessBinary =
             (document.getElementById "dstRadix").innerText <- string destinationRadix
             (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
             (document.getElementById "hintArea").innerHTML <- hintGenerator initNumber
-            (document.getElementById "submitButton").onclick <- (fun _ ->
-                checker questionGenerator hintGenerator validator converter tagger additional sourceRadix destinationRadix answersToKeep (string initNumber) [initNumber]
-                false)
-            (document.getElementById "inputArea").onsubmit <- (fun _ ->
-                checker questionGenerator hintGenerator validator converter tagger additional sourceRadix destinationRadix answersToKeep (string initNumber) [initNumber]
-                false)
+
+            (document.getElementById "submitButton").onclick <-
+                (fun _ ->
+                    checker
+                        questionGenerator
+                        hintGenerator
+                        validator
+                        converter
+                        tagger
+                        additional
+                        sourceRadix
+                        destinationRadix
+                        answersToKeep
+                        (string initNumber)
+                        [ initNumber ]
+
+                    false)
+
+            (document.getElementById "inputArea").onsubmit <-
+                (fun _ ->
+                    checker
+                        questionGenerator
+                        hintGenerator
+                        validator
+                        converter
+                        tagger
+                        additional
+                        sourceRadix
+                        destinationRadix
+                        answersToKeep
+                        (string initNumber)
+                        [ initNumber ]
+
+                    false)
+
             additional initNumber
-            
-            (document.getElementById "helpButton").onclick <- (fun _ ->
-                ["helpWindow"; "helpBarrier"]
-                |> List.iter (fun x -> (document.getElementById x).classList.toggle "active" |> ignore))
-            
-            (document.getElementById "helpBarrier").onclick <- (fun _ ->
-                ["helpWindow"; "helpBarrier"]
-                |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore))
-            
-            //printfn "Initialization ends."
-        
-        let init () = init' (question 8) hint Bin.validate Bin.toDec (padWithZero 8 >> colorLeadingZero) additional 10 2 10 checkAnswer
-        let init4 () = init' (question 4) hint Bin.validate Bin.toDec (padWithZero 4 >> colorLeadingZero) additional 10 2 2 checkAnswer
+
+            (document.getElementById "helpButton").onclick <-
+                (fun _ ->
+                    [ "helpWindow"; "helpBarrier" ]
+                    |> List.iter (fun x -> (document.getElementById x).classList.toggle "active" |> ignore))
+
+            (document.getElementById "helpBarrier").onclick <-
+                (fun _ ->
+                    [ "helpWindow"; "helpBarrier" ]
+                    |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore))
+
+        //printfn "Initialization ends."
+
+        let init () =
+            init'
+                (question 8)
+                hint
+                Bin.validate
+                Bin.toDec
+                (padWithZero 8 >> colorLeadingZero)
+                additional
+                10
+                2
+                10
+                checkAnswer
+
+        let init4 () =
+            init'
+                (question 4)
+                hint
+                Bin.validate
+                Bin.toDec
+                (padWithZero 4 >> colorLeadingZero)
+                additional
+                10
+                2
+                2
+                checkAnswer

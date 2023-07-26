@@ -6,7 +6,8 @@
 namespace Taidalab
 
 module About =
-    let main = $"""
+    let main =
+        $"""
         <h2>このサイトについて</h2>
         <p>
             taidalab（タイダラブ）は、taidalog が作成したプログラム置き場です。<br>

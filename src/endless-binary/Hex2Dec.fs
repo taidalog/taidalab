@@ -17,20 +17,21 @@ open Fermata.RadixConversion
 
 module EndlessBinary =
     module Hex2Dec =
-        let help = """
+        let help =
+            """
             16進数から10進数への変換をエンドレスで練習できます。<br>
             出題範囲は n (0&le;n&le;255) です。<br>
             ヒント付きなので、考え方も身に付けられます。
             """
 
-        let writeAdditionFormulaHex (hex : seq<char>) =
+        let writeAdditionFormulaHex (hex: seq<char>) =
             hex
             |> Seq.toList
             |> List.rev
-            |> List.mapi (fun i c -> sprintf """(%d * 16<sup>%d</sup>)""" (c |> string |> Hex.toDec)i)
+            |> List.mapi (fun i c -> sprintf """(%d * 16<sup>%d</sup>)""" (c |> string |> Hex.toDec) i)
             |> List.rev
             |> String.concat " + "
-        
+
         let tableComponentsHex hex =
             hex
             |> Seq.toList
@@ -38,7 +39,7 @@ module EndlessBinary =
                 $"""<span class="hint-table-digit">%d{(hex |> String.length) - i}</span>""",
                 $"""<span class="hint-table-digit green-h2d large">%c{c}</span>""",
                 $"""<span class="hint-table-digit palegreen">%d{16}<sup>%d{(hex |> String.length) - i - 1}</sup></span>""")
-        
+
         let newHintTable (a, b, c) =
             sprintf
                 """
@@ -63,15 +64,16 @@ module EndlessBinary =
                     </div>
                 </div>
                 """
-                a b c
-        
+                a
+                b
+                c
+
         let hintTable hex =
             hex
             |> tableComponentsHex
-            |> List.fold (fun x y ->
-                applyToTuples3 (fun a1 a2 -> sprintf"%s%s" a1 a2) x y) ("", "", "")
+            |> List.fold (fun x y -> applyToTuples3 (fun a1 a2 -> sprintf "%s%s" a1 a2) x y) ("", "", "")
             |> newHintTable
-        
+
         let hintFormat hex formula table =
             $"""<details>
                 <summary>ヒント:</summary>
@@ -103,31 +105,29 @@ module EndlessBinary =
                     = %d{hex |> Hex.toDec}
                 </p>
             </details>"""
-        
-        let rec checkAnswer answer (question : string) (last_answers : int list) =
+
+        let rec checkAnswer answer (question: string) (last_answers: int list) =
             // Getting the user input.
             let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
             let input = numberInput.value |> escapeHtml
-            let dec: Result<int,Errors.Errors> = input |> Dec.validate
+            let dec: Result<int, Errors.Errors> = input |> Dec.validate
             //printfn "input: %s" input
 
-            numberInput.focus()
+            numberInput.focus ()
 
             match dec with
-            | Error (error: Errors.Errors) ->
+            | Error(error: Errors.Errors) ->
                 // Making an error message.
                 (document.getElementById "errorArea").innerHTML <- newErrorMessageDec question input error
-            | Ok (dec: int) ->
+            | Ok(dec: int) ->
                 (document.getElementById "errorArea").innerHTML <- ""
-                
+
                 // Converting the input in order to use in the history message.
                 let digit = 3
+
                 let spacePaddedInputValue =
-                    dec
-                    |> string
-                    |> Fermata.String.padLeft digit ' '
-                    |> escapeSpace
-                
+                    dec |> string |> Fermata.String.padLeft digit ' ' |> escapeSpace
+
                 let sourceRadix = 16
                 let hex = Dec.toHex dec
                 let hexDigit = 2
@@ -136,49 +136,51 @@ module EndlessBinary =
                 // Making a new history and updating the history with the new one.
                 let destinationRadix = 10
                 let outputArea = document.getElementById "outputArea"
+
                 let historyMessage =
                     newHistory (dec = answer) spacePaddedInputValue destinationRadix taggedHex sourceRadix
-                    |> (fun x -> concatinateStrings "<br>" [x; outputArea.innerHTML])
+                    |> (fun x -> concatinateStrings "<br>" [ x; outputArea.innerHTML ])
                 //printfn "%A" historyMessage
                 outputArea.innerHTML <- historyMessage
-                
+
                 if dec = answer then
                     // Making the next question.
                     //printfnfn "%A" last_answers
 
                     let nextNumber =
-                        newNumber
-                            (fun _ -> getRandomBetween 0 255)
-                            (fun n -> List.contains n last_answers = false)
+                        newNumber (fun _ -> getRandomBetween 0 255) (fun n -> List.contains n last_answers = false)
                     //printfn "%d" nextNumber
 
                     let nextHex = Dec.toHex nextNumber
                     //printfnfn "%s" nextHex
-                                    
+
                     (document.getElementById "questionSpan").innerText <- nextHex
-                    
+
                     let nextAddtionFormula = writeAdditionFormulaHex nextHex
                     let nextHint = hintFormat nextHex nextAddtionFormula (hintTable nextHex)
                     //printfn "%s" nextHint
-                    
+
                     (document.getElementById "hintArea").innerHTML <- nextHint
                     numberInput.value <- ""
 
                     // Updating `lastAnswers`.
                     // These numbers will not be used for the next question.
                     let answersToKeep = Math.Min(10, List.length last_answers + 1)
-                    let lastAnswers = (nextNumber :: last_answers).[0..(answersToKeep - 1)]
+                    let lastAnswers = (nextNumber :: last_answers).[0 .. (answersToKeep - 1)]
 
                     // Setting the next answer to the check button.
-                    (document.getElementById "submitButton").onclick <- (fun _ ->
-                        checkAnswer nextNumber nextHex lastAnswers
-                        false)
-                    (document.getElementById "inputArea").onsubmit <- (fun _ ->
-                        checkAnswer nextNumber nextHex lastAnswers
-                        false)
+                    (document.getElementById "submitButton").onclick <-
+                        (fun _ ->
+                            checkAnswer nextNumber nextHex lastAnswers
+                            false)
+
+                    (document.getElementById "inputArea").onsubmit <-
+                        (fun _ ->
+                            checkAnswer nextNumber nextHex lastAnswers
+                            false)
 
 
-        let init  () =
+        let init () =
             // Initialization.
             let initNumber = getRandomBetween 0 255
             let initHex = Dec.toHex initNumber
@@ -197,17 +199,23 @@ module EndlessBinary =
             (document.getElementById "dstRadix").innerText <- string destinationRadix
             (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
             (document.getElementById "hintArea").innerHTML <- hint
-            (document.getElementById "submitButton").onclick <- (fun _ ->
-                checkAnswer initNumber initHex [initNumber]
-                false)
-            (document.getElementById "inputArea").onsubmit <- (fun _ ->
-                checkAnswer initNumber initHex [initNumber]
-                false)
-            
-            (document.getElementById "helpButton").onclick <- (fun _ ->
-                ["helpWindow"; "helpBarrier"]
-                |> List.iter (fun x -> (document.getElementById x).classList.toggle "active" |> ignore))
-            
-            (document.getElementById "helpBarrier").onclick <- (fun _ ->
-                ["helpWindow"; "helpBarrier"]
-                |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore))
+
+            (document.getElementById "submitButton").onclick <-
+                (fun _ ->
+                    checkAnswer initNumber initHex [ initNumber ]
+                    false)
+
+            (document.getElementById "inputArea").onsubmit <-
+                (fun _ ->
+                    checkAnswer initNumber initHex [ initNumber ]
+                    false)
+
+            (document.getElementById "helpButton").onclick <-
+                (fun _ ->
+                    [ "helpWindow"; "helpBarrier" ]
+                    |> List.iter (fun x -> (document.getElementById x).classList.toggle "active" |> ignore))
+
+            (document.getElementById "helpBarrier").onclick <-
+                (fun _ ->
+                    [ "helpWindow"; "helpBarrier" ]
+                    |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore))

@@ -18,16 +18,16 @@ module NotFound =
         // Getting the user input.
         let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
         let input = numberInput.value |> escapeHtml
-        let bin: Result<string,Errors.Errors> = input |> Bin.validate
+        let bin: Result<string, Errors.Errors> = input |> Bin.validate
         //printfn "%A" bin
-        
-        numberInput.focus()
+
+        numberInput.focus ()
 
         match bin with
-        | Error (error: Errors.Errors) ->
+        | Error(error: Errors.Errors) ->
             // Making an error message.
             (document.getElementById "errorArea").innerHTML <- newErrorMessageBin answer input error
-        | Ok (bin: string) ->
+        | Ok(bin: string) ->
             (document.getElementById "errorArea").innerHTML <- ""
             // Converting the input in order to use in the history message.
             let binaryDigit = 9
@@ -36,23 +36,22 @@ module NotFound =
             let dec = Bin.toDec bin
             //printfn "%s" taggedBin
             //printfn "%d" dec
-            
+
             let decimalDigit = 3
+
             let spacePaddedDec =
-                dec
-                |> string
-                |> Fermata.String.padLeft decimalDigit ' '
-                |> escapeSpace
-            
+                dec |> string |> Fermata.String.padLeft decimalDigit ' ' |> escapeSpace
+
             // Making a new history and updating the history with the new one.
             let sourceRadix = 10
             let outputArea = document.getElementById "outputArea" :?> HTMLParagraphElement
+
             let historyMessage =
                 newHistory (dec = int answer) taggedBin destinationRadix spacePaddedDec sourceRadix
-                |> (fun x -> concatinateStrings "<br>" [x; outputArea.innerHTML])
+                |> (fun x -> concatinateStrings "<br>" [ x; outputArea.innerHTML ])
             //printfn "%s" historyMessage
             outputArea.innerHTML <- historyMessage
-            
+
             if dec <> int answer then
                 ()
             else
@@ -60,7 +59,7 @@ module NotFound =
                 ("/", Taidalab.Home.main, (fun _ -> ())) |||> InitObject.create |> Page.replace
 
 
-    let init ()  =
+    let init () =
         // Initialization.
         //printfn "Initialization starts."
 
@@ -72,11 +71,15 @@ module NotFound =
         (document.getElementById "srcRadix").innerText <- sprintf "(%d)" sourceRadix
         (document.getElementById "dstRadix").innerText <- string destinationRadix
         (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
-        (document.getElementById "submitButton").onclick <- (fun _ ->
-            checkAnswer (string initNumber)
-            false)
-        (document.getElementById "inputArea").onsubmit <- (fun _ ->
-            checkAnswer (string initNumber)
-            false)
-        
-        //printfn "Initialization ends."
+
+        (document.getElementById "submitButton").onclick <-
+            (fun _ ->
+                checkAnswer (string initNumber)
+                false)
+
+        (document.getElementById "inputArea").onsubmit <-
+            (fun _ ->
+                checkAnswer (string initNumber)
+                false)
+
+//printfn "Initialization ends."

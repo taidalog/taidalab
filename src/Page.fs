@@ -14,14 +14,17 @@ module Page =
         let header = document.querySelector "header"
         header.innerHTML <- initObject.headerContent
         header.className <- initObject.headerColorClass
-        (document.getElementById "hamburgerButton").onclick <- (fun _ ->
-            (document.querySelector "aside").classList.toggle "active" |> ignore
-            (document.getElementById "barrier").classList.toggle "active" |> ignore)
-        
-        (document.getElementById "barrier").onclick <- (fun _ ->
-            (document.querySelector "aside").classList.remove "active" |> ignore
-            (document.getElementById "barrier").classList.remove "active" |> ignore)
-        
+
+        (document.getElementById "hamburgerButton").onclick <-
+            (fun _ ->
+                (document.querySelector "aside").classList.toggle "active" |> ignore
+                (document.getElementById "barrier").classList.toggle "active" |> ignore)
+
+        (document.getElementById "barrier").onclick <-
+            (fun _ ->
+                (document.querySelector "aside").classList.remove "active" |> ignore
+                (document.getElementById "barrier").classList.remove "active" |> ignore)
+
         let headerTitle = document.querySelector "#headerTitle"
         headerTitle.innerHTML <- initObject.headerTitle
 
@@ -33,13 +36,13 @@ module Page =
 
         if initObject.buttonColorClass <> "" then
             (document.querySelector "#submitButton").className <- initObject.buttonColorClass
-        
-        initObject.initFunc()
+
+        initObject.initFunc ()
 
     let push initObject =
-        window.history.pushState(null, "", initObject.pathname)
+        window.history.pushState (null, "", initObject.pathname)
         init initObject
 
     let replace initObject =
-        window.history.replaceState(null, "", initObject.pathname)
+        window.history.replaceState (null, "", initObject.pathname)
         init initObject

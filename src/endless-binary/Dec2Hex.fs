@@ -16,7 +16,8 @@ open Fermata.RadixConversion
 
 module EndlessBinary =
     module Dec2Hex =
-        let help = """
+        let help =
+            """
             10進数から16進数への変換をエンドレスで練習できます。<br>
             出題範囲は n (0&le;n&le;255) です。<br>
             ヒント付きなので、考え方も身に付けられます。
@@ -34,10 +35,12 @@ module EndlessBinary =
                 stroke
                 fill
 
-        
+
         let newHintAnimation divisor num fontSize =
             let divRems =
-                (numOpt divisor num) :: (divRemOpt divisor (Dec2Bin1.repeatDivision num divisor))
+                (numOpt divisor num)
+                :: (divRemOpt divisor (Dec2Bin1.repeatDivision num divisor))
+
             divRems
             |> List.mapi (fun i (a, b, c, d) ->
                 Option.map // divisor
@@ -46,7 +49,12 @@ module EndlessBinary =
                             0
                             (fontSize * (i + 1))
                             0.
-                            (sprintf "%d%s" x (Svg.animateOpacity (i |> delayMs |> (fun x -> if i = 0 then x + 1000 else x + 2000)) 500)))
+                            (sprintf
+                                "%d%s"
+                                x
+                                (Svg.animateOpacity
+                                    (i |> delayMs |> (fun x -> if i = 0 then x + 1000 else x + 2000))
+                                    500)))
                     a,
                 Option.map // line
                     (fun x ->
@@ -58,7 +66,7 @@ module EndlessBinary =
                                 (fontSize / 2)
                                 (double fontSize * 0.4)
                                 (double fontSize * 0.8)
-                                (double fontSize / 2.* 4.8))
+                                (double fontSize / 2. * 4.8))
                             "#000000"
                             1
                             "none"
@@ -71,7 +79,10 @@ module EndlessBinary =
                             (fontSize / 2 * 3)
                             (fontSize * (i + 1))
                             0.
-                            (sprintf "%s%s" (x |> string |> (String.padLeft 3 ' ') |> escapeSpace) (Svg.animateOpacity (i |> delayMs) 500)))
+                            (sprintf
+                                "%s%s"
+                                (x |> string |> (String.padLeft 3 ' ') |> escapeSpace)
+                                (Svg.animateOpacity (i |> delayMs) 500)))
                     c,
                 Option.map // remainder
                     (fun x ->
@@ -91,10 +102,8 @@ module EndlessBinary =
             |> List.fold
                 (fun x y -> sprintf "%s%s" x y)
                 (newArrowHex fontSize (List.length divRems) "#1e3330" "#95feec")
-            |> (Svg.frame
-                    (fontSize / 2 * 11)
-                    (divRems |> List.length |> (fun x -> fontSize * (x + 1))))
-        
+            |> (Svg.frame (fontSize / 2 * 11) (divRems |> List.length |> (fun x -> fontSize * (x + 1))))
+
 
         let newHintRepeatDivision divisor number fontSize =
             sprintf
@@ -126,18 +135,26 @@ module EndlessBinary =
                 """
                 (newHintRepeatDivision divisor number fontSize)
 
-        let hint number =
-            newHint 16 number 20
-        
+        let hint number = newHint 16 number 20
+
         let question lastAnswers : int =
-            newNumber
-                (fun _ -> getRandomBetween 0 255)
-                (fun n -> List.contains n lastAnswers = false)
+            newNumber (fun _ -> getRandomBetween 0 255) (fun n -> List.contains n lastAnswers = false)
 
         let additional number : unit =
-            (document.getElementById "hint1").onclick <- (fun _ ->
-                (document.getElementById "hint1").innerHTML <-
-                    newHintAnimation 16 number 20
-                (document.getElementById "hintDetails").setAttribute ("open", "true"))
+            (document.getElementById "hint1").onclick <-
+                (fun _ ->
+                    (document.getElementById "hint1").innerHTML <- newHintAnimation 16 number 20
+                    (document.getElementById "hintDetails").setAttribute ("open", "true"))
 
-        let init () = Dec2Bin1.init' question hint Hex.validate Hex.toDec (padWithZero 8 >> colorLeadingZero) additional 10 16 10 Dec2Bin1.checkAnswer
+        let init () =
+            Dec2Bin1.init'
+                question
+                hint
+                Hex.validate
+                Hex.toDec
+                (padWithZero 8 >> colorLeadingZero)
+                additional
+                10
+                16
+                10
+                Dec2Bin1.checkAnswer
