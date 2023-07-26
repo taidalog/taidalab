@@ -239,7 +239,7 @@ module IroIroiro =
                 | "Limit" -> "回数"
                 | _ -> "")
             |> List.map (sprintf """<span class="warning">%s の値が正しくありません。</span>""")
-            |> List.reduce (fun x y -> sprintf "%s<br>%s" x y)
+            |> List.reduce (fun x y -> $"%s{x}<br>%s{y}")
             |> (fun s -> errorArea.innerHTML <- s)
 
             h
@@ -266,14 +266,8 @@ module IroIroiro =
                 ress
                 |> List.map (fun (r, g, b) ->
                     sprintf
-                        """<div class="color-div" style="background-color: rgb(%d, %d, %d);">R: %d  G: %d  B: %d</div>"""
-                        r
-                        g
-                        b
-                        r
-                        g
-                        b)
-                |> List.reduce (fun x y -> sprintf "%s\n%s" x y)
+                        $"""<div class="color-div" style="background-color: rgb(%d{r}, %d{g}, %d{b});">R: %d{r}  G: %d{g}  B: %d{b}</div>""")
+                |> List.reduce (fun x y -> $"%s{x}\n%s{y}")
 
             //
             let outputArea = (document.getElementById "outputArea")
