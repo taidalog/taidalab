@@ -36,19 +36,10 @@ module RankedRgb =
                RankedRgb.Rank = rank }))
 
     let toInts (rankedRgb: RankedRgb list) : (int * int * int) =
-        let r =
-            rankedRgb
-            |> List.find (fun x -> x.Color = PrimaryColors.Red)
-            |> fun x -> x.Value
+        let valueByColor rankedRgbs color =
+            rankedRgbs |> List.find (fun x -> x.Color = color) |> (fun x -> x.Value)
 
-        let g =
-            rankedRgb
-            |> List.find (fun x -> x.Color = PrimaryColors.Green)
-            |> fun x -> x.Value
-
-        let b =
-            rankedRgb
-            |> List.find (fun x -> x.Color = PrimaryColors.Blue)
-            |> fun x -> x.Value
-
+        let r = valueByColor rankedRgb PrimaryColors.Red
+        let g = valueByColor rankedRgb PrimaryColors.Green
+        let b = valueByColor rankedRgb PrimaryColors.Blue
         (r, g, b)
