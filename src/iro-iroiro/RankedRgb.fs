@@ -23,6 +23,15 @@ type RankedRgb =
       Rank: Rank }
 
 module RankedRgb =
+    let valueByColor (rankedRgbs: RankedRgb list) (color: PrimaryColors) : int =
+        rankedRgbs |> List.find (fun x -> x.Color = color) |> (fun x -> x.Value)
+
+    let valueByRank (rankedRgbs: RankedRgb list) (rank: Rank) : int =
+        rankedRgbs |> List.find (fun x -> x.Rank = rank) |> (fun x -> x.Value)
+
+    let colorByRank (rankedRgbs: RankedRgb list) (rank: Rank) : PrimaryColors =
+        rankedRgbs |> List.find (fun x -> x.Rank = rank) |> (fun x -> x.Color)
+
     let ofInts (r: int) (g: int) (b: int) : RankedRgb list =
         [ (PrimaryColors.Red, r); (PrimaryColors.Green, g); (PrimaryColors.Blue, b) ]
         |> List.map (fun (color, value) ->
@@ -36,9 +45,6 @@ module RankedRgb =
                RankedRgb.Rank = rank }))
 
     let toInts (rankedRgb: RankedRgb list) : (int * int * int) =
-        let valueByColor rankedRgbs color =
-            rankedRgbs |> List.find (fun x -> x.Color = color) |> (fun x -> x.Value)
-
         let r = valueByColor rankedRgb PrimaryColors.Red
         let g = valueByColor rankedRgb PrimaryColors.Green
         let b = valueByColor rankedRgb PrimaryColors.Blue
