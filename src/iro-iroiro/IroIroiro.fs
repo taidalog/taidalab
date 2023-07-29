@@ -64,7 +64,7 @@ module IroIroiro =
 
     let (|Positive|Negative|) num = if num >= 0 then Positive else Negative
 
-    let getNextRgb r g b step colorToModify =
+    let getNextRgb r g b step colorToModify : RankedRgb list * PrimaryColors =
         let rec loop rgbList min max value colorToModify =
             let addedMed, gap =
                 rgbList
@@ -107,13 +107,10 @@ module IroIroiro =
         let rankedRgbs = RankedRgb.ofInts r g b
         //printfn "rankedRgbs: %A" rankedRgbs
 
-        let getValueByRank rgbList rank =
-            rgbList |> List.find (fun x -> x.Rank = rank) |> (fun x -> x.Value)
-
-        let min = getValueByRank rankedRgbs Rank.Min
+        let min = valueByRank rankedRgbs Rank.Min
         //printfnfn "min: %d" min
 
-        let max = getValueByRank rankedRgbs Rank.Max
+        let max = valueByRank rankedRgbs Rank.Max
         //printfn "max: %d" max
 
         loop rankedRgbs min max step colorToModify
@@ -144,7 +141,7 @@ module IroIroiro =
                 //printfnfnfn "nextRankToModify: %A" nextRankToModify
 
                 match nextRankToModify with
-                | Rank.Med -> resRgb |> List.find (fun x -> x.Rank = nextRankToModify) |> (fun x -> x.Color)
+                | Rank.Med -> colorByRank resRgb nextRankToModify
                 | _ ->
                     resRgb
                     |> List.filter (fun x -> x.Color <> lastModifiedColor)
@@ -188,10 +185,7 @@ module IroIroiro =
             |> List.reduce (fun x y -> $"%s{x}<br>%s{y}")
             |> fun s -> errorArea.innerHTML <- s
 
-            h
-            |> fun (_, id, (_, _)) -> id
-            |> fun id -> (document.getElementById id)
-            |> fun el -> el.focus () |> ignore
+            h |> fun (_, id, (_, _)) -> (document.getElementById id).focus () |> ignore
         | [] ->
             let r = rInput |> int
             let g = gInput |> int
@@ -213,11 +207,9 @@ module IroIroiro =
                 |> List.map (fun (r, g, b) ->
                     sprintf
                         $"""<div class="color-div" style="background-color: rgb(%d{r}, %d{g}, %d{b});">R: %d{r}  G: %d{g}  B: %d{b}</div>""")
-                |> List.reduce (fun x y -> $"%s{x}\n%s{y}")
+                |> String.concat "\n"
 
-            //
-            let outputArea = document.getElementById "outputArea"
-            outputArea.innerHTML <- output
+            (document.getElementById "outputArea").innerHTML <- output
 
 
     let init () =
@@ -225,15 +217,17 @@ module IroIroiro =
         //printfn "Initialization starts."
         (document.getElementById "submitButton").onclick <- (fun _ -> start ())
 
-        (document.getElementById "helpButton").onclick <-
-            (fun _ ->
-                [ "helpWindow"; "helpBarrier" ]
-                |> List.iter (fun x -> (document.getElementById x).classList.toggle "active" |> ignore))
+        [ "helpButton"; "helpBarrier" ]
+        |> List.iter (fun x ->
+            (document.getElementById x).onclick <-
+                (fun _ ->
+                    [ "helpWindow"; "helpBarrier" ]
+                    |> List.iter (fun x -> (document.getElementById x).classList.toggle "active" |> ignore)))
 
-        (document.getElementById "helpBarrier").onclick <-
-            (fun _ ->
-                [ "helpWindow"; "helpBarrier" ]
-                |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore))
+//        (document.getElementById "helpBarrier").onclick <-
+//            (fun _ ->
+//                [ "helpWindow"; "helpBarrier" ]
+//                |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore))
 
-//(document.getElementById "inputArea").onsubmit <- (fun _ -> start())
-//printfn "Initialization ends."
+//        (document.getElementById "inputArea").onsubmit <- (fun _ -> start())
+//        printfn "Initialization ends."
