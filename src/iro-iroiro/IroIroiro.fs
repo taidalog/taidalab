@@ -71,8 +71,6 @@ module IroIroiro =
                 |> List.find (fun x -> x.Color = colorToModify)
                 |> fun x -> x.Value + value |> Bound.clampGap min max
                 |> fun (x, y) -> x, -y
-            //printfn "addedMed: %d" addedMed
-            //printfn "gap: %d" gap
 
             let newRankedRgb =
                 rgbList
@@ -83,13 +81,11 @@ module IroIroiro =
                         x)
                 |> RankedRgb.toInts
                 |||> RankedRgb.ofInts
-            //printfn "newRankedRgb: %A" newRankedRgb
 
             let rankToAdd =
                 if gap > 0 then Some Rank.Min
                 else if gap < 0 then Some Rank.Max
                 else None
-            //printfnfnfn "rankToAdd: %A" rankToAdd
 
             let nextColorToModify =
                 match rankToAdd with
@@ -105,27 +101,17 @@ module IroIroiro =
             | Some c -> loop newRankedRgb min max gap c
 
         let rankedRgbs = RankedRgb.ofInts r g b
-        //printfn "rankedRgbs: %A" rankedRgbs
-
         let min = valueByRank rankedRgbs Rank.Min
-        //printfnfn "min: %d" min
-
         let max = valueByRank rankedRgbs Rank.Max
-        //printfn "max: %d" max
 
         loop rankedRgbs min max step colorToModify
 
     let rec repeatGetNextRgb r g b step limit colorToModify acc =
-        //printfn "r: %d  g: %d  b: %d" r g b
-        //printfn "colorToModify: %A" colorToModify
 
         let resRgb, lastModifiedColor = getNextRgb r g b step colorToModify
         let resR, resG, resB = resRgb |> RankedRgb.toInts
-        //printfn "resRgb: %A" resRgb
-        //printfn "lastModifiedColor: %A" lastModifiedColor
 
         let nextStep = step * (if colorToModify = lastModifiedColor then 1 else -1)
-        //printfn "nextStep: %d" nextStep
 
         let nextColorToModify =
             if lastModifiedColor = colorToModify then
@@ -138,7 +124,6 @@ module IroIroiro =
                         match nextStep with
                         | Positive -> Rank.Min
                         | Negative -> Rank.Max
-                //printfnfnfn "nextRankToModify: %A" nextRankToModify
 
                 match nextRankToModify with
                 | Rank.Med -> colorByRank resRgb nextRankToModify
@@ -147,9 +132,6 @@ module IroIroiro =
                     |> List.filter (fun x -> x.Color <> lastModifiedColor)
                     |> List.find (fun x -> x.Rank = nextRankToModify)
                     |> fun x -> x.Color
-        //printfn "nextColorToModify: %A" nextColorToModify
-        //printfn "The end of repeatGetNextRgb at limit: %d" limit
-        //printfn "\n"
 
         match limit with
         | 0 -> acc @ [ (resR, resG, resB) ]
@@ -159,15 +141,11 @@ module IroIroiro =
         let errorArea = document.getElementById "errorArea"
         errorArea.innerHTML <- ""
 
-        //
         let rInput = (document.getElementById "rInput" :?> HTMLInputElement).value
         let gInput = (document.getElementById "gInput" :?> HTMLInputElement).value
         let bInput = (document.getElementById "bInput" :?> HTMLInputElement).value
-
         let stepInput = (document.getElementById "stepInput" :?> HTMLInputElement).value
-
         let limitInput = (document.getElementById "limitInput" :?> HTMLInputElement).value
-        //(rInput, gInput, bInput) |> printfn "initial: %A"
 
         let parseResult =
             [ ("R", "rInput", rInput)
@@ -199,7 +177,6 @@ module IroIroiro =
                 |> List.item 1
                 |> fun x -> x.Color
 
-            //
             let ress = repeatGetNextRgb r g b step limit colorToModify [ (r, g, b) ]
 
             let output =
@@ -223,11 +200,5 @@ module IroIroiro =
                 (fun _ ->
                     [ "helpWindow"; "helpBarrier" ]
                     |> List.iter (fun x -> (document.getElementById x).classList.toggle "active" |> ignore)))
-
-//        (document.getElementById "helpBarrier").onclick <-
-//            (fun _ ->
-//                [ "helpWindow"; "helpBarrier" ]
-//                |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore))
-
 //        (document.getElementById "inputArea").onsubmit <- (fun _ -> start())
 //        printfn "Initialization ends."
