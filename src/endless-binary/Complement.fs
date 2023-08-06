@@ -78,7 +78,11 @@ module EndlessBinary =
                 (document.getElementById "errorArea").innerHTML <- ""
                 let dec = Bin.toDec bin
 
-                let historyClassName = if dec = answer then "history-correct" else "history-wrong"
+                let historyClassName =
+                    if dec = answer then
+                        "history history-correct"
+                    else
+                        "history history-wrong"
 
                 // Converting the input in order to use in the history message.
                 let digit = 4

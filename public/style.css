@@ -103,48 +103,206 @@ aside.active {
     transition: all 0.5s ease-in-out 0s;
 }
 
-.aside-home:hover {
+aside summary {
+    list-style: none;
+}
+
+aside summary::-webkit-details-marker {
+    display: none;
+}
+
+/*
+    Colors for headers and check buttons.
+
+    Colors of buttons on home.
+    course-button-<identifier>
+*/
+header.home,
+header.dec2bin,
+aside a.home:hover,
+aside a.dec2bin:hover,
+.course-button-d2b1,
+.course-button-d2b2 {
     background-color: #65a2ac;
 }
 
-.aside-d2b:hover {
-    background-color: #65a2ac;
+header.home,
+header.dec2bin {
+    color: aliceblue;
 }
 
-.aside-b2d:hover {
+button.submit-button.dec2bin {
+    color: midnightblue;
+    background: powderblue;
+}
+
+button.submit-button.dec2bin:hover {
+    background-color: #9ec9cf;
+}
+
+.course-button-d2b1:hover,
+.course-button-d2b2:hover {
+    background-color: #5a919a;
+}
+
+header.bin2dec,
+aside a.bin2dec:hover,
+.course-button-b2d1,
+.course-button-b2d2 {
     background-color: #65ac86;
 }
 
-.aside-pot:hover {
+button.submit-button.bin2dec {
+    color: #1e3328;
+    background: #95fec6;
+}
+
+button.submit-button.bin2dec:hover {
+    background-color: #86e5b2;
+}
+
+.course-button-b2d1:hover,
+.course-button-b2d2:hover {
+    background-color: #5a9a78;
+}
+
+header.power-of-two,
+aside a.power-of-two:hover,
+.course-button-pot1,
+.course-button-pot2 {
     background-color: #a665ac;
 }
 
-.aside-add:hover {
+button.submit-button.power-of-two {
+    color: indigo;
+    background: plum;
+}
+
+button.submit-button.power-of-two:hover {
+    background-color: #c690c6;
+}
+
+.course-button-pot1:hover,
+.course-button-pot2:hover {
+    background-color: #955a9a;
+}
+
+header.addition,
+aside a.addition:hover,
+aside a.subtraction:hover,
+.course-button-add,
+.course-button-sub {
     background-color: #656eac;
 }
 
-.aside-sub:hover {
-    background-color: #656eac;
+button.submit-button.addition,
+button.submit-button.subtraction {
+    color: #1e2133;
+    background: #95a2fe;
 }
 
-.aside-cmp:hover {
+button.submit-button.addition:hover,
+button.submit-button.subtraction:hover {
+    background-color: #8692e5;
+}
+
+.course-button-add:hover,
+.course-button-sub:hover {
+    background-color: #5a639a;
+}
+
+header.complement,
+aside a.complement:hover,
+.course-button-cmp {
     background-color: #6588ac;
 }
 
-.aside-d2h:hover {
+button.submit-button.complement {
+    color: #1e2833;
+    background: #95c9fe;
+}
+
+button.submit-button.complement:hover {
+    background-color: #86b5e5;
+}
+
+.course-button-cmp:hover {
+    background-color: #5a7a9a;
+}
+
+header.dec2hex,
+aside a.dec2hex:hover,
+aside a.hex2dec:hover,
+.course-button-d2h {
     background-color: #65aca0;
 }
 
-.aside-iro:hover {
+button.submit-button.dec2hex {
+    color: #1e3330;
+    background: #95feec;
+}
+
+button.submit-button.dec2hex:hover {
+    background-color: #86e5d5;
+}
+
+.course-button-d2h:hover {
+    background-color: #5a9a90;
+}
+
+header.iro-iroiro,
+aside a.iro-iroiro:hover {
     background-color: #ac657c;
 }
 
-.aside-ctc:hover {
+button.submit-button.iro-iroiro {
+    color: #331e25;
+    background: #fe95b7;
+}
+
+button.submit-button.iro-iroiro:hover {
+    background-color: #e586a5;
+}
+
+aside a.ctc:hover {
     background-color: #aaac65;
 }
 
-.aside-nws:hover {
+header.network-simulator,
+aside a.network-simulator:hover {
     background-color: #7c65ac;
+}
+
+button.submit-button.network-simulator {
+    color: #251e33;
+    background: #b795fe;
+}
+
+button.submit-button.network-simulator:hover {
+    background-color: #a586e5;
+}
+
+header.not-found {
+    background-color: #808080;
+}
+
+button.submit-button.not-found {
+    color: #262626;
+    background: #bdbdbd;
+}
+
+button.submit-button.not-found:hover {
+    background-color: #aaaaaa;
+}
+
+button.submit-button.gray {
+    color: #000000;
+    background-color: #e9e9ed;
+    width: 160px;
+}
+
+button.submit-button.gray:hover {
+    background-color: #d0d0d7;
 }
 
 main {
@@ -305,23 +463,20 @@ details summary:hover {
     margin-left: 2rem;
 }
 
-.consolas {
-    font-family: Consolas, sans-serif;
+.history {
+    font-size: 18px;
 }
 
 .history-correct {
     background-color: greenyellow;
-    font-size: 18px;
 }
 
 .history-wrong {
     background-color: lightpink;
-    font-size: 18px;
 }
 
 .history-lightgray {
     background-color: lightgray;
-    font-size: 18px;
 }
 
 .zero-gray {
@@ -406,6 +561,7 @@ details summary:hover {
     Colors of buttons on home.
     course-button-<identifier>
 */
+/*
 .course-button-d2b1 {
     background-color: #65a2ac;
 }
@@ -485,158 +641,7 @@ details summary:hover {
 .course-button-d2h:hover {
     background-color: #5a9a90;
 }
-
-
-/*
-    Colors for headers and check buttons.
-    header-<identifier>
-    submit-button-<identifier>
 */
-.header-home {
-    background-color: #65a2ac;
-    color: aliceblue;
-}
-
-.header-d2b {
-    background-color: #65a2ac;
-    color: aliceblue;
-}
-
-.submit-button-d2b {
-    color: midnightblue;
-    background: powderblue;
-}
-
-.submit-button-d2b:hover {
-    background-color: #9ec9cf;
-}
-
-.header-b2d {
-    background-color: #65ac86;
-}
-
-.submit-button-b2d {
-    color: #1e3328;
-    background: #95fec6;
-}
-
-.submit-button-b2d:hover {
-    background-color: #86e5b2;
-}
-
-.header-pot {
-    background-color: #a665ac;
-}
-
-.submit-button-pot {
-    color: indigo;
-    background: plum;
-}
-
-.submit-button-pot:hover {
-    background-color: #c690c6;
-}
-
-.header-add {
-    background-color: #656eac;
-}
-
-.submit-button-add {
-    color: #1e2133;
-    background: #95a2fe;
-}
-
-.submit-button-add:hover {
-    background-color: #8692e5;
-}
-
-.header-sub {
-    background-color: #656eac;
-}
-
-.submit-button-sub {
-    color: #1e2133;
-    background: #95a2fe;
-}
-
-.submit-button-sub:hover {
-    background-color: #8692e5;
-}
-
-.header-cmp {
-    background-color: #6588ac;
-}
-
-.submit-button-cmp {
-    color: #1e2833;
-    background: #95c9fe;
-}
-
-.submit-button-cmp:hover {
-    background-color: #86b5e5;
-}
-
-.header-d2h {
-    background-color: #65aca0;
-}
-
-.submit-button-d2h {
-    color: #1e3330;
-    background: #95feec;
-}
-
-.submit-button-d2h:hover {
-    background-color: #86e5d5;
-}
-
-.header-iro {
-    background-color: #ac657c;
-}
-
-.submit-button-iro {
-    color: #331e25;
-    background: #fe95b7;
-}
-
-.submit-button-iro:hover {
-    background-color: #e586a5;
-}
-
-.header-nws {
-    background-color: #7c65ac;
-}
-
-.submit-button-nws {
-    color: #251e33;
-    background: #b795fe;
-}
-
-.submit-button-nws:hover {
-    background-color: #a586e5;
-}
-
-.header-not {
-    background-color: #808080;
-}
-
-.submit-button-not {
-    color: #262626;
-    background: #bdbdbd;
-}
-
-.submit-button-not:hover {
-    background-color: #aaaaaa;
-}
-
-.submit-button-gray {
-    color: #000000;
-    background-color: #e9e9ed;
-    width: 160px;
-}
-
-.submit-button-gray:hover {
-    background-color: #d0d0d7;
-}
 
 
 /*
@@ -1046,14 +1051,6 @@ span.device-prop.subnetmask::before {
 
 .lan-cable {
     cursor: move;
-}
-
-.aside-summary {
-    list-style: none;
-}
-
-.aside-summary::-webkit-details-marker {
-    display: none;
 }
 
 .material-symbols-outlined.symbols18 {

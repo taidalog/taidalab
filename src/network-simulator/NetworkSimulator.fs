@@ -63,25 +63,25 @@ module NetworkSimulator =
             </span>
         </form>
         <form>
-            <button type="button" id="addClientButton" class="submit-button submit-button-gray display-order-3">
+            <button type="button" id="addClientButton" class="submit-button gray display-order-3">
                 <span class="icon-vertical-center">
                     <span class="material-symbols-outlined symbols18">add_circle</span>
                     クライアント
                 </span>
             </button>
-            <button type="button" id="addRouterButton" class="submit-button submit-button-gray display-order-4">
+            <button type="button" id="addRouterButton" class="submit-button gray display-order-4">
                 <span class="icon-vertical-center">
                     <span class="material-symbols-outlined symbols18">add_circle</span>
                     ルータ
                 </span>
             </button>
-            <button type="button" id="addHubButton" class="submit-button submit-button-gray display-order-5">
+            <button type="button" id="addHubButton" class="submit-button gray display-order-5">
                 <span class="icon-vertical-center">
                     <span class="material-symbols-outlined symbols18">add_circle</span>
                     ハブ
                 </span>
             </button>
-            <button type="button" id="addLANCableButton" class="submit-button submit-button-gray display-order-6">
+            <button type="button" id="addLANCableButton" class="submit-button gray display-order-6">
                 <span class="icon-vertical-center">
                     <span class="material-symbols-outlined symbols18">add_circle</span>
                     LANケーブル
@@ -648,7 +648,7 @@ module NetworkSimulator =
                                     sprintf "%s [%s] はLANケーブルに繋がっていません。" (Device.name source) (sourceIPv4.ToString())
                             | _ ->
                                 sprintf
-                                    """<span class="history-lightgray">%s [%s] -> %s 接続中…"""
+                                    """<span class="history history-lightgray">%s [%s] -> %s 接続中…"""
                                     (Device.name source)
                                     (sourceIPv4.ToString())
                                     (destinationIPv4.ToString())
@@ -657,9 +657,9 @@ module NetworkSimulator =
                                 ping lanCables' devices' 128 destinationIPv4 source
                                 |> fun b ->
                                     if b then
-                                        ("history-correct", "通信成功！")
+                                        ("history history-correct", "通信成功！")
                                     else
-                                        ("history-wrong", "通信失敗…")
+                                        ("history history-wrong", "通信失敗…")
                                 |> fun (className, success) ->
                                     sprintf
                                         """<span class="%s">%s [%s] -> %s %s"""

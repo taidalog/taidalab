@@ -98,7 +98,11 @@ module EndlessBinary =
             sprintf """<span class="warning">'%s' は入力できる数値の範囲を越えています。入力できるのは xxx ~ yyy の間です。</span>""" input
 
     let newHistory correct input destination_radix converted_input source_radix =
-        let historyClassName = if correct then "history-correct" else "history-wrong"
+        let historyClassName =
+            if correct then
+                "history history-correct"
+            else
+                "history history-wrong"
 
         sprintf
             "<span class =\"%s\">%s<sub>(%d)</sub> = %s<sub>(%d)</sub></span>"

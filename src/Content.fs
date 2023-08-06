@@ -39,34 +39,34 @@ module Content =
         let aside =
             """
             <ul>
-                <details class="aside-details">
-                    <summary class="aside-summary">
-                        <a class="aside-home" id="asideEndlessBinary">10進数↔︎2進数の反復練習</a>
+                <details>
+                    <summary>
+                        <a class="home" id="asideEndlessBinary">10進数↔︎2進数の反復練習</a>
                     </summary>
                     <ul>
-                        <li><a class="aside-d2b" href="/endless-binary/dec2bin-1/">10進数→2進数 (1)</a></li>
-                        <li><a class="aside-d2b" href="/endless-binary/dec2bin-2/">10進数→2進数 (2)</a></li>
-                        <li><a class="aside-b2d" href="/endless-binary/bin2dec-1/">2進数→10進数 (1)</a></li>
-                        <li><a class="aside-b2d" href="/endless-binary/bin2dec-2/">2進数→10進数 (2)</a></li>
-                        <li><a class="aside-pot" href="/endless-binary/power-of-two-1/">2のn乗</a></li>
-                        <li><a class="aside-pot" href="/endless-binary/power-of-two-2/">2のn乗-1</a></li>
-                        <li><a class="aside-add" href="/endless-binary/addition/">加算</a></li>
-                        <li><a class="aside-sub" href="/endless-binary/subtraction/">減算</a></li>
-                        <li><a class="aside-cmp" href="/endless-binary/complement/">補数</a></li>
-                        <li><a class="aside-d2h" href="/endless-binary/dec2hex/">10進数→16進数</a></li>
-                        <li><a class="aside-d2h" href="/endless-binary/hex2dec/">16進数→10進数</a></li>
+                        <li><a class="dec2bin" href="/endless-binary/dec2bin-1/">10進数→2進数 (1)</a></li>
+                        <li><a class="dec2bin" href="/endless-binary/dec2bin-2/">10進数→2進数 (2)</a></li>
+                        <li><a class="bin2dec" href="/endless-binary/bin2dec-1/">2進数→10進数 (1)</a></li>
+                        <li><a class="bin2dec" href="/endless-binary/bin2dec-2/">2進数→10進数 (2)</a></li>
+                        <li><a class="power-of-two" href="/endless-binary/power-of-two-1/">2のn乗</a></li>
+                        <li><a class="power-of-two" href="/endless-binary/power-of-two-2/">2のn乗-1</a></li>
+                        <li><a class="addition" href="/endless-binary/addition/">加算</a></li>
+                        <li><a class="subtraction" href="/endless-binary/subtraction/">減算</a></li>
+                        <li><a class="complement" href="/endless-binary/complement/">補数</a></li>
+                        <li><a class="dec2hex" href="/endless-binary/dec2hex/">10進数→16進数</a></li>
+                        <li><a class="hex2dec" href="/endless-binary/hex2dec/">16進数→10進数</a></li>
                     </ul>
                 </details>
-                <li><a class="aside-iro" id="asideIroIroiro" href="/iro-iroiro/">色いろいろ</a></li>
-                <li><a class="aside-nws" id="asideNetworkSimulator" href="/network-simulator/">ネットワークシミュレータ</a></li>
-                <li><a class="aside-ctc" id="asideSoon" href="#">Comming soon...</a></li>
+                <li><a class="iro-iroiro" id="asideIroIroiro" href="/iro-iroiro/">色いろいろ</a></li>
+                <li><a class="network-simulator" id="asideNetworkSimulator" href="/network-simulator/">ネットワークシミュレータ</a></li>
+                <li><a class="ctc" id="asideSoon" href="#">Comming soon...</a></li>
             </ul>
             <ul>
-                <li><a class="aside-home" id="asideAbout" href="/">Home</a></li>
-                <li><a class="aside-home" id="asideAbout" href="/about/">About</a></li>
-                <li><a class="aside-home" id="asideTerms" href="/terms/">ご利用について</a></li>
-                <li><a class="aside-home" id="asideTerms" href="/information-policy/">情報の外部送信について</a></li>
-                <li><a class="aside-home" id="asideRepo" href="https://github.com/taidalog/taidalab">Repository on GitHub</a></li>
+                <li><a class="home" id="asideAbout" href="/">Home</a></li>
+                <li><a class="home" id="asideAbout" href="/about/">About</a></li>
+                <li><a class="home" id="asideTerms" href="/terms/">ご利用について</a></li>
+                <li><a class="home" id="asideTerms" href="/information-policy/">情報の外部送信について</a></li>
+                <li><a class="home" id="asideRepo" href="https://github.com/taidalog/taidalab">Repository on GitHub</a></li>
             </ul>"""
 
         let question =
