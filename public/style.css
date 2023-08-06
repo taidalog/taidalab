@@ -10,8 +10,22 @@
 /*
     Common in the all pages.
 */
+
+.mono {
+    font-family: 'Noto Sans Mono', monospace;
+}
+
+.light {
+    font-weight: 300;
+}
+
+.regular {
+    font-weight: 400;
+}
+
 html {
-    font-family: sans-serif;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 300;
     font-size: 100%;
 }
 
@@ -42,6 +56,8 @@ header {
 }
 
 header h1 {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 400;
     font-size: 1.5rem;
     margin-top: 0;
     margin-bottom: 0;
@@ -257,7 +273,6 @@ footer a {
     width: 200px;
     height: 40px;
     margin-bottom: 20px;
-    /**/
     position: relative;
     cursor: pointer;
 }
@@ -1019,7 +1034,6 @@ details summary:hover {
 
 .device-note {
     font-size: 0.8rem;
-    font-family: monospace;
 }
 
 .device-prop {
