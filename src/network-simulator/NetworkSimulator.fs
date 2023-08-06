@@ -49,10 +49,10 @@ module NetworkSimulator =
         <form id="inputArea" class="iro-input-area" autocomplete="off">
             <span class="display-order-1 input-area-iro-shorter">
                 <span class="iro-input-wrapper">
-                    <label for="intervalInput">送信元 IPv4:<input type="text" id="sourceInput" class="number-input display-order-1 consolas"></label>
+                    <label for="intervalInput">送信元 IPv4:<input type="text" id="sourceInput" class="number-input display-order-1 mono regular"></label>
                 </span>
                 <span class="iro-input-wrapper">
-                    <label for="limitInput">送信先 IPv4:<input type="text" id="destinationInput" class="number-input display-order-1 consolas"></label>
+                    <label for="limitInput">送信先 IPv4:<input type="text" id="destinationInput" class="number-input display-order-1 mono regular"></label>
                 </span>
             </span>
             <span class="display-order-2">

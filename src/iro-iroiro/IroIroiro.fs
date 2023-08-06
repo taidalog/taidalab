@@ -39,13 +39,13 @@ module IroIroiro =
         $"""
         <form id="inputArea" class="iro-input-area" autocomplete="off">
             <span class="display-order-1 input-area-iro-shorter">
-                <span class="iro-input-wrapper"><label for="rInput">R:<input type="number" id="rInput" class="iro-number-input consolas" min="0" max="255"></label></span>
-                <span class="iro-input-wrapper"><label for="gInput">G:<input type="number" id="gInput" class="iro-number-input consolas" min="0" max="255"></label></span>
-                <span class="iro-input-wrapper"><label for="bInput">B:<input type="number" id="bInput" class="iro-number-input consolas" min="0" max="255"></label></span>
+                <span class="iro-input-wrapper"><label for="rInput">R:<input type="number" id="rInput" class="iro-number-input mono regular" min="0" max="255"></label></span>
+                <span class="iro-input-wrapper"><label for="gInput">G:<input type="number" id="gInput" class="iro-number-input mono regular" min="0" max="255"></label></span>
+                <span class="iro-input-wrapper"><label for="bInput">B:<input type="number" id="bInput" class="iro-number-input mono regular" min="0" max="255"></label></span>
             </span>
             <span class="display-order-2 input-area-iro-wider">
-                <span class="iro-input-wrapper"><label for="stepInput">変化量:<input type="number" id="stepInput" class="iro-number-input consolas"></label></span>
-                <span class="iro-input-wrapper"><label for="limitInput">回数:<input type="number" id="limitInput" class="iro-number-input iro-number-input-6rem consolas" value="100"></label></span>
+                <span class="iro-input-wrapper"><label for="stepInput">変化量:<input type="number" id="stepInput" class="iro-number-input mono regular"></label></span>
+                <span class="iro-input-wrapper"><label for="limitInput">回数:<input type="number" id="limitInput" class="iro-number-input iro-number-input-6rem mono regular" value="100"></label></span>
             </span>
             <span class="display-order-3">
                 <button type="button" id="submitButton" class="submit-button d2b-button">確認</button>

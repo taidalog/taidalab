@@ -32,7 +32,7 @@ module EndlessBinary =
                 <p class="history-indented">
                     %d{number}<sub>(10)</sub> という数は、以下のように表すことができます。
                 </p>
-                <p class="history-indented hint-bgcolor-gray">
+                <p class="history-indented hint-bgcolor-gray mono regular">
                     &nbsp;&nbsp;%d{number}<sub>(10)</sub><br>
                     = %d{number + 1}<sub>(10)</sub> - 1<sub>(10)</sub><br>
                     = 2<sup>%d{indexNumber}</sup><sub>(10)</sub> - 1<sub>(10)</sub>

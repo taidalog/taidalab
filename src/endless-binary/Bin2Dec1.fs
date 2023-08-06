@@ -116,7 +116,7 @@ module EndlessBinary =
                     2進法で表現した数を10進法で表現しなおすには、それぞれの桁の数と重みをかけ算し、それを合計します。<br>
                     %s{binaryString}<sub>(2)</sub> の場合、以下のように計算します。
                 </p>
-                <p class="history-indented hint-bgcolor-gray">
+                <p class="history-indented hint-bgcolor-gray mono regular">
                     &nbsp;&nbsp;%s{formula}<br>
                     = %d{Bin.toDec binaryString}<sub>(10)</sub>
                 </p>
