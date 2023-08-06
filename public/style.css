@@ -289,10 +289,6 @@ details summary:hover {
     background-color: #f0f0f0;
 }
 
-.column-addition-area {
-    font-family: 'Courier New', Courier, monospace;
-}
-
 .column-addition-row {
     text-decoration: underline;
 }
@@ -1040,11 +1036,11 @@ details summary:hover {
     cursor: pointer;
 }
 
-.device-prop-ipv4::before {
+span.device-prop.ipv4::before {
     content: "IPv4: ";
 }
 
-.device-prop-subnetmask::before {
+span.device-prop.subnetmask::before {
     content: "SubnetMask: ";
 }
 

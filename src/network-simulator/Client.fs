@@ -198,7 +198,7 @@ module Client =
 
         let spanIPv4 = document.createElement ("span")
         spanIPv4.id <- $"%s{client.Id}IPv4"
-        spanIPv4.className <- "device-prop device-prop-ipv4"
+        spanIPv4.className <- "device-prop ipv4 mono"
         spanIPv4.contentEditable <- "true"
         spanIPv4.textContent <- $"%s{client.IPv4.ToString()}"
 
@@ -206,7 +206,7 @@ module Client =
 
         let spanSubnetMask = document.createElement ("span")
         spanSubnetMask.id <- $"%s{client.Id}SubnetMask"
-        spanSubnetMask.className <- "device-prop device-prop-subnetmask"
+        spanSubnetMask.className <- "device-prop subnetmask mono"
         spanSubnetMask.contentEditable <- "true"
         spanSubnetMask.textContent <- $"%s{client.SubnetMask.ToString()}"
 

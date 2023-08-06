@@ -118,7 +118,7 @@ module EndlessBinary =
                         ※この下の筆算をクリックすると動きます。
                     </p>
                 </div>
-                <div id="hint1" class="history-indented column-addition-area">
+                <div id="hint1" class="history-indented mono">
                     %s
                 </div>
                 """

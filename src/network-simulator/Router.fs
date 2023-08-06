@@ -150,7 +150,7 @@ module Router =
 
         let spanIPv4 = document.createElement ("span")
         spanIPv4.id <- $"%s{router.Id}IPv4"
-        spanIPv4.className <- "device-prop device-prop-ipv4"
+        spanIPv4.className <- "device-prop ipv4 mono"
         spanIPv4.contentEditable <- "true"
 
         router.IPv4
@@ -162,7 +162,7 @@ module Router =
 
         let spanSubnetMask = document.createElement ("span")
         spanSubnetMask.id <- $"%s{router.Id}SubnetMask"
-        spanSubnetMask.className <- "device-prop device-prop-subnetmask"
+        spanSubnetMask.className <- "device-prop subnetmask mono"
         spanSubnetMask.contentEditable <- "true"
 
         router.SubnetMask
