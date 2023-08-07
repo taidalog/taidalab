@@ -399,11 +399,18 @@ footer a {
 /*
     <main> of /endless-binary/* pages.
 */
+
+/*
+    question area
+*/
 .question-number {
     font-size: 1.5rem;
     font-weight: bold;
 }
 
+/*
+    input area
+*/
 .input-area {
     padding: 5px 0;
     display: flex;
@@ -439,6 +446,9 @@ footer a {
     cursor: pointer;
 }
 
+/*
+    hint area
+*/
 .hint-area {
     width: 100%;
 }
@@ -459,16 +469,19 @@ details summary:hover {
     content: ")";
 }
 
+/*
+    history area
+*/
+.history {
+    font-size: 18px;
+}
+
 .history-area {
     margin-top: 10px;
 }
 
 .history-indented {
     margin-left: 2rem;
-}
-
-.history {
-    font-size: 18px;
 }
 
 .history-correct {
@@ -487,6 +500,10 @@ details summary:hover {
     color: rgba(0, 0, 0, 0.5);
 }
 
+
+/*
+    error area
+*/
 .error-area {
     width: 100%;
 }
