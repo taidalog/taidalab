@@ -36,9 +36,9 @@ module EndlessBinary =
             hex
             |> Seq.toList
             |> List.mapi (fun i c ->
-                $"""<span class="hint-table-digit">%d{(hex |> String.length) - i}</span>""",
-                $"""<span class="hint-table-digit green-h2d large">%c{c}</span>""",
-                $"""<span class="hint-table-digit palegreen">%d{16}<sup>%d{(hex |> String.length) - i - 1}</sup></span>""")
+                $"""<span class="hex2dec hint-table-digit">%d{(hex |> String.length) - i}</span>""",
+                $"""<span class="hex2dec hint-table-digit green large">%c{c}</span>""",
+                $"""<span class="hex2dec hint-table-digit gray">%d{16}<sup>%d{(hex |> String.length) - i - 1}</sup></span>""")
 
         let newHintTable (a, b, c) =
             sprintf

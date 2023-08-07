@@ -1025,15 +1025,15 @@ span.network-simulator.input-wrapper {
     margin: 1px 4px;
 }
 
-.green {
+span.bin2dec.hint-table-digit.green {
     background-color: #95fec6;
 }
 
-.green-h2d {
+span.hex2dec.hint-table-digit.green {
     background-color: #95feec;
 }
 
-.palegreen {
+span.hint-table-digit.gray {
     background-color: #cccccc;
 }
 

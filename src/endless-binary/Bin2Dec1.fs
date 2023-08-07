@@ -50,9 +50,9 @@ module EndlessBinary =
             binaryString
             |> Seq.toList
             |> List.mapi (fun i c ->
-                $"""<span class="hint-table-digit">%d{(String.length binaryString) - i}</span>""",
-                $"""<span class="hint-table-digit green large">%c{c}</span>""",
-                $"""<span class="hint-table-digit palegreen">%d{2}<sup>%d{(String.length binaryString) - i - 1}</sup></span>""")
+                $"""<span class="bin2dec hint-table-digit">%d{(String.length binaryString) - i}</span>""",
+                $"""<span class="bin2dec hint-table-digit green large">%c{c}</span>""",
+                $"""<span class="bin2dec hint-table-digit gray">%d{2}<sup>%d{(String.length binaryString) - i - 1}</sup></span>""")
 
         let newHintTable (a, b, c) =
             sprintf
