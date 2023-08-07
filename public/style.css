@@ -547,13 +547,14 @@ details summary:hover {
     height: 130px;
 }
 
-.iro-input-area {
+input.iro-iroiro.input-area,
+input.network-simulator.input-area {
     padding: 5px 0;
     display: flex;
     flex-direction: row
 }
 
-.iro-number-input {
+input.iro-iroiro.number-input {
     font-size: 1.25rem;
     border: none;
     border-bottom: 2px solid;
@@ -566,19 +567,19 @@ details summary:hover {
     width: 4rem;
 }
 
-.iro-number-input-6rem {
-    width: 6rem;
-}
-
-.iro-number-input:invalid {
+input.iro-iroiro.number-input:invalid {
     background-color: lightpink;
 }
 
-.iro-input-wrapper {
+span.iro-iroiro.input-wrapper,
+span.network-simulator.input-wrapper {
     margin: 0;
     margin-right: 10px;
 }
 
+.rem6 {
+    width: 6rem;
+}
 
 /*
     Colors of buttons on home.
@@ -725,11 +726,14 @@ details summary:hover {
     Settings for responsive design.
 */
 @media (max-width: 1199px) {
-    .iro-input-area {
+
+    form.iro-iroiro.input-area,
+    form.network-simulator.input-area {
         flex-direction: column
     }
 
-    .iro-input-area .display-order-2 {
+    form.iro-iroiro.input-area .display-order-2,
+    form.network-simulator.input-area .display-order-2 {
         margin-top: 10px;
     }
 
@@ -849,17 +853,19 @@ details summary:hover {
 
 @media (max-width: 370px) {
 
-    .input-area-iro-shorter,
-    .input-area-iro-wider {
+    span.iro-iroiro.shorter,
+    span.network-simulator.shorter,
+    span.iro-iroiro.wider {
         display: flex;
         flex-direction: column;
     }
 
-    .input-area-iro-shorter .iro-input-wrapper {
+    span.iro-iroiro.shorter span.iro-iroiro.input-wrapper,
+    span.network-simulator.shorter span.network-simulator.input-wrapper {
         max-width: 7rem;
     }
 
-    .input-area-iro-wider .iro-input-wrapper {
+    span.iro-iroiro.wider span.iro-iroiro.input-wrapper {
         max-width: 10rem;
     }
 }
