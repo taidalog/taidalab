@@ -23,6 +23,50 @@
     font-weight: 400;
 }
 
+.display-order-1 {
+    order: 1;
+}
+
+.display-order-2 {
+    order: 2;
+}
+
+.display-order-3 {
+    order: 3;
+}
+
+.display-order-4 {
+    order: 4;
+}
+
+.display-order-5 {
+    order: 5;
+}
+
+.display-order-6 {
+    order: 6;
+}
+
+.display-order-7 {
+    order: 7;
+}
+
+.display-order-8 {
+    order: 8;
+}
+
+.display-order-9 {
+    order: 9;
+}
+
+.display-order-10 {
+    order: 10;
+}
+
+.display-order-11 {
+    order: 11;
+}
+
 html {
     font-family: 'Noto Sans JP', sans-serif;
     font-weight: 300;
@@ -959,54 +1003,6 @@ span.network-simulator.input-wrapper {
     .bar-bottom {
         bottom: 10px;
     }
-}
-
-
-/*
-    General classes.
-*/
-.display-order-1 {
-    order: 1;
-}
-
-.display-order-2 {
-    order: 2;
-}
-
-.display-order-3 {
-    order: 3;
-}
-
-.display-order-4 {
-    order: 4;
-}
-
-.display-order-5 {
-    order: 5;
-}
-
-.display-order-6 {
-    order: 6;
-}
-
-.display-order-7 {
-    order: 7;
-}
-
-.display-order-8 {
-    order: 8;
-}
-
-.display-order-9 {
-    order: 9;
-}
-
-.display-order-10 {
-    order: 10;
-}
-
-.display-order-11 {
-    order: 11;
 }
 
 
