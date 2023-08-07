@@ -461,6 +461,7 @@ details summary:hover {
     background-color: #f0f0f0;
 }
 
+/*
 .column-addition-row {
     text-decoration: underline;
 }
@@ -468,6 +469,7 @@ details summary:hover {
 .column-addition-row::before {
     content: ")";
 }
+*/
 
 /*
     history area
