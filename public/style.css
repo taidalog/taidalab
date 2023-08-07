@@ -1009,6 +1009,10 @@ span.network-simulator.input-wrapper {
     order: 11;
 }
 
+
+/*
+    hint table
+*/
 .hint-table {
     display: flex;
     flex-direction: column;
@@ -1053,6 +1057,10 @@ span.network-simulator.input-wrapper {
     line-height: normal;
 }
 
+
+/*
+    network-simulator
+*/
 .device {
     position: absolute;
 }
@@ -1091,6 +1099,10 @@ span.device-prop.subnetmask::before {
     align-items: center;
 }
 
+
+/*
+    help window
+*/
 .help-button {
     font-size: 18px;
     cursor: pointer;
