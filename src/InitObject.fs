@@ -180,10 +180,10 @@ module InitObject =
             { pathname = "/endless-binary/hex2dec/"
               title = "16進数→10進数 - taidalab"
               headerContent = Content.Common.header
-              headerColorClass = "dec2hex"
+              headerColorClass = "hex2dec"
               headerTitle = "<h1>16進数→10進数 - taidalab</h1>"
               mainContent = main // Content.Course.main
-              buttonColorClass = "submit-button display-order-3 dec2hex"
+              buttonColorClass = "submit-button display-order-3 hex2dec"
               questionContent = Content.Common.question
               initFunc = f }
         | "/iro-iroiro/" ->

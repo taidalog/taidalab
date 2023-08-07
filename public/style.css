@@ -232,18 +232,21 @@ button.submit-button.complement:hover {
 }
 
 header.dec2hex,
+header.hex2dec,
 aside a.dec2hex:hover,
 aside a.hex2dec:hover,
 .course-button-d2h {
     background-color: #65aca0;
 }
 
-button.submit-button.dec2hex {
+button.submit-button.dec2hex,
+button.submit-button.hex2dec {
     color: #1e3330;
     background: #95feec;
 }
 
-button.submit-button.dec2hex:hover {
+button.submit-button.dec2hex:hover,
+button.submit-button.hex2dec:hover {
     background-color: #86e5d5;
 }
 
