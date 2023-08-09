@@ -1,8 +1,3 @@
-// taidalab Version 4.3.0
-// https://github.com/taidalog/taidalab
-// Copyright (c) 2022-2023 taidalog
-// This software is licensed under the MIT License.
-// https://github.com/taidalog/taidalab/blob/main/LICENSE
 namespace Taidalab
 
 [<StructuredFormatDisplay("{DisplayText}")>]
@@ -46,7 +41,6 @@ module Area =
         && point.X <= area.X + area.Width
         && point.Y >= area.Y
         && point.Y <= area.Y + area.Height
-
 //    let isOver (offset: float) (area1: Area) (area2: Area): bool =
 //        //printfn "DEBUG: area1 = left: %f top: %f width: %f height: %f" area1.X area1.Y area1.Width area1.Height
 //        //printfn "DEBUG: area2  = left: %f top: %f width: %f height: %f" area2.X area2.Y area2.Width area2.Height
