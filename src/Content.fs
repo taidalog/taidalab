@@ -59,7 +59,7 @@ module Content =
                 </details>
                 <li><a class="iro-iroiro" id="asideIroIroiro" href="/iro-iroiro/">色いろいろ</a></li>
                 <li><a class="network-simulator" id="asideNetworkSimulator" href="/network-simulator/">ネットワークシミュレータ</a></li>
-                <li><a class="ctc" id="asideSoon" href="#">Comming soon...</a></li>
+                <li><a class="ctc" id="asideSoon" href="#">Coming soon...</a></li>
             </ul>
             <ul>
                 <li><a class="home" id="asideAbout" href="/">Home</a></li>
