@@ -26,7 +26,7 @@ Version 4.4.0
 
 ## 推奨環境
 
-- Mozilla FireFox 106.0.1 以上
+- Mozilla Firefox 106.0.1 以上
 
 
 ## ご利用について

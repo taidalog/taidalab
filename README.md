@@ -23,7 +23,7 @@ A Web application for learning Informatics &#8544;, one of the subjects taught i
 
 ## Recommended environment
 
-- Mozilla FireFox 106.0.1 or later.
+- Mozilla Firefox 106.0.1 or later.
 
 
 ## Terms of Service
