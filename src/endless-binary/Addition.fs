@@ -259,7 +259,7 @@ module EndlessBinary =
                 (padWithZero 8 >> colorLeadingZero)
                 (fun n -> ())
                 2
-                10
+                2
                 10
                 checkAnswer
 
@@ -272,6 +272,6 @@ module EndlessBinary =
                 (padWithZero 4 >> colorLeadingZero)
                 (fun n -> ())
                 2
-                10
+                2
                 5
                 checkAnswer
