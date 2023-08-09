@@ -475,7 +475,7 @@ footer a {
     line-height: 40px;
 }
 
-.submit-button {
+button.submit-button {
     appearance: none;
     border: none;
     outline: none;
@@ -488,6 +488,7 @@ footer a {
     margin-bottom: 20px;
     position: relative;
     cursor: pointer;
+    font-family: 'Noto Sans JP', sans-serif;
 }
 
 /*
