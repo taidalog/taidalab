@@ -884,7 +884,8 @@ span.network-simulator.input-wrapper {
         width: 10.5rem;
     }
 
-    .submit-button {
+    button.submit-button,
+    button.submit-button.gray {
         width: 100%;
         margin-top: 15px;
     }
