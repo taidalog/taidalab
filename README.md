@@ -1,6 +1,6 @@
 # taidalab
 
-Version 4.4.3
+Version 4.4.4
 
 [Japanese README](README.ja.md)
 
