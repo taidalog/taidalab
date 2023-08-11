@@ -506,15 +506,6 @@ details summary:hover {
     background-color: #f0f0f0;
 }
 
-/*
-.column-addition-row {
-    text-decoration: underline;
-}
-
-.column-addition-row::before {
-    content: ")";
-}
-*/
 
 /*
     history area
@@ -625,92 +616,6 @@ span.network-simulator.input-wrapper {
 .rem6 {
     width: 6rem;
 }
-
-/*
-    Colors of buttons on home.
-    course-button-<identifier>
-*/
-/*
-.course-button-d2b1 {
-    background-color: #65a2ac;
-}
-
-.course-button-d2b1:hover {
-    background-color: #5a919a;
-}
-
-.course-button-d2b2 {
-    background-color: #65a2ac;
-}
-
-.course-button-d2b2:hover {
-    background-color: #5a919a;
-}
-
-.course-button-b2d1 {
-    background-color: #65ac86;
-}
-
-.course-button-b2d1:hover {
-    background-color: #5a9a78;
-}
-
-.course-button-b2d2 {
-    background-color: #65ac86;
-}
-
-.course-button-b2d2:hover {
-    background-color: #5a9a78;
-}
-
-.course-button-pot1 {
-    background-color: #a665ac;
-}
-
-.course-button-pot1:hover {
-    background-color: #955a9a;
-}
-
-.course-button-pot2 {
-    background-color: #a665ac;
-}
-
-.course-button-pot2:hover {
-    background-color: #955a9a;
-}
-
-.course-button-add {
-    background-color: #656eac;
-}
-
-.course-button-add:hover {
-    background-color: #5a639a;
-}
-
-.course-button-sub {
-    background-color: #656eac;
-}
-
-.course-button-sub:hover {
-    background-color: #5a639a;
-}
-
-.course-button-cmp {
-    background-color: #6588ac;
-}
-
-.course-button-cmp:hover {
-    background-color: #5a7a9a;
-}
-
-.course-button-d2h {
-    background-color: #65aca0;
-}
-
-.course-button-d2h:hover {
-    background-color: #5a9a90;
-}
-*/
 
 
 /*
