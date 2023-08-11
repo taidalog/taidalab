@@ -1036,43 +1036,44 @@ span.device-prop.subnetmask::before {
     scrollbar-width: thin;
 }
 
-.help-color-d2b {
+p.help-color.dec2bin {
     color: #65a2ac;
 }
 
-.help-color-b2d {
+p.help-color.bin2dec {
     color: #65ac86;
 }
 
-.help-color-pot {
+p.help-color.power-of-two {
     color: #a665ac;
 }
 
-.help-color-add {
+p.help-color.addition {
     color: #656eac;
 }
 
-.help-color-sub {
+p.help-color.subtraction {
     color: #656eac;
 }
 
-.help-color-cmp {
+p.help-color.complement {
     color: #6588ac;
 }
 
-.help-color-d2h {
+p.help-color.dec2hex,
+p.help-color.hex2dec {
     color: #65aca0;
 }
 
-.help-color-iro {
+p.help-color.iro-iroiro {
     color: #ac657c;
 }
 
-.help-color-nws {
+p.help-color.network-simulator {
     color: #7c65ac;
 }
 
-.help-color-ctc {
+p.help-color.ctc {
     color: #aaac65;
 }
 

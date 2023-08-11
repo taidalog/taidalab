@@ -16,31 +16,31 @@ module rec Switcher =
         | "/" -> (pathname, Taidalab.Home.main, (fun _ -> ()))
         | "/endless-binary/" -> (pathname, EndlessBinary.Home.main, setHomeButtons)
         | "/endless-binary/dec2bin-1/" ->
-            (pathname, EndlessBinary.Course.main Dec2Bin1.help "help-color-d2b", Dec2Bin1.init)
+            (pathname, EndlessBinary.Course.main Dec2Bin1.help "help-color dec2bin", Dec2Bin1.init)
         | "/endless-binary/dec2bin-1/4/" ->
-            (pathname, EndlessBinary.Course.main Dec2Bin1.help "help-color-d2b", Dec2Bin1.init4)
+            (pathname, EndlessBinary.Course.main Dec2Bin1.help "help-color dec2bin", Dec2Bin1.init4)
         | "/endless-binary/dec2bin-2/" ->
-            (pathname, EndlessBinary.Course.main Dec2Bin2.help "help-color-d2b", Dec2Bin2.init)
+            (pathname, EndlessBinary.Course.main Dec2Bin2.help "help-color dec2bin", Dec2Bin2.init)
         | "/endless-binary/bin2dec-1/" ->
-            (pathname, EndlessBinary.Course.main Bin2Dec1.help "help-color-b2d", Bin2Dec1.init)
+            (pathname, EndlessBinary.Course.main Bin2Dec1.help "help-color bin2dec", Bin2Dec1.init)
         | "/endless-binary/bin2dec-2/" ->
-            (pathname, EndlessBinary.Course.main Bin2Dec2.help "help-color-b2d", Bin2Dec2.init)
+            (pathname, EndlessBinary.Course.main Bin2Dec2.help "help-color bin2dec", Bin2Dec2.init)
         | "/endless-binary/power-of-two-1/" ->
-            (pathname, EndlessBinary.Course.main PowerOfTwo1.help "help-color-pot", PowerOfTwo1.init)
+            (pathname, EndlessBinary.Course.main PowerOfTwo1.help "help-color power-of-two", PowerOfTwo1.init)
         | "/endless-binary/power-of-two-2/" ->
-            (pathname, EndlessBinary.Course.main PowerOfTwo2.help "help-color-pot", PowerOfTwo2.init)
+            (pathname, EndlessBinary.Course.main PowerOfTwo2.help "help-color power-of-two", PowerOfTwo2.init)
         | "/endless-binary/addition/" ->
-            (pathname, EndlessBinary.Course.main Addition.help "help-color-add", Addition.init)
+            (pathname, EndlessBinary.Course.main Addition.help "help-color addition", Addition.init)
         | "/endless-binary/addition/4/" ->
-            (pathname, EndlessBinary.Course.main Addition.help "help-color-add", Addition.init4)
+            (pathname, EndlessBinary.Course.main Addition.help "help-color addition", Addition.init4)
         | "/endless-binary/subtraction/" ->
-            (pathname, EndlessBinary.Course.main Subtraction.help "help-color-sub", Subtraction.init)
+            (pathname, EndlessBinary.Course.main Subtraction.help "help-color subtraction", Subtraction.init)
         | "/endless-binary/complement/" ->
-            (pathname, EndlessBinary.Course.main Complement.help "help-color-cmp", Complement.init)
+            (pathname, EndlessBinary.Course.main Complement.help "help-color complement", Complement.init)
         | "/endless-binary/dec2hex/" ->
-            (pathname, EndlessBinary.Course.main Dec2Hex.help "help-color-d2h", Dec2Hex.init)
+            (pathname, EndlessBinary.Course.main Dec2Hex.help "help-color dec2hex", Dec2Hex.init)
         | "/endless-binary/hex2dec/" ->
-            (pathname, EndlessBinary.Course.main Hex2Dec.help "help-color-d2h", Hex2Dec.init)
+            (pathname, EndlessBinary.Course.main Hex2Dec.help "help-color hex2dec", Hex2Dec.init)
         | "/iro-iroiro/" -> (pathname, IroIroiro.main, IroIroiro.init)
         | "/network-simulator/" -> (pathname, NetworkSimulator.main, NetworkSimulator.init)
         | "/about/" -> (pathname, Taidalab.About.main, (fun _ -> ()))

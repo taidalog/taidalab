@@ -58,7 +58,7 @@ module IroIroiro =
         <div id="outputArea" class="output-area"></div>
         <div id="helpWindow" class="help-window">
             %s{help}
-            <p class="help-color-iro">このヘルプは、他の場所をクリックすると消えます。</p>
+            <p class="help-color iro-iroiro">このヘルプは、他の場所をクリックすると消えます。</p>
         </div>
         """
 
