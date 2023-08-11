@@ -51,12 +51,12 @@ module EndlessBinary =
         let newArrowBin fontSize lineCount stroke fill =
             Svg.newArrow
                 (fontSize |> double |> (fun x -> x / 2. * 4.))
-                (lineCount |> (fun x -> (fontSize * (x - 1)) + 6) |> double)
+                (lineCount |> (fun x -> fontSize * (x - 1) + 6) |> double)
                 (fontSize |> double |> (fun x -> x / 2. * 3.))
-                (lineCount |> double |> (fun x -> 17.85 * x - 35.) |> ((*) -1.))
+                (lineCount |> double |> (fun x -> 17.85 * x - 35.) |> (*) -1.)
                 -48.
                 (17.85 * (lineCount |> double) - 15.)
-                (lineCount - 1 |> delayMs |> ((+) 1500))
+                (lineCount - 1 |> delayMs |> (+) 1500)
                 stroke
                 fill
 
@@ -86,7 +86,7 @@ module EndlessBinary =
                             (sprintf
                                 "M %d,%d q %d,%f 0,%f h %f"
                                 (fontSize / 2 + 2)
-                                ((fontSize * i) + 6)
+                                (fontSize * i + 6)
                                 (fontSize / 2)
                                 (double fontSize * 0.4)
                                 (double fontSize * 0.8)
@@ -105,7 +105,7 @@ module EndlessBinary =
                             0.
                             (sprintf
                                 "%s%s"
-                                (x |> string |> (Fermata.String.padLeft 3 ' ') |> escapeSpace)
+                                (x |> string |> Fermata.String.padLeft 3 ' ' |> escapeSpace)
                                 (Svg.animateOpacity (i |> delayMs) 500)))
                     c,
                 Option.map // remainder
@@ -114,7 +114,7 @@ module EndlessBinary =
                             (fontSize / 2 * 6)
                             (fontSize * (i + 1))
                             0.
-                            (sprintf "…%d%s" x (Svg.animateOpacity (i |> delayMs |> ((+) 500)) 500)))
+                            (sprintf "…%d%s" x (Svg.animateOpacity (i |> delayMs |> (+) 500) 500)))
                     d)
             |> List.map (fun (a, b, c, d) ->
                 sprintf
