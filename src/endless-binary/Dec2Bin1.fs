@@ -232,10 +232,7 @@ module EndlessBinary =
                 else
                     newTwoRandomNumbers min max
 
-            newTwoRandomNumbers min max
-            |> Tuple.map (double >> (fun x -> 2.0 ** x))
-            ||> (+)
-            |> int
+            newTwoRandomNumbers min max |> Tuple.map (pown 2) ||> (+)
 
         let question (digit: int) (lastAnswers: int list) : int =
             newNumber (fun _ -> newNumberWithTwoOne 0 digit) (fun n -> List.contains n lastAnswers = false)

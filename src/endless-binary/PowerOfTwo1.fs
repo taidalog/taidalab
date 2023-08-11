@@ -36,8 +36,7 @@ module EndlessBinary =
             </details>"""
 
         let question lastAnswers : int =
-            newNumber (fun _ -> getRandomBetween 0 7 |> float |> (fun x -> 2. ** x) |> int) (fun n ->
-                List.contains n lastAnswers = false)
+            newNumber (fun _ -> getRandomBetween 0 7 |> pown 2) (fun n -> List.contains n lastAnswers = false)
 
         let additional number : unit = ()
 

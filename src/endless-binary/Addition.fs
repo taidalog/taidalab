@@ -41,7 +41,7 @@ module EndlessBinary =
             hint
 
         let newNumbersAdd (digit: int) : (int * int) =
-            let max = (digit |> float |> (fun x -> 2.0 ** x |> int)) - 1
+            let max = digit |> pown 2 |> (+) -1
 
             let number1 =
                 newNumber

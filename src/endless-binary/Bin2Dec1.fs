@@ -29,7 +29,7 @@ module EndlessBinary =
                 let generator' () : int =
                     // Generates a number that is zero, or that is power of two and less than 255.
                     getRandomBetween 0 8
-                    |> (float >> (fun x -> 2. ** x) >> int)
+                    |> pown 2
                     |> Dec.toBin
                     |> String.padLeft 9 '0'
                     |> String.tail
