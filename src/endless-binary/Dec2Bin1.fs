@@ -24,8 +24,7 @@ module EndlessBinary =
             """
 
         let devideIntoPowerOfTwo (number: int) =
-            let getMaxPowerOfTwo (number: int) =
-                Math.Log(double number, 2.) |> int |> pown 2
+            let getMaxPowerOfTwo (number: int) = number |> log2 |> int |> pown 2
 
             let rec loop acc number =
                 match number with
@@ -146,7 +145,6 @@ module EndlessBinary =
 
         let newHintRepeatAddition number (power_of_twos: int list) =
             let additionDec = power_of_twos |> List.map string |> String.concat " + "
-            let log2 i = Math.Log(double i, 2.0)
 
             let additionIndex =
                 power_of_twos

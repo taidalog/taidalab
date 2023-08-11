@@ -19,3 +19,5 @@ module Number =
             candidate
         else
             newNumber generator tester
+
+    let log2 (value: int) : float = Math.Log(float value, 2.0)
