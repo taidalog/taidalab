@@ -25,8 +25,7 @@ module EndlessBinary =
 
         let devideIntoPowerOfTwo (number: int) =
             let getMaxPowerOfTwo (number: int) =
-                let indexNumber = Math.Log(double number, 2.0) |> int |> double
-                Math.Pow(2.0, indexNumber) |> int
+                Math.Log(double number, 2.) |> int |> pown 2
 
             let rec loop acc number =
                 match number with
@@ -151,7 +150,7 @@ module EndlessBinary =
 
             let additionIndex =
                 power_of_twos
-                |> List.map (log2 >> Math.Truncate >> int)
+                |> List.map (log2 >> truncate >> int)
                 |> List.map (sprintf "2<sup>%d</sup>")
                 |> String.concat " + "
 
