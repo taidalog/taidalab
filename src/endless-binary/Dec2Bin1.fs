@@ -126,21 +126,20 @@ module EndlessBinary =
             |> (Svg.frame (fontSize / 2 * 10) (divRems |> List.length |> (fun x -> fontSize * (x + 1))))
 
         let newHintRepeatDivision divisor number =
-            sprintf
-                """
-                <div class="history-indented">
-                    <p>
-                        10進法で表現した数を2進法で表現しなおすには、<br>
-                        10進法の数を、商が 1 になるまで 2 で割り続けます。<br>
-                        この時、余りを商の右に書いておきます。<br>
-                        商と余りを下から順に繋げると、2進法の数になります。<br>
-                        ※この下の筆算をクリックすると動きます。
-                    </p>
-                </div>
-                <div id="hint1" class="history-indented mono">
-                    %s
-                </div>"""
-                (newHintAnimation divisor number 20)
+            $"""
+            <div class="history-indented">
+                <p>
+                    10進法で表現した数を2進法で表現しなおすには、<br>
+                    10進法の数を、商が 1 になるまで 2 で割り続けます。<br>
+                    この時、余りを商の右に書いておきます。<br>
+                    商と余りを下から順に繋げると、2進法の数になります。<br>
+                    ※この下の筆算をクリックすると動きます。
+                </p>
+            </div>
+            <div id="hint1" class="history-indented mono">
+                %s{(newHintAnimation divisor number 20)}
+            </div>
+            """
 
         let newHintRepeatAddition number (power_of_twos: int list) =
             let additionDec = power_of_twos |> List.map string |> String.concat " + "
@@ -158,64 +157,59 @@ module EndlessBinary =
                 |> String.concat " + "
 
             $"""
-                <p class="history-indented">
-                    10進法で表現した数を2進法で表現しなおすには、<br>
-                </p>
-                <p class="history-indented">
-                    <ol style="padding-left: 4rem;">
-                        <li>10進法の数を「2<sup>n</sup> の数同士の足し算」に変換して、</li>
-                        <li>それぞれの 2<sup>n</sup> の数を2進法で表し、</li>
-                        <li>足し合わせる</li>
-                    </ol>
-                </p>
-                <p class="history-indented">
-                    という方法もあります。
-                </p>
-                <p class="history-indented">
-                    %d{number}<sub>(10)</sub> を 2<sup>n</sup> の数同士の足し算に変換すると
-                </p>
-                <p class="history-indented hint-bgcolor-gray mono regular">
-                    &nbsp;&nbsp;%s{additionDec}<br>
-                    = %s{additionIndex}
-                </p>
-                <p class="history-indented">
-                    になります。<br>
-                </p>
-                <p class="history-indented">
-                    次に、それぞれの 2<sup>n</sup> の数を2進法で表します。<br>
-                    2<sup>n</sup> の数を2進法で表すには、1 の後に 0 を n 個続けます。<br>
-                    そのため、%s{additionIndex} は2進法で
-                </p>
-                <p class="history-indented hint-bgcolor-gray mono regular">
-                    &nbsp;&nbsp;%s{additionBin}<br>
-                </p>
-                <p class="history-indented">
-                    と表現できます。最後にこれを計算すると
-                </p>
-                <p class="history-indented hint-bgcolor-gray mono regular">
-                    &nbsp;&nbsp;%s{additionBin}<br>
-                    = %s{number |> Dec.toBin}<sub>(2)</sub>
-                </p>
-                <p class="history-indented">
-                    になります。
-                </p>"""
+            <p class="history-indented">
+                10進法で表現した数を2進法で表現しなおすには、<br>
+            </p>
+            <p class="history-indented">
+                <ol style="padding-left: 4rem;">
+                    <li>10進法の数を「2<sup>n</sup> の数同士の足し算」に変換して、</li>
+                    <li>それぞれの 2<sup>n</sup> の数を2進法で表し、</li>
+                    <li>足し合わせる</li>
+                </ol>
+            </p>
+            <p class="history-indented">
+                という方法もあります。
+            </p>
+            <p class="history-indented">
+                %d{number}<sub>(10)</sub> を 2<sup>n</sup> の数同士の足し算に変換すると
+            </p>
+            <p class="history-indented hint-bgcolor-gray mono regular">
+                &nbsp;&nbsp;%s{additionDec}<br>
+                = %s{additionIndex}
+            </p>
+            <p class="history-indented">
+                になります。<br>
+            </p>
+            <p class="history-indented">
+                次に、それぞれの 2<sup>n</sup> の数を2進法で表します。<br>
+                2<sup>n</sup> の数を2進法で表すには、1 の後に 0 を n 個続けます。<br>
+                そのため、%s{additionIndex} は2進法で
+            </p>
+            <p class="history-indented hint-bgcolor-gray mono regular">
+                &nbsp;&nbsp;%s{additionBin}<br>
+            </p>
+            <p class="history-indented">
+                と表現できます。最後にこれを計算すると
+            </p>
+            <p class="history-indented hint-bgcolor-gray mono regular">
+                &nbsp;&nbsp;%s{additionBin}<br>
+                = %s{number |> Dec.toBin}<sub>(2)</sub>
+            </p>
+            <p class="history-indented">
+                になります。
+            </p>
+            """
 
-        let newHint divisor number power_of_twos =
-            sprintf
-                """
-                <details id="hintDetails">
-                    <summary>ヒント: </summary>
-                    <h2>考え方 1</h2>
-                    %s
-                    <h2>考え方 2</h2>
-                    %s
-                </details>
-                """
-                (newHintRepeatDivision divisor number)
-                (newHintRepeatAddition number power_of_twos)
-
-        let hint number =
-            newHint 2 number (devideIntoPowerOfTwo number)
+        let hint (number: int) : string =
+            $"""
+            <details id="hintDetails">
+                <summary>ヒント: </summary>
+                <h2>考え方 1</h2>
+                %s{(newHintRepeatDivision 2 number)}
+                <h2>考え方 2</h2>
+                %s{(newHintRepeatAddition number (devideIntoPowerOfTwo number))}
+            </details>
+            """
 
         let newNumberWithTwoOne min max =
             let rec newTwoRandomNumbers min max =
