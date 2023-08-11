@@ -37,9 +37,8 @@ module EndlessBinary =
             loop [] number
 
 
-        let rec repeatDivision dividend divisor =
-            let quotient = int (dividend / divisor)
-            let remainder = dividend - (quotient * divisor)
+        let rec repeatDivision (dividend: int) (divisor: int) : (int * int) list =
+            let quotient, remainder = Math.DivRem(dividend, divisor)
 
             if quotient < divisor then
                 [ (quotient, remainder) ]
