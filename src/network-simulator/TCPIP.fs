@@ -11,8 +11,6 @@ module TCPIP =
     let getNetNeighbors (cables: Cable list) (devices: Device list) (route: Device list) : Device list =
         let current = route |> List.last
         let last = route |> List.filter (Device.isHub >> not) |> List.tryLast
-        //        printfn "current.NetworkAddresses:\t%O" (Device.networkAddresses current)
-        //        printfn "last.NetworkAddresses:\t%O" (Device.networkAddresses (Option.get last))
 
         cables
         |> List.filter (Cable.connectedTo current)
@@ -40,7 +38,6 @@ module TCPIP =
             (destinationIPv4: IPv4)
             (route: Device list)
             : bool =
-            //printfn "%A" (route |> List.map (fun x -> $"Name:\t{Device.name x}\tIPv4:\t{Device.IPv4s x}") |> String.concat "\n")
             let routes = extendRoute cables devices route
 
             let found =

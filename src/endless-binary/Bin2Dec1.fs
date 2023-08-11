@@ -140,27 +140,24 @@ module EndlessBinary =
             let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
             let input = numberInput.value |> escapeHtml
             let dec: Result<int, Errors.Errors> = input |> Dec.validate
-            //printfn "input: %s" input
 
             numberInput.focus ()
 
             match dec with
             | Error(error: Errors.Errors) ->
                 // Making an error message.
-                //let questionWithoutSpace = question.Replace(" ", "")
                 (document.getElementById "errorArea").innerHTML <- newErrorMessageDec question input error
             | Ok(dec: int) ->
                 (document.getElementById "errorArea").innerHTML <- ""
-                //let inputValueAsInt = int input
 
                 // Converting the input in order to use in the history message.
                 let digit = 3
 
-                let spacePaddedInputValue = // input |> Fermata.String.padLeft digit ' ' |> escapeSpace
+                let spacePaddedInputValue =
                     dec |> string |> Fermata.String.padLeft digit ' ' |> escapeSpace
 
                 let sourceRadix = 2
-                let bin = Dec.toBin dec //inputValueAsInt
+                let bin = Dec.toBin dec
                 let binaryDigit = 8
                 let taggedBin = bin |> padWithZero binaryDigit |> colorLeadingZero
 
@@ -171,24 +168,14 @@ module EndlessBinary =
                 let historyMessage =
                     newHistory (dec = int answer) spacePaddedInputValue destinationRadix taggedBin sourceRadix
                     |> (fun x -> concatinateStrings "<br>" [ x; outputArea.innerHTML ])
-                //printfn "%A" historyMessage
+
                 outputArea.innerHTML <- historyMessage
 
                 if dec = int answer then
                     // Making the next question.
-                    //printfn "%A" last_answers
-
                     let nextNumber = questionGenerator last_answers
-                    //                        newNumber
-                    //                            (fun _ -> getRandomBetween 0 7 |> double |> (fun x -> Math.Pow(2.0, x)) |> int)
-                    //                            (fun n -> List.contains n last_answers = false)
-                    //printfn "%d" nextNumber
-
                     let nextBin = Dec.toBin nextNumber
                     let splitBin = splitBinaryStringBy 4 nextBin
-                    //printfn "%s" nextBin
-                    //printfn "%s" splitBin
-
                     (document.getElementById "questionSpan").innerText <- splitBin
                     (document.getElementById "hintArea").innerHTML <- hintGenerator nextBin
                     numberInput.value <- ""
@@ -226,16 +213,9 @@ module EndlessBinary =
 
         let init' (questionGenerator: 'c list -> 'c) (hintGenerator: 'a -> 'b) (additional: 'c -> unit) checker : unit =
             // Initialization.
-            //            let initIndexNumber = getRandomBetween 0 7
-            //            let initNumber = Math.Pow(2.0, double initIndexNumber) |> int
             let initNumber = questionGenerator []
             let initBin = Dec.toBin initNumber
             let splitBin = splitBinaryStringBy 4 initBin
-            //printfn "%A" initIndexNumber
-            //printfn "%A" initNumber
-            //printfn "%A" initBin
-            //printfn "%A" splitBin
-
             let sourceRadix = 2
             let destinationRadix = 10
 

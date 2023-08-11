@@ -113,10 +113,7 @@ module NetworkSimulator =
             fun _ ->
                 document.addEventListener ("mousemove", onMouseMove')
 
-                svg.onmouseup <-
-                    fun _ ->
-                        //printfn "mouse up!"
-                        document.removeEventListener ("mousemove", onMouseMove')
+                svg.onmouseup <- fun _ -> document.removeEventListener ("mousemove", onMouseMove')
 
     let resetTitleOnNameChange (container: HTMLElement) : unit =
         let nameElement = document.getElementById (container.id + "Name")
@@ -180,11 +177,6 @@ module NetworkSimulator =
         |> Tuple.map (Point.distance newPoint)
         |> fun (d1, d2) -> if d1 <= d2 then (point1, point2) else (point2, point1)
 
-    //    let inline (|Positive|Negative|Zero|) (n: ^a) =
-    //        if n > LanguagePrimitives.GenericZero<'a> then Positive
-    //        else if n < LanguagePrimitives.GenericZero<'a> then Negative
-    //        else Zero
-
     let resizeCable (container: HTMLElement) (svg: HTMLElement) (polyline: HTMLElement) (event: Event) : unit =
         let event = event :?> MouseEvent
 
@@ -197,52 +189,30 @@ module NetworkSimulator =
 
         let cursorPoint =
             Point.ofFloats (event.pageX - container.offsetLeft) (event.pageY - container.offsetTop)
-        //        printfn "point1:\t%O" point1
-        //        printfn "point2:\t%O" point2
-        //        printfn "cursorPoint:\t%O" cursorPoint
 
         let touchedPoint, untouchedPoint = cursorPoint |> touchedAndUntouched point1 point2
-        //        printfn "touchedPoint:\t%O" touchedPoint
-        //        printfn "untouchedPoint:\t%O" untouchedPoint
 
         let xMoving = cursorPoint.X - touchedPoint.X
         let yMoving = cursorPoint.Y - touchedPoint.Y
-        //        printfn "xMoving:\t%f, yMoving:\t%f" xMoving yMoving
 
         let touchedPointPosition = touchedPoint |> Point.relativePosition untouchedPoint
 
         // Building the new end points with the cursor position.
         let updatedPoints =
             match touchedPointPosition with
-            | Directions.Up ->
-                //                printfn "touchedPointRelativePosition:\tUp" |> ignore
-                touchedPoint, untouchedPoint |> Point.shift -xMoving -yMoving
-            | Directions.Down ->
-                //                printfn "touchedPointRelativePosition:\tDown" |> ignore
-                cursorPoint |> updatePoints untouchedPoint touchedPoint
-            | Directions.Left ->
-                //                printfn "touchedPointRelativePosition:\tLeft" |> ignore
-                touchedPoint, untouchedPoint |> Point.shift -xMoving -yMoving
-            | Directions.Right ->
-                //                printfn "touchedPointRelativePosition:\tRight" |> ignore
-                cursorPoint |> updatePoints untouchedPoint touchedPoint
+            | Directions.Up -> touchedPoint, untouchedPoint |> Point.shift -xMoving -yMoving
+            | Directions.Down -> cursorPoint |> updatePoints untouchedPoint touchedPoint
+            | Directions.Left -> touchedPoint, untouchedPoint |> Point.shift -xMoving -yMoving
+            | Directions.Right -> cursorPoint |> updatePoints untouchedPoint touchedPoint
             | var when var = (Directions.Up ||| Directions.Left) ->
-                //                printfn "touchedPointRelativePosition:\tUpLeft" |> ignore
                 touchedPoint, untouchedPoint |> Point.shift -xMoving -yMoving
             | var when var = (Directions.Up ||| Directions.Right) ->
-                //                printfn "touchedPointRelativePosition:\tUpRight" |> ignore
                 untouchedPoint |> Point.shift 0. -yMoving, touchedPoint |> Point.shift xMoving 0.
             | var when var = (Directions.Down ||| Directions.Left) ->
-                //                printfn "touchedPointRelativePosition:\tDownLeft" |> ignore
                 touchedPoint |> Point.shift 0. yMoving, untouchedPoint |> Point.shift -xMoving 0.
             | var when var = (Directions.Down ||| Directions.Right) ->
-                //                printfn "touchedPointRelativePosition:\tDownRight" |> ignore
                 cursorPoint |> updatePoints untouchedPoint touchedPoint
-            | _ ->
-                //                printfn "touchedPointRelativePosition:\t_" |> ignore
-                cursorPoint |> updatePoints untouchedPoint touchedPoint
-
-        //        printfn "updatedPoints:\t(%O), (%O)" <|| updatedPoints
+            | _ -> cursorPoint |> updatePoints untouchedPoint touchedPoint
 
         let xGap =
             updatedPoints
@@ -255,15 +225,12 @@ module NetworkSimulator =
             |> Tuple.map (fun x -> x.Y)
             |> System.Math.Min
             |> fun x -> 5. - x
-        //        printfn "xGap:\t%f, yGap:\t%f" xGap yGap
 
         // Updating the cable points.
         updatedPoints
         |> Tuple.map (Point.shift xGap yGap)
         |> fun (p1, p2) -> $"%f{p1.X},%f{p1.Y} %f{p2.X},%f{p2.Y}"
         |> fun x -> polyline.setAttribute ("points", x)
-
-        //        printfn "container.offsetTop:\t%f, container.offsetLeft:\t%f" container.offsetTop container.offsetLeft
 
         let updatedArea =
             updatedPoints
@@ -275,8 +242,6 @@ module NetworkSimulator =
         svg.setAttribute ("width", $"%f{updatedArea.Width}px")
         svg.setAttribute ("height", $"%f{updatedArea.Height}px")
         //        svg.setAttribute("style", "background-color: red;")
-
-        //        printfn "updatedArea:\t%O" <| updatedArea
 
         // Shifting the cable container.
         match touchedPointPosition with
@@ -311,7 +276,6 @@ module NetworkSimulator =
         | _ -> ()
 
         let touchedPointPosition' = updatedPoints ||> Point.relativePosition
-        //        printfn "touchedPointPosition':\t%O" touchedPointPosition'
 
         // Resizing and shifting the cable container.
         match touchedPointPosition' with
@@ -345,7 +309,6 @@ module NetworkSimulator =
         //| var when var = (Directions.Down ||| Directions.Left) ->
         //| var when var = (Directions.Down ||| Directions.Right) ->
         | _ -> ()
-    //        printfn ""
 
     let setMouseMoveEventCable (container: HTMLElement) : unit =
         let cable = Cable.ofHTMLElement container
@@ -384,13 +347,9 @@ module NetworkSimulator =
 
                     document.addEventListener ("mousemove", onMouseMove')
 
-                    svg.onmouseup <-
-                        fun _ ->
-                            //printfn "mouse up!"
-                            document.removeEventListener ("mousemove", onMouseMove')
+                    svg.onmouseup <- fun _ -> document.removeEventListener ("mousemove", onMouseMove')
 
     let removeOnRightClick (container: HTMLElement) : unit =
-        //container.oncontextmenu <- fun event ->
         container.oncontextmenu <-
             fun event ->
                 event.preventDefault ()
@@ -583,9 +542,6 @@ module NetworkSimulator =
                     |> List.filter Option.isSome
                     |> List.map Option.get
 
-                //devices' |> List.length |> printfn "%d devices."
-                //devices' |> List.iter (fun x -> printfn "%s, %s" x.Name (x.IPv4.ToString()))
-
                 let lanCables' =
                     document.getElementById("playArea").getElementsByClassName ("cable-container")
                     |> (fun x -> JS.Constructors.Array?from(x))
@@ -593,9 +549,6 @@ module NetworkSimulator =
                     |> List.map Cable.ofHTMLElement
                     |> List.filter Option.isSome
                     |> List.map Option.get
-
-                //lanCables' |> List.length |> printfn "%d cables."
-                //lanCables' |> List.iter (fun x -> printfn "%s" x.Name)
 
                 let errorArea = document.getElementById "errorArea" :?> HTMLDivElement
                 let outputArea = document.getElementById "outputArea" :?> HTMLDivElement

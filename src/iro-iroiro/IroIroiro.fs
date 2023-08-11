@@ -191,7 +191,6 @@ module IroIroiro =
 
     let init () =
         // Initialization.
-        //printfn "Initialization starts."
         (document.getElementById "submitButton").onclick <- (fun _ -> start ())
 
         [ "helpButton"; "helpBarrier" ]
@@ -201,4 +200,3 @@ module IroIroiro =
                     [ "helpWindow"; "helpBarrier" ]
                     |> List.iter (fun x -> (document.getElementById x).classList.toggle "active" |> ignore)))
 //        (document.getElementById "inputArea").onsubmit <- (fun _ -> start())
-//        printfn "Initialization ends."

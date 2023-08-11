@@ -19,7 +19,6 @@ module NotFound =
         let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
         let input = numberInput.value |> escapeHtml
         let bin: Result<string, Errors.Errors> = input |> Bin.validate
-        //printfn "%A" bin
 
         numberInput.focus ()
 
@@ -34,8 +33,6 @@ module NotFound =
             let destinationRadix = 2
             let taggedBin = padWithZero binaryDigit bin |> colorLeadingZero
             let dec = Bin.toDec bin
-            //printfn "%s" taggedBin
-            //printfn "%d" dec
 
             let decimalDigit = 3
 
@@ -49,7 +46,7 @@ module NotFound =
             let historyMessage =
                 newHistory (dec = int answer) taggedBin destinationRadix spacePaddedDec sourceRadix
                 |> (fun x -> concatinateStrings "<br>" [ x; outputArea.innerHTML ])
-            //printfn "%s" historyMessage
+
             outputArea.innerHTML <- historyMessage
 
             if dec <> int answer then
@@ -61,8 +58,6 @@ module NotFound =
 
     let init () =
         // Initialization.
-        //printfn "Initialization starts."
-
         let initNumber = 404
         let sourceRadix = 10
         let destinationRadix = 2
@@ -81,5 +76,3 @@ module NotFound =
             (fun _ ->
                 checkAnswer (string initNumber)
                 false)
-
-//printfn "Initialization ends."

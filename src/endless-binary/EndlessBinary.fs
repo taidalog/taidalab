@@ -121,8 +121,6 @@ module EndlessBinary =
         let bin1 = number1 |> Dec.toBin |> Seq.map string |> Seq.padLeft 8 ""
 
         let bin2 = number2 |> Dec.toBin |> Seq.map string |> Seq.padLeft 8 ""
-        //printfn "%s" bin1
-        //printfn "%s" bin2
 
         bin1
         |> Seq.iteri (fun i x ->

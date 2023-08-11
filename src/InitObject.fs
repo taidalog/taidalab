@@ -22,183 +22,166 @@ module InitObject =
 
         match pathname with
         | "/" ->
-            //printfn "%s" "/"
             { pathname = "/"
               title = "taidalab"
               headerContent = Content.Common.header
               headerColorClass = "home"
               headerTitle = "<h1>taidalab</h1>"
-              mainContent = main //Taidalab.Home.main
+              mainContent = main
               buttonColorClass = ""
               questionContent = ""
               initFunc = f }
         | "/endless-binary/" ->
-            //printfn "%s" "/endless-binary/"
             { pathname = "/endless-binary/"
               title = "10進数↔2進数 - taidalab"
               headerContent = Content.Common.header
               headerColorClass = "home"
               headerTitle = "<h1>10進数↔︎2進数 - taidalab</h1>"
-              mainContent = main //Content.Home.main
+              mainContent = main
               buttonColorClass = ""
               questionContent = ""
               initFunc = f }
         | "/endless-binary/dec2bin-1/" ->
-            //printfn "%s" "/endless-binary/dec2bin-1/"
             { pathname = "/endless-binary/dec2bin-1/"
               title = "10進数→2進数 (1) - taidalab"
               headerContent = Content.Common.header
               headerColorClass = "dec2bin"
               headerTitle = "<h1>10進数→2進数 (1) - taidalab</h1>"
-              mainContent = main // Content.Course.main
+              mainContent = main
               buttonColorClass = "submit-button display-order-3 dec2bin"
               questionContent = Content.Common.question
               initFunc = f }
         | "/endless-binary/dec2bin-1/4/" ->
-            //printfn "%s" "/endless-binary/dec2bin-1/"
             { pathname = "/endless-binary/dec2bin-1/4/"
               title = "10進数→2進数 (1) - taidalab"
               headerContent = Content.Common.header
               headerColorClass = "dec2bin"
               headerTitle = "<h1>10進数→2進数 (1) - taidalab</h1>"
-              mainContent = main // Content.Course.main
+              mainContent = main
               buttonColorClass = "submit-button display-order-3 dec2bin"
               questionContent = Content.Common.question
               initFunc = f }
         | "/endless-binary/dec2bin-2/" ->
-            //printfn "%s" "/endless-binary/dec2bin-2/"
             { pathname = "/endless-binary/dec2bin-2/"
               title = "10進数→2進数 (2) - taidalab"
               headerContent = Content.Common.header
               headerColorClass = "dec2bin"
               headerTitle = "<h1>10進数→2進数 (2) - taidalab</h1>"
-              mainContent = main // Content.Course.main
+              mainContent = main
               buttonColorClass = "submit-button display-order-3 dec2bin"
               questionContent = Content.Common.question
               initFunc = f }
         | "/endless-binary/bin2dec-1/" ->
-            //printfn "%s" "/endless-binary/bin2dec-1/"
             { pathname = "/endless-binary/bin2dec-1/"
               title = "2進数→10進数 (1) - taidalab"
               headerContent = Content.Common.header
               headerColorClass = "bin2dec"
               headerTitle = "<h1>2進数→10進数 (1) - taidalab</h1>"
-              mainContent = main // Content.Course.main
+              mainContent = main
               buttonColorClass = "submit-button display-order-3 bin2dec"
               questionContent = Content.Common.question
               initFunc = f }
         | "/endless-binary/bin2dec-2/" ->
-            //printfn "%s" "/endless-binary/bin2dec-2/"
             { pathname = "/endless-binary/bin2dec-2/"
               title = "2進数→10進数 (2) - taidalab"
               headerContent = Content.Common.header
               headerColorClass = "bin2dec"
               headerTitle = "<h1>2進数→10進数 (2) - taidalab</h1>"
-              mainContent = main // Content.Course.main
+              mainContent = main
               buttonColorClass = "submit-button display-order-3 bin2dec"
               questionContent = Content.Common.question
               initFunc = f }
         | "/endless-binary/power-of-two-1/" ->
-            //printfn "%s" "/endless-binary/power-of-two-1/"
             { pathname = "/endless-binary/power-of-two-1/"
               title = "2のn乗 - taidalab"
               headerContent = Content.Common.header
               headerColorClass = "power-of-two"
               headerTitle = "<h1>2のn乗 - taidalab</h1>"
-              mainContent = main // Content.Course.main
+              mainContent = main
               buttonColorClass = "submit-button display-order-3 power-of-two"
               questionContent = Content.Common.question
               initFunc = f }
         | "/endless-binary/power-of-two-2/" ->
-            //printfn "%s" "/endless-binary/power-of-two-2/"
             { pathname = "/endless-binary/power-of-two-2/"
               title = "2のn乗-1 - taidalab"
               headerContent = Content.Common.header
               headerColorClass = "power-of-two"
               headerTitle = "<h1>2のn乗-1 - taidalab</h1>"
-              mainContent = main // Content.Course.main
+              mainContent = main
               buttonColorClass = "submit-button display-order-3 power-of-two"
               questionContent = Content.Common.question
               initFunc = f }
         | "/endless-binary/addition/" ->
-            //printfn "%s" "/endless-binary/addition/"
             { pathname = "/endless-binary/addition/"
               title = "加算 - taidalab"
               headerContent = Content.Common.header
               headerColorClass = "addition"
               headerTitle = "<h1>加算 - taidalab</h1>"
-              mainContent = main // Content.Course.main
+              mainContent = main
               buttonColorClass = "submit-button display-order-3 addition"
               questionContent = Content.Common.columnAdditionFormat
               initFunc = f }
         | "/endless-binary/addition/4/" ->
-            //printfn "%s" "/endless-binary/addition/"
             { pathname = "/endless-binary/addition/4/"
               title = "加算 - taidalab"
               headerContent = Content.Common.header
               headerColorClass = "addition"
               headerTitle = "<h1>加算 - taidalab</h1>"
-              mainContent = main // Content.Course.main
+              mainContent = main
               buttonColorClass = "submit-button display-order-3 addition"
               questionContent = Content.Common.columnAdditionFormat
               initFunc = f }
         | "/endless-binary/subtraction/" ->
-            //printfn "%s" "/endless-binary/subtraction/"
             { pathname = "/endless-binary/subtraction/"
               title = "減算 - taidalab"
               headerContent = Content.Common.header
               headerColorClass = "subtraction"
               headerTitle = "<h1>減算 - taidalab</h1>"
-              mainContent = main // Content.Course.main
+              mainContent = main
               buttonColorClass = "submit-button display-order-3 subtraction"
               questionContent = Content.Common.columnAdditionFormat
               initFunc = f }
         | "/endless-binary/complement/" ->
-            //printfn "%s" "/endless-binary/complement/"
             { pathname = "/endless-binary/complement/"
               title = "補数 - taidalab"
               headerContent = Content.Common.header
               headerColorClass = "complement"
               headerTitle = "<h1>補数 - taidalab</h1>"
-              mainContent = main // Content.Course.main
+              mainContent = main
               buttonColorClass = "submit-button display-order-3 complement"
               questionContent = Content.Complement.question
               initFunc = f }
         | "/endless-binary/dec2hex/" ->
-            //printfn "%s" "/endless-binary/dec2hex/"
             { pathname = "/endless-binary/dec2hex/"
               title = "10進数→16進数 - taidalab"
               headerContent = Content.Common.header
               headerColorClass = "dec2hex"
               headerTitle = "<h1>10進数→16進数 - taidalab</h1>"
-              mainContent = main // Content.Course.main
+              mainContent = main
               buttonColorClass = "submit-button display-order-3 dec2hex"
               questionContent = Content.Common.question
               initFunc = f }
         | "/endless-binary/hex2dec/" ->
-            //printfn "%s" "/endless-binary/hex2dec/"
             { pathname = "/endless-binary/hex2dec/"
               title = "16進数→10進数 - taidalab"
               headerContent = Content.Common.header
               headerColorClass = "hex2dec"
               headerTitle = "<h1>16進数→10進数 - taidalab</h1>"
-              mainContent = main // Content.Course.main
+              mainContent = main
               buttonColorClass = "submit-button display-order-3 hex2dec"
               questionContent = Content.Common.question
               initFunc = f }
         | "/iro-iroiro/" ->
-            //printfn "%s" "/iro-iroiro/"
             { pathname = "/iro-iroiro/"
               title = "色いろいろ - taidalab"
               headerContent = Content.Common.header
               headerColorClass = "iro-iroiro"
               headerTitle = "<h1>色いろいろ - taidalab</h1>"
-              mainContent = main // IroIroiro.main
+              mainContent = main
               buttonColorClass = "submit-button iro-iroiro"
               questionContent = ""
               initFunc = f }
         | "/network-simulator/" ->
-            //printfn "%s" "/network-simulator/"
             { pathname = "/network-simulator/"
               title = "ネットワークシミュレータ - taidalab"
               headerContent = Content.Common.header
@@ -209,29 +192,26 @@ module InitObject =
               questionContent = ""
               initFunc = f }
         | "/about/" ->
-            //printfn "%s" "/about/"
             { pathname = "/about/"
               title = "about - taidalab"
               headerContent = Content.Common.header
               headerColorClass = "home"
               headerTitle = "<h1>about - taidalab</h1>"
-              mainContent = main // Content.About.main
+              mainContent = main
               buttonColorClass = ""
               questionContent = ""
               initFunc = f }
         | "/terms/" ->
-            //printfn "%s" "/terms/"
             { pathname = "/terms/"
               title = "ご利用について - taidalab"
               headerContent = Content.Common.header
               headerColorClass = "home"
               headerTitle = "<h1>ご利用について - taidalab</h1>"
-              mainContent = main // Content.Terms.main
+              mainContent = main
               buttonColorClass = ""
               questionContent = ""
               initFunc = f }
         | "/information-policy/" ->
-            //printfn "%s" "/information-policy/"
             { pathname = "/information-policy/"
               title = "情報の外部送信について - taidalab"
               headerContent = Content.Common.header
@@ -242,13 +222,12 @@ module InitObject =
               questionContent = ""
               initFunc = f }
         | _ ->
-            //printfn "%s" "default"
             { pathname = "/404/"
               title = "404: Page Not Found - taidalab"
               headerContent = Content.Common.header
               headerColorClass = "not-found"
               headerTitle = "<h1>404: Page Not Found - taidalab</h1>"
-              mainContent = main // Content.Course.main
+              mainContent = main
               buttonColorClass = "submit-button display-order-3 not-found"
               questionContent = Content.Common.question
               initFunc = f }

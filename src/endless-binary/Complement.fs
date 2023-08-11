@@ -57,7 +57,6 @@ module EndlessBinary =
             let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
             let input = numberInput.value |> escapeHtml
             let bin: Result<string, Errors.Errors> = input |> Bin.validate
-            //printfn "inputValue: %s" inputValue
 
             numberInput.focus ()
 
@@ -88,10 +87,8 @@ module EndlessBinary =
                 let digit = 4
                 let taggedInputValue = bin |> padWithZero digit
                 let sourceRadix = 2
-                //let bin = Dec.toBin dec
 
                 // Making a new history and updating the history with the new one.
-                //let destinationRadix = 10
                 let outputArea = document.getElementById "outputArea"
 
                 let historyMessage =
@@ -103,26 +100,17 @@ module EndlessBinary =
                     |> (fun x -> concatinateStrings "<br>" [ x; outputArea.innerHTML ])
 
                 outputArea.innerHTML <- historyMessage
-                //printfn "historyMessage: %s" historyMessage
 
                 if dec = answer then
                     // Making the next question.
-                    //printfn "last_answers: %A" last_answers
-
                     let nextNumber =
                         newNumber (fun _ -> getRandomBetween 1 15) (fun n -> List.contains n last_answers = false)
-                    //printfn "nextNumber: %A" nextNumber
 
                     let nextAnswer = 16 - nextNumber
                     let nextBin = nextNumber |> Dec.toBin |> Fermata.String.padLeft 4 '0'
-                    //printfn "nextAnswer: %A" nextAnswer
-                    //printfn "nextBin: %A" nextBin
-
                     (document.getElementById "questionSpan").innerText <- nextBin
 
                     let reversedBin = nextBin |> String.collect (fun c -> if c = '1' then "0" else "1")
-                    //printfn "reversedBin: %s" reversedBin
-
                     (document.getElementById "hintArea").innerHTML <- hint nextBin reversedBin
 
                     numberInput.value <- ""
@@ -152,13 +140,7 @@ module EndlessBinary =
             let initNumber = getRandomBetween 1 15
             let initAnswer = 16 - initNumber
             let initBin = initNumber |> Dec.toBin |> Fermata.String.padLeft 4 '0'
-            //printfn "initNumber: %A" initNumber
-            //printfn "initAnswer: %A" initAnswer
-            //printfn "initBin: %A" initBin
-
             let reversedBin = initBin |> String.collect (fun c -> if c = '1' then "0" else "1")
-            //printfn "reversedBin: %A" reversedBin
-
             (document.getElementById "questionSpan").innerText <- initBin
             (document.getElementById "srcRadix").innerText <- sprintf "(%d)" sourceRadix
             (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix

@@ -111,7 +111,6 @@ module EndlessBinary =
             let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
             let input = numberInput.value |> escapeHtml
             let dec: Result<int, Errors.Errors> = input |> Dec.validate
-            //printfn "input: %s" input
 
             numberInput.focus ()
 
@@ -140,26 +139,19 @@ module EndlessBinary =
                 let historyMessage =
                     newHistory (dec = answer) spacePaddedInputValue destinationRadix taggedHex sourceRadix
                     |> (fun x -> concatinateStrings "<br>" [ x; outputArea.innerHTML ])
-                //printfn "%A" historyMessage
+
                 outputArea.innerHTML <- historyMessage
 
                 if dec = answer then
                     // Making the next question.
-                    //printfnfn "%A" last_answers
-
                     let nextNumber =
                         newNumber (fun _ -> getRandomBetween 0 255) (fun n -> List.contains n last_answers = false)
-                    //printfn "%d" nextNumber
 
                     let nextHex = Dec.toHex nextNumber
-                    //printfnfn "%s" nextHex
-
                     (document.getElementById "questionSpan").innerText <- nextHex
 
                     let nextAddtionFormula = writeAdditionFormulaHex nextHex
                     let nextHint = hintFormat nextHex nextAddtionFormula (hintTable nextHex)
-                    //printfn "%s" nextHint
-
                     (document.getElementById "hintArea").innerHTML <- nextHint
                     numberInput.value <- ""
 
@@ -184,11 +176,8 @@ module EndlessBinary =
             // Initialization.
             let initNumber = getRandomBetween 0 255
             let initHex = Dec.toHex initNumber
-            //printfn "%A" initNumber
-            //printfn "%A" initHex
 
             let addtionFormula = writeAdditionFormulaHex initHex
-
             let hint = hintFormat initHex addtionFormula (hintTable initHex)
 
             let sourceRadix = 16

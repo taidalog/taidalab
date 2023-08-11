@@ -23,11 +23,6 @@ module EndlessBinary =
             ヒント付きなので、考え方も身に付けられます。
             """
 
-        //        let countOneBit binaryString =
-        //            binaryString
-        //            |> Seq.countWith (fun c -> c = '1')
-
-
         let devideIntoPowerOfTwo (number: int) =
             let getMaxPowerOfTwo (number: int) =
                 let indexNumber = Math.Log(double number, 2.0) |> int |> double
@@ -132,9 +127,6 @@ module EndlessBinary =
                 (fun x y -> sprintf "%s%s" x y)
                 (newArrowBin fontSize (List.length divRems) "#191970" "#b0e0e6")
             |> (Svg.frame (fontSize / 2 * 10) (divRems |> List.length |> (fun x -> fontSize * (x + 1))))
-
-        //        let hint content=
-        //            sprintf """<details id="hintDetails"><summary>ヒント: </summary>%s</details>""" content
 
         let newHintRepeatDivision divisor number =
             sprintf
@@ -283,12 +275,8 @@ module EndlessBinary =
                 (document.getElementById "errorArea").innerHTML <- ""
 
                 // Converting the input in order to use in the history message.
-                //let binaryDigit = 8
-                //let destinationRadix = 2
                 let colored = validated |> tagger //padWithZero binaryDigit |> colorLeadingZero
                 let converted = validated |> converter
-                //printfn "taggedBin: %s" taggedBin
-                //printfn "dec: %d" dec
 
                 let decimalDigit = 3
 
@@ -296,34 +284,19 @@ module EndlessBinary =
                     converted |> string |> Fermata.String.padLeft decimalDigit ' ' |> escapeSpace
 
                 // Making a new history and updating the history with the new one.
-                //let sourceRadix = 10
                 let outputArea = document.getElementById "outputArea" :?> HTMLParagraphElement
 
                 let historyMessage =
                     newHistory (converted = int answer) colored destinationRadix spacePadded sourceRadix
                     |> (fun x -> concatinateStrings "<br>" [ x; outputArea.innerHTML ])
-                //printfn "historyMessage: \n%s" historyMessage
+
                 outputArea.innerHTML <- historyMessage
 
                 if converted <> int answer then
                     ()
                 else
                     // Making the next question.
-                    //printfn "last_answers : %A" last_answers
-
                     let nextNumber = questionGenerator last_answers
-                    //printfn "nextNumber : %d" nextNumber
-                    //printfn "List.contains nextNumber last_answers : %b" (List.contains nextNumber last_answers)
-
-                    //let quotientsAndRemainders = repeatDivision nextNumber 2
-                    //printfn "quotientsAndRemainders: %A" quotientsAndRemainders
-
-                    //let powerOfTwos = devideIntoPowerOfTwo nextNumber
-                    //printfn "powerOfTwos: %A" powerOfTwos
-
-                    //let nextHint = hint nextNumber
-                    //printfn "nextHint: \n%s" nextHint
-
                     (document.getElementById "questionSpan").innerText <- string nextNumber
                     (document.getElementById "hintArea").innerHTML <- hintGenerator nextNumber
                     additional nextNumber
@@ -332,8 +305,6 @@ module EndlessBinary =
 
                     // Updating `lastAnswers`.
                     // These numbers will not be used for the next question.
-                    //let answersToKeep = Math.Min(10, List.length last_answers + 1)
-                    //let lastAnswers = (nextNumber :: last_answers).[0..(answersToKeep - 1)]
                     let lastAnswers' = (nextNumber :: last_answers) |> List.truncate answersToKeep
 
                     // Setting the next answer to the check button.
@@ -385,19 +356,7 @@ module EndlessBinary =
             checker
             : unit =
             // Initialization.
-            //printfn "Initialization starts."
-
             let initNumber = questionGenerator []
-            //printfn "initNumber : %d" initNumber
-
-            //let quotientsAndRemainders = repeatDivision initNumber 2
-            //let powerOfTwos = devideIntoPowerOfTwo initNumber
-            //printfn "quotients and remainders : %A" quotientsAndRemainders
-            //printfn "power of twos : %A" powerOfTwos
-
-            //let sourceRadix = 10
-            //let destinationRadix = 2
-
             (document.getElementById "questionSpan").innerText <- string initNumber
             (document.getElementById "srcRadix").innerText <- sprintf "(%d)" sourceRadix
             (document.getElementById "dstRadix").innerText <- string destinationRadix
@@ -449,8 +408,6 @@ module EndlessBinary =
                 (fun _ ->
                     [ "helpWindow"; "helpBarrier" ]
                     |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore))
-
-        //printfn "Initialization ends."
 
         let init () =
             init'
