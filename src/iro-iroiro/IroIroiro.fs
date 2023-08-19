@@ -62,6 +62,55 @@ module IroIroiro =
         </div>
         """
 
+    let circulation1 (s: int) (n: int) = n % s
+    let circulation2 (s: int) (n: int) = n / s
+
+    let stairs (list: 'T list) : 'T list list =
+        let rec loop list acc =
+            match list with
+            | [] -> acc
+            | _ :: t -> loop t ((List.rev list) :: acc)
+
+        loop (List.rev list) []
+
+    let fore (list: 'T list) : 'T list =
+        list |> List.rev |> List.tail |> List.rev
+
+    let countBefore (list: 'T list) : int list =
+        List.zip list (stairs list)
+        |> List.map (fun (x, xs) -> List.countWith ((=) x) xs - 1)
+
+    let f min' max' x =
+        let gap = max' - min'
+
+        if (circulation2 (gap * 3) x) % 2 = 0 then
+            min (min' + (circulation1 (gap * 3) x)) max'
+        else
+            max (max' - (circulation1 (gap * 3) x)) min'
+
+    let fmid min' max' step start value =
+        value + ((max' - min') * 0) |> (fun x -> x * step + start |> f min' max')
+
+    let fmax min' max' step start value =
+        value + ((max' - min') * 2) |> (fun x -> x * step + start |> f min' max')
+
+    let fmin min' max' step start value =
+        value + ((max' - min') * 4) |> (fun x -> x * step + start |> f min' max')
+
+    let r, g, b = 101, 162, 172
+    //let r, g, b = 162, 101, 162
+    let rgb = [ r; g; b ]
+    let indexes = rgb |> List.map (fun x -> List.findIndex ((=) x) (List.sort rgb))
+
+    let [ rf; gf; bf ] =
+        List.map2 (+) indexes (countBefore rgb)
+        |> List.map (fun x -> List.item x [ fmin; fmid; fmax ])
+
+    [ 0..9 ]
+    |> List.map (fun x -> (rf 101 172 25 61 x), (gf 101 172 25 61 x), (bf 101 172 25 61 x))
+    |> List.map (fun (r', g', b') ->
+        $"""<div class="color-div" style="background-color: rgb(%d{r'}, %d{g'}, %d{b'});">R: %d{r'}  G: %d{g'}  B: %d{b'}</div>""")
+
     let (|Positive|Negative|) num = if num >= 0 then Positive else Negative
 
     let getNextRgb r g b step colorToModify : RankedRgb list * PrimaryColors =
