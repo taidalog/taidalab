@@ -67,17 +67,8 @@ module IroIroiro =
     let private circulation2 (s: int) (n: int) : int = n / s
     // 0 0 0 ... 1 1 1 ... 2 2 2 ...
 
-    let private stairs (list: 'T list) : 'T list list =
-        let rec loop list acc =
-            match list with
-            | [] -> acc
-            | _ :: t -> loop t ((List.rev list) :: acc)
-
-        loop (List.rev list) []
-
-    let private countBefore (list: 'T list) : int list =
-        List.zip list (stairs list)
-        |> List.map (fun (x, xs) -> List.countWith ((=) x) xs - 1)
+    let private countBefore (index: int) (list: 'T list) : int =
+        list |> List.truncate index |> List.countWith ((=) (List.item index list))
 
     let private f min' max' x =
         let gap = max' - min'
@@ -98,17 +89,18 @@ module IroIroiro =
 
     let rec repeatGetNextRgb r g b step limit =
         let rgb = [ r; g; b ]
-        let indexes = rgb |> List.map (fun x -> List.findIndex ((=) x) (List.sort rgb))
 
-        let [ rf; gf; bf ] =
-            List.map2 (+) indexes (countBefore rgb)
-            |> List.map (fun x -> List.item x [ fmin; fmid; fmax ])
+        let rf, gf, bf =
+            (0, 1, 2)
+            |> Tuple.map3 (fun x -> List.findIndex ((=) (List.item x rgb)) rgb + countBefore x rgb)
+            |> Tuple.map3 (fun x -> List.item x [ fmin; fmid; fmax ])
 
         let min' = List.min rgb
         let max' = List.max rgb
+        let shift = List.item 2 (List.sort rgb) - min'
 
         [ 0..limit ]
-        |> List.map (fun x -> (rf min' max' step 61 x), (gf min' max' step 61 x), (bf min' max' step 61 x))
+        |> List.map (fun x -> (rf min' max' step shift x), (gf min' max' step shift x), (bf min' max' step shift x))
 
     let start () =
         let errorArea = document.getElementById "errorArea"
