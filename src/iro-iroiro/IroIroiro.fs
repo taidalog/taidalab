@@ -8,7 +8,6 @@ namespace Taidalab
 open Browser.Dom
 open Browser.Types
 open Fermata
-open Taidalab.RankedRgb
 
 module IroIroiro =
     let help =
