@@ -75,9 +75,6 @@ module IroIroiro =
 
         loop (List.rev list) []
 
-    let private fore (list: 'T list) : 'T list =
-        list |> List.rev |> List.tail |> List.rev
-
     let private countBefore (list: 'T list) : int list =
         List.zip list (stairs list)
         |> List.map (fun (x, xs) -> List.countWith ((=) x) xs - 1)
@@ -99,94 +96,19 @@ module IroIroiro =
     let private fmin min' max' step start value =
         value + ((max' - min') * 4) |> (fun x -> x * step + start |> f min' max')
 
-    let r, g, b = 101, 162, 172
-    //let r, g, b = 162, 101, 162
-    let rgb = [ r; g; b ]
-    let indexes = rgb |> List.map (fun x -> List.findIndex ((=) x) (List.sort rgb))
+    let rec repeatGetNextRgb r g b step limit =
+        let rgb = [ r; g; b ]
+        let indexes = rgb |> List.map (fun x -> List.findIndex ((=) x) (List.sort rgb))
 
-    let [ rf; gf; bf ] =
-        List.map2 (+) indexes (countBefore rgb)
-        |> List.map (fun x -> List.item x [ fmin; fmid; fmax ])
+        let [ rf; gf; bf ] =
+            List.map2 (+) indexes (countBefore rgb)
+            |> List.map (fun x -> List.item x [ fmin; fmid; fmax ])
 
-    [ 0..9 ]
-    |> List.map (fun x -> (rf 101 172 25 61 x), (gf 101 172 25 61 x), (bf 101 172 25 61 x))
-    |> List.map (fun (r', g', b') ->
-        $"""<div class="color-div" style="background-color: rgb(%d{r'}, %d{g'}, %d{b'});">R: %d{r'}  G: %d{g'}  B: %d{b'}</div>""")
+        let min' = List.min rgb
+        let max' = List.max rgb
 
-    let (|Positive|Negative|) num = if num >= 0 then Positive else Negative
-
-    let getNextRgb r g b step colorToModify : RankedRgb list * PrimaryColors =
-        let rec loop rgbList min max value colorToModify =
-            let addedMed, gap =
-                rgbList
-                |> List.find (fun x -> x.Color = colorToModify)
-                |> fun x -> x.Value + value |> Bound.clampGap min max
-                |> fun (x, y) -> x, -y
-
-            let newRankedRgb =
-                rgbList
-                |> List.map (fun x ->
-                    if x.Color = colorToModify then
-                        { x with Value = addedMed }
-                    else
-                        x)
-                |> RankedRgb.toInts
-                |||> RankedRgb.ofInts
-
-            let rankToAdd =
-                if gap > 0 then Some Rank.Min
-                else if gap < 0 then Some Rank.Max
-                else None
-
-            let nextColorToModify =
-                match rankToAdd with
-                | None -> None
-                | Some rnk ->
-                    newRankedRgb
-                    |> List.filter (fun x -> x.Color <> colorToModify)
-                    |> List.find (fun x -> x.Rank = rnk)
-                    |> fun x -> Some x.Color
-
-            match nextColorToModify with
-            | None -> (newRankedRgb, colorToModify)
-            | Some c -> loop newRankedRgb min max gap c
-
-        let rankedRgbs = RankedRgb.ofInts r g b
-        let min = valueByRank rankedRgbs Rank.Min
-        let max = valueByRank rankedRgbs Rank.Max
-
-        loop rankedRgbs min max step colorToModify
-
-    let rec repeatGetNextRgb r g b step limit colorToModify acc =
-
-        let resRgb, lastModifiedColor = getNextRgb r g b step colorToModify
-        let resR, resG, resB = resRgb |> RankedRgb.toInts
-
-        let nextStep = step * (if colorToModify = lastModifiedColor then 1 else -1)
-
-        let nextColorToModify =
-            if lastModifiedColor = colorToModify then
-                colorToModify
-            else
-                let nextRankToModify =
-                    match (List.tryFind (fun x -> x.Rank = Rank.Med) resRgb) with
-                    | Some m -> m.Rank
-                    | None ->
-                        match nextStep with
-                        | Positive -> Rank.Min
-                        | Negative -> Rank.Max
-
-                match nextRankToModify with
-                | Rank.Med -> colorByRank resRgb nextRankToModify
-                | _ ->
-                    resRgb
-                    |> List.filter (fun x -> x.Color <> lastModifiedColor)
-                    |> List.find (fun x -> x.Rank = nextRankToModify)
-                    |> fun x -> x.Color
-
-        match limit with
-        | 0 -> acc @ [ (resR, resG, resB) ]
-        | _ -> repeatGetNextRgb resR resG resB nextStep (limit - 1) nextColorToModify (acc @ [ (resR, resG, resB) ])
+        [ 0..limit ]
+        |> List.map (fun x -> (rf min' max' step 61 x), (gf min' max' step 61 x), (bf min' max' step 61 x))
 
     let start () =
         let errorArea = document.getElementById "errorArea"
@@ -222,13 +144,7 @@ module IroIroiro =
             let step = stepInput |> int
             let limit = limitInput |> int
 
-            let colorToModify =
-                RankedRgb.ofInts r g b
-                |> List.sortBy (fun x -> x.Value)
-                |> List.item 1
-                |> fun x -> x.Color
-
-            let ress = repeatGetNextRgb r g b step limit colorToModify [ (r, g, b) ]
+            let ress = repeatGetNextRgb r g b step limit
 
             let output =
                 ress
@@ -238,7 +154,6 @@ module IroIroiro =
                 |> String.concat "\n"
 
             (document.getElementById "outputArea").innerHTML <- output
-
 
     let init () =
         // Initialization.
