@@ -5,6 +5,7 @@
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
 namespace Taidalab
 
+open System
 open Browser.Dom
 open Browser.Types
 open Fermata
@@ -97,6 +98,11 @@ module IroIroiro =
 
         [ 0..limit ] |> List.map (fun x -> rf x, gf x, bf x)
 
+    let hexcode (r: int) (g: int) (b: int) =
+        (r, g, b)
+        |> Tuple.map3 (fun x -> Convert.ToString(x, 16) |> string |> String.padLeft 2 '0')
+        |> fun (r', g', b') -> $"#%s{r'}%s{g'}%s{b'}"
+
     let start () =
         let errorArea = document.getElementById "errorArea"
         errorArea.innerHTML <- ""
@@ -137,7 +143,13 @@ module IroIroiro =
                 ress
                 |> List.map (fun (r, g, b) ->
                     sprintf
-                        $"""<div class="color-div" style="background-color: rgb(%d{r}, %d{g}, %d{b});">R: %d{r}  G: %d{g}  B: %d{b}</div>""")
+                        $"""
+                        <div class="color-div" style="background-color: rgb(%d{r}, %d{g}, %d{b});">
+                            R: %d{r}  G: %d{g}  B: %d{b}
+                            <br>
+                            HEX: %s{hexcode r g b}
+                        </div>
+                        """)
                 |> String.concat "\n"
 
             (document.getElementById "outputArea").innerHTML <- output
