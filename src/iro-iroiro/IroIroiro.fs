@@ -97,7 +97,7 @@ module IroIroiro =
 
         let min' = List.min rgb
         let max' = List.max rgb
-        let shift = List.item 2 (List.sort rgb) - min'
+        let shift = List.item 1 (List.sort rgb) - min'
 
         [ 0..limit ]
         |> List.map (fun x -> (rf min' max' step shift x), (gf min' max' step shift x), (bf min' max' step shift x))
