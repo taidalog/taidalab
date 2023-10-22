@@ -62,10 +62,12 @@ module IroIroiro =
         </div>
         """
 
-    let circulation1 (s: int) (n: int) = n % s
-    let circulation2 (s: int) (n: int) = n / s
+    let private circulation1 (s: int) (n: int) : int = n % s
+    // 0 1 2 ... 0 1 2 ... 0 1 2 ...
+    let private circulation2 (s: int) (n: int) : int = n / s
+    // 0 0 0 ... 1 1 1 ... 2 2 2 ...
 
-    let stairs (list: 'T list) : 'T list list =
+    let private stairs (list: 'T list) : 'T list list =
         let rec loop list acc =
             match list with
             | [] -> acc
@@ -73,14 +75,14 @@ module IroIroiro =
 
         loop (List.rev list) []
 
-    let fore (list: 'T list) : 'T list =
+    let private fore (list: 'T list) : 'T list =
         list |> List.rev |> List.tail |> List.rev
 
-    let countBefore (list: 'T list) : int list =
+    let private countBefore (list: 'T list) : int list =
         List.zip list (stairs list)
         |> List.map (fun (x, xs) -> List.countWith ((=) x) xs - 1)
 
-    let f min' max' x =
+    let private f min' max' x =
         let gap = max' - min'
 
         if (circulation2 (gap * 3) x) % 2 = 0 then
@@ -88,13 +90,13 @@ module IroIroiro =
         else
             max (max' - (circulation1 (gap * 3) x)) min'
 
-    let fmid min' max' step start value =
+    let private fmid min' max' step start value =
         value + ((max' - min') * 0) |> (fun x -> x * step + start |> f min' max')
 
-    let fmax min' max' step start value =
+    let private fmax min' max' step start value =
         value + ((max' - min') * 2) |> (fun x -> x * step + start |> f min' max')
 
-    let fmin min' max' step start value =
+    let private fmin min' max' step start value =
         value + ((max' - min') * 4) |> (fun x -> x * step + start |> f min' max')
 
     let r, g, b = 101, 162, 172
