@@ -78,29 +78,25 @@ module IroIroiro =
         else
             max (max' - (circulation1 (gap * 3) x)) min'
 
-    let private fmid min' max' step start value =
-        value + ((max' - min') * 0) |> (fun x -> x * step + start |> f min' max')
-
-    let private fmax min' max' step start value =
-        value + ((max' - min') * 2) |> (fun x -> x * step + start |> f min' max')
-
-    let private fmin min' max' step start value =
-        value + ((max' - min') * 4) |> (fun x -> x * step + start |> f min' max')
+    let private f' factor min' max' step start value =
+        f min' max' (((max' - min') * factor) + step * value + start)
 
     let rec repeatGetNextRgb r g b step limit =
         let rgb = [ r; g; b ]
-
-        let rf, gf, bf =
-            (0, 1, 2)
-            |> Tuple.map3 (fun x -> List.findIndex ((=) (List.item x rgb)) rgb + countBefore x rgb)
-            |> Tuple.map3 (fun x -> List.item x [ fmin; fmid; fmax ])
-
         let min' = List.min rgb
         let max' = List.max rgb
         let shift = List.item 1 (List.sort rgb) - min'
 
-        [ 0..limit ]
-        |> List.map (fun x -> (rf min' max' step shift x), (gf min' max' step shift x), (bf min' max' step shift x))
+        let fmin = f' 4 min' max' step shift
+        let fmid = f' 0 min' max' step shift
+        let fmax = f' 2 min' max' step shift
+
+        let rf, gf, bf =
+            (0, 1, 2)
+            |> Tuple.map3 (fun x -> List.findIndex ((=) (List.item x rgb)) (List.sort rgb) + countBefore x rgb)
+            |> Tuple.map3 (fun x -> List.item x [ fmin; fmid; fmax ])
+
+        [ 0..limit ] |> List.map (fun x -> rf x, gf x, bf x)
 
     let start () =
         let errorArea = document.getElementById "errorArea"
