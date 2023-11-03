@@ -402,6 +402,11 @@ module EndlessBinary =
                     [ "helpWindow"; "helpBarrier" ]
                     |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore))
 
+            (document.getElementById "helpClose").onclick <-
+                (fun _ ->
+                    [ "helpWindow"; "helpBarrier" ]
+                    |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore))
+
         let init () =
             init'
                 (question 8)

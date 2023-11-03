@@ -1016,9 +1016,19 @@ span.device-prop.subnetmask::before {
 /*
     help window
 */
-span.help-button {
+span.help-button,
+span.help-close {
     font-size: 1.5rem;
     cursor: pointer;
+}
+
+div.help-close-outer {
+    width: 100%;
+    text-align: right;
+}
+
+span.help-close:hover {
+    color: #ffffff;
 }
 
 @media (max-width: 599px) {

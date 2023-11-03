@@ -89,6 +89,11 @@ module NetworkSimulator =
         <div id="outputArea" class="output-area"></div>
         <div id="playArea" class="play-area"></div>
         <div id="helpWindow" class="help-window">
+            <div class="help-close-outer">
+                <span id="helpClose" class="material-symbols-outlined help-close" translate="no">
+                    close
+                </span>
+            </div>
             %s{help}
             <p class="help-color network-simulator">このヘルプは、他の場所をクリックすると消えます。</p>
         </div>
@@ -359,6 +364,11 @@ module NetworkSimulator =
                 |> List.iter (fun x -> (document.getElementById x).classList.toggle "active" |> ignore))
 
         (document.getElementById "helpBarrier").onclick <-
+            (fun _ ->
+                [ "helpWindow"; "helpBarrier" ]
+                |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore))
+
+        (document.getElementById "helpClose").onclick <-
             (fun _ ->
                 [ "helpWindow"; "helpBarrier" ]
                 |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore))

@@ -44,6 +44,11 @@ module EndlessBinary =
                 </div>
             </div>
             <div id="helpWindow" class="help-window">
+                <div class="help-close-outer">
+                    <span id="helpClose" class="material-symbols-outlined help-close" translate="no">
+                        close
+                    </span>
+                </div>
                 %s{help}
                 <p class="%s{colorClass}">このヘルプは、他の場所をクリックすると消えます。</p>
             </div>"""

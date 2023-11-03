@@ -54,6 +54,11 @@ module IroIroiro =
         <div id="errorArea" class="error-area"></div>
         <div id="outputArea" class="output-area"></div>
         <div id="helpWindow" class="help-window">
+            <div class="help-close-outer">
+                <span id="helpClose" class="material-symbols-outlined help-close" translate="no">
+                    close
+                </span>
+            </div>
             %s{help}
             <p class="help-color iro-iroiro">このヘルプは、他の場所をクリックすると消えます。</p>
         </div>
@@ -155,7 +160,7 @@ module IroIroiro =
         // Initialization.
         (document.getElementById "submitButton").onclick <- (fun _ -> start ())
 
-        [ "helpButton"; "helpBarrier" ]
+        [ "helpButton"; "helpBarrier"; "helpClose" ]
         |> List.iter (fun x ->
             (document.getElementById x).onclick <-
                 (fun _ ->
