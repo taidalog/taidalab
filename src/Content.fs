@@ -43,6 +43,20 @@ module Content =
                 </div>
             </div>"""
 
+        let headerNoHelp =
+            """
+            <div id="headerContainer" class="header-container">
+                <button id="hamburgerButton" class="hamburger-button">
+                    <span class="bar bar-top"></span>
+                    <span class="bar bar-mid"></span>
+                    <span class="bar bar-bottom"></span>
+                </button>
+                <div class="header-center">
+                    <div id="headerTitle" class="header-title"></div>
+                    <div class="inline-flex-center"></div>
+                </div>
+            </div>"""
+
         let aside =
             """
             <ul>

@@ -24,7 +24,7 @@ module InitObject =
         | "/" ->
             { pathname = "/"
               title = "taidalab"
-              headerContent = Content.Common.header
+              headerContent = Content.Common.headerNoHelp
               headerColorClass = "home"
               headerTitle = """<h1 translate="no">taidalab</h1>"""
               mainContent = main
@@ -34,7 +34,7 @@ module InitObject =
         | "/endless-binary/" ->
             { pathname = "/endless-binary/"
               title = "10進数↔2進数 - taidalab"
-              headerContent = Content.Common.header
+              headerContent = Content.Common.headerNoHelp
               headerColorClass = "home"
               headerTitle = """<h1>10進数↔︎2進数 - <span translate="no">taidalab</span></h1>"""
               mainContent = main
@@ -194,7 +194,7 @@ module InitObject =
         | "/about/" ->
             { pathname = "/about/"
               title = "about - taidalab"
-              headerContent = Content.Common.header
+              headerContent = Content.Common.headerNoHelp
               headerColorClass = "home"
               headerTitle = """<h1>about - <span translate="no">taidalab</span></h1>"""
               mainContent = main
@@ -204,7 +204,7 @@ module InitObject =
         | "/terms/" ->
             { pathname = "/terms/"
               title = "ご利用について - taidalab"
-              headerContent = Content.Common.header
+              headerContent = Content.Common.headerNoHelp
               headerColorClass = "home"
               headerTitle = """<h1>ご利用について - <span translate="no">taidalab</span></h1>"""
               mainContent = main
@@ -214,7 +214,7 @@ module InitObject =
         | "/information-policy/" ->
             { pathname = "/information-policy/"
               title = "情報の外部送信について - taidalab"
-              headerContent = Content.Common.header
+              headerContent = Content.Common.headerNoHelp
               headerColorClass = "home"
               headerTitle = """<h1>情報の外部送信について - <span translate="no">taidalab</span></h1>"""
               mainContent = main
@@ -224,7 +224,7 @@ module InitObject =
         | _ ->
             { pathname = "/404/"
               title = "404: Page Not Found - taidalab"
-              headerContent = Content.Common.header
+              headerContent = Content.Common.headerNoHelp
               headerColorClass = "not-found"
               headerTitle = """<h1>404: Page Not Found - <span translate="no">taidalab</span></h1>"""
               mainContent = main
