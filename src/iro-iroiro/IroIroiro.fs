@@ -50,7 +50,7 @@ module IroIroiro =
             <span class="display-order-3">
                 <button type="button" id="submitButton" class="submit-button d2b-button">確認</button>
             </span>
-            <span id="helpButton" class="material-symbols-outlined help-button display-order-4">
+            <span id="helpButton" class="material-symbols-outlined help-button display-order-4" translate="no">
                 help
             </span>
         </form>

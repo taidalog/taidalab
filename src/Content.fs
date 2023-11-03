@@ -78,9 +78,9 @@ module Content =
             sprintf
                 """
                 <small class="footer-container">
-                    <div class="item">&copy; 2022-2023 taidalog</div>
+                    <div class="item" translate="no">&copy; 2022-2023 taidalog</div>
                     <div class="item"><a id="versionNumber" href="https://github.com/taidalog/taidalab/releases">%s</a></div>
-                    <div class="item">Powered by <a id="footerFSharp" href="https://fsharp.org/">F#</a> and <a id="footerFable" href="https://fable.io">Fable</a>. Thank you!</div>
+                    <div class="item">Powered by <a id="footerFSharp" href="https://fsharp.org/" translate="no">F#</a> and <a id="footerFable" href="https://fable.io" translate="no">Fable</a>. Thank you!</div>
                 </small>"""
                 version
 

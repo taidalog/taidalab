@@ -32,7 +32,7 @@ module NetworkSimulator =
             クライアントやルータの IP アドレスをクリックして設定しなおしたりしてください。
         </p>
         <p>
-            <span class="material-symbols-outlined symbols18">add_circle</span>マークのボタンをクリックすると、デバイスやケーブルを追加できます。
+            <span class="material-symbols-outlined symbols18" translate="no">add_circle</span>マークのボタンをクリックすると、デバイスやケーブルを追加できます。
         </p>
         <p>
             デバイスやケーブルをドラッグで動かした後、カーソルから離れなくなった場合は、<br>
@@ -56,34 +56,34 @@ module NetworkSimulator =
                 </span>
             </span>
             <span class="display-order-2">
-                <button type="submit" id="submitButton" class="submit-button">ping</button>
+                <button type="submit" id="submitButton" class="submit-button" translate="no">ping</button>
             </span>
-            <span id="helpButton" class="material-symbols-outlined help-button display-order-3">
+            <span id="helpButton" class="material-symbols-outlined help-button display-order-3" translate="no">
                 help
             </span>
         </form>
         <form>
             <button type="button" id="addClientButton" class="submit-button gray display-order-3">
                 <span class="icon-vertical-center">
-                    <span class="material-symbols-outlined symbols18">add_circle</span>
+                    <span class="material-symbols-outlined symbols18" translate="no">add_circle</span>
                     クライアント
                 </span>
             </button>
             <button type="button" id="addRouterButton" class="submit-button gray display-order-4">
                 <span class="icon-vertical-center">
-                    <span class="material-symbols-outlined symbols18">add_circle</span>
+                    <span class="material-symbols-outlined symbols18" translate="no">add_circle</span>
                     ルータ
                 </span>
             </button>
             <button type="button" id="addHubButton" class="submit-button gray display-order-5">
                 <span class="icon-vertical-center">
-                    <span class="material-symbols-outlined symbols18">add_circle</span>
+                    <span class="material-symbols-outlined symbols18" translate="no">add_circle</span>
                     ハブ
                 </span>
             </button>
             <button type="button" id="addLANCableButton" class="submit-button gray display-order-6">
                 <span class="icon-vertical-center">
-                    <span class="material-symbols-outlined symbols18">add_circle</span>
+                    <span class="material-symbols-outlined symbols18" translate="no">add_circle</span>
                     LANケーブル
                 </span>
             </button>
