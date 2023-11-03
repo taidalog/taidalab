@@ -34,8 +34,8 @@ module EndlessBinary =
                 <input type="text" id="numberInput" class="number-input display-order-1 mono regular">
                 <span id="binaryRadix" class="binary-radix display-order-2"></span>
                 <button type="button" id="submitButton" class="submit-button display-order-3 d2b-button">確認</button>
-                <div id="hintArea" class="hint-area display-order-4"></div>
-                <div id="errorArea" class="error-area display-order-5"></div>
+                <div id="errorArea" class="error-area display-order-4"></div>
+                <div id="hintArea" class="hint-area display-order-5"></div>
             </form>
             <div class="history-area">
                 結果:
@@ -55,8 +55,8 @@ module EndlessBinary =
                 <input type="text" id="numberInput" class="number-input display-order-1 mono regular">
                 <span id="binaryRadix" class="binary-radix display-order-2"></span>
                 <button type="button" id="submitButton" class="submit-button display-order-3 d2b-button">確認</button>
-                <div id="hintArea" class="hint-area display-order-4"></div>
-                <div id="errorArea" class="error-area display-order-5"></div>
+                <div id="errorArea" class="error-area display-order-4"></div>
+                <div id="hintArea" class="hint-area display-order-5"></div>
             </form>
             <div class="history-area">
                 結果:
