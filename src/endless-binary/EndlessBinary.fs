@@ -30,9 +30,6 @@ module EndlessBinary =
         let main help colorClass =
             $"""
             <span id="questionArea" class="question-area"></span>
-            <span id="helpButton" class="material-symbols-outlined help-button" translate="no">
-                help
-            </span>
             <form id="inputArea" class="input-area" autocomplete="off">
                 <input type="text" id="numberInput" class="number-input display-order-1 mono regular">
                 <span id="binaryRadix" class="binary-radix display-order-2"></span>
@@ -54,9 +51,6 @@ module EndlessBinary =
         let main404 =
             """
             <span id="questionArea" class="question-area"></span>
-            <span id="helpButton" class="material-symbols-outlined help-button" translate="no">
-                help
-            </span>
             <form id="inputArea" class="input-area" autocomplete="off">
                 <input type="text" id="numberInput" class="number-input display-order-1 mono regular">
                 <span id="binaryRadix" class="binary-radix display-order-2"></span>

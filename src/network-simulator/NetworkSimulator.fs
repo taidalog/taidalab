@@ -58,9 +58,6 @@ module NetworkSimulator =
             <span class="display-order-2">
                 <button type="submit" id="submitButton" class="submit-button" translate="no">ping</button>
             </span>
-            <span id="helpButton" class="material-symbols-outlined help-button display-order-3" translate="no">
-                help
-            </span>
         </form>
         <form>
             <button type="button" id="addClientButton" class="submit-button gray display-order-3">

@@ -33,7 +33,14 @@ module Content =
                     <span class="bar bar-mid"></span>
                     <span class="bar bar-bottom"></span>
                 </button>
-                <div id="headerTitle" class="header-title"></div>
+                <div class="header-center">
+                    <div id="headerTitle" class="header-title"></div>
+                    <div class="inline-flex-center">
+                        <span id="helpButton" class="material-symbols-outlined help-button-header" translate="no">
+                            help
+                        </span>
+                    </div>
+                </div>
             </div>"""
 
         let aside =

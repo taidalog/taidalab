@@ -96,7 +96,17 @@ header {
 .header-container {
     width: 100%;
     margin: 0 auto;
-    padding-left: max(20%, 260px);
+    padding: 0 max(20%, 260px);
+}
+
+header div.header-container div.header-center {
+    display: flex;
+    justify-content: space-between;
+}
+
+header div.header-container div.header-center div.inline-flex-center {
+    display: inline-flex;
+    align-items: center;
 }
 
 header h1 {
@@ -1008,6 +1018,11 @@ span.device-prop.subnetmask::before {
 */
 .help-button {
     font-size: 18px;
+    cursor: pointer;
+}
+
+.help-button-header {
+    font-size: 1.5rem;
     cursor: pointer;
 }
 
