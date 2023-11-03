@@ -593,6 +593,10 @@ details summary:hover {
     height: 130px;
 }
 
+div.color-div .white {
+    color: #ffffff;
+}
+
 input.iro-iroiro.input-area,
 input.network-simulator.input-area {
     padding: 5px 0;

@@ -146,9 +146,13 @@ module IroIroiro =
                     sprintf
                         $"""
                         <div class="color-div" style="background-color: rgb(%d{r}, %d{g}, %d{b});">
-                            R: %d{r}  G: %d{g}  B: %d{b}
+                            <span>R: %d{r}  G: %d{g}  B: %d{b}</span>
                             <br>
-                            HEX: %s{hexcode r g b}
+                            <span>HEX: %s{hexcode r g b}</span>
+                            <br>
+                            <span class="white">R: %d{r}  G: %d{g}  B: %d{b}</span>
+                            <br>
+                            <span class="white">HEX: %s{hexcode r g b}</span>
                         </div>
                         """)
                 |> String.concat "\n"
