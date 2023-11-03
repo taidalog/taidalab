@@ -1022,6 +1022,11 @@ span.help-close {
     cursor: pointer;
 }
 
+span.help-button:hover {
+    font-variation-settings:
+        'FILL' 1
+}
+
 div.help-close-outer {
     width: 100%;
     text-align: right;
