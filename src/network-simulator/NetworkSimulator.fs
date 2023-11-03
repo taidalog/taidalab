@@ -90,12 +90,11 @@ module NetworkSimulator =
         <div id="playArea" class="play-area"></div>
         <div id="helpWindow" class="help-window">
             <div class="help-close-outer">
-                <span id="helpClose" class="material-symbols-outlined help-close" translate="no">
+                <span id="helpClose" class="material-symbols-outlined help-close network-simulator" translate="no">
                     close
                 </span>
             </div>
             %s{help}
-            <p class="help-color network-simulator">このヘルプは、他の場所をクリックすると消えます。</p>
         </div>
         """
 

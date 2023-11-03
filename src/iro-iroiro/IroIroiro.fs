@@ -55,12 +55,11 @@ module IroIroiro =
         <div id="outputArea" class="output-area"></div>
         <div id="helpWindow" class="help-window">
             <div class="help-close-outer">
-                <span id="helpClose" class="material-symbols-outlined help-close" translate="no">
+                <span id="helpClose" class="material-symbols-outlined help-close iro-iroiro" translate="no">
                     close
                 </span>
             </div>
             %s{help}
-            <p class="help-color iro-iroiro">このヘルプは、他の場所をクリックすると消えます。</p>
         </div>
         """
 

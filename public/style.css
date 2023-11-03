@@ -1062,45 +1062,45 @@ span.help-close:hover {
     scrollbar-width: thin;
 }
 
-p.help-color.dec2bin {
-    color: #65a2ac;
+span.help-close.dec2bin:hover {
+    background-color: #65a2ac;
 }
 
-p.help-color.bin2dec {
-    color: #65ac86;
+span.help-close.bin2dec:hover {
+    background-color: #65ac86;
 }
 
-p.help-color.power-of-two {
-    color: #a665ac;
+span.help-close.power-of-two:hover {
+    background-color: #a665ac;
 }
 
-p.help-color.addition {
-    color: #656eac;
+span.help-close.addition:hover {
+    background-color: #656eac;
 }
 
-p.help-color.subtraction {
-    color: #656eac;
+span.help-close.subtraction:hover {
+    background-color: #656eac;
 }
 
-p.help-color.complement {
-    color: #6588ac;
+span.help-close.complement:hover {
+    background-color: #6588ac;
 }
 
-p.help-color.dec2hex,
-p.help-color.hex2dec {
-    color: #65aca0;
+span.help-close.dec2hex:hover,
+span.help-close.hex2dec:hover {
+    background-color: #65aca0;
 }
 
-p.help-color.iro-iroiro {
-    color: #ac657c;
+span.help-close.iro-iroiro:hover {
+    background-color: #ac657c;
 }
 
-p.help-color.network-simulator {
-    color: #7c65ac;
+span.help-close.network-simulator:hover {
+    background-color: #7c65ac;
 }
 
-p.help-color.ctc {
-    color: #aaac65;
+span.help-close.ctc:hover {
+    background-color: #aaac65;
 }
 
 .help-barrier {
