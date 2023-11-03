@@ -36,7 +36,7 @@ module Content =
                 <div class="header-center">
                     <div id="headerTitle" class="header-title"></div>
                     <div class="inline-flex-center">
-                        <span id="helpButton" class="material-symbols-outlined help-button-header" translate="no">
+                        <span id="helpButton" class="material-symbols-outlined help-button" translate="no">
                             help
                         </span>
                     </div>

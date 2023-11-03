@@ -748,8 +748,7 @@ span.network-simulator.input-wrapper {
         margin: 0 auto;
     }
 
-    header h1,
-    span.help-button-header {
+    header h1 {
         font-size: 1rem;
     }
 
@@ -1017,14 +1016,15 @@ span.device-prop.subnetmask::before {
 /*
     help window
 */
-.help-button {
-    font-size: 18px;
+span.help-button {
+    font-size: 1.5rem;
     cursor: pointer;
 }
 
-.help-button-header {
-    font-size: 1.5rem;
-    cursor: pointer;
+@media (max-width: 599px) {
+    span.help-button {
+        font-size: 1rem;
+    }
 }
 
 .help-window {
