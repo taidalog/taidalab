@@ -748,7 +748,8 @@ span.network-simulator.input-wrapper {
         margin: 0 auto;
     }
 
-    header h1 {
+    header h1,
+    span.help-button-header {
         font-size: 1rem;
     }
 
@@ -861,7 +862,7 @@ span.network-simulator.input-wrapper {
     }
 
     .header-container {
-        padding-left: 0px;
+        padding: 0px;
     }
 
     .header-title {
