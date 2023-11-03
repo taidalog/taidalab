@@ -150,6 +150,7 @@ module EndlessBinary =
             Dec2Bin1.init'
                 question
                 hint
+                newErrorMessageHex
                 Hex.validate
                 Hex.toDec
                 (padWithZero 8 >> colorLeadingZero)

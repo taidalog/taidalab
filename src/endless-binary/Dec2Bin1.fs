@@ -236,6 +236,7 @@ module EndlessBinary =
         let rec checkAnswer
             (questionGenerator: 'c list -> 'c)
             (hintGenerator: 'a -> 'b)
+            (errorGenerator: 'd -> 'e -> 'f -> 'g)
             validator
             converter
             tagger
@@ -257,7 +258,7 @@ module EndlessBinary =
             match validated with
             | Error(error: Errors.Errors) ->
                 // Making an error message.
-                (document.getElementById "errorArea").innerHTML <- newErrorMessageBin answer input error
+                (document.getElementById "errorArea").innerHTML <- errorGenerator answer input error
             | Ok validated ->
                 (document.getElementById "errorArea").innerHTML <- ""
 
@@ -300,6 +301,7 @@ module EndlessBinary =
                             checkAnswer
                                 questionGenerator
                                 hintGenerator
+                                errorGenerator
                                 validator
                                 converter
                                 tagger
@@ -317,6 +319,7 @@ module EndlessBinary =
                             checkAnswer
                                 questionGenerator
                                 hintGenerator
+                                errorGenerator
                                 validator
                                 converter
                                 tagger
@@ -333,6 +336,7 @@ module EndlessBinary =
         let init'
             (questionGenerator: 'c list -> 'c)
             (hintGenerator: 'a -> 'b)
+            (errorGenerator: 'd -> 'e -> 'f -> 'g)
             validator
             converter
             tagger
@@ -355,6 +359,7 @@ module EndlessBinary =
                     checker
                         questionGenerator
                         hintGenerator
+                        errorGenerator
                         validator
                         converter
                         tagger
@@ -372,6 +377,7 @@ module EndlessBinary =
                     checker
                         questionGenerator
                         hintGenerator
+                        errorGenerator
                         validator
                         converter
                         tagger
@@ -400,6 +406,7 @@ module EndlessBinary =
             init'
                 (question 8)
                 hint
+                newErrorMessageBin
                 Bin.validate
                 Bin.toDec
                 (padWithZero 8 >> colorLeadingZero)
@@ -413,6 +420,7 @@ module EndlessBinary =
             init'
                 (question 4)
                 hint
+                newErrorMessageBin
                 Bin.validate
                 Bin.toDec
                 (padWithZero 4 >> colorLeadingZero)
