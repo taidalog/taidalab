@@ -18,7 +18,8 @@ module Page =
         (document.getElementById "hamburgerButton").onclick <-
             (fun _ ->
                 (document.querySelector "aside").classList.toggle "active" |> ignore
-                (document.getElementById "barrier").classList.toggle "active" |> ignore)
+                (document.getElementById "barrier").classList.toggle "active" |> ignore
+                (document.querySelector "main").classList.toggle "active" |> ignore)
 
         (document.getElementById "barrier").onclick <-
             (fun _ ->
