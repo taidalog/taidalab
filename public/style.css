@@ -88,23 +88,20 @@ body {
 header {
     color: #ffffff;
     height: 50px;
+    width: 100%;
     min-height: 50px;
     display: flex;
     align-items: center;
+    display: grid;
+    grid-template-columns: max(20%, 260px) auto max(20%, 260px);
 }
 
-.header-container {
-    width: 100%;
-    margin: 0 auto;
-    padding: 0 max(20%, 260px);
-}
-
-header div.header-container div.header-center {
+header div.header-center {
     display: flex;
     justify-content: space-between;
 }
 
-header div.header-container div.header-center div.inline-flex-center {
+header div.header-center div.inline-flex-center {
     display: inline-flex;
     align-items: center;
 }
@@ -690,6 +687,9 @@ span.network-simulator.input-wrapper {
     Settings for responsive design.
 */
 @media (max-width: 1199px) {
+    header {
+        grid-template-columns: max(20%, 260px) auto 1rem;
+    }
 
     form.iro-iroiro.input-area,
     form.network-simulator.input-area {
@@ -747,11 +747,6 @@ span.network-simulator.input-wrapper {
 
 
 @media (max-width: 599px) {
-    .header-container {
-        max-width: 94%;
-        margin: 0 auto;
-    }
-
     header h1 {
         font-size: 1rem;
     }
@@ -862,14 +857,7 @@ span.network-simulator.input-wrapper {
     header {
         height: 40px;
         min-height: 40px;
-    }
-
-    .header-container {
-        padding: 0px;
-    }
-
-    .header-title {
-        padding-left: 50px;
+        grid-template-columns: 50px auto 1rem;
     }
 
     aside {
