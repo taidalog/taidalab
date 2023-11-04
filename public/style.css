@@ -743,12 +743,6 @@ span.network-simulator.input-wrapper {
 }
 
 @media (max-width: 999px) {
-    /*
-    main {
-        padding-left: 20px;
-    }
-    */
-
     .button-container {
         grid-template-columns: 1fr 1fr 1fr;
         grid-template-rows: 200px 200px 200px;
@@ -756,12 +750,6 @@ span.network-simulator.input-wrapper {
 }
 
 @media (max-width: 799px) {
-    /*
-    main {
-        margin: 0 auto;
-    }
-    */
-
     footer {
         width: 100%;
         margin: 0 auto;
@@ -790,13 +778,6 @@ span.network-simulator.input-wrapper {
     header h1 {
         font-size: 1rem;
     }
-
-    /*
-    main {
-        max-width: 90%;
-        margin: 0 auto;
-    }
-    */
 
     footer {
         width: 100%;
@@ -907,13 +888,6 @@ span.hamburger-button:hover {
         min-height: 40px;
         grid-template-columns: 50px auto 1rem;
     }
-
-    /*
-    main {
-        width: 94%;
-        padding-left: 0px;
-    }
-    */
 }
 
 
