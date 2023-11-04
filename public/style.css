@@ -137,7 +137,7 @@ aside {
     transition: all 0.5s ease-in-out 0s;
 }
 
-aside.active {
+aside.flagged {
     /*left: calc(max(20%, 260px) * -1 + 50px);*/
     left: calc(max(20%, 260px) * -1);
     z-index: 3;
@@ -151,7 +151,7 @@ aside.active {
         height: calc(100% - 40px);
     }
 
-    aside.active {
+    aside.flagged {
         left: 0px;
         z-index: 1;
     }
@@ -389,7 +389,7 @@ main {
     transition: all 0.5s ease-in-out 0s;
 }
 
-main.active {
+main.flagged {
     padding: 20px 2rem 0 2rem;
     transition: all 0.5s ease-in-out 0s;
 }
@@ -397,7 +397,7 @@ main.active {
 @media (max-width: 799px) {
 
     main,
-    main.active {
+    main.flagged {
         padding: 20px 1rem 0 1rem;
     }
 }
@@ -870,7 +870,7 @@ span.hamburger-button:hover {
 }
 
 @media (max-width: 799px) {
-    .barrier.active {
+    .barrier.flagged {
         display: block;
         width: 100%;
         height: 100%;

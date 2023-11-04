@@ -17,15 +17,15 @@ module Page =
 
         (document.getElementById "hamburgerButton").onclick <-
             (fun _ ->
-                (document.querySelector "aside").classList.toggle "active" |> ignore
-                (document.getElementById "barrier").classList.toggle "active" |> ignore
-                (document.querySelector "main").classList.toggle "active" |> ignore)
+                (document.querySelector "aside").classList.toggle "flagged" |> ignore
+                (document.getElementById "barrier").classList.toggle "flagged" |> ignore
+                (document.querySelector "main").classList.toggle "flagged" |> ignore)
 
         (document.getElementById "barrier").onclick <-
             (fun _ ->
-                (document.querySelector "aside").classList.remove "active" |> ignore
-                (document.getElementById "barrier").classList.remove "active" |> ignore
-                (document.querySelector "main").classList.remove "active" |> ignore)
+                (document.querySelector "aside").classList.remove "flagged" |> ignore
+                (document.getElementById "barrier").classList.remove "flagged" |> ignore
+                (document.querySelector "main").classList.remove "flagged" |> ignore)
 
         let headerTitle = document.querySelector "#headerTitle"
         headerTitle.innerHTML <- initObject.headerTitle

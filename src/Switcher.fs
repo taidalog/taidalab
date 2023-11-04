@@ -93,8 +93,9 @@ module rec Switcher =
                     overwriteAnchorClick
                         (fun _ ->
                             a.pathname |> Switcher.switch |||> InitObject.create |> Page.push
-                            (document.querySelector "aside").classList.remove "active" |> ignore
-                            (document.getElementById "barrier").classList.remove "active" |> ignore)
+                            (document.querySelector "aside").classList.remove "flagged" |> ignore
+                            (document.getElementById "barrier").classList.remove "flagged" |> ignore
+                            (document.querySelector "main").classList.remove "flagged" |> ignore)
                         a)
             | (true, false, a) -> (fun _ -> ())
             | (false, true, a) ->
@@ -102,15 +103,17 @@ module rec Switcher =
                     overwriteAnchorClick
                         (fun _ ->
                             a.pathname |> Switcher.switch |||> InitObject.create |> Page.replace
-                            (document.querySelector "aside").classList.remove "active" |> ignore
-                            (document.getElementById "barrier").classList.remove "active" |> ignore)
+                            (document.querySelector "aside").classList.remove "flagged" |> ignore
+                            (document.getElementById "barrier").classList.remove "flagged" |> ignore
+                            (document.querySelector "main").classList.remove "flagged" |> ignore)
                         a)
             | (false, false, a) ->
                 (fun _ ->
                     overwriteAnchorClick
                         (fun _ ->
                             window.location.replace a.pathname
-                            (document.querySelector "aside").classList.remove "active" |> ignore
-                            (document.getElementById "barrier").classList.remove "active" |> ignore)
+                            (document.querySelector "aside").classList.remove "flagged" |> ignore
+                            (document.getElementById "barrier").classList.remove "flagged" |> ignore
+                            (document.querySelector "main").classList.remove "flagged" |> ignore)
                         a))
         |> (fun f -> f ())
