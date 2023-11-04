@@ -24,7 +24,8 @@ module Page =
         (document.getElementById "barrier").onclick <-
             (fun _ ->
                 (document.querySelector "aside").classList.remove "active" |> ignore
-                (document.getElementById "barrier").classList.remove "active" |> ignore)
+                (document.getElementById "barrier").classList.remove "active" |> ignore
+                (document.querySelector "main").classList.remove "active" |> ignore)
 
         let headerTitle = document.querySelector "#headerTitle"
         headerTitle.innerHTML <- initObject.headerTitle
