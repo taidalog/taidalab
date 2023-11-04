@@ -151,13 +151,11 @@ aside.active {
     aside {
         left: calc(max(20%, 260px) * -1);
         z-index: 3;
-        transition: all 0.5s ease-in-out 0s;
     }
 
     aside.active {
         left: 0px;
         z-index: 1;
-        transition: all 0.5s ease-in-out 0s;
     }
 }
 
@@ -398,34 +396,13 @@ main.active {
     transition: all 0.5s ease-in-out 0s;
 }
 
-@media (max-width: 999px) {
-    main {
-        padding-left: 20px;
-    }
-}
-
 @media (max-width: 799px) {
-    main {
-        width: 94%;
-        margin: 0 auto;
-        padding-left: 0px;
+
+    main,
+    main.active {
+        padding: 20px 1rem 0 1rem;
     }
 }
-
-@media (max-width: 599px) {
-    main {
-        max-width: 90%;
-        margin: 0 auto;
-    }
-}
-
-/*
-main {
-    padding-top: 20px;
-    padding-left: 100px;
-    max-width: 66%;
-}
-*/
 
 footer {
     padding-top: 20px;
