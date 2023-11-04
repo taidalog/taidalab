@@ -148,6 +148,7 @@ aside.active {
     aside {
         left: calc(max(20%, 260px) * -1);
         z-index: 3;
+        height: calc(100% - 40px);
     }
 
     aside.active {
