@@ -28,11 +28,9 @@ module Content =
         let header =
             """
             <div class="header-left">
-                <button id="hamburgerButton" class="hamburger-button">
-                    <span class="bar bar-top"></span>
-                    <span class="bar bar-mid"></span>
-                    <span class="bar bar-bottom"></span>
-                </button>
+                <span id="hamburgerButton" class="material-symbols-outlined hamburger-button" translate="no">
+                    menu
+                </span>
             </div>
             <div class="header-center">
                 <div id="headerTitle" class="header-title"></div>
@@ -49,11 +47,9 @@ module Content =
         let headerNoHelp =
             """
             <div class="header-left">
-                <button id="hamburgerButton" class="hamburger-button">
-                    <span class="bar bar-top"></span>
-                    <span class="bar bar-mid"></span>
-                    <span class="bar bar-bottom"></span>
-                </button>
+                <span id="hamburgerButton" class="material-symbols-outlined hamburger-button" translate="no">
+                    menu
+                </span>
             </div>
             <div class="header-center">
                 <div id="headerTitle" class="header-title"></div>
