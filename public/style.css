@@ -96,11 +96,16 @@ header {
     grid-template-columns: max(20%, 260px) auto max(20%, 260px);
 }
 
+header div.header-left {
+    padding: 0 1rem;
+}
+
 header div.header-center {
     display: flex;
     justify-content: space-between;
 }
 
+header div.header-left,
 header div.header-center div.inline-flex-center {
     display: inline-flex;
     align-items: center;
@@ -834,8 +839,12 @@ span.network-simulator.input-wrapper {
 /*
     Related to the hamburger button.
 */
-.hamburger-button {
-    display: none;
+span.hamburger-button {
+    background: transparent;
+}
+
+span.hamburger-button:hover {
+    background-color: rgba(255, 255, 255, 0.25);
 }
 
 .barrier {
@@ -870,47 +879,6 @@ span.network-simulator.input-wrapper {
     main {
         width: 94%;
         padding-left: 0px;
-    }
-
-    /*
-        Hamburger button.
-    */
-    .hamburger-button {
-        display: block;
-        position: absolute;
-        top: 0;
-        z-index: 3;
-        width: 40px;
-        height: 40px;
-        border: none;
-        background: transparent;
-    }
-
-    .hamburger-button:hover {
-        background-color: rgba(255, 255, 255, 0.25);
-    }
-
-    .bar {
-        width: 20px;
-        height: 2px;
-        display: block;
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        background-color: aliceblue;
-    }
-
-    .bar-top {
-        top: 10px;
-    }
-
-    .bar-mid {
-        top: 50%;
-        transform: translate(-50%, -50%);
-    }
-
-    .bar-bottom {
-        bottom: 10px;
     }
 }
 
