@@ -15,7 +15,7 @@ open Fermata
 module rec Switcher =
     let switch pathname =
         match pathname with
-        | "/" -> (pathname, Taidalab.Home.main, (fun _ -> ()))
+        | "/" -> (pathname, Taidalab.Home.main, (fun _ -> document.onkeydown <- fun _ -> ()))
         | "/endless-binary/" -> (pathname, EndlessBinary.Home.main, setHomeButtons)
         | "/endless-binary/dec2bin-1/" ->
             (pathname, EndlessBinary.Course.main Dec2Bin1.help "help-color dec2bin", Dec2Bin1.init)
@@ -45,9 +45,10 @@ module rec Switcher =
             (pathname, EndlessBinary.Course.main Hex2Dec.help "help-color hex2dec", Hex2Dec.init)
         | "/iro-iroiro/" -> (pathname, IroIroiro.main, IroIroiro.init)
         | "/network-simulator/" -> (pathname, NetworkSimulator.main, NetworkSimulator.init)
-        | "/about/" -> (pathname, Taidalab.About.main, (fun _ -> ()))
-        | "/terms/" -> (pathname, Taidalab.Terms.main, (fun _ -> ()))
-        | "/information-policy/" -> (pathname, Taidalab.InformationPolicy.main, (fun _ -> ()))
+        | "/about/" -> (pathname, Taidalab.About.main, (fun _ -> document.onkeydown <- fun _ -> ()))
+        | "/terms/" -> (pathname, Taidalab.Terms.main, (fun _ -> document.onkeydown <- fun _ -> ()))
+        | "/information-policy/" ->
+            (pathname, Taidalab.InformationPolicy.main, (fun _ -> document.onkeydown <- fun _ -> ()))
         | _ -> ("/404/", EndlessBinary.Course.main404, NotFound.init)
 
     let initPageFromPathname pathname =
