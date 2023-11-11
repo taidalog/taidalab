@@ -181,7 +181,8 @@ aside ul details ul li a {
     padding-right: 3rem;
 }
 
-aside a:hover {
+aside a:hover,
+aside a.current-location {
     color: #ffffff;
     border-radius: 4px;
 }
@@ -203,7 +204,9 @@ aside summary::-webkit-details-marker {
 header.home,
 header.dec2bin,
 aside a.home:hover,
+aside a.home.current-location,
 aside a.dec2bin:hover,
+aside a.dec2bin.current-location,
 .course-button-d2b1,
 .course-button-d2b2 {
     background-color: #65a2ac;
@@ -230,6 +233,7 @@ button.submit-button.dec2bin:hover {
 
 header.bin2dec,
 aside a.bin2dec:hover,
+aside a.bin2dec.current-location,
 .course-button-b2d1,
 .course-button-b2d2 {
     background-color: #65ac86;
@@ -251,6 +255,7 @@ button.submit-button.bin2dec:hover {
 
 header.power-of-two,
 aside a.power-of-two:hover,
+aside a.power-of-two.current-location,
 .course-button-pot1,
 .course-button-pot2 {
     background-color: #a665ac;
@@ -273,7 +278,9 @@ button.submit-button.power-of-two:hover {
 header.addition,
 header.subtraction,
 aside a.addition:hover,
+aside a.addition.current-location,
 aside a.subtraction:hover,
+aside a.subtraction.current-location,
 .course-button-add,
 .course-button-sub {
     background-color: #656eac;
@@ -297,6 +304,7 @@ button.submit-button.subtraction:hover {
 
 header.complement,
 aside a.complement:hover,
+aside a.complement.current-location,
 .course-button-cmp {
     background-color: #6588ac;
 }
@@ -317,7 +325,9 @@ button.submit-button.complement:hover {
 header.dec2hex,
 header.hex2dec,
 aside a.dec2hex:hover,
+aside a.dec2hex.current-location,
 aside a.hex2dec:hover,
+aside a.hex2dec.current-location,
 .course-button-d2h {
     background-color: #65aca0;
 }
@@ -338,7 +348,8 @@ button.submit-button.hex2dec:hover {
 }
 
 header.iro-iroiro,
-aside a.iro-iroiro:hover {
+aside a.iro-iroiro:hover,
+aside a.iro-iroiro.current-location {
     background-color: #ac657c;
 }
 
@@ -351,12 +362,14 @@ button.submit-button.iro-iroiro:hover {
     background-color: #e586a5;
 }
 
-aside a.ctc:hover {
+aside a.ctc:hover,
+aside a.ctc.current-location {
     background-color: #aaac65;
 }
 
 header.network-simulator,
-aside a.network-simulator:hover {
+aside a.network-simulator:hover,
+aside a.network-simulator.current-location {
     background-color: #7c65ac;
 }
 

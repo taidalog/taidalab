@@ -7,6 +7,8 @@ namespace Taidalab
 
 open Browser.Dom
 open Browser.Types
+open Fable.Core
+open Fable.Core.JsInterop
 open Taidalab.EndlessBinary
 open Fermata
 
@@ -84,6 +86,12 @@ module rec Switcher =
             (document.getElementById x).onclick <- (fun _ -> y |> switch |||> InitObject.create |> Page.push))
 
     let switchAnchorAction pathname (anchor: HTMLAnchorElement) =
+        let links: HTMLAnchorElement array =
+            (document.querySelector "aside").getElementsByTagName "a"
+            |> (fun x -> JS.Constructors.Array?from(x))
+            |> Array.filter (fun (x: HTMLAnchorElement) -> x.id <> "asideSoon")
+            |> Array.filter (fun (x: HTMLAnchorElement) -> x.pathname <> "/")
+
         (pathname, anchor.href, anchor)
         |> (fun (p, h, a) -> (p <> "/404/", isInnerPage h, a))
         |> (fun (p, h, a) ->
@@ -93,6 +101,16 @@ module rec Switcher =
                     overwriteAnchorClick
                         (fun _ ->
                             a.pathname |> Switcher.switch |||> InitObject.create |> Page.push
+
+                            links |> Array.iteri (fun i x -> printfn "%d %s" i x.pathname)
+
+                            links
+                            |> Array.iter (fun (x: HTMLAnchorElement) -> x.classList.remove "current-location")
+
+                            links
+                            |> Array.filter (fun (x: HTMLAnchorElement) -> x.pathname = window.location.pathname)
+                            |> Array.iter (fun x -> x.classList.add "current-location")
+
                             (document.querySelector "aside").classList.remove "flagged" |> ignore
                             (document.getElementById "barrier").classList.remove "flagged" |> ignore
                             (document.querySelector "main").classList.remove "flagged" |> ignore)
@@ -103,6 +121,14 @@ module rec Switcher =
                     overwriteAnchorClick
                         (fun _ ->
                             a.pathname |> Switcher.switch |||> InitObject.create |> Page.replace
+
+                            links
+                            |> Array.iter (fun (x: HTMLAnchorElement) -> x.classList.remove "current-location")
+
+                            links
+                            |> Array.filter (fun (x: HTMLAnchorElement) -> x.pathname = window.location.pathname)
+                            |> Array.iter (fun x -> x.classList.add "current-location")
+
                             (document.querySelector "aside").classList.remove "flagged" |> ignore
                             (document.getElementById "barrier").classList.remove "flagged" |> ignore
                             (document.querySelector "main").classList.remove "flagged" |> ignore)
@@ -112,6 +138,14 @@ module rec Switcher =
                     overwriteAnchorClick
                         (fun _ ->
                             window.location.replace a.pathname
+
+                            links
+                            |> Array.iter (fun (x: HTMLAnchorElement) -> x.classList.remove "current-location")
+
+                            links
+                            |> Array.filter (fun (x: HTMLAnchorElement) -> x.pathname = window.location.pathname)
+                            |> Array.iter (fun x -> x.classList.add "current-location")
+
                             (document.querySelector "aside").classList.remove "flagged" |> ignore
                             (document.getElementById "barrier").classList.remove "flagged" |> ignore
                             (document.querySelector "main").classList.remove "flagged" |> ignore)
