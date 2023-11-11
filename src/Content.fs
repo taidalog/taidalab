@@ -89,6 +89,9 @@ module Content =
                 <li><a class="home" id="asideAbout" href="/about/">About</a></li>
                 <li><a class="home" id="asideTerms" href="/terms/">ご利用について</a></li>
                 <li><a class="home" id="asideTerms" href="/information-policy/">情報の外部送信について</a></li>
+            </ul>
+            <ul>
+                <li><a class="home" id="asideOdaibako" href="https://odaibako.net/u/taidalog">お題箱</a></li>
                 <li><a class="home" id="asideRepo" href="https://github.com/taidalog/taidalab">Repository on GitHub</a></li>
             </ul>"""
 
