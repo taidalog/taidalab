@@ -211,7 +211,13 @@ module EndlessBinary =
                             false)
 
 
-        let init' (questionGenerator: 'c list -> 'c) (hintGenerator: 'a -> 'b) (additional: 'c -> unit) checker : unit =
+        let init'
+            (questionGenerator: 'c list -> 'c)
+            (hintGenerator: 'a -> 'b)
+            (additional: 'c -> unit)
+            (keyboardshortcutSetter: KeyboardEvent -> unit)
+            checker
+            : unit =
             // Initialization.
             let initNumber = questionGenerator []
             let initBin = Dec.toBin initNumber
@@ -250,5 +256,7 @@ module EndlessBinary =
                     [ "helpWindow"; "helpBarrier" ]
                     |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore))
 
+            document.onkeydown <- (fun (e: KeyboardEvent) -> keyboardshortcutSetter e)
+
         let init () =
-            init' question' hint additional checkAnswer
+            init' question' hint additional EndlessBinary.keyboardshortcut checkAnswer

@@ -189,6 +189,7 @@ module EndlessBinary =
             sourceRadix
             destinationRadix
             (answersToKeep: int)
+            (keyboardshortcutSetter: KeyboardEvent -> unit)
             checker
             : unit =
             // Initialization.
@@ -255,6 +256,8 @@ module EndlessBinary =
                     [ "helpWindow"; "helpBarrier" ]
                     |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore))
 
+            document.onkeydown <- (fun (e: KeyboardEvent) -> keyboardshortcutSetter e)
+
         let init () =
             init'
                 (question 8)
@@ -266,6 +269,7 @@ module EndlessBinary =
                 2
                 2
                 10
+                EndlessBinary.keyboardshortcut
                 checkAnswer
 
         let init4 () =
@@ -279,4 +283,5 @@ module EndlessBinary =
                 2
                 2
                 5
+                EndlessBinary.keyboardshortcut
                 checkAnswer

@@ -8,8 +8,6 @@ namespace Taidalab
 open System
 open Browser.Dom
 open Browser.Types
-open Fable.Core
-open Fable.Core.JsInterop
 open Taidalab.Number
 open Taidalab.Text
 open Taidalab.EndlessBinary
@@ -235,36 +233,6 @@ module EndlessBinary =
                     (document.getElementById "hint1").innerHTML <- newHintAnimation 2 number 20
                     (document.getElementById "hintDetails").setAttribute ("open", "true"))
 
-        let keyboardshortcut (e: KeyboardEvent) =
-            printfn "Pressed: %s" e.key
-            printfn "Active element id: %s" (document.activeElement.id)
-
-            match document.activeElement.id with
-            | "numberInput" ->
-                match e.key with
-                | "Escape" -> (document.getElementById "numberInput").blur ()
-                | _ -> ()
-            | _ ->
-                let isHelpWindowActive =
-                    (document.getElementById "helpWindow").classList
-                    |> (fun x -> JS.Constructors.Array?from(x))
-                    |> Array.contains "active"
-
-                match e.key with
-                | "\\" ->
-                    if not isHelpWindowActive then
-                        (document.getElementById "numberInput").focus ()
-                        e.preventDefault ()
-                | "?" ->
-                    [ "helpWindow"; "helpBarrier" ]
-                    |> List.iter (fun x -> (document.getElementById x).classList.toggle "active" |> ignore)
-                | "Escape" ->
-
-                    if isHelpWindowActive then
-                        [ "helpWindow"; "helpBarrier" ]
-                        |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore)
-                | _ -> ()
-
         let rec checkAnswer
             (questionGenerator: 'c list -> 'c)
             (hintGenerator: 'a -> 'b)
@@ -454,7 +422,7 @@ module EndlessBinary =
                 10
                 2
                 10
-                keyboardshortcut
+                EndlessBinary.keyboardshortcut
                 checkAnswer
 
         let init4 () =
@@ -469,5 +437,5 @@ module EndlessBinary =
                 10
                 2
                 2
-                keyboardshortcut
+                EndlessBinary.keyboardshortcut
                 checkAnswer

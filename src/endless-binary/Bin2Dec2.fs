@@ -31,4 +31,4 @@ module EndlessBinary =
         let additional number : unit = ()
 
         let init () =
-            Bin2Dec1.init' question hint additional Bin2Dec1.checkAnswer
+            Bin2Dec1.init' question hint additional EndlessBinary.keyboardshortcut Bin2Dec1.checkAnswer

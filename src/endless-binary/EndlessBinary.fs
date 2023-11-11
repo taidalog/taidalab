@@ -5,6 +5,9 @@
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
 namespace Taidalab
 
+open Browser.Types
+open Fable.Core
+open Fable.Core.JsInterop
 open Fermata
 open Fermata.RadixConversion
 
@@ -147,3 +150,30 @@ module EndlessBinary =
             let inner_h = h |> (fun (x, y) -> (None, None, Some x, Some y))
             let inner_t = t |> List.map (fun (x, y) -> (Some divisor, Some 1, Some x, Some y))
             inner_h :: inner_t |> List.rev
+
+    let keyboardshortcut (e: KeyboardEvent) =
+        match document.activeElement.id with
+        | "numberInput" ->
+            match e.key with
+            | "Escape" -> (document.getElementById "numberInput").blur ()
+            | _ -> ()
+        | _ ->
+            let isHelpWindowActive =
+                (document.getElementById "helpWindow").classList
+                |> (fun x -> JS.Constructors.Array?from(x))
+                |> Array.contains "active"
+
+            match e.key with
+            | "\\" ->
+                if not isHelpWindowActive then
+                    (document.getElementById "numberInput").focus ()
+                    e.preventDefault ()
+            | "?" ->
+                [ "helpWindow"; "helpBarrier" ]
+                |> List.iter (fun x -> (document.getElementById x).classList.toggle "active" |> ignore)
+            | "Escape" ->
+
+                if isHelpWindowActive then
+                    [ "helpWindow"; "helpBarrier" ]
+                    |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore)
+            | _ -> ()

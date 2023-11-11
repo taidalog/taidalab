@@ -158,4 +158,5 @@ module EndlessBinary =
                 10
                 16
                 10
+                EndlessBinary.keyboardshortcut
                 Dec2Bin1.checkAnswer
