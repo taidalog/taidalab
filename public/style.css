@@ -592,6 +592,32 @@ details summary:hover {
     margin-top: 10px;
 }
 
+div.history-container {
+    display: inline-flex;
+    align-items: center;
+}
+
+div.history-container.history-correct {
+    background-color: greenyellow;
+}
+
+div.history-container.history-wrong {
+    background-color: lightpink;
+}
+
+div.history-container>span.material-symbols-outlined {
+    font-size: 18px;
+    line-height: 18px;
+    margin-right: 1rem;
+    font-variation-settings:
+        'opsz' 20
+}
+
+div.history-container>span.material-symbols-outlined.history-wrong {
+    font-variation-settings:
+        'FILL' 1
+}
+
 .history-indented {
     margin-left: 2rem;
 }

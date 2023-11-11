@@ -102,13 +102,17 @@ module EndlessBinary =
             else
                 "history history-wrong"
 
-        sprintf
-            "<span class =\"%s\">%s<sub>(%d)</sub> = %s<sub>(%d)</sub></span>"
-            historyClassName
-            input
-            destination_radix
-            converted_input
-            source_radix
+        let historyIcon =
+            if correct then
+                """<span class="material-symbols-outlined history-correct" translate="no">check_circle</span>"""
+            else
+                """<span class="material-symbols-outlined history-wrong" translate="no">error</span>"""
+
+        $"""
+        <div class="history-container %s{historyClassName}"">
+            %s{historyIcon}<span class ="%s{historyClassName}">%s{input}<sub>(%d{destination_radix})</sub> = %s{converted_input}<sub>(%d{source_radix})</sub></span>
+        </div>
+        """
 
     let splitBinaryStringBy digit str =
         str |> String.chunkBySizeRight digit |> Seq.toList |> String.concat " "
