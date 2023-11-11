@@ -26,7 +26,7 @@ module EndlessBinary =
         let newHintAdd () =
             let hint =
                 """
-                <details><summary>ヒント: </summary>
+                <details><summary><h2>ヒント:</h2></summary>
                     <p class="history-indented">
                         10進数の筆算と同じように、右端から上下の数を足していきます。<br><br>
                         0<sub>(2)</sub> + 0<sub>(2)</sub> = 0<sub>(2)</sub><br>

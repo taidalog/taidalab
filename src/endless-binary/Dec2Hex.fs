@@ -128,8 +128,8 @@ module EndlessBinary =
         let newHint divisor number fontSize =
             sprintf
                 """
-                <details id="hintDetails"><summary>ヒント: </summary>
-                    <h2>考え方 1</h2>
+                <details id="hintDetails"><summary><h2>ヒント:</h2></summary>
+                    <h3>考え方 1</h3>
                     %s
                 </details>
                 """

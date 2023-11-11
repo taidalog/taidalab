@@ -28,7 +28,7 @@ module EndlessBinary =
 
         let hint bin reversedBin =
             $"""
-            <details><summary>ヒント:</summary>
+            <details><summary><h2>ヒント:</h2></summary>
                 <p class="history-indented">
                     ある2進数に足すと桁が1つ上がる、最も小さい数のことを、<br>
                     元の2進数に対する<span style="background-color: #95c9fe;">「2の補数」</span>と呼びます。

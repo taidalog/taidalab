@@ -203,10 +203,10 @@ module EndlessBinary =
         let hint (number: int) : string =
             $"""
             <details id="hintDetails">
-                <summary>ヒント: </summary>
-                <h2>考え方 1</h2>
+                <summary><h2>ヒント:</h2></summary>
+                <h3>考え方 1</h3>
                 %s{(newHintRepeatDivision 2 number)}
-                <h2>考え方 2</h2>
+                <h3>考え方 2</h3>
                 %s{(newHintRepeatAddition number (devideIntoPowerOfTwo number))}
             </details>
             """

@@ -41,7 +41,7 @@ module EndlessBinary =
                 <div id="hintArea" class="hint-area display-order-5"></div>
             </form>
             <div class="history-area">
-                結果:
+                <h2>結果:</h2>
                 <div class="history-indented mono regular">
                     <span id="outputArea"></span>
                 </div>
@@ -66,7 +66,7 @@ module EndlessBinary =
                 <div id="hintArea" class="hint-area display-order-5"></div>
             </form>
             <div class="history-area">
-                結果:
+                <h2>結果:</h2>
                 <div class="history-indented mono regular">
                     <span id="outputArea"></span>
                 </div>

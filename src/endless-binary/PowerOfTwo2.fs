@@ -28,7 +28,7 @@ module EndlessBinary =
 
             $"""
             <details>
-                <summary>ヒント: </summary>
+                <summary><h2>ヒント:</h2></summary>
                 <p class="history-indented">
                     %d{number}<sub>(10)</sub> という数は、以下のように表すことができます。
                 </p>

@@ -565,6 +565,21 @@ button.submit-button {
     font-family: 'Noto Sans JP', sans-serif;
 }
 
+div.history-area>h2,
+div.hint-area h2 {
+    color: #888888;
+    font-size: 1.25rem;
+}
+
+div.hint-area h2 {
+    display: inline;
+}
+
+div.hint-area h3 {
+    color: #888888;
+    font-size: 1.15rem;
+}
+
 /*
     hint area
 */

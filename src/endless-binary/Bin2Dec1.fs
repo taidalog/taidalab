@@ -93,7 +93,7 @@ module EndlessBinary =
             let table = hintTable binaryString
 
             $"""
-            <details><summary>ヒント:</summary>
+            <details><summary><h2>ヒント:</h2></summary>
                 <p class="history-indented">
                     10進法で表現した数は、一番右の桁から<br>
                     1の位、10の位、100の位、1000の位...となっています。<br>
