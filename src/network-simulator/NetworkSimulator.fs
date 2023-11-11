@@ -356,6 +356,23 @@ module NetworkSimulator =
                 event.preventDefault ()
                 document.getElementById("playArea").removeChild (container)
 
+    let newHistory source sourceIPv4 destinationIPv4 connected =
+        let historyClassName, historyIcon, historyMessage =
+            if connected then
+                "history history-correct",
+                """<span class="material-symbols-outlined history-correct" translate="no">check_circle</span>""",
+                "通信成功！"
+            else
+                "history history-wrong",
+                """<span class="material-symbols-outlined history-wrong" translate="no">error</span>""",
+                "通信失敗…"
+
+        $"""
+        <div class="history-container %s{historyClassName}"">
+            %s{historyIcon}<span class ="%s{historyClassName}">%s{Device.name source} [%s{sourceIPv4.ToString()}] -> %s{destinationIPv4.ToString()} %s{historyMessage}</span>
+        </div>
+        """
+
     let init () =
         (document.getElementById "helpButton").onclick <-
             (fun _ ->
@@ -614,20 +631,10 @@ module NetworkSimulator =
                                 |> fun x -> outputArea.innerHTML <- x
 
                                 ping lanCables' devices' 128 destinationIPv4 source
-                                |> fun b ->
-                                    if b then
-                                        ("history history-correct", "通信成功！")
-                                    else
-                                        ("history history-wrong", "通信失敗…")
-                                |> fun (className, success) ->
-                                    sprintf
-                                        """<span class="%s">%s [%s] -> %s %s"""
-                                        className
-                                        (Device.name source)
-                                        (sourceIPv4.ToString())
-                                        (destinationIPv4.ToString())
-                                        success
+                                |> newHistory source sourceIPv4 destinationIPv4
                                 |> fun x -> outputArea.innerHTML <- x
+
+
 
                                 match document.activeElement.id with
                                 | "sourceInput" -> sourceInput.focus ()
