@@ -373,6 +373,43 @@ module NetworkSimulator =
         </div>
         """
 
+    let keyboardshortcut (e: KeyboardEvent) =
+
+        match document.activeElement.id with
+        | "sourceInput"
+        | "destinationInput" as x ->
+            match e.key with
+            | "Escape" -> (document.getElementById x).blur ()
+            | _ -> ()
+        | _ ->
+            let isHelpWindowActive =
+                (document.getElementById "helpWindow").classList
+                |> (fun x -> JS.Constructors.Array?from(x))
+                |> Array.contains "active"
+
+            match e.key with
+            | "\\" ->
+                let inputs =
+                    [ "sourceInput"; "destinationInput" ]
+                    |> List.map (fun x -> document.getElementById x :?> HTMLInputElement)
+
+                if not isHelpWindowActive then
+                    inputs
+                    |> List.tryFind (fun x -> x.value = "")
+                    |> Option.defaultValue (List.head inputs)
+                    |> fun x -> x.focus ()
+
+                    e.preventDefault ()
+            | "?" ->
+                [ "helpWindow"; "helpBarrier" ]
+                |> List.iter (fun x -> (document.getElementById x).classList.toggle "active" |> ignore)
+            | "Escape" ->
+
+                if isHelpWindowActive then
+                    [ "helpWindow"; "helpBarrier" ]
+                    |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore)
+            | _ -> ()
+
     let init () =
         (document.getElementById "helpButton").onclick <-
             (fun _ ->
@@ -815,3 +852,5 @@ module NetworkSimulator =
                 |> (fun x ->
                     setMouseMoveEventCable x
                     removeOnRightClick x)
+
+        document.onkeydown <- (fun (e: KeyboardEvent) -> keyboardshortcut e)

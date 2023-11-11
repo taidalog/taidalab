@@ -8,6 +8,8 @@ namespace Taidalab
 open System
 open Browser.Dom
 open Browser.Types
+open Fable.Core
+open Fable.Core.JsInterop
 open Fermata
 
 module IroIroiro =
@@ -104,6 +106,46 @@ module IroIroiro =
         |> Tuple.map3 (fun x -> Convert.ToString(x, 16) |> string |> String.padLeft 2 '0')
         |> fun (r', g', b') -> $"#%s{r'}%s{g'}%s{b'}"
 
+    let keyboardshortcut (e: KeyboardEvent) =
+
+        match document.activeElement.id with
+        | "rInput"
+        | "gInput"
+        | "bInput"
+        | "stepInput"
+        | "limitInput" as x ->
+            match e.key with
+            | "Escape" -> (document.getElementById x).blur ()
+            | _ -> ()
+        | _ ->
+            let isHelpWindowActive =
+                (document.getElementById "helpWindow").classList
+                |> (fun x -> JS.Constructors.Array?from(x))
+                |> Array.contains "active"
+
+            match e.key with
+            | "\\" ->
+                let inputs =
+                    [ "rInput"; "gInput"; "bInput"; "stepInput"; "limitInput" ]
+                    |> List.map (fun x -> document.getElementById x :?> HTMLInputElement)
+
+                if not isHelpWindowActive then
+                    inputs
+                    |> List.tryFind (fun x -> x.value = "")
+                    |> Option.defaultValue (List.head inputs)
+                    |> fun x -> x.focus ()
+
+                    e.preventDefault ()
+            | "?" ->
+                [ "helpWindow"; "helpBarrier" ]
+                |> List.iter (fun x -> (document.getElementById x).classList.toggle "active" |> ignore)
+            | "Escape" ->
+
+                if isHelpWindowActive then
+                    [ "helpWindow"; "helpBarrier" ]
+                    |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore)
+            | _ -> ()
+
     let start () =
         let errorArea = document.getElementById "errorArea"
         errorArea.innerHTML <- ""
@@ -169,4 +211,6 @@ module IroIroiro =
                 (fun _ ->
                     [ "helpWindow"; "helpBarrier" ]
                     |> List.iter (fun x -> (document.getElementById x).classList.toggle "active" |> ignore)))
+
+        document.onkeydown <- (fun (e: KeyboardEvent) -> keyboardshortcut e)
 //        (document.getElementById "inputArea").onsubmit <- (fun _ -> start())
