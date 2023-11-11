@@ -103,8 +103,6 @@ module rec Switcher =
                         (fun _ ->
                             a.pathname |> Switcher.switch |||> InitObject.create |> Page.push
 
-                            links |> Array.iteri (fun i x -> printfn "%d %s" i x.pathname)
-
                             links
                             |> Array.iter (fun (x: HTMLAnchorElement) -> x.classList.remove "current-location")
 

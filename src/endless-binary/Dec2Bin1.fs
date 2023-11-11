@@ -251,7 +251,6 @@ module EndlessBinary =
             let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
             let input = numberInput.value |> escapeHtml
             let validated: Result<string, Errors.Errors> = input |> validator
-            //printfn "bin: %A" bin
 
             numberInput.focus ()
 
