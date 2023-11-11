@@ -126,7 +126,7 @@ header h1 {
 }
 
 aside {
-    position: fixed;
+    position: absolute;
     left: 0px;
     z-index: 1;
     width: max(20%, 260px);
