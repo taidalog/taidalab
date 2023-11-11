@@ -164,13 +164,21 @@ aside::-webkit-scrollbar {
 
 aside ul {
     list-style: none;
+    padding-left: 0;
 }
 
 aside a {
     color: #666666;
     padding: 5px;
+    padding-left: 1rem;
+    padding-right: 3rem;
     display: block;
     text-decoration: none;
+}
+
+aside ul details ul li a {
+    padding-left: 2rem;
+    padding-right: 3rem;
 }
 
 aside a:hover {
