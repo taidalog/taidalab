@@ -393,7 +393,9 @@ button.submit-button.gray:hover {
 }
 
 main {
-    width: 100%;
+    width: 80%;
+    max-width: 1200px;
+    margin: 0 auto;
     padding: 20px 2rem 0 calc(max(20%, 260px) + 2rem);
     transition: all 0.5s ease-in-out 0s;
 }
@@ -407,6 +409,7 @@ main.flagged {
 
     main,
     main.flagged {
+        width: 100%;
         padding: 20px 1rem 0 1rem;
     }
 }
