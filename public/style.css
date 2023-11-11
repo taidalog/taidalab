@@ -595,6 +595,7 @@ details summary:hover {
 div.history-container {
     display: inline-flex;
     align-items: center;
+    margin: 3px 0;
 }
 
 div.history-container.history-correct {
