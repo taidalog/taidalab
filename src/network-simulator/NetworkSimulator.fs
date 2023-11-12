@@ -1,4 +1,4 @@
-// taidalab Version 4.4.4
+// taidalab Version 4.5.0
 // https://github.com/taidalog/taidalab
 // Copyright (c) 2022-2023 taidalog
 // This software is licensed under the MIT License.
@@ -32,7 +32,7 @@ module NetworkSimulator =
             クライアントやルータの IP アドレスをクリックして設定しなおしたりしてください。
         </p>
         <p>
-            <span class="material-symbols-outlined symbols18">add_circle</span>マークのボタンをクリックすると、デバイスやケーブルを追加できます。
+            <span class="material-symbols-outlined symbols18" translate="no">add_circle</span>マークのボタンをクリックすると、デバイスやケーブルを追加できます。
         </p>
         <p>
             デバイスやケーブルをドラッグで動かした後、カーソルから離れなくなった場合は、<br>
@@ -56,34 +56,31 @@ module NetworkSimulator =
                 </span>
             </span>
             <span class="display-order-2">
-                <button type="submit" id="submitButton" class="submit-button">ping</button>
-            </span>
-            <span id="helpButton" class="material-symbols-outlined help-button display-order-3">
-                help
+                <button type="submit" id="submitButton" class="submit-button" translate="no">ping</button>
             </span>
         </form>
         <form>
             <button type="button" id="addClientButton" class="submit-button gray display-order-3">
                 <span class="icon-vertical-center">
-                    <span class="material-symbols-outlined symbols18">add_circle</span>
+                    <span class="material-symbols-outlined symbols18" translate="no">add_circle</span>
                     クライアント
                 </span>
             </button>
             <button type="button" id="addRouterButton" class="submit-button gray display-order-4">
                 <span class="icon-vertical-center">
-                    <span class="material-symbols-outlined symbols18">add_circle</span>
+                    <span class="material-symbols-outlined symbols18" translate="no">add_circle</span>
                     ルータ
                 </span>
             </button>
             <button type="button" id="addHubButton" class="submit-button gray display-order-5">
                 <span class="icon-vertical-center">
-                    <span class="material-symbols-outlined symbols18">add_circle</span>
+                    <span class="material-symbols-outlined symbols18" translate="no">add_circle</span>
                     ハブ
                 </span>
             </button>
             <button type="button" id="addLANCableButton" class="submit-button gray display-order-6">
                 <span class="icon-vertical-center">
-                    <span class="material-symbols-outlined symbols18">add_circle</span>
+                    <span class="material-symbols-outlined symbols18" translate="no">add_circle</span>
                     LANケーブル
                 </span>
             </button>
@@ -92,8 +89,12 @@ module NetworkSimulator =
         <div id="outputArea" class="output-area"></div>
         <div id="playArea" class="play-area"></div>
         <div id="helpWindow" class="help-window">
+            <div class="help-close-outer">
+                <span id="helpClose" class="material-symbols-outlined help-close network-simulator" translate="no">
+                    close
+                </span>
+            </div>
             %s{help}
-            <p class="help-color network-simulator">このヘルプは、他の場所をクリックすると消えます。</p>
         </div>
         """
 
@@ -355,6 +356,60 @@ module NetworkSimulator =
                 event.preventDefault ()
                 document.getElementById("playArea").removeChild (container)
 
+    let newHistory source sourceIPv4 destinationIPv4 connected =
+        let historyClassName, historyIcon, historyMessage =
+            if connected then
+                "history history-correct",
+                """<span class="material-symbols-outlined history-correct" translate="no">check_circle</span>""",
+                "通信成功！"
+            else
+                "history history-wrong",
+                """<span class="material-symbols-outlined history-wrong" translate="no">error</span>""",
+                "通信失敗…"
+
+        $"""
+        <div class="history-container %s{historyClassName}"">
+            %s{historyIcon}<span class ="%s{historyClassName}">%s{Device.name source} [%s{sourceIPv4.ToString()}] -> %s{destinationIPv4.ToString()} %s{historyMessage}</span>
+        </div>
+        """
+
+    let keyboardshortcut (e: KeyboardEvent) =
+
+        match document.activeElement.id with
+        | "sourceInput"
+        | "destinationInput" as x ->
+            match e.key with
+            | "Escape" -> (document.getElementById x).blur ()
+            | _ -> ()
+        | _ ->
+            let isHelpWindowActive =
+                (document.getElementById "helpWindow").classList
+                |> (fun x -> JS.Constructors.Array?from(x))
+                |> Array.contains "active"
+
+            match e.key with
+            | "\\" ->
+                let inputs =
+                    [ "sourceInput"; "destinationInput" ]
+                    |> List.map (fun x -> document.getElementById x :?> HTMLInputElement)
+
+                if not isHelpWindowActive then
+                    inputs
+                    |> List.tryFind (fun x -> x.value = "")
+                    |> Option.defaultValue (List.head inputs)
+                    |> fun x -> x.focus ()
+
+                    e.preventDefault ()
+            | "?" ->
+                [ "helpWindow"; "helpBarrier" ]
+                |> List.iter (fun x -> (document.getElementById x).classList.toggle "active" |> ignore)
+            | "Escape" ->
+
+                if isHelpWindowActive then
+                    [ "helpWindow"; "helpBarrier" ]
+                    |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore)
+            | _ -> ()
+
     let init () =
         (document.getElementById "helpButton").onclick <-
             (fun _ ->
@@ -362,6 +417,11 @@ module NetworkSimulator =
                 |> List.iter (fun x -> (document.getElementById x).classList.toggle "active" |> ignore))
 
         (document.getElementById "helpBarrier").onclick <-
+            (fun _ ->
+                [ "helpWindow"; "helpBarrier" ]
+                |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore))
+
+        (document.getElementById "helpClose").onclick <-
             (fun _ ->
                 [ "helpWindow"; "helpBarrier" ]
                 |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore))
@@ -608,20 +668,10 @@ module NetworkSimulator =
                                 |> fun x -> outputArea.innerHTML <- x
 
                                 ping lanCables' devices' 128 destinationIPv4 source
-                                |> fun b ->
-                                    if b then
-                                        ("history history-correct", "通信成功！")
-                                    else
-                                        ("history history-wrong", "通信失敗…")
-                                |> fun (className, success) ->
-                                    sprintf
-                                        """<span class="%s">%s [%s] -> %s %s"""
-                                        className
-                                        (Device.name source)
-                                        (sourceIPv4.ToString())
-                                        (destinationIPv4.ToString())
-                                        success
+                                |> newHistory source sourceIPv4 destinationIPv4
                                 |> fun x -> outputArea.innerHTML <- x
+
+
 
                                 match document.activeElement.id with
                                 | "sourceInput" -> sourceInput.focus ()
@@ -802,3 +852,5 @@ module NetworkSimulator =
                 |> (fun x ->
                     setMouseMoveEventCable x
                     removeOnRightClick x)
+
+        document.onkeydown <- (fun (e: KeyboardEvent) -> keyboardshortcut e)

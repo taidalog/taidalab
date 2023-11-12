@@ -1,4 +1,4 @@
-﻿// taidalab Version 4.4.4
+﻿// taidalab Version 4.5.0
 // https://github.com/taidalog/taidalab
 // Copyright (c) 2022-2023 taidalog
 // This software is licensed under the MIT License.
@@ -31,4 +31,4 @@ module EndlessBinary =
         let additional number : unit = ()
 
         let init () =
-            Bin2Dec1.init' question hint additional Bin2Dec1.checkAnswer
+            Bin2Dec1.init' question hint additional EndlessBinary.keyboardshortcut Bin2Dec1.checkAnswer

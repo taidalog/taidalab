@@ -1,4 +1,4 @@
-﻿// taidalab Version 4.4.4
+﻿// taidalab Version 4.5.0
 // https://github.com/taidalog/taidalab
 // Copyright  c 2022-2023 taidalog
 // This software is licensed under the MIT License.
@@ -28,7 +28,7 @@ module EndlessBinary =
 
             $"""
             <details>
-                <summary>ヒント: </summary>
+                <summary><h2>ヒント:</h2></summary>
                 <p class="history-indented">
                     %d{number}<sub>(10)</sub> という数は、以下のように表すことができます。
                 </p>
@@ -53,6 +53,7 @@ module EndlessBinary =
             Dec2Bin1.init'
                 question
                 hint
+                newErrorMessageBin
                 Bin.validate
                 Bin.toDec
                 (padWithZero 8 >> colorLeadingZero)
@@ -60,4 +61,5 @@ module EndlessBinary =
                 10
                 2
                 4
+                EndlessBinary.keyboardshortcut
                 Dec2Bin1.checkAnswer

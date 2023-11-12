@@ -1,4 +1,4 @@
-﻿// taidalab Version 4.4.4
+﻿// taidalab Version 4.5.0
 // https://github.com/taidalog/taidalab
 // Copyright (c) 2022-2023 taidalog
 // This software is licensed under the MIT License.
@@ -38,7 +38,7 @@ module EndlessBinary =
         let newHintSub () =
             let hint =
                 """
-                <details><summary>ヒント: </summary>
+                <details><summary><h2>ヒント:</h2></summary>
                     <p class="history-indented">
                         10進数の筆算と同じように、右端から上下の数で引き算をします。<br><br>
                         0<sub>(2)</sub> - 0<sub>(2)</sub> = 0<sub>(2)</sub><br>
@@ -157,3 +157,10 @@ module EndlessBinary =
                 (fun _ ->
                     [ "helpWindow"; "helpBarrier" ]
                     |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore))
+
+            (document.getElementById "helpClose").onclick <-
+                (fun _ ->
+                    [ "helpWindow"; "helpBarrier" ]
+                    |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore))
+
+            document.onkeydown <- (fun (e: KeyboardEvent) -> EndlessBinary.keyboardshortcut e)

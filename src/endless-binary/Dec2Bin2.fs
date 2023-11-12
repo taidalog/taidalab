@@ -1,4 +1,4 @@
-﻿// taidalab Version 4.4.4
+﻿// taidalab Version 4.5.0
 // https://github.com/taidalog/taidalab
 // Copyright (c) 2022-2023 taidalog
 // This software is licensed under the MIT License.
@@ -34,6 +34,7 @@ module EndlessBinary =
             Dec2Bin1.init'
                 question
                 hint
+                newErrorMessageBin
                 Bin.validate
                 Bin.toDec
                 (padWithZero 8 >> colorLeadingZero)
@@ -41,4 +42,5 @@ module EndlessBinary =
                 10
                 2
                 10
+                EndlessBinary.keyboardshortcut
                 Dec2Bin1.checkAnswer

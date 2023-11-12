@@ -1,10 +1,13 @@
-// taidalab Version 4.4.4
+// taidalab Version 4.5.0
 // https://github.com/taidalog/taidalab
 // Copyright (c) 2022-2023 taidalog
 // This software is licensed under the MIT License.
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
 namespace Taidalab
 
+open Browser.Types
+open Fable.Core
+open Fable.Core.JsInterop
 open Fermata
 open Fermata.RadixConversion
 
@@ -30,42 +33,40 @@ module EndlessBinary =
         let main help colorClass =
             $"""
             <span id="questionArea" class="question-area"></span>
-            <span id="helpButton" class="material-symbols-outlined help-button">
-                help
-            </span>
             <form id="inputArea" class="input-area" autocomplete="off">
                 <input type="text" id="numberInput" class="number-input display-order-1 mono regular">
                 <span id="binaryRadix" class="binary-radix display-order-2"></span>
                 <button type="button" id="submitButton" class="submit-button display-order-3 d2b-button">確認</button>
-                <div id="hintArea" class="hint-area display-order-4"></div>
-                <div id="errorArea" class="error-area display-order-5"></div>
+                <div id="errorArea" class="error-area display-order-4"></div>
+                <div id="hintArea" class="hint-area display-order-5"></div>
             </form>
             <div class="history-area">
-                結果:
+                <h2>結果:</h2>
                 <div class="history-indented mono regular">
                     <span id="outputArea"></span>
                 </div>
             </div>
             <div id="helpWindow" class="help-window">
+                <div class="help-close-outer">
+                    <span id="helpClose" class="material-symbols-outlined help-close %s{colorClass}" translate="no">
+                        close
+                    </span>
+                </div>
                 %s{help}
-                <p class="%s{colorClass}">このヘルプは、他の場所をクリックすると消えます。</p>
             </div>"""
 
         let main404 =
             """
             <span id="questionArea" class="question-area"></span>
-            <span id="helpButton" class="material-symbols-outlined help-button">
-                help
-            </span>
             <form id="inputArea" class="input-area" autocomplete="off">
                 <input type="text" id="numberInput" class="number-input display-order-1 mono regular">
                 <span id="binaryRadix" class="binary-radix display-order-2"></span>
                 <button type="button" id="submitButton" class="submit-button display-order-3 d2b-button">確認</button>
-                <div id="hintArea" class="hint-area display-order-4"></div>
-                <div id="errorArea" class="error-area display-order-5"></div>
+                <div id="errorArea" class="error-area display-order-4"></div>
+                <div id="hintArea" class="hint-area display-order-5"></div>
             </form>
             <div class="history-area">
-                結果:
+                <h2>結果:</h2>
                 <div class="history-indented mono regular">
                     <span id="outputArea"></span>
                 </div>
@@ -104,13 +105,17 @@ module EndlessBinary =
             else
                 "history history-wrong"
 
-        sprintf
-            "<span class =\"%s\">%s<sub>(%d)</sub> = %s<sub>(%d)</sub></span>"
-            historyClassName
-            input
-            destination_radix
-            converted_input
-            source_radix
+        let historyIcon =
+            if correct then
+                """<span class="material-symbols-outlined history-correct" translate="no">check_circle</span>"""
+            else
+                """<span class="material-symbols-outlined history-wrong" translate="no">error</span>"""
+
+        $"""
+        <div class="history-container %s{historyClassName}"">
+            %s{historyIcon}<span class ="%s{historyClassName}">%s{input}<sub>(%d{destination_radix})</sub> = %s{converted_input}<sub>(%d{source_radix})</sub></span>
+        </div>
+        """
 
     let splitBinaryStringBy digit str =
         str |> String.chunkBySizeRight digit |> Seq.toList |> String.concat " "
@@ -145,3 +150,30 @@ module EndlessBinary =
             let inner_h = h |> (fun (x, y) -> (None, None, Some x, Some y))
             let inner_t = t |> List.map (fun (x, y) -> (Some divisor, Some 1, Some x, Some y))
             inner_h :: inner_t |> List.rev
+
+    let keyboardshortcut (e: KeyboardEvent) =
+        match document.activeElement.id with
+        | "numberInput" ->
+            match e.key with
+            | "Escape" -> (document.getElementById "numberInput").blur ()
+            | _ -> ()
+        | _ ->
+            let isHelpWindowActive =
+                (document.getElementById "helpWindow").classList
+                |> (fun x -> JS.Constructors.Array?from(x))
+                |> Array.contains "active"
+
+            match e.key with
+            | "\\" ->
+                if not isHelpWindowActive then
+                    (document.getElementById "numberInput").focus ()
+                    e.preventDefault ()
+            | "?" ->
+                [ "helpWindow"; "helpBarrier" ]
+                |> List.iter (fun x -> (document.getElementById x).classList.toggle "active" |> ignore)
+            | "Escape" ->
+
+                if isHelpWindowActive then
+                    [ "helpWindow"; "helpBarrier" ]
+                    |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore)
+            | _ -> ()

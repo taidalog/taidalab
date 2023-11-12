@@ -1,4 +1,4 @@
-// taidalab Version 4.4.4
+// taidalab Version 4.5.0
 // https://github.com/taidalog/taidalab
 // Copyright (c) 2022-2023 taidalog
 // This software is licensed under the MIT License.
@@ -128,8 +128,8 @@ module EndlessBinary =
         let newHint divisor number fontSize =
             sprintf
                 """
-                <details id="hintDetails"><summary>ヒント: </summary>
-                    <h2>考え方 1</h2>
+                <details id="hintDetails"><summary><h2>ヒント:</h2></summary>
+                    <h3>考え方 1</h3>
                     %s
                 </details>
                 """
@@ -150,6 +150,7 @@ module EndlessBinary =
             Dec2Bin1.init'
                 question
                 hint
+                newErrorMessageHex
                 Hex.validate
                 Hex.toDec
                 (padWithZero 8 >> colorLeadingZero)
@@ -157,4 +158,5 @@ module EndlessBinary =
                 10
                 16
                 10
+                EndlessBinary.keyboardshortcut
                 Dec2Bin1.checkAnswer

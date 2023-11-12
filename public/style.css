@@ -1,5 +1,5 @@
 /* 
-    taidalab Version 4.4.4
+    taidalab Version 4.5.0
     https://github.com/taidalog/taidalab
     Copyright (c) 2022-2023 taidalog
     This software is licensed under the MIT License.
@@ -68,8 +68,9 @@
 }
 
 html {
+    color: #444444;
     font-family: 'Noto Sans JP', sans-serif;
-    font-weight: 300;
+    font-weight: 400;
     font-size: 100%;
 }
 
@@ -88,15 +89,27 @@ body {
 header {
     color: #ffffff;
     height: 50px;
+    width: 100%;
     min-height: 50px;
     display: flex;
     align-items: center;
+    display: grid;
+    grid-template-columns: max(20%, 260px) auto max(20%, 260px);
 }
 
-.header-container {
-    width: 100%;
-    margin: 0 auto;
-    padding-left: max(20%, 260px);
+header div.header-left {
+    padding: 0 1rem;
+}
+
+header div.header-center {
+    display: flex;
+    justify-content: space-between;
+}
+
+header div.header-left,
+header div.header-center div.inline-flex-center {
+    display: inline-flex;
+    align-items: center;
 }
 
 header h1 {
@@ -113,12 +126,36 @@ header h1 {
 }
 
 aside {
-    width: 20%;
-    min-width: 260px;
+    position: absolute;
+    left: 0px;
+    z-index: 1;
+    width: max(20%, 260px);
+    height: calc(100% - 50px);
+    background-color: aliceblue;
     overflow-y: scroll;
     scrollbar-width: none;
     -ms-overflow-style: none;
-    background-color: aliceblue;
+    transition: all 0.5s ease-in-out 0s;
+}
+
+aside.flagged {
+    /*left: calc(max(20%, 260px) * -1 + 50px);*/
+    left: calc(max(20%, 260px) * -1);
+    z-index: 3;
+    transition: all 0.5s ease-in-out 0s;
+}
+
+@media (max-width: 799px) {
+    aside {
+        left: calc(max(20%, 260px) * -1);
+        z-index: 3;
+        height: calc(100% - 40px);
+    }
+
+    aside.flagged {
+        left: 0px;
+        z-index: 1;
+    }
 }
 
 aside::-webkit-scrollbar {
@@ -127,24 +164,27 @@ aside::-webkit-scrollbar {
 
 aside ul {
     list-style: none;
+    padding-left: 0;
 }
 
 aside a {
-    color: #444444;
+    color: #888888;
     padding: 5px;
+    padding-left: 1rem;
+    padding-right: 3rem;
     display: block;
     text-decoration: none;
 }
 
-aside a:hover {
-    color: #ffffff;
-    border-radius: 4px;
+aside ul details ul li a {
+    padding-left: 2rem;
+    padding-right: 3rem;
 }
 
-aside.active {
-    left: 0px;
-    z-index: 1;
-    transition: all 0.5s ease-in-out 0s;
+aside a:hover,
+aside a.current-location {
+    color: #ffffff;
+    border-radius: 4px;
 }
 
 aside summary {
@@ -164,7 +204,9 @@ aside summary::-webkit-details-marker {
 header.home,
 header.dec2bin,
 aside a.home:hover,
+aside a.home.current-location,
 aside a.dec2bin:hover,
+aside a.dec2bin.current-location,
 .course-button-d2b1,
 .course-button-d2b2 {
     background-color: #65a2ac;
@@ -191,6 +233,7 @@ button.submit-button.dec2bin:hover {
 
 header.bin2dec,
 aside a.bin2dec:hover,
+aside a.bin2dec.current-location,
 .course-button-b2d1,
 .course-button-b2d2 {
     background-color: #65ac86;
@@ -212,6 +255,7 @@ button.submit-button.bin2dec:hover {
 
 header.power-of-two,
 aside a.power-of-two:hover,
+aside a.power-of-two.current-location,
 .course-button-pot1,
 .course-button-pot2 {
     background-color: #a665ac;
@@ -234,7 +278,9 @@ button.submit-button.power-of-two:hover {
 header.addition,
 header.subtraction,
 aside a.addition:hover,
+aside a.addition.current-location,
 aside a.subtraction:hover,
+aside a.subtraction.current-location,
 .course-button-add,
 .course-button-sub {
     background-color: #656eac;
@@ -258,6 +304,7 @@ button.submit-button.subtraction:hover {
 
 header.complement,
 aside a.complement:hover,
+aside a.complement.current-location,
 .course-button-cmp {
     background-color: #6588ac;
 }
@@ -278,7 +325,9 @@ button.submit-button.complement:hover {
 header.dec2hex,
 header.hex2dec,
 aside a.dec2hex:hover,
+aside a.dec2hex.current-location,
 aside a.hex2dec:hover,
+aside a.hex2dec.current-location,
 .course-button-d2h {
     background-color: #65aca0;
 }
@@ -299,7 +348,8 @@ button.submit-button.hex2dec:hover {
 }
 
 header.iro-iroiro,
-aside a.iro-iroiro:hover {
+aside a.iro-iroiro:hover,
+aside a.iro-iroiro.current-location {
     background-color: #ac657c;
 }
 
@@ -312,12 +362,14 @@ button.submit-button.iro-iroiro:hover {
     background-color: #e586a5;
 }
 
-aside a.ctc:hover {
+aside a.ctc:hover,
+aside a.ctc.current-location {
     background-color: #aaac65;
 }
 
 header.network-simulator,
-aside a.network-simulator:hover {
+aside a.network-simulator:hover,
+aside a.network-simulator.current-location {
     background-color: #7c65ac;
 }
 
@@ -344,7 +396,7 @@ button.submit-button.not-found:hover {
 }
 
 button.submit-button.gray {
-    color: #000000;
+    color: #333333;
     background-color: #e9e9ed;
     width: 160px;
 }
@@ -354,18 +406,40 @@ button.submit-button.gray:hover {
 }
 
 main {
-    padding-top: 20px;
-    padding-left: 100px;
-    max-width: 66%;
+    width: 80%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 2rem 0 calc(max(20%, 260px) + 2rem);
+    transition: all 0.5s ease-in-out 0s;
+}
+
+main.flagged {
+    padding: 20px 2rem 0 2rem;
+    transition: all 0.5s ease-in-out 0s;
+}
+
+@media (max-width: 799px) {
+
+    main,
+    main.flagged {
+        width: 100%;
+        padding: 20px 1rem 0 1rem;
+    }
 }
 
 footer {
+    color: #888888;
     padding-top: 20px;
     padding-bottom: 20px;
 }
 
 footer a {
+    color: #447f88;
     text-decoration: none;
+}
+
+footer a:visited {
+    color: #754488;
 }
 
 .footer-container {
@@ -491,6 +565,21 @@ button.submit-button {
     font-family: 'Noto Sans JP', sans-serif;
 }
 
+div.history-area>h2,
+div.hint-area h2 {
+    color: #888888;
+    font-size: 1.25rem;
+}
+
+div.hint-area h2 {
+    display: inline;
+}
+
+div.hint-area h3 {
+    color: #888888;
+    font-size: 1.15rem;
+}
+
 /*
     hint area
 */
@@ -516,6 +605,33 @@ details summary:hover {
 
 .history-area {
     margin-top: 10px;
+}
+
+div.history-container {
+    display: inline-flex;
+    align-items: center;
+    margin: 3px 0;
+}
+
+div.history-container.history-correct {
+    background-color: greenyellow;
+}
+
+div.history-container.history-wrong {
+    background-color: lightpink;
+}
+
+div.history-container>span.material-symbols-outlined {
+    font-size: 18px;
+    line-height: 18px;
+    margin-right: 0.5rem;
+    font-variation-settings:
+        'opsz' 20
+}
+
+div.history-container>span.material-symbols-outlined.history-wrong {
+    font-variation-settings:
+        'FILL' 1
 }
 
 .history-indented {
@@ -581,6 +697,10 @@ details summary:hover {
     width: 94%;
     max-width: 580px;
     height: 130px;
+}
+
+div.color-div .white {
+    color: #ffffff;
 }
 
 input.iro-iroiro.input-area,
@@ -676,6 +796,9 @@ span.network-simulator.input-wrapper {
     Settings for responsive design.
 */
 @media (max-width: 1199px) {
+    header {
+        grid-template-columns: max(20%, 260px) auto 1rem;
+    }
 
     form.iro-iroiro.input-area,
     form.network-simulator.input-area {
@@ -693,10 +816,6 @@ span.network-simulator.input-wrapper {
 }
 
 @media (max-width: 999px) {
-    main {
-        padding-left: 20px;
-    }
-
     .button-container {
         grid-template-columns: 1fr 1fr 1fr;
         grid-template-rows: 200px 200px 200px;
@@ -704,10 +823,6 @@ span.network-simulator.input-wrapper {
 }
 
 @media (max-width: 799px) {
-    main {
-        margin: 0 auto;
-    }
-
     footer {
         width: 100%;
         margin: 0 auto;
@@ -733,18 +848,8 @@ span.network-simulator.input-wrapper {
 
 
 @media (max-width: 599px) {
-    .header-container {
-        max-width: 94%;
-        margin: 0 auto;
-    }
-
     header h1 {
         font-size: 1rem;
-    }
-
-    main {
-        max-width: 90%;
-        margin: 0 auto;
     }
 
     footer {
@@ -825,90 +930,36 @@ span.network-simulator.input-wrapper {
 /*
     Related to the hamburger button.
 */
-.hamburger-button {
-    display: none;
+span.hamburger-button {
+    background: transparent;
+}
+
+span.hamburger-button:hover {
+    background-color: rgba(255, 255, 255, 0.25);
 }
 
 .barrier {
     display: none;
 }
 
-.barrier.active {
-    display: block;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    opacity: 0.2;
-    background-color: #ffffff;
+@media (max-width: 799px) {
+    .barrier.flagged {
+        display: block;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0.2;
+        background-color: #ffffff;
+    }
 }
 
 @media (max-width: 799px) {
     header {
         height: 40px;
         min-height: 40px;
-    }
-
-    .header-container {
-        padding-left: 0px;
-    }
-
-    .header-title {
-        padding-left: 50px;
-    }
-
-    aside {
-        position: fixed;
-        left: -800px;
-        height: calc(100% - 50px);
-        z-index: 3;
-    }
-
-    main {
-        width: 94%;
-        padding-left: 0px;
-    }
-
-    /*
-        Hamburger button.
-    */
-    .hamburger-button {
-        display: block;
-        position: absolute;
-        top: 0;
-        z-index: 3;
-        width: 40px;
-        height: 40px;
-        border: none;
-        background: transparent;
-    }
-
-    .hamburger-button:hover {
-        background-color: rgba(255, 255, 255, 0.25);
-    }
-
-    .bar {
-        width: 20px;
-        height: 2px;
-        display: block;
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        background-color: aliceblue;
-    }
-
-    .bar-top {
-        top: 10px;
-    }
-
-    .bar-mid {
-        top: 50%;
-        transform: translate(-50%, -50%);
-    }
-
-    .bar-bottom {
-        bottom: 10px;
+        grid-template-columns: 50px auto 1rem;
     }
 }
 
@@ -1006,9 +1057,30 @@ span.device-prop.subnetmask::before {
 /*
     help window
 */
-.help-button {
-    font-size: 18px;
+span.help-button,
+span.help-close {
+    font-size: 1.5rem;
     cursor: pointer;
+}
+
+span.help-button:hover {
+    font-variation-settings:
+        'FILL' 1
+}
+
+div.help-close-outer {
+    width: 100%;
+    text-align: right;
+}
+
+span.help-close:hover {
+    color: #ffffff;
+}
+
+@media (max-width: 599px) {
+    span.help-button {
+        font-size: 1rem;
+    }
 }
 
 .help-window {
@@ -1031,50 +1103,51 @@ span.device-prop.subnetmask::before {
     right: 0;
     margin: auto;
     padding: 2rem;
+    padding-top: 0;
     box-shadow: 0px 0px 5px 1px #999;
     overflow-y: auto;
     scrollbar-width: thin;
 }
 
-p.help-color.dec2bin {
-    color: #65a2ac;
+span.help-close.dec2bin:hover {
+    background-color: #65a2ac;
 }
 
-p.help-color.bin2dec {
-    color: #65ac86;
+span.help-close.bin2dec:hover {
+    background-color: #65ac86;
 }
 
-p.help-color.power-of-two {
-    color: #a665ac;
+span.help-close.power-of-two:hover {
+    background-color: #a665ac;
 }
 
-p.help-color.addition {
-    color: #656eac;
+span.help-close.addition:hover {
+    background-color: #656eac;
 }
 
-p.help-color.subtraction {
-    color: #656eac;
+span.help-close.subtraction:hover {
+    background-color: #656eac;
 }
 
-p.help-color.complement {
-    color: #6588ac;
+span.help-close.complement:hover {
+    background-color: #6588ac;
 }
 
-p.help-color.dec2hex,
-p.help-color.hex2dec {
-    color: #65aca0;
+span.help-close.dec2hex:hover,
+span.help-close.hex2dec:hover {
+    background-color: #65aca0;
 }
 
-p.help-color.iro-iroiro {
-    color: #ac657c;
+span.help-close.iro-iroiro:hover {
+    background-color: #ac657c;
 }
 
-p.help-color.network-simulator {
-    color: #7c65ac;
+span.help-close.network-simulator:hover {
+    background-color: #7c65ac;
 }
 
-p.help-color.ctc {
-    color: #aaac65;
+span.help-close.ctc:hover {
+    background-color: #aaac65;
 }
 
 .help-barrier {

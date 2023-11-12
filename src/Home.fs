@@ -1,4 +1,4 @@
-// taidalab Version 4.4.4
+// taidalab Version 4.5.0
 // https://github.com/taidalog/taidalab
 // Copyright (c) 2022-2023 taidalog
 // This software is licensed under the MIT License.
@@ -10,7 +10,7 @@ module Home =
         """
         <div class="home-center">
             <p>
-                <span class="home-title">taidalab</span><br>
+                <span class="home-title" translate="no">taidalab</span><br>
                 <span class="home-subtitle">「情報I」学習サイト</span>
             </p>
         </div>"""

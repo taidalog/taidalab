@@ -1,4 +1,4 @@
-// taidalab Version 4.4.4
+// taidalab Version 4.5.0
 // https://github.com/taidalog/taidalab
 // Copyright (c) 2022-2023 taidalog
 // This software is licensed under the MIT License.
@@ -8,6 +8,7 @@ namespace Taidalab
 open Fable.Core
 open Fable.Core.JsInterop
 open Browser.Dom
+open Browser.Types
 open Taidalab.Switcher
 
 module Main =
@@ -32,4 +33,21 @@ module Main =
             printfn "%s" "The end of DOMContentLoaded")
     )
 
-    window.addEventListener ("popstate", (fun _ -> window.location.pathname |> Switcher.initPageFromPathname |> ignore))
+    window.addEventListener (
+        "popstate",
+        (fun _ ->
+            let links: HTMLAnchorElement array =
+                (document.querySelector "aside").getElementsByTagName "a"
+                |> (fun x -> JS.Constructors.Array?from(x))
+                |> Array.filter (fun (x: HTMLAnchorElement) -> x.id <> "asideSoon")
+                |> Array.filter (fun (x: HTMLAnchorElement) -> x.pathname <> "/")
+
+            links
+            |> Array.iter (fun (x: HTMLAnchorElement) -> x.classList.remove "current-location")
+
+            links
+            |> Array.filter (fun (x: HTMLAnchorElement) -> x.pathname = window.location.pathname)
+            |> Array.iter (fun x -> x.classList.add "current-location")
+
+            window.location.pathname |> Switcher.initPageFromPathname |> ignore)
+    )

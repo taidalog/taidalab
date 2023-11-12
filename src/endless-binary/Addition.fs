@@ -1,4 +1,4 @@
-// taidalab Version 4.4.4
+// taidalab Version 4.5.0
 // https://github.com/taidalog/taidalab
 // Copyright (c) 2022-2023 taidalog
 // This software is licensed under the MIT License.
@@ -26,7 +26,7 @@ module EndlessBinary =
         let newHintAdd () =
             let hint =
                 """
-                <details><summary>ヒント: </summary>
+                <details><summary><h2>ヒント:</h2></summary>
                     <p class="history-indented">
                         10進数の筆算と同じように、右端から上下の数を足していきます。<br><br>
                         0<sub>(2)</sub> + 0<sub>(2)</sub> = 0<sub>(2)</sub><br>
@@ -189,6 +189,7 @@ module EndlessBinary =
             sourceRadix
             destinationRadix
             (answersToKeep: int)
+            (keyboardshortcutSetter: KeyboardEvent -> unit)
             checker
             : unit =
             // Initialization.
@@ -250,6 +251,13 @@ module EndlessBinary =
                     [ "helpWindow"; "helpBarrier" ]
                     |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore))
 
+            (document.getElementById "helpClose").onclick <-
+                (fun _ ->
+                    [ "helpWindow"; "helpBarrier" ]
+                    |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore))
+
+            document.onkeydown <- (fun (e: KeyboardEvent) -> keyboardshortcutSetter e)
+
         let init () =
             init'
                 (question 8)
@@ -261,6 +269,7 @@ module EndlessBinary =
                 2
                 2
                 10
+                EndlessBinary.keyboardshortcut
                 checkAnswer
 
         let init4 () =
@@ -274,4 +283,5 @@ module EndlessBinary =
                 2
                 2
                 5
+                EndlessBinary.keyboardshortcut
                 checkAnswer

@@ -1,6 +1,6 @@
 # taidalab
 
-Version 4.4.4
+Version 4.5.0
 
 [English README](README.md)
 
@@ -20,13 +20,13 @@ Version 4.4.4
 ## 使い方
 
 1. [taidalab](http://taidalog.html.xdomain.jp/) にアクセスしてください。
-1. 画面左側のメニューのリンクから選んでクリックするか、画面左上のハンバーガーボタン（三本線のボタン）を押してメニューを開いてリンクをクリックしてください。
-1. 出てきた画面で操作を行ってください。使い方は 各ページのヘルプと About ページに書いてあります。
+1. 画面左側のメニューから好きなものを選んでクリックしてください。メニューが非表示になっているときは画面左上のハンバーガーボタン（三本線のボタン）を押してメニューを開いてください。
+1. 出てきた画面で操作を行ってください。使い方は各ページ右上のヘルプと About ページに書いてあります。
 
 
 ## 推奨環境
 
-- Mozilla Firefox 106.0.1 以上
+- Mozilla Firefox 119.0.1 (64 bit) 以上
 
 
 ## ご利用について
@@ -44,7 +44,7 @@ Version 4.4.4
 
 ## リリースノート
 
-[Releases](https://github.com/taidalog/taidalab/releases)
+[Releases on GitHub](https://github.com/taidalog/taidalab/releases)
 
 
 ## License

@@ -1,4 +1,4 @@
-﻿// taidalab Version 4.4.4
+﻿// taidalab Version 4.5.0
 // https://github.com/taidalog/taidalab
 // Copyright (c) 2022-2023 taidalog
 // This software is licensed under the MIT License.
@@ -76,7 +76,7 @@ module EndlessBinary =
 
         let hintFormat hex formula table =
             $"""<details>
-                <summary>ヒント:</summary>
+                <summary><h2>ヒント:</h2></summary>
                 <p class="history-indented">
                     10進法で表現した数は、一番右の桁から<br>
                     1の位、10の位、100の位、1000の位...となっています。<br>
@@ -208,3 +208,10 @@ module EndlessBinary =
                 (fun _ ->
                     [ "helpWindow"; "helpBarrier" ]
                     |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore))
+
+            (document.getElementById "helpClose").onclick <-
+                (fun _ ->
+                    [ "helpWindow"; "helpBarrier" ]
+                    |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore))
+
+            document.onkeydown <- (fun (e: KeyboardEvent) -> EndlessBinary.keyboardshortcut e)

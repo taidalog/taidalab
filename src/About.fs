@@ -1,4 +1,4 @@
-// taidalab Version 4.4.4
+// taidalab Version 4.5.0
 // https://github.com/taidalog/taidalab
 // Copyright (c) 2022-2023 taidalog
 // This software is licensed under the MIT License.
@@ -10,9 +10,9 @@ module About =
         $"""
         <h2>このサイトについて</h2>
         <p>
-            taidalab（タイダラブ）は、taidalog が作成したプログラム置き場です。<br>
+            <span translate="no">taidalab</span>（タイダラブ）は、<span translate="no">taidalog</span> が作成したプログラム置き場です。<br>
             10進数と2進数の変換の反復練習ツールなど、高校の「情報&#8544;」の学習ツールを中心に公開しています。<br>
-            F# で書いたものを Fable で JavaScript にトランスパイルしています。F# 楽しい。
+            <span translate="no">F#</span> で書いたものを <span translate="no">Fable</span> で <span translate="no">JavaScript</span> にトランスパイルしています。<span translate="no">F#</span> 楽しい。
         </p>
         <h2>それぞれのページについて</h2>
         <dl id="explanation" class="explanation">

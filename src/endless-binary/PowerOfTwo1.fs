@@ -1,4 +1,4 @@
-﻿// taidalab Version 4.4.4
+﻿// taidalab Version 4.5.0
 // https://github.com/taidalog/taidalab
 // Copyright (c) 2022-2023 taidalog
 // This software is licensed under the MIT License.
@@ -28,7 +28,7 @@ module EndlessBinary =
 
             $"""
             <details>
-                <summary>ヒント: </summary>
+                <summary><h2>ヒント:</h2></summary>
                 <p class="history-indented">
                     2<sup>n</sup> の数を2進法で表現するには、1 の後に 0 を n 個続けます。<br>
                     %d{answer}<sub>(10)</sub> は 2<sup>%d{indexNumber}</sup> なので、1 の後ろに 0 を %d{indexNumber} 個つけます。
@@ -44,6 +44,7 @@ module EndlessBinary =
             Dec2Bin1.init'
                 question
                 hint
+                newErrorMessageBin
                 Bin.validate
                 Bin.toDec
                 (padWithZero 8 >> colorLeadingZero)
@@ -51,4 +52,5 @@ module EndlessBinary =
                 10
                 2
                 4
+                EndlessBinary.keyboardshortcut
                 Dec2Bin1.checkAnswer

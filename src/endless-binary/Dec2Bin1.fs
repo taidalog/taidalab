@@ -1,4 +1,4 @@
-// taidalab Version 4.4.4
+// taidalab Version 4.5.0
 // https://github.com/taidalog/taidalab
 // Copyright (c) 2022-2023 taidalog
 // This software is licensed under the MIT License.
@@ -203,10 +203,10 @@ module EndlessBinary =
         let hint (number: int) : string =
             $"""
             <details id="hintDetails">
-                <summary>ヒント: </summary>
-                <h2>考え方 1</h2>
+                <summary><h2>ヒント:</h2></summary>
+                <h3>考え方 1</h3>
                 %s{(newHintRepeatDivision 2 number)}
-                <h2>考え方 2</h2>
+                <h3>考え方 2</h3>
                 %s{(newHintRepeatAddition number (devideIntoPowerOfTwo number))}
             </details>
             """
@@ -236,6 +236,7 @@ module EndlessBinary =
         let rec checkAnswer
             (questionGenerator: 'c list -> 'c)
             (hintGenerator: 'a -> 'b)
+            (errorGenerator: 'd -> 'e -> 'f -> 'g)
             validator
             converter
             tagger
@@ -250,14 +251,13 @@ module EndlessBinary =
             let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
             let input = numberInput.value |> escapeHtml
             let validated: Result<string, Errors.Errors> = input |> validator
-            //printfn "bin: %A" bin
 
             numberInput.focus ()
 
             match validated with
             | Error(error: Errors.Errors) ->
                 // Making an error message.
-                (document.getElementById "errorArea").innerHTML <- newErrorMessageBin answer input error
+                (document.getElementById "errorArea").innerHTML <- errorGenerator answer input error
             | Ok validated ->
                 (document.getElementById "errorArea").innerHTML <- ""
 
@@ -300,6 +300,7 @@ module EndlessBinary =
                             checkAnswer
                                 questionGenerator
                                 hintGenerator
+                                errorGenerator
                                 validator
                                 converter
                                 tagger
@@ -317,6 +318,7 @@ module EndlessBinary =
                             checkAnswer
                                 questionGenerator
                                 hintGenerator
+                                errorGenerator
                                 validator
                                 converter
                                 tagger
@@ -333,6 +335,7 @@ module EndlessBinary =
         let init'
             (questionGenerator: 'c list -> 'c)
             (hintGenerator: 'a -> 'b)
+            (errorGenerator: 'd -> 'e -> 'f -> 'g)
             validator
             converter
             tagger
@@ -340,6 +343,7 @@ module EndlessBinary =
             sourceRadix
             destinationRadix
             (answersToKeep: int)
+            (keyboardshortcutSetter: KeyboardEvent -> unit)
             checker
             : unit =
             // Initialization.
@@ -355,6 +359,7 @@ module EndlessBinary =
                     checker
                         questionGenerator
                         hintGenerator
+                        errorGenerator
                         validator
                         converter
                         tagger
@@ -372,6 +377,7 @@ module EndlessBinary =
                     checker
                         questionGenerator
                         hintGenerator
+                        errorGenerator
                         validator
                         converter
                         tagger
@@ -396,10 +402,18 @@ module EndlessBinary =
                     [ "helpWindow"; "helpBarrier" ]
                     |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore))
 
+            (document.getElementById "helpClose").onclick <-
+                (fun _ ->
+                    [ "helpWindow"; "helpBarrier" ]
+                    |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore))
+
+            document.onkeydown <- (fun (e: KeyboardEvent) -> keyboardshortcutSetter e)
+
         let init () =
             init'
                 (question 8)
                 hint
+                newErrorMessageBin
                 Bin.validate
                 Bin.toDec
                 (padWithZero 8 >> colorLeadingZero)
@@ -407,12 +421,14 @@ module EndlessBinary =
                 10
                 2
                 10
+                EndlessBinary.keyboardshortcut
                 checkAnswer
 
         let init4 () =
             init'
                 (question 4)
                 hint
+                newErrorMessageBin
                 Bin.validate
                 Bin.toDec
                 (padWithZero 4 >> colorLeadingZero)
@@ -420,4 +436,5 @@ module EndlessBinary =
                 10
                 2
                 2
+                EndlessBinary.keyboardshortcut
                 checkAnswer

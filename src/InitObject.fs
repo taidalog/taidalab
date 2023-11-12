@@ -1,4 +1,4 @@
-// taidalab Version 4.4.4
+// taidalab Version 4.5.0
 // https://github.com/taidalog/taidalab
 // Copyright (c) 2022-2023 taidalog
 // This software is licensed under the MIT License.
@@ -24,9 +24,9 @@ module InitObject =
         | "/" ->
             { pathname = "/"
               title = "taidalab"
-              headerContent = Content.Common.header
+              headerContent = Content.Common.headerNoHelp
               headerColorClass = "home"
-              headerTitle = "<h1>taidalab</h1>"
+              headerTitle = """<h1 translate="no">taidalab</h1>"""
               mainContent = main
               buttonColorClass = ""
               questionContent = ""
@@ -34,9 +34,9 @@ module InitObject =
         | "/endless-binary/" ->
             { pathname = "/endless-binary/"
               title = "10進数↔2進数 - taidalab"
-              headerContent = Content.Common.header
+              headerContent = Content.Common.headerNoHelp
               headerColorClass = "home"
-              headerTitle = "<h1>10進数↔︎2進数 - taidalab</h1>"
+              headerTitle = """<h1>10進数↔︎2進数 - <span translate="no">taidalab</span></h1>"""
               mainContent = main
               buttonColorClass = ""
               questionContent = ""
@@ -46,7 +46,7 @@ module InitObject =
               title = "10進数→2進数 (1) - taidalab"
               headerContent = Content.Common.header
               headerColorClass = "dec2bin"
-              headerTitle = "<h1>10進数→2進数 (1) - taidalab</h1>"
+              headerTitle = """<h1>10進数→2進数 (1) - <span translate="no">taidalab</span></h1>"""
               mainContent = main
               buttonColorClass = "submit-button display-order-3 dec2bin"
               questionContent = Content.Common.question
@@ -56,7 +56,7 @@ module InitObject =
               title = "10進数→2進数 (1) - taidalab"
               headerContent = Content.Common.header
               headerColorClass = "dec2bin"
-              headerTitle = "<h1>10進数→2進数 (1) - taidalab</h1>"
+              headerTitle = """<h1>10進数→2進数 (1) - <span translate="no">taidalab</span></h1>"""
               mainContent = main
               buttonColorClass = "submit-button display-order-3 dec2bin"
               questionContent = Content.Common.question
@@ -66,7 +66,7 @@ module InitObject =
               title = "10進数→2進数 (2) - taidalab"
               headerContent = Content.Common.header
               headerColorClass = "dec2bin"
-              headerTitle = "<h1>10進数→2進数 (2) - taidalab</h1>"
+              headerTitle = """<h1>10進数→2進数 (2) - <span translate="no">taidalab</span></h1>"""
               mainContent = main
               buttonColorClass = "submit-button display-order-3 dec2bin"
               questionContent = Content.Common.question
@@ -76,7 +76,7 @@ module InitObject =
               title = "2進数→10進数 (1) - taidalab"
               headerContent = Content.Common.header
               headerColorClass = "bin2dec"
-              headerTitle = "<h1>2進数→10進数 (1) - taidalab</h1>"
+              headerTitle = """<h1>2進数→10進数 (1) - <span translate="no">taidalab</span></h1>"""
               mainContent = main
               buttonColorClass = "submit-button display-order-3 bin2dec"
               questionContent = Content.Common.question
@@ -86,7 +86,7 @@ module InitObject =
               title = "2進数→10進数 (2) - taidalab"
               headerContent = Content.Common.header
               headerColorClass = "bin2dec"
-              headerTitle = "<h1>2進数→10進数 (2) - taidalab</h1>"
+              headerTitle = """<h1>2進数→10進数 (2) - <span translate="no">taidalab</span></h1>"""
               mainContent = main
               buttonColorClass = "submit-button display-order-3 bin2dec"
               questionContent = Content.Common.question
@@ -96,7 +96,7 @@ module InitObject =
               title = "2のn乗 - taidalab"
               headerContent = Content.Common.header
               headerColorClass = "power-of-two"
-              headerTitle = "<h1>2のn乗 - taidalab</h1>"
+              headerTitle = """<h1>2のn乗 - <span translate="no">taidalab</span></h1>"""
               mainContent = main
               buttonColorClass = "submit-button display-order-3 power-of-two"
               questionContent = Content.Common.question
@@ -106,7 +106,7 @@ module InitObject =
               title = "2のn乗-1 - taidalab"
               headerContent = Content.Common.header
               headerColorClass = "power-of-two"
-              headerTitle = "<h1>2のn乗-1 - taidalab</h1>"
+              headerTitle = """<h1>2のn乗-1 - <span translate="no">taidalab</span></h1>"""
               mainContent = main
               buttonColorClass = "submit-button display-order-3 power-of-two"
               questionContent = Content.Common.question
@@ -116,7 +116,7 @@ module InitObject =
               title = "加算 - taidalab"
               headerContent = Content.Common.header
               headerColorClass = "addition"
-              headerTitle = "<h1>加算 - taidalab</h1>"
+              headerTitle = """<h1>加算 - <span translate="no">taidalab</span></h1>"""
               mainContent = main
               buttonColorClass = "submit-button display-order-3 addition"
               questionContent = Content.Common.columnAdditionFormat
@@ -126,7 +126,7 @@ module InitObject =
               title = "加算 - taidalab"
               headerContent = Content.Common.header
               headerColorClass = "addition"
-              headerTitle = "<h1>加算 - taidalab</h1>"
+              headerTitle = """<h1>加算 - <span translate="no">taidalab</span></h1>"""
               mainContent = main
               buttonColorClass = "submit-button display-order-3 addition"
               questionContent = Content.Common.columnAdditionFormat
@@ -136,7 +136,7 @@ module InitObject =
               title = "減算 - taidalab"
               headerContent = Content.Common.header
               headerColorClass = "subtraction"
-              headerTitle = "<h1>減算 - taidalab</h1>"
+              headerTitle = """<h1>減算 - <span translate="no">taidalab</span></h1>"""
               mainContent = main
               buttonColorClass = "submit-button display-order-3 subtraction"
               questionContent = Content.Common.columnAdditionFormat
@@ -146,7 +146,7 @@ module InitObject =
               title = "補数 - taidalab"
               headerContent = Content.Common.header
               headerColorClass = "complement"
-              headerTitle = "<h1>補数 - taidalab</h1>"
+              headerTitle = """<h1>補数 - <span translate="no">taidalab</span></h1>"""
               mainContent = main
               buttonColorClass = "submit-button display-order-3 complement"
               questionContent = Content.Complement.question
@@ -156,7 +156,7 @@ module InitObject =
               title = "10進数→16進数 - taidalab"
               headerContent = Content.Common.header
               headerColorClass = "dec2hex"
-              headerTitle = "<h1>10進数→16進数 - taidalab</h1>"
+              headerTitle = """<h1>10進数→16進数 - <span translate="no">taidalab</span></h1>"""
               mainContent = main
               buttonColorClass = "submit-button display-order-3 dec2hex"
               questionContent = Content.Common.question
@@ -166,7 +166,7 @@ module InitObject =
               title = "16進数→10進数 - taidalab"
               headerContent = Content.Common.header
               headerColorClass = "hex2dec"
-              headerTitle = "<h1>16進数→10進数 - taidalab</h1>"
+              headerTitle = """<h1>16進数→10進数 - <span translate="no">taidalab</span></h1>"""
               mainContent = main
               buttonColorClass = "submit-button display-order-3 hex2dec"
               questionContent = Content.Common.question
@@ -176,7 +176,7 @@ module InitObject =
               title = "色いろいろ - taidalab"
               headerContent = Content.Common.header
               headerColorClass = "iro-iroiro"
-              headerTitle = "<h1>色いろいろ - taidalab</h1>"
+              headerTitle = """<h1>色いろいろ - <span translate="no">taidalab</span></h1>"""
               mainContent = main
               buttonColorClass = "submit-button iro-iroiro"
               questionContent = ""
@@ -186,7 +186,7 @@ module InitObject =
               title = "ネットワークシミュレータ - taidalab"
               headerContent = Content.Common.header
               headerColorClass = "network-simulator"
-              headerTitle = "<h1>ネットワークシミュレータ - taidalab</h1>"
+              headerTitle = """<h1>ネットワークシミュレータ - <span translate="no">taidalab</span></h1>"""
               mainContent = main
               buttonColorClass = "submit-button network-simulator"
               questionContent = ""
@@ -194,9 +194,9 @@ module InitObject =
         | "/about/" ->
             { pathname = "/about/"
               title = "about - taidalab"
-              headerContent = Content.Common.header
+              headerContent = Content.Common.headerNoHelp
               headerColorClass = "home"
-              headerTitle = "<h1>about - taidalab</h1>"
+              headerTitle = """<h1>about - <span translate="no">taidalab</span></h1>"""
               mainContent = main
               buttonColorClass = ""
               questionContent = ""
@@ -204,9 +204,9 @@ module InitObject =
         | "/terms/" ->
             { pathname = "/terms/"
               title = "ご利用について - taidalab"
-              headerContent = Content.Common.header
+              headerContent = Content.Common.headerNoHelp
               headerColorClass = "home"
-              headerTitle = "<h1>ご利用について - taidalab</h1>"
+              headerTitle = """<h1>ご利用について - <span translate="no">taidalab</span></h1>"""
               mainContent = main
               buttonColorClass = ""
               questionContent = ""
@@ -214,9 +214,9 @@ module InitObject =
         | "/information-policy/" ->
             { pathname = "/information-policy/"
               title = "情報の外部送信について - taidalab"
-              headerContent = Content.Common.header
+              headerContent = Content.Common.headerNoHelp
               headerColorClass = "home"
-              headerTitle = "<h1>情報の外部送信について - taidalab</h1>"
+              headerTitle = """<h1>情報の外部送信について - <span translate="no">taidalab</span></h1>"""
               mainContent = main
               buttonColorClass = ""
               questionContent = ""
@@ -224,9 +224,9 @@ module InitObject =
         | _ ->
             { pathname = "/404/"
               title = "404: Page Not Found - taidalab"
-              headerContent = Content.Common.header
+              headerContent = Content.Common.headerNoHelp
               headerColorClass = "not-found"
-              headerTitle = "<h1>404: Page Not Found - taidalab</h1>"
+              headerTitle = """<h1>404: Page Not Found - <span translate="no">taidalab</span></h1>"""
               mainContent = main
               buttonColorClass = "submit-button display-order-3 not-found"
               questionContent = Content.Common.question

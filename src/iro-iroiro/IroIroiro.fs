@@ -1,14 +1,16 @@
-// taidalab Version 4.4.4
+// taidalab Version 4.5.0
 // https://github.com/taidalog/taidalab
 // Copyright (c) 2022-2023 taidalog
 // This software is licensed under the MIT License.
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
 namespace Taidalab
 
+open System
 open Browser.Dom
 open Browser.Types
+open Fable.Core
+open Fable.Core.JsInterop
 open Fermata
-open Taidalab.RankedRgb
 
 module IroIroiro =
     let help =
@@ -50,92 +52,99 @@ module IroIroiro =
             <span class="display-order-3">
                 <button type="button" id="submitButton" class="submit-button d2b-button">確認</button>
             </span>
-            <span id="helpButton" class="material-symbols-outlined help-button display-order-4">
-                help
-            </span>
         </form>
         <div id="errorArea" class="error-area"></div>
         <div id="outputArea" class="output-area"></div>
         <div id="helpWindow" class="help-window">
+            <div class="help-close-outer">
+                <span id="helpClose" class="material-symbols-outlined help-close iro-iroiro" translate="no">
+                    close
+                </span>
+            </div>
             %s{help}
-            <p class="help-color iro-iroiro">このヘルプは、他の場所をクリックすると消えます。</p>
         </div>
         """
 
-    let (|Positive|Negative|) num = if num >= 0 then Positive else Negative
+    let private circulation1 (s: int) (n: int) : int = n % s
+    // 0 1 2 ... 0 1 2 ... 0 1 2 ...
+    let private circulation2 (s: int) (n: int) : int = n / s
+    // 0 0 0 ... 1 1 1 ... 2 2 2 ...
 
-    let getNextRgb r g b step colorToModify : RankedRgb list * PrimaryColors =
-        let rec loop rgbList min max value colorToModify =
-            let addedMed, gap =
-                rgbList
-                |> List.find (fun x -> x.Color = colorToModify)
-                |> fun x -> x.Value + value |> Bound.clampGap min max
-                |> fun (x, y) -> x, -y
+    let private countBefore (index: int) (list: 'T list) : int =
+        list |> List.truncate index |> List.countWith ((=) (List.item index list))
 
-            let newRankedRgb =
-                rgbList
-                |> List.map (fun x ->
-                    if x.Color = colorToModify then
-                        { x with Value = addedMed }
-                    else
-                        x)
-                |> RankedRgb.toInts
-                |||> RankedRgb.ofInts
+    let private f min' max' x =
+        let gap = max' - min'
 
-            let rankToAdd =
-                if gap > 0 then Some Rank.Min
-                else if gap < 0 then Some Rank.Max
-                else None
+        if (circulation2 (gap * 3) x) % 2 = 0 then
+            min (min' + (circulation1 (gap * 3) x)) max'
+        else
+            max (max' - (circulation1 (gap * 3) x)) min'
 
-            let nextColorToModify =
-                match rankToAdd with
-                | None -> None
-                | Some rnk ->
-                    newRankedRgb
-                    |> List.filter (fun x -> x.Color <> colorToModify)
-                    |> List.find (fun x -> x.Rank = rnk)
-                    |> fun x -> Some x.Color
+    let private f' factor min' max' step start value =
+        f min' max' (((max' - min') * factor) + step * value + start)
 
-            match nextColorToModify with
-            | None -> (newRankedRgb, colorToModify)
-            | Some c -> loop newRankedRgb min max gap c
+    let rec repeatGetNextRgb r g b step limit =
+        let rgb = [ r; g; b ]
+        let min' = List.min rgb
+        let max' = List.max rgb
+        let shift = List.item 1 (List.sort rgb) - min'
 
-        let rankedRgbs = RankedRgb.ofInts r g b
-        let min = valueByRank rankedRgbs Rank.Min
-        let max = valueByRank rankedRgbs Rank.Max
+        let fmin = f' 4 min' max' step shift
+        let fmid = f' 0 min' max' step shift
+        let fmax = f' 2 min' max' step shift
 
-        loop rankedRgbs min max step colorToModify
+        let rf, gf, bf =
+            (0, 1, 2)
+            |> Tuple.map3 (fun x -> List.findIndex ((=) (List.item x rgb)) (List.sort rgb) + countBefore x rgb)
+            |> Tuple.map3 (fun x -> List.item x [ fmin; fmid; fmax ])
 
-    let rec repeatGetNextRgb r g b step limit colorToModify acc =
+        [ 0..limit ] |> List.map (fun x -> rf x, gf x, bf x)
 
-        let resRgb, lastModifiedColor = getNextRgb r g b step colorToModify
-        let resR, resG, resB = resRgb |> RankedRgb.toInts
+    let hexcode (r: int) (g: int) (b: int) =
+        (r, g, b)
+        |> Tuple.map3 (fun x -> Convert.ToString(x, 16) |> string |> String.padLeft 2 '0')
+        |> fun (r', g', b') -> $"#%s{r'}%s{g'}%s{b'}"
 
-        let nextStep = step * (if colorToModify = lastModifiedColor then 1 else -1)
+    let keyboardshortcut (e: KeyboardEvent) =
 
-        let nextColorToModify =
-            if lastModifiedColor = colorToModify then
-                colorToModify
-            else
-                let nextRankToModify =
-                    match (List.tryFind (fun x -> x.Rank = Rank.Med) resRgb) with
-                    | Some m -> m.Rank
-                    | None ->
-                        match nextStep with
-                        | Positive -> Rank.Min
-                        | Negative -> Rank.Max
+        match document.activeElement.id with
+        | "rInput"
+        | "gInput"
+        | "bInput"
+        | "stepInput"
+        | "limitInput" as x ->
+            match e.key with
+            | "Escape" -> (document.getElementById x).blur ()
+            | _ -> ()
+        | _ ->
+            let isHelpWindowActive =
+                (document.getElementById "helpWindow").classList
+                |> (fun x -> JS.Constructors.Array?from(x))
+                |> Array.contains "active"
 
-                match nextRankToModify with
-                | Rank.Med -> colorByRank resRgb nextRankToModify
-                | _ ->
-                    resRgb
-                    |> List.filter (fun x -> x.Color <> lastModifiedColor)
-                    |> List.find (fun x -> x.Rank = nextRankToModify)
-                    |> fun x -> x.Color
+            match e.key with
+            | "\\" ->
+                let inputs =
+                    [ "rInput"; "gInput"; "bInput"; "stepInput"; "limitInput" ]
+                    |> List.map (fun x -> document.getElementById x :?> HTMLInputElement)
 
-        match limit with
-        | 0 -> acc @ [ (resR, resG, resB) ]
-        | _ -> repeatGetNextRgb resR resG resB nextStep (limit - 1) nextColorToModify (acc @ [ (resR, resG, resB) ])
+                if not isHelpWindowActive then
+                    inputs
+                    |> List.tryFind (fun x -> x.value = "")
+                    |> Option.defaultValue (List.head inputs)
+                    |> fun x -> x.focus ()
+
+                    e.preventDefault ()
+            | "?" ->
+                [ "helpWindow"; "helpBarrier" ]
+                |> List.iter (fun x -> (document.getElementById x).classList.toggle "active" |> ignore)
+            | "Escape" ->
+
+                if isHelpWindowActive then
+                    [ "helpWindow"; "helpBarrier" ]
+                    |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore)
+            | _ -> ()
 
     let start () =
         let errorArea = document.getElementById "errorArea"
@@ -171,32 +180,37 @@ module IroIroiro =
             let step = stepInput |> int
             let limit = limitInput |> int
 
-            let colorToModify =
-                RankedRgb.ofInts r g b
-                |> List.sortBy (fun x -> x.Value)
-                |> List.item 1
-                |> fun x -> x.Color
-
-            let ress = repeatGetNextRgb r g b step limit colorToModify [ (r, g, b) ]
+            let ress = repeatGetNextRgb r g b step limit
 
             let output =
                 ress
                 |> List.map (fun (r, g, b) ->
                     sprintf
-                        $"""<div class="color-div" style="background-color: rgb(%d{r}, %d{g}, %d{b});">R: %d{r}  G: %d{g}  B: %d{b}</div>""")
+                        $"""
+                        <div class="color-div" style="background-color: rgb(%d{r}, %d{g}, %d{b});">
+                            <span>R: %d{r}  G: %d{g}  B: %d{b}</span>
+                            <br>
+                            <span>HEX: %s{hexcode r g b}</span>
+                            <br>
+                            <span class="white">R: %d{r}  G: %d{g}  B: %d{b}</span>
+                            <br>
+                            <span class="white">HEX: %s{hexcode r g b}</span>
+                        </div>
+                        """)
                 |> String.concat "\n"
 
             (document.getElementById "outputArea").innerHTML <- output
-
 
     let init () =
         // Initialization.
         (document.getElementById "submitButton").onclick <- (fun _ -> start ())
 
-        [ "helpButton"; "helpBarrier" ]
+        [ "helpButton"; "helpBarrier"; "helpClose" ]
         |> List.iter (fun x ->
             (document.getElementById x).onclick <-
                 (fun _ ->
                     [ "helpWindow"; "helpBarrier" ]
                     |> List.iter (fun x -> (document.getElementById x).classList.toggle "active" |> ignore)))
+
+        document.onkeydown <- (fun (e: KeyboardEvent) -> keyboardshortcut e)
 //        (document.getElementById "inputArea").onsubmit <- (fun _ -> start())

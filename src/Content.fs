@@ -1,4 +1,4 @@
-// taidalab Version 4.4.4
+// taidalab Version 4.5.0
 // https://github.com/taidalog/taidalab
 // Copyright (c) 2022-2023 taidalog
 // This software is licensed under the MIT License.
@@ -27,14 +27,37 @@ module Content =
 
         let header =
             """
-            <div id="headerContainer" class="header-container">
-                <button id="hamburgerButton" class="hamburger-button">
-                    <span class="bar bar-top"></span>
-                    <span class="bar bar-mid"></span>
-                    <span class="bar bar-bottom"></span>
-                </button>
+            <div class="header-left">
+                <span id="hamburgerButton" class="material-symbols-outlined hamburger-button" translate="no">
+                    menu
+                </span>
+            </div>
+            <div class="header-center">
                 <div id="headerTitle" class="header-title"></div>
-            </div>"""
+                <div class="inline-flex-center">
+                    <span id="helpButton" class="material-symbols-outlined help-button" translate="no">
+                        help
+                    </span>
+                </div>
+            </div>
+            <div class="header-right">
+            </div>
+            """
+
+        let headerNoHelp =
+            """
+            <div class="header-left">
+                <span id="hamburgerButton" class="material-symbols-outlined hamburger-button" translate="no">
+                    menu
+                </span>
+            </div>
+            <div class="header-center">
+                <div id="headerTitle" class="header-title"></div>
+                <div class="inline-flex-center"></div>
+            </div>
+            <div class="header-right">
+            </div>
+            """
 
         let aside =
             """
@@ -66,21 +89,24 @@ module Content =
                 <li><a class="home" id="asideAbout" href="/about/">About</a></li>
                 <li><a class="home" id="asideTerms" href="/terms/">ご利用について</a></li>
                 <li><a class="home" id="asideTerms" href="/information-policy/">情報の外部送信について</a></li>
+            </ul>
+            <ul>
+                <li><a class="home" id="asideOdaibako" href="https://odaibako.net/u/taidalog">お題箱</a></li>
                 <li><a class="home" id="asideRepo" href="https://github.com/taidalog/taidalab">Repository on GitHub</a></li>
             </ul>"""
 
         let question =
             """<span id="questionSpan" class="question-number"></span><sub id="srcRadix"></sub> を<span id="dstRadix"></span>進法で表すと？"""
 
-        let version = "Version 4.4.4"
+        let version = "Version 4.5.0"
 
         let footer =
             sprintf
                 """
                 <small class="footer-container">
-                    <div class="item">&copy; 2022-2023 taidalog</div>
+                    <div class="item" translate="no">&copy; 2022-2023 taidalog</div>
                     <div class="item"><a id="versionNumber" href="https://github.com/taidalog/taidalab/releases">%s</a></div>
-                    <div class="item">Powered by <a id="footerFSharp" href="https://fsharp.org/">F#</a> and <a id="footerFable" href="https://fable.io">Fable</a>. Thank you!</div>
+                    <div class="item">Powered by <a id="footerFSharp" href="https://fsharp.org/" translate="no">F#</a> and <a id="footerFable" href="https://fable.io" translate="no">Fable</a>. Thank you!</div>
                 </small>"""
                 version
 
