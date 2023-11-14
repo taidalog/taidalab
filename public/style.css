@@ -130,8 +130,8 @@ aside {
     left: 0px;
     z-index: 1;
     width: max(20%, 260px);
-    height: calc(100% - 50px);
-    background-color: aliceblue;
+    height: fit-content;
+    max-height: calc(100% - 50px);
     overflow-y: scroll;
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -150,6 +150,7 @@ aside.flagged {
         left: calc(max(20%, 260px) * -1);
         z-index: 3;
         height: calc(100% - 40px);
+        background-color: #ffffff;
     }
 
     aside.flagged {
@@ -951,7 +952,7 @@ span.hamburger-button:hover {
         top: 0;
         left: 0;
         opacity: 0.2;
-        background-color: #ffffff;
+        background-color: #444444;
     }
 }
 
