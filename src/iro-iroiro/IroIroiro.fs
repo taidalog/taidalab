@@ -215,11 +215,21 @@ module IroIroiro =
                     [ "helpWindow"; "helpBarrier" ]
                     |> List.iter (fun x -> (document.getElementById x).classList.toggle "active" |> ignore)))
 
-        (document.getElementById "rInput" :?> HTMLInputElement).oninput <- fun _ -> start ()
-        (document.getElementById "gInput" :?> HTMLInputElement).oninput <- fun _ -> start ()
-        (document.getElementById "bInput" :?> HTMLInputElement).oninput <- fun _ -> start ()
-        (document.getElementById "stepInput" :?> HTMLInputElement).oninput <- fun _ -> start ()
-        (document.getElementById "limitInput" :?> HTMLInputElement).oninput <- fun _ -> start ()
+        let start' r g b step limit =
+            if [ r; g; b; step; limit ] |> List.forall ((<>) "") then
+                start ()
+
+        let rInput = (document.getElementById "rInput" :?> HTMLInputElement)
+        let gInput = (document.getElementById "gInput" :?> HTMLInputElement)
+        let bInput = (document.getElementById "bInput" :?> HTMLInputElement)
+        let stepInput = (document.getElementById "stepInput" :?> HTMLInputElement)
+        let limitInput = (document.getElementById "limitInput" :?> HTMLInputElement)
+
+        rInput.oninput <- fun _ -> start' rInput.value gInput.value bInput.value stepInput.value limitInput.value
+        gInput.oninput <- fun _ -> start' rInput.value gInput.value bInput.value stepInput.value limitInput.value
+        bInput.oninput <- fun _ -> start' rInput.value gInput.value bInput.value stepInput.value limitInput.value
+        stepInput.oninput <- fun _ -> start' rInput.value gInput.value bInput.value stepInput.value limitInput.value
+        limitInput.oninput <- fun _ -> start' rInput.value gInput.value bInput.value stepInput.value limitInput.value
 
         document.onkeydown <- (fun (e: KeyboardEvent) -> keyboardshortcut e)
 //        (document.getElementById "inputArea").onsubmit <- (fun _ -> start())
