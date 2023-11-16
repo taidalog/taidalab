@@ -937,6 +937,7 @@ span.hamburger-button {
 
 span.hamburger-button:hover {
     background-color: rgba(255, 255, 255, 0.25);
+    cursor: pointer;
 }
 
 .barrier {
