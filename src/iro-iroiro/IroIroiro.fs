@@ -157,13 +157,16 @@ module IroIroiro =
         let limitInput = (document.getElementById "limitInput" :?> HTMLInputElement).value
 
         let parseResult =
-            [ ("R", "rInput", rInput)
-              ("G", "gInput", gInput)
-              ("B", "bInput", bInput)
-              ("変化量", "stepInput", stepInput)
-              ("回数", "limitInput", limitInput) ]
-            |> List.map (fun (name, id, s) -> (name, id, System.Int32.TryParse s))
-            |> List.filter (fun (_, _, (b, _)) -> b = false)
+            let x =
+                [ ("R", "rInput", rInput); ("G", "gInput", gInput); ("B", "bInput", bInput) ]
+                |> List.map (fun (name, id, s) -> (name, id, System.Byte.TryParse s))
+                |> List.map (fun (name, id, (b, x)) -> name, id, (b, int x))
+
+            let y =
+                [ ("変化量", "stepInput", stepInput); ("回数", "limitInput", limitInput) ]
+                |> List.map (fun (name, id, s) -> (name, id, System.Int32.TryParse s))
+
+            x @ y |> List.filter (fun (_, _, (b, _)) -> b = false)
 
         match parseResult with
         | h :: t ->
