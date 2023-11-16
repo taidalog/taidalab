@@ -215,5 +215,11 @@ module IroIroiro =
                     [ "helpWindow"; "helpBarrier" ]
                     |> List.iter (fun x -> (document.getElementById x).classList.toggle "active" |> ignore)))
 
+        (document.getElementById "rInput" :?> HTMLInputElement).oninput <- fun _ -> start ()
+        (document.getElementById "gInput" :?> HTMLInputElement).oninput <- fun _ -> start ()
+        (document.getElementById "bInput" :?> HTMLInputElement).oninput <- fun _ -> start ()
+        (document.getElementById "stepInput" :?> HTMLInputElement).oninput <- fun _ -> start ()
+        (document.getElementById "limitInput" :?> HTMLInputElement).oninput <- fun _ -> start ()
+
         document.onkeydown <- (fun (e: KeyboardEvent) -> keyboardshortcut e)
 //        (document.getElementById "inputArea").onsubmit <- (fun _ -> start())
