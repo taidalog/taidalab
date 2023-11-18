@@ -105,6 +105,19 @@ module IroIroiro =
         (r, g, b)
         |> Tuple.map3 (fun x -> Convert.ToString(x, 16) |> string |> String.padLeft 2 '0')
         |> fun (r', g', b') -> $"#%s{r'}%s{g'}%s{b'}"
+    
+    let colorDiv (r: int, g: int, b: int) : string =
+        $"""
+        <div class="color-div" style="background-color: rgb(%d{r}, %d{g}, %d{b});">
+            <span>R: %d{r}  G: %d{g}  B: %d{b}</span>
+            <br>
+            <span>HEX: %s{hexcode r g b}</span>
+            <br>
+            <span class="white">R: %d{r}  G: %d{g}  B: %d{b}</span>
+            <br>
+            <span class="white">HEX: %s{hexcode r g b}</span>
+        </div>
+        """
 
     let keyboardshortcut (e: KeyboardEvent) =
 
@@ -187,19 +200,7 @@ module IroIroiro =
 
             let output =
                 ress
-                |> List.map (fun (r, g, b) ->
-                    sprintf
-                        $"""
-                        <div class="color-div" style="background-color: rgb(%d{r}, %d{g}, %d{b});">
-                            <span>R: %d{r}  G: %d{g}  B: %d{b}</span>
-                            <br>
-                            <span>HEX: %s{hexcode r g b}</span>
-                            <br>
-                            <span class="white">R: %d{r}  G: %d{g}  B: %d{b}</span>
-                            <br>
-                            <span class="white">HEX: %s{hexcode r g b}</span>
-                        </div>
-                        """)
+                |> List.map colorDiv
                 |> String.concat "\n"
 
             (document.getElementById "outputArea").innerHTML <- output
