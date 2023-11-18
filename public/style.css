@@ -94,7 +94,7 @@ header {
     display: flex;
     align-items: center;
     display: grid;
-    grid-template-columns: max(20%, 260px) auto max(20%, 260px);
+    grid-template-columns: min(20%, 260px) auto min(20%, 260px);
 }
 
 header div.header-left {
@@ -130,8 +130,8 @@ aside {
     left: 0px;
     z-index: 1;
     width: max(20%, 260px);
-    height: calc(100% - 50px);
-    background-color: aliceblue;
+    height: fit-content;
+    max-height: calc(100% - 50px);
     overflow-y: scroll;
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -139,17 +139,19 @@ aside {
 }
 
 aside.flagged {
-    /*left: calc(max(20%, 260px) * -1 + 50px);*/
+    /*left: calc(min(20%, 260px) * -1 + 50px);*/
     left: calc(max(20%, 260px) * -1);
-    z-index: 3;
+    z-index: 2;
     transition: all 0.5s ease-in-out 0s;
 }
 
 @media (max-width: 799px) {
     aside {
+        width: max(20%, 260px);
         left: calc(max(20%, 260px) * -1);
-        z-index: 3;
+        z-index: 2;
         height: calc(100% - 40px);
+        background-color: #ffffff;
     }
 
     aside.flagged {
@@ -406,23 +408,26 @@ button.submit-button.gray:hover {
 }
 
 main {
-    width: 80%;
+    width: calc(min(80%, calc(100% - 260px)) - 4rem);
     max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px 2rem 0 calc(max(20%, 260px) + 2rem);
+    margin-left: max(20%, 260px);
+    padding: 20px 2rem 0 2rem;
     transition: all 0.5s ease-in-out 0s;
 }
 
 main.flagged {
-    padding: 20px 2rem 0 2rem;
-    transition: all 0.5s ease-in-out 0s;
+    width: calc(90% - 4rem);
+    max-width: 90%;
+    margin: 0 5%;
 }
 
 @media (max-width: 799px) {
 
     main,
     main.flagged {
-        width: 100%;
+        width: 92%;
+        max-width: 92%;
+        margin: 0;
         padding: 20px 1rem 0 1rem;
     }
 }
@@ -691,12 +696,32 @@ div.history-container>span.material-symbols-outlined.history-wrong {
 /*
     IroIroiro
 */
-.color-div {
+div.output-area.iro-iroiro {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    scrollbar-width: none;
+}
+
+div.output-area.iro-iroiro::-webkit-scrollbar {
+    display: none;
+}
+
+div.color-row {
+    display: flex;
+    flex-direction: row;
+}
+
+div.color-div {
     margin: 10px 0;
-    padding: 10px;
-    width: 94%;
-    max-width: 580px;
+    min-width: 12rem;
     height: 130px;
+    display: flex;
+    align-items: center;
+}
+
+div.color-div>div {
+    width: fit-content;
+    margin: auto;
 }
 
 div.color-div .white {
@@ -797,7 +822,7 @@ span.network-simulator.input-wrapper {
 */
 @media (max-width: 1199px) {
     header {
-        grid-template-columns: max(20%, 260px) auto 1rem;
+        grid-template-columns: min(20%, 260px) auto 1rem;
     }
 
     form.iro-iroiro.input-area,
@@ -900,11 +925,6 @@ span.network-simulator.input-wrapper {
         width: 100%;
         margin-top: 15px;
     }
-
-    .color-div {
-        margin: 10px auto;
-        width: calc(100% - 20px);
-    }
 }
 
 @media (max-width: 370px) {
@@ -936,6 +956,7 @@ span.hamburger-button {
 
 span.hamburger-button:hover {
     background-color: rgba(255, 255, 255, 0.25);
+    cursor: pointer;
 }
 
 .barrier {
@@ -951,7 +972,7 @@ span.hamburger-button:hover {
         top: 0;
         left: 0;
         opacity: 0.2;
-        background-color: #ffffff;
+        background-color: #444444;
     }
 }
 
@@ -1017,6 +1038,7 @@ span.hint-table-digit.gray {
 */
 .device {
     position: absolute;
+    z-index: 3;
 }
 
 .device-image {
@@ -1096,7 +1118,7 @@ span.help-close:hover {
     max-width: 80%;
     max-height: 60%;
     position: absolute;
-    z-index: 2;
+    z-index: 5;
     top: 0;
     left: 0;
     bottom: 0;
@@ -1159,7 +1181,7 @@ span.help-close.ctc:hover {
     width: 100%;
     height: 100%;
     position: absolute;
-    z-index: 1;
+    z-index: 4;
     top: 0;
     left: 0;
     opacity: 0;
