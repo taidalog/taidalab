@@ -408,16 +408,15 @@ button.submit-button.gray:hover {
 }
 
 main {
-    width: min(80%, calc(100% - 260px));
+    width: calc(min(80%, calc(100% - 260px)) - 4rem);
     max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px 2rem 0 calc(min(20%, 260px) + 2rem);
+    margin-left: max(20%, 260px);
+    padding: 20px 2rem 0 2rem;
     transition: all 0.5s ease-in-out 0s;
 }
 
 main.flagged {
-    padding: 20px 2rem 0 2rem;
-    transition: all 0.5s ease-in-out 0s;
+    margin-left: 0;
 }
 
 @media (max-width: 799px) {
@@ -425,6 +424,7 @@ main.flagged {
     main,
     main.flagged {
         width: 92%;
+        margin: 0;
         padding: 20px 1rem 0 1rem;
     }
 }
