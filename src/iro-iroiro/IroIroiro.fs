@@ -54,7 +54,7 @@ module IroIroiro =
             </span>
         </form>
         <div id="errorArea" class="error-area"></div>
-        <div id="outputArea" class="output-area"></div>
+        <div id="outputArea" class="output-area iro-iroiro"></div>
         <div id="helpWindow" class="help-window">
             <div class="help-close-outer">
                 <span id="helpClose" class="material-symbols-outlined help-close iro-iroiro" translate="no">
@@ -226,27 +226,18 @@ module IroIroiro =
                 |> List.map colorRow
                 |> String.concat "\n"
 
-            (document.getElementById "outputArea").innerHTML <- output
+            let outputArea = document.getElementById "outputArea"
+            outputArea.innerHTML <- output
 
-            let outputWidth =
-                (document.getElementById "outputArea" :?> HTMLDivElement)
-                    .getBoundingClientRect()
-                    .width
-
-            let colorRows: Element array =
-                (document.getElementsByClassName "color-row")
-                |> fun x -> JS.Constructors.Array?from(x)
-
-            let colorDivs: Element array =
-                document.getElementsByClassName "color-div"
-                |> fun x -> JS.Constructors.Array?from(x)
+            let outputWidth = outputArea.getBoundingClientRect().width
 
             let colorDivWidth =
-                colorDivs |> Array.head |> (fun x -> x.getBoundingClientRect().width)
+                document.getElementsByClassName "color-div"
+                |> fun x -> JS.Constructors.Array?from(x)
+                |> Array.head
+                |> (fun (x: Element) -> x.getBoundingClientRect().width)
 
-            colorRows
-            |> Array.iter (fun x ->
-                x.scrollLeft <- (colorDivWidth * float darkerLength) - ((outputWidth - colorDivWidth) / 2.))
+            outputArea.scrollLeft <- (colorDivWidth * float darkerLength) - ((outputWidth - colorDivWidth) / 2.)
 
     let init () =
         // Initialization.

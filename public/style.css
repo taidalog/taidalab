@@ -696,12 +696,16 @@ div.color-row {
     max-width: 100%;
     display: flex;
     flex-direction: row;
+}
+
+div.output-area.iro-iroiro {
+    max-width: 100%;
     overflow-x: scroll;
     overflow-y: hidden;
     scrollbar-width: none;
 }
 
-div.color-row::-webkit-scrollbar {
+div.output-area.iro-iroiro::-webkit-scrollbar {
     display: none;
 }
 
