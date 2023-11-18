@@ -922,11 +922,6 @@ span.network-simulator.input-wrapper {
         width: 100%;
         margin-top: 15px;
     }
-
-    .color-div {
-        margin: 10px auto;
-        width: calc(100% - 20px);
-    }
 }
 
 @media (max-width: 370px) {
