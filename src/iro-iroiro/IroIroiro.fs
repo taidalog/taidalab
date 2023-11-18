@@ -112,7 +112,11 @@ module IroIroiro =
 
     let darkers (factor: float) : float list =
         let darkerLength = int (1. / factor)
-        [ 1..darkerLength ] |> List.map (float >> (*) factor >> (-) 1.) |> List.rev
+
+        [ 1..darkerLength ]
+        |> List.map (float >> (*) factor >> (-) 1.)
+        |> List.rev
+        |> List.tail
 
     let colorDiv (r: int, g: int, b: int) : string =
         $"""
