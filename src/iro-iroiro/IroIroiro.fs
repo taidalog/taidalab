@@ -211,7 +211,10 @@ module IroIroiro =
 
             let max' = max (max r g) b
             let factor = 0.1
-            let factors = darkers factor @ (1. :: lighters factor max')
+            let darkerBlocks = darkers factor
+            let darkerLength = List.length darkerBlocks
+            let lighterBlocks = lighters factor max'
+            let factors = darkerBlocks @ (1. :: lighterBlocks)
 
             let lightnesses (factors: float list) (rgb: int * int * int) : (int * int * int) list =
                 factors |> List.map (fun x -> Tuple.map3 (float >> (*) x >> int) rgb)
@@ -224,6 +227,26 @@ module IroIroiro =
                 |> String.concat "\n"
 
             (document.getElementById "outputArea").innerHTML <- output
+
+            let outputWidth =
+                (document.getElementById "outputArea" :?> HTMLDivElement)
+                    .getBoundingClientRect()
+                    .width
+
+            let colorRows: Element array =
+                (document.getElementsByClassName "color-row")
+                |> fun x -> JS.Constructors.Array?from(x)
+
+            let colorDivs: Element array =
+                document.getElementsByClassName "color-div"
+                |> fun x -> JS.Constructors.Array?from(x)
+
+            let colorDivWidth =
+                colorDivs |> Array.head |> (fun x -> x.getBoundingClientRect().width)
+
+            colorRows
+            |> Array.iter (fun x ->
+                x.scrollLeft <- (colorDivWidth * float darkerLength) - ((outputWidth - colorDivWidth) / 2.))
 
     let init () =
         // Initialization.
