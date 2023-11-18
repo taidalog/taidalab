@@ -1,4 +1,4 @@
-// taidalab Version 4.5.0
+// taidalab Version 4.6.1
 // https://github.com/taidalog/taidalab
 // Copyright (c) 2022-2023 taidalog
 // This software is licensed under the MIT License.
@@ -16,7 +16,7 @@ module IroIroiro =
     let help =
         """
         <p>
-            元の色のRGB値などを入力すると、その色の色相（色の種類）を変更しながら色をローテーションします。<br>
+            元の色のRGB値などを入力すると、その色の色相（色の種類）と明度（色が黒に近いか白に近いかの度合）を変更しながら色をローテーションします。<br>
             綺麗です。
         </p>
         <p>
@@ -31,7 +31,7 @@ module IroIroiro =
                 </li>
                 <li>
                     回数: 色をローテーションさせる回数。(1 &le; 回数)<br>
-                    あまり大きくすると時間がかかってしまいます。100位にしておいてください。
+                    あまり大きくすると時間がかかってしまいます。100位までにしておいてください。
                 </li>
             </ul>
         </p>
