@@ -47,7 +47,7 @@ module IroIroiro =
             </span>
             <span class="display-order-2 iro-iroiro wider">
                 <span class="iro-iroiro input-wrapper"><label for="stepInput">変化量:<input type="number" id="stepInput" class="iro-iroiro number-input mono regular"></label></span>
-                <span class="iro-iroiro input-wrapper"><label for="limitInput">回数:<input type="number" id="limitInput" class="iro-iroiro number-input rem6 mono regular" value="100"></label></span>
+                <span class="iro-iroiro input-wrapper"><label for="limitInput">回数:<input type="number" id="limitInput" class="iro-iroiro number-input rem6 mono regular" value="10"></label></span>
             </span>
             <span class="display-order-3">
                 <button type="button" id="submitButton" class="submit-button d2b-button">確認</button>
