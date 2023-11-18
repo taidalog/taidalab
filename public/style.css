@@ -129,7 +129,7 @@ aside {
     position: absolute;
     left: 0px;
     z-index: 1;
-    width: min(20%, 260px);
+    width: max(20%, 260px);
     height: fit-content;
     max-height: calc(100% - 50px);
     overflow-y: scroll;
@@ -140,7 +140,7 @@ aside {
 
 aside.flagged {
     /*left: calc(min(20%, 260px) * -1 + 50px);*/
-    left: calc(min(20%, 260px) * -1);
+    left: calc(max(20%, 260px) * -1);
     z-index: 2;
     transition: all 0.5s ease-in-out 0s;
 }
