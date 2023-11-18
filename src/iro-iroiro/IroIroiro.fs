@@ -105,7 +105,7 @@ module IroIroiro =
         (r, g, b)
         |> Tuple.map3 (fun x -> Convert.ToString(x, 16) |> string |> String.padLeft 2 '0')
         |> fun (r', g', b') -> $"#%s{r'}%s{g'}%s{b'}"
-    
+
     let colorDiv (r: int, g: int, b: int) : string =
         $"""
         <div class="color-div" style="background-color: rgb(%d{r}, %d{g}, %d{b});">
@@ -118,6 +118,9 @@ module IroIroiro =
             <span class="white">HEX: %s{hexcode r g b}</span>
         </div>
         """
+
+    let colorRow (divs: string list) : string =
+        divs |> String.concat "\n" |> sprintf """<div class="color-row">%s</div>"""
 
     let keyboardshortcut (e: KeyboardEvent) =
 
@@ -201,6 +204,8 @@ module IroIroiro =
             let output =
                 ress
                 |> List.map colorDiv
+                |> List.map (List.replicate 11)
+                |> List.map colorRow
                 |> String.concat "\n"
 
             (document.getElementById "outputArea").innerHTML <- output

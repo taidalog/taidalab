@@ -94,7 +94,7 @@ header {
     display: flex;
     align-items: center;
     display: grid;
-    grid-template-columns: max(20%, 260px) auto max(20%, 260px);
+    grid-template-columns: min(20%, 260px) auto min(20%, 260px);
 }
 
 header div.header-left {
@@ -129,7 +129,7 @@ aside {
     position: absolute;
     left: 0px;
     z-index: 1;
-    width: max(20%, 260px);
+    width: min(20%, 260px);
     height: fit-content;
     max-height: calc(100% - 50px);
     overflow-y: scroll;
@@ -139,15 +139,15 @@ aside {
 }
 
 aside.flagged {
-    /*left: calc(max(20%, 260px) * -1 + 50px);*/
-    left: calc(max(20%, 260px) * -1);
+    /*left: calc(min(20%, 260px) * -1 + 50px);*/
+    left: calc(min(20%, 260px) * -1);
     z-index: 2;
     transition: all 0.5s ease-in-out 0s;
 }
 
 @media (max-width: 799px) {
     aside {
-        left: calc(max(20%, 260px) * -1);
+        left: calc(min(20%, 260px) * -1);
         z-index: 2;
         height: calc(100% - 40px);
         background-color: #ffffff;
@@ -407,10 +407,10 @@ button.submit-button.gray:hover {
 }
 
 main {
-    width: 80%;
+    width: min(80%, calc(100% - 260px));
     max-width: 1200px;
     margin: 0 auto;
-    padding: 20px 2rem 0 calc(max(20%, 260px) + 2rem);
+    padding: 20px 2rem 0 calc(min(20%, 260px) + 2rem);
     transition: all 0.5s ease-in-out 0s;
 }
 
@@ -692,11 +692,23 @@ div.history-container>span.material-symbols-outlined.history-wrong {
 /*
     IroIroiro
 */
+div.color-row {
+    max-width: 100%;
+    display: flex;
+    flex-direction: row;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    scrollbar-width: none;
+}
+
+div.color-row::-webkit-scrollbar {
+    display: none;
+}
+
 .color-div {
     margin: 10px 0;
     padding: 10px;
-    width: 94%;
-    max-width: 580px;
+    min-width: 12rem;
     height: 130px;
 }
 
@@ -798,7 +810,7 @@ span.network-simulator.input-wrapper {
 */
 @media (max-width: 1199px) {
     header {
-        grid-template-columns: max(20%, 260px) auto 1rem;
+        grid-template-columns: min(20%, 260px) auto 1rem;
     }
 
     form.iro-iroiro.input-area,
