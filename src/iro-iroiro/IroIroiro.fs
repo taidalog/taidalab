@@ -106,6 +106,14 @@ module IroIroiro =
         |> Tuple.map3 (fun x -> Convert.ToString(x, 16) |> string |> String.padLeft 2 '0')
         |> fun (r', g', b') -> $"#%s{r'}%s{g'}%s{b'}"
 
+    let lighters (factor: float) (max': int) : float list =
+        let lighterLength = int ((255. / float max' - 1.) / factor)
+        [ 1..lighterLength ] |> List.map (float >> (*) factor >> (+) 1.)
+
+    let darkers (factor: float) : float list =
+        let darkerLength = int (1. / factor)
+        [ 1..darkerLength ] |> List.map (float >> (*) factor >> (-) 1.) |> List.rev
+
     let colorDiv (r: int, g: int, b: int) : string =
         $"""
         <div class="color-div" style="background-color: rgb(%d{r}, %d{g}, %d{b});">
@@ -201,10 +209,17 @@ module IroIroiro =
 
             let ress = repeatGetNextRgb r g b step limit
 
+            let max' = max (max r g) b
+            let factor = 0.1
+            let factors = darkers factor @ (1. :: lighters factor max')
+
+            let lightnesses (factors: float list) (rgb: int * int * int) : (int * int * int) list =
+                factors |> List.map (fun x -> Tuple.map3 (float >> (*) x >> int) rgb)
+
             let output =
                 ress
-                |> List.map colorDiv
-                |> List.map (List.replicate 11)
+                |> List.map (lightnesses factors)
+                |> List.map (List.map colorDiv)
                 |> List.map colorRow
                 |> String.concat "\n"
 
