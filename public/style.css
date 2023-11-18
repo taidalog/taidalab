@@ -693,11 +693,6 @@ div.history-container>span.material-symbols-outlined.history-wrong {
 /*
     IroIroiro
 */
-div.color-row {
-    display: flex;
-    flex-direction: row;
-}
-
 div.output-area.iro-iroiro {
     overflow-x: scroll;
     overflow-y: hidden;
@@ -706,6 +701,11 @@ div.output-area.iro-iroiro {
 
 div.output-area.iro-iroiro::-webkit-scrollbar {
     display: none;
+}
+
+div.color-row {
+    display: flex;
+    flex-direction: row;
 }
 
 div.color-div {
