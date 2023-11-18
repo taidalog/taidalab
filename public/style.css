@@ -693,13 +693,11 @@ div.history-container>span.material-symbols-outlined.history-wrong {
     IroIroiro
 */
 div.color-row {
-    max-width: 100%;
     display: flex;
     flex-direction: row;
 }
 
 div.output-area.iro-iroiro {
-    max-width: 100%;
     overflow-x: scroll;
     overflow-y: hidden;
     scrollbar-width: none;
@@ -709,11 +707,17 @@ div.output-area.iro-iroiro::-webkit-scrollbar {
     display: none;
 }
 
-.color-div {
+div.color-div {
     margin: 10px 0;
-    padding: 10px;
     min-width: 12rem;
     height: 130px;
+    display: flex;
+    align-items: center;
+}
+
+div.color-div>div {
+    width: fit-content;
+    margin: auto;
 }
 
 div.color-div .white {

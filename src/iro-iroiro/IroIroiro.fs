@@ -121,13 +121,15 @@ module IroIroiro =
     let colorDiv (r: int, g: int, b: int) : string =
         $"""
         <div class="color-div" style="background-color: rgb(%d{r}, %d{g}, %d{b});">
-            <span>R: %d{r}  G: %d{g}  B: %d{b}</span>
-            <br>
-            <span>HEX: %s{hexcode r g b}</span>
-            <br>
-            <span class="white">R: %d{r}  G: %d{g}  B: %d{b}</span>
-            <br>
-            <span class="white">HEX: %s{hexcode r g b}</span>
+            <div>
+                <span>R: %d{r}  G: %d{g}  B: %d{b}</span>
+                <br>
+                <span>HEX: %s{hexcode r g b}</span>
+                <br>
+                <span class="white">R: %d{r}  G: %d{g}  B: %d{b}</span>
+                <br>
+                <span class="white">HEX: %s{hexcode r g b}</span>
+            </div>
         </div>
         """
 
