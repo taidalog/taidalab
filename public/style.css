@@ -147,7 +147,8 @@ aside.flagged {
 
 @media (max-width: 799px) {
     aside {
-        left: calc(min(20%, 260px) * -1);
+        width: max(20%, 260px);
+        left: calc(max(20%, 260px) * -1);
         z-index: 2;
         height: calc(100% - 40px);
         background-color: #ffffff;
