@@ -136,46 +136,6 @@ module IroIroiro =
     let colorRow (divs: string list) : string =
         divs |> String.concat "\n" |> sprintf """<div class="color-row">%s</div>"""
 
-    let keyboardshortcut (e: KeyboardEvent) =
-
-        match document.activeElement.id with
-        | "rInput"
-        | "gInput"
-        | "bInput"
-        | "stepInput"
-        | "limitInput" as x ->
-            match e.key with
-            | "Escape" -> (document.getElementById x).blur ()
-            | _ -> ()
-        | _ ->
-            let isHelpWindowActive =
-                (document.getElementById "helpWindow").classList
-                |> (fun x -> JS.Constructors.Array?from(x))
-                |> Array.contains "active"
-
-            match e.key with
-            | "\\" ->
-                let inputs =
-                    [ "rInput"; "gInput"; "bInput"; "stepInput"; "limitInput" ]
-                    |> List.map (fun x -> document.getElementById x :?> HTMLInputElement)
-
-                if not isHelpWindowActive then
-                    inputs
-                    |> List.tryFind (fun x -> x.value = "")
-                    |> Option.defaultValue (List.head inputs)
-                    |> fun x -> x.focus ()
-
-                    e.preventDefault ()
-            | "?" ->
-                [ "helpWindow"; "helpBarrier" ]
-                |> List.iter (fun x -> (document.getElementById x).classList.toggle "active" |> ignore)
-            | "Escape" ->
-
-                if isHelpWindowActive then
-                    [ "helpWindow"; "helpBarrier" ]
-                    |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore)
-            | _ -> ()
-
     let start () =
         let errorArea = document.getElementById "errorArea"
         errorArea.innerHTML <- ""
@@ -245,6 +205,78 @@ module IroIroiro =
 
             outputArea.scrollLeft <- (colorDivWidth * float darkerLength) - ((outputWidth - colorDivWidth) / 2.)
 
+    let start' r g b step limit =
+        if [ r; g; b; step; limit ] |> List.forall ((<>) "") then
+            start ()
+
+    let keyboardshortcut (e: KeyboardEvent) =
+
+        match document.activeElement.id with
+        | "rInput"
+        | "gInput"
+        | "bInput"
+        | "stepInput"
+        | "limitInput" as x ->
+            match e.key with
+            | "Escape" -> (document.getElementById x).blur ()
+            | _ -> ()
+        | _ ->
+            let isHelpWindowActive =
+                (document.getElementById "helpWindow").classList
+                |> (fun x -> JS.Constructors.Array?from(x))
+                |> Array.contains "active"
+
+            match e.key with
+            | "\\" ->
+                let inputs =
+                    [ "rInput"; "gInput"; "bInput"; "stepInput"; "limitInput" ]
+                    |> List.map (fun x -> document.getElementById x :?> HTMLInputElement)
+
+                if not isHelpWindowActive then
+                    inputs
+                    |> List.tryFind (fun x -> x.value = "")
+                    |> Option.defaultValue (List.head inputs)
+                    |> fun x -> x.focus ()
+
+                    e.preventDefault ()
+            | "?" ->
+                [ "helpWindow"; "helpBarrier" ]
+                |> List.iter (fun x -> (document.getElementById x).classList.toggle "active" |> ignore)
+            | "Escape" ->
+
+                if isHelpWindowActive then
+                    [ "helpWindow"; "helpBarrier" ]
+                    |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore)
+            | "+" ->
+                if not isHelpWindowActive then
+                    let rInput = document.getElementById "rInput" :?> HTMLInputElement
+                    let gInput = document.getElementById "gInput" :?> HTMLInputElement
+                    let bInput = document.getElementById "bInput" :?> HTMLInputElement
+                    let stepInput = document.getElementById "stepInput" :?> HTMLInputElement
+                    let limitInput = document.getElementById "limitInput" :?> HTMLInputElement
+
+                    match Int32.TryParse limitInput.value with
+                    | true, n ->
+                        if n < Int32.MaxValue then
+                            limitInput.value <- string (n + 1)
+                            start' rInput.value gInput.value bInput.value stepInput.value limitInput.value
+                    | false, _ -> ()
+            | "-" ->
+                if not isHelpWindowActive then
+                    let rInput = document.getElementById "rInput" :?> HTMLInputElement
+                    let gInput = document.getElementById "gInput" :?> HTMLInputElement
+                    let bInput = document.getElementById "bInput" :?> HTMLInputElement
+                    let stepInput = document.getElementById "stepInput" :?> HTMLInputElement
+                    let limitInput = document.getElementById "limitInput" :?> HTMLInputElement
+
+                    match Int32.TryParse limitInput.value with
+                    | true, n ->
+                        if n > 0 then
+                            limitInput.value <- string (n - 1)
+                            start' rInput.value gInput.value bInput.value stepInput.value limitInput.value
+                    | false, _ -> ()
+            | _ -> ()
+
     let init () =
         // Initialization.
         (document.getElementById "submitButton").onclick <- (fun _ -> start ())
@@ -255,10 +287,6 @@ module IroIroiro =
                 (fun _ ->
                     [ "helpWindow"; "helpBarrier" ]
                     |> List.iter (fun x -> (document.getElementById x).classList.toggle "active" |> ignore)))
-
-        let start' r g b step limit =
-            if [ r; g; b; step; limit ] |> List.forall ((<>) "") then
-                start ()
 
         let rInput = (document.getElementById "rInput" :?> HTMLInputElement)
         let gInput = (document.getElementById "gInput" :?> HTMLInputElement)
