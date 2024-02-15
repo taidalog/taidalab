@@ -1,6 +1,6 @@
-// taidalab Version 4.6.1
+// taidalab Version 4.6.2
 // https://github.com/taidalog/taidalab
-// Copyright (c) 2022-2023 taidalog
+// Copyright (c) 2022-2024 taidalog
 // This software is licensed under the MIT License.
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
 namespace Taidalab
@@ -98,13 +98,13 @@ module Content =
         let question =
             """<span id="questionSpan" class="question-number"></span><sub id="srcRadix"></sub> を<span id="dstRadix"></span>進法で表すと？"""
 
-        let version = "Version 4.6.1"
+        let version = "Version 4.6.2"
 
         let footer =
             sprintf
                 """
                 <small class="footer-container">
-                    <div class="item" translate="no">&copy; 2022-2023 taidalog</div>
+                    <div class="item" translate="no">&copy; 2022-2024 <a href="https://taidalog.github.io/">taidalog</a></div>
                     <div class="item"><a id="versionNumber" href="https://github.com/taidalog/taidalab/releases">%s</a></div>
                     <div class="item">Powered by <a id="footerFSharp" href="https://fsharp.org/" translate="no">F#</a> and <a id="footerFable" href="https://fable.io" translate="no">Fable</a>. Thank you!</div>
                 </small>"""
