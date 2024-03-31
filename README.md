@@ -1,6 +1,6 @@
 # taidalab
 
-Version 4.6.2
+Version 4.6.3
 
 [Japanese README](README.ja.md)
 
@@ -16,7 +16,7 @@ A Web application for learning Informatics &#8544;, one of the subjects taught i
 
 ## Usage
 
-1. Visit [taidalab](http://taidalog.html.xdomain.jp/).
+1. Visit [taidalab](https://taidalog.cloudfree.jp/).
 1. Click a link in the menu on the left side of the screen. To show the menu, click the hamburger button (a button with three horizontal lines) on the upper left corner.
 1. Operate on the page you opened. For more details, click the "Help" button at the top right of each page, or visit the "About" page.
 

@@ -1,6 +1,6 @@
 # taidalab
 
-Version 4.6.2
+Version 4.6.3
 
 [English README](README.md)
 
@@ -19,7 +19,7 @@ Version 4.6.2
 
 ## 使い方
 
-1. [taidalab](http://taidalog.html.xdomain.jp/) にアクセスしてください。
+1. [taidalab](https://taidalog.cloudfree.jp/) にアクセスしてください。
 1. 画面左側のメニューから好きなものを選んでクリックしてください。メニューが非表示になっているときは画面左上のハンバーガーボタン（三本線のボタン）を押してメニューを開いてください。
 1. 出てきた画面で操作を行ってください。使い方は各ページ右上のヘルプと About ページに書いてあります。
 
