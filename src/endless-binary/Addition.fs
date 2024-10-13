@@ -141,7 +141,9 @@ module EndlessBinary =
 
                     // Setting the next answer to the check button.
                     (document.getElementById "submitButton").onclick <-
-                        (fun _ ->
+                        (fun e ->
+                            e.preventDefault ()
+
                             checkAnswer
                                 questionGenerator
                                 hintGenerator
@@ -155,12 +157,12 @@ module EndlessBinary =
                                 (number1 + number2)
                                 number1
                                 number2
-                                lastAnswers'
-
-                            false)
+                                lastAnswers')
 
                     (document.getElementById "inputArea").onsubmit <-
-                        (fun _ ->
+                        (fun e ->
+                            e.preventDefault ()
+
                             checkAnswer
                                 questionGenerator
                                 hintGenerator
@@ -174,9 +176,7 @@ module EndlessBinary =
                                 (number1 + number2)
                                 number1
                                 number2
-                                lastAnswers'
-
-                            false)
+                                lastAnswers')
 
 
         let init'
@@ -204,7 +204,9 @@ module EndlessBinary =
             setColumnAddition number1 number2
 
             (document.getElementById "submitButton").onclick <-
-                (fun _ ->
+                (fun e ->
+                    e.preventDefault ()
+
                     checker
                         questionGenerator
                         hintGenerator
@@ -218,12 +220,12 @@ module EndlessBinary =
                         (number1 + number2)
                         number1
                         number2
-                        [ number1; number2 ]
-
-                    false)
+                        [ number1; number2 ])
 
             (document.getElementById "inputArea").onsubmit <-
-                (fun _ ->
+                (fun e ->
+                    e.preventDefault ()
+
                     checker
                         questionGenerator
                         hintGenerator
@@ -237,9 +239,7 @@ module EndlessBinary =
                         (number1 + number2)
                         number1
                         number2
-                        [ number1; number2 ]
-
-                    false)
+                        [ number1; number2 ])
 
             (document.getElementById "helpButton").onclick <-
                 (fun _ ->

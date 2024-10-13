@@ -113,7 +113,7 @@ module NetworkSimulator =
 
     let setMouseMoveEvent (container: HTMLElement) : unit =
         let svg = document.getElementById (container.id + "Svg")
-        svg.ondragstart <- fun _ -> false
+        svg.ondragstart <- fun e -> e.preventDefault ()
         let onMouseMove' = onMouseMove container svg
 
         svg.onmousedown <-
@@ -324,7 +324,7 @@ module NetworkSimulator =
         | None -> ()
         | Some cable' ->
             let svg = document.getElementById (container.id + "Svg")
-            svg.ondragstart <- fun _ -> false
+            svg.ondragstart <- fun e -> e.preventDefault ()
 
             svg.onmousedown <-
                 fun event ->
@@ -360,7 +360,7 @@ module NetworkSimulator =
         container.oncontextmenu <-
             fun event ->
                 event.preventDefault ()
-                document.getElementById("playArea").removeChild (container)
+                document.getElementById("playArea").removeChild (container) |> ignore
 
     let newHistory source sourceIPv4 destinationIPv4 connected =
         let historyClassName, historyIcon, historyMessage =
@@ -684,7 +684,7 @@ module NetworkSimulator =
                                 | "destinationInput" -> destinationInput.focus ()
                                 | _ -> ()
 
-                false
+                ()
 
         let addClientButton =
             document.getElementById ("addClientButton") :?> HTMLButtonElement

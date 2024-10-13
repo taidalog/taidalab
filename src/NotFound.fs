@@ -68,11 +68,11 @@ module NotFound =
         (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
 
         (document.getElementById "submitButton").onclick <-
-            (fun _ ->
-                checkAnswer (string initNumber)
-                false)
+            (fun e ->
+                e.preventDefault ()
+                checkAnswer (string initNumber))
 
         (document.getElementById "inputArea").onsubmit <-
-            (fun _ ->
-                checkAnswer (string initNumber)
-                false)
+            (fun e ->
+                e.preventDefault ()
+                checkAnswer (string initNumber))

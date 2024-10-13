@@ -187,28 +187,28 @@ module EndlessBinary =
 
                     // Setting the next answer to the check button.
                     (document.getElementById "submitButton").onclick <-
-                        (fun _ ->
+                        (fun e ->
+                            e.preventDefault ()
+
                             checkAnswer
                                 questionGenerator
                                 hintGenerator
                                 additional
                                 (string nextNumber)
                                 splitBin
-                                lastAnswers
-
-                            false)
+                                lastAnswers)
 
                     (document.getElementById "inputArea").onsubmit <-
-                        (fun _ ->
+                        (fun e ->
+                            e.preventDefault ()
+
                             checkAnswer
                                 questionGenerator
                                 hintGenerator
                                 additional
                                 (string nextNumber)
                                 splitBin
-                                lastAnswers
-
-                            false)
+                                lastAnswers)
 
 
         let init'
@@ -232,14 +232,14 @@ module EndlessBinary =
             (document.getElementById "hintArea").innerHTML <- hintGenerator initBin
 
             (document.getElementById "submitButton").onclick <-
-                (fun _ ->
-                    checker questionGenerator hintGenerator additional (string initNumber) splitBin [ initNumber ]
-                    false)
+                (fun e ->
+                    e.preventDefault ()
+                    checker questionGenerator hintGenerator additional (string initNumber) splitBin [ initNumber ])
 
             (document.getElementById "inputArea").onsubmit <-
-                (fun _ ->
-                    checker questionGenerator hintGenerator additional (string initNumber) splitBin [ initNumber ]
-                    false)
+                (fun e ->
+                    e.preventDefault ()
+                    checker questionGenerator hintGenerator additional (string initNumber) splitBin [ initNumber ])
 
             (document.getElementById "helpButton").onclick <-
                 (fun _ ->

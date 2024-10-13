@@ -296,7 +296,9 @@ module EndlessBinary =
 
                     // Setting the next answer to the check button.
                     (document.getElementById "submitButton").onclick <-
-                        (fun _ ->
+                        (fun e ->
+                            e.preventDefault ()
+
                             checkAnswer
                                 questionGenerator
                                 hintGenerator
@@ -309,12 +311,12 @@ module EndlessBinary =
                                 destinationRadix
                                 answersToKeep
                                 (string nextNumber)
-                                lastAnswers'
-
-                            false)
+                                lastAnswers')
 
                     (document.getElementById "inputArea").onsubmit <-
-                        (fun _ ->
+                        (fun e ->
+                            e.preventDefault ()
+
                             checkAnswer
                                 questionGenerator
                                 hintGenerator
@@ -327,9 +329,7 @@ module EndlessBinary =
                                 destinationRadix
                                 answersToKeep
                                 (string nextNumber)
-                                lastAnswers'
-
-                            false)
+                                lastAnswers')
 
 
         let init'
@@ -355,7 +355,9 @@ module EndlessBinary =
             (document.getElementById "hintArea").innerHTML <- hintGenerator initNumber
 
             (document.getElementById "submitButton").onclick <-
-                (fun _ ->
+                (fun e ->
+                    e.preventDefault ()
+
                     checker
                         questionGenerator
                         hintGenerator
@@ -368,12 +370,12 @@ module EndlessBinary =
                         destinationRadix
                         answersToKeep
                         (string initNumber)
-                        [ initNumber ]
-
-                    false)
+                        [ initNumber ])
 
             (document.getElementById "inputArea").onsubmit <-
-                (fun _ ->
+                (fun e ->
+                    e.preventDefault ()
+
                     checker
                         questionGenerator
                         hintGenerator
@@ -386,9 +388,7 @@ module EndlessBinary =
                         destinationRadix
                         answersToKeep
                         (string initNumber)
-                        [ initNumber ]
-
-                    false)
+                        [ initNumber ])
 
             additional initNumber
 

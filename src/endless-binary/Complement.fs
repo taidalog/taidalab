@@ -122,14 +122,14 @@ module EndlessBinary =
 
                     // Setting the next answer to the check button.
                     (document.getElementById "submitButton").onclick <-
-                        (fun _ ->
-                            checkAnswer nextBin nextAnswer lastAnswers
-                            false)
+                        (fun e ->
+                            e.preventDefault ()
+                            checkAnswer nextBin nextAnswer lastAnswers)
 
                     (document.getElementById "inputArea").onsubmit <-
-                        (fun _ ->
-                            checkAnswer nextBin nextAnswer lastAnswers
-                            false)
+                        (fun e ->
+                            e.preventDefault ()
+                            checkAnswer nextBin nextAnswer lastAnswers)
 
 
         let init () =
@@ -147,14 +147,14 @@ module EndlessBinary =
             (document.getElementById "hintArea").innerHTML <- hint initBin reversedBin
 
             (document.getElementById "submitButton").onclick <-
-                (fun _ ->
-                    checkAnswer initBin initAnswer [ initNumber ]
-                    false)
+                (fun e ->
+                    e.preventDefault ()
+                    checkAnswer initBin initAnswer [ initNumber ])
 
             (document.getElementById "inputArea").onsubmit <-
-                (fun _ ->
-                    checkAnswer initBin initAnswer [ initNumber ]
-                    false)
+                (fun e ->
+                    e.preventDefault ()
+                    checkAnswer initBin initAnswer [ initNumber ])
 
             (document.getElementById "helpButton").onclick <-
                 (fun _ ->

@@ -112,14 +112,14 @@ module EndlessBinary =
 
                     // Setting the next answer to the check button.
                     (document.getElementById "submitButton").onclick <-
-                        (fun _ ->
-                            checkAnswer (number1 - number2) number1 number2 lastAnswers
-                            false)
+                        (fun e ->
+                            e.preventDefault ()
+                            checkAnswer (number1 - number2) number1 number2 lastAnswers)
 
                     (document.getElementById "inputArea").onsubmit <-
-                        (fun _ ->
-                            checkAnswer (number1 - number2) number1 number2 lastAnswers
-                            false)
+                        (fun e ->
+                            e.preventDefault ()
+                            checkAnswer (number1 - number2) number1 number2 lastAnswers)
 
 
         let init () =
@@ -139,14 +139,14 @@ module EndlessBinary =
             setColumnAddition number1 number2
 
             (document.getElementById "submitButton").onclick <-
-                (fun _ ->
-                    checkAnswer (number1 - number2) number1 number2 [ number1; number2 ]
-                    false)
+                (fun e ->
+                    e.preventDefault ()
+                    checkAnswer (number1 - number2) number1 number2 [ number1; number2 ])
 
             (document.getElementById "inputArea").onsubmit <-
-                (fun _ ->
-                    checkAnswer (number1 - number2) number1 number2 [ number1; number2 ]
-                    false)
+                (fun e ->
+                    e.preventDefault ()
+                    checkAnswer (number1 - number2) number1 number2 [ number1; number2 ])
 
             (document.getElementById "helpButton").onclick <-
                 (fun _ ->
