@@ -40,7 +40,7 @@ module Main =
                 (document.querySelector "aside").getElementsByTagName "a"
                 |> (fun x -> JS.Constructors.Array?from(x))
                 |> Array.filter (fun (x: HTMLAnchorElement) -> x.id <> "asideSoon")
-                |> Array.filter (fun (x: HTMLAnchorElement) -> x.pathname <> "/")
+                |> Array.filter (fun (x: HTMLAnchorElement) -> x.pathname <> "/taidalab/")
 
             links
             |> Array.iter (fun (x: HTMLAnchorElement) -> x.classList.remove "current-location")

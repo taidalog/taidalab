@@ -599,7 +599,9 @@ module NetworkSimulator =
         let submitButton = document.getElementById ("submitButton") :?> HTMLButtonElement
 
         submitButton.onclick <-
-            fun _ ->
+            fun e ->
+                e.preventDefault ()
+
                 let devices' =
                     document.getElementById("playArea").getElementsByClassName ("device-container")
                     |> (fun x -> JS.Constructors.Array?from(x))
@@ -683,8 +685,6 @@ module NetworkSimulator =
                                 | "sourceInput" -> sourceInput.focus ()
                                 | "destinationInput" -> destinationInput.focus ()
                                 | _ -> ()
-
-                ()
 
         let addClientButton =
             document.getElementById ("addClientButton") :?> HTMLButtonElement
