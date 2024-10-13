@@ -1,0 +1,18 @@
+{
+  "name": "taidalab",
+  "version": "1.0.0",
+  "description": "Version 4.6.3",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "vite": "^5.4.8"
+  }
+}
