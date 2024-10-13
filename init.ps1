@@ -6,7 +6,7 @@ dotnet tool install fable
 dotnet tool install fantomas
 dotnet add .\src\App.fsproj package Fable.Core
 dotnet add .\src\App.fsproj package Fable.Browser.Dom
-dotnet new xunit --language "F#" --framework "net8.0" --output tests
+dotnet new xunit --language "F#" --name "Tests" --framework "net8.0" --output tests
 dotnet add .\tests\tests.fsproj reference .\src\App.fsproj
 # Save workspace.
 # Setup formatting.
