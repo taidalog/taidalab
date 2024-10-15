@@ -44,3 +44,43 @@ module EndlessBinary =
                 10
                 EndlessBinary.keyboardshortcut
                 Dec2Bin1.checkAnswer
+
+        let init'' () =
+            document.title <- "10進数→2進数 (2) - taidalab"
+
+            let header = document.querySelector "header"
+            header.innerHTML <- Content.Common.header
+            header.className <- "dec2bin"
+
+            (document.getElementById "hamburgerButton").onclick <-
+                (fun _ ->
+                    (document.querySelector "aside").classList.toggle "flagged" |> ignore
+                    (document.getElementById "barrier").classList.toggle "flagged" |> ignore
+                    (document.querySelector "main").classList.toggle "flagged" |> ignore)
+
+            (document.getElementById "barrier").onclick <-
+                (fun _ ->
+                    (document.querySelector "aside").classList.remove "flagged" |> ignore
+                    (document.getElementById "barrier").classList.remove "flagged" |> ignore
+                    (document.querySelector "main").classList.remove "flagged" |> ignore)
+
+            (document.querySelector "#headerTitle").innerHTML <-
+                """<h1>10進数→2進数 (2) - <span translate="no">taidalab</span></h1>"""
+
+            (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help "help-color dec2bin"
+            (document.querySelector "#submitButton").className <- "submit-button display-order-3 dec2bin"
+            (document.querySelector "#questionArea").innerHTML <- Content.Common.question
+
+            Dec2Bin1.init'
+                question
+                hint
+                newErrorMessageBin
+                Bin.validate
+                Bin.toDec
+                (padWithZero 8 >> colorLeadingZero)
+                additional
+                10
+                2
+                10
+                EndlessBinary.keyboardshortcut
+                Dec2Bin1.checkAnswer
