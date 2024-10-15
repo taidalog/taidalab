@@ -53,9 +53,11 @@ module NotFound =
                 ()
             else
                 // Redirecting to the home.
-                ("/taidalab/", Taidalab.Home.main, (fun _ -> ()))
-                |||> InitObject.create
-                |> Page.replace
+                // ("/taidalab/", Taidalab.Home.main, (fun _ -> ()))
+                // |||> InitObject.create
+                // |> Page.replace
+                window.history.replaceState (null, "", "http://localhost:8080/taidalab/")
+                Home.init ()
 
 
     let init () =
