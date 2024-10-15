@@ -43,6 +43,7 @@
     <Compile Include="Terms.fs" />
     <Compile Include="InformationPolicy.fs" />
     <Compile Include="NotFound.fs" />
+    <Compile Include="Url.fs" />
     <Compile Include="Switcher.fs" />
     <Compile Include="App.fs" />
   </ItemGroup>
