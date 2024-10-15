@@ -5,6 +5,8 @@
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
 namespace Taidalab
 
+open Browser.Dom
+
 module Terms =
     let main =
         """
@@ -13,3 +15,36 @@ module Terms =
         <p>当サイトを利用したことにより、コンピュータウィルス等による被害やデータの損失、その他いかなる不利益が生じた場合も、作成者は一切の責任を負いません。</p>
         <p>ソースコードの利用は可能ですが、再頒布時には著作権表示とライセンス表示を消さずに残しておいてください。</p>
         <p>2022年6月11日</p>"""
+
+    let init () =
+        document.title <- "ご利用について - taidalab"
+
+        let header = document.querySelector "header"
+        header.innerHTML <- Content.Common.headerNoHelp
+        header.className <- "home"
+
+        (document.getElementById "hamburgerButton").onclick <-
+            (fun _ ->
+                (document.querySelector "aside").classList.toggle "flagged" |> ignore
+                (document.getElementById "barrier").classList.toggle "flagged" |> ignore
+                (document.querySelector "main").classList.toggle "flagged" |> ignore)
+
+        (document.getElementById "barrier").onclick <-
+            (fun _ ->
+                (document.querySelector "aside").classList.remove "flagged" |> ignore
+                (document.getElementById "barrier").classList.remove "flagged" |> ignore
+                (document.querySelector "main").classList.remove "flagged" |> ignore)
+
+        (document.querySelector "#headerTitle").innerHTML <-
+            """<h1>ご利用について - <span translate="no">taidalab</span></h1>"""
+
+        (document.querySelector "main").innerHTML <- main
+
+        // if initObject.questionContent <> "" then
+        //     (document.querySelector "#questionArea").innerHTML <- initObject.questionContent
+
+        // if initObject.buttonColorClass <> "" then
+        //     (document.querySelector "#submitButton").className <- initObject.buttonColorClass
+
+        // Resets keyboard shortcuts.
+        document.onkeydown <- fun _ -> ()

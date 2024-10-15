@@ -5,6 +5,8 @@
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
 namespace Taidalab
 
+open Browser.Dom
+
 module InformationPolicy =
     let main =
         """
@@ -31,3 +33,36 @@ module InformationPolicy =
                 <li><a href="https://support.google.com/analytics/answer/11593727?hl=ja&ref_topic=1008008&sjid=3916650995392926123-AP">[GA4] データ収集 - アナリティクス ヘルプ</a></li>
             </ul>
         </p>"""
+
+    let init () =
+        document.title <- "情報の外部送信について - taidalab"
+
+        let header = document.querySelector "header"
+        header.innerHTML <- Content.Common.headerNoHelp
+        header.className <- "home"
+
+        (document.getElementById "hamburgerButton").onclick <-
+            (fun _ ->
+                (document.querySelector "aside").classList.toggle "flagged" |> ignore
+                (document.getElementById "barrier").classList.toggle "flagged" |> ignore
+                (document.querySelector "main").classList.toggle "flagged" |> ignore)
+
+        (document.getElementById "barrier").onclick <-
+            (fun _ ->
+                (document.querySelector "aside").classList.remove "flagged" |> ignore
+                (document.getElementById "barrier").classList.remove "flagged" |> ignore
+                (document.querySelector "main").classList.remove "flagged" |> ignore)
+
+        (document.querySelector "#headerTitle").innerHTML <-
+            """<h1>情報の外部送信について - <span translate="no">taidalab</span></h1>"""
+
+        (document.querySelector "main").innerHTML <- main
+
+        // if initObject.questionContent <> "" then
+        //     (document.querySelector "#questionArea").innerHTML <- initObject.questionContent
+
+        // if initObject.buttonColorClass <> "" then
+        //     (document.querySelector "#submitButton").className <- initObject.buttonColorClass
+
+        // Resets keyboard shortcuts.
+        document.onkeydown <- fun _ -> ()

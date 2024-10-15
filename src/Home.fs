@@ -5,6 +5,8 @@
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
 namespace Taidalab
 
+open Browser.Dom
+
 module Home =
     let main =
         """
@@ -14,3 +16,34 @@ module Home =
                 <span class="home-subtitle">「情報I」学習サイト</span>
             </p>
         </div>"""
+
+    let init () =
+        document.title <- "taidalab"
+
+        let header = document.querySelector "header"
+        header.innerHTML <- Content.Common.headerNoHelp
+        header.className <- "home"
+
+        (document.getElementById "hamburgerButton").onclick <-
+            (fun _ ->
+                (document.querySelector "aside").classList.toggle "flagged" |> ignore
+                (document.getElementById "barrier").classList.toggle "flagged" |> ignore
+                (document.querySelector "main").classList.toggle "flagged" |> ignore)
+
+        (document.getElementById "barrier").onclick <-
+            (fun _ ->
+                (document.querySelector "aside").classList.remove "flagged" |> ignore
+                (document.getElementById "barrier").classList.remove "flagged" |> ignore
+                (document.querySelector "main").classList.remove "flagged" |> ignore)
+
+        (document.querySelector "#headerTitle").innerHTML <- """<h1 translate="no">taidalab</h1>"""
+        (document.querySelector "main").innerHTML <- main
+
+        // if initObject.questionContent <> "" then
+        //     (document.querySelector "#questionArea").innerHTML <- initObject.questionContent
+
+        // if initObject.buttonColorClass <> "" then
+        //     (document.querySelector "#submitButton").className <- initObject.buttonColorClass
+
+        // Resets keyboard shortcuts.
+        document.onkeydown <- fun _ -> ()
