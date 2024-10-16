@@ -409,20 +409,20 @@ module EndlessBinary =
 
             document.onkeydown <- (fun (e: KeyboardEvent) -> keyboardshortcutSetter e)
 
-        let init () =
-            init'
-                (question 8)
-                hint
-                newErrorMessageBin
-                Bin.validate
-                Bin.toDec
-                (padWithZero 8 >> colorLeadingZero)
-                additional
-                10
-                2
-                10
-                EndlessBinary.keyboardshortcut
-                checkAnswer
+        // let init () =
+        //     init'
+        //         (question 8)
+        //         hint
+        //         newErrorMessageBin
+        //         Bin.validate
+        //         Bin.toDec
+        //         (padWithZero 8 >> colorLeadingZero)
+        //         additional
+        //         10
+        //         2
+        //         10
+        //         EndlessBinary.keyboardshortcut
+        //         checkAnswer
 
         let init4 () =
             init'

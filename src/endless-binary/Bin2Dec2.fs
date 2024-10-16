@@ -25,8 +25,8 @@ module EndlessBinary =
 
         let additional number : unit = ()
 
-        let init () =
-            Bin2Dec1.init' question hint additional EndlessBinary.keyboardshortcut Bin2Dec1.checkAnswer
+        // let init () =
+        //     Bin2Dec1.init' question hint additional EndlessBinary.keyboardshortcut Bin2Dec1.checkAnswer
 
         let init'' () =
             document.title <- "2進数→10進数 (2) - taidalab"

@@ -257,19 +257,19 @@ module EndlessBinary =
 
             document.onkeydown <- (fun (e: KeyboardEvent) -> keyboardshortcutSetter e)
 
-        let init () =
-            init'
-                (question 8)
-                newHintAdd
-                Bin.validate
-                Bin.toDec
-                (padWithZero 8 >> colorLeadingZero)
-                (fun n -> ())
-                2
-                2
-                10
-                EndlessBinary.keyboardshortcut
-                checkAnswer
+        // let init () =
+        //     init'
+        //         (question 8)
+        //         newHintAdd
+        //         Bin.validate
+        //         Bin.toDec
+        //         (padWithZero 8 >> colorLeadingZero)
+        //         (fun n -> ())
+        //         2
+        //         2
+        //         10
+        //         EndlessBinary.keyboardshortcut
+        //         checkAnswer
 
         let init'' () =
             document.title <- "加算 - taidalab"

@@ -38,20 +38,20 @@ module EndlessBinary =
 
         let additional number : unit = ()
 
-        let init () =
-            Dec2Bin1.init'
-                question
-                hint
-                newErrorMessageBin
-                Bin.validate
-                Bin.toDec
-                (padWithZero 8 >> colorLeadingZero)
-                additional
-                10
-                2
-                4
-                EndlessBinary.keyboardshortcut
-                Dec2Bin1.checkAnswer
+        // let init () =
+        //     Dec2Bin1.init'
+        //         question
+        //         hint
+        //         newErrorMessageBin
+        //         Bin.validate
+        //         Bin.toDec
+        //         (padWithZero 8 >> colorLeadingZero)
+        //         additional
+        //         10
+        //         2
+        //         4
+        //         EndlessBinary.keyboardshortcut
+        //         Dec2Bin1.checkAnswer
 
         let init'' () =
             document.title <- "2のn乗 - taidalab"
