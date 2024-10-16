@@ -215,3 +215,72 @@ module EndlessBinary =
                     |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore))
 
             document.onkeydown <- (fun (e: KeyboardEvent) -> EndlessBinary.keyboardshortcut e)
+
+        let init'' () =
+            // Initialization.
+            document.title <- "16進数→10進数 - taidalab"
+
+            let header = document.querySelector "header"
+            header.innerHTML <- Content.Common.header
+            header.className <- "hex2dec"
+
+            (document.getElementById "hamburgerButton").onclick <-
+                (fun _ ->
+                    (document.querySelector "aside").classList.toggle "flagged" |> ignore
+                    (document.getElementById "barrier").classList.toggle "flagged" |> ignore
+                    (document.querySelector "main").classList.toggle "flagged" |> ignore)
+
+            (document.getElementById "barrier").onclick <-
+                (fun _ ->
+                    (document.querySelector "aside").classList.remove "flagged" |> ignore
+                    (document.getElementById "barrier").classList.remove "flagged" |> ignore
+                    (document.querySelector "main").classList.remove "flagged" |> ignore)
+
+            (document.querySelector "#headerTitle").innerHTML <-
+                """<h1>16進数→10進数 - <span translate="no">taidalab</span></h1>"""
+
+            (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help "help-color hex2dec"
+            (document.querySelector "#submitButton").className <- "submit-button display-order-3 hex2dec"
+            (document.querySelector "#questionArea").innerHTML <- Content.Common.question
+
+            let initNumber = getRandomBetween 0 255
+            let initHex = Dec.toHex initNumber
+
+            let addtionFormula = writeAdditionFormulaHex initHex
+            let hint = hintFormat initHex addtionFormula (hintTable initHex)
+
+            let sourceRadix = 16
+            let destinationRadix = 10
+
+            (document.getElementById "questionSpan").innerText <- initHex
+            (document.getElementById "srcRadix").innerText <- sprintf "(%d)" sourceRadix
+            (document.getElementById "dstRadix").innerText <- string destinationRadix
+            (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
+            (document.getElementById "hintArea").innerHTML <- hint
+
+            (document.getElementById "submitButton").onclick <-
+                (fun e ->
+                    e.preventDefault ()
+                    checkAnswer initNumber initHex [ initNumber ])
+
+            (document.getElementById "inputArea").onsubmit <-
+                (fun e ->
+                    e.preventDefault ()
+                    checkAnswer initNumber initHex [ initNumber ])
+
+            (document.getElementById "helpButton").onclick <-
+                (fun _ ->
+                    [ "helpWindow"; "helpBarrier" ]
+                    |> List.iter (fun x -> (document.getElementById x).classList.toggle "active" |> ignore))
+
+            (document.getElementById "helpBarrier").onclick <-
+                (fun _ ->
+                    [ "helpWindow"; "helpBarrier" ]
+                    |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore))
+
+            (document.getElementById "helpClose").onclick <-
+                (fun _ ->
+                    [ "helpWindow"; "helpBarrier" ]
+                    |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore))
+
+            document.onkeydown <- (fun (e: KeyboardEvent) -> EndlessBinary.keyboardshortcut e)

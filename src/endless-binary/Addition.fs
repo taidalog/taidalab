@@ -5,7 +5,7 @@
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
 namespace Taidalab
 
-open System
+// open System
 open Browser.Dom
 open Browser.Types
 open Taidalab.Number
@@ -259,6 +259,45 @@ module EndlessBinary =
             document.onkeydown <- (fun (e: KeyboardEvent) -> keyboardshortcutSetter e)
 
         let init () =
+            init'
+                (question 8)
+                newHintAdd
+                Bin.validate
+                Bin.toDec
+                (padWithZero 8 >> colorLeadingZero)
+                (fun n -> ())
+                2
+                2
+                10
+                EndlessBinary.keyboardshortcut
+                checkAnswer
+
+        let init'' () =
+            document.title <- "加算 - taidalab"
+
+            let header = document.querySelector "header"
+            header.innerHTML <- Content.Common.header
+            header.className <- "addition"
+
+            (document.getElementById "hamburgerButton").onclick <-
+                (fun _ ->
+                    (document.querySelector "aside").classList.toggle "flagged" |> ignore
+                    (document.getElementById "barrier").classList.toggle "flagged" |> ignore
+                    (document.querySelector "main").classList.toggle "flagged" |> ignore)
+
+            (document.getElementById "barrier").onclick <-
+                (fun _ ->
+                    (document.querySelector "aside").classList.remove "flagged" |> ignore
+                    (document.getElementById "barrier").classList.remove "flagged" |> ignore
+                    (document.querySelector "main").classList.remove "flagged" |> ignore)
+
+            (document.querySelector "#headerTitle").innerHTML <-
+                """<h1>加算 - <span translate="no">taidalab</span></h1>"""
+
+            (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help "help-color addition"
+            (document.querySelector "#submitButton").className <- "submit-button display-order-3 addition"
+            (document.querySelector "#questionArea").innerHTML <- Content.Common.columnAdditionFormat
+
             init'
                 (question 8)
                 newHintAdd

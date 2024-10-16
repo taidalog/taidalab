@@ -10,7 +10,7 @@ open Browser.Dom
 open Browser.Types
 open Taidalab.Number
 open Taidalab.Text
-open Taidalab.EndlessBinary
+// open Taidalab.EndlessBinary
 open Fermata
 open Fermata.RadixConversion
 
@@ -134,6 +134,72 @@ module EndlessBinary =
 
         let init () =
             // Initialization.
+            let sourceRadix = 2
+            let destinationRadix = 2
+
+            let initNumber = getRandomBetween 1 15
+            let initAnswer = 16 - initNumber
+            let initBin = initNumber |> Dec.toBin |> Fermata.String.padLeft 4 '0'
+            let reversedBin = initBin |> String.collect (fun c -> if c = '1' then "0" else "1")
+            (document.getElementById "questionSpan").innerText <- initBin
+            (document.getElementById "srcRadix").innerText <- sprintf "(%d)" sourceRadix
+            (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
+            (document.getElementById "hintArea").innerHTML <- hint initBin reversedBin
+
+            (document.getElementById "submitButton").onclick <-
+                (fun e ->
+                    e.preventDefault ()
+                    checkAnswer initBin initAnswer [ initNumber ])
+
+            (document.getElementById "inputArea").onsubmit <-
+                (fun e ->
+                    e.preventDefault ()
+                    checkAnswer initBin initAnswer [ initNumber ])
+
+            (document.getElementById "helpButton").onclick <-
+                (fun _ ->
+                    [ "helpWindow"; "helpBarrier" ]
+                    |> List.iter (fun x -> (document.getElementById x).classList.toggle "active" |> ignore))
+
+            (document.getElementById "helpBarrier").onclick <-
+                (fun _ ->
+                    [ "helpWindow"; "helpBarrier" ]
+                    |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore))
+
+            (document.getElementById "helpClose").onclick <-
+                (fun _ ->
+                    [ "helpWindow"; "helpBarrier" ]
+                    |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore))
+
+            document.onkeydown <- (fun (e: KeyboardEvent) -> EndlessBinary.keyboardshortcut e)
+
+        let init'' () =
+            // Initialization.
+            document.title <- "補数 - taidalab"
+
+            let header = document.querySelector "header"
+            header.innerHTML <- Content.Common.header
+            header.className <- "complement"
+
+            (document.getElementById "hamburgerButton").onclick <-
+                (fun _ ->
+                    (document.querySelector "aside").classList.toggle "flagged" |> ignore
+                    (document.getElementById "barrier").classList.toggle "flagged" |> ignore
+                    (document.querySelector "main").classList.toggle "flagged" |> ignore)
+
+            (document.getElementById "barrier").onclick <-
+                (fun _ ->
+                    (document.querySelector "aside").classList.remove "flagged" |> ignore
+                    (document.getElementById "barrier").classList.remove "flagged" |> ignore
+                    (document.querySelector "main").classList.remove "flagged" |> ignore)
+
+            (document.querySelector "#headerTitle").innerHTML <-
+                """<h1>補数 - <span translate="no">taidalab</span></h1>"""
+
+            (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help "help-color complement"
+            (document.querySelector "#submitButton").className <- "submit-button display-order-3 complement"
+            (document.querySelector "#questionArea").innerHTML <- Content.Common.question
+
             let sourceRadix = 2
             let destinationRadix = 2
 

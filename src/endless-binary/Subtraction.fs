@@ -164,3 +164,71 @@ module EndlessBinary =
                     |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore))
 
             document.onkeydown <- (fun (e: KeyboardEvent) -> EndlessBinary.keyboardshortcut e)
+
+        let init'' () =
+            // Initialization.
+            document.title <- "減算 - taidalab"
+
+            let header = document.querySelector "header"
+            header.innerHTML <- Content.Common.header
+            header.className <- "subtraction"
+
+            (document.getElementById "hamburgerButton").onclick <-
+                (fun _ ->
+                    (document.querySelector "aside").classList.toggle "flagged" |> ignore
+                    (document.getElementById "barrier").classList.toggle "flagged" |> ignore
+                    (document.querySelector "main").classList.toggle "flagged" |> ignore)
+
+            (document.getElementById "barrier").onclick <-
+                (fun _ ->
+                    (document.querySelector "aside").classList.remove "flagged" |> ignore
+                    (document.getElementById "barrier").classList.remove "flagged" |> ignore
+                    (document.querySelector "main").classList.remove "flagged" |> ignore)
+
+            (document.querySelector "#headerTitle").innerHTML <-
+                """<h1>減算 - <span translate="no">taidalab</span></h1>"""
+
+            (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help "help-color subtraction"
+            (document.querySelector "#submitButton").className <- "submit-button display-order-3 subtraction"
+            (document.querySelector "#questionArea").innerHTML <- Content.Common.columnAdditionFormat
+
+            let sourceRadix = 2
+            let destinationRadix = 2
+            let hint = newHintSub ()
+
+            (document.getElementById "numberInput").className <- "number-input question-number eight-digit"
+            (document.getElementById "operator").innerText <- "-)"
+            (document.getElementById "firstRowSrcRadix").innerText <- sprintf "(%d)" sourceRadix
+            (document.getElementById "secondRowSrcRadix").innerText <- sprintf "(%d)" sourceRadix
+            (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
+            (document.getElementById "hintArea").innerHTML <- hint
+
+            let (number1, number2) = newNumbersSub ()
+            setColumnAddition number1 number2
+
+            (document.getElementById "submitButton").onclick <-
+                (fun e ->
+                    e.preventDefault ()
+                    checkAnswer (number1 - number2) number1 number2 [ number1; number2 ])
+
+            (document.getElementById "inputArea").onsubmit <-
+                (fun e ->
+                    e.preventDefault ()
+                    checkAnswer (number1 - number2) number1 number2 [ number1; number2 ])
+
+            (document.getElementById "helpButton").onclick <-
+                (fun _ ->
+                    [ "helpWindow"; "helpBarrier" ]
+                    |> List.iter (fun x -> (document.getElementById x).classList.toggle "active" |> ignore))
+
+            (document.getElementById "helpBarrier").onclick <-
+                (fun _ ->
+                    [ "helpWindow"; "helpBarrier" ]
+                    |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore))
+
+            (document.getElementById "helpClose").onclick <-
+                (fun _ ->
+                    [ "helpWindow"; "helpBarrier" ]
+                    |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore))
+
+            document.onkeydown <- (fun (e: KeyboardEvent) -> EndlessBinary.keyboardshortcut e)

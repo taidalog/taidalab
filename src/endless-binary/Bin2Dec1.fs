@@ -260,3 +260,31 @@ module EndlessBinary =
 
         let init () =
             init' question' hint additional EndlessBinary.keyboardshortcut checkAnswer
+
+        let init'' () =
+            document.title <- "2進数→10進数 (1) - taidalab"
+
+            let header = document.querySelector "header"
+            header.innerHTML <- Content.Common.header
+            header.className <- "bin2dec"
+
+            (document.getElementById "hamburgerButton").onclick <-
+                (fun _ ->
+                    (document.querySelector "aside").classList.toggle "flagged" |> ignore
+                    (document.getElementById "barrier").classList.toggle "flagged" |> ignore
+                    (document.querySelector "main").classList.toggle "flagged" |> ignore)
+
+            (document.getElementById "barrier").onclick <-
+                (fun _ ->
+                    (document.querySelector "aside").classList.remove "flagged" |> ignore
+                    (document.getElementById "barrier").classList.remove "flagged" |> ignore
+                    (document.querySelector "main").classList.remove "flagged" |> ignore)
+
+            (document.querySelector "#headerTitle").innerHTML <-
+                """<h1>2進数→10進数 (1) - <span translate="no">taidalab</span></h1>"""
+
+            (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help "help-color bin2dec"
+            (document.querySelector "#submitButton").className <- "submit-button display-order-3 bin2dec"
+            (document.querySelector "#questionArea").innerHTML <- Content.Common.question
+
+            init' question' hint additional EndlessBinary.keyboardshortcut checkAnswer
