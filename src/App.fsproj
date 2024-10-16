@@ -11,8 +11,6 @@
     <Compile Include="common/Text.fs" />
     <Compile Include="common/Tuple.fs" />
     <Compile Include="Content.fs" />
-    <Compile Include="InitObject.fs" />
-    <Compile Include="Page.fs" />
     <Compile Include="endless-binary/EndlessBinary.fs" />
     <Compile Include="endless-binary/Dec2Bin1.fs" />
     <Compile Include="endless-binary/Dec2Bin2.fs" />
@@ -44,7 +42,7 @@
     <Compile Include="InformationPolicy.fs" />
     <Compile Include="NotFound.fs" />
     <Compile Include="Url.fs" />
-    <Compile Include="Switcher.fs" />
+    <Compile Include="Page.fs" />
     <Compile Include="App.fs" />
   </ItemGroup>
 
