@@ -9,7 +9,7 @@ open Fable.Core
 open Fable.Core.JsInterop
 open Browser.Dom
 open Browser.Url
-open Taidalab.Switcher
+open Taidalab.Page
 
 module Main =
     let init () : unit =
@@ -25,7 +25,7 @@ module Main =
 
             let mergedUrl = window.location.href |> URL.Create |> Url.mergePathname
             window.history.replaceState (null, "", mergedUrl.href)
-            Switcher.init mergedUrl
+            Page.init mergedUrl
 
             document.links |> JS.Constructors.Array?from |> Array.iter overwriteAnchor)
     )
@@ -35,7 +35,7 @@ module Main =
         (fun _ ->
             let mergedUrl = window.location.href |> URL.Create |> Url.mergePathname
             window.history.replaceState (null, "", mergedUrl.href)
-            Switcher.init mergedUrl
+            Page.init mergedUrl
 
             document.links |> JS.Constructors.Array?from |> Array.iter overwriteAnchor)
     )

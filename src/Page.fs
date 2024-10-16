@@ -5,47 +5,39 @@
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
 namespace Taidalab
 
-// open Browser.Dom
+open Browser.Dom
+open Browser.Url
+open Browser.Types
+open Fable.Core
+open Fable.Core.JsInterop
+open Taidalab.EndlessBinary
 
 module Page =
-    let n = 0
-// let init initObject =
-//     document.title <- initObject.title
+    let init (url: URL) : unit =
+        match url.pathname with
+        | "/taidalab/" -> Home.init ()
+        | "/taidalab/endless-binary/dec2bin-1/" -> Dec2Bin1.init'' ()
+        | "/taidalab/endless-binary/dec2bin-2/" -> Dec2Bin2.init'' ()
+        | "/taidalab/endless-binary/bin2dec-1/" -> Bin2Dec1.init'' ()
+        | "/taidalab/endless-binary/bin2dec-2/" -> Bin2Dec2.init'' ()
+        | "/taidalab/endless-binary/power-of-two-1/" -> PowerOfTwo1.init'' ()
+        | "/taidalab/endless-binary/power-of-two-2/" -> PowerOfTwo2.init'' ()
+        | "/taidalab/endless-binary/addition/" -> Addition.init'' ()
+        | "/taidalab/endless-binary/subtraction/" -> Subtraction.init'' ()
+        | "/taidalab/endless-binary/complement/" -> Complement.init'' ()
+        | "/taidalab/endless-binary/dec2hex/" -> Dec2Hex.init'' ()
+        | "/taidalab/endless-binary/hex2dec/" -> Hex2Dec.init'' ()
+        | "/taidalab/iro-iroiro/" -> IroIroiro.init'' ()
+        | "/taidalab/network-simulator/" -> NetworkSimulator.init'' ()
+        | "/taidalab/about/" -> About.init ()
+        | "/taidalab/terms/" -> Terms.init ()
+        | "/taidalab/information-policy/" -> InformationPolicy.init ()
+        | _ -> NotFound.init ()
 
-//     let header = document.querySelector "header"
-//     header.innerHTML <- initObject.headerContent
-//     header.className <- initObject.headerColorClass
-
-//     (document.getElementById "hamburgerButton").onclick <-
-//         (fun _ ->
-//             (document.querySelector "aside").classList.toggle "flagged" |> ignore
-//             (document.getElementById "barrier").classList.toggle "flagged" |> ignore
-//             (document.querySelector "main").classList.toggle "flagged" |> ignore)
-
-//     (document.getElementById "barrier").onclick <-
-//         (fun _ ->
-//             (document.querySelector "aside").classList.remove "flagged" |> ignore
-//             (document.getElementById "barrier").classList.remove "flagged" |> ignore
-//             (document.querySelector "main").classList.remove "flagged" |> ignore)
-
-//     let headerTitle = document.querySelector "#headerTitle"
-//     headerTitle.innerHTML <- initObject.headerTitle
-
-//     let main = document.querySelector "main"
-//     main.innerHTML <- initObject.mainContent
-
-//     if initObject.questionContent <> "" then
-//         (document.querySelector "#questionArea").innerHTML <- initObject.questionContent
-
-//     if initObject.buttonColorClass <> "" then
-//         (document.querySelector "#submitButton").className <- initObject.buttonColorClass
-
-//     initObject.initFunc ()
-
-// let push initObject =
-//     window.history.pushState (null, "", initObject.pathname)
-//     init initObject
-
-// let replace initObject =
-//     window.history.replaceState (null, "", initObject.pathname)
-//     init initObject
+    let rec overwriteAnchor (anchor: HTMLAnchorElement) : unit =
+        anchor.onclick <-
+            fun (e: MouseEvent) ->
+                e.preventDefault ()
+                window.history.pushState (null, "", anchor.href)
+                anchor.href |> URL.Create |> init
+                document.links |> JS.Constructors.Array?from |> Array.iter overwriteAnchor
