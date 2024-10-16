@@ -5,13 +5,10 @@
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
 namespace Taidalab
 
-open System
 open Browser.Dom
-open Browser.Types
 open Taidalab.Number
 open Taidalab.Text
 open Taidalab.EndlessBinary
-open Fermata
 open Fermata.RadixConversion
 
 module EndlessBinary =

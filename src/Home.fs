@@ -39,11 +39,5 @@ module Home =
         (document.querySelector "#headerTitle").innerHTML <- """<h1 translate="no">taidalab</h1>"""
         (document.querySelector "main").innerHTML <- main
 
-        // if initObject.questionContent <> "" then
-        //     (document.querySelector "#questionArea").innerHTML <- initObject.questionContent
-
-        // if initObject.buttonColorClass <> "" then
-        //     (document.querySelector "#submitButton").className <- initObject.buttonColorClass
-
         // Resets keyboard shortcuts.
         document.onkeydown <- fun _ -> ()

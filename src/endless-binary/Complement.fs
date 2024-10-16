@@ -10,7 +10,6 @@ open Browser.Dom
 open Browser.Types
 open Taidalab.Number
 open Taidalab.Text
-// open Taidalab.EndlessBinary
 open Fermata
 open Fermata.RadixConversion
 

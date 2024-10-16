@@ -52,10 +52,6 @@ module NotFound =
             if dec <> int answer then
                 ()
             else
-                // Redirecting to the home.
-                // ("/taidalab/", Taidalab.Home.main, (fun _ -> ()))
-                // |||> InitObject.create
-                // |> Page.replace
                 window.history.replaceState (null, "", "http://localhost:8080/taidalab/")
                 Home.init ()
 
