@@ -40,4 +40,19 @@ module Page =
                 e.preventDefault ()
                 window.history.pushState (null, "", anchor.href)
                 anchor.href |> URL.Create |> init
-                document.links |> JS.Constructors.Array?from |> Array.iter overwriteAnchor
+
+                let asideLinks: HTMLAnchorElement array =
+                    (document.querySelector "aside").querySelectorAll "a"
+                    |> JS.Constructors.Array?from
+
+                asideLinks |> Array.iter _.classList.remove("current-location")
+
+                asideLinks
+                |> Array.filter (fun x -> x.pathname <> Url.home)
+                |> Array.filter (fun x -> x.href = window.location.href)
+                |> Array.iter _.classList.add("current-location")
+
+                document.links
+                |> JS.Constructors.Array?from
+                |> Array.filter (fun (x: HTMLAnchorElement) -> x.href |> URL.Create |> Url.isInternal')
+                |> Array.iter overwriteAnchor

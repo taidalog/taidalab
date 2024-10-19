@@ -16,6 +16,8 @@ module Url =
         "https://taidalog.github.io/"
 #endif
 
+    let home = "/taidalab/"
+
     let mergePathname (url: URL) =
         let searchParams = url.searchParams
 
@@ -31,7 +33,7 @@ module Url =
                 URL.Create(url.origin + v + "?" + searchParams'.ToString())
 
     let isInternal (baseUrl: string) (url: URL) : bool =
-        url.origin = baseUrl && url.pathname.StartsWith("/taidalab/")
+        url.origin = baseUrl && url.pathname.StartsWith home
 
     let isExternal (baseUrl: string) (url: URL) : bool = url |> isInternal baseUrl |> not
 
