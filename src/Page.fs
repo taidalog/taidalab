@@ -58,5 +58,6 @@ module Page =
 
                 document.links
                 |> JS.Constructors.Array?from
+                |> Array.filter (fun (x: HTMLAnchorElement) -> x.href <> "")
                 |> Array.filter (fun (x: HTMLAnchorElement) -> x.href |> URL.Create |> Url.isInternal')
                 |> Array.iter overwriteAnchor

@@ -31,6 +31,7 @@ module Main =
 
             document.links
             |> JS.Constructors.Array?from
+            |> Array.filter (fun (x: HTMLAnchorElement) -> x.href <> "")
             |> Array.filter (fun (x: HTMLAnchorElement) -> x.href |> URL.Create |> Url.isInternal')
             |> Array.iter overwriteAnchor
 
@@ -50,6 +51,7 @@ module Main =
 
             (document.querySelector "aside").querySelectorAll "a"
             |> JS.Constructors.Array?from
+            |> Array.filter (fun (x: HTMLAnchorElement) -> x.href <> "")
             |> Array.iter overwriteAnchor
 
             showLocation ())
