@@ -45,6 +45,7 @@ module Main =
 
             asideLinks
             |> Array.filter (fun x -> x.pathname <> Url.home)
+            |> Array.filter (fun x -> x.href = "")
             |> Array.filter (fun x -> x.href = mergedUrl.href)
             |> Array.iter _.classList.add("current-location"))
     )
@@ -68,6 +69,7 @@ module Main =
 
             asideLinks
             |> Array.filter (fun x -> x.pathname <> Url.home)
+            |> Array.filter (fun x -> x.href = "")
             |> Array.filter (fun x -> x.href = mergedUrl.href)
             |> Array.iter _.classList.add("current-location"))
     )

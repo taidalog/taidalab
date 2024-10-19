@@ -49,6 +49,7 @@ module Page =
 
                 asideLinks
                 |> Array.filter (fun x -> x.pathname <> Url.home)
+                |> Array.filter (fun x -> x.href = "")
                 |> Array.filter (fun x -> x.href = window.location.href)
                 |> Array.iter _.classList.add("current-location")
 
