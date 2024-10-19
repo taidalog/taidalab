@@ -38,16 +38,7 @@ module Main =
                 (document.querySelector "aside").querySelectorAll "a"
                 |> JS.Constructors.Array?from
 
-            asideLinks
-            |> Array.iter (fun (x: HTMLAnchorElement) -> printfn "%s, %s" x.href x.pathname)
-
-            asideLinks |> Array.iter _.classList.remove("current-location")
-
-            asideLinks
-            |> Array.filter (fun x -> x.pathname <> Url.home)
-            |> Array.filter (fun x -> x.href = "")
-            |> Array.filter (fun x -> x.href = mergedUrl.href)
-            |> Array.iter _.classList.add("current-location"))
+            showLocation ())
     )
 
     window.addEventListener (
@@ -61,15 +52,5 @@ module Main =
             |> JS.Constructors.Array?from
             |> Array.iter overwriteAnchor
 
-            let asideLinks: HTMLAnchorElement array =
-                (document.querySelector "aside").querySelectorAll "a"
-                |> JS.Constructors.Array?from
-
-            asideLinks |> Array.iter _.classList.remove("current-location")
-
-            asideLinks
-            |> Array.filter (fun x -> x.pathname <> Url.home)
-            |> Array.filter (fun x -> x.href = "")
-            |> Array.filter (fun x -> x.href = mergedUrl.href)
-            |> Array.iter _.classList.add("current-location"))
+            showLocation ())
     )

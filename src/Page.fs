@@ -34,6 +34,19 @@ module Page =
         | "/taidalab/information-policy/" -> InformationPolicy.init ()
         | _ -> NotFound.init ()
 
+    let showLocation () : unit =
+        let asideLinks: HTMLAnchorElement array =
+            (document.querySelector "aside").querySelectorAll "a"
+            |> JS.Constructors.Array?from
+
+        asideLinks |> Array.iter _.classList.remove("current-location")
+
+        asideLinks
+        |> Array.filter (fun x -> x.pathname <> Url.home)
+        |> Array.filter (fun x -> x.href <> "")
+        |> Array.filter (fun x -> x.href = window.location.href)
+        |> Array.iter _.classList.add("current-location")
+
     let rec overwriteAnchor (anchor: HTMLAnchorElement) : unit =
         anchor.onclick <-
             fun (e: MouseEvent) ->
@@ -41,17 +54,7 @@ module Page =
                 window.history.pushState (null, "", anchor.href)
                 anchor.href |> URL.Create |> init
 
-                let asideLinks: HTMLAnchorElement array =
-                    (document.querySelector "aside").querySelectorAll "a"
-                    |> JS.Constructors.Array?from
-
-                asideLinks |> Array.iter _.classList.remove("current-location")
-
-                asideLinks
-                |> Array.filter (fun x -> x.pathname <> Url.home)
-                |> Array.filter (fun x -> x.href = "")
-                |> Array.filter (fun x -> x.href = window.location.href)
-                |> Array.iter _.classList.add("current-location")
+                showLocation ()
 
                 document.links
                 |> JS.Constructors.Array?from
