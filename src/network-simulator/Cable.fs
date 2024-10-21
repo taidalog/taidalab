@@ -99,9 +99,6 @@ module Cable =
         let polyline = document.createElementNS ("http://www.w3.org/2000/svg", "polyline")
         polyline.id <- $"{cable.Id}Polyline"
         polyline.setAttribute ("points", $"""%s{cable.Points |> List.map Point.toCoordinate |> String.concat " "}""")
-        polyline.setAttribute ("fill", "none")
-        polyline.setAttribute ("stroke", "#00aeda")
-        polyline.setAttribute ("stroke-width", "5")
 
         g.appendChild (title) |> ignore
         g.appendChild (polyline) |> ignore
