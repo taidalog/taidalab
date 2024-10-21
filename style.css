@@ -1062,10 +1062,15 @@ span.device-prop.subnetmask::before {
     content: "SubnetMask: ";
 }
 
+div.lan-cable>svg {
+    pointer-events: none;
+}
+
 div.lan-cable>svg>g>polyline {
     stroke: #00aeda;
     stroke-width: 5;
     fill: none;
+    pointer-events: auto;
 }
 
 div.lan-cable>svg>g>polyline:hover {
