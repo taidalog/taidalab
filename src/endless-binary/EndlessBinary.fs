@@ -126,9 +126,10 @@ module EndlessBinary =
 
     open Browser.Dom
 
-    let setColumnAddition (number1: Dec) (number2: Dec) =
+    let setColumnAddition (number1: int) (number2: int) =
         let bin1 =
             number1
+            |> Dec.Valid
             |> Dec.toBin
             |> function
                 | Bin.Valid v -> v
@@ -138,6 +139,7 @@ module EndlessBinary =
 
         let bin2 =
             number2
+            |> Dec.Valid
             |> Dec.toBin
             |> function
                 | Bin.Valid v -> v
