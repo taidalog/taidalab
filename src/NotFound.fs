@@ -9,7 +9,6 @@ open Browser.Dom
 open Browser.Types
 open Taidalab.Text
 open Taidalab.EndlessBinary
-open Fermata
 open Fermata.RadixConversion
 
 module NotFound =
@@ -25,7 +24,7 @@ module NotFound =
         match bin with
         | Bin.Invalid e ->
             // Making an error message.
-            (document.getElementById "errorArea").innerHTML <- newErrorMessageBin answer input e
+            (document.getElementById "errorArea").innerHTML <- newErrorMessageBin (string answer) input e
         | Bin.Valid v ->
             (document.getElementById "errorArea").innerHTML <- ""
             // Converting the input in order to use in the history message.

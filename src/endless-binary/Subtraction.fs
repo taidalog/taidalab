@@ -11,7 +11,6 @@ open Browser.Types
 open Taidalab.Number
 open Taidalab.Text
 open Taidalab.EndlessBinary
-open Fermata
 open Fermata.RadixConversion
 
 module EndlessBinary =
@@ -107,7 +106,7 @@ module EndlessBinary =
                             newNumber (fun _ -> newNumbersSub ()) (fun (n1, n2) ->
                                 List.contains n1 last_answers = false && List.contains n2 last_answers = false)
 
-                        setColumnAddition (Dec.Valid number1) (Dec.Valid number2)
+                        setColumnAddition number1 number2
 
                         let nextHint = newHintSub ()
                         (document.getElementById "hintArea").innerHTML <- nextHint
@@ -213,7 +212,7 @@ module EndlessBinary =
             (document.getElementById "hintArea").innerHTML <- hint
 
             let (number1, number2) = newNumbersSub ()
-            setColumnAddition (Dec.Valid number1) (Dec.Valid number2)
+            setColumnAddition number1 number2
 
             (document.getElementById "submitButton").onclick <-
                 (fun e ->

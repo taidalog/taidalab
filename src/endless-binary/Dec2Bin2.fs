@@ -72,8 +72,7 @@ module EndlessBinary =
                 question
                 hint
                 newErrorMessageBin
-                Bin.validate
-                Bin.toDec
+                (Bin.validate >> Bin.toDec)
                 (padWithZero 8 >> colorLeadingZero)
                 additional
                 10
