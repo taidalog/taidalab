@@ -88,7 +88,7 @@ module EndlessBinary =
             |> List.fold (fun x y -> applyToTuples3 (fun a1 a2 -> sprintf "%s%s" a1 a2) x y) ("", "", "")
             |> newHintTable
 
-        let hint binaryString =
+        let hint (binaryString: string) =
             let formula = writeAdditionFormula binaryString
             let table = hintTable binaryString
 
@@ -129,10 +129,10 @@ module EndlessBinary =
         let additional number : unit = ()
 
         let rec checkAnswer
-            (questionGenerator: 'c list -> 'c)
-            (hintGenerator: 'a -> 'b)
+            (questionGenerator: int list -> int)
+            (hintGenerator: string -> string)
             (additional: 'c -> unit)
-            (answer: string)
+            (answer: int)
             (question: string)
             (last_answers: int list)
             =
@@ -190,30 +190,18 @@ module EndlessBinary =
                         (fun e ->
                             e.preventDefault ()
 
-                            checkAnswer
-                                questionGenerator
-                                hintGenerator
-                                additional
-                                (string nextNumber)
-                                splitBin
-                                lastAnswers)
+                            checkAnswer questionGenerator hintGenerator additional nextNumber splitBin lastAnswers)
 
                     (document.getElementById "inputArea").onsubmit <-
                         (fun e ->
                             e.preventDefault ()
 
-                            checkAnswer
-                                questionGenerator
-                                hintGenerator
-                                additional
-                                (string nextNumber)
-                                splitBin
-                                lastAnswers)
+                            checkAnswer questionGenerator hintGenerator additional nextNumber splitBin lastAnswers)
 
 
         let init'
-            (questionGenerator: 'c list -> 'c)
-            (hintGenerator: 'a -> 'b)
+            (questionGenerator: int list -> int)
+            (hintGenerator: string -> string)
             (additional: 'c -> unit)
             (keyboardshortcutSetter: KeyboardEvent -> unit)
             checker
@@ -234,12 +222,12 @@ module EndlessBinary =
             (document.getElementById "submitButton").onclick <-
                 (fun e ->
                     e.preventDefault ()
-                    checker questionGenerator hintGenerator additional (string initNumber) splitBin [ initNumber ])
+                    checker questionGenerator hintGenerator additional initNumber splitBin [ initNumber ])
 
             (document.getElementById "inputArea").onsubmit <-
                 (fun e ->
                     e.preventDefault ()
-                    checker questionGenerator hintGenerator additional (string initNumber) splitBin [ initNumber ])
+                    checker questionGenerator hintGenerator additional initNumber splitBin [ initNumber ])
 
             (document.getElementById "helpButton").onclick <-
                 (fun _ ->
