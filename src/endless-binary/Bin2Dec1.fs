@@ -30,10 +30,18 @@ module EndlessBinary =
                     // Generates a number that is zero, or that is power of two and less than 255.
                     getRandomBetween 0 8
                     |> pown 2
+                    |> Dec.Valid
                     |> Dec.toBin
+                    |> function
+                        | Bin.Invalid _ -> ""
+                        | Bin.Valid v -> v
                     |> String.padLeft 9 '0'
                     |> String.tail
+                    |> Bin.Valid
                     |> Bin.toDec
+                    |> function
+                        | Dec.Invalid _ -> -1
+                        | Dec.Valid v -> v
 
                 generator' (), generator' ()
 
@@ -88,39 +96,49 @@ module EndlessBinary =
             |> List.fold (fun x y -> applyToTuples3 (fun a1 a2 -> sprintf "%s%s" a1 a2) x y) ("", "", "")
             |> newHintTable
 
-        let hint (binaryString: string) =
-            let formula = writeAdditionFormula binaryString
-            let table = hintTable binaryString
+        let hint (bin: Bin) : string =
+            match bin with
+            | Bin.Invalid _ -> ""
+            | Bin.Valid v ->
+                let formula = writeAdditionFormula v
+                let table = hintTable v
 
-            $"""
-            <details><summary><h2>ヒント:</h2></summary>
-                <p class="history-indented">
-                    10進法で表現した数は、一番右の桁から<br>
-                    1の位、10の位、100の位、1000の位...となっています。<br>
-                    これを「10<sup>n</sup>の位」の形で表すと、<br>
-                    10<sup>0</sup>の位、10<sup>1</sup>の位、10<sup>2</sup>の位、10<sup>3</sup>の位...となります。<br>
-                </p>
-                <p class="history-indented">
-                    同様に、2進法で表現した数は、一番右の桁から<br>
-                    1の位、2の位、4の位、8の位...となっています。<br>
-                    これを「2<sup>n</sup>の位」の形で表すと、<br>
-                    2<sup>0</sup>の位、2<sup>1</sup>の位、2<sup>2</sup>の位、2<sup>3</sup>の位...となります。
-                </p>
-                <p class="history-indented">
-                    この 10<sup>0</sup>、10<sup>1</sup>、10<sup>2</sup>、10<sup>3</sup>...や 2<sup>0</sup>、2<sup>1</sup>、2<sup>2</sup>、2<sup>3</sup>...という数を、その桁の「重み」と呼びます。<br>
-                </p>
-                <p class="history-indented">
-                    %s{table}
-                </p>
-                <p class="history-indented">
-                    2進法で表現した数を10進法で表現しなおすには、それぞれの桁の数と重みをかけ算し、それを合計します。<br>
-                    %s{binaryString}<sub>(2)</sub> の場合、以下のように計算します。
-                </p>
-                <p class="history-indented hint-bgcolor-gray mono regular">
-                    &nbsp;&nbsp;%s{formula}<br>
-                    = %d{Bin.toDec binaryString}<sub>(10)</sub>
-                </p>
-            </details>
+                let dec =
+                    bin
+                    |> Bin.toDec
+                    |> function
+                        | Dec.Valid v -> v
+                        | Dec.Invalid _ -> -1
+
+                $"""
+                <details><summary><h2>ヒント:</h2></summary>
+                    <p class="history-indented">
+                        10進法で表現した数は、一番右の桁から<br>
+                        1の位、10の位、100の位、1000の位...となっています。<br>
+                        これを「10<sup>n</sup>の位」の形で表すと、<br>
+                        10<sup>0</sup>の位、10<sup>1</sup>の位、10<sup>2</sup>の位、10<sup>3</sup>の位...となります。<br>
+                    </p>
+                    <p class="history-indented">
+                        同様に、2進法で表現した数は、一番右の桁から<br>
+                        1の位、2の位、4の位、8の位...となっています。<br>
+                        これを「2<sup>n</sup>の位」の形で表すと、<br>
+                        2<sup>0</sup>の位、2<sup>1</sup>の位、2<sup>2</sup>の位、2<sup>3</sup>の位...となります。
+                    </p>
+                    <p class="history-indented">
+                        この 10<sup>0</sup>、10<sup>1</sup>、10<sup>2</sup>、10<sup>3</sup>...や 2<sup>0</sup>、2<sup>1</sup>、2<sup>2</sup>、2<sup>3</sup>...という数を、その桁の「重み」と呼びます。<br>
+                    </p>
+                    <p class="history-indented">
+                        %s{table}
+                    </p>
+                    <p class="history-indented">
+                        2進法で表現した数を10進法で表現しなおすには、それぞれの桁の数と重みをかけ算し、それを合計します。<br>
+                        %s{v}<sub>(2)</sub> の場合、以下のように計算します。
+                    </p>
+                    <p class="history-indented hint-bgcolor-gray mono regular">
+                        &nbsp;&nbsp;%s{formula}<br>
+                        = %d{dec}<sub>(10)</sub>
+                    </p>
+                </details>
             """
 
         let question' lastAnswers : int =
@@ -130,7 +148,7 @@ module EndlessBinary =
 
         let rec checkAnswer
             (questionGenerator: int list -> int)
-            (hintGenerator: string -> string)
+            (hintGenerator: Bin -> string)
             (additional: 'c -> unit)
             (answer: int)
             (question: string)
@@ -139,42 +157,45 @@ module EndlessBinary =
             // Getting the user input.
             let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
             let input = numberInput.value |> escapeHtml
-            let dec: Result<int, Errors.Errors> = input |> Dec.validate
 
             numberInput.focus ()
 
-            match dec with
-            | Error(error: Errors.Errors) ->
+            match Dec.validate input with
+            | Dec.Invalid e ->
                 // Making an error message.
-                (document.getElementById "errorArea").innerHTML <- newErrorMessageDec question input error
-            | Ok(dec: int) ->
+                (document.getElementById "errorArea").innerHTML <- newErrorMessageDec question input e
+            | Dec.Valid v ->
                 (document.getElementById "errorArea").innerHTML <- ""
 
                 // Converting the input in order to use in the history message.
                 let digit = 3
 
                 let spacePaddedInputValue =
-                    dec |> string |> Fermata.String.padLeft digit ' ' |> escapeSpace
+                    v |> string |> Fermata.String.padLeft digit ' ' |> escapeSpace
 
                 let sourceRadix = 2
-                let bin = Dec.toBin dec
+                let bin: Bin = Dec.Valid v |> Dec.toBin
                 let binaryDigit = 8
-                let taggedBin = bin |> padWithZero binaryDigit |> colorLeadingZero
+
+                let taggedBin =
+                    match bin with
+                    | Bin.Invalid _ -> ""
+                    | Bin.Valid v -> v |> padWithZero binaryDigit |> colorLeadingZero
 
                 // Making a new history and updating the history with the new one.
                 let destinationRadix = 10
                 let outputArea = document.getElementById "outputArea"
 
                 let historyMessage =
-                    newHistory (dec = int answer) spacePaddedInputValue destinationRadix taggedBin sourceRadix
+                    newHistory (v = answer) spacePaddedInputValue destinationRadix taggedBin sourceRadix
                     |> (fun x -> concatinateStrings "<br>" [ x; outputArea.innerHTML ])
 
                 outputArea.innerHTML <- historyMessage
 
-                if dec = int answer then
+                if v = answer then
                     // Making the next question.
                     let nextNumber = questionGenerator last_answers
-                    let nextBin = Dec.toBin nextNumber
+                    let nextBin: Bin = Dec.Valid nextNumber |> Dec.toBin
                     let splitBin = splitBinaryStringBy 4 nextBin
                     (document.getElementById "questionSpan").innerText <- splitBin
                     (document.getElementById "hintArea").innerHTML <- hintGenerator nextBin
@@ -201,14 +222,14 @@ module EndlessBinary =
 
         let init'
             (questionGenerator: int list -> int)
-            (hintGenerator: string -> string)
+            (hintGenerator: Bin -> string)
             (additional: 'c -> unit)
             (keyboardshortcutSetter: KeyboardEvent -> unit)
             checker
             : unit =
             // Initialization.
             let initNumber = questionGenerator []
-            let initBin = Dec.toBin initNumber
+            let initBin: Bin = Dec.Valid initNumber |> Dec.toBin
             let splitBin = splitBinaryStringBy 4 initBin
             let sourceRadix = 2
             let destinationRadix = 10
