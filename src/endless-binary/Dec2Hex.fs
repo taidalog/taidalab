@@ -6,6 +6,7 @@
 namespace Taidalab
 
 open Browser.Dom
+open Browser.Types
 open Taidalab.Number
 open Taidalab.Text
 open Taidalab.EndlessBinary
@@ -144,6 +145,104 @@ module EndlessBinary =
                     (document.getElementById "hint1").innerHTML <- newHintAnimation 16 number 20
                     (document.getElementById "hintDetails").setAttribute ("open", "true"))
 
+        let rec checkAnswer
+            (questionGenerator: 'c list -> 'c)
+            (hintGenerator: 'a -> 'b)
+            (errorGenerator: 'd -> 'e -> 'f -> 'g)
+            validator
+            converter
+            tagger
+            (additional: 'c -> unit)
+            sourceRadix
+            destinationRadix
+            (answersToKeep: int)
+            (answer: string)
+            (last_answers: int list)
+            =
+            // Getting the user input.
+            let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
+            let input = numberInput.value |> escapeHtml
+            let validated: Result<string, Errors.Errors> = input |> validator
+
+            numberInput.focus ()
+
+            match validated with
+            | Error(error: Errors.Errors) ->
+                // Making an error message.
+                (document.getElementById "errorArea").innerHTML <- errorGenerator answer input error
+            | Ok validated ->
+                (document.getElementById "errorArea").innerHTML <- ""
+
+                // Converting the input in order to use in the history message.
+                let colored = validated |> tagger //padWithZero binaryDigit |> colorLeadingZero
+                let converted = validated |> converter
+
+                let decimalDigit = 3
+
+                let spacePadded =
+                    converted |> string |> Fermata.String.padLeft decimalDigit ' ' |> escapeSpace
+
+                // Making a new history and updating the history with the new one.
+                let outputArea = document.getElementById "outputArea" :?> HTMLParagraphElement
+
+                let historyMessage =
+                    newHistory (converted = int answer) colored destinationRadix spacePadded sourceRadix
+                    |> (fun x -> concatinateStrings "<br>" [ x; outputArea.innerHTML ])
+
+                outputArea.innerHTML <- historyMessage
+
+                if converted <> int answer then
+                    ()
+                else
+                    // Making the next question.
+                    let nextNumber = questionGenerator last_answers
+                    (document.getElementById "questionSpan").innerText <- string nextNumber
+                    (document.getElementById "hintArea").innerHTML <- hintGenerator nextNumber
+                    additional nextNumber
+
+                    numberInput.value <- ""
+
+                    // Updating `lastAnswers`.
+                    // These numbers will not be used for the next question.
+                    let lastAnswers' = (nextNumber :: last_answers) |> List.truncate answersToKeep
+
+                    // Setting the next answer to the check button.
+                    (document.getElementById "submitButton").onclick <-
+                        (fun e ->
+                            e.preventDefault ()
+
+                            checkAnswer
+                                questionGenerator
+                                hintGenerator
+                                errorGenerator
+                                validator
+                                converter
+                                tagger
+                                additional
+                                sourceRadix
+                                destinationRadix
+                                answersToKeep
+                                (string nextNumber)
+                                lastAnswers')
+
+                    (document.getElementById "inputArea").onsubmit <-
+                        (fun e ->
+                            e.preventDefault ()
+
+                            checkAnswer
+                                questionGenerator
+                                hintGenerator
+                                errorGenerator
+                                validator
+                                converter
+                                tagger
+                                additional
+                                sourceRadix
+                                destinationRadix
+                                answersToKeep
+                                (string nextNumber)
+                                lastAnswers')
+
         // let init () =
         //     Dec2Bin1.init'
         //         question
@@ -197,4 +296,4 @@ module EndlessBinary =
                 16
                 10
                 EndlessBinary.keyboardshortcut
-                Dec2Bin1.checkAnswer
+                checkAnswer
