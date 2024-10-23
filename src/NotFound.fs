@@ -14,46 +14,48 @@ open Fermata.RadixConversion
 
 module NotFound =
 
-    let rec checkAnswer answer =
+    let rec checkAnswer (answer: int) =
         // Getting the user input.
         let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
         let input = numberInput.value |> escapeHtml
-        let bin: Result<string, Errors.Errors> = input |> Bin.validate
+        let bin = input |> Bin.validate
 
         numberInput.focus ()
 
         match bin with
-        | Error(error: Errors.Errors) ->
+        | Bin.Invalid e ->
             // Making an error message.
-            (document.getElementById "errorArea").innerHTML <- newErrorMessageBin answer input error
-        | Ok(bin: string) ->
+            (document.getElementById "errorArea").innerHTML <- newErrorMessageBin answer input e
+        | Bin.Valid v ->
             (document.getElementById "errorArea").innerHTML <- ""
             // Converting the input in order to use in the history message.
             let binaryDigit = 9
             let destinationRadix = 2
-            let taggedBin = padWithZero binaryDigit bin |> colorLeadingZero
-            let dec = Bin.toDec bin
+            let taggedBin = padWithZero binaryDigit v |> colorLeadingZero
 
-            let decimalDigit = 3
+            match Bin.toDec bin with
+            | Dec.Invalid _ -> ()
+            | Dec.Valid dec ->
+                let decimalDigit = 3
 
-            let spacePaddedDec =
-                dec |> string |> Fermata.String.padLeft decimalDigit ' ' |> escapeSpace
+                let spacePaddedDec =
+                    dec |> string |> Fermata.String.padLeft decimalDigit ' ' |> escapeSpace
 
-            // Making a new history and updating the history with the new one.
-            let sourceRadix = 10
-            let outputArea = document.getElementById "outputArea" :?> HTMLParagraphElement
+                // Making a new history and updating the history with the new one.
+                let sourceRadix = 10
+                let outputArea = document.getElementById "outputArea" :?> HTMLParagraphElement
 
-            let historyMessage =
-                newHistory (dec = int answer) taggedBin destinationRadix spacePaddedDec sourceRadix
-                |> (fun x -> concatinateStrings "<br>" [ x; outputArea.innerHTML ])
+                let historyMessage =
+                    newHistory (dec = int answer) taggedBin destinationRadix spacePaddedDec sourceRadix
+                    |> (fun x -> concatinateStrings "<br>" [ x; outputArea.innerHTML ])
 
-            outputArea.innerHTML <- historyMessage
+                outputArea.innerHTML <- historyMessage
 
-            if dec <> int answer then
-                ()
-            else
-                window.history.replaceState (null, "", "http://localhost:8080/taidalab/")
-                Home.init ()
+                if dec <> int answer then
+                    ()
+                else
+                    window.history.replaceState (null, "", "http://localhost:8080/taidalab/")
+                    Home.init ()
 
 
     let init () =
@@ -95,9 +97,9 @@ module NotFound =
         (document.getElementById "submitButton").onclick <-
             (fun e ->
                 e.preventDefault ()
-                checkAnswer (string initNumber))
+                checkAnswer initNumber)
 
         (document.getElementById "inputArea").onsubmit <-
             (fun e ->
                 e.preventDefault ()
-                checkAnswer (string initNumber))
+                checkAnswer initNumber)
