@@ -70,9 +70,6 @@ module IroIroiro =
     let private circulation2 (s: int) (n: int) : int = n / s
     // 0 0 0 ... 1 1 1 ... 2 2 2 ...
 
-    let private countBefore (index: int) (list: 'T list) : int =
-        list |> List.truncate index |> List.countWith ((=) (List.item index list))
-
     let private f min' max' x =
         let gap = max' - min'
 
@@ -96,7 +93,7 @@ module IroIroiro =
 
         let rf, gf, bf =
             (0, 1, 2)
-            |> Tuple.map3 (fun x -> List.findIndex ((=) (List.item x rgb)) (List.sort rgb) + countBefore x rgb)
+            |> Tuple.map3 (fun x -> List.findIndex ((=) (List.item x rgb)) (List.sort rgb) + List.countBefore x rgb)
             |> Tuple.map3 (fun x -> List.item x [ fmin; fmid; fmax ])
 
         [ 0..limit ] |> List.map (fun x -> rf x, gf x, bf x)
@@ -277,31 +274,31 @@ module IroIroiro =
                     | false, _ -> ()
             | _ -> ()
 
-//     let init () =
-//         // Initialization.
-//         (document.getElementById "submitButton").onclick <- (fun _ -> start ())
+    //     let init () =
+    //         // Initialization.
+    //         (document.getElementById "submitButton").onclick <- (fun _ -> start ())
 
-//         [ "helpButton"; "helpBarrier"; "helpClose" ]
-//         |> List.iter (fun x ->
-//             (document.getElementById x).onclick <-
-//                 (fun _ ->
-//                     [ "helpWindow"; "helpBarrier" ]
-//                     |> List.iter (fun x -> (document.getElementById x).classList.toggle "active" |> ignore)))
+    //         [ "helpButton"; "helpBarrier"; "helpClose" ]
+    //         |> List.iter (fun x ->
+    //             (document.getElementById x).onclick <-
+    //                 (fun _ ->
+    //                     [ "helpWindow"; "helpBarrier" ]
+    //                     |> List.iter (fun x -> (document.getElementById x).classList.toggle "active" |> ignore)))
 
-//         let rInput = (document.getElementById "rInput" :?> HTMLInputElement)
-//         let gInput = (document.getElementById "gInput" :?> HTMLInputElement)
-//         let bInput = (document.getElementById "bInput" :?> HTMLInputElement)
-//         let stepInput = (document.getElementById "stepInput" :?> HTMLInputElement)
-//         let limitInput = (document.getElementById "limitInput" :?> HTMLInputElement)
+    //         let rInput = (document.getElementById "rInput" :?> HTMLInputElement)
+    //         let gInput = (document.getElementById "gInput" :?> HTMLInputElement)
+    //         let bInput = (document.getElementById "bInput" :?> HTMLInputElement)
+    //         let stepInput = (document.getElementById "stepInput" :?> HTMLInputElement)
+    //         let limitInput = (document.getElementById "limitInput" :?> HTMLInputElement)
 
-//         rInput.oninput <- fun _ -> start' rInput.value gInput.value bInput.value stepInput.value limitInput.value
-//         gInput.oninput <- fun _ -> start' rInput.value gInput.value bInput.value stepInput.value limitInput.value
-//         bInput.oninput <- fun _ -> start' rInput.value gInput.value bInput.value stepInput.value limitInput.value
-//         stepInput.oninput <- fun _ -> start' rInput.value gInput.value bInput.value stepInput.value limitInput.value
-//         limitInput.oninput <- fun _ -> start' rInput.value gInput.value bInput.value stepInput.value limitInput.value
+    //         rInput.oninput <- fun _ -> start' rInput.value gInput.value bInput.value stepInput.value limitInput.value
+    //         gInput.oninput <- fun _ -> start' rInput.value gInput.value bInput.value stepInput.value limitInput.value
+    //         bInput.oninput <- fun _ -> start' rInput.value gInput.value bInput.value stepInput.value limitInput.value
+    //         stepInput.oninput <- fun _ -> start' rInput.value gInput.value bInput.value stepInput.value limitInput.value
+    //         limitInput.oninput <- fun _ -> start' rInput.value gInput.value bInput.value stepInput.value limitInput.value
 
-//         document.onkeydown <- (fun (e: KeyboardEvent) -> keyboardshortcut e)
-// //        (document.getElementById "inputArea").onsubmit <- (fun _ -> start())
+    //         document.onkeydown <- (fun (e: KeyboardEvent) -> keyboardshortcut e)
+    // //        (document.getElementById "inputArea").onsubmit <- (fun _ -> start())
     let init'' () =
         // Initialization.
         document.title <- "色いろいろ - taidalab"
@@ -322,12 +319,11 @@ module IroIroiro =
                 (document.getElementById "barrier").classList.remove "flagged" |> ignore
                 (document.querySelector "main").classList.remove "flagged" |> ignore)
 
-        (document.querySelector "#headerTitle").innerHTML <-
-            """<h1>色いろいろ - <span translate="no">taidalab</span></h1>"""
+        (document.querySelector "#headerTitle").innerHTML <- """<h1>色いろいろ - <span translate="no">taidalab</span></h1>"""
 
         (document.querySelector "main").innerHTML <- main
         (document.querySelector "#submitButton").className <- "submit-button iro-iroiro"
-        
+
         (document.getElementById "submitButton").onclick <- (fun _ -> start ())
 
         [ "helpButton"; "helpBarrier"; "helpClose" ]

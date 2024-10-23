@@ -24,7 +24,7 @@ module TCPIP =
                 || match last with
                    | None -> false
                    | Some last' ->
-                       List.intersection (Device.networkAddresses last') (Device.networkAddresses next)
+                       List.intersect (Device.networkAddresses last') (Device.networkAddresses next)
                        <> []))
 
     let extendRoute (cables: Cable list) (devices: Device list) (route: Device list) : Device list list =
