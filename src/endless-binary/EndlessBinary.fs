@@ -73,9 +73,9 @@ module EndlessBinary =
                 </div>
             </div>"""
 
-    let newErrorMessageBin (answer: string) (input: string) (error: exn) =
+    let newErrorMessageBin (answer: int) (input: string) (error: exn) =
         match error.GetType().ToString() with
-        | "System.ArgumentException" -> sprintf """<span class="warning">%s の2進法表記を入力してください。</span>""" answer
+        | "System.ArgumentException" -> sprintf """<span class="warning">%d の2進法表記を入力してください。</span>""" answer
         | "System.FormatException" ->
             sprintf """<span class="warning">'%s' は2進数ではありません。使えるのは半角の 0 と 1 のみです。</span>""" input
         | "System.OverflowException" ->

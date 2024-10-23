@@ -141,7 +141,7 @@ module EndlessBinary =
             </div>
             """
 
-        let newHintRepeatAddition number (power_of_twos: int list) =
+        let newHintRepeatAddition (dec: Dec) (power_of_twos: int list) : string =
             let additionDec = power_of_twos |> List.map string |> String.concat " + "
 
             let additionIndex =
@@ -152,9 +152,25 @@ module EndlessBinary =
 
             let additionBin =
                 power_of_twos
-                |> List.map Dec.toBin
-                |> List.map (sprintf "%s<sub>(2)</sub>")
+                |> List.map (Dec.Valid >> Dec.toBin)
+                |> List.map (function
+                    | Bin.Valid v -> v
+                    | Bin.Invalid _ -> "")
+                |> List.map (fun x -> $"%s{x}<sub>(2)</sub>")
                 |> String.concat " + "
+
+            let bin: string =
+                dec
+                |> Dec.toBin
+                |> function
+                    | Bin.Valid v -> v
+                    | Bin.Invalid _ -> "-1"
+
+            let number: int =
+                dec
+                |> function
+                    | Dec.Valid v -> v
+                    | Dec.Invalid _ -> -1
 
             $"""
             <p class="history-indented">
@@ -193,7 +209,7 @@ module EndlessBinary =
             </p>
             <p class="history-indented hint-bgcolor-gray mono regular">
                 &nbsp;&nbsp;%s{additionBin}<br>
-                = %s{number |> Dec.toBin}<sub>(2)</sub>
+                = %s{bin}<sub>(2)</sub>
             </p>
             <p class="history-indented">
                 になります。
@@ -207,7 +223,7 @@ module EndlessBinary =
                 <h3>考え方 1</h3>
                 %s{(newHintRepeatDivision 2 number)}
                 <h3>考え方 2</h3>
-                %s{(newHintRepeatAddition number (devideIntoPowerOfTwo number))}
+                %s{(newHintRepeatAddition (Dec.Valid number) (devideIntoPowerOfTwo number))}
             </details>
             """
 
@@ -234,109 +250,106 @@ module EndlessBinary =
                     (document.getElementById "hintDetails").setAttribute ("open", "true"))
 
         let rec checkAnswer
-            (questionGenerator: 'c list -> 'c)
-            (hintGenerator: 'a -> 'b)
-            (errorGenerator: 'd -> 'e -> 'f -> 'g)
-            validator
-            converter
+            (questionGenerator: int list -> int)
+            (hintGenerator: int -> string)
+            (errorGenerator: 'd -> 'e -> exn -> string)
+            (converter: string -> Dec)
             tagger
             (additional: 'c -> unit)
             sourceRadix
             destinationRadix
             (answersToKeep: int)
-            (answer: string)
+            (answer: int)
             (last_answers: int list)
             =
             // Getting the user input.
             let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
             let input = numberInput.value |> escapeHtml
-            let validated: Result<string, Errors.Errors> = input |> validator
 
             numberInput.focus ()
 
-            match validated with
-            | Error(error: Errors.Errors) ->
+            match input |> Dec.validate |> Dec.toBin with
+            | Bin.Invalid e ->
                 // Making an error message.
-                (document.getElementById "errorArea").innerHTML <- errorGenerator answer input error
-            | Ok validated ->
+                (document.getElementById "errorArea").innerHTML <- errorGenerator answer input e
+            | Bin.Valid v ->
                 (document.getElementById "errorArea").innerHTML <- ""
 
                 // Converting the input in order to use in the history message.
-                let colored = validated |> tagger //padWithZero binaryDigit |> colorLeadingZero
-                let converted = validated |> converter
+                let colored = v |> tagger //padWithZero binaryDigit |> colorLeadingZero
 
                 let decimalDigit = 3
 
-                let spacePadded =
-                    converted |> string |> Fermata.String.padLeft decimalDigit ' ' |> escapeSpace
+                match converter v with
+                | Dec.Invalid _ -> ()
+                | Dec.Valid v ->
+                    let spacePadded =
+                        v |> string |> Fermata.String.padLeft decimalDigit ' ' |> escapeSpace
 
-                // Making a new history and updating the history with the new one.
-                let outputArea = document.getElementById "outputArea" :?> HTMLParagraphElement
+                    // Making a new history and updating the history with the new one.
+                    let outputArea = document.getElementById "outputArea" :?> HTMLParagraphElement
 
-                let historyMessage =
-                    newHistory (converted = int answer) colored destinationRadix spacePadded sourceRadix
-                    |> (fun x -> concatinateStrings "<br>" [ x; outputArea.innerHTML ])
+                    let historyMessage =
+                        newHistory (v = int answer) colored destinationRadix spacePadded sourceRadix
+                        |> (fun x -> concatinateStrings "<br>" [ x; outputArea.innerHTML ])
 
-                outputArea.innerHTML <- historyMessage
+                    outputArea.innerHTML <- historyMessage
 
-                if converted <> int answer then
-                    ()
-                else
-                    // Making the next question.
-                    let nextNumber = questionGenerator last_answers
-                    (document.getElementById "questionSpan").innerText <- string nextNumber
-                    (document.getElementById "hintArea").innerHTML <- hintGenerator nextNumber
-                    additional nextNumber
+                    if v <> int answer then
+                        ()
+                    else
+                        // Making the next question.
+                        let nextNumber: int = questionGenerator last_answers
+                        (document.getElementById "questionSpan").innerText <- string nextNumber
+                        (document.getElementById "hintArea").innerHTML <- hintGenerator nextNumber
+                        additional nextNumber
 
-                    numberInput.value <- ""
+                        numberInput.value <- ""
 
-                    // Updating `lastAnswers`.
-                    // These numbers will not be used for the next question.
-                    let lastAnswers' = (nextNumber :: last_answers) |> List.truncate answersToKeep
+                        // Updating `lastAnswers`.
+                        // These numbers will not be used for the next question.
+                        let lastAnswers' = (nextNumber :: last_answers) |> List.truncate answersToKeep
 
-                    // Setting the next answer to the check button.
-                    (document.getElementById "submitButton").onclick <-
-                        (fun e ->
-                            e.preventDefault ()
+                        // Setting the next answer to the check button.
+                        (document.getElementById "submitButton").onclick <-
+                            (fun e ->
+                                e.preventDefault ()
 
-                            checkAnswer
-                                questionGenerator
-                                hintGenerator
-                                errorGenerator
-                                validator
-                                converter
-                                tagger
-                                additional
-                                sourceRadix
-                                destinationRadix
-                                answersToKeep
-                                (string nextNumber)
-                                lastAnswers')
+                                checkAnswer
+                                    questionGenerator
+                                    hintGenerator
+                                    errorGenerator
+                                    converter
+                                    tagger
+                                    additional
+                                    sourceRadix
+                                    destinationRadix
+                                    answersToKeep
+                                    nextNumber
+                                    lastAnswers')
 
-                    (document.getElementById "inputArea").onsubmit <-
-                        (fun e ->
-                            e.preventDefault ()
+                        (document.getElementById "inputArea").onsubmit <-
+                            (fun e ->
+                                e.preventDefault ()
 
-                            checkAnswer
-                                questionGenerator
-                                hintGenerator
-                                errorGenerator
-                                validator
-                                converter
-                                tagger
-                                additional
-                                sourceRadix
-                                destinationRadix
-                                answersToKeep
-                                (string nextNumber)
-                                lastAnswers')
+                                checkAnswer
+                                    questionGenerator
+                                    hintGenerator
+                                    errorGenerator
+                                    converter
+                                    tagger
+                                    additional
+                                    sourceRadix
+                                    destinationRadix
+                                    answersToKeep
+                                    nextNumber
+                                    lastAnswers')
 
 
         let init'
-            (questionGenerator: 'c list -> 'c)
-            (hintGenerator: 'a -> 'b)
-            (errorGenerator: 'd -> 'e -> 'f -> 'g)
-            validator
+            (questionGenerator: int list -> int)
+            (hintGenerator: int -> string)
+            (errorGenerator: 'd -> 'e -> exn -> string)
             converter
             tagger
             (additional: 'c -> unit)
@@ -347,7 +360,7 @@ module EndlessBinary =
             checker
             : unit =
             // Initialization.
-            let initNumber = questionGenerator []
+            let initNumber: int = questionGenerator []
             (document.getElementById "questionSpan").innerText <- string initNumber
             (document.getElementById "srcRadix").innerText <- sprintf "(%d)" sourceRadix
             (document.getElementById "dstRadix").innerText <- string destinationRadix
@@ -362,14 +375,13 @@ module EndlessBinary =
                         questionGenerator
                         hintGenerator
                         errorGenerator
-                        validator
                         converter
                         tagger
                         additional
                         sourceRadix
                         destinationRadix
                         answersToKeep
-                        (string initNumber)
+                        initNumber
                         [ initNumber ])
 
             (document.getElementById "inputArea").onsubmit <-
@@ -380,14 +392,13 @@ module EndlessBinary =
                         questionGenerator
                         hintGenerator
                         errorGenerator
-                        validator
                         converter
                         tagger
                         additional
                         sourceRadix
                         destinationRadix
                         answersToKeep
-                        (string initNumber)
+                        initNumber
                         [ initNumber ])
 
             additional initNumber
@@ -429,8 +440,7 @@ module EndlessBinary =
                 (question 4)
                 hint
                 newErrorMessageBin
-                Bin.validate
-                Bin.toDec
+                (Bin.validate >> Bin.toDec)
                 (padWithZero 4 >> colorLeadingZero)
                 additional
                 10
@@ -469,8 +479,7 @@ module EndlessBinary =
                 (question 8)
                 hint
                 newErrorMessageBin
-                Bin.validate
-                Bin.toDec
+                (Bin.validate >> Bin.toDec)
                 (padWithZero 8 >> colorLeadingZero)
                 additional
                 10
