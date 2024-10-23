@@ -160,12 +160,14 @@ module NetworkSimulator =
                         | Error e ->
                             let name = document.getElementById(container.id + "Name").innerText
 
-                            match e.GetType().ToString() with
-                            | "Errors.NullOrEmpty"
-                            | "Errors.EmptyString" -> errorArea.innerText <- $"%s{name} の %s{identifier} を入力してください。"
-                            | "Errors.WrongFormat" -> errorArea.innerText <- $"%s{name} の %s{identifier} の形式が正しくありません。"
-                            | "Errors.OutOfRange" ->
+                            match e with
+                            | :? System.ArgumentOutOfRangeException ->
                                 errorArea.innerText <- $"%s{name} の %s{identifier} の数値の範囲が正しくありません。"
+                            | :? System.ArgumentNullException
+                            | :? System.ArgumentException ->
+                                errorArea.innerText <- $"%s{name} の %s{identifier} を入力してください。"
+                            | :? System.FormatException ->
+                                errorArea.innerText <- $"%s{name} の %s{identifier} の形式が正しくありません。"
                             | _ -> errorArea.innerText <- "不明なエラーです。"
 
                             JS.setTimeout (fun _ -> elm.focus ()) 0 |> ignore)
@@ -1103,22 +1105,22 @@ module NetworkSimulator =
 
                 match sourceIPv4 with
                 | Error e ->
-                    match e.GetType().ToString() with
-                    | "Errors.NullOrEmpty"
-                    | "Errors.EmptyString" -> errorArea.innerText <- "送信元 IPv4 を入力してください。"
-                    | "Errors.WrongFormat" -> errorArea.innerText <- "送信元 IPv4 の形式が正しくありません。"
-                    | "Errors.OutOfRange" -> errorArea.innerText <- "送信元 IPv4 の数値の範囲が正しくありません。"
+                    match e with
+                    | :? System.ArgumentOutOfRangeException -> errorArea.innerText <- "送信元 IPv4 の数値の範囲が正しくありません。"
+                    | :? System.ArgumentNullException -> errorArea.innerText <- "送信元 IPv4 を入力してください。"
+                    | :? System.ArgumentException
+                    | :? System.FormatException -> errorArea.innerText <- "送信元 IPv4 の形式が正しくありません。"
                     | _ -> errorArea.innerText <- "不明なエラーです。"
 
                     sourceInput.focus ()
                 | Ok sourceIPv4 ->
                     match destinationIPv4 with
                     | Error e ->
-                        match e.GetType().ToString() with
-                        | "Errors.NullOrEmpty"
-                        | "Errors.EmptyString" -> errorArea.innerText <- "送信先 IPv4 を入力してください。"
-                        | "Errors.WrongFormat" -> errorArea.innerText <- "送信先 IPv4 の形式が正しくありません。"
-                        | "Errors.OutOfRange" -> errorArea.innerText <- "送信先 IPv4 の数値の範囲が正しくありません。"
+                        match e with
+                        | :? System.ArgumentOutOfRangeException -> errorArea.innerText <- "送信先 IPv4 の数値の範囲が正しくありません。"
+                        | :? System.ArgumentNullException -> errorArea.innerText <- "送信先 IPv4 を入力してください。"
+                        | :? System.ArgumentException
+                        | :? System.FormatException -> errorArea.innerText <- "送信先 IPv4 の形式が正しくありません。"
                         | _ -> errorArea.innerText <- "不明なエラーです。"
 
                         destinationInput.focus ()

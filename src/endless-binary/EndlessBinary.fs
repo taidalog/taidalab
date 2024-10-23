@@ -5,7 +5,6 @@
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
 namespace Taidalab
 
-open System
 open Browser.Types
 open Fable.Core
 open Fable.Core.JsInterop
@@ -74,29 +73,29 @@ module EndlessBinary =
             </div>"""
 
     let newErrorMessageBin (answer: string) (input: string) (error: exn) =
-        match error.GetType().ToString() with
-        | "System.ArgumentException" -> sprintf """<span class="warning">%s の2進法表記を入力してください。</span>""" answer
-        | "System.FormatException" ->
+        match error with
+        | :? System.ArgumentException -> sprintf """<span class="warning">%s の2進法表記を入力してください。</span>""" answer
+        | :? System.FormatException ->
             sprintf """<span class="warning">'%s' は2進数ではありません。使えるのは半角の 0 と 1 のみです。</span>""" input
-        | "System.OverflowException" ->
+        | :? System.OverflowException ->
             sprintf """<span class="warning">'%s' は入力できる数値の範囲を越えています。入力できるのは xxx ~ yyy の間です。</span>""" input
         | _ -> "不明なエラーです。"
 
     let newErrorMessageDec (answer: string) (input: string) (error: exn) =
-        match error.GetType().ToString() with
-        | "System.ArgumentException" -> sprintf """<span class="warning">%s の10進法表記を入力してください。</span>""" answer
-        | "System.FormatException" ->
+        match error with
+        | :? System.ArgumentException -> sprintf """<span class="warning">%s の10進法表記を入力してください。</span>""" answer
+        | :? System.FormatException ->
             sprintf """<span class="warning">'%s' は10進数ではありません。使えるのは半角の 0123456789 のみです。</span>""" input
-        | "System.OverflowException" ->
+        | :? System.OverflowException ->
             sprintf """<span class="warning">'%s' は入力できる数値の範囲を越えています。入力できるのは xxx ~ yyy の間です。</span>""" input
         | _ -> "不明なエラーです。"
 
     let newErrorMessageHex (answer: int) (input: string) (error: exn) =
-        match error.GetType().ToString() with
-        | "System.ArgumentException" -> sprintf """<span class="warning">%d の16進法表記を入力してください。</span>""" answer
-        | "System.FormatException" ->
+        match error with
+        | :? System.ArgumentException -> sprintf """<span class="warning">%d の16進法表記を入力してください。</span>""" answer
+        | :? System.FormatException ->
             sprintf """<span class="warning">'%s' は16進数ではありません。使えるのは半角の 0123456789ABCDEF のみです。</span>""" input
-        | "System.OverflowException" ->
+        | :? System.OverflowException ->
             sprintf """<span class="warning">'%s' は入力できる数値の範囲を越えています。入力できるのは xxx ~ yyy の間です。</span>""" input
         | _ -> "不明なエラーです。"
 

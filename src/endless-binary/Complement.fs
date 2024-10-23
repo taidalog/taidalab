@@ -10,7 +10,6 @@ open Browser.Dom
 open Browser.Types
 open Taidalab.Number
 open Taidalab.Text
-open Fermata
 open Fermata.RadixConversion
 
 module EndlessBinary =
@@ -60,10 +59,10 @@ module EndlessBinary =
             match Bin.validate input with
             | Bin.Invalid e ->
                 // Making an error message.
-                match e.GetType().ToString() with
-                | "System.ArgumentException" ->
+                match e with
+                | :? System.ArgumentException ->
                     sprintf """<span class="warning">%s の補数を、2進法表記を入力してください。</span>""" question
-                | "System.FormatException" ->
+                | :? System.FormatException ->
                     sprintf """<span class="warning">'%s' は2進数ではありません。使えるのは半角の 0 と 1 のみです。</span>""" input
                 | _ -> "不明なエラーです。"
                 |> fun x -> (document.getElementById "errorArea").innerHTML <- x
