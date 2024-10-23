@@ -51,40 +51,35 @@ module EndlessBinary =
                 </p>
             </details>"""
 
-        let rec checkAnswer (question: string) answer (last_answers: int list) =
+        let rec checkAnswer (question: string) (answer: int) (last_answers: int list) =
             // Getting the user input.
             let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
             let input = numberInput.value |> escapeHtml
-            let bin: Result<string, Errors.Errors> = input |> Bin.validate
-
             numberInput.focus ()
 
-            match bin with
-            | Error(error: Errors.Errors) ->
+            match Bin.validate input with
+            | Bin.Invalid e ->
                 // Making an error message.
-                match error with
-                | Fermata.Errors.Errors.EmptyString
-                | Fermata.Errors.Errors.NullOrEmpty
-                | Fermata.Errors.Errors.OutOfRange ->
-                    question
-                    |> String.replace "" ""
-                    |> sprintf """<span class="warning">%s の補数を、2進法表記で入力してください。</span>"""
-                | Fermata.Errors.Errors.WrongFormat ->
+                match e.GetType().ToString() with
+                | "System.ArgumentException" ->
+                    sprintf """<span class="warning">%s の補数を、2進法表記を入力してください。</span>""" question
+                | "System.FormatException" ->
                     sprintf """<span class="warning">'%s' は2進数ではありません。使えるのは半角の 0 と 1 のみです。</span>""" input
+                | _ -> "不明なエラーです。"
                 |> fun x -> (document.getElementById "errorArea").innerHTML <- x
-            | Ok(bin: string) ->
+            | Bin.Valid v ->
                 (document.getElementById "errorArea").innerHTML <- ""
-                let dec = Bin.toDec bin
+                let dec: Dec = Bin.Valid v |> Bin.toDec
 
                 let historyClassName =
-                    if dec = answer then
+                    if dec = Dec.Valid answer then
                         "history history-correct"
                     else
                         "history history-wrong"
 
                 // Converting the input in order to use in the history message.
                 let digit = 4
-                let taggedInputValue = bin |> padWithZero digit
+                let taggedInputValue = v |> padWithZero digit
                 let sourceRadix = 2
 
                 // Making a new history and updating the history with the new one.
@@ -100,13 +95,22 @@ module EndlessBinary =
 
                 outputArea.innerHTML <- historyMessage
 
-                if dec = answer then
+                if dec = Dec.Valid answer then
                     // Making the next question.
                     let nextNumber =
                         newNumber (fun _ -> getRandomBetween 1 15) (fun n -> List.contains n last_answers = false)
 
                     let nextAnswer = 16 - nextNumber
-                    let nextBin = nextNumber |> Dec.toBin |> Fermata.String.padLeft 4 '0'
+
+                    let nextBin =
+                        nextNumber
+                        |> Dec.Valid
+                        |> Dec.toBin
+                        |> function
+                            | Bin.Valid v -> v
+                            | Bin.Invalid _ -> ""
+                        |> Fermata.String.padLeft 4 '0'
+
                     (document.getElementById "questionSpan").innerText <- nextBin
 
                     let reversedBin = nextBin |> String.collect (fun c -> if c = '1' then "0" else "1")
@@ -204,7 +208,16 @@ module EndlessBinary =
 
             let initNumber = getRandomBetween 1 15
             let initAnswer = 16 - initNumber
-            let initBin = initNumber |> Dec.toBin |> Fermata.String.padLeft 4 '0'
+
+            let initBin =
+                initNumber
+                |> Dec.Valid
+                |> Dec.toBin
+                |> function
+                    | Bin.Valid v -> v
+                    | Bin.Invalid _ -> ""
+                |> Fermata.String.padLeft 4 '0'
+
             let reversedBin = initBin |> String.collect (fun c -> if c = '1' then "0" else "1")
             (document.getElementById "questionSpan").innerText <- initBin
             (document.getElementById "srcRadix").innerText <- sprintf "(%d)" sourceRadix
