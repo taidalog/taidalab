@@ -34,6 +34,6 @@ module Text =
     let colorLeadingZero str =
         str
         |> (String.rev >> String.tail >> String.rev)
-        |> String.splitWith ((<>) '0')
+        |> String.splitFind ((<>) '0')
         |> fun (left, right) -> $"""<span class="zero-gray">%s{left}</span>%s{right}"""
         |> fun x -> x + (str |> String.last)
