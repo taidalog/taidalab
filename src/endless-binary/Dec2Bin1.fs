@@ -252,7 +252,7 @@ module EndlessBinary =
         let rec checkAnswer
             (questionGenerator: int list -> int)
             (hintGenerator: int -> string)
-            (errorGenerator: 'd -> 'e -> exn -> string)
+            (errorGenerator: int -> string -> exn -> string)
             (converter: string -> Dec)
             tagger
             (additional: 'c -> unit)
@@ -349,7 +349,7 @@ module EndlessBinary =
         let init'
             (questionGenerator: int list -> int)
             (hintGenerator: int -> string)
-            (errorGenerator: 'd -> 'e -> exn -> string)
+            (errorGenerator: int -> string -> exn -> string)
             converter
             tagger
             (additional: 'c -> unit)
