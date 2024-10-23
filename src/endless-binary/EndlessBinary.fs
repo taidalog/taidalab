@@ -5,6 +5,7 @@
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
 namespace Taidalab
 
+open System
 open Browser.Types
 open Fable.Core
 open Fable.Core.JsInterop
@@ -72,31 +73,32 @@ module EndlessBinary =
                 </div>
             </div>"""
 
-    let newErrorMessageBin answer input (error: Errors.Errors) =
-        match error with
-        | Errors.EmptyString
-        | Errors.NullOrEmpty -> sprintf """<span class="warning">%s の2進法表記を入力してください。</span>""" answer
-        | Errors.WrongFormat -> sprintf """<span class="warning">'%s' は2進数ではありません。使えるのは半角の 0 と 1 のみです。</span>""" input
-        | Errors.OutOfRange ->
+    let newErrorMessageBin (answer: string) (input: string) (error: exn) =
+        match error.GetType().ToString() with
+        | "System.ArgumentException" -> sprintf """<span class="warning">%s の2進法表記を入力してください。</span>""" answer
+        | "System.FormatException" ->
+            sprintf """<span class="warning">'%s' は2進数ではありません。使えるのは半角の 0 と 1 のみです。</span>""" input
+        | "System.OverflowException" ->
             sprintf """<span class="warning">'%s' は入力できる数値の範囲を越えています。入力できるのは xxx ~ yyy の間です。</span>""" input
+        | _ -> "不明なエラーです。"
 
-    let newErrorMessageDec answer input (error: Errors.Errors) =
-        match error with
-        | Errors.EmptyString
-        | Errors.NullOrEmpty -> sprintf """<span class="warning">%s の10進法表記を入力してください。</span>""" answer
-        | Errors.WrongFormat ->
+    let newErrorMessageDec (answer: string) (input: string) (error: exn) =
+        match error.GetType().ToString() with
+        | "System.ArgumentException" -> sprintf """<span class="warning">%s の10進法表記を入力してください。</span>""" answer
+        | "System.FormatException" ->
             sprintf """<span class="warning">'%s' は10進数ではありません。使えるのは半角の 0123456789 のみです。</span>""" input
-        | Errors.OutOfRange ->
+        | "System.OverflowException" ->
             sprintf """<span class="warning">'%s' は入力できる数値の範囲を越えています。入力できるのは xxx ~ yyy の間です。</span>""" input
+        | _ -> "不明なエラーです。"
 
-    let newErrorMessageHex answer input (error: Errors.Errors) =
-        match error with
-        | Errors.EmptyString
-        | Errors.NullOrEmpty -> sprintf """<span class="warning">%s の16進法表記を入力してください。</span>""" answer
-        | Errors.WrongFormat ->
+    let newErrorMessageHex (answer: string) (input: string) (error: exn) =
+        match error.GetType().ToString() with
+        | "System.ArgumentException" -> sprintf """<span class="warning">%s の16進法表記を入力してください。</span>""" answer
+        | "System.FormatException" ->
             sprintf """<span class="warning">'%s' は16進数ではありません。使えるのは半角の 0123456789ABCDEF のみです。</span>""" input
-        | Errors.OutOfRange ->
+        | "System.OverflowException" ->
             sprintf """<span class="warning">'%s' は入力できる数値の範囲を越えています。入力できるのは xxx ~ yyy の間です。</span>""" input
+        | _ -> "不明なエラーです。"
 
     let newHistory correct input destination_radix converted_input source_radix =
         let historyClassName =
@@ -117,15 +119,31 @@ module EndlessBinary =
         </div>
         """
 
-    let splitBinaryStringBy digit str =
-        str |> String.chunkBySizeRight digit |> Seq.toList |> String.concat " "
+    let splitBinaryStringBy digit bin =
+        match bin with
+        | Bin.Invalid _ -> ""
+        | Bin.Valid v -> v |> String.chunkBySizeRight digit |> Seq.toList |> String.concat " "
 
     open Browser.Dom
 
-    let setColumnAddition number1 number2 =
-        let bin1 = number1 |> Dec.toBin |> Seq.map string |> Seq.padLeft 8 ""
+    let setColumnAddition (number1: Dec) (number2: Dec) =
+        let bin1 =
+            number1
+            |> Dec.toBin
+            |> function
+                | Bin.Valid v -> v
+                | Bin.Invalid _ -> ""
+            |> Seq.map string
+            |> Seq.padLeft 8 ""
 
-        let bin2 = number2 |> Dec.toBin |> Seq.map string |> Seq.padLeft 8 ""
+        let bin2 =
+            number2
+            |> Dec.toBin
+            |> function
+                | Bin.Valid v -> v
+                | Bin.Invalid _ -> ""
+            |> Seq.map string
+            |> Seq.padLeft 8 ""
 
         bin1
         |> Seq.iteri (fun i x ->
