@@ -255,7 +255,7 @@ module EndlessBinary =
             (errorGenerator: string -> string -> exn -> string)
             (converter: string -> Dec)
             tagger
-            (additional: 'c -> unit)
+            (additional: int -> unit)
             sourceRadix
             destinationRadix
             (answersToKeep: int)
@@ -352,7 +352,7 @@ module EndlessBinary =
             (errorGenerator: string -> string -> exn -> string)
             converter
             tagger
-            (additional: 'c -> unit)
+            (additional: int -> unit)
             sourceRadix
             destinationRadix
             (answersToKeep: int)
