@@ -252,7 +252,7 @@ module EndlessBinary =
         let rec checkAnswer
             (questionGenerator: int list -> int)
             (hintGenerator: int -> string)
-            (errorGenerator: int -> string -> exn -> string)
+            (errorGenerator: string -> string -> exn -> string)
             (converter: string -> Dec)
             tagger
             (additional: 'c -> unit)
@@ -271,7 +271,7 @@ module EndlessBinary =
             match input |> Dec.validate |> Dec.toBin with
             | Bin.Invalid e ->
                 // Making an error message.
-                (document.getElementById "errorArea").innerHTML <- errorGenerator answer input e
+                (document.getElementById "errorArea").innerHTML <- errorGenerator (string answer) input e
             | Bin.Valid v ->
                 (document.getElementById "errorArea").innerHTML <- ""
 
@@ -349,7 +349,7 @@ module EndlessBinary =
         let init'
             (questionGenerator: int list -> int)
             (hintGenerator: int -> string)
-            (errorGenerator: int -> string -> exn -> string)
+            (errorGenerator: string -> string -> exn -> string)
             converter
             tagger
             (additional: 'c -> unit)
