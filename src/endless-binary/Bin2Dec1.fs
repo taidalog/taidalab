@@ -1,4 +1,4 @@
-﻿// taidalab Version 4.6.3
+﻿// taidalab Version 5.0.0
 // https://github.com/taidalog/taidalab
 // Copyright (c) 2022-2024 taidalog
 // This software is licensed under the MIT License.
@@ -187,28 +187,28 @@ module EndlessBinary =
 
                     // Setting the next answer to the check button.
                     (document.getElementById "submitButton").onclick <-
-                        (fun _ ->
+                        (fun e ->
+                            e.preventDefault ()
+
                             checkAnswer
                                 questionGenerator
                                 hintGenerator
                                 additional
                                 (string nextNumber)
                                 splitBin
-                                lastAnswers
-
-                            false)
+                                lastAnswers)
 
                     (document.getElementById "inputArea").onsubmit <-
-                        (fun _ ->
+                        (fun e ->
+                            e.preventDefault ()
+
                             checkAnswer
                                 questionGenerator
                                 hintGenerator
                                 additional
                                 (string nextNumber)
                                 splitBin
-                                lastAnswers
-
-                            false)
+                                lastAnswers)
 
 
         let init'
@@ -232,14 +232,14 @@ module EndlessBinary =
             (document.getElementById "hintArea").innerHTML <- hintGenerator initBin
 
             (document.getElementById "submitButton").onclick <-
-                (fun _ ->
-                    checker questionGenerator hintGenerator additional (string initNumber) splitBin [ initNumber ]
-                    false)
+                (fun e ->
+                    e.preventDefault ()
+                    checker questionGenerator hintGenerator additional (string initNumber) splitBin [ initNumber ])
 
             (document.getElementById "inputArea").onsubmit <-
-                (fun _ ->
-                    checker questionGenerator hintGenerator additional (string initNumber) splitBin [ initNumber ]
-                    false)
+                (fun e ->
+                    e.preventDefault ()
+                    checker questionGenerator hintGenerator additional (string initNumber) splitBin [ initNumber ])
 
             (document.getElementById "helpButton").onclick <-
                 (fun _ ->
@@ -259,4 +259,29 @@ module EndlessBinary =
             document.onkeydown <- (fun (e: KeyboardEvent) -> keyboardshortcutSetter e)
 
         let init () =
+            document.title <- "2進数→10進数 (1) - taidalab"
+
+            let header = document.querySelector "header"
+            header.innerHTML <- Content.Common.header
+            header.className <- "bin2dec"
+
+            (document.getElementById "hamburgerButton").onclick <-
+                (fun _ ->
+                    (document.querySelector "aside").classList.toggle "flagged" |> ignore
+                    (document.getElementById "barrier").classList.toggle "flagged" |> ignore
+                    (document.querySelector "main").classList.toggle "flagged" |> ignore)
+
+            (document.getElementById "barrier").onclick <-
+                (fun _ ->
+                    (document.querySelector "aside").classList.remove "flagged" |> ignore
+                    (document.getElementById "barrier").classList.remove "flagged" |> ignore
+                    (document.querySelector "main").classList.remove "flagged" |> ignore)
+
+            (document.querySelector "#headerTitle").innerHTML <-
+                """<h1>2進数→10進数 (1) - <span translate="no">taidalab</span></h1>"""
+
+            (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help "help-color bin2dec"
+            (document.querySelector "#submitButton").className <- "submit-button display-order-3 bin2dec"
+            (document.querySelector "#questionArea").innerHTML <- Content.Common.question
+
             init' question' hint additional EndlessBinary.keyboardshortcut checkAnswer

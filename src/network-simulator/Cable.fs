@@ -1,4 +1,4 @@
-// taidalab Version 4.6.3
+// taidalab Version 5.0.0
 // https://github.com/taidalog/taidalab
 // Copyright (c) 2022-2024 taidalog
 // This software is licensed under the MIT License.
@@ -99,9 +99,6 @@ module Cable =
         let polyline = document.createElementNS ("http://www.w3.org/2000/svg", "polyline")
         polyline.id <- $"{cable.Id}Polyline"
         polyline.setAttribute ("points", $"""%s{cable.Points |> List.map Point.toCoordinate |> String.concat " "}""")
-        polyline.setAttribute ("fill", "none")
-        polyline.setAttribute ("stroke", "#00aeda")
-        polyline.setAttribute ("stroke-width", "5")
 
         g.appendChild (title) |> ignore
         g.appendChild (polyline) |> ignore

@@ -1,4 +1,4 @@
-﻿// taidalab Version 4.6.3
+﻿// taidalab Version 5.0.0
 // https://github.com/taidalog/taidalab
 // Copyright (c) 2022-2024 taidalog
 // This software is licensed under the MIT License.
@@ -10,7 +10,6 @@ open Browser.Dom
 open Browser.Types
 open Taidalab.Number
 open Taidalab.Text
-open Taidalab.EndlessBinary
 open Fermata
 open Fermata.RadixConversion
 
@@ -122,18 +121,42 @@ module EndlessBinary =
 
                     // Setting the next answer to the check button.
                     (document.getElementById "submitButton").onclick <-
-                        (fun _ ->
-                            checkAnswer nextBin nextAnswer lastAnswers
-                            false)
+                        (fun e ->
+                            e.preventDefault ()
+                            checkAnswer nextBin nextAnswer lastAnswers)
 
                     (document.getElementById "inputArea").onsubmit <-
-                        (fun _ ->
-                            checkAnswer nextBin nextAnswer lastAnswers
-                            false)
-
+                        (fun e ->
+                            e.preventDefault ()
+                            checkAnswer nextBin nextAnswer lastAnswers)
 
         let init () =
             // Initialization.
+            document.title <- "補数 - taidalab"
+
+            let header = document.querySelector "header"
+            header.innerHTML <- Content.Common.header
+            header.className <- "complement"
+
+            (document.getElementById "hamburgerButton").onclick <-
+                (fun _ ->
+                    (document.querySelector "aside").classList.toggle "flagged" |> ignore
+                    (document.getElementById "barrier").classList.toggle "flagged" |> ignore
+                    (document.querySelector "main").classList.toggle "flagged" |> ignore)
+
+            (document.getElementById "barrier").onclick <-
+                (fun _ ->
+                    (document.querySelector "aside").classList.remove "flagged" |> ignore
+                    (document.getElementById "barrier").classList.remove "flagged" |> ignore
+                    (document.querySelector "main").classList.remove "flagged" |> ignore)
+
+            (document.querySelector "#headerTitle").innerHTML <-
+                """<h1>補数 - <span translate="no">taidalab</span></h1>"""
+
+            (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help "help-color complement"
+            (document.querySelector "#submitButton").className <- "submit-button display-order-3 complement"
+            (document.querySelector "#questionArea").innerHTML <- Content.Common.question
+
             let sourceRadix = 2
             let destinationRadix = 2
 
@@ -147,14 +170,14 @@ module EndlessBinary =
             (document.getElementById "hintArea").innerHTML <- hint initBin reversedBin
 
             (document.getElementById "submitButton").onclick <-
-                (fun _ ->
-                    checkAnswer initBin initAnswer [ initNumber ]
-                    false)
+                (fun e ->
+                    e.preventDefault ()
+                    checkAnswer initBin initAnswer [ initNumber ])
 
             (document.getElementById "inputArea").onsubmit <-
-                (fun _ ->
-                    checkAnswer initBin initAnswer [ initNumber ]
-                    false)
+                (fun e ->
+                    e.preventDefault ()
+                    checkAnswer initBin initAnswer [ initNumber ])
 
             (document.getElementById "helpButton").onclick <-
                 (fun _ ->

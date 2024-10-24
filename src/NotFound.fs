@@ -1,4 +1,4 @@
-// taidalab Version 4.6.3
+// taidalab Version 5.0.0
 // https://github.com/taidalog/taidalab
 // Copyright (c) 2022-2024 taidalog
 // This software is licensed under the MIT License.
@@ -52,12 +52,37 @@ module NotFound =
             if dec <> int answer then
                 ()
             else
-                // Redirecting to the home.
-                ("/", Taidalab.Home.main, (fun _ -> ())) |||> InitObject.create |> Page.replace
+                window.history.replaceState (null, "", "http://localhost:8080/taidalab/")
+                Home.init ()
 
 
     let init () =
         // Initialization.
+        document.title <- "404: Page Not Found - taidalab"
+
+        let header = document.querySelector "header"
+        header.innerHTML <- Content.Common.headerNoHelp
+        header.className <- "not-found"
+
+        (document.getElementById "hamburgerButton").onclick <-
+            (fun _ ->
+                (document.querySelector "aside").classList.toggle "flagged" |> ignore
+                (document.getElementById "barrier").classList.toggle "flagged" |> ignore
+                (document.querySelector "main").classList.toggle "flagged" |> ignore)
+
+        (document.getElementById "barrier").onclick <-
+            (fun _ ->
+                (document.querySelector "aside").classList.remove "flagged" |> ignore
+                (document.getElementById "barrier").classList.remove "flagged" |> ignore
+                (document.querySelector "main").classList.remove "flagged" |> ignore)
+
+        (document.querySelector "#headerTitle").innerHTML <-
+            """<h1>404: Page Not Found - <span translate="no">taidalab</span></h1>"""
+
+        (document.querySelector "main").innerHTML <- EndlessBinary.Course.main404
+        (document.querySelector "#submitButton").className <- "submit-button display-order-3 not-found"
+        (document.querySelector "#questionArea").innerHTML <- Content.Common.question
+
         let initNumber = 404
         let sourceRadix = 10
         let destinationRadix = 2
@@ -68,11 +93,11 @@ module NotFound =
         (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
 
         (document.getElementById "submitButton").onclick <-
-            (fun _ ->
-                checkAnswer (string initNumber)
-                false)
+            (fun e ->
+                e.preventDefault ()
+                checkAnswer (string initNumber))
 
         (document.getElementById "inputArea").onsubmit <-
-            (fun _ ->
-                checkAnswer (string initNumber)
-                false)
+            (fun e ->
+                e.preventDefault ()
+                checkAnswer (string initNumber))

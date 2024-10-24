@@ -1,4 +1,4 @@
-// taidalab Version 4.6.3
+// taidalab Version 5.0.0
 // https://github.com/taidalog/taidalab
 // Copyright (c) 2022-2024 taidalog
 // This software is licensed under the MIT License.
@@ -296,7 +296,9 @@ module EndlessBinary =
 
                     // Setting the next answer to the check button.
                     (document.getElementById "submitButton").onclick <-
-                        (fun _ ->
+                        (fun e ->
+                            e.preventDefault ()
+
                             checkAnswer
                                 questionGenerator
                                 hintGenerator
@@ -309,12 +311,12 @@ module EndlessBinary =
                                 destinationRadix
                                 answersToKeep
                                 (string nextNumber)
-                                lastAnswers'
-
-                            false)
+                                lastAnswers')
 
                     (document.getElementById "inputArea").onsubmit <-
-                        (fun _ ->
+                        (fun e ->
+                            e.preventDefault ()
+
                             checkAnswer
                                 questionGenerator
                                 hintGenerator
@@ -327,9 +329,7 @@ module EndlessBinary =
                                 destinationRadix
                                 answersToKeep
                                 (string nextNumber)
-                                lastAnswers'
-
-                            false)
+                                lastAnswers')
 
 
         let init'
@@ -355,7 +355,9 @@ module EndlessBinary =
             (document.getElementById "hintArea").innerHTML <- hintGenerator initNumber
 
             (document.getElementById "submitButton").onclick <-
-                (fun _ ->
+                (fun e ->
+                    e.preventDefault ()
+
                     checker
                         questionGenerator
                         hintGenerator
@@ -368,12 +370,12 @@ module EndlessBinary =
                         destinationRadix
                         answersToKeep
                         (string initNumber)
-                        [ initNumber ]
-
-                    false)
+                        [ initNumber ])
 
             (document.getElementById "inputArea").onsubmit <-
-                (fun _ ->
+                (fun e ->
+                    e.preventDefault ()
+
                     checker
                         questionGenerator
                         hintGenerator
@@ -386,9 +388,7 @@ module EndlessBinary =
                         destinationRadix
                         answersToKeep
                         (string initNumber)
-                        [ initNumber ]
-
-                    false)
+                        [ initNumber ])
 
             additional initNumber
 
@@ -409,21 +409,6 @@ module EndlessBinary =
 
             document.onkeydown <- (fun (e: KeyboardEvent) -> keyboardshortcutSetter e)
 
-        let init () =
-            init'
-                (question 8)
-                hint
-                newErrorMessageBin
-                Bin.validate
-                Bin.toDec
-                (padWithZero 8 >> colorLeadingZero)
-                additional
-                10
-                2
-                10
-                EndlessBinary.keyboardshortcut
-                checkAnswer
-
         let init4 () =
             init'
                 (question 4)
@@ -436,5 +421,45 @@ module EndlessBinary =
                 10
                 2
                 2
+                EndlessBinary.keyboardshortcut
+                checkAnswer
+
+        let init () =
+            document.title <- "10進数→2進数 (1) - taidalab"
+
+            let header = document.querySelector "header"
+            header.innerHTML <- Content.Common.header
+            header.className <- "dec2bin"
+
+            (document.getElementById "hamburgerButton").onclick <-
+                (fun _ ->
+                    (document.querySelector "aside").classList.toggle "flagged" |> ignore
+                    (document.getElementById "barrier").classList.toggle "flagged" |> ignore
+                    (document.querySelector "main").classList.toggle "flagged" |> ignore)
+
+            (document.getElementById "barrier").onclick <-
+                (fun _ ->
+                    (document.querySelector "aside").classList.remove "flagged" |> ignore
+                    (document.getElementById "barrier").classList.remove "flagged" |> ignore
+                    (document.querySelector "main").classList.remove "flagged" |> ignore)
+
+            (document.querySelector "#headerTitle").innerHTML <-
+                """<h1>10進数→2進数 (1) - <span translate="no">taidalab</span></h1>"""
+
+            (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help "help-color dec2bin"
+            (document.querySelector "#submitButton").className <- "submit-button display-order-3 dec2bin"
+            (document.querySelector "#questionArea").innerHTML <- Content.Common.question
+
+            init'
+                (question 8)
+                hint
+                newErrorMessageBin
+                Bin.validate
+                Bin.toDec
+                (padWithZero 8 >> colorLeadingZero)
+                additional
+                10
+                2
+                10
                 EndlessBinary.keyboardshortcut
                 checkAnswer

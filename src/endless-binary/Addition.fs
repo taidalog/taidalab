@@ -1,11 +1,10 @@
-// taidalab Version 4.6.3
+// taidalab Version 5.0.0
 // https://github.com/taidalog/taidalab
 // Copyright (c) 2022-2024 taidalog
 // This software is licensed under the MIT License.
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
 namespace Taidalab
 
-open System
 open Browser.Dom
 open Browser.Types
 open Taidalab.Number
@@ -141,7 +140,9 @@ module EndlessBinary =
 
                     // Setting the next answer to the check button.
                     (document.getElementById "submitButton").onclick <-
-                        (fun _ ->
+                        (fun e ->
+                            e.preventDefault ()
+
                             checkAnswer
                                 questionGenerator
                                 hintGenerator
@@ -155,12 +156,12 @@ module EndlessBinary =
                                 (number1 + number2)
                                 number1
                                 number2
-                                lastAnswers'
-
-                            false)
+                                lastAnswers')
 
                     (document.getElementById "inputArea").onsubmit <-
-                        (fun _ ->
+                        (fun e ->
+                            e.preventDefault ()
+
                             checkAnswer
                                 questionGenerator
                                 hintGenerator
@@ -174,9 +175,7 @@ module EndlessBinary =
                                 (number1 + number2)
                                 number1
                                 number2
-                                lastAnswers'
-
-                            false)
+                                lastAnswers')
 
 
         let init'
@@ -204,7 +203,9 @@ module EndlessBinary =
             setColumnAddition number1 number2
 
             (document.getElementById "submitButton").onclick <-
-                (fun _ ->
+                (fun e ->
+                    e.preventDefault ()
+
                     checker
                         questionGenerator
                         hintGenerator
@@ -218,12 +219,12 @@ module EndlessBinary =
                         (number1 + number2)
                         number1
                         number2
-                        [ number1; number2 ]
-
-                    false)
+                        [ number1; number2 ])
 
             (document.getElementById "inputArea").onsubmit <-
-                (fun _ ->
+                (fun e ->
+                    e.preventDefault ()
+
                     checker
                         questionGenerator
                         hintGenerator
@@ -237,9 +238,7 @@ module EndlessBinary =
                         (number1 + number2)
                         number1
                         number2
-                        [ number1; number2 ]
-
-                    false)
+                        [ number1; number2 ])
 
             (document.getElementById "helpButton").onclick <-
                 (fun _ ->
@@ -259,6 +258,31 @@ module EndlessBinary =
             document.onkeydown <- (fun (e: KeyboardEvent) -> keyboardshortcutSetter e)
 
         let init () =
+            document.title <- "加算 - taidalab"
+
+            let header = document.querySelector "header"
+            header.innerHTML <- Content.Common.header
+            header.className <- "addition"
+
+            (document.getElementById "hamburgerButton").onclick <-
+                (fun _ ->
+                    (document.querySelector "aside").classList.toggle "flagged" |> ignore
+                    (document.getElementById "barrier").classList.toggle "flagged" |> ignore
+                    (document.querySelector "main").classList.toggle "flagged" |> ignore)
+
+            (document.getElementById "barrier").onclick <-
+                (fun _ ->
+                    (document.querySelector "aside").classList.remove "flagged" |> ignore
+                    (document.getElementById "barrier").classList.remove "flagged" |> ignore
+                    (document.querySelector "main").classList.remove "flagged" |> ignore)
+
+            (document.querySelector "#headerTitle").innerHTML <-
+                """<h1>加算 - <span translate="no">taidalab</span></h1>"""
+
+            (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help "help-color addition"
+            (document.querySelector "#submitButton").className <- "submit-button display-order-3 addition"
+            (document.querySelector "#questionArea").innerHTML <- Content.Common.columnAdditionFormat
+
             init'
                 (question 8)
                 newHintAdd

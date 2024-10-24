@@ -1,4 +1,4 @@
-// taidalab Version 4.6.3
+// taidalab Version 5.0.0
 // https://github.com/taidalog/taidalab
 // Copyright (c) 2022-2024 taidalog
 // This software is licensed under the MIT License.
@@ -113,7 +113,7 @@ module NetworkSimulator =
 
     let setMouseMoveEvent (container: HTMLElement) : unit =
         let svg = document.getElementById (container.id + "Svg")
-        svg.ondragstart <- fun _ -> false
+        svg.ondragstart <- fun e -> e.preventDefault ()
         let onMouseMove' = onMouseMove container svg
 
         svg.onmousedown <-
@@ -324,7 +324,7 @@ module NetworkSimulator =
         | None -> ()
         | Some cable' ->
             let svg = document.getElementById (container.id + "Svg")
-            svg.ondragstart <- fun _ -> false
+            svg.ondragstart <- fun e -> e.preventDefault ()
 
             svg.onmousedown <-
                 fun event ->
@@ -360,7 +360,7 @@ module NetworkSimulator =
         container.oncontextmenu <-
             fun event ->
                 event.preventDefault ()
-                document.getElementById("playArea").removeChild (container)
+                document.getElementById("playArea").removeChild (container) |> ignore
 
     let newHistory source sourceIPv4 destinationIPv4 connected =
         let historyClassName, historyIcon, historyMessage =
@@ -417,6 +417,30 @@ module NetworkSimulator =
             | _ -> ()
 
     let init () =
+        document.title <- "ネットワークシミュレータ - taidalab"
+
+        let header = document.querySelector "header"
+        header.innerHTML <- Content.Common.header
+        header.className <- "network-simulator"
+
+        (document.getElementById "hamburgerButton").onclick <-
+            (fun _ ->
+                (document.querySelector "aside").classList.toggle "flagged" |> ignore
+                (document.getElementById "barrier").classList.toggle "flagged" |> ignore
+                (document.querySelector "main").classList.toggle "flagged" |> ignore)
+
+        (document.getElementById "barrier").onclick <-
+            (fun _ ->
+                (document.querySelector "aside").classList.remove "flagged" |> ignore
+                (document.getElementById "barrier").classList.remove "flagged" |> ignore
+                (document.querySelector "main").classList.remove "flagged" |> ignore)
+
+        (document.querySelector "#headerTitle").innerHTML <-
+            """<h1>ネットワークシミュレータ - <span translate="no">taidalab</span></h1>"""
+
+        (document.querySelector "main").innerHTML <- main
+        (document.querySelector "#submitButton").className <- "submit-button network-simulator"
+
         (document.getElementById "helpButton").onclick <-
             (fun _ ->
                 [ "helpWindow"; "helpBarrier" ]
@@ -599,7 +623,9 @@ module NetworkSimulator =
         let submitButton = document.getElementById ("submitButton") :?> HTMLButtonElement
 
         submitButton.onclick <-
-            fun _ ->
+            fun e ->
+                e.preventDefault ()
+
                 let devices' =
                     document.getElementById("playArea").getElementsByClassName ("device-container")
                     |> (fun x -> JS.Constructors.Array?from(x))
@@ -683,8 +709,6 @@ module NetworkSimulator =
                                 | "sourceInput" -> sourceInput.focus ()
                                 | "destinationInput" -> destinationInput.focus ()
                                 | _ -> ()
-
-                false
 
         let addClientButton =
             document.getElementById ("addClientButton") :?> HTMLButtonElement
