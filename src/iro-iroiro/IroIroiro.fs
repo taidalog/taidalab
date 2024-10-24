@@ -1,4 +1,4 @@
-// taidalab Version 4.6.3
+// taidalab Version 5.0.0
 // https://github.com/taidalog/taidalab
 // Copyright (c) 2022-2024 taidalog
 // This software is licensed under the MIT License.
@@ -297,12 +297,11 @@ module IroIroiro =
                 (document.getElementById "barrier").classList.remove "flagged" |> ignore
                 (document.querySelector "main").classList.remove "flagged" |> ignore)
 
-        (document.querySelector "#headerTitle").innerHTML <-
-            """<h1>色いろいろ - <span translate="no">taidalab</span></h1>"""
+        (document.querySelector "#headerTitle").innerHTML <- """<h1>色いろいろ - <span translate="no">taidalab</span></h1>"""
 
         (document.querySelector "main").innerHTML <- main
         (document.querySelector "#submitButton").className <- "submit-button iro-iroiro"
-        
+
         (document.getElementById "submitButton").onclick <- (fun _ -> start ())
 
         [ "helpButton"; "helpBarrier"; "helpClose" ]
