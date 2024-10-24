@@ -1,4 +1,4 @@
-﻿// taidalab Version 4.6.3
+﻿// taidalab Version 5.0.0
 // https://github.com/taidalog/taidalab
 // Copyright (c) 2022-2024 taidalog
 // This software is licensed under the MIT License.
@@ -27,22 +27,7 @@ module EndlessBinary =
 
         let additional number : unit = ()
 
-        // let init () =
-        //     Dec2Bin1.init'
-        //         question
-        //         hint
-        //         newErrorMessageBin
-        //         Bin.validate
-        //         Bin.toDec
-        //         (padWithZero 8 >> colorLeadingZero)
-        //         additional
-        //         10
-        //         2
-        //         10
-        //         EndlessBinary.keyboardshortcut
-        //         Dec2Bin1.checkAnswer
-
-        let init'' () =
+        let init () =
             document.title <- "10進数→2進数 (2) - taidalab"
 
             let header = document.querySelector "header"

@@ -1,4 +1,4 @@
-// taidalab Version 4.6.3
+// taidalab Version 5.0.0
 // https://github.com/taidalog/taidalab
 // Copyright (c) 2022-2024 taidalog
 // This software is licensed under the MIT License.
@@ -263,21 +263,7 @@ module EndlessBinary =
 
             document.onkeydown <- (fun (e: KeyboardEvent) -> keyboardshortcutSetter e)
 
-        // let init () =
-        //     init'
-        //         (question 8)
-        //         newHintAdd
-        //         Bin.validate
-        //         Bin.toDec
-        //         (padWithZero 8 >> colorLeadingZero)
-        //         (fun n -> ())
-        //         2
-        //         2
-        //         10
-        //         EndlessBinary.keyboardshortcut
-        //         checkAnswer
-
-        let init'' () =
+        let init () =
             document.title <- "加算 - taidalab"
 
             let header = document.querySelector "header"
