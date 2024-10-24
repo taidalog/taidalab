@@ -14,13 +14,13 @@ A Web application for learning Informatics &#8544;, one of the subjects taught i
 
 ## Usage
 
-1. Visit [taidalab](https://taidalog.cloudfree.jp/).
+1. Visit [taidalab](https://taidalog.github.io/taidalab/).
 1. Click a link in the menu on the left side of the screen. To show the menu, click the hamburger button (a button with three horizontal lines) on the upper left corner.
 1. Operate on the page you opened. For more details, click the "Help" button at the top right of each page, or visit the "About" page.
 
 ## Recommended environment
 
-- Mozilla Firefox 119.0.1 (64 bit) or later.
+- Mozilla Firefox 131.0.3 (64 bit) or later.
 
 ## Terms of Service
 

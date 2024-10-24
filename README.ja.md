@@ -17,13 +17,13 @@ Version 5.0.0
 
 ## 使い方
 
-1. [taidalab](https://taidalog.cloudfree.jp/) にアクセスしてください。
+1. [taidalab](https://taidalog.github.io/taidalab/) にアクセスしてください。
 1. 画面左側のメニューから好きなものを選んでクリックしてください。メニューが非表示になっているときは画面左上のハンバーガーボタン（三本線のボタン）を押してメニューを開いてください。
 1. 出てきた画面で操作を行ってください。使い方は各ページ右上のヘルプと About ページに書いてあります。
 
 ## 推奨環境
 
-- Mozilla Firefox 119.0.1 (64 bit) 以上
+- Mozilla Firefox 131.0.3 (64 bit) 以上
 
 ## ご利用について
 
