@@ -144,22 +144,7 @@ module EndlessBinary =
                     (document.getElementById "hint1").innerHTML <- newHintAnimation 16 number 20
                     (document.getElementById "hintDetails").setAttribute ("open", "true"))
 
-        // let init () =
-        //     Dec2Bin1.init'
-        //         question
-        //         hint
-        //         newErrorMessageHex
-        //         Hex.validate
-        //         Hex.toDec
-        //         (padWithZero 8 >> colorLeadingZero)
-        //         additional
-        //         10
-        //         16
-        //         10
-        //         EndlessBinary.keyboardshortcut
-        //         Dec2Bin1.checkAnswer
-
-        let init'' () =
+        let init () =
             document.title <- "10進数→16進数 - taidalab"
 
             let header = document.querySelector "header"

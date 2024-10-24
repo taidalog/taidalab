@@ -277,32 +277,7 @@ module IroIroiro =
                     | false, _ -> ()
             | _ -> ()
 
-//     let init () =
-//         // Initialization.
-//         (document.getElementById "submitButton").onclick <- (fun _ -> start ())
-
-//         [ "helpButton"; "helpBarrier"; "helpClose" ]
-//         |> List.iter (fun x ->
-//             (document.getElementById x).onclick <-
-//                 (fun _ ->
-//                     [ "helpWindow"; "helpBarrier" ]
-//                     |> List.iter (fun x -> (document.getElementById x).classList.toggle "active" |> ignore)))
-
-//         let rInput = (document.getElementById "rInput" :?> HTMLInputElement)
-//         let gInput = (document.getElementById "gInput" :?> HTMLInputElement)
-//         let bInput = (document.getElementById "bInput" :?> HTMLInputElement)
-//         let stepInput = (document.getElementById "stepInput" :?> HTMLInputElement)
-//         let limitInput = (document.getElementById "limitInput" :?> HTMLInputElement)
-
-//         rInput.oninput <- fun _ -> start' rInput.value gInput.value bInput.value stepInput.value limitInput.value
-//         gInput.oninput <- fun _ -> start' rInput.value gInput.value bInput.value stepInput.value limitInput.value
-//         bInput.oninput <- fun _ -> start' rInput.value gInput.value bInput.value stepInput.value limitInput.value
-//         stepInput.oninput <- fun _ -> start' rInput.value gInput.value bInput.value stepInput.value limitInput.value
-//         limitInput.oninput <- fun _ -> start' rInput.value gInput.value bInput.value stepInput.value limitInput.value
-
-//         document.onkeydown <- (fun (e: KeyboardEvent) -> keyboardshortcut e)
-// //        (document.getElementById "inputArea").onsubmit <- (fun _ -> start())
-    let init'' () =
+    let init () =
         // Initialization.
         document.title <- "色いろいろ - taidalab"
 

@@ -258,10 +258,7 @@ module EndlessBinary =
 
             document.onkeydown <- (fun (e: KeyboardEvent) -> keyboardshortcutSetter e)
 
-        // let init () =
-        //     init' question' hint additional EndlessBinary.keyboardshortcut checkAnswer
-
-        let init'' () =
+        let init () =
             document.title <- "2進数→10進数 (1) - taidalab"
 
             let header = document.querySelector "header"

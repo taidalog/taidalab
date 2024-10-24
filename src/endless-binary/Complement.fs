@@ -130,49 +130,7 @@ module EndlessBinary =
                             e.preventDefault ()
                             checkAnswer nextBin nextAnswer lastAnswers)
 
-
-        // let init () =
-        //     // Initialization.
-        //     let sourceRadix = 2
-        //     let destinationRadix = 2
-
-        //     let initNumber = getRandomBetween 1 15
-        //     let initAnswer = 16 - initNumber
-        //     let initBin = initNumber |> Dec.toBin |> Fermata.String.padLeft 4 '0'
-        //     let reversedBin = initBin |> String.collect (fun c -> if c = '1' then "0" else "1")
-        //     (document.getElementById "questionSpan").innerText <- initBin
-        //     (document.getElementById "srcRadix").innerText <- sprintf "(%d)" sourceRadix
-        //     (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
-        //     (document.getElementById "hintArea").innerHTML <- hint initBin reversedBin
-
-        //     (document.getElementById "submitButton").onclick <-
-        //         (fun e ->
-        //             e.preventDefault ()
-        //             checkAnswer initBin initAnswer [ initNumber ])
-
-        //     (document.getElementById "inputArea").onsubmit <-
-        //         (fun e ->
-        //             e.preventDefault ()
-        //             checkAnswer initBin initAnswer [ initNumber ])
-
-        //     (document.getElementById "helpButton").onclick <-
-        //         (fun _ ->
-        //             [ "helpWindow"; "helpBarrier" ]
-        //             |> List.iter (fun x -> (document.getElementById x).classList.toggle "active" |> ignore))
-
-        //     (document.getElementById "helpBarrier").onclick <-
-        //         (fun _ ->
-        //             [ "helpWindow"; "helpBarrier" ]
-        //             |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore))
-
-        //     (document.getElementById "helpClose").onclick <-
-        //         (fun _ ->
-        //             [ "helpWindow"; "helpBarrier" ]
-        //             |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore))
-
-        //     document.onkeydown <- (fun (e: KeyboardEvent) -> EndlessBinary.keyboardshortcut e)
-
-        let init'' () =
+        let init () =
             // Initialization.
             document.title <- "補数 - taidalab"
 
