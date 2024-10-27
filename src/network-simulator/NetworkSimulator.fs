@@ -5,6 +5,7 @@
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
 namespace Taidalab
 
+open System
 open Browser.Dom
 open Browser.Types
 open Fable.Core
@@ -149,7 +150,9 @@ module NetworkSimulator =
             elm.addEventListener (
                 "blur",
                 (fun _ ->
-                    elm.innerText
+                    let ipv4Expression = elm.innerText
+
+                    ipv4Expression
                     |> IPv4.validate
                     |> fun x ->
                         let errorArea = document.getElementById "errorArea"
@@ -160,15 +163,30 @@ module NetworkSimulator =
                         | Error e ->
                             let name = document.getElementById(container.id + "Name").innerText
 
-                            match e with
-                            | :? System.ArgumentOutOfRangeException ->
-                                errorArea.innerText <- $"%s{name} の %s{identifier} の数値の範囲が正しくありません。"
-                            | :? System.ArgumentNullException
-                            | :? System.ArgumentException ->
-                                errorArea.innerText <- $"%s{name} の %s{identifier} を入力してください。"
-                            | :? System.FormatException ->
-                                errorArea.innerText <- $"%s{name} の %s{identifier} の形式が正しくありません。"
-                            | _ -> errorArea.innerText <- "不明なエラーです。"
+                            let validateRangeAll =
+                                (String.split '.' >> List.map int >> List.forall (fun x -> x >= 0 && x <= 255))
+
+                            if String.IsNullOrEmpty ipv4Expression then
+                                $"%s{name} の %s{identifier} を入力してください。"
+                            else if String.IsNullOrWhiteSpace ipv4Expression then
+                                $"%s{name} の %s{identifier} を入力してください。"
+                            else if Regex.isMatch "^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$" ipv4Expression |> not then
+                                $"%s{name} の %s{identifier} の形式が正しくありません。"
+                            else if validateRangeAll ipv4Expression |> not then
+                                $"%s{name} の %s{identifier} の数値の範囲が正しくありません。"
+                            else
+                                "不明なエラーです。"
+                            |> fun x -> errorArea.innerText <- x
+
+                            // match e with
+                            // | :? System.ArgumentOutOfRangeException ->
+                            //     errorArea.innerText <- $"%s{name} の %s{identifier} の数値の範囲が正しくありません。"
+                            // | :? System.ArgumentNullException
+                            // | :? System.ArgumentException ->
+                            //     errorArea.innerText <- $"%s{name} の %s{identifier} を入力してください。"
+                            // | :? System.FormatException ->
+                            //     errorArea.innerText <- $"%s{name} の %s{identifier} の形式が正しくありません。"
+                            // | _ -> errorArea.innerText <- "不明なエラーです。"
 
                             JS.setTimeout (fun _ -> elm.focus ()) 0 |> ignore)
             ))
@@ -660,23 +678,54 @@ module NetworkSimulator =
 
                 match sourceIPv4 with
                 | Error e ->
-                    match e with
-                    | :? System.ArgumentOutOfRangeException -> errorArea.innerText <- "送信元 IPv4 の数値の範囲が正しくありません。"
-                    | :? System.ArgumentNullException -> errorArea.innerText <- "送信元 IPv4 を入力してください。"
-                    | :? System.ArgumentException
-                    | :? System.FormatException -> errorArea.innerText <- "送信元 IPv4 の形式が正しくありません。"
-                    | _ -> errorArea.innerText <- "不明なエラーです。"
+                    let validateRangeAll =
+                        (String.split '.' >> List.map int >> List.forall (fun x -> x >= 0 && x <= 255))
+
+                    if String.IsNullOrEmpty sourceInput.value then
+                        "送信元 IPv4 を入力してください。"
+                    else if String.IsNullOrWhiteSpace sourceInput.value then
+                        "送信元 IPv4 を入力してください。"
+                    else if Regex.isMatch "^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$" sourceInput.value |> not then
+                        "送信元 IPv4 の形式が正しくありません。"
+                    else if validateRangeAll sourceInput.value |> not then
+                        "送信元 IPv4 の数値の範囲が正しくありません。"
+                    else
+                        "不明なエラーです。"
+                    |> fun x -> errorArea.innerText <- x
+                    // match e with
+                    // | :? System.ArgumentOutOfRangeException -> errorArea.innerText <- "送信元 IPv4 の数値の範囲が正しくありません。"
+                    // | :? System.ArgumentNullException -> errorArea.innerText <- "送信元 IPv4 を入力してください。"
+                    // | :? System.ArgumentException
+                    // | :? System.FormatException -> errorArea.innerText <- "送信元 IPv4 の形式が正しくありません。"
+                    // | _ -> errorArea.innerText <- "不明なエラーです。"
 
                     sourceInput.focus ()
                 | Ok sourceIPv4 ->
                     match destinationIPv4 with
                     | Error e ->
-                        match e with
-                        | :? System.ArgumentOutOfRangeException -> errorArea.innerText <- "送信先 IPv4 の数値の範囲が正しくありません。"
-                        | :? System.ArgumentNullException -> errorArea.innerText <- "送信先 IPv4 を入力してください。"
-                        | :? System.ArgumentException
-                        | :? System.FormatException -> errorArea.innerText <- "送信先 IPv4 の形式が正しくありません。"
-                        | _ -> errorArea.innerText <- "不明なエラーです。"
+                        let validateRangeAll =
+                            (String.split '.' >> List.map int >> List.forall (fun x -> x >= 0 && x <= 255))
+
+                        if String.IsNullOrEmpty destinationInput.value then
+                            "送信先 IPv4 を入力してください。"
+                        else if String.IsNullOrWhiteSpace destinationInput.value then
+                            "送信先 IPv4 を入力してください。"
+                        else if
+                            Regex.isMatch "^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$" destinationInput.value
+                            |> not
+                        then
+                            "送信先 IPv4 の形式が正しくありません。"
+                        else if validateRangeAll destinationInput.value |> not then
+                            "送信先 IPv4 の数値の範囲が正しくありません。"
+                        else
+                            "不明なエラーです。"
+                        |> fun x -> errorArea.innerText <- x
+                        // match e with
+                        // | :? System.ArgumentOutOfRangeException -> errorArea.innerText <- "送信先 IPv4 の数値の範囲が正しくありません。"
+                        // | :? System.ArgumentNullException -> errorArea.innerText <- "送信先 IPv4 を入力してください。"
+                        // | :? System.ArgumentException
+                        // | :? System.FormatException -> errorArea.innerText <- "送信先 IPv4 の形式が正しくありません。"
+                        // | _ -> errorArea.innerText <- "不明なエラーです。"
 
                         destinationInput.focus ()
                     | Ok destinationIPv4 ->
