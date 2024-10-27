@@ -5,6 +5,7 @@
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
 namespace Taidalab
 
+open System
 open Browser.Types
 open Fable.Core
 open Fable.Core.JsInterop
@@ -73,31 +74,37 @@ module EndlessBinary =
             </div>"""
 
     let newErrorMessageBin (question: string) (input: string) (error: exn) =
-        match error with
-        | :? System.ArgumentException -> sprintf """<span class="warning">%s の2進法表記を入力してください。</span>""" question
-        | :? System.FormatException ->
-            sprintf """<span class="warning">'%s' は2進数ではありません。使えるのは半角の 0 と 1 のみです。</span>""" input
-        | :? System.OverflowException ->
-            sprintf """<span class="warning">'%s' は入力できる数値の範囲を越えています。入力できるのは xxx ~ yyy の間です。</span>""" input
-        | _ -> "不明なエラーです。"
+        if String.IsNullOrWhiteSpace input then
+            $"%s{question} の2進法表記を入力してください。"
+        else if Regex.isMatch "^[01]+$" input |> not then
+            $"'%s{input}' は2進数ではありません。使えるのは半角の 0 と 1 のみです。"
+        // else if false then
+        //      $"'%s{input}' は入力できる数値の範囲を越えています。入力できるのは xxx ~ yyy の間です。"
+        else
+            "不明なエラーです。"
+        |> sprintf """<span class="warning">%s</span>"""
 
     let newErrorMessageDec (question: string) (input: string) (error: exn) =
-        match error with
-        | :? System.ArgumentException -> sprintf """<span class="warning">%s の10進法表記を入力してください。</span>""" question
-        | :? System.FormatException ->
-            sprintf """<span class="warning">'%s' は10進数ではありません。使えるのは半角の 0123456789 のみです。</span>""" input
-        | :? System.OverflowException ->
-            sprintf """<span class="warning">'%s' は入力できる数値の範囲を越えています。入力できるのは xxx ~ yyy の間です。</span>""" input
-        | _ -> "不明なエラーです。"
+        if String.IsNullOrWhiteSpace input then
+            $"%s{question} の10進法表記を入力してください。"
+        else if Regex.isMatch "^[0-9]+$" input |> not then
+            $"'%s{input}' は10進数ではありません。使えるのは半角の 0123456789 のみです。"
+        // else if false then
+        //      $"'%s{input}' は入力できる数値の範囲を越えています。入力できるのは xxx ~ yyy の間です。"
+        else
+            "不明なエラーです。"
+        |> sprintf """<span class="warning">%s</span>"""
 
     let newErrorMessageHex (question: string) (input: string) (error: exn) =
-        match error with
-        | :? System.ArgumentException -> sprintf """<span class="warning">%s の16進法表記を入力してください。</span>""" question
-        | :? System.FormatException ->
-            sprintf """<span class="warning">'%s' は16進数ではありません。使えるのは半角の 0123456789ABCDEF のみです。</span>""" input
-        | :? System.OverflowException ->
-            sprintf """<span class="warning">'%s' は入力できる数値の範囲を越えています。入力できるのは xxx ~ yyy の間です。</span>""" input
-        | _ -> "不明なエラーです。"
+        if String.IsNullOrWhiteSpace input then
+            $"%s{question} の16進法表記を入力してください。"
+        else if Regex.isMatch "^[0-9A-Fa-f]+$" input |> not then
+            $"'%s{input}' は16進数ではありません。使えるのは半角の 0123456789ABCDEF のみです。"
+        // else if false then
+        //      $"'%s{input}' は入力できる数値の範囲を越えています。入力できるのは xxx ~ yyy の間です。"
+        else
+            "不明なエラーです。"
+        |> sprintf """<span class="warning">%s</span>"""
 
     let newHistory correct input destination_radix converted_input source_radix =
         let historyClassName =

@@ -10,6 +10,7 @@ open Browser.Dom
 open Browser.Types
 open Taidalab.Number
 open Taidalab.Text
+open Fermata
 open Fermata.RadixConversion
 
 module EndlessBinary =
@@ -23,6 +24,16 @@ module EndlessBinary =
 
         let question =
             """4ビットの2進数 <span id="questionSpan" class="question-number"></span><sub id="srcRadix"></sub> の補数は？"""
+
+        let newErrorMessageComplement (question: string) (input: string) (error: exn) =
+            if String.IsNullOrWhiteSpace input then
+                $"""<span class="warning">%s{question} の補数を、2進法表記で入力してください。</span>"""
+            else if Regex.isMatch "^[01]+$" input |> not then
+                $"""<span class="warning">'%s{input}' は2進数ではありません。使えるのは半角の 0 と 1 のみです。</span>"""
+            // else if false then
+            //      $"""<span class="warning">'%s{input}' は入力できる数値の範囲を越えています。入力できるのは xxx ~ yyy の間です。</span>"""
+            else
+                """<span class="warning">不明なエラーです。</span>"""
 
         let hint bin reversedBin =
             $"""
@@ -59,13 +70,7 @@ module EndlessBinary =
             match Bin.validate input with
             | Bin.Invalid e ->
                 // Making an error message.
-                match e with
-                | :? System.ArgumentException ->
-                    sprintf """<span class="warning">%s の補数を、2進法表記を入力してください。</span>""" question
-                | :? System.FormatException ->
-                    sprintf """<span class="warning">'%s' は2進数ではありません。使えるのは半角の 0 と 1 のみです。</span>""" input
-                | _ -> "不明なエラーです。"
-                |> fun x -> (document.getElementById "errorArea").innerHTML <- x
+                (document.getElementById "errorArea").innerHTML <- newErrorMessageComplement question input e
             | Bin.Valid v ->
                 (document.getElementById "errorArea").innerHTML <- ""
                 let dec: Dec = Bin.Valid v |> Bin.toDec

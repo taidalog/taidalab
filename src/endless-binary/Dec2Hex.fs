@@ -163,6 +163,7 @@ module EndlessBinary =
             destinationRadix
             (numbersToKeep: int)
             (lastNumbers: int list)
+            (question: Dec)
             (answer: Hex)
             =
             // Getting the user input.
@@ -176,9 +177,9 @@ module EndlessBinary =
             | Hex.Invalid e ->
                 // Making an error message.
                 let q =
-                    match answer with
-                    | Hex.Invalid _ -> ""
-                    | Hex.Valid v -> v
+                    match question with
+                    | Dec.Invalid _ -> ""
+                    | Dec.Valid v -> string v
 
                 (document.getElementById "errorArea").innerHTML <- errorGenerator q input e
             | Hex.Valid v ->
@@ -209,7 +210,8 @@ module EndlessBinary =
                     (document.getElementById "hintArea").innerHTML <- hintGenerator nextNumber
                     additional nextNumber
 
-                    let nextAnswer = nextNumber |> Dec.Valid |> Dec.toHex
+                    let nextQuestion = nextNumber |> Dec.Valid
+                    let nextAnswer = nextQuestion |> Dec.toHex
 
                     numberInput.value <- ""
 
@@ -232,6 +234,7 @@ module EndlessBinary =
                                 destinationRadix
                                 numbersToKeep
                                 lastNumbers'
+                                nextQuestion
                                 nextAnswer)
 
                     (document.getElementById "inputArea").onsubmit <-
@@ -248,9 +251,10 @@ module EndlessBinary =
                                 destinationRadix
                                 nextNumber
                                 lastNumbers'
+                                nextQuestion
                                 nextAnswer)
 
-        let exec' (lastNumbers: int list) (answer: Hex) =
+        let exec' (lastNumbers: int list) (question': Dec) (answer: Hex) =
             exec
                 question
                 hint
@@ -261,6 +265,7 @@ module EndlessBinary =
                 16
                 10
                 lastNumbers
+                question'
                 answer
 
         let init'
@@ -279,17 +284,18 @@ module EndlessBinary =
             (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
             (document.getElementById "hintArea").innerHTML <- hintGenerator initNumber
 
-            let answer: Hex = initNumber |> Dec.Valid |> Dec.toHex
+            let question: Dec = initNumber |> Dec.Valid
+            let answer: Hex = question |> Dec.toHex
 
             (document.getElementById "submitButton").onclick <-
                 (fun e ->
                     e.preventDefault ()
-                    exec' [ initNumber ] answer)
+                    exec' [ initNumber ] question answer)
 
             (document.getElementById "inputArea").onsubmit <-
                 (fun e ->
                     e.preventDefault ()
-                    exec' [ initNumber ] answer)
+                    exec' [ initNumber ] question answer)
 
             additional initNumber
 
