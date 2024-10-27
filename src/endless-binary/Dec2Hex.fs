@@ -139,6 +139,14 @@ module EndlessBinary =
         let question lastNumbers : int =
             newNumber (fun _ -> getRandomBetween 0 255) (fun n -> List.contains n lastNumbers = false)
 
+        let history (correct: bool) (input: string) : string =
+            match input |> Hex.validate |> Hex.toDec with
+            | Dec.Invalid _ -> ""
+            | Dec.Valid v ->
+                let colored = input |> padWithZero 8 |> colorLeadingZero
+                let spacePadded = v |> string |> Fermata.String.padLeft 3 ' ' |> escapeSpace
+                newHistory correct colored 16 spacePadded 10
+
         let additional number : unit =
             (document.getElementById "hint1").onclick <-
                 (fun _ ->
@@ -160,7 +168,7 @@ module EndlessBinary =
             // Getting the user input.
             let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
             let input = numberInput.value |> escapeHtml
-            let hex: Hex = input |> Dec.validate |> Dec.toHex
+            let hex: Hex = Hex.validate input
 
             numberInput.focus ()
 
@@ -187,7 +195,7 @@ module EndlessBinary =
                 let outputArea = document.getElementById "outputArea" :?> HTMLParagraphElement
 
                 let historyMessage =
-                    newHistory (hex = answer) colored destinationRadix spacePadded sourceRadix
+                    history (hex = answer) v //colored destinationRadix spacePadded sourceRadix
                     |> (fun x -> concatinateStrings "<br>" [ x; outputArea.innerHTML ])
 
                 outputArea.innerHTML <- historyMessage
@@ -246,11 +254,11 @@ module EndlessBinary =
             exec
                 question
                 hint
-                newErrorMessageBin
+                newErrorMessageHex
                 (padWithZero 8 >> colorLeadingZero)
                 additional
                 10
-                2
+                16
                 10
                 lastNumbers
                 answer
@@ -271,7 +279,7 @@ module EndlessBinary =
             (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
             (document.getElementById "hintArea").innerHTML <- hintGenerator initNumber
 
-            let answer = initNumber |> Dec.Valid |> Dec.toHex
+            let answer: Hex = initNumber |> Dec.Valid |> Dec.toHex
 
             (document.getElementById "submitButton").onclick <-
                 (fun e ->

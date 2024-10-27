@@ -90,9 +90,9 @@ module EndlessBinary =
             sprintf """<span class="warning">'%s' は入力できる数値の範囲を越えています。入力できるのは xxx ~ yyy の間です。</span>""" input
         | _ -> "不明なエラーです。"
 
-    let newErrorMessageHex (question: int) (input: string) (error: exn) =
+    let newErrorMessageHex (question: string) (input: string) (error: exn) =
         match error with
-        | :? System.ArgumentException -> sprintf """<span class="warning">%d の16進法表記を入力してください。</span>""" question
+        | :? System.ArgumentException -> sprintf """<span class="warning">%s の16進法表記を入力してください。</span>""" question
         | :? System.FormatException ->
             sprintf """<span class="warning">'%s' は16進数ではありません。使えるのは半角の 0123456789ABCDEF のみです。</span>""" input
         | :? System.OverflowException ->
