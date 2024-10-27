@@ -348,8 +348,8 @@ module EndlessBinary =
                                 nextQuestion
                                 nextAnswer)
 
-        let exec' (numbersToKeep: int) (lastNumbers: int list) (question': Dec) (answer: Bin) : unit =
-            exec (question 8) hint newErrorMessageBin additional 10 2 numbersToKeep lastNumbers question' answer
+        let exec' (lastNumbers: int list) (question': Dec) (answer: Bin) : unit =
+            exec (question 8) hint newErrorMessageBin additional 10 2 10 lastNumbers question' answer
 
         let init'
             (questionGenerator: int list -> int)
@@ -357,7 +357,7 @@ module EndlessBinary =
             (additional: int -> unit)
             (sourceRadix: int)
             (destinationRadix: int)
-            (numbersToKeep: int)
+            (executor: int list -> Dec -> Bin -> unit)
             (keyboardshortcutSetter: KeyboardEvent -> unit)
             : unit =
             // Initialization.
@@ -374,12 +374,12 @@ module EndlessBinary =
             (document.getElementById "submitButton").onclick <-
                 (fun e ->
                     e.preventDefault ()
-                    exec' numbersToKeep [ initNumber ] question answer)
+                    executor [ initNumber ] question answer)
 
             (document.getElementById "inputArea").onsubmit <-
                 (fun e ->
                     e.preventDefault ()
-                    exec' numbersToKeep [ initNumber ] question answer)
+                    executor [ initNumber ] question answer)
 
             additional initNumber
 
@@ -401,7 +401,7 @@ module EndlessBinary =
             document.onkeydown <- (fun (e: KeyboardEvent) -> keyboardshortcutSetter e)
 
         let init4 () =
-            init' (question 4) hint additional 10 2 10 EndlessBinary.keyboardshortcut
+            init' (question 4) hint additional 10 2 exec' EndlessBinary.keyboardshortcut
 
         let init () : unit =
             document.title <- "10進数→2進数 (1) - taidalab"
@@ -429,4 +429,4 @@ module EndlessBinary =
             (document.querySelector "#submitButton").className <- "submit-button display-order-3 dec2bin"
             (document.querySelector "#questionArea").innerHTML <- Content.Common.question
 
-            init' (question 8) hint additional 10 2 10 EndlessBinary.keyboardshortcut
+            init' (question 8) hint additional 10 2 exec' EndlessBinary.keyboardshortcut

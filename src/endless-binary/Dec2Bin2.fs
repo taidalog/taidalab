@@ -7,7 +7,6 @@ namespace Taidalab
 
 open Browser.Dom
 open Taidalab.Number
-open Taidalab.Text
 open Taidalab.EndlessBinary
 open Fermata.RadixConversion
 
@@ -20,12 +19,15 @@ module EndlessBinary =
             ヒントはありませんので、慣れてからどうぞ。
             """
 
-        let hint number = ""
+        let hint _ = ""
 
         let question lastAnswers : int =
             newNumber (fun _ -> getRandomBetween 0 255) (fun n -> List.contains n lastAnswers = false)
 
-        let additional number : unit = ()
+        let additional _ : unit = ()
+
+        let exec' (lastNumbers: int list) (question': Dec) (answer: Bin) : unit =
+            Dec2Bin1.exec question hint newErrorMessageBin additional 10 2 10 lastNumbers question' answer
 
         let init () =
             document.title <- "10進数→2進数 (2) - taidalab"
@@ -53,4 +55,4 @@ module EndlessBinary =
             (document.querySelector "#submitButton").className <- "submit-button display-order-3 dec2bin"
             (document.querySelector "#questionArea").innerHTML <- Content.Common.question
 
-            Dec2Bin1.init' question hint additional 10 2 10 EndlessBinary.keyboardshortcut
+            Dec2Bin1.init' question hint additional 10 2 exec' EndlessBinary.keyboardshortcut
