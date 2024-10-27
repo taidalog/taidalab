@@ -158,7 +158,7 @@ module EndlessBinary =
 
             (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help "help-color complement"
             (document.querySelector "#submitButton").className <- "submit-button display-order-3 complement"
-            (document.querySelector "#questionArea").innerHTML <- Content.Common.question
+            (document.querySelector "#questionArea").innerHTML <- question
 
             let sourceRadix = 2
             let destinationRadix = 2
