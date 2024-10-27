@@ -51,7 +51,7 @@
     <PackageReference Include="Fable.Browser.Url" Version="1.4.0" />
     <PackageReference Include="Fable.Core" Version="4.3.0" />
     <PackageReference Include="Fermata" Version="1.0.0" />
-    <PackageReference Include="Fermata.RadixConversion" Version="1.0.0" />
+    <PackageReference Include="Fermata.RadixConversion" Version="1.1.0" />
   </ItemGroup>
 
 </Project>
