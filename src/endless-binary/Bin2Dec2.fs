@@ -51,4 +51,4 @@ module EndlessBinary =
             (document.querySelector "#submitButton").className <- "submit-button display-order-3 bin2dec"
             (document.querySelector "#questionArea").innerHTML <- Content.Common.question
 
-            Bin2Dec1.init' question hint additional EndlessBinary.keyboardshortcut Bin2Dec1.checkAnswer
+            Bin2Dec1.init' question hint additional EndlessBinary.keyboardshortcut
