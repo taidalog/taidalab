@@ -34,10 +34,15 @@ module Main =
             Console.WriteLine mergedUrl
             Debug.WriteLine mergedUrl
 
-            document.links
-            |> JS.Constructors.Array?from
-            |> Array.filter (fun (x: HTMLAnchorElement) -> x.href <> "")
-            |> Array.filter (fun (x: HTMLAnchorElement) -> x.href |> URL.Create |> Url.isInternal')
+            let links: HTMLAnchorElement array = JS.Constructors.Array?from document.links
+
+            links
+            |> Array.iter (fun x ->
+                printfn "%s, %b, %b" x.href (x.href <> "") (x.href |> URL.Create |> Url.isInternal'))
+
+            links
+            |> Array.filter (fun x -> x.href <> "")
+            |> Array.filter (fun x -> x.href |> URL.Create |> Url.isInternal')
             |> Array.iter overwriteAnchor
 
             showLocation ())
