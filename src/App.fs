@@ -1,4 +1,4 @@
-// taidalab Version 5.0.1
+// taidalab Version 5.0.2
 // https://github.com/taidalog/taidalab
 // Copyright (c) 2022-2024 taidalog
 // This software is licensed under the MIT License.
@@ -31,14 +31,23 @@ module Main =
             window.history.replaceState (null, "", mergedUrl.href)
             Page.init mergedUrl
 
-            printfn "%s" Url.baseUrl
             Console.WriteLine mergedUrl
             Debug.WriteLine mergedUrl
 
-            document.links
-            |> JS.Constructors.Array?from
-            |> Array.filter (fun (x: HTMLAnchorElement) -> x.href <> "")
-            |> Array.filter (fun (x: HTMLAnchorElement) -> x.href |> URL.Create |> Url.isInternal')
+            let links: HTMLAnchorElement array = JS.Constructors.Array?from document.links
+
+            links
+            |> Array.iter (fun x ->
+                printfn
+                    "href: %s, URL: %O, href is blank: %b, href is internal: %b"
+                    x.href
+                    (x.href |> URL.Create)
+                    (x.href <> "")
+                    (x.href |> URL.Create |> Url.isInternal'))
+
+            links
+            |> Array.filter (fun x -> x.href <> "")
+            |> Array.filter (fun x -> x.href |> URL.Create |> Url.isInternal')
             |> Array.iter overwriteAnchor
 
             showLocation ())
