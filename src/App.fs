@@ -39,7 +39,7 @@ module Main =
             links
             |> Array.iter (fun x ->
                 printfn
-                    "href: %s, URL: %O, href is blank: %b, href is internal: %b"
+                    "href: %s, URL: %O, href is not blank: %b, href is internal: %b"
                     x.href
                     (x.href |> URL.Create)
                     (x.href <> "")
