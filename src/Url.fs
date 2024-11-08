@@ -13,7 +13,7 @@ module Url =
 #if DEBUG
         "http://localhost:8080"
 #else
-        "https://taidalog.github.io/"
+        "https://taidalog.github.io"
 #endif
 
     let home = "/taidalab/"
