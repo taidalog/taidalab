@@ -5,6 +5,8 @@
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
 namespace Taidalab
 
+open System
+open System.Diagnostics
 open Browser.Dom
 open Browser.Url
 open Browser.Types
@@ -53,6 +55,9 @@ module Page =
                 e.preventDefault ()
                 window.history.pushState (null, "", anchor.href)
                 anchor.href |> URL.Create |> init
+
+                Console.WriteLine(URL.Create anchor.href)
+                Debug.WriteLine(URL.Create anchor.href)
 
                 showLocation ()
 

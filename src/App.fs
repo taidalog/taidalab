@@ -5,6 +5,8 @@
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
 namespace Taidalab
 
+open System
+open System.Diagnostics
 open Fable.Core
 open Fable.Core.JsInterop
 open Browser.Dom
@@ -29,6 +31,10 @@ module Main =
             window.history.replaceState (null, "", mergedUrl.href)
             Page.init mergedUrl
 
+            printfn "%s" Url.baseUrl
+            Console.WriteLine mergedUrl
+            Debug.WriteLine mergedUrl
+
             document.links
             |> JS.Constructors.Array?from
             |> Array.filter (fun (x: HTMLAnchorElement) -> x.href <> "")
@@ -44,6 +50,9 @@ module Main =
             let mergedUrl = window.location.href |> URL.Create |> Url.mergePathname
             window.history.replaceState (null, "", mergedUrl.href)
             Page.init mergedUrl
+
+            Console.WriteLine mergedUrl
+            Debug.WriteLine mergedUrl
 
             (document.querySelector "aside").querySelectorAll "a"
             |> JS.Constructors.Array?from
