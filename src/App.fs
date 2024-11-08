@@ -38,7 +38,12 @@ module Main =
 
             links
             |> Array.iter (fun x ->
-                printfn "%s, %b, %b" x.href (x.href <> "") (x.href |> URL.Create |> Url.isInternal'))
+                printfn
+                    "href: %s, URL: %O, href is blank: %b, href is internal: %b"
+                    x.href
+                    (x.href |> URL.Create)
+                    (x.href <> "")
+                    (x.href |> URL.Create |> Url.isInternal'))
 
             links
             |> Array.filter (fun x -> x.href <> "")
