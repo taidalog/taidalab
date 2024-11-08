@@ -31,19 +31,9 @@ module Main =
             window.history.replaceState (null, "", mergedUrl.href)
             Page.init mergedUrl
 
-            Console.WriteLine mergedUrl
-            Debug.WriteLine mergedUrl
+            // Debug.WriteLine mergedUrl
 
             let links: HTMLAnchorElement array = JS.Constructors.Array?from document.links
-
-            links
-            |> Array.iter (fun x ->
-                printfn
-                    "href: %s, URL: %O, href is not blank: %b, href is internal: %b"
-                    x.href
-                    (x.href |> URL.Create)
-                    (x.href <> "")
-                    (x.href |> URL.Create |> Url.isInternal'))
 
             links
             |> Array.filter (fun x -> x.href <> "")
@@ -60,8 +50,7 @@ module Main =
             window.history.replaceState (null, "", mergedUrl.href)
             Page.init mergedUrl
 
-            Console.WriteLine mergedUrl
-            Debug.WriteLine mergedUrl
+            // Debug.WriteLine mergedUrl
 
             (document.querySelector "aside").querySelectorAll "a"
             |> JS.Constructors.Array?from

@@ -56,8 +56,7 @@ module Page =
                 window.history.pushState (null, "", anchor.href)
                 anchor.href |> URL.Create |> init
 
-                Console.WriteLine(URL.Create anchor.href)
-                Debug.WriteLine(URL.Create anchor.href)
+                // Debug.WriteLine(URL.Create anchor.href)
 
                 showLocation ()
 
