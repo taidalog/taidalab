@@ -1,4 +1,4 @@
-// taidalab Version 5.0.0
+// taidalab Version 5.0.1
 // https://github.com/taidalog/taidalab
 // Copyright (c) 2022-2024 taidalog
 // This software is licensed under the MIT License.
@@ -70,9 +70,6 @@ module IroIroiro =
     let private circulation2 (s: int) (n: int) : int = n / s
     // 0 0 0 ... 1 1 1 ... 2 2 2 ...
 
-    let private countBefore (index: int) (list: 'T list) : int =
-        list |> List.truncate index |> List.countWith ((=) (List.item index list))
-
     let private f min' max' x =
         let gap = max' - min'
 
@@ -96,7 +93,7 @@ module IroIroiro =
 
         let rf, gf, bf =
             (0, 1, 2)
-            |> Tuple.map3 (fun x -> List.findIndex ((=) (List.item x rgb)) (List.sort rgb) + countBefore x rgb)
+            |> Tuple.map3 (fun x -> List.findIndex ((=) (List.item x rgb)) (List.sort rgb) + List.countBefore x rgb)
             |> Tuple.map3 (fun x -> List.item x [ fmin; fmid; fmax ])
 
         [ 0..limit ] |> List.map (fun x -> rf x, gf x, bf x)

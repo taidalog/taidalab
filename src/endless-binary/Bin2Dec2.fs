@@ -1,4 +1,4 @@
-﻿// taidalab Version 5.0.0
+﻿// taidalab Version 5.0.1
 // https://github.com/taidalog/taidalab
 // Copyright (c) 2022-2024 taidalog
 // This software is licensed under the MIT License.
@@ -51,4 +51,4 @@ module EndlessBinary =
             (document.querySelector "#submitButton").className <- "submit-button display-order-3 bin2dec"
             (document.querySelector "#questionArea").innerHTML <- Content.Common.question
 
-            Bin2Dec1.init' question hint additional EndlessBinary.keyboardshortcut Bin2Dec1.checkAnswer
+            Bin2Dec1.init' question hint additional EndlessBinary.keyboardshortcut

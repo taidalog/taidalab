@@ -1,4 +1,4 @@
-// taidalab Version 5.0.0
+// taidalab Version 5.0.1
 // https://github.com/taidalog/taidalab
 // Copyright (c) 2022-2024 taidalog
 // This software is licensed under the MIT License.
@@ -24,7 +24,7 @@ module TCPIP =
                 || match last with
                    | None -> false
                    | Some last' ->
-                       List.intersection (Device.networkAddresses last') (Device.networkAddresses next)
+                       List.intersect (Device.networkAddresses last') (Device.networkAddresses next)
                        <> []))
 
     let extendRoute (cables: Cable list) (devices: Device list) (route: Device list) : Device list list =

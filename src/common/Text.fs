@@ -1,4 +1,4 @@
-// taidalab Version 5.0.0
+// taidalab Version 5.0.1
 // https://github.com/taidalog/taidalab
 // Copyright (c) 2022-2024 taidalog
 // This software is licensed under the MIT License.
@@ -34,6 +34,6 @@ module Text =
     let colorLeadingZero str =
         str
         |> (String.rev >> String.tail >> String.rev)
-        |> String.splitWith ((<>) '0')
+        |> String.splitFind ((<>) '0')
         |> fun (left, right) -> $"""<span class="zero-gray">%s{left}</span>%s{right}"""
         |> fun x -> x + (str |> String.last)

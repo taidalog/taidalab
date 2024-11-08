@@ -1,4 +1,4 @@
-﻿// taidalab Version 5.0.0
+﻿// taidalab Version 5.0.1
 // https://github.com/taidalog/taidalab
 // Copyright (c) 2022-2024 taidalog
 // This software is licensed under the MIT License.
@@ -30,10 +30,18 @@ module EndlessBinary =
                     // Generates a number that is zero, or that is power of two and less than 255.
                     getRandomBetween 0 8
                     |> pown 2
+                    |> Dec.Valid
                     |> Dec.toBin
+                    |> function
+                        | Bin.Invalid _ -> ""
+                        | Bin.Valid v -> v
                     |> String.padLeft 9 '0'
                     |> String.tail
+                    |> Bin.Valid
                     |> Bin.toDec
+                    |> function
+                        | Dec.Invalid _ -> -1
+                        | Dec.Valid v -> v
 
                 generator' (), generator' ()
 
@@ -88,158 +96,191 @@ module EndlessBinary =
             |> List.fold (fun x y -> applyToTuples3 (fun a1 a2 -> sprintf "%s%s" a1 a2) x y) ("", "", "")
             |> newHintTable
 
-        let hint binaryString =
-            let formula = writeAdditionFormula binaryString
-            let table = hintTable binaryString
+        let hint (bin: Bin) : string =
+            match bin with
+            | Bin.Invalid _ -> ""
+            | Bin.Valid v ->
+                let formula = writeAdditionFormula v
+                let table = hintTable v
 
-            $"""
-            <details><summary><h2>ヒント:</h2></summary>
-                <p class="history-indented">
-                    10進法で表現した数は、一番右の桁から<br>
-                    1の位、10の位、100の位、1000の位...となっています。<br>
-                    これを「10<sup>n</sup>の位」の形で表すと、<br>
-                    10<sup>0</sup>の位、10<sup>1</sup>の位、10<sup>2</sup>の位、10<sup>3</sup>の位...となります。<br>
-                </p>
-                <p class="history-indented">
-                    同様に、2進法で表現した数は、一番右の桁から<br>
-                    1の位、2の位、4の位、8の位...となっています。<br>
-                    これを「2<sup>n</sup>の位」の形で表すと、<br>
-                    2<sup>0</sup>の位、2<sup>1</sup>の位、2<sup>2</sup>の位、2<sup>3</sup>の位...となります。
-                </p>
-                <p class="history-indented">
-                    この 10<sup>0</sup>、10<sup>1</sup>、10<sup>2</sup>、10<sup>3</sup>...や 2<sup>0</sup>、2<sup>1</sup>、2<sup>2</sup>、2<sup>3</sup>...という数を、その桁の「重み」と呼びます。<br>
-                </p>
-                <p class="history-indented">
-                    %s{table}
-                </p>
-                <p class="history-indented">
-                    2進法で表現した数を10進法で表現しなおすには、それぞれの桁の数と重みをかけ算し、それを合計します。<br>
-                    %s{binaryString}<sub>(2)</sub> の場合、以下のように計算します。
-                </p>
-                <p class="history-indented hint-bgcolor-gray mono regular">
-                    &nbsp;&nbsp;%s{formula}<br>
-                    = %d{Bin.toDec binaryString}<sub>(10)</sub>
-                </p>
-            </details>
+                let dec =
+                    bin
+                    |> Bin.toDec
+                    |> function
+                        | Dec.Valid v -> v
+                        | Dec.Invalid _ -> -1
+
+                $"""
+                <details><summary><h2>ヒント:</h2></summary>
+                    <p class="history-indented">
+                        10進法で表現した数は、一番右の桁から<br>
+                        1の位、10の位、100の位、1000の位...となっています。<br>
+                        これを「10<sup>n</sup>の位」の形で表すと、<br>
+                        10<sup>0</sup>の位、10<sup>1</sup>の位、10<sup>2</sup>の位、10<sup>3</sup>の位...となります。<br>
+                    </p>
+                    <p class="history-indented">
+                        同様に、2進法で表現した数は、一番右の桁から<br>
+                        1の位、2の位、4の位、8の位...となっています。<br>
+                        これを「2<sup>n</sup>の位」の形で表すと、<br>
+                        2<sup>0</sup>の位、2<sup>1</sup>の位、2<sup>2</sup>の位、2<sup>3</sup>の位...となります。
+                    </p>
+                    <p class="history-indented">
+                        この 10<sup>0</sup>、10<sup>1</sup>、10<sup>2</sup>、10<sup>3</sup>...や 2<sup>0</sup>、2<sup>1</sup>、2<sup>2</sup>、2<sup>3</sup>...という数を、その桁の「重み」と呼びます。<br>
+                    </p>
+                    <p class="history-indented">
+                        %s{table}
+                    </p>
+                    <p class="history-indented">
+                        2進法で表現した数を10進法で表現しなおすには、それぞれの桁の数と重みをかけ算し、それを合計します。<br>
+                        %s{v}<sub>(2)</sub> の場合、以下のように計算します。
+                    </p>
+                    <p class="history-indented hint-bgcolor-gray mono regular">
+                        &nbsp;&nbsp;%s{formula}<br>
+                        = %d{dec}<sub>(10)</sub>
+                    </p>
+                </details>
             """
 
-        let question' lastAnswers : int =
-            newNumber newNumberWithOneOrTwoOne (fun n -> List.contains n lastAnswers = false)
+        let question' lastNumbers : int =
+            newNumber newNumberWithOneOrTwoOne (fun n -> List.contains n lastNumbers = false)
+
+        let history (correct: bool) (question: Bin) (answer: Dec) : string =
+            match question, answer with
+            | (Bin.Valid b, Dec.Valid d) ->
+                let taggedBin = b |> padWithZero 8 |> colorLeadingZero
+
+                let spacePaddedInputValue =
+                    d |> string |> Fermata.String.padLeft 3 ' ' |> escapeSpace
+
+                newHistory correct spacePaddedInputValue 10 taggedBin 2
+            | _ -> ""
 
         let additional number : unit = ()
 
-        let rec checkAnswer
-            (questionGenerator: 'c list -> 'c)
-            (hintGenerator: 'a -> 'b)
+        let rec exec
+            (questionGenerator: int list -> int)
+            (hintGenerator: Bin -> string)
             (additional: 'c -> unit)
-            (answer: string)
-            (question: string)
-            (last_answers: int list)
-            =
+            (numbersToKeep: int)
+            (lastNumbers: int list)
+            (question: Bin)
+            (answer: Dec)
+            : unit =
             // Getting the user input.
             let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
             let input = numberInput.value |> escapeHtml
-            let dec: Result<int, Errors.Errors> = input |> Dec.validate
+            let dec: Dec = input |> Dec.validate
 
             numberInput.focus ()
 
             match dec with
-            | Error(error: Errors.Errors) ->
+            | Dec.Invalid e ->
                 // Making an error message.
-                (document.getElementById "errorArea").innerHTML <- newErrorMessageDec question input error
-            | Ok(dec: int) ->
+                let q =
+                    match question with
+                    | Bin.Invalid _ -> ""
+                    | Bin.Valid v -> v
+
+                (document.getElementById "errorArea").innerHTML <- newErrorMessageDec q input e
+            | Dec.Valid v ->
                 (document.getElementById "errorArea").innerHTML <- ""
 
                 // Converting the input in order to use in the history message.
-                let digit = 3
+                // let digit = 3
 
-                let spacePaddedInputValue =
-                    dec |> string |> Fermata.String.padLeft digit ' ' |> escapeSpace
+                // let spacePaddedInputValue =
+                //     v |> string |> Fermata.String.padLeft digit ' ' |> escapeSpace
 
-                let sourceRadix = 2
-                let bin = Dec.toBin dec
-                let binaryDigit = 8
-                let taggedBin = bin |> padWithZero binaryDigit |> colorLeadingZero
+                // let sourceRadix = 2
+                // let bin: Bin = Bin.validate question
+                // let binaryDigit = 8
+
+                // let taggedBin =
+                //     match bin with
+                //     | Bin.Invalid _ -> ""
+                //     | Bin.Valid v -> v |> padWithZero binaryDigit |> colorLeadingZero
 
                 // Making a new history and updating the history with the new one.
-                let destinationRadix = 10
+                // let destinationRadix = 10
                 let outputArea = document.getElementById "outputArea"
 
                 let historyMessage =
-                    newHistory (dec = int answer) spacePaddedInputValue destinationRadix taggedBin sourceRadix
+                    history (dec = answer) question answer
                     |> (fun x -> concatinateStrings "<br>" [ x; outputArea.innerHTML ])
 
                 outputArea.innerHTML <- historyMessage
 
-                if dec = int answer then
+                if dec = answer then
                     // Making the next question.
-                    let nextNumber = questionGenerator last_answers
-                    let nextBin = Dec.toBin nextNumber
-                    let splitBin = splitBinaryStringBy 4 nextBin
-                    (document.getElementById "questionSpan").innerText <- splitBin
-                    (document.getElementById "hintArea").innerHTML <- hintGenerator nextBin
+                    let nextNumber = questionGenerator lastNumbers
+                    let nextAnswer: Dec = Dec.Valid nextNumber
+                    let nextQuestion: Bin = nextAnswer |> Dec.toBin
+                    (document.getElementById "questionSpan").innerText <- splitBinaryStringBy 4 nextQuestion
+                    (document.getElementById "hintArea").innerHTML <- hintGenerator nextQuestion
                     numberInput.value <- ""
 
-                    // Updating `lastAnswers`.
+                    // Updating `lastNumbers`.
                     // These numbers will not be used for the next question.
-                    let answersToKeep = Math.Min(4, List.length last_answers + 1)
-                    let lastAnswers = (nextNumber :: last_answers).[0 .. (answersToKeep - 1)]
+                    let lastNumbers = (nextNumber :: lastNumbers) |> List.truncate numbersToKeep
 
                     // Setting the next answer to the check button.
                     (document.getElementById "submitButton").onclick <-
                         (fun e ->
                             e.preventDefault ()
 
-                            checkAnswer
+                            exec
                                 questionGenerator
                                 hintGenerator
                                 additional
-                                (string nextNumber)
-                                splitBin
-                                lastAnswers)
+                                numbersToKeep
+                                lastNumbers
+                                nextQuestion
+                                nextAnswer)
 
                     (document.getElementById "inputArea").onsubmit <-
                         (fun e ->
                             e.preventDefault ()
 
-                            checkAnswer
+                            exec
                                 questionGenerator
                                 hintGenerator
                                 additional
-                                (string nextNumber)
-                                splitBin
-                                lastAnswers)
+                                numbersToKeep
+                                lastNumbers
+                                nextQuestion
+                                nextAnswer)
 
+        let exec' (lastNumbers: int list) (question: Bin) (answer: Dec) =
+            exec question' hint additional 4 lastNumbers question answer
 
         let init'
-            (questionGenerator: 'c list -> 'c)
-            (hintGenerator: 'a -> 'b)
+            (questionGenerator: int list -> int)
+            (hintGenerator: Bin -> string)
             (additional: 'c -> unit)
             (keyboardshortcutSetter: KeyboardEvent -> unit)
-            checker
             : unit =
             // Initialization.
             let initNumber = questionGenerator []
-            let initBin = Dec.toBin initNumber
-            let splitBin = splitBinaryStringBy 4 initBin
+            let initAnswer: Dec = Dec.Valid initNumber
+            let initQuestion: Bin = initAnswer |> Dec.toBin
             let sourceRadix = 2
             let destinationRadix = 10
 
-            (document.getElementById "questionSpan").innerText <- splitBin
+            (document.getElementById "questionSpan").innerText <- splitBinaryStringBy 4 initQuestion
             (document.getElementById "srcRadix").innerText <- sprintf "(%d)" sourceRadix
             (document.getElementById "dstRadix").innerText <- string destinationRadix
             (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
-            (document.getElementById "hintArea").innerHTML <- hintGenerator initBin
+            (document.getElementById "hintArea").innerHTML <- hintGenerator initQuestion
 
             (document.getElementById "submitButton").onclick <-
                 (fun e ->
                     e.preventDefault ()
-                    checker questionGenerator hintGenerator additional (string initNumber) splitBin [ initNumber ])
+                    exec' [ initNumber ] initQuestion initAnswer)
 
             (document.getElementById "inputArea").onsubmit <-
                 (fun e ->
                     e.preventDefault ()
-                    checker questionGenerator hintGenerator additional (string initNumber) splitBin [ initNumber ])
+                    exec' [ initNumber ] initQuestion initAnswer)
 
             (document.getElementById "helpButton").onclick <-
                 (fun _ ->
@@ -258,7 +299,7 @@ module EndlessBinary =
 
             document.onkeydown <- (fun (e: KeyboardEvent) -> keyboardshortcutSetter e)
 
-        let init () =
+        let init () : unit =
             document.title <- "2進数→10進数 (1) - taidalab"
 
             let header = document.querySelector "header"
@@ -284,4 +325,4 @@ module EndlessBinary =
             (document.querySelector "#submitButton").className <- "submit-button display-order-3 bin2dec"
             (document.querySelector "#questionArea").innerHTML <- Content.Common.question
 
-            init' question' hint additional EndlessBinary.keyboardshortcut checkAnswer
+            init' question' hint additional EndlessBinary.keyboardshortcut

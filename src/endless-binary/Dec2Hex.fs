@@ -1,4 +1,4 @@
-// taidalab Version 5.0.0
+// taidalab Version 5.0.1
 // https://github.com/taidalog/taidalab
 // Copyright (c) 2022-2024 taidalog
 // This software is licensed under the MIT License.
@@ -6,6 +6,7 @@
 namespace Taidalab
 
 open Browser.Dom
+open Browser.Types
 open Taidalab.Number
 open Taidalab.Text
 open Taidalab.EndlessBinary
@@ -135,14 +136,185 @@ module EndlessBinary =
 
         let hint number = newHint 16 number 20
 
-        let question lastAnswers : int =
-            newNumber (fun _ -> getRandomBetween 0 255) (fun n -> List.contains n lastAnswers = false)
+        let question lastNumbers : int =
+            newNumber (fun _ -> getRandomBetween 0 255) (fun n -> List.contains n lastNumbers = false)
+
+        let history (correct: bool) (input: string) : string =
+            match input |> Hex.validate |> Hex.toDec with
+            | Dec.Invalid _ -> ""
+            | Dec.Valid v ->
+                let colored = input |> padWithZero 8 |> colorLeadingZero
+                let spacePadded = v |> string |> Fermata.String.padLeft 3 ' ' |> escapeSpace
+                newHistory correct colored 16 spacePadded 10
 
         let additional number : unit =
             (document.getElementById "hint1").onclick <-
                 (fun _ ->
                     (document.getElementById "hint1").innerHTML <- newHintAnimation 16 number 20
                     (document.getElementById "hintDetails").setAttribute ("open", "true"))
+
+        let rec exec
+            (questionGenerator: int list -> int)
+            (hintGenerator: int -> string)
+            (errorGenerator: string -> string -> exn -> string)
+            tagger
+            (additional: int -> unit)
+            sourceRadix
+            destinationRadix
+            (numbersToKeep: int)
+            (lastNumbers: int list)
+            (question: Dec)
+            (answer: Hex)
+            =
+            // Getting the user input.
+            let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
+            let input = numberInput.value |> escapeHtml
+            let hex: Hex = Hex.validate input
+
+            numberInput.focus ()
+
+            match hex with
+            | Hex.Invalid e ->
+                // Making an error message.
+                let q =
+                    match question with
+                    | Dec.Invalid _ -> ""
+                    | Dec.Valid v -> string v
+
+                (document.getElementById "errorArea").innerHTML <- errorGenerator q input e
+            | Hex.Valid v ->
+                (document.getElementById "errorArea").innerHTML <- ""
+
+                // Converting the input in order to use in the history message.
+                let colored = v |> tagger //padWithZero binaryDigit |> colorLeadingZero
+
+                let decimalDigit = 3
+
+                let spacePadded = v |> Fermata.String.padLeft decimalDigit ' ' |> escapeSpace
+
+                // Making a new history and updating the history with the new one.
+                let outputArea = document.getElementById "outputArea" :?> HTMLParagraphElement
+
+                let historyMessage =
+                    history (hex = answer) v //colored destinationRadix spacePadded sourceRadix
+                    |> (fun x -> concatinateStrings "<br>" [ x; outputArea.innerHTML ])
+
+                outputArea.innerHTML <- historyMessage
+
+                if hex <> answer then
+                    ()
+                else
+                    // Making the next question.
+                    let nextNumber: int = questionGenerator lastNumbers
+                    (document.getElementById "questionSpan").innerText <- string nextNumber
+                    (document.getElementById "hintArea").innerHTML <- hintGenerator nextNumber
+                    additional nextNumber
+
+                    let nextQuestion = nextNumber |> Dec.Valid
+                    let nextAnswer = nextQuestion |> Dec.toHex
+
+                    numberInput.value <- ""
+
+                    // Updating `lastNumbers`.
+                    // These numbers will not be used for the next question.
+                    let lastNumbers' = (nextNumber :: lastNumbers) |> List.truncate numbersToKeep
+
+                    // Setting the next answer to the check button.
+                    (document.getElementById "submitButton").onclick <-
+                        (fun e ->
+                            e.preventDefault ()
+
+                            exec
+                                questionGenerator
+                                hintGenerator
+                                errorGenerator
+                                tagger
+                                additional
+                                sourceRadix
+                                destinationRadix
+                                numbersToKeep
+                                lastNumbers'
+                                nextQuestion
+                                nextAnswer)
+
+                    (document.getElementById "inputArea").onsubmit <-
+                        (fun e ->
+                            e.preventDefault ()
+
+                            exec
+                                questionGenerator
+                                hintGenerator
+                                errorGenerator
+                                tagger
+                                additional
+                                sourceRadix
+                                destinationRadix
+                                nextNumber
+                                lastNumbers'
+                                nextQuestion
+                                nextAnswer)
+
+        let exec' (lastNumbers: int list) (question': Dec) (answer: Hex) =
+            exec
+                question
+                hint
+                newErrorMessageHex
+                (padWithZero 8 >> colorLeadingZero)
+                additional
+                10
+                16
+                10
+                lastNumbers
+                question'
+                answer
+
+        let init'
+            (questionGenerator: int list -> int)
+            (hintGenerator: int -> string)
+            (additional: int -> unit)
+            sourceRadix
+            destinationRadix
+            (keyboardshortcutSetter: KeyboardEvent -> unit)
+            : unit =
+            // Initialization.
+            let initNumber: int = questionGenerator []
+            (document.getElementById "questionSpan").innerText <- string initNumber
+            (document.getElementById "srcRadix").innerText <- sprintf "(%d)" sourceRadix
+            (document.getElementById "dstRadix").innerText <- string destinationRadix
+            (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
+            (document.getElementById "hintArea").innerHTML <- hintGenerator initNumber
+
+            let question: Dec = initNumber |> Dec.Valid
+            let answer: Hex = question |> Dec.toHex
+
+            (document.getElementById "submitButton").onclick <-
+                (fun e ->
+                    e.preventDefault ()
+                    exec' [ initNumber ] question answer)
+
+            (document.getElementById "inputArea").onsubmit <-
+                (fun e ->
+                    e.preventDefault ()
+                    exec' [ initNumber ] question answer)
+
+            additional initNumber
+
+            (document.getElementById "helpButton").onclick <-
+                (fun _ ->
+                    [ "helpWindow"; "helpBarrier" ]
+                    |> List.iter (fun x -> (document.getElementById x).classList.toggle "active" |> ignore))
+
+            (document.getElementById "helpBarrier").onclick <-
+                (fun _ ->
+                    [ "helpWindow"; "helpBarrier" ]
+                    |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore))
+
+            (document.getElementById "helpClose").onclick <-
+                (fun _ ->
+                    [ "helpWindow"; "helpBarrier" ]
+                    |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore))
+
+            document.onkeydown <- (fun (e: KeyboardEvent) -> keyboardshortcutSetter e)
 
         let init () =
             document.title <- "10進数→16進数 - taidalab"
@@ -170,16 +342,4 @@ module EndlessBinary =
             (document.querySelector "#submitButton").className <- "submit-button display-order-3 dec2hex"
             (document.querySelector "#questionArea").innerHTML <- Content.Common.question
 
-            Dec2Bin1.init'
-                question
-                hint
-                newErrorMessageHex
-                Hex.validate
-                Hex.toDec
-                (padWithZero 8 >> colorLeadingZero)
-                additional
-                10
-                16
-                10
-                EndlessBinary.keyboardshortcut
-                Dec2Bin1.checkAnswer
+            init' question hint additional 10 16 EndlessBinary.keyboardshortcut

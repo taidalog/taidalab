@@ -1,10 +1,11 @@
-// taidalab Version 5.0.0
+// taidalab Version 5.0.1
 // https://github.com/taidalog/taidalab
 // Copyright (c) 2022-2024 taidalog
 // This software is licensed under the MIT License.
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
 namespace Taidalab
 
+open System
 open Fermata
 open Fermata.Validators
 
@@ -31,8 +32,8 @@ module IPv4 =
         let bytes = dotDecimal.Split([| '.' |]) |> Array.map byte
         ofBytes (bytes.[0]) (bytes.[1]) (bytes.[2]) (bytes.[3])
 
-    let validate (str: string) : Result<IPv4, Fermata.Errors.Errors> =
-        let validateRangeAll str =
+    let validate (str: string) : Result<IPv4, exn> =
+        let validateRangeAll (str: string) : Result<string, exn> =
             if
                 (str
                  |> String.split '.'
@@ -41,7 +42,9 @@ module IPv4 =
             then
                 Ok str
             else
-                Error Fermata.Errors.Errors.OutOfRange
+                Error(
+                    ArgumentOutOfRangeException("str", $"%s{str} is out of range. Each value must be within 0 and 255")
+                )
 
         Ok str
         |> Result.bind validateNotEmptyString

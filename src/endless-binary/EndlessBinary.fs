@@ -1,10 +1,11 @@
-// taidalab Version 5.0.0
+// taidalab Version 5.0.1
 // https://github.com/taidalog/taidalab
 // Copyright (c) 2022-2024 taidalog
 // This software is licensed under the MIT License.
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
 namespace Taidalab
 
+open System
 open Browser.Types
 open Fable.Core
 open Fable.Core.JsInterop
@@ -72,31 +73,38 @@ module EndlessBinary =
                 </div>
             </div>"""
 
-    let newErrorMessageBin answer input (error: Errors.Errors) =
-        match error with
-        | Errors.EmptyString
-        | Errors.NullOrEmpty -> sprintf """<span class="warning">%s の2進法表記を入力してください。</span>""" answer
-        | Errors.WrongFormat -> sprintf """<span class="warning">'%s' は2進数ではありません。使えるのは半角の 0 と 1 のみです。</span>""" input
-        | Errors.OutOfRange ->
-            sprintf """<span class="warning">'%s' は入力できる数値の範囲を越えています。入力できるのは xxx ~ yyy の間です。</span>""" input
+    let newErrorMessageBin (question: string) (input: string) (error: exn) =
+        if String.IsNullOrWhiteSpace input then
+            $"%s{question} の2進法表記を入力してください。"
+        else if Regex.isMatch "^[01]+$" input |> not then
+            $"'%s{input}' は2進数ではありません。使えるのは半角の 0 と 1 のみです。"
+        // else if false then
+        //      $"'%s{input}' は入力できる数値の範囲を越えています。入力できるのは xxx ~ yyy の間です。"
+        else
+            "不明なエラーです。"
+        |> sprintf """<span class="warning">%s</span>"""
 
-    let newErrorMessageDec answer input (error: Errors.Errors) =
-        match error with
-        | Errors.EmptyString
-        | Errors.NullOrEmpty -> sprintf """<span class="warning">%s の10進法表記を入力してください。</span>""" answer
-        | Errors.WrongFormat ->
-            sprintf """<span class="warning">'%s' は10進数ではありません。使えるのは半角の 0123456789 のみです。</span>""" input
-        | Errors.OutOfRange ->
-            sprintf """<span class="warning">'%s' は入力できる数値の範囲を越えています。入力できるのは xxx ~ yyy の間です。</span>""" input
+    let newErrorMessageDec (question: string) (input: string) (error: exn) =
+        if String.IsNullOrWhiteSpace input then
+            $"%s{question} の10進法表記を入力してください。"
+        else if Regex.isMatch "^[0-9]+$" input |> not then
+            $"'%s{input}' は10進数ではありません。使えるのは半角の 0123456789 のみです。"
+        // else if false then
+        //      $"'%s{input}' は入力できる数値の範囲を越えています。入力できるのは xxx ~ yyy の間です。"
+        else
+            "不明なエラーです。"
+        |> sprintf """<span class="warning">%s</span>"""
 
-    let newErrorMessageHex answer input (error: Errors.Errors) =
-        match error with
-        | Errors.EmptyString
-        | Errors.NullOrEmpty -> sprintf """<span class="warning">%s の16進法表記を入力してください。</span>""" answer
-        | Errors.WrongFormat ->
-            sprintf """<span class="warning">'%s' は16進数ではありません。使えるのは半角の 0123456789ABCDEF のみです。</span>""" input
-        | Errors.OutOfRange ->
-            sprintf """<span class="warning">'%s' は入力できる数値の範囲を越えています。入力できるのは xxx ~ yyy の間です。</span>""" input
+    let newErrorMessageHex (question: string) (input: string) (error: exn) =
+        if String.IsNullOrWhiteSpace input then
+            $"%s{question} の16進法表記を入力してください。"
+        else if Regex.isMatch "^[0-9A-Fa-f]+$" input |> not then
+            $"'%s{input}' は16進数ではありません。使えるのは半角の 0123456789ABCDEF のみです。"
+        // else if false then
+        //      $"'%s{input}' は入力できる数値の範囲を越えています。入力できるのは xxx ~ yyy の間です。"
+        else
+            "不明なエラーです。"
+        |> sprintf """<span class="warning">%s</span>"""
 
     let newHistory correct input destination_radix converted_input source_radix =
         let historyClassName =
@@ -117,15 +125,33 @@ module EndlessBinary =
         </div>
         """
 
-    let splitBinaryStringBy digit str =
-        str |> String.chunkBySizeRight digit |> Seq.toList |> String.concat " "
+    let splitBinaryStringBy digit bin =
+        match bin with
+        | Bin.Invalid _ -> ""
+        | Bin.Valid v -> v |> String.chunkBySizeRight digit |> Seq.toList |> String.concat " "
 
     open Browser.Dom
 
-    let setColumnAddition number1 number2 =
-        let bin1 = number1 |> Dec.toBin |> Seq.map string |> Seq.padLeft 8 ""
+    let setColumnAddition (number1: int) (number2: int) =
+        let bin1 =
+            number1
+            |> Dec.Valid
+            |> Dec.toBin
+            |> function
+                | Bin.Valid v -> v
+                | Bin.Invalid _ -> ""
+            |> Seq.map string
+            |> Seq.padLeft 8 ""
 
-        let bin2 = number2 |> Dec.toBin |> Seq.map string |> Seq.padLeft 8 ""
+        let bin2 =
+            number2
+            |> Dec.Valid
+            |> Dec.toBin
+            |> function
+                | Bin.Valid v -> v
+                | Bin.Invalid _ -> ""
+            |> Seq.map string
+            |> Seq.padLeft 8 ""
 
         bin1
         |> Seq.iteri (fun i x ->

@@ -1,4 +1,4 @@
-﻿// taidalab Version 5.0.0
+﻿// taidalab Version 5.0.1
 // https://github.com/taidalog/taidalab
 // Copyright (c) 2022-2024 taidalog
 // This software is licensed under the MIT License.
@@ -12,7 +12,6 @@ open Taidalab.Number
 open Taidalab.Text
 open Taidalab.Tuple
 open Taidalab.EndlessBinary
-open Fermata
 open Fermata.RadixConversion
 
 module EndlessBinary =
@@ -26,10 +25,16 @@ module EndlessBinary =
 
         let writeAdditionFormulaHex (hex: seq<char>) =
             hex
-            |> Seq.toList
-            |> List.rev
-            |> List.mapi (fun i c -> sprintf """(%d * 16<sup>%d</sup>)""" (c |> string |> Hex.toDec) i)
-            |> List.rev
+            |> Seq.rev
+            |> Seq.map string
+            |> Seq.mapi (fun i c ->
+                $"""(%d{c
+                        |> Hex.validate
+                        |> Hex.toDec
+                        |> function
+                            | Dec.Valid v -> v
+                            | Dec.Invalid _ -> -1} * 16<sup>%d{i}</sup>)""")
+            |> Seq.rev
             |> String.concat " + "
 
         let tableComponentsHex hex =
@@ -75,6 +80,19 @@ module EndlessBinary =
             |> newHintTable
 
         let hintFormat hex formula table =
+            let hex' =
+                hex
+                |> function
+                    | Hex.Valid v -> v
+                    | Hex.Invalid _ -> "-1"
+
+            let dec =
+                hex
+                |> Hex.toDec
+                |> function
+                    | Dec.Valid v -> v
+                    | Dec.Invalid _ -> -1
+
             $"""<details>
                 <summary><h2>ヒント:</h2></summary>
                 <p class="history-indented">
@@ -97,79 +115,85 @@ module EndlessBinary =
                 </p>
                 <p class="history-indented">
                     16進法で表現した数を10進法で表現しなおすには、それぞれの桁の数と重みをかけ算し、それを合計します。<br>
-                    %s{hex}<sub>(16)</sub>の場合、以下のように計算します。<br>
+                    %s{hex'}<sub>(16)</sub>の場合、以下のように計算します。<br>
                     ※ 16進数にA~Fのアルファベットがある場合は、それぞれ10<sub>(10)</sub>~15<sub>(10)</sub>を表しています。
                 </p>
                 <p class="history-indented hint-bgcolor-gray mono regular">
                     &nbsp;&nbsp;%s{formula}<br>
-                    = %d{hex |> Hex.toDec}
+                    = %d{dec}
                 </p>
             </details>"""
 
-        let rec checkAnswer answer (question: string) (last_answers: int list) =
+        let rec checkAnswer (answer: int) (question: string) (last_answers: int list) =
             // Getting the user input.
             let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
             let input = numberInput.value |> escapeHtml
-            let dec: Result<int, Errors.Errors> = input |> Dec.validate
 
             numberInput.focus ()
 
-            match dec with
-            | Error(error: Errors.Errors) ->
+            match Dec.validate input with
+            | Dec.Invalid e ->
                 // Making an error message.
-                (document.getElementById "errorArea").innerHTML <- newErrorMessageDec question input error
-            | Ok(dec: int) ->
+                (document.getElementById "errorArea").innerHTML <- newErrorMessageDec question input e
+            | Dec.Valid v ->
                 (document.getElementById "errorArea").innerHTML <- ""
 
                 // Converting the input in order to use in the history message.
                 let digit = 3
 
                 let spacePaddedInputValue =
-                    dec |> string |> Fermata.String.padLeft digit ' ' |> escapeSpace
+                    v |> string |> Fermata.String.padLeft digit ' ' |> escapeSpace
 
                 let sourceRadix = 16
-                let hex = Dec.toHex dec
-                let hexDigit = 2
-                let taggedHex = padWithZero hexDigit hex |> colorLeadingZero
 
-                // Making a new history and updating the history with the new one.
-                let destinationRadix = 10
-                let outputArea = document.getElementById "outputArea"
+                match v |> Dec.Valid |> Dec.toHex with
+                | Hex.Invalid _ -> ()
+                | Hex.Valid hex ->
+                    let hexDigit = 2
+                    let taggedHex = padWithZero hexDigit hex |> colorLeadingZero
 
-                let historyMessage =
-                    newHistory (dec = answer) spacePaddedInputValue destinationRadix taggedHex sourceRadix
-                    |> (fun x -> concatinateStrings "<br>" [ x; outputArea.innerHTML ])
+                    // Making a new history and updating the history with the new one.
+                    let destinationRadix = 10
+                    let outputArea = document.getElementById "outputArea"
 
-                outputArea.innerHTML <- historyMessage
+                    let historyMessage =
+                        newHistory (v = answer) spacePaddedInputValue destinationRadix taggedHex sourceRadix
+                        |> (fun x -> concatinateStrings "<br>" [ x; outputArea.innerHTML ])
 
-                if dec = answer then
-                    // Making the next question.
-                    let nextNumber =
-                        newNumber (fun _ -> getRandomBetween 0 255) (fun n -> List.contains n last_answers = false)
+                    outputArea.innerHTML <- historyMessage
 
-                    let nextHex = Dec.toHex nextNumber
-                    (document.getElementById "questionSpan").innerText <- nextHex
+                    if v = answer then
+                        // Making the next question.
+                        let nextNumber: int =
+                            newNumber (fun _ -> getRandomBetween 0 255) (fun n -> List.contains n last_answers = false)
 
-                    let nextAddtionFormula = writeAdditionFormulaHex nextHex
-                    let nextHint = hintFormat nextHex nextAddtionFormula (hintTable nextHex)
-                    (document.getElementById "hintArea").innerHTML <- nextHint
-                    numberInput.value <- ""
+                        let nextHex = nextNumber |> Dec.Valid |> Dec.toHex
 
-                    // Updating `lastAnswers`.
-                    // These numbers will not be used for the next question.
-                    let answersToKeep = Math.Min(10, List.length last_answers + 1)
-                    let lastAnswers = (nextNumber :: last_answers).[0 .. (answersToKeep - 1)]
+                        match nextHex with
+                        | Hex.Invalid _ -> ()
+                        | Hex.Valid v ->
+                            (document.getElementById "questionSpan").innerText <- v
 
-                    // Setting the next answer to the check button.
-                    (document.getElementById "submitButton").onclick <-
-                        (fun e ->
-                            e.preventDefault ()
-                            checkAnswer nextNumber nextHex lastAnswers)
+                            let nextAddtionFormula = writeAdditionFormulaHex v
+                            let nextHint = hintFormat nextHex nextAddtionFormula (hintTable v)
+                            (document.getElementById "hintArea").innerHTML <- nextHint
+                            numberInput.value <- ""
 
-                    (document.getElementById "inputArea").onsubmit <-
-                        (fun e ->
-                            e.preventDefault ()
-                            checkAnswer nextNumber nextHex lastAnswers)
+                            // Updating `lastAnswers`.
+                            // These numbers will not be used for the next question.
+                            let answersToKeep = Math.Min(10, List.length last_answers + 1)
+                            let lastAnswers = (nextNumber :: last_answers).[0 .. (answersToKeep - 1)]
+
+                            // Setting the next answer to the check button.
+                            (document.getElementById "submitButton").onclick <-
+                                (fun e ->
+                                    e.preventDefault ()
+                                    checkAnswer nextNumber v lastAnswers)
+
+                            (document.getElementById "inputArea").onsubmit <-
+                                (fun e ->
+                                    e.preventDefault ()
+                                    checkAnswer nextNumber v lastAnswers)
 
         let init () =
             // Initialization.
@@ -199,43 +223,46 @@ module EndlessBinary =
             (document.querySelector "#questionArea").innerHTML <- Content.Common.question
 
             let initNumber = getRandomBetween 0 255
-            let initHex = Dec.toHex initNumber
+            let initHex = initNumber |> Dec.Valid |> Dec.toHex
 
-            let addtionFormula = writeAdditionFormulaHex initHex
-            let hint = hintFormat initHex addtionFormula (hintTable initHex)
+            match initHex with
+            | Hex.Invalid _ -> ()
+            | Hex.Valid v ->
+                let addtionFormula = writeAdditionFormulaHex v
+                let hint = hintFormat initHex addtionFormula (hintTable v)
 
-            let sourceRadix = 16
-            let destinationRadix = 10
+                let sourceRadix = 16
+                let destinationRadix = 10
 
-            (document.getElementById "questionSpan").innerText <- initHex
-            (document.getElementById "srcRadix").innerText <- sprintf "(%d)" sourceRadix
-            (document.getElementById "dstRadix").innerText <- string destinationRadix
-            (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
-            (document.getElementById "hintArea").innerHTML <- hint
+                (document.getElementById "questionSpan").innerText <- v
+                (document.getElementById "srcRadix").innerText <- sprintf "(%d)" sourceRadix
+                (document.getElementById "dstRadix").innerText <- string destinationRadix
+                (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
+                (document.getElementById "hintArea").innerHTML <- hint
 
-            (document.getElementById "submitButton").onclick <-
-                (fun e ->
-                    e.preventDefault ()
-                    checkAnswer initNumber initHex [ initNumber ])
+                (document.getElementById "submitButton").onclick <-
+                    (fun e ->
+                        e.preventDefault ()
+                        checkAnswer initNumber v [ initNumber ])
 
-            (document.getElementById "inputArea").onsubmit <-
-                (fun e ->
-                    e.preventDefault ()
-                    checkAnswer initNumber initHex [ initNumber ])
+                (document.getElementById "inputArea").onsubmit <-
+                    (fun e ->
+                        e.preventDefault ()
+                        checkAnswer initNumber v [ initNumber ])
 
-            (document.getElementById "helpButton").onclick <-
-                (fun _ ->
-                    [ "helpWindow"; "helpBarrier" ]
-                    |> List.iter (fun x -> (document.getElementById x).classList.toggle "active" |> ignore))
+                (document.getElementById "helpButton").onclick <-
+                    (fun _ ->
+                        [ "helpWindow"; "helpBarrier" ]
+                        |> List.iter (fun x -> (document.getElementById x).classList.toggle "active" |> ignore))
 
-            (document.getElementById "helpBarrier").onclick <-
-                (fun _ ->
-                    [ "helpWindow"; "helpBarrier" ]
-                    |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore))
+                (document.getElementById "helpBarrier").onclick <-
+                    (fun _ ->
+                        [ "helpWindow"; "helpBarrier" ]
+                        |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore))
 
-            (document.getElementById "helpClose").onclick <-
-                (fun _ ->
-                    [ "helpWindow"; "helpBarrier" ]
-                    |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore))
+                (document.getElementById "helpClose").onclick <-
+                    (fun _ ->
+                        [ "helpWindow"; "helpBarrier" ]
+                        |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore))
 
-            document.onkeydown <- (fun (e: KeyboardEvent) -> EndlessBinary.keyboardshortcut e)
+                document.onkeydown <- (fun (e: KeyboardEvent) -> EndlessBinary.keyboardshortcut e)

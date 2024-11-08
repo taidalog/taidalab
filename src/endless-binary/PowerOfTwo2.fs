@@ -1,4 +1,4 @@
-﻿// taidalab Version 5.0.0
+﻿// taidalab Version 5.0.1
 // https://github.com/taidalog/taidalab
 // Copyright (c) 2022-2024 taidalog
 // This software is licensed under the MIT License.
@@ -8,7 +8,6 @@ namespace Taidalab
 open System
 open Browser.Dom
 open Taidalab.Number
-open Taidalab.Text
 open Taidalab.EndlessBinary
 open Fermata.RadixConversion
 
@@ -45,7 +44,10 @@ module EndlessBinary =
         let question lastAnswers : int =
             newNumber (fun _ -> getRandomBetween 0 8 |> pown 2 |> (+) -1) (fun n -> List.contains n lastAnswers = false)
 
-        let additional number : unit = ()
+        let additional _ : unit = ()
+
+        let exec' (lastNumbers: int list) (question': Dec) (answer: Bin) : unit =
+            Dec2Bin1.exec question hint newErrorMessageBin additional 10 2 4 lastNumbers question' answer
 
         let init () =
             document.title <- "2のn乗-1 - taidalab"
@@ -73,16 +75,4 @@ module EndlessBinary =
             (document.querySelector "#submitButton").className <- "submit-button display-order-3 power-of-two"
             (document.querySelector "#questionArea").innerHTML <- Content.Common.question
 
-            Dec2Bin1.init'
-                question
-                hint
-                newErrorMessageBin
-                Bin.validate
-                Bin.toDec
-                (padWithZero 8 >> colorLeadingZero)
-                additional
-                10
-                2
-                4
-                EndlessBinary.keyboardshortcut
-                Dec2Bin1.checkAnswer
+            Dec2Bin1.init' question hint additional 10 2 exec' EndlessBinary.keyboardshortcut
