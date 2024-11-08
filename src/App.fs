@@ -31,7 +31,6 @@ module Main =
             window.history.replaceState (null, "", mergedUrl.href)
             Page.init mergedUrl
 
-            printfn "%s" Url.baseUrl
             Console.WriteLine mergedUrl
             Debug.WriteLine mergedUrl
 
