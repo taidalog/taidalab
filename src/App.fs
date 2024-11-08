@@ -1,4 +1,4 @@
-// taidalab Version 5.0.2
+// taidalab Version 5.0.3
 // https://github.com/taidalog/taidalab
 // Copyright (c) 2022-2024 taidalog
 // This software is licensed under the MIT License.
@@ -39,7 +39,7 @@ module Main =
             links
             |> Array.iter (fun x ->
                 printfn
-                    "href: %s, URL: %O, href is blank: %b, href is internal: %b"
+                    "href: %s, URL: %O, href is not blank: %b, href is internal: %b"
                     x.href
                     (x.href |> URL.Create)
                     (x.href <> "")

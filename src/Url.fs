@@ -1,4 +1,4 @@
-// taidalab Version 5.0.2
+// taidalab Version 5.0.3
 // https://github.com/taidalog/taidalab
 // Copyright (c) 2022-2024 taidalog
 // This software is licensed under the MIT License.
@@ -13,7 +13,7 @@ module Url =
 #if DEBUG
         "http://localhost:8080"
 #else
-        "https://taidalog.github.io/"
+        "https://taidalog.github.io"
 #endif
 
     let home = "/taidalab/"
