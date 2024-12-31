@@ -58,11 +58,11 @@ module Page =
 
                 // Debug.WriteLine(URL.Create anchor.href)
 
-                showLocation ()
-
                 let links: HTMLAnchorElement array = JS.Constructors.Array?from document.links
 
                 links
                 |> Array.filter (fun x -> x.href <> "")
                 |> Array.filter (fun x -> x.href |> URL.Create |> Url.isInternal')
                 |> Array.iter overwriteAnchor
+
+                showLocation ()
