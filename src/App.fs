@@ -56,7 +56,10 @@ module Main =
                 (document.querySelector "aside").querySelectorAll "a"
                 |> JS.Constructors.Array?from
 
-            links |> Array.filter (fun x -> x.href <> "") |> Array.iter overwriteAnchor
+            links
+            |> Array.filter (fun x -> x.href <> "")
+            |> Array.filter (fun x -> x.href |> URL.Create |> Url.isInternal')
+            |> Array.iter overwriteAnchor
 
             showLocation ())
     )
