@@ -56,7 +56,11 @@
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
 
-        gtag('config', 'G-RHTCVBXP5Y');
+        if (window.location.hostname === "localhost" || window.location.pathname.startsWith("/test.")) {
+            gtag('config', 'G-RHTCVBXP5Y', { 'debug_mode': true });
+        } else {
+            gtag('config', 'G-RHTCVBXP5Y');
+        }
     </script>
 </head>
 
