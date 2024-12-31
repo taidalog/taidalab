@@ -52,10 +52,11 @@ module Main =
 
             // Debug.WriteLine mergedUrl
 
-            (document.querySelector "aside").querySelectorAll "a"
-            |> JS.Constructors.Array?from
-            |> Array.filter (fun (x: HTMLAnchorElement) -> x.href <> "")
-            |> Array.iter overwriteAnchor
+            let links: HTMLAnchorElement array =
+                (document.querySelector "aside").querySelectorAll "a"
+                |> JS.Constructors.Array?from
+
+            links |> Array.filter (fun x -> x.href <> "") |> Array.iter overwriteAnchor
 
             showLocation ())
     )
