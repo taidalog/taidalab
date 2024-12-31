@@ -1,6 +1,6 @@
 # taidalab
 
-Version 5.0.3
+Version 5.0.4
 
 [Japanese README](README.ja.md)
 
@@ -20,7 +20,10 @@ A Web application for learning Informatics &#8544;, one of the subjects taught i
 
 ## Recommended environment
 
-- Mozilla Firefox 131.0.3 (64 bit) or later.
+- Mozilla Firefox 133.0.3 (64 bit) or later.
+- Google Chrome 131.0.6778.205 (64 bit) or later.
+- Microsoft Edge 131.0.2903.112 (64 bit) or later.
+- Safari 16.6 (iOS 16.6) or later.
 
 ## Terms of Service
 

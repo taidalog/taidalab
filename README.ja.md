@@ -1,6 +1,6 @@
 # taidalab
 
-Version 5.0.3
+Version 5.0.4
 
 [English README](README.md)
 
@@ -23,7 +23,10 @@ Version 5.0.3
 
 ## 推奨環境
 
-- Mozilla Firefox 131.0.3 (64 bit) 以上
+- Mozilla Firefox 133.0.3 (64 bit) 以上
+- Google Chrome 131.0.6778.205 (64 bit) 以上
+- Microsoft Edge 131.0.2903.112 (64 bit) 以上
+- Safari 16.6 (iOS 16.6) 以上
 
 ## ご利用について
 

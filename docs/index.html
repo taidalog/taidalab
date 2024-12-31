@@ -1,5 +1,5 @@
 <!--
-    taidalab Version 5.0.3
+    taidalab
     https://github.com/taidalog/taidalab
     Copyright (c) 2022-2024 taidalog
     This software is licensed under the MIT License.
@@ -54,9 +54,13 @@
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
 
-        gtag('config', 'G-RHTCVBXP5Y');
+        if (window.location.hostname === "localhost" || window.location.pathname.startsWith("/test.")) {
+            gtag('config', 'G-RHTCVBXP5Y', { 'debug_mode': true });
+        } else {
+            gtag('config', 'G-RHTCVBXP5Y');
+        }
     </script>
-  <script type="module" crossorigin src="/taidalab/assets/main-B9tCjdor.js"></script>
+  <script type="module" crossorigin src="/taidalab/assets/main-BNJ_B4ZY.js"></script>
   <link rel="stylesheet" crossorigin href="/taidalab/assets/main-gd4_TZQu.css">
 </head>
 

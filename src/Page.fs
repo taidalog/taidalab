@@ -1,4 +1,4 @@
-// taidalab Version 5.0.3
+// taidalab
 // https://github.com/taidalog/taidalab
 // Copyright (c) 2022-2024 taidalog
 // This software is licensed under the MIT License.
@@ -56,13 +56,13 @@ module Page =
                 window.history.pushState (null, "", anchor.href)
                 anchor.href |> URL.Create |> init
 
-                Console.WriteLine(URL.Create anchor.href)
-                Debug.WriteLine(URL.Create anchor.href)
+                // Debug.WriteLine(URL.Create anchor.href)
+
+                let links: HTMLAnchorElement array = JS.Constructors.Array?from document.links
+
+                links
+                |> Array.filter (fun x -> x.href <> "")
+                |> Array.filter (fun x -> x.href |> URL.Create |> Url.isInternal')
+                |> Array.iter overwriteAnchor
 
                 showLocation ()
-
-                document.links
-                |> JS.Constructors.Array?from
-                |> Array.filter (fun (x: HTMLAnchorElement) -> x.href <> "")
-                |> Array.filter (fun (x: HTMLAnchorElement) -> x.href |> URL.Create |> Url.isInternal')
-                |> Array.iter overwriteAnchor
