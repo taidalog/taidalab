@@ -19,91 +19,91 @@ module About =
         <h2>それぞれのページについて</h2>
         <dl id="explanation" class="explanation">
             <dt>
-                <h3><a href="/taidalab/endless-binary/dec2bin-1/">10進数→2進数 (1)</a></h3>
+                <h3><a href="%s{Url.home}endless-binary/dec2bin-1/">10進数→2進数 (1)</a></h3>
             </dt>
             <dd>
                 %s{EndlessBinary.Dec2Bin1.help}
             </dd>
             
             <dt>
-                <h3><a href="/taidalab/endless-binary/dec2bin-2/">10進数→2進数 (2)</a></h3>
+                <h3><a href="%s{Url.home}endless-binary/dec2bin-2/">10進数→2進数 (2)</a></h3>
             </dt>
             <dd>
                 %s{EndlessBinary.Dec2Bin2.help}
             </dd>
             
             <dt>
-                <h3><a href="/taidalab/endless-binary/bin2dec-1/">2進数→10進数 (1)</a></h3>
+                <h3><a href="%s{Url.home}endless-binary/bin2dec-1/">2進数→10進数 (1)</a></h3>
             </dt>
             <dd>
                 %s{EndlessBinary.Bin2Dec1.help}
             </dd>
 
             <dt>
-                <h3><a href="/taidalab/endless-binary/bin2dec-2/">2進数→10進数 (2)</a></h3>
+                <h3><a href="%s{Url.home}endless-binary/bin2dec-2/">2進数→10進数 (2)</a></h3>
             </dt>
             <dd>
                 %s{EndlessBinary.Bin2Dec2.help}
             </dd>
 
             <dt>
-                <h3><a href="/taidalab/endless-binary/power-of-two-1/">2のn乗</a></h3>
+                <h3><a href="%s{Url.home}endless-binary/power-of-two-1/">2のn乗</a></h3>
             </dt>
             <dd>
                 %s{EndlessBinary.PowerOfTwo1.help}
             </dd>
             
             <dt>
-                <h3><a href="/taidalab/endless-binary/power-of-two-2/">2のn乗-1</a></h3>
+                <h3><a href="%s{Url.home}endless-binary/power-of-two-2/">2のn乗-1</a></h3>
             </dt>
             <dd>
                 %s{EndlessBinary.PowerOfTwo2.help}
             </dd>
 
             <dt>
-                <h3><a href="/taidalab/endless-binary/addition/">加算</a></h3>
+                <h3><a href="%s{Url.home}endless-binary/addition/">加算</a></h3>
             </dt>
             <dd>
                 %s{EndlessBinary.Addition.help}
             </dd>
 
             <dt>
-                <h3><a href="/taidalab/endless-binary/subtraction/">減算</a></h3>
+                <h3><a href="%s{Url.home}endless-binary/subtraction/">減算</a></h3>
             </dt>
             <dd>
                 %s{EndlessBinary.Subtraction.help}
             </dd>
             
             <dt>
-                <h3><a href="/taidalab/endless-binary/complement/">補数</a></h3>
+                <h3><a href="%s{Url.home}endless-binary/complement/">補数</a></h3>
             </dt>
             <dd>
                 %s{EndlessBinary.Complement.help}
             </dd>
 
             <dt>
-                <h3><a href="/taidalab/endless-binary/dec2hex/">10進数→16進数</a></h3>
+                <h3><a href="%s{Url.home}endless-binary/dec2hex/">10進数→16進数</a></h3>
             </dt>
             <dd>
                 %s{EndlessBinary.Dec2Hex.help}
             </dd>
 
             <dt>
-                <h3><a href="/taidalab/endless-binary/hex2dec/">16進数→10進数</a></h3>
+                <h3><a href="%s{Url.home}endless-binary/hex2dec/">16進数→10進数</a></h3>
             </dt>
             <dd>
                 %s{EndlessBinary.Hex2Dec.help}
             </dd>
             
             <dt>
-                <h3><a href="/taidalab/iro-iroiro/">色いろいろ</a></h3>
+                <h3><a href="%s{Url.home}iro-iroiro/">色いろいろ</a></h3>
             </dt>
             <dd>
                 %s{IroIroiro.help}
             </dd>
             
             <dt>
-                <h3><a href="/taidalab/network-simulator/">ネットワークシミュレータ</a></h3>
+                <h3><a href="%s{Url.home}network-simulator/">ネットワークシミュレータ</a></h3>
             </dt>
             <dd>
                 %s{NetworkSimulator.help}

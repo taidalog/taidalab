@@ -5,6 +5,8 @@
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
 namespace Taidalab
 
+open Url
+
 module Content =
     module Complement =
         let question =
@@ -60,35 +62,35 @@ module Content =
             """
 
         let aside =
-            """
+            $"""
             <ul>
                 <details>
                     <summary>
                         <a class="home" id="asideEndlessBinary">10進数↔︎2進数の反復練習</a>
                     </summary>
                     <ul>
-                        <li><a class="dec2bin" href="/taidalab/endless-binary/dec2bin-1/">10進数→2進数 (1)</a></li>
-                        <li><a class="dec2bin" href="/taidalab/endless-binary/dec2bin-2/">10進数→2進数 (2)</a></li>
-                        <li><a class="bin2dec" href="/taidalab/endless-binary/bin2dec-1/">2進数→10進数 (1)</a></li>
-                        <li><a class="bin2dec" href="/taidalab/endless-binary/bin2dec-2/">2進数→10進数 (2)</a></li>
-                        <li><a class="power-of-two" href="/taidalab/endless-binary/power-of-two-1/">2のn乗</a></li>
-                        <li><a class="power-of-two" href="/taidalab/endless-binary/power-of-two-2/">2のn乗-1</a></li>
-                        <li><a class="addition" href="/taidalab/endless-binary/addition/">加算</a></li>
-                        <li><a class="subtraction" href="/taidalab/endless-binary/subtraction/">減算</a></li>
-                        <li><a class="complement" href="/taidalab/endless-binary/complement/">補数</a></li>
-                        <li><a class="dec2hex" href="/taidalab/endless-binary/dec2hex/">10進数→16進数</a></li>
-                        <li><a class="hex2dec" href="/taidalab/endless-binary/hex2dec/">16進数→10進数</a></li>
+                        <li><a class="dec2bin" href="%s{Url.home}endless-binary/dec2bin-1/">10進数→2進数 (1)</a></li>
+                        <li><a class="dec2bin" href="%s{Url.home}endless-binary/dec2bin-2/">10進数→2進数 (2)</a></li>
+                        <li><a class="bin2dec" href="%s{Url.home}endless-binary/bin2dec-1/">2進数→10進数 (1)</a></li>
+                        <li><a class="bin2dec" href="%s{Url.home}endless-binary/bin2dec-2/">2進数→10進数 (2)</a></li>
+                        <li><a class="power-of-two" href="%s{Url.home}endless-binary/power-of-two-1/">2のn乗</a></li>
+                        <li><a class="power-of-two" href="%s{Url.home}endless-binary/power-of-two-2/">2のn乗-1</a></li>
+                        <li><a class="addition" href="%s{Url.home}endless-binary/addition/">加算</a></li>
+                        <li><a class="subtraction" href="%s{Url.home}endless-binary/subtraction/">減算</a></li>
+                        <li><a class="complement" href="%s{Url.home}endless-binary/complement/">補数</a></li>
+                        <li><a class="dec2hex" href="%s{Url.home}endless-binary/dec2hex/">10進数→16進数</a></li>
+                        <li><a class="hex2dec" href="%s{Url.home}endless-binary/hex2dec/">16進数→10進数</a></li>
                     </ul>
                 </details>
-                <li><a class="iro-iroiro" id="asideIroIroiro" href="/taidalab/iro-iroiro/">色いろいろ</a></li>
-                <li><a class="network-simulator" id="asideNetworkSimulator" href="/taidalab/network-simulator/">ネットワークシミュレータ</a></li>
+                <li><a class="iro-iroiro" id="asideIroIroiro" href="%s{Url.home}iro-iroiro/">色いろいろ</a></li>
+                <li><a class="network-simulator" id="asideNetworkSimulator" href="%s{Url.home}network-simulator/">ネットワークシミュレータ</a></li>
                 <li><a class="ctc" id="asideSoon" href="#">Coming soon...</a></li>
             </ul>
             <ul>
-                <li><a class="home" id="asideAbout" href="/taidalab/">Home</a></li>
-                <li><a class="home" id="asideAbout" href="/taidalab/about/">About</a></li>
-                <li><a class="home" id="asideTerms" href="/taidalab/terms/">ご利用について</a></li>
-                <li><a class="home" id="asideTerms" href="/taidalab/information-policy/">情報の外部送信について</a></li>
+                <li><a class="home" id="asideAbout" href="%s{Url.home}">Home</a></li>
+                <li><a class="home" id="asideAbout" href="%s{Url.home}about/">About</a></li>
+                <li><a class="home" id="asideTerms" href="%s{Url.home}terms/">ご利用について</a></li>
+                <li><a class="home" id="asideTerms" href="%s{Url.home}information-policy/">情報の外部送信について</a></li>
             </ul>
             <ul>
                 <li><a class="home" id="asideOdaibako" href="https://odaibako.net/u/taidalog">お題箱</a></li>
