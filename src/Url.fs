@@ -18,9 +18,9 @@ module Url =
 
     let home: string =
 #if TESTING
-        "/taidalab/"
-#else
         "/test.taidalab/"
+#else
+        "/taidalab/"
 #endif
 
 
