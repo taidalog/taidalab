@@ -16,7 +16,13 @@ module Url =
         "https://taidalog.github.io"
 #endif
 
-    let home = "/taidalab/"
+    let home: string =
+#if TESTING
+        "/taidalab/"
+#else
+        "/test.taidalab/"
+#endif
+
 
     let mergePathname (url: URL) =
         let searchParams = url.searchParams
