@@ -9,7 +9,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "dotnet fable watch src --run npx vite",
     "build": "dotnet fable src --run npx vite build",
-    "build:testing": "dotnet fable src --run npx vite build --base /test.taidalab/"
+    "build:testing": "dotnet fable src --define TESTING --run npx vite build --base /test.taidalab/"
   },
   "author": "taidalog",
   "license": "MIT",
