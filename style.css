@@ -12,6 +12,11 @@
     --text-color: #444444;
     --header-text-color: #ffffff;
     --pale-color: #888888;
+    --a-color: #447f88;
+    --a-visited-color: #754488;
+    --box-shadow-color: #999999;
+    --hamburger-button-hover-color: rgba(255, 255, 255, 0.25);
+
     --theme-color: #65a2ac;
     --bin2dec-color: #65ac86;
     --power-of-two-color: #a665ac;
@@ -22,26 +27,28 @@
     --ctc-color: #aaac65;
     --network-simulator-color: #7c65ac;
     --not-found-color: #808080;
-    --gary-color: #e9e9ed;
-    --a-color: #447f88;
-    --a-visited-color: #754488;
+
     --home-color: #325156;
+    --gary-color: #e9e9ed;
     --hint-gray-color: #f0f0f0;
     --history-correct-color: #adff2f;
     --history-wrong-color: #ffb6c1;
     --history-gray-color: #d3d3d3;
     --zero-gray-color: rgba(0, 0, 0, 0.5);
     --warning-red-color: #ff0000;
-    --hamburger-button-hover-color: rgba(255, 255, 255, 0.25);
     --lan-cable-color: #00aeda;
-    --box-shadow-color: #999999;
 }
 
 @media (prefers-color-scheme: dark) {
     :root {
-        --background-color: #444444;
+        --background-color: #121212;
         --text-color: #ffffff;
         --header-text-color: #ffffff;
+        --pale-color: #9c9c9c;
+        --a-color: #58a5b0;
+        --a-visited-color: #bb6cd9;
+        --box-shadow-color: #8b8b8b;
+        --home-color: hsl(188, 26%, 80%);
     }
 }
 
@@ -260,12 +267,12 @@ header.dec2bin {
 }
 
 button.submit-button.dec2bin {
-    color: midnightblue;
-    background: powderblue;
+    background: hsl(188, 30%, 65%);
 }
 
 button.submit-button.dec2bin:hover {
-    background-color: #9ec9cf;
+    /* color: var(--background-color); */
+    background-color: hsl(188, 30%, 72%);
 }
 
 .course-button-d2b1:hover,
