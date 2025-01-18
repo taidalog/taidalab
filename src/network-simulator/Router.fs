@@ -67,7 +67,7 @@ module Router =
         let area =
             let svg = document.getElementById (id + "Svg")
             let rect = svg.getBoundingClientRect ()
-            Area.ofFloats rect.left rect.top rect.width rect.height
+            Area.ofFloats rect.left rect.top (rect.width - 20.) (rect.height - 20.)
 
         let position =
             let x =
@@ -95,8 +95,14 @@ module Router =
         let svg = document.createElementNS ("http://www.w3.org/2000/svg", "svg")
         svg.id <- $"%s{router.Id}Svg"
         svg.classList.add ("device-image")
-        svg.setAttribute ("width", "100")
-        svg.setAttribute ("height", "35")
+
+        svg.setAttribute (
+            "viewBox",
+            $"%f{router.Area.X} %f{router.Area.Y} %f{router.Area.Width + 20.} %f{router.Area.Height + 20.}"
+        )
+
+        svg.setAttribute ("width", $"%f{router.Area.Width + 20.}")
+        svg.setAttribute ("height", $"%f{router.Area.Height + 20.}")
 
         let g = document.createElementNS ("http://www.w3.org/2000/svg", "g")
 
@@ -105,27 +111,27 @@ module Router =
         title.textContent <- $"%s{router.Name}"
 
         let path1 = document.createElementNS ("http://www.w3.org/2000/svg", "path")
-        path1.setAttribute ("d", "m 50,0 l 50,0 l 0,35 l -100,0 l 0,-35 l 50,0 z")
+        path1.setAttribute ("d", "m 60,10 l 50,0 l 0,35 l -100,0 l 0,-35 l 50,0 z")
         path1.setAttribute ("fill", "#000000")
         path1.setAttribute ("stroke", "#000000")
 
         let path2 = document.createElementNS ("http://www.w3.org/2000/svg", "path")
-        path2.setAttribute ("d", "m 20,15 l 3,0 l 0,3 l 3,0 l 0,7 l -10,0 l 0,-7 l 3,0 l 0,-3 l 3,0 z")
+        path2.setAttribute ("d", "m 30,25 l 3,0 l 0,3 l 3,0 l 0,7 l -10,0 l 0,-7 l 3,0 l 0,-3 l 3,0 z")
         path2.setAttribute ("fill", "#ffffff")
         path2.setAttribute ("stroke", "#000000")
 
         let path3 = document.createElementNS ("http://www.w3.org/2000/svg", "path")
-        path3.setAttribute ("d", "m 40,15 l 3,0 l 0,3 l 3,0 l 0,7 l -10,0 l 0,-7 l 3,0 l 0,-3 l 3,0 z")
+        path3.setAttribute ("d", "m 50,25 l 3,0 l 0,3 l 3,0 l 0,7 l -10,0 l 0,-7 l 3,0 l 0,-3 l 3,0 z")
         path3.setAttribute ("fill", "#ffffff")
         path3.setAttribute ("stroke", "#000000")
 
         let path4 = document.createElementNS ("http://www.w3.org/2000/svg", "path")
-        path4.setAttribute ("d", "m 60,15 l 3,0 l 0,3 l 3,0 l 0,7 l -10,0 l 0,-7 l 3,0 l 0,-3 l 3,0 z")
+        path4.setAttribute ("d", "m 70,25 l 3,0 l 0,3 l 3,0 l 0,7 l -10,0 l 0,-7 l 3,0 l 0,-3 l 3,0 z")
         path4.setAttribute ("fill", "#ffffff")
         path4.setAttribute ("stroke", "#000000")
 
         let path5 = document.createElementNS ("http://www.w3.org/2000/svg", "path")
-        path5.setAttribute ("d", "m 80,15 l 3,0 l 0,3 l 3,0 l 0,7 l -10,0 l 0,-7 l 3,0 l 0,-3 l 3,0 z")
+        path5.setAttribute ("d", "m 90,25 l 3,0 l 0,3 l 3,0 l 0,7 l -10,0 l 0,-7 l 3,0 l 0,-3 l 3,0 z")
         path5.setAttribute ("fill", "#ffffff")
         path5.setAttribute ("stroke", "#000000")
 
