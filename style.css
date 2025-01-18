@@ -9,7 +9,7 @@
 
 :root {
     --background-color: #ffffff;
-    --text-color: #444444;
+    --foreground-color: #444444;
     --header-text-color: #ffffff;
     --pale-color: #888888;
     --a-color: #447f88;
@@ -19,6 +19,7 @@
     --hamburger-button-hover-color: rgba(255, 255, 255, 0.25);
 
     --theme-color: #65a2ac;
+    --dec2bin-color: #65a2ac;
     --bin2dec-color: #65ac86;
     --power-of-two-color: #a665ac;
     --addition-color: #656eac;
@@ -43,7 +44,7 @@
 @media (prefers-color-scheme: dark) {
     :root {
         --background-color: #121212;
-        --text-color: #ffffff;
+        --foreground-color: #ffffff;
         --header-text-color: #ffffff;
         --pale-color: #9c9c9c;
         --a-color: #58a5b0;
@@ -120,7 +121,7 @@
 
 html {
     background-color: var(--background-color);
-    color: var(--text-color);
+    color: var(--foreground-color);
     font-family: 'Noto Sans JP', sans-serif;
     font-weight: 400;
     font-size: 100%;
@@ -260,15 +261,18 @@ aside summary::-webkit-details-marker {
     course-button-<identifier>
 */
 header.home,
-header.dec2bin,
 aside a.home:hover,
-aside a.home.current-location,
+aside a.home.current-location {
+    background-color: var(--theme-color);
+}
+
+header.dec2bin,
 aside a.dec2bin:hover,
 aside a.dec2bin.current-location,
 .course-button-d2b1,
 .course-button-d2b2,
 span.help-close.dec2bin:hover {
-    background-color: var(--theme-color);
+    background-color: var(--dec2bin-color);
 }
 
 header.home,
@@ -619,11 +623,11 @@ a:visited {
 }
 
 .number-input {
-    color: var(--text-color);
+    color: var(--foreground-color);
     background-color: var(--background-color);
     font-size: 1.25rem;
     border: 2px solid;
-    border-color: var(--text-color);
+    border-color: var(--foreground-color);
     border-radius: 4px;
     padding: 2px 5px;
     height: 32px;
@@ -724,12 +728,12 @@ div.history-container>span.material-symbols-outlined.history-wrong {
 }
 
 .history-indented>svg>text {
-    color: var(--text-color);
-    fill: var(--text-color);
+    color: var(--foreground-color);
+    fill: var(--foreground-color);
 }
 
 .history-indented>svg>path {
-    stroke: var(--text-color);
+    stroke: var(--foreground-color);
 }
 
 .history-correct {
@@ -1065,7 +1069,7 @@ span.hamburger-button:hover {
         top: 0;
         left: 0;
         opacity: 0.2;
-        background-color: var(--text-color);
+        background-color: var(--foreground-color);
     }
 }
 
@@ -1140,7 +1144,7 @@ span.hint-table-digit.gray {
 }
 
 div.device-container.selected>svg>g>path {
-    filter: drop-shadow(0px 2px 4px var(--text-color));
+    filter: drop-shadow(0px 2px 4px var(--foreground-color));
 }
 
 .device-note {
