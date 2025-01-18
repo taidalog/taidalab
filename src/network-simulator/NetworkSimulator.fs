@@ -680,7 +680,7 @@ module NetworkSimulator =
         addLANCableButton.onclick <-
             fun _ ->
                 let playArea = document.getElementById "playArea"
-                let cableCount = playArea.getElementsByClassName("cable-container").length
+                let cableCount = playArea.getElementsByClassName("lan-cable").length
                 let nextNumber = cableCount + 1
                 let id = $"cable%d{nextNumber}"
 
