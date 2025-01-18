@@ -48,35 +48,22 @@ module Cable =
 
         let kind = document.getElementById(id + "Kind").innerText |> Kind.ofString
 
-        let area =
-            let svg = document.getElementById (id + "Svg")
-            let rect = svg.getBoundingClientRect ()
-            Area.ofFloats rect.left rect.top rect.width rect.height
-
-        let points =
-            document.getElementById (id + "Polyline")
-            |> fun (x: HTMLElement) -> x.getAttribute ("points")
-            |> String.split ' '
-            |> List.map Point.ofString
-
-        let position =
-            let x =
-                elm.getAttribute ("style")
-                |> Regex.match' """left: (\d+\.?\d+)px;"""
-                |> fun m -> (m.Groups.Item 1).Value
-                |> float
-
-            let y =
-                elm.getAttribute ("style")
-                |> Regex.match' """top: (\d+\.?\d+)px;"""
-                |> fun m -> (m.Groups.Item 1).Value
-                |> float
-
-            Point.ofFloats x y
-
         match kind with
-        | Some x -> Some(create id x name points area position)
         | None -> None
+        | Some x ->
+            let area =
+                let svg = document.getElementById (id + "Svg")
+                let rect = svg.getBoundingClientRect ()
+                Area.ofFloats rect.left rect.top rect.width rect.height
+
+            let points =
+                document.getElementById (id + "Polyline")
+                |> fun (x: HTMLElement) -> x.getAttribute ("points")
+                |> String.split ' '
+                |> List.map Point.ofString
+
+            let position = Point.ofFloats 0. 0.
+            Some(create id x name points area position)
 
     let toHTMLElement (cable: Cable) : HTMLElement =
         let container = document.createElement ("div")

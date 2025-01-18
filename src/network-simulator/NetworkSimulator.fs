@@ -427,7 +427,7 @@ module NetworkSimulator =
                     |> List.map Option.get
 
                 let lanCables' =
-                    document.getElementById("playArea").getElementsByClassName ("cable-container")
+                    document.getElementById("playArea").getElementsByClassName ("lan-cable")
                     |> (fun x -> JS.Constructors.Array?from(x))
                     |> Array.toList
                     |> List.map Cable.ofHTMLElement
@@ -543,7 +543,7 @@ module NetworkSimulator =
                 let playArea = document.getElementById "playArea"
                 let playAreaRect = playArea.getBoundingClientRect ()
 
-                let firstCable = playArea.getElementsByClassName("cable-container").item 0
+                let firstCable = playArea.getElementsByClassName("lan-cable").item 0
 
                 let clientCount =
                     playArea.getElementsByClassName "device-container"
@@ -591,7 +591,7 @@ module NetworkSimulator =
                 let playArea = document.getElementById "playArea"
                 let playAreaRect = playArea.getBoundingClientRect ()
 
-                let firstCable = playArea.getElementsByClassName("cable-container").item 0
+                let firstCable = playArea.getElementsByClassName("lan-cable").item 0
 
                 let routerCount =
                     playArea.getElementsByClassName "device-container"
@@ -638,7 +638,7 @@ module NetworkSimulator =
                 let playArea = document.getElementById "playArea"
                 let playAreaRect = playArea.getBoundingClientRect ()
 
-                let firstCable = playArea.getElementsByClassName("cable-container").item 0
+                let firstCable = playArea.getElementsByClassName("lan-cable").item 0
 
                 let hubCount =
                     playArea.getElementsByClassName "device-container"
