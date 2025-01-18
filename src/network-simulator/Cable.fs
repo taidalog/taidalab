@@ -82,7 +82,6 @@ module Cable =
         let container = document.createElement ("div")
         container.id <- cable.Id
         container.className <- "device cable-container lan-cable"
-        container.setAttribute ("style", $"top: %f{cable.Position.Y}px; left: %f{cable.Position.X}px;")
 
         let svg = document.createElementNS ("http://www.w3.org/2000/svg", "svg")
         svg.id <- $"%s{cable.Id}Svg"

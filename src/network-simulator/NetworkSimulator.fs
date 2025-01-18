@@ -372,11 +372,12 @@ module NetworkSimulator =
                     $"lancable%d{x}"
                     Kind.LANCable
                     $"LANケーブル(%d{x})"
-                    [ Point.ofFloats 5. 5.; Point.ofFloats 195. 45. ]
+                    [ Point.ofFloats (playArea.offsetLeft + 5. + float (x - 1) * 250.) (playArea.offsetTop + 5.)
+                      Point.ofFloats (playArea.offsetLeft + 195. + float (x - 1) * 250.) (playArea.offsetTop + 45.) ]
                     { Area.X = 0.
                       Y = 0.
-                      Width = playArea.clientWidth
-                      Height = playArea.clientHeight }
+                      Width = window.innerWidth
+                      Height = window.innerHeight }
                     { Point.X = float (x - 1) * 250. + playArea.offsetLeft
                       Y = playArea.offsetTop })
 
@@ -685,11 +686,12 @@ module NetworkSimulator =
                         id
                         Kind.LANCable
                         $"LANケーブル(%d{n})"
-                        [ Point.ofFloats 5. 5.; Point.ofFloats 195. 45. ]
+                        [ Point.ofFloats (playArea.offsetLeft + 5.) (playArea.offsetTop + 5.)
+                          Point.ofFloats (playArea.offsetLeft + 195.) (playArea.offsetTop + 45.) ]
                         { Area.X = 0.
                           Y = 0.
-                          Width = playArea.clientWidth
-                          Height = playArea.clientHeight }
+                          Width = window.innerWidth
+                          Height = window.innerHeight }
                         { Point.X = playArea.offsetLeft
                           Y = playArea.offsetTop })
                 |> Cable.toHTMLElement
