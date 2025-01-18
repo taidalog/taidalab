@@ -372,7 +372,7 @@ module NetworkSimulator =
                     $"lancable%d{x}"
                     Kind.LANCable
                     $"LANケーブル(%d{x})"
-                    ("5,5 195,45" |> String.split ' ' |> List.map Point.ofString)
+                    [ Point.ofFloats 5. 5.; Point.ofFloats 195. 45. ]
                     { Area.X = 0.
                       Y = 0.
                       Width = playArea.clientWidth
@@ -684,7 +684,7 @@ module NetworkSimulator =
                         id
                         Kind.LANCable
                         $"LANケーブル(%d{n})"
-                        ("5,5 195,45" |> String.split ' ' |> List.map Point.ofString)
+                        [ Point.ofFloats 5. 5.; Point.ofFloats 195. 45. ]
                         { Area.X = 0.
                           Y = 0.
                           Width = playArea.clientWidth
