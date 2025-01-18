@@ -705,8 +705,6 @@ module NetworkSimulator =
         addLANCableButton.onclick <-
             fun _ ->
                 let playArea = document.getElementById "playArea"
-                let playAreaRect = playArea.getBoundingClientRect ()
-
                 let cableCount = playArea.getElementsByClassName("cable-container").length
                 let nextNumber = cableCount + 1
                 let id = $"cable%d{nextNumber}"
@@ -720,10 +718,10 @@ module NetworkSimulator =
                         ("5,5 195,45" |> String.split ' ' |> List.map Point.ofString)
                         { Area.X = 0.
                           Y = 0.
-                          Width = 200.
-                          Height = 50. }
-                        { Point.X = 0. + playAreaRect.left
-                          Y = 0. + playAreaRect.top })
+                          Width = playArea.clientWidth
+                          Height = playArea.clientHeight }
+                        { Point.X = playArea.offsetLeft
+                          Y = playArea.offsetTop })
                 |> Cable.toHTMLElement
                 |> (fun x -> playArea.appendChild (x))
                 |> ignore
