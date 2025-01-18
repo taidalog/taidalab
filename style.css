@@ -15,6 +15,7 @@
     --a-color: #447f88;
     --a-visited-color: #754488;
     --box-shadow-color: #999999;
+    --warning-red-color: #ff0000;
     --hamburger-button-hover-color: rgba(255, 255, 255, 0.25);
 
     --theme-color: #65a2ac;
@@ -35,7 +36,7 @@
     --history-wrong-color: #ffb6c1;
     --history-gray-color: #d3d3d3;
     --zero-gray-color: rgba(0, 0, 0, 0.5);
-    --warning-red-color: #ff0000;
+    --complement-marker-color: #95c9fe;
     --lan-cable-color: #00aeda;
 }
 
@@ -48,7 +49,12 @@
         --a-color: #58a5b0;
         --a-visited-color: #bb6cd9;
         --box-shadow-color: #8b8b8b;
+
         --home-color: hsl(188, 26%, 80%);
+        --hint-gray-color: #303030;
+        --history-correct-color: hsl(84, 69%, 35%);
+        --history-wrong-color: #b38188;
+        --complement-marker-color: #597998;
     }
 }
 
@@ -224,6 +230,10 @@ aside a {
     text-decoration: none;
 }
 
+aside a:visited {
+    color: var(--pale-color);
+}
+
 aside ul details ul li a {
     padding-left: 2rem;
     padding-right: 3rem;
@@ -376,6 +386,10 @@ button.submit-button.complement:hover {
     background-color: #5a7a9a;
 }
 
+span.complement.marker {
+    background-color: var(--complement-marker-color);
+}
+
 header.dec2hex,
 header.hex2dec,
 aside a.dec2hex:hover,
@@ -500,12 +514,7 @@ footer {
 }
 
 footer a {
-    color: var(--a-color);
     text-decoration: none;
-}
-
-footer a:visited {
-    color: var(--a-visited-color);
 }
 
 @media (max-width: 799px) {
@@ -513,6 +522,14 @@ footer a:visited {
         margin: 1rem auto 0.5rem;
         gap: 0.25rem 1.5rem;
     }
+}
+
+a {
+    color: var(--a-color);
+}
+
+a:visited {
+    color: var(--a-visited-color);
 }
 
 
@@ -602,8 +619,11 @@ footer a:visited {
 }
 
 .number-input {
+    color: var(--text-color);
+    background-color: var(--background-color);
     font-size: 1.25rem;
     border: 2px solid;
+    border-color: var(--text-color);
     border-radius: 4px;
     padding: 2px 5px;
     height: 32px;
@@ -703,6 +723,15 @@ div.history-container>span.material-symbols-outlined.history-wrong {
     margin-left: 2rem;
 }
 
+.history-indented>svg>text {
+    color: var(--text-color);
+    fill: var(--text-color);
+}
+
+.history-indented>svg>path {
+    stroke: var(--text-color);
+}
+
 .history-correct {
     background-color: var(--history-correct-color);
 }
@@ -782,6 +811,10 @@ div.color-div {
 div.color-div>div {
     width: fit-content;
     margin: auto;
+}
+
+div.color-div>div>span:not(.white) {
+    color: #000000;
 }
 
 div.color-div .white {
