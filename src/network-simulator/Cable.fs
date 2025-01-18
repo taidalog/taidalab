@@ -132,7 +132,11 @@ module Cable =
     let onpointerdown (polyline: HTMLElement) (e: PointerEvent) : unit =
         if e.buttons = 1 then
             Debug.WriteLine "onpointerdown"
-            // let container = polyline.parentElement.parentElement.parentElement
+
+            // Giving a cable a class to remove it with Delete key.
+            Device.removeSelectedClass ()
+            let container = polyline.parentElement.parentElement.parentElement
+            container.classList.add "selected"
 
             polyline.onlostpointercapture <- fun _ -> polyline.onpointermove <- fun _ -> ()
 

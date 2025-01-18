@@ -226,11 +226,16 @@ module NetworkSimulator =
             | "?" ->
                 [ "helpWindow"; "helpBarrier" ]
                 |> List.iter (fun x -> (document.getElementById x).classList.toggle "active" |> ignore)
+            | "Delete" ->
+                let playArea = document.getElementById "playArea"
+                let xs = document.getElementsByClassName "selected" |> JS.Constructors.Array?from
+                xs |> Array.iter (fun (x: HTMLElement) -> playArea.removeChild x |> ignore)
             | "Escape" ->
-
                 if isHelpWindowActive then
                     [ "helpWindow"; "helpBarrier" ]
                     |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore)
+                else
+                    Device.removeSelectedClass ()
             | _ -> ()
 
     let init () =

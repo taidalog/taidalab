@@ -1092,6 +1092,10 @@ div.lan-cable>span {
     display: none;
 }
 
+div.lan-cable.selected>svg>g>polyline {
+    filter: drop-shadow(2px 2px 4px #00aeda);
+}
+
 .material-symbols-outlined.symbols18 {
     font-size: 18px;
 }

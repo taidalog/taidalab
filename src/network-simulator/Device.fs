@@ -5,6 +5,8 @@
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
 namespace Taidalab
 
+open Fable.Core
+open Fable.Core.JsInterop
 open Browser.Dom
 open Browser.Types
 open Fermata
@@ -111,3 +113,8 @@ module Device =
                 document.addEventListener ("mousemove", onMouseMove')
 
                 svg.onmouseup <- fun _ -> document.removeEventListener ("mousemove", onMouseMove')
+
+    let removeSelectedClass () =
+        document.getElementsByClassName "selected"
+        |> JS.Constructors.Array?from
+        |> Array.iter (fun (x: HTMLElement) -> x.classList.remove "selected")
