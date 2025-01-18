@@ -366,50 +366,19 @@ module NetworkSimulator =
         |> ignore
 
         let cables =
-            [ Cable.create
-                  "lancable1"
-                  Kind.LANCable
-                  "LANケーブル(1)"
-                  ("5,5 195,45" |> String.split ' ' |> List.map Point.ofString)
-                  { Area.X = 0.
-                    Y = 0.
-                    Width = playArea.clientWidth
-                    Height = playArea.clientHeight }
-                  { Point.X = playArea.offsetLeft
-                    Y = playArea.offsetTop }
-              Cable.create
-                  "lancable2"
-                  Kind.LANCable
-                  "LANケーブル(2)"
-                  ("5,5 195,45" |> String.split ' ' |> List.map Point.ofString)
-                  { Area.X = 0.
-                    Y = 0.
-                    Width = playArea.clientWidth
-                    Height = playArea.clientHeight }
-                  { Point.X = 250. + playArea.offsetLeft
-                    Y = playArea.offsetTop }
-              Cable.create
-                  "lancable3"
-                  Kind.LANCable
-                  "LANケーブル(3)"
-                  ("5,5 195,45" |> String.split ' ' |> List.map Point.ofString)
-                  { Area.X = 0.
-                    Y = 0.
-                    Width = playArea.clientWidth
-                    Height = playArea.clientHeight }
-                  { Point.X = 500. + playArea.offsetLeft
-                    Y = playArea.offsetTop }
-              Cable.create
-                  "lancable4"
-                  Kind.LANCable
-                  "LANケーブル(4)"
-                  ("5,5 195,45" |> String.split ' ' |> List.map Point.ofString)
-                  { Area.X = 0.
-                    Y = 0.
-                    Width = playArea.clientWidth
-                    Height = playArea.clientHeight }
-                  { Point.X = 750. + playArea.offsetLeft
-                    Y = playArea.offsetTop } ]
+            [ 1..4 ]
+            |> List.map (fun x ->
+                Cable.create
+                    $"lancable%d{x}"
+                    Kind.LANCable
+                    $"LANケーブル(%d{x})"
+                    ("5,5 195,45" |> String.split ' ' |> List.map Point.ofString)
+                    { Area.X = 0.
+                      Y = 0.
+                      Width = playArea.clientWidth
+                      Height = playArea.clientHeight }
+                    { Point.X = float (x - 1) * 250. + playArea.offsetLeft
+                      Y = playArea.offsetTop })
 
         cables
         |> List.map Cable.toHTMLElement
