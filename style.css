@@ -29,7 +29,7 @@
     --not-found-color: #808080;
 
     --home-color: #325156;
-    --gary-color: #e9e9ed;
+    --gray-color: #e9e9ed;
     --hint-gray-color: #f0f0f0;
     --history-correct-color: #adff2f;
     --history-wrong-color: #ffb6c1;
@@ -456,7 +456,7 @@ button.submit-button.not-found:hover {
 
 button.submit-button.gray {
     color: #333333;
-    background-color: var(--gary-color);
+    background-color: var(--gray-color);
     width: 160px;
 }
 
