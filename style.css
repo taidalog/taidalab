@@ -1046,6 +1046,10 @@ span.hint-table-digit.gray {
     cursor: move;
 }
 
+div.device-container.selected>svg>g>path {
+    filter: drop-shadow(2px 2px 4px #444444);
+}
+
 .device-note {
     font-size: 0.8rem;
 }

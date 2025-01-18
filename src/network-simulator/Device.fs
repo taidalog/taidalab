@@ -96,6 +96,11 @@ module Device =
         | Router d -> d.Name
         | Hub d -> d.Name
 
+    let removeSelectedClass () =
+        document.getElementsByClassName "selected"
+        |> JS.Constructors.Array?from
+        |> Array.iter (fun (x: HTMLElement) -> x.classList.remove "selected")
+
     let onMouseMove (container: HTMLElement) (svg: HTMLElement) (event: Event) : unit =
         let event = event :?> MouseEvent
         let top = (event.pageY - svg.getBoundingClientRect().height / 2.)
@@ -110,11 +115,8 @@ module Device =
 
         svg.onmousedown <-
             fun _ ->
+                removeSelectedClass ()
+                container.classList.add "selected"
                 document.addEventListener ("mousemove", onMouseMove')
 
                 svg.onmouseup <- fun _ -> document.removeEventListener ("mousemove", onMouseMove')
-
-    let removeSelectedClass () =
-        document.getElementsByClassName "selected"
-        |> JS.Constructors.Array?from
-        |> Array.iter (fun (x: HTMLElement) -> x.classList.remove "selected")
