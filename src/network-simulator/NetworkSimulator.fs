@@ -403,7 +403,8 @@ module NetworkSimulator =
         |> List.map (fun x -> x.Id)
         |> List.map document.getElementById
         |> List.iter (fun x ->
-            Cable.setMouseMoveEvent x
+            let polyline = x.querySelector "polyline" :?> HTMLElement
+            polyline.onpointerdown <- Cable.onpointerdown polyline
             removeOnRightClick x)
 
         let submitButton = document.getElementById ("submitButton") :?> HTMLButtonElement
@@ -697,7 +698,8 @@ module NetworkSimulator =
 
                 document.getElementById id
                 |> (fun x ->
-                    Cable.setMouseMoveEvent x
+                    let polyline = x.querySelector "polyline" :?> HTMLElement
+                    polyline.onpointerdown <- Cable.onpointerdown polyline
                     removeOnRightClick x)
 
         document.onkeydown <- (fun (e: KeyboardEvent) -> keyboardshortcut e)

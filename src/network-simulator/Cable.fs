@@ -5,6 +5,8 @@
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
 namespace Taidalab
 
+open System
+open System.Diagnostics
 open Browser.Dom
 open Browser.Types
 open Fermata
@@ -132,188 +134,51 @@ module Cable =
         |> List.map (Point.shift cable.Area.X cable.Area.Y)
         |> List.exists (Area.includesPoint (Device.area device))
 
-    let updatePoints (point1: Point) (point2: Point) (newPoint: Point) : (Point * Point) =
-        (point1, point2)
-        |> Tuple.map (Point.distance newPoint)
-        |> fun (f1, f2) ->
-            if f1 <= f2 then
-                (point1, point2 |> Point.shift (newPoint.X - point1.X) (newPoint.Y - point1.Y))
-            else
-                (point1, newPoint)
+    let onpointerdown (polyline: HTMLElement) (e: PointerEvent) : unit =
+        if e.buttons = 1 then
+            Debug.WriteLine "onpointerdown"
+            // let container = polyline.parentElement.parentElement.parentElement
 
-    let touchedAndUntouched (point1: Point) (point2: Point) (newPoint: Point) : (Point * Point) =
-        (point1, point2)
-        |> Tuple.map (Point.distance newPoint)
-        |> fun (d1, d2) -> if d1 <= d2 then (point1, point2) else (point2, point1)
+            polyline.onlostpointercapture <- fun _ -> polyline.onpointermove <- fun _ -> ()
 
-    let resizeCable (container: HTMLElement) (svg: HTMLElement) (polyline: HTMLElement) (event: Event) : unit =
-        let event = event :?> MouseEvent
+            let points =
+                (polyline.getAttribute "points").Split [| ' ' |] |> Array.map Point.ofString
 
-        // Getting current end points of the cable.
-        let point1, point2 =
-            polyline.getAttribute ("points")
-            |> String.split ' '
-            |> List.map Point.ofString
-            |> fun xs -> List.head xs, List.last xs
+            let firstPoint, lastPoint = Array.head points, Array.last points
+            let cursorPoint = { Point.X = e.offsetX; Y = e.offsetY }
 
-        let cursorPoint =
-            Point.ofFloats (event.pageX - container.offsetLeft) (event.pageY - container.offsetTop)
+            let mindist =
+                let d1, d2 = (firstPoint, lastPoint) |> Tuple.map (Point.distance cursorPoint)
+                min d1 d2
 
-        let touchedPoint, untouchedPoint = cursorPoint |> touchedAndUntouched point1 point2
+            polyline.onpointermove <-
+                fun e ->
+                    if e.buttons = 1 then
+                        Debug.WriteLine "onpointermove"
 
-        let xMoving = cursorPoint.X - touchedPoint.X
-        let yMoving = cursorPoint.Y - touchedPoint.Y
+                        let points =
+                            (polyline.getAttribute "points").Split [| ' ' |] |> Array.map Point.ofString
 
-        let touchedPointPosition = touchedPoint |> Point.relativePosition untouchedPoint
+                        let firstPoint, lastPoint = Array.head points, Array.last points
+                        let cursorPoint = { Point.X = e.offsetX; Y = e.offsetY }
 
-        // Building the new end points with the cursor position.
-        let updatedPoints =
-            match touchedPointPosition with
-            | Directions.Up -> touchedPoint, untouchedPoint |> Point.shift -xMoving -yMoving
-            | Directions.Down -> cursorPoint |> updatePoints untouchedPoint touchedPoint
-            | Directions.Left -> touchedPoint, untouchedPoint |> Point.shift -xMoving -yMoving
-            | Directions.Right -> cursorPoint |> updatePoints untouchedPoint touchedPoint
-            | var when var = (Directions.Up ||| Directions.Left) ->
-                touchedPoint, untouchedPoint |> Point.shift -xMoving -yMoving
-            | var when var = (Directions.Up ||| Directions.Right) ->
-                untouchedPoint |> Point.shift 0. -yMoving, touchedPoint |> Point.shift xMoving 0.
-            | var when var = (Directions.Down ||| Directions.Left) ->
-                touchedPoint |> Point.shift 0. yMoving, untouchedPoint |> Point.shift -xMoving 0.
-            | var when var = (Directions.Down ||| Directions.Right) ->
-                cursorPoint |> updatePoints untouchedPoint touchedPoint
-            | _ -> cursorPoint |> updatePoints untouchedPoint touchedPoint
+                        let touchedPoint, theOtherPoint =
+                            let (p1, d1), (p2, d2) =
+                                (firstPoint, lastPoint)
+                                |> Tuple.map (fun x -> x, (Point.distance cursorPoint x))
 
-        let xGap =
-            updatedPoints
-            |> Tuple.map (fun x -> x.X)
-            |> System.Math.Min
-            |> fun x -> 5. - x
+                            if d1 < d2 then p1, p2 else p2, p1
 
-        let yGap =
-            updatedPoints
-            |> Tuple.map (fun x -> x.Y)
-            |> System.Math.Min
-            |> fun x -> 5. - x
-
-        // Updating the cable points.
-        updatedPoints
-        |> Tuple.map (Point.shift xGap yGap)
-        |> fun (p1, p2) -> $"%f{p1.X},%f{p1.Y} %f{p2.X},%f{p2.Y}"
-        |> fun x -> polyline.setAttribute ("points", x)
-
-        let updatedArea =
-            updatedPoints
-            |> Tuple.map (Point.shift xGap yGap)
-            ||> Area.ofPoints
-            |> Area.expand (5. * 2.) (5. * 2.)
-
-        svg.setAttribute ("viewBox", $"0 0 %f{updatedArea.Width} %f{updatedArea.Height}")
-        svg.setAttribute ("width", $"%f{updatedArea.Width}px")
-        svg.setAttribute ("height", $"%f{updatedArea.Height}px")
-        //        svg.setAttribute("style", "background-color: red;")
-
-        // Shifting the cable container.
-        match touchedPointPosition with
-        | Directions.Up ->
-            container.setAttribute (
-                "style",
-                $"top: %f{container.offsetTop + yMoving}px; left: %f{container.offsetLeft + xMoving}px;"
-            )
-        //| Directions.Down ->
-        | Directions.Left ->
-            container.setAttribute (
-                "style",
-                $"top: %f{container.offsetTop + yMoving}px; left: %f{container.offsetLeft + xMoving}px;"
-            )
-        //| Directions.Right ->
-        | var when var = (Directions.Up ||| Directions.Left) ->
-            container.setAttribute (
-                "style",
-                $"top: %f{container.offsetTop + yMoving}px; left: %f{container.offsetLeft + xMoving}px;"
-            )
-        | var when var = (Directions.Up ||| Directions.Right) ->
-            container.setAttribute (
-                "style",
-                $"top: %f{container.offsetTop + yMoving}px; left: %f{container.offsetLeft}px;"
-            )
-        | var when var = (Directions.Down ||| Directions.Left) ->
-            container.setAttribute (
-                "style",
-                $"top: %f{container.offsetTop}px; left: %f{container.offsetLeft + xMoving}px;"
-            )
-        //| var when var = (Directions.Down ||| Directions.Right) ->
-        | _ -> ()
-
-        let touchedPointPosition' = updatedPoints ||> Point.relativePosition
-
-        // Resizing and shifting the cable container.
-        match touchedPointPosition' with
-        | Directions.Up ->
-            svg.setAttribute ("width", $"%f{updatedArea.Width + -xMoving}px")
-            svg.setAttribute ("height", $"%f{updatedArea.Height + -yMoving}px")
-
-            container.setAttribute (
-                "style",
-                $"top: %f{container.offsetTop + yMoving}px; left: %f{container.offsetLeft + xMoving}px;"
-            )
-        //| Directions.Down ->
-        | Directions.Left ->
-            svg.setAttribute ("width", $"%f{updatedArea.Width + -xMoving}px")
-            svg.setAttribute ("height", $"%f{updatedArea.Height + -yMoving}px")
-
-            container.setAttribute (
-                "style",
-                $"top: %f{container.offsetTop + yMoving}px; left: %f{container.offsetLeft + xMoving}px;"
-            )
-        //| Directions.Right ->
-        | var when var = (Directions.Up ||| Directions.Left) ->
-            svg.setAttribute ("width", $"%f{updatedArea.Width + -xMoving}px")
-            svg.setAttribute ("height", $"%f{updatedArea.Height + -yMoving}px")
-
-            container.setAttribute (
-                "style",
-                $"top: %f{container.offsetTop + yMoving}px; left: %f{container.offsetLeft + xMoving}px;"
-            )
-        //| var when var = (Directions.Up ||| Directions.Right) ->
-        //| var when var = (Directions.Down ||| Directions.Left) ->
-        //| var when var = (Directions.Down ||| Directions.Right) ->
-        | _ -> ()
-
-    let setMouseMoveEvent (container: HTMLElement) : unit =
-        let cable = ofHTMLElement container
-
-        match cable with
-        | None -> ()
-        | Some cable' ->
-            let svg = document.getElementById (container.id + "Svg")
-            svg.ondragstart <- fun e -> e.preventDefault ()
-
-            svg.onmousedown <-
-                fun event ->
-                    let point1, point2 =
-                        document.getElementById (container.id)
-                        |> ofHTMLElement
-                        |> fun x ->
-                            match x with
-                            | None -> None, None
-                            | Some x -> x.Points |> fun xs -> Some(List.head xs), Some(List.last xs)
-
-                    let cursorPoint = Point.ofFloats event.offsetX event.offsetY
-
-                    let minDistance =
-                        [ point1; point2 ]
-                        |> List.filter Option.isSome
-                        |> List.map Option.get
-                        |> List.map (Point.distance cursorPoint)
-                        |> List.min
-
-                    let onMouseMove' =
-                        if minDistance < 5. then
-                            let polyline = document.getElementById (container.id + "Polyline")
-                            resizeCable container svg polyline
+                        if mindist < 5. then
+                            polyline.setAttribute (
+                                "points",
+                                $"%f{touchedPoint.X + e.movementX},%f{touchedPoint.Y + e.movementY} %f{theOtherPoint.X},%f{theOtherPoint.Y}"
+                            )
                         else
-                            Device.onMouseMove container svg
+                            polyline.setAttribute (
+                                "points",
+                                $"%f{touchedPoint.X + e.movementX},%f{touchedPoint.Y + e.movementY} %f{theOtherPoint.X + e.movementX},%f{theOtherPoint.Y + e.movementY}"
+                            )
 
-                    document.addEventListener ("mousemove", onMouseMove')
-
-                    svg.onmouseup <- fun _ -> document.removeEventListener ("mousemove", onMouseMove')
+                        polyline.draggable <- false
+                        polyline.setPointerCapture (e.pointerId)
