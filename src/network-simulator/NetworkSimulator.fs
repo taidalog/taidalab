@@ -91,6 +91,12 @@ module NetworkSimulator =
                     LANケーブル
                 </span>
             </button>
+            <button type="button" id="deleteButton" class="submit-button gray display-order-7">
+                <span class="icon-vertical-center">
+                    <span class="material-symbols-outlined symbols18" translate="no">delete</span>
+                    削除
+                </span>
+            </button>
         </form>
         <div id="errorArea" class="error-area warning"></div>
         <div id="outputArea" class="output-area"></div>
@@ -708,5 +714,15 @@ module NetworkSimulator =
                     let polyline = x.querySelector "polyline" :?> HTMLElement
                     polyline.onpointerdown <- Cable.onpointerdown polyline
                     removeOnRightClick x)
+
+        let deleteButton = document.getElementById ("deleteButton") :?> HTMLButtonElement
+
+        deleteButton.onclick <-
+            fun _ ->
+                let playArea = document.getElementById "playArea"
+
+                document.getElementsByClassName "selected"
+                |> JS.Constructors.Array?from
+                |> Array.iter (fun (x: HTMLElement) -> playArea.removeChild x |> ignore)
 
         document.onkeydown <- (fun (e: KeyboardEvent) -> keyboardshortcut e)
