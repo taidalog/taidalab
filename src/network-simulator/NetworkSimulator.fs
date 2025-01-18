@@ -179,12 +179,6 @@ module NetworkSimulator =
                             JS.setTimeout (fun _ -> elm.focus ()) 0 |> ignore)
             ))
 
-    let removeOnRightClick (container: HTMLElement) : unit =
-        container.oncontextmenu <-
-            fun event ->
-                event.preventDefault ()
-                document.getElementById("playArea").removeChild (container) |> ignore
-
     let newHistory source sourceIPv4 destinationIPv4 connected =
         let historyClassName, historyIcon, historyMessage =
             if connected then
@@ -416,8 +410,7 @@ module NetworkSimulator =
         |> List.map document.getElementById
         |> List.iter (fun x ->
             let polyline = x.querySelector "polyline" :?> HTMLElement
-            polyline.onpointerdown <- Cable.onpointerdown polyline
-            removeOnRightClick x)
+            polyline.onpointerdown <- Cable.onpointerdown polyline)
 
         let submitButton = document.getElementById ("submitButton") :?> HTMLButtonElement
 
@@ -712,8 +705,7 @@ module NetworkSimulator =
                 document.getElementById id
                 |> (fun x ->
                     let polyline = x.querySelector "polyline" :?> HTMLElement
-                    polyline.onpointerdown <- Cable.onpointerdown polyline
-                    removeOnRightClick x)
+                    polyline.onpointerdown <- Cable.onpointerdown polyline)
 
         let deleteButton = document.getElementById ("deleteButton") :?> HTMLButtonElement
 
