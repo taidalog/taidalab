@@ -93,3 +93,21 @@ module Device =
         | Client d -> d.Name
         | Router d -> d.Name
         | Hub d -> d.Name
+
+    let onMouseMove (container: HTMLElement) (svg: HTMLElement) (event: Event) : unit =
+        let event = event :?> MouseEvent
+        let top = (event.pageY - svg.getBoundingClientRect().height / 2.)
+        let left = (event.pageX - svg.getBoundingClientRect().width / 2.)
+        let styleString = sprintf "top: %fpx; left: %fpx;" top left
+        container.setAttribute ("style", styleString)
+
+    let setMouseMoveEvent (container: HTMLElement) : unit =
+        let svg = document.getElementById (container.id + "Svg")
+        svg.ondragstart <- fun e -> e.preventDefault ()
+        let onMouseMove' = onMouseMove container svg
+
+        svg.onmousedown <-
+            fun _ ->
+                document.addEventListener ("mousemove", onMouseMove')
+
+                svg.onmouseup <- fun _ -> document.removeEventListener ("mousemove", onMouseMove')
