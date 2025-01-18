@@ -81,12 +81,10 @@ module Cable =
     let toHTMLElement (cable: Cable) : HTMLElement =
         let container = document.createElement ("div")
         container.id <- cable.Id
-        container.className <- "device cable-container lan-cable"
+        container.className <- "lan-cable"
 
         let svg = document.createElementNS ("http://www.w3.org/2000/svg", "svg")
         svg.id <- $"%s{cable.Id}Svg"
-        svg.classList.add ("device")
-        svg.classList.add ("device")
         svg.setAttribute ("viewBox", $"%f{cable.Area.X} %f{cable.Area.Y} %f{cable.Area.Width} %f{cable.Area.Height}")
         svg.setAttribute ("width", $"%f{cable.Area.Width}px")
         svg.setAttribute ("height", $"%f{cable.Area.Height}px")
@@ -110,14 +108,12 @@ module Cable =
 
         let spanName = document.createElement ("span")
         spanName.id <- $"%s{cable.Id}Name"
-        spanName.className <- "no-display"
         spanName.textContent <- $"%s{cable.Name}"
 
         let br2 = document.createElement ("br")
 
         let spanKind = document.createElement ("span")
         spanKind.id <- $"%s{cable.Id}Kind"
-        spanKind.className <- "no-display"
         spanKind.textContent <- $"%s{cable.Kind |> string}"
 
         container.appendChild (svg) |> ignore

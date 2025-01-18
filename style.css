@@ -1073,6 +1073,8 @@ div.lan-cable {
 
 div.lan-cable>svg {
     pointer-events: none;
+    position: absolute;
+    z-index: 3;
 }
 
 div.lan-cable>svg>g>polyline {
@@ -1084,6 +1086,10 @@ div.lan-cable>svg>g>polyline {
 
 div.lan-cable>svg>g>polyline:hover {
     cursor: move;
+}
+
+div.lan-cable>span {
+    display: none;
 }
 
 .material-symbols-outlined.symbols18 {
