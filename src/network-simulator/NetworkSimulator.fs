@@ -373,10 +373,10 @@ module NetworkSimulator =
                   ("5,5 195,45" |> String.split ' ' |> List.map Point.ofString)
                   { Area.X = 0.
                     Y = 0.
-                    Width = 200.
-                    Height = 50. }
-                  { Point.X = 100. + playAreaRect.left
-                    Y = 30. + playAreaRect.top }
+                    Width = playArea.clientWidth
+                    Height = playArea.clientHeight }
+                  { Point.X = playArea.offsetLeft
+                    Y = playArea.offsetTop }
               Cable.create
                   "lancable2"
                   Kind.LANCable
@@ -384,10 +384,10 @@ module NetworkSimulator =
                   ("5,5 195,45" |> String.split ' ' |> List.map Point.ofString)
                   { Area.X = 0.
                     Y = 0.
-                    Width = 200.
-                    Height = 50. }
-                  { Point.X = 300. + playAreaRect.left
-                    Y = 30. + playAreaRect.top }
+                    Width = playArea.clientWidth
+                    Height = playArea.clientHeight }
+                  { Point.X = 250. + playArea.offsetLeft
+                    Y = playArea.offsetTop }
               Cable.create
                   "lancable3"
                   Kind.LANCable
@@ -395,10 +395,10 @@ module NetworkSimulator =
                   ("5,5 195,45" |> String.split ' ' |> List.map Point.ofString)
                   { Area.X = 0.
                     Y = 0.
-                    Width = 200.
-                    Height = 50. }
-                  { Point.X = 500. + playAreaRect.left
-                    Y = 30. + playAreaRect.top }
+                    Width = playArea.clientWidth
+                    Height = playArea.clientHeight }
+                  { Point.X = 500. + playArea.offsetLeft
+                    Y = playArea.offsetTop }
               Cable.create
                   "lancable4"
                   Kind.LANCable
@@ -406,10 +406,10 @@ module NetworkSimulator =
                   ("5,5 195,45" |> String.split ' ' |> List.map Point.ofString)
                   { Area.X = 0.
                     Y = 0.
-                    Width = 200.
-                    Height = 50. }
-                  { Point.X = 700. + playAreaRect.left
-                    Y = 30. + playAreaRect.top } ]
+                    Width = playArea.clientWidth
+                    Height = playArea.clientHeight }
+                  { Point.X = 750. + playArea.offsetLeft
+                    Y = playArea.offsetTop } ]
 
         cables
         |> List.map Cable.toHTMLElement

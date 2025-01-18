@@ -1086,6 +1086,10 @@ div.lan-cable>svg>g>polyline:hover {
     align-items: center;
 }
 
+div.play-area {
+    width: 100%;
+    height: 100%;
+}
 
 /*
     help window
