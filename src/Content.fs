@@ -93,10 +93,6 @@ module Content =
                 <li><a class="home" id="asideTerms" href="%s{Url.home}information-policy/">情報の外部送信について</a></li>
             </ul>
             """
-        // <ul>
-        //     <li><a class="home" id="asideOdaibako" href="https://odaibako.net/u/taidalog">お題箱</a></li>
-        //     <li><a class="home" id="asideRepo" href="https://github.com/taidalog/taidalab">Repository on GitHub</a></li>
-        // </ul>"""
 
         let question =
             """<span id="questionSpan" class="question-number"></span><sub id="srcRadix"></sub> を<span id="dstRadix"></span>進法で表すと？"""
@@ -105,13 +101,12 @@ module Content =
 
         let footer =
             $"""
-            <small class="footer-container">
-                <div class="item" translate="no">&copy; 2022-2024 <a href="https://taidalog.github.io/">taidalog</a></div>
-                <div class="item"><a id="versionNumber" href="https://github.com/taidalog/taidalab/releases">%s{version}</a></div>
-                <div class="item"><a class="home" id="asideOdaibako" href="https://odaibako.net/u/taidalog">お題箱</a></div>
-                <div class="item"><a class="home" id="asideRepo" href="https://github.com/taidalog/taidalab">Repository on GitHub</a></div>
-                <div class="item">Powered by <a id="footerFSharp" href="https://fsharp.org/" translate="no">F#</a> and <a id="footerFable" href="https://fable.io" translate="no">Fable</a>. Thank you!</div>
-            </small>"""
+            <small translate="no">&copy; 2022-2024 <a href="https://taidalog.github.io/">taidalog</a></small>
+            <small translate="no"><a id="versionNumber" href="https://github.com/taidalog/taidalab/releases">%s{version}</a></small>
+            <small><a class="home" href="https://odaibako.net/u/taidalog">お題箱</a></small>
+            <small translate="no"><a class="home" href="https://github.com/taidalog/taidalab">Repository on GitHub</a></small>
+            <small>Powered by <a id="footerFSharp" href="https://fsharp.org/" translate="no">F#</a> and <a id="footerFable" href="https://fable.io" translate="no">Fable</a>. Thank you!</small>
+            """
 
         let columnAdditionFormat =
             """
