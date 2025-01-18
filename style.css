@@ -7,6 +7,44 @@
  */
 @charset "UTF-8";
 
+:root {
+    --background-color: #ffffff;
+    --text-color: #444444;
+    --header-text-color: #ffffff;
+    --pale-color: #888888;
+    --theme-color: #65a2ac;
+    --bin2dec-color: #65ac86;
+    --power-of-two-color: #a665ac;
+    --addition-color: #656eac;
+    --complement-color: #6588ac;
+    --dec2hex-color: #65aca0;
+    --iro-iroiro-color: #ac657c;
+    --ctc-color: #aaac65;
+    --network-simulator-color: #7c65ac;
+    --not-found-color: #808080;
+    --gary-color: #e9e9ed;
+    --a-color: #447f88;
+    --a-visited-color: #754488;
+    --home-color: #325156;
+    --hint-gray-color: #f0f0f0;
+    --history-correct-color: #adff2f;
+    --history-wrong-color: #ffb6c1;
+    --history-gray-color: #d3d3d3;
+    --zero-gray-color: rgba(0, 0, 0, 0.5);
+    --warning-red-color: #ff0000;
+    --hamburger-button-hover-color: rgba(255, 255, 255, 0.25);
+    --lan-cable-color: #00aeda;
+    --box-shadow-color: #999999;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --background-color: #444444;
+        --text-color: #ffffff;
+        --header-text-color: #ffffff;
+    }
+}
+
 /*
     Common in the all pages.
 */
@@ -68,7 +106,8 @@
 }
 
 html {
-    color: #444444;
+    background-color: var(--background-color);
+    color: var(--text-color);
     font-family: 'Noto Sans JP', sans-serif;
     font-weight: 400;
     font-size: 100%;
@@ -87,7 +126,7 @@ body {
 }
 
 header {
-    color: #ffffff;
+    color: var(--header-text-color);
     height: 50px;
     width: 100%;
     min-height: 50px;
@@ -151,7 +190,7 @@ aside.flagged {
         left: calc(max(20%, 260px) * -1);
         z-index: 2;
         height: calc(100% - 40px);
-        background-color: #ffffff;
+        background-color: var(--background-color);
     }
 
     aside.flagged {
@@ -170,7 +209,7 @@ aside ul {
 }
 
 aside a {
-    color: #888888;
+    color: var(--pale-color);
     padding: 5px;
     padding-left: 1rem;
     padding-right: 3rem;
@@ -185,7 +224,7 @@ aside ul details ul li a {
 
 aside a:hover,
 aside a.current-location {
-    color: #ffffff;
+    color: var(--background-color);
     border-radius: 4px;
 }
 
@@ -210,8 +249,9 @@ aside a.home.current-location,
 aside a.dec2bin:hover,
 aside a.dec2bin.current-location,
 .course-button-d2b1,
-.course-button-d2b2 {
-    background-color: #65a2ac;
+.course-button-d2b2,
+span.help-close.dec2bin:hover {
+    background-color: var(--theme-color);
 }
 
 header.home,
@@ -237,8 +277,9 @@ header.bin2dec,
 aside a.bin2dec:hover,
 aside a.bin2dec.current-location,
 .course-button-b2d1,
-.course-button-b2d2 {
-    background-color: #65ac86;
+.course-button-b2d2,
+span.help-close.bin2dec:hover {
+    background-color: var(--bin2dec-color);
 }
 
 button.submit-button.bin2dec {
@@ -259,8 +300,9 @@ header.power-of-two,
 aside a.power-of-two:hover,
 aside a.power-of-two.current-location,
 .course-button-pot1,
-.course-button-pot2 {
-    background-color: #a665ac;
+.course-button-pot2,
+span.help-close.power-of-two:hover {
+    background-color: var(--power-of-two-color);
 }
 
 button.submit-button.power-of-two {
@@ -284,8 +326,10 @@ aside a.addition.current-location,
 aside a.subtraction:hover,
 aside a.subtraction.current-location,
 .course-button-add,
-.course-button-sub {
-    background-color: #656eac;
+.course-button-sub,
+span.help-close.addition:hover,
+span.help-close.subtraction:hover {
+    background-color: var(--addition-color);
 }
 
 button.submit-button.addition,
@@ -307,8 +351,9 @@ button.submit-button.subtraction:hover {
 header.complement,
 aside a.complement:hover,
 aside a.complement.current-location,
-.course-button-cmp {
-    background-color: #6588ac;
+.course-button-cmp,
+span.help-close.complement:hover {
+    background-color: var(--complement-color);
 }
 
 button.submit-button.complement {
@@ -330,8 +375,10 @@ aside a.dec2hex:hover,
 aside a.dec2hex.current-location,
 aside a.hex2dec:hover,
 aside a.hex2dec.current-location,
-.course-button-d2h {
-    background-color: #65aca0;
+.course-button-d2h,
+span.help-close.dec2hex:hover,
+span.help-close.hex2dec:hover {
+    background-color: var(--dec2hex-color);
 }
 
 button.submit-button.dec2hex,
@@ -351,8 +398,9 @@ button.submit-button.hex2dec:hover {
 
 header.iro-iroiro,
 aside a.iro-iroiro:hover,
-aside a.iro-iroiro.current-location {
-    background-color: #ac657c;
+aside a.iro-iroiro.current-location,
+span.help-close.iro-iroiro:hover {
+    background-color: var(--iro-iroiro-color);
 }
 
 button.submit-button.iro-iroiro {
@@ -365,14 +413,16 @@ button.submit-button.iro-iroiro:hover {
 }
 
 aside a.ctc:hover,
-aside a.ctc.current-location {
-    background-color: #aaac65;
+aside a.ctc.current-location,
+span.help-close.ctc:hover {
+    background-color: var(--ctc-color);
 }
 
 header.network-simulator,
 aside a.network-simulator:hover,
-aside a.network-simulator.current-location {
-    background-color: #7c65ac;
+aside a.network-simulator.current-location,
+span.help-close.network-simulator:hover {
+    background-color: var(--network-simulator-color);
 }
 
 button.submit-button.network-simulator {
@@ -385,7 +435,7 @@ button.submit-button.network-simulator:hover {
 }
 
 header.not-found {
-    background-color: #808080;
+    background-color: var(--not-found-color);
 }
 
 button.submit-button.not-found {
@@ -399,7 +449,7 @@ button.submit-button.not-found:hover {
 
 button.submit-button.gray {
     color: #333333;
-    background-color: #e9e9ed;
+    background-color: var(--gary-color);
     width: 160px;
 }
 
@@ -433,7 +483,7 @@ main.flagged {
 }
 
 footer {
-    color: #888888;
+    color: var(--pale-color);
     width: 90%;
     margin: 40px auto 20px;
     display: flex;
@@ -443,12 +493,12 @@ footer {
 }
 
 footer a {
-    color: #447f88;
+    color: var(--a-color);
     text-decoration: none;
 }
 
 footer a:visited {
-    color: #754488;
+    color: var(--a-visited-color);
 }
 
 @media (max-width: 799px) {
@@ -464,7 +514,7 @@ footer a:visited {
 */
 .home-center {
     max-width: 300px;
-    color: #325156;
+    color: var(--home-color);
     text-align: center;
     position: absolute;
     left: 0;
@@ -510,7 +560,7 @@ footer a:visited {
     outline: none;
     -webkit-appearance: none;
     -moz-appearance: none;
-    color: white;
+    color: var(--background-color);
     font-size: 1.75rem;
     border-radius: 4px;
     position: relative;
@@ -575,7 +625,7 @@ button.submit-button {
 
 div.history-area>h2,
 div.hint-area h2 {
-    color: #888888;
+    color: var(--pale-color);
     font-size: 1.25rem;
 }
 
@@ -584,7 +634,7 @@ div.hint-area h2 {
 }
 
 div.hint-area h3 {
-    color: #888888;
+    color: var(--pale-color);
     font-size: 1.15rem;
 }
 
@@ -600,7 +650,7 @@ details summary:hover {
 }
 
 .hint-bgcolor-gray {
-    background-color: #f0f0f0;
+    background-color: var(--hint-gray-color);
 }
 
 
@@ -622,11 +672,11 @@ div.history-container {
 }
 
 div.history-container.history-correct {
-    background-color: greenyellow;
+    background-color: var(--history-correct-color);
 }
 
 div.history-container.history-wrong {
-    background-color: lightpink;
+    background-color: var(--history-wrong-color);
 }
 
 div.history-container>span.material-symbols-outlined {
@@ -647,19 +697,19 @@ div.history-container>span.material-symbols-outlined.history-wrong {
 }
 
 .history-correct {
-    background-color: greenyellow;
+    background-color: var(--history-correct-color);
 }
 
 .history-wrong {
-    background-color: lightpink;
+    background-color: var(--history-wrong-color);
 }
 
 .history-lightgray {
-    background-color: lightgray;
+    background-color: var(--history-gray-color);
 }
 
 .zero-gray {
-    color: rgba(0, 0, 0, 0.5);
+    color: var(--zero-gray-color);
 }
 
 
@@ -671,7 +721,7 @@ div.history-container>span.material-symbols-outlined.history-wrong {
 }
 
 .warning {
-    color: red;
+    color: var(--warning-red-color);
 }
 
 
@@ -752,7 +802,7 @@ input.iro-iroiro.number-input {
 }
 
 input.iro-iroiro.number-input:invalid {
-    background-color: lightpink;
+    background-color: var(--history-wrong-color);
 }
 
 span.iro-iroiro.input-wrapper,
@@ -786,7 +836,7 @@ span.network-simulator.input-wrapper {
 }
 
 .under-line {
-    border-bottom: 2px solid #000000;
+    border-bottom: 2px solid var(--background-color);
 }
 
 .digit-area {
@@ -958,7 +1008,7 @@ span.hamburger-button {
 }
 
 span.hamburger-button:hover {
-    background-color: rgba(255, 255, 255, 0.25);
+    background-color: var(--hamburger-button-hover-color);
     cursor: pointer;
 }
 
@@ -975,7 +1025,7 @@ span.hamburger-button:hover {
         top: 0;
         left: 0;
         opacity: 0.2;
-        background-color: #444444;
+        background-color: var(--text-color);
     }
 }
 
@@ -1050,7 +1100,7 @@ span.hint-table-digit.gray {
 }
 
 div.device-container.selected>svg>g>path {
-    filter: drop-shadow(0px 2px 4px #444444);
+    filter: drop-shadow(0px 2px 4px var(--text-color));
 }
 
 .device-note {
@@ -1085,7 +1135,7 @@ div.lan-cable>svg {
 }
 
 div.lan-cable>svg>g>polyline {
-    stroke: #00aeda;
+    stroke: var(--lan-cable-color);
     stroke-width: 5;
     fill: none;
     pointer-events: auto;
@@ -1100,7 +1150,7 @@ div.lan-cable>span {
 }
 
 div.lan-cable.selected>svg>g>polyline {
-    filter: drop-shadow(0px 2px 4px #00aeda);
+    filter: drop-shadow(0px 2px 4px var(--lan-cable-color));
 }
 
 .material-symbols-outlined.symbols18 {
@@ -1132,7 +1182,7 @@ div.help-close-outer {
 }
 
 span.help-close:hover {
-    color: #ffffff;
+    color: var(--background-color);
 }
 
 @media (max-width: 599px) {
@@ -1147,7 +1197,7 @@ span.help-close:hover {
 
 .help-window.active {
     display: block;
-    background-color: #ffffff;
+    background-color: var(--background-color);
     opacity: 0.95;
     width: fit-content;
     height: fit-content;
@@ -1162,12 +1212,12 @@ span.help-close:hover {
     margin: auto;
     padding: 2rem;
     padding-top: 0;
-    box-shadow: 0px 0px 5px 1px #999;
+    box-shadow: 0px 0px 5px 1px var(--box-shadow-color);
     overflow-y: auto;
     scrollbar-width: thin;
 }
 
-span.help-close.dec2bin:hover {
+/* span.help-close.dec2bin:hover {
     background-color: #65a2ac;
 }
 
@@ -1206,7 +1256,7 @@ span.help-close.network-simulator:hover {
 
 span.help-close.ctc:hover {
     background-color: #aaac65;
-}
+} */
 
 .help-barrier {
     display: none;
