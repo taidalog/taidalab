@@ -395,7 +395,7 @@ module NetworkSimulator =
         |> List.map Device.id
         |> List.map document.getElementById
         |> List.iter (fun x ->
-            Device.setMouseMoveEvent x
+            x.onpointerdown <- Device.onpointerdown x
             resetTitleOnNameChange x
             setToQuitEditOnEnter x)
 
@@ -575,7 +575,7 @@ module NetworkSimulator =
                 |> (fun x -> playArea.insertBefore (x, firstCable))
                 |> ignore
 
-                document.getElementById id |> Device.setMouseMoveEvent
+                document.getElementById id |> fun x -> x.onpointerdown <- Device.onpointerdown x
 
                 document.getElementById id |> resetTitleOnNameChange
 
@@ -623,7 +623,7 @@ module NetworkSimulator =
                 |> (fun x -> playArea.insertBefore (x, firstCable))
                 |> ignore
 
-                document.getElementById id |> Device.setMouseMoveEvent
+                document.getElementById id |> fun x -> x.onpointerdown <- Device.onpointerdown x
 
                 document.getElementById id |> resetTitleOnNameChange
 
@@ -668,7 +668,7 @@ module NetworkSimulator =
                 |> (fun x -> playArea.insertBefore (x, firstCable))
                 |> ignore
 
-                document.getElementById id |> Device.setMouseMoveEvent
+                document.getElementById id |> fun x -> x.onpointerdown <- Device.onpointerdown x
 
                 document.getElementById id |> resetTitleOnNameChange
 

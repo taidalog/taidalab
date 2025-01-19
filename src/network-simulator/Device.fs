@@ -5,6 +5,8 @@
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
 namespace Taidalab
 
+open System
+open System.Diagnostics
 open Fable.Core
 open Fable.Core.JsInterop
 open Browser.Dom
@@ -101,22 +103,23 @@ module Device =
         |> JS.Constructors.Array?from
         |> Array.iter (fun (x: HTMLElement) -> x.classList.remove "selected")
 
-    let onMouseMove (container: HTMLElement) (svg: HTMLElement) (event: Event) : unit =
-        let event = event :?> MouseEvent
-        let top = (event.pageY - svg.getBoundingClientRect().height / 2.)
-        let left = (event.pageX - svg.getBoundingClientRect().width / 2.)
-        let styleString = sprintf "top: %fpx; left: %fpx;" top left
-        container.setAttribute ("style", styleString)
+    let onpointerdown (container: HTMLElement) (e: PointerEvent) : unit =
+        if e.buttons = 1 then
+            Debug.WriteLine "Device.onpointerdown"
 
-    let setMouseMoveEvent (container: HTMLElement) : unit =
-        let svg = document.getElementById (container.id + "Svg")
-        svg.ondragstart <- fun e -> e.preventDefault ()
-        let onMouseMove' = onMouseMove container svg
+            removeSelectedClass ()
+            container.classList.add "selected"
 
-        svg.onmousedown <-
-            fun _ ->
-                removeSelectedClass ()
-                container.classList.add "selected"
-                document.addEventListener ("mousemove", onMouseMove')
+            container.onlostpointercapture <- fun _ -> ()
 
-                svg.onmouseup <- fun _ -> document.removeEventListener ("mousemove", onMouseMove')
+            container.onpointermove <-
+                fun e ->
+                    if e.buttons = 1 then
+                        Debug.WriteLine "Device.onpointermove"
+                        // let top = (e.pageY - svg.getBoundingClientRect().height / 2.)
+                        // let left = (e.pageX - svg.getBoundingClientRect().width / 2.)
+                        let top = container.offsetTop + e.movementY
+                        let left = container.offsetLeft + e.movementX
+                        container.setAttribute ("style", $"top: %f{top}px; left: %f{left}px;")
+                        container.draggable <- false
+                        container.setPointerCapture (e.pointerId)
