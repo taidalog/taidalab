@@ -717,4 +717,11 @@ module NetworkSimulator =
                 |> JS.Constructors.Array?from
                 |> Array.iter (fun (x: HTMLElement) -> playArea.removeChild x |> ignore)
 
+        let main = document.querySelector "main"
+
+        main.onpointerdown <-
+            fun e ->
+                if e.buttons = 1 && e.target = main then
+                    Device.removeSelectedClass ()
+
         document.onkeydown <- (fun (e: KeyboardEvent) -> keyboardshortcut e)
