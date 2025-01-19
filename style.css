@@ -1163,6 +1163,60 @@ span.device-prop.subnetmask::before {
     content: "SubnetMask: ";
 }
 
+div.client>svg>g>path {
+    fill: var(--foreground-color);
+    stroke: none;
+}
+
+div.client>svg>g>path.background {
+    fill: var(--background-color);
+}
+
+div.router>svg>g>path {
+    fill: var(--foreground-color);
+    stroke: none;
+}
+
+div.router>svg>g>path.inner {
+    fill: var(--background-color);
+    stroke: none;
+}
+
+@media (prefers-color-scheme: dark) {
+    div.router>svg>g>path {
+        fill: var(--background-color);
+        stroke: var(--foreground-color);
+        stroke-width: 1;
+    }
+
+    div.router>svg>g>path.inner {
+        fill: var(--foreground-color);
+    }
+}
+
+div.hub>svg>g>path {
+    fill: var(--background-color);
+    stroke: var(--foreground-color);
+    stroke-width: 2;
+}
+
+div.hub>svg>g>path.inner {
+    fill: var(--foreground-color);
+    stroke-width: 1;
+}
+
+@media (prefers-color-scheme: dark) {
+    div.hub>svg>g>path {
+        fill: var(--foreground-color);
+        stroke: var(--foreground-color);
+    }
+
+    div.hub>svg>g>path.inner {
+        fill: var(--background-color);
+        stroke: var(--background-color);
+    }
+}
+
 div.lan-cable {
     width: fit-content;
     position: absolute;
