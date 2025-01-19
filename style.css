@@ -945,18 +945,6 @@ span.network-simulator.input-wrapper {
 }
 
 @media (max-width: 799px) {
-    footer {
-        width: 100%;
-        margin: 0 auto;
-    }
-
-    .footer-container {
-        max-width: 100%;
-        margin: 0 auto;
-        padding-left: 5px;
-        padding-right: 5px;
-    }
-
     .button-container {
         grid-template-columns: 1fr 1fr;
         grid-template-rows: 5rem 5rem 5rem 5rem 5rem;
@@ -972,19 +960,6 @@ span.network-simulator.input-wrapper {
 @media (max-width: 599px) {
     header h1 {
         font-size: 1rem;
-    }
-
-    footer {
-        width: 100%;
-        margin: 0 auto;
-    }
-
-    .footer-container {
-        margin: 0 auto;
-        padding: 0;
-        width: 100%;
-        flex-direction: column;
-        text-align: center;
     }
 
     .home-center {
