@@ -1,10 +1,14 @@
 // taidalab
 // https://github.com/taidalog/taidalab
-// Copyright (c) 2022-2024 taidalog
+// Copyright (c) 2022-2025 taidalog
 // This software is licensed under the MIT License.
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
 namespace Taidalab
 
+open System
+open System.Diagnostics
+open Fable.Core
+open Fable.Core.JsInterop
 open Browser.Dom
 open Browser.Types
 open Fermata
@@ -93,3 +97,41 @@ module Device =
         | Client d -> d.Name
         | Router d -> d.Name
         | Hub d -> d.Name
+
+    let removeSelectedClass () =
+        document.getElementsByClassName "selected"
+        |> JS.Constructors.Array?from
+        |> Array.iter (fun (x: HTMLElement) -> x.classList.remove "selected")
+
+    let onpointerdown (container: HTMLElement) (e: PointerEvent) : unit =
+        let t = e.target :?> HTMLElement
+        Debug.WriteLine t
+        removeSelectedClass ()
+
+        let paths: HTMLElement array =
+            container.querySelectorAll "path" |> JS.Constructors.Array.from
+
+        if e.buttons = 1 && Array.contains t paths then
+            Debug.WriteLine "Device.onpointerdown"
+            container.classList.add "selected"
+
+            container.onlostpointercapture <-
+                fun _ ->
+                    Debug.WriteLine "onlostpointercapture"
+                    container.onpointermove <- fun _ -> ()
+
+            container.onpointerup <-
+                fun _ ->
+                    Debug.WriteLine "onpointerup"
+                    container.onpointermove <- fun _ -> ()
+
+            container.onpointermove <-
+                fun e ->
+                    if e.buttons = 1 then
+                        Debug.WriteLine e.target
+                        Debug.WriteLine "Device.onpointermove"
+                        let top = container.offsetTop + e.movementY
+                        let left = container.offsetLeft + e.movementX
+                        container.setAttribute ("style", $"top: %f{top}px; left: %f{left}px;")
+                        container.draggable <- false
+                        container.setPointerCapture (e.pointerId)

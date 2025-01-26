@@ -1,6 +1,6 @@
 ﻿// taidalab
 // https://github.com/taidalog/taidalab
-// Copyright (c) 2022-2024 taidalog
+// Copyright (c) 2022-2025 taidalog
 // This software is licensed under the MIT License.
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
 namespace Taidalab
@@ -40,7 +40,7 @@ module EndlessBinary =
             <details><summary><h2>ヒント:</h2></summary>
                 <p class="history-indented">
                     ある2進数に足すと桁が1つ上がる、最も小さい数のことを、<br>
-                    元の2進数に対する<span style="background-color: #95c9fe;">「2の補数」</span>と呼びます。
+                    元の2進数に対する<span class="complement marker">「2の補数」</span>と呼びます。
                 </p>
                 <p class="history-indented">
                     たとえば、4ビットの2進数 1010<sub>(2)</sub> に 0110<sub>(2)</sub></span> を足すと<br>
@@ -48,12 +48,12 @@ module EndlessBinary =
                     この 0110<sub>(2)</sub> を、元の 1010<sub>(2)</sub> に対する2の補数と呼びます。<br>
                 </p>
                 <p class="history-indented">
-                    2の補数は、<span style="background-color: #95c9fe;">2進数の負の数を表すのに使われます。</sub></span><br>
+                    2の補数は、<span class="complement marker">2進数の負の数を表すのに使われます。</sub></span><br>
                     1010<sub>(2)</sub> (=10<sub>(10)</sub>) の2の補数 0110<sub>(2)</sub> は-10<sub>(10)</sub> を表します。
                 </p>
                 <p class="history-indented">
                     2の補数を求めるには、元の2進数の各ビットの<br>
-                    <span style="background-color: #95c9fe;">0 と 1 を反転させた数に 1 を足します。</span><br>
+                    <span class="complement marker">0 と 1 を反転させた数に 1 を足します。</span><br>
                     今回の問題で説明すると、<br>
                     %s{bin}<sub>(2)</sub> の 0 と 1 を反転させると<br>
                     %s{reversedBin}<sub>(2)</sub> になります。これに 1 を足したものが<br>

@@ -1,6 +1,6 @@
 // taidalab
 // https://github.com/taidalog/taidalab
-// Copyright (c) 2022-2024 taidalog
+// Copyright (c) 2022-2025 taidalog
 // This software is licensed under the MIT License.
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
 namespace Taidalab
@@ -16,7 +16,13 @@ module Url =
         "https://taidalog.github.io"
 #endif
 
-    let home = "/taidalab/"
+    let home: string =
+#if TESTING
+        "/test.taidalab/"
+#else
+        "/taidalab/"
+#endif
+
 
     let mergePathname (url: URL) =
         let searchParams = url.searchParams

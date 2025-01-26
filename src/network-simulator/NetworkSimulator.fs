@@ -1,6 +1,6 @@
 // taidalab
 // https://github.com/taidalog/taidalab
-// Copyright (c) 2022-2024 taidalog
+// Copyright (c) 2022-2025 taidalog
 // This software is licensed under the MIT License.
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
 namespace Taidalab
@@ -23,8 +23,7 @@ module NetworkSimulator =
         </p>
         <p>
             LAN ケーブルの端にカーソルを合わせてドラッグすると、長さや角度を調節できます。<br>
-            あまり速く動かすと位置がズレます。ゆっくり動かしてください。<br>
-            LAN ケーブルの端がデバイスに重なっていると「繋がっている」と認識します。<br>
+            LAN ケーブルの端がデバイスに重なっていると「繋がっている」と認識します。
         </p>
         <p>
             デバイス同士が LAN ケーブルで繋がっている状態で、「送信元 IPv4」と「送信先 IPv4」を入力して<br>
@@ -33,15 +32,8 @@ module NetworkSimulator =
             クライアントやルータの IP アドレスをクリックして設定しなおしたりしてください。
         </p>
         <p>
-            <span class="material-symbols-outlined symbols18" translate="no">add_circle</span>マークのボタンをクリックすると、デバイスやケーブルを追加できます。
-        </p>
-        <p>
-            デバイスやケーブルをドラッグで動かした後、カーソルから離れなくなった場合は、<br>
-            それぞれ以下のようにしてください。<br>
-            <ul>
-                <li>デバイス→もう一度クリックする</li>
-                <li>ケーブル→右クリックする（ケーブルを削除できます）</li>
-            </ul>
+            <span class="material-symbols-outlined symbols18" translate="no">add_circle</span>マークのボタンをクリックすると、デバイスやケーブルを追加できます。<br>
+            <span class="material-symbols-outlined symbols18" translate="no">delete</span>マークのボタンをクリックすると、選択中のデバイスやケーブルを削除できます。
         </p>
     """
 
@@ -91,6 +83,12 @@ module NetworkSimulator =
                     LANケーブル
                 </span>
             </button>
+            <button type="button" id="deleteButton" class="submit-button gray display-order-7">
+                <span class="icon-vertical-center">
+                    <span class="material-symbols-outlined symbols18" translate="no">delete</span>
+                    削除
+                </span>
+            </button>
         </form>
         <div id="errorArea" class="error-area warning"></div>
         <div id="outputArea" class="output-area"></div>
@@ -104,24 +102,6 @@ module NetworkSimulator =
             %s{help}
         </div>
         """
-
-    let onMouseMove (container: HTMLElement) (svg: HTMLElement) (event: Event) : unit =
-        let event = event :?> MouseEvent
-        let top = (event.pageY - svg.getBoundingClientRect().height / 2.)
-        let left = (event.pageX - svg.getBoundingClientRect().width / 2.)
-        let styleString = sprintf "top: %fpx; left: %fpx;" top left
-        container.setAttribute ("style", styleString)
-
-    let setMouseMoveEvent (container: HTMLElement) : unit =
-        let svg = document.getElementById (container.id + "Svg")
-        svg.ondragstart <- fun e -> e.preventDefault ()
-        let onMouseMove' = onMouseMove container svg
-
-        svg.onmousedown <-
-            fun _ ->
-                document.addEventListener ("mousemove", onMouseMove')
-
-                svg.onmouseup <- fun _ -> document.removeEventListener ("mousemove", onMouseMove')
 
     let resetTitleOnNameChange (container: HTMLElement) : unit =
         let nameElement = document.getElementById (container.id + "Name")
@@ -191,198 +171,6 @@ module NetworkSimulator =
                             JS.setTimeout (fun _ -> elm.focus ()) 0 |> ignore)
             ))
 
-    let updatePoints (point1: Point) (point2: Point) (newPoint: Point) : (Point * Point) =
-        (point1, point2)
-        |> Tuple.map (Point.distance newPoint)
-        |> fun (f1, f2) ->
-            if f1 <= f2 then
-                (point1, point2 |> Point.shift (newPoint.X - point1.X) (newPoint.Y - point1.Y))
-            else
-                (point1, newPoint)
-
-    let touchedAndUntouched (point1: Point) (point2: Point) (newPoint: Point) : (Point * Point) =
-        (point1, point2)
-        |> Tuple.map (Point.distance newPoint)
-        |> fun (d1, d2) -> if d1 <= d2 then (point1, point2) else (point2, point1)
-
-    let resizeCable (container: HTMLElement) (svg: HTMLElement) (polyline: HTMLElement) (event: Event) : unit =
-        let event = event :?> MouseEvent
-
-        // Getting current end points of the cable.
-        let point1, point2 =
-            polyline.getAttribute ("points")
-            |> String.split ' '
-            |> List.map Point.ofString
-            |> fun xs -> List.head xs, List.last xs
-
-        let cursorPoint =
-            Point.ofFloats (event.pageX - container.offsetLeft) (event.pageY - container.offsetTop)
-
-        let touchedPoint, untouchedPoint = cursorPoint |> touchedAndUntouched point1 point2
-
-        let xMoving = cursorPoint.X - touchedPoint.X
-        let yMoving = cursorPoint.Y - touchedPoint.Y
-
-        let touchedPointPosition = touchedPoint |> Point.relativePosition untouchedPoint
-
-        // Building the new end points with the cursor position.
-        let updatedPoints =
-            match touchedPointPosition with
-            | Directions.Up -> touchedPoint, untouchedPoint |> Point.shift -xMoving -yMoving
-            | Directions.Down -> cursorPoint |> updatePoints untouchedPoint touchedPoint
-            | Directions.Left -> touchedPoint, untouchedPoint |> Point.shift -xMoving -yMoving
-            | Directions.Right -> cursorPoint |> updatePoints untouchedPoint touchedPoint
-            | var when var = (Directions.Up ||| Directions.Left) ->
-                touchedPoint, untouchedPoint |> Point.shift -xMoving -yMoving
-            | var when var = (Directions.Up ||| Directions.Right) ->
-                untouchedPoint |> Point.shift 0. -yMoving, touchedPoint |> Point.shift xMoving 0.
-            | var when var = (Directions.Down ||| Directions.Left) ->
-                touchedPoint |> Point.shift 0. yMoving, untouchedPoint |> Point.shift -xMoving 0.
-            | var when var = (Directions.Down ||| Directions.Right) ->
-                cursorPoint |> updatePoints untouchedPoint touchedPoint
-            | _ -> cursorPoint |> updatePoints untouchedPoint touchedPoint
-
-        let xGap =
-            updatedPoints
-            |> Tuple.map (fun x -> x.X)
-            |> System.Math.Min
-            |> fun x -> 5. - x
-
-        let yGap =
-            updatedPoints
-            |> Tuple.map (fun x -> x.Y)
-            |> System.Math.Min
-            |> fun x -> 5. - x
-
-        // Updating the cable points.
-        updatedPoints
-        |> Tuple.map (Point.shift xGap yGap)
-        |> fun (p1, p2) -> $"%f{p1.X},%f{p1.Y} %f{p2.X},%f{p2.Y}"
-        |> fun x -> polyline.setAttribute ("points", x)
-
-        let updatedArea =
-            updatedPoints
-            |> Tuple.map (Point.shift xGap yGap)
-            ||> Area.ofPoints
-            |> Area.expand (5. * 2.) (5. * 2.)
-
-        svg.setAttribute ("viewBox", $"0 0 %f{updatedArea.Width} %f{updatedArea.Height}")
-        svg.setAttribute ("width", $"%f{updatedArea.Width}px")
-        svg.setAttribute ("height", $"%f{updatedArea.Height}px")
-        //        svg.setAttribute("style", "background-color: red;")
-
-        // Shifting the cable container.
-        match touchedPointPosition with
-        | Directions.Up ->
-            container.setAttribute (
-                "style",
-                $"top: %f{container.offsetTop + yMoving}px; left: %f{container.offsetLeft + xMoving}px;"
-            )
-        //| Directions.Down ->
-        | Directions.Left ->
-            container.setAttribute (
-                "style",
-                $"top: %f{container.offsetTop + yMoving}px; left: %f{container.offsetLeft + xMoving}px;"
-            )
-        //| Directions.Right ->
-        | var when var = (Directions.Up ||| Directions.Left) ->
-            container.setAttribute (
-                "style",
-                $"top: %f{container.offsetTop + yMoving}px; left: %f{container.offsetLeft + xMoving}px;"
-            )
-        | var when var = (Directions.Up ||| Directions.Right) ->
-            container.setAttribute (
-                "style",
-                $"top: %f{container.offsetTop + yMoving}px; left: %f{container.offsetLeft}px;"
-            )
-        | var when var = (Directions.Down ||| Directions.Left) ->
-            container.setAttribute (
-                "style",
-                $"top: %f{container.offsetTop}px; left: %f{container.offsetLeft + xMoving}px;"
-            )
-        //| var when var = (Directions.Down ||| Directions.Right) ->
-        | _ -> ()
-
-        let touchedPointPosition' = updatedPoints ||> Point.relativePosition
-
-        // Resizing and shifting the cable container.
-        match touchedPointPosition' with
-        | Directions.Up ->
-            svg.setAttribute ("width", $"%f{updatedArea.Width + -xMoving}px")
-            svg.setAttribute ("height", $"%f{updatedArea.Height + -yMoving}px")
-
-            container.setAttribute (
-                "style",
-                $"top: %f{container.offsetTop + yMoving}px; left: %f{container.offsetLeft + xMoving}px;"
-            )
-        //| Directions.Down ->
-        | Directions.Left ->
-            svg.setAttribute ("width", $"%f{updatedArea.Width + -xMoving}px")
-            svg.setAttribute ("height", $"%f{updatedArea.Height + -yMoving}px")
-
-            container.setAttribute (
-                "style",
-                $"top: %f{container.offsetTop + yMoving}px; left: %f{container.offsetLeft + xMoving}px;"
-            )
-        //| Directions.Right ->
-        | var when var = (Directions.Up ||| Directions.Left) ->
-            svg.setAttribute ("width", $"%f{updatedArea.Width + -xMoving}px")
-            svg.setAttribute ("height", $"%f{updatedArea.Height + -yMoving}px")
-
-            container.setAttribute (
-                "style",
-                $"top: %f{container.offsetTop + yMoving}px; left: %f{container.offsetLeft + xMoving}px;"
-            )
-        //| var when var = (Directions.Up ||| Directions.Right) ->
-        //| var when var = (Directions.Down ||| Directions.Left) ->
-        //| var when var = (Directions.Down ||| Directions.Right) ->
-        | _ -> ()
-
-    let setMouseMoveEventCable (container: HTMLElement) : unit =
-        let cable = Cable.ofHTMLElement container
-
-        match cable with
-        | None -> ()
-        | Some cable' ->
-            let svg = document.getElementById (container.id + "Svg")
-            svg.ondragstart <- fun e -> e.preventDefault ()
-
-            svg.onmousedown <-
-                fun event ->
-                    let point1, point2 =
-                        document.getElementById (container.id)
-                        |> Cable.ofHTMLElement
-                        |> fun x ->
-                            match x with
-                            | None -> None, None
-                            | Some x -> x.Points |> fun xs -> Some(List.head xs), Some(List.last xs)
-
-                    let cursorPoint = Point.ofFloats event.offsetX event.offsetY
-
-                    let minDistance =
-                        [ point1; point2 ]
-                        |> List.filter Option.isSome
-                        |> List.map Option.get
-                        |> List.map (Point.distance cursorPoint)
-                        |> List.min
-
-                    let onMouseMove' =
-                        if minDistance < 5. then
-                            let polyline = document.getElementById (container.id + "Polyline")
-                            resizeCable container svg polyline
-                        else
-                            onMouseMove container svg
-
-                    document.addEventListener ("mousemove", onMouseMove')
-
-                    svg.onmouseup <- fun _ -> document.removeEventListener ("mousemove", onMouseMove')
-
-    let removeOnRightClick (container: HTMLElement) : unit =
-        container.oncontextmenu <-
-            fun event ->
-                event.preventDefault ()
-                document.getElementById("playArea").removeChild (container) |> ignore
-
     let newHistory source sourceIPv4 destinationIPv4 connected =
         let historyClassName, historyIcon, historyMessage =
             if connected then
@@ -430,11 +218,16 @@ module NetworkSimulator =
             | "?" ->
                 [ "helpWindow"; "helpBarrier" ]
                 |> List.iter (fun x -> (document.getElementById x).classList.toggle "active" |> ignore)
+            | "Delete" ->
+                let playArea = document.getElementById "playArea"
+                let xs = document.getElementsByClassName "selected" |> JS.Constructors.Array?from
+                xs |> Array.iter (fun (x: HTMLElement) -> playArea.removeChild x |> ignore)
             | "Escape" ->
-
                 if isHelpWindowActive then
                     [ "helpWindow"; "helpBarrier" ]
                     |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore)
+                else
+                    Device.removeSelectedClass ()
             | _ -> ()
 
     let init () =
@@ -570,50 +363,20 @@ module NetworkSimulator =
         |> ignore
 
         let cables =
-            [ Cable.create
-                  "lancable1"
-                  Kind.LANCable
-                  "LANケーブル(1)"
-                  ("5,5 195,45" |> String.split ' ' |> List.map Point.ofString)
-                  { Area.X = 0.
-                    Y = 0.
-                    Width = 200.
-                    Height = 50. }
-                  { Point.X = 100. + playAreaRect.left
-                    Y = 30. + playAreaRect.top }
-              Cable.create
-                  "lancable2"
-                  Kind.LANCable
-                  "LANケーブル(2)"
-                  ("5,5 195,45" |> String.split ' ' |> List.map Point.ofString)
-                  { Area.X = 0.
-                    Y = 0.
-                    Width = 200.
-                    Height = 50. }
-                  { Point.X = 300. + playAreaRect.left
-                    Y = 30. + playAreaRect.top }
-              Cable.create
-                  "lancable3"
-                  Kind.LANCable
-                  "LANケーブル(3)"
-                  ("5,5 195,45" |> String.split ' ' |> List.map Point.ofString)
-                  { Area.X = 0.
-                    Y = 0.
-                    Width = 200.
-                    Height = 50. }
-                  { Point.X = 500. + playAreaRect.left
-                    Y = 30. + playAreaRect.top }
-              Cable.create
-                  "lancable4"
-                  Kind.LANCable
-                  "LANケーブル(4)"
-                  ("5,5 195,45" |> String.split ' ' |> List.map Point.ofString)
-                  { Area.X = 0.
-                    Y = 0.
-                    Width = 200.
-                    Height = 50. }
-                  { Point.X = 700. + playAreaRect.left
-                    Y = 30. + playAreaRect.top } ]
+            [ 1..4 ]
+            |> List.map (fun x ->
+                Cable.create
+                    $"lancable%d{x}"
+                    Kind.LANCable
+                    $"LANケーブル(%d{x})"
+                    [ Point.ofFloats (playArea.offsetLeft + 5. + float (x - 1) * 250.) (playArea.offsetTop + 5.)
+                      Point.ofFloats (playArea.offsetLeft + 195. + float (x - 1) * 250.) (playArea.offsetTop + 45.) ]
+                    { Area.X = 0.
+                      Y = 0.
+                      Width = window.innerWidth
+                      Height = window.innerHeight }
+                    { Point.X = float (x - 1) * 250. + playArea.offsetLeft
+                      Y = playArea.offsetTop })
 
         cables
         |> List.map Cable.toHTMLElement
@@ -624,7 +387,7 @@ module NetworkSimulator =
         |> List.map Device.id
         |> List.map document.getElementById
         |> List.iter (fun x ->
-            setMouseMoveEvent x
+            x.onpointerdown <- Device.onpointerdown x
             resetTitleOnNameChange x
             setToQuitEditOnEnter x)
 
@@ -638,8 +401,8 @@ module NetworkSimulator =
         |> List.map (fun x -> x.Id)
         |> List.map document.getElementById
         |> List.iter (fun x ->
-            setMouseMoveEventCable x
-            removeOnRightClick x)
+            let polyline = x.querySelector "polyline" :?> HTMLElement
+            polyline.onpointerdown <- Cable.onpointerdown polyline)
 
         let submitButton = document.getElementById ("submitButton") :?> HTMLButtonElement
 
@@ -656,7 +419,7 @@ module NetworkSimulator =
                     |> List.map Option.get
 
                 let lanCables' =
-                    document.getElementById("playArea").getElementsByClassName ("cable-container")
+                    document.getElementById("playArea").getElementsByClassName ("lan-cable")
                     |> (fun x -> JS.Constructors.Array?from(x))
                     |> Array.toList
                     |> List.map Cable.ofHTMLElement
@@ -772,7 +535,7 @@ module NetworkSimulator =
                 let playArea = document.getElementById "playArea"
                 let playAreaRect = playArea.getBoundingClientRect ()
 
-                let firstCable = playArea.getElementsByClassName("cable-container").item 0
+                let firstCable = playArea.getElementsByClassName("lan-cable").item 0
 
                 let clientCount =
                     playArea.getElementsByClassName "device-container"
@@ -804,7 +567,7 @@ module NetworkSimulator =
                 |> (fun x -> playArea.insertBefore (x, firstCable))
                 |> ignore
 
-                document.getElementById id |> setMouseMoveEvent
+                document.getElementById id |> fun x -> x.onpointerdown <- Device.onpointerdown x
 
                 document.getElementById id |> resetTitleOnNameChange
 
@@ -820,7 +583,7 @@ module NetworkSimulator =
                 let playArea = document.getElementById "playArea"
                 let playAreaRect = playArea.getBoundingClientRect ()
 
-                let firstCable = playArea.getElementsByClassName("cable-container").item 0
+                let firstCable = playArea.getElementsByClassName("lan-cable").item 0
 
                 let routerCount =
                     playArea.getElementsByClassName "device-container"
@@ -852,7 +615,7 @@ module NetworkSimulator =
                 |> (fun x -> playArea.insertBefore (x, firstCable))
                 |> ignore
 
-                document.getElementById id |> setMouseMoveEvent
+                document.getElementById id |> fun x -> x.onpointerdown <- Device.onpointerdown x
 
                 document.getElementById id |> resetTitleOnNameChange
 
@@ -867,7 +630,7 @@ module NetworkSimulator =
                 let playArea = document.getElementById "playArea"
                 let playAreaRect = playArea.getBoundingClientRect ()
 
-                let firstCable = playArea.getElementsByClassName("cable-container").item 0
+                let firstCable = playArea.getElementsByClassName("lan-cable").item 0
 
                 let hubCount =
                     playArea.getElementsByClassName "device-container"
@@ -897,7 +660,7 @@ module NetworkSimulator =
                 |> (fun x -> playArea.insertBefore (x, firstCable))
                 |> ignore
 
-                document.getElementById id |> setMouseMoveEvent
+                document.getElementById id |> fun x -> x.onpointerdown <- Device.onpointerdown x
 
                 document.getElementById id |> resetTitleOnNameChange
 
@@ -909,9 +672,7 @@ module NetworkSimulator =
         addLANCableButton.onclick <-
             fun _ ->
                 let playArea = document.getElementById "playArea"
-                let playAreaRect = playArea.getBoundingClientRect ()
-
-                let cableCount = playArea.getElementsByClassName("cable-container").length
+                let cableCount = playArea.getElementsByClassName("lan-cable").length
                 let nextNumber = cableCount + 1
                 let id = $"cable%d{nextNumber}"
 
@@ -921,20 +682,38 @@ module NetworkSimulator =
                         id
                         Kind.LANCable
                         $"LANケーブル(%d{n})"
-                        ("5,5 195,45" |> String.split ' ' |> List.map Point.ofString)
+                        [ Point.ofFloats (playArea.offsetLeft + 5.) (playArea.offsetTop + 5.)
+                          Point.ofFloats (playArea.offsetLeft + 195.) (playArea.offsetTop + 45.) ]
                         { Area.X = 0.
                           Y = 0.
-                          Width = 200.
-                          Height = 50. }
-                        { Point.X = 0. + playAreaRect.left
-                          Y = 0. + playAreaRect.top })
+                          Width = window.innerWidth
+                          Height = window.innerHeight }
+                        { Point.X = playArea.offsetLeft
+                          Y = playArea.offsetTop })
                 |> Cable.toHTMLElement
                 |> (fun x -> playArea.appendChild (x))
                 |> ignore
 
                 document.getElementById id
                 |> (fun x ->
-                    setMouseMoveEventCable x
-                    removeOnRightClick x)
+                    let polyline = x.querySelector "polyline" :?> HTMLElement
+                    polyline.onpointerdown <- Cable.onpointerdown polyline)
+
+        let deleteButton = document.getElementById ("deleteButton") :?> HTMLButtonElement
+
+        deleteButton.onclick <-
+            fun _ ->
+                let playArea = document.getElementById "playArea"
+
+                document.getElementsByClassName "selected"
+                |> JS.Constructors.Array?from
+                |> Array.iter (fun (x: HTMLElement) -> playArea.removeChild x |> ignore)
+
+        let main = document.querySelector "main"
+
+        main.onpointerdown <-
+            fun e ->
+                if e.buttons = 1 && e.target = main then
+                    Device.removeSelectedClass ()
 
         document.onkeydown <- (fun (e: KeyboardEvent) -> keyboardshortcut e)

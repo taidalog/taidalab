@@ -1,6 +1,6 @@
 # taidalab
 
-Version 5.0.4
+Version 5.1.0
 
 [Japanese README](README.ja.md)
 
@@ -34,7 +34,8 @@ A Web application for learning Informatics &#8544;, one of the subjects taught i
 
 ## Known Issue
 
-- On network-simulator page, when clicking a device or a LAN cable which is over another device or LAN cable, both the clicked element and the other one are dragged, and stick to the cursor even after stopping clicking.
+- The network-simulator is not available with a device with a small screen such as a smartphone.
+- The network-simulator is not available with touch operation.
 
 ## Release Notes
 
