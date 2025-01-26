@@ -14,6 +14,7 @@ module About =
         <p>
             <span translate="no">taidalab</span>（タイダラブ）は、<span translate="no">taidalog</span> が作成したプログラム置き場です。<br>
             10進数と2進数の変換の反復練習ツールなど、高校の「情報&#8544;」の学習ツールを中心に公開しています。<br>
+            利用前に<a translate="no" href="https://github.com/taidalog/taidalab/blob/main/README.ja.md">README</a>をご一読ください。<br>
             <span translate="no">F#</span> で書いたものを <span translate="no">Fable</span> で <span translate="no">JavaScript</span> にトランスパイルしています。<span translate="no">F#</span> 楽しい。
         </p>
         <h2>それぞれのページについて</h2>
