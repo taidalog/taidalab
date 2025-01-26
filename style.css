@@ -1115,6 +1115,9 @@ span.hint-table-digit.gray {
 
 .device-image {
     position: relative;
+}
+
+div.device-container>svg>g>path {
     cursor: move;
 }
 
