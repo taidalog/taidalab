@@ -101,11 +101,13 @@ module Content =
 
         let footer =
             $"""
-            <small translate="no">&copy; 2022-2024 <a href="https://taidalog.github.io/">taidalog</a></small>
-            <small translate="no"><a id="versionNumber" href="https://github.com/taidalog/taidalab/releases">%s{version}</a></small>
-            <small><a class="home" href="https://odaibako.net/u/taidalog">お題箱</a></small>
-            <small translate="no"><a class="home" href="https://github.com/taidalog/taidalab">Repository on GitHub</a></small>
-            <small>Powered by <a id="footerFSharp" href="https://fsharp.org/" translate="no">F#</a> and <a id="footerFable" href="https://fable.io" translate="no">Fable</a>. Thank you!</small>
+            <div>
+                <small translate="no">&copy; 2022-2024 <a href="https://taidalog.github.io/">taidalog</a></small>
+                <small translate="no"><a id="versionNumber" href="https://github.com/taidalog/taidalab/releases">%s{version}</a></small>
+                <small><a class="home" href="https://odaibako.net/u/taidalog">お題箱</a></small>
+                <small translate="no"><a class="home" href="https://github.com/taidalog/taidalab">Repository on GitHub</a></small>
+                <small>Powered by <a id="footerFSharp" href="https://fsharp.org/" translate="no">F#</a> and <a id="footerFable" href="https://fable.io" translate="no">Fable</a>. Thank you!</small>
+            </div>
             """
 
         let columnAdditionFormat =
