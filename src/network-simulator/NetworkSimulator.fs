@@ -23,8 +23,7 @@ module NetworkSimulator =
         </p>
         <p>
             LAN ケーブルの端にカーソルを合わせてドラッグすると、長さや角度を調節できます。<br>
-            あまり速く動かすと位置がズレます。ゆっくり動かしてください。<br>
-            LAN ケーブルの端がデバイスに重なっていると「繋がっている」と認識します。<br>
+            LAN ケーブルの端がデバイスに重なっていると「繋がっている」と認識します。
         </p>
         <p>
             デバイス同士が LAN ケーブルで繋がっている状態で、「送信元 IPv4」と「送信先 IPv4」を入力して<br>
@@ -33,15 +32,8 @@ module NetworkSimulator =
             クライアントやルータの IP アドレスをクリックして設定しなおしたりしてください。
         </p>
         <p>
-            <span class="material-symbols-outlined symbols18" translate="no">add_circle</span>マークのボタンをクリックすると、デバイスやケーブルを追加できます。
-        </p>
-        <p>
-            デバイスやケーブルをドラッグで動かした後、カーソルから離れなくなった場合は、<br>
-            それぞれ以下のようにしてください。<br>
-            <ul>
-                <li>デバイス→もう一度クリックする</li>
-                <li>ケーブル→右クリックする（ケーブルを削除できます）</li>
-            </ul>
+            <span class="material-symbols-outlined symbols18" translate="no">add_circle</span>マークのボタンをクリックすると、デバイスやケーブルを追加できます。<br>
+            <span class="material-symbols-outlined symbols18" translate="no">delete</span>マークのボタンをクリックすると、選択中のデバイスやケーブルを削除できます。
         </p>
     """
 
