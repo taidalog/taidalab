@@ -104,20 +104,32 @@ module Device =
         |> Array.iter (fun (x: HTMLElement) -> x.classList.remove "selected")
 
     let onpointerdown (container: HTMLElement) (e: PointerEvent) : unit =
-        if e.buttons = 1 then
-            Debug.WriteLine "Device.onpointerdown"
+        let t = e.target :?> HTMLElement
+        Debug.WriteLine t
+        removeSelectedClass ()
 
-            removeSelectedClass ()
+        let paths: HTMLElement array =
+            container.querySelectorAll "path" |> JS.Constructors.Array.from
+
+        if e.buttons = 1 && Array.contains t paths then
+            Debug.WriteLine "Device.onpointerdown"
             container.classList.add "selected"
 
-            container.onlostpointercapture <- fun _ -> ()
+            container.onlostpointercapture <-
+                fun _ ->
+                    Debug.WriteLine "onlostpointercapture"
+                    container.onpointermove <- fun _ -> ()
+
+            container.onpointerup <-
+                fun _ ->
+                    Debug.WriteLine "onpointerup"
+                    container.onpointermove <- fun _ -> ()
 
             container.onpointermove <-
                 fun e ->
                     if e.buttons = 1 then
+                        Debug.WriteLine e.target
                         Debug.WriteLine "Device.onpointermove"
-                        // let top = (e.pageY - svg.getBoundingClientRect().height / 2.)
-                        // let left = (e.pageX - svg.getBoundingClientRect().width / 2.)
                         let top = container.offsetTop + e.movementY
                         let left = container.offsetLeft + e.movementX
                         container.setAttribute ("style", $"top: %f{top}px; left: %f{left}px;")
