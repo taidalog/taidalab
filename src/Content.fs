@@ -1,6 +1,6 @@
 // taidalab
 // https://github.com/taidalog/taidalab
-// Copyright (c) 2022-2024 taidalog
+// Copyright (c) 2022-2025 taidalog
 // This software is licensed under the MIT License.
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
 namespace Taidalab
@@ -102,7 +102,7 @@ module Content =
         let footer =
             $"""
             <div>
-                <small translate="no">&copy; 2022-2024 <a href="https://taidalog.github.io/">taidalog</a></small>
+                <small translate="no">&copy; 2022-2025 <a href="https://taidalog.github.io/">taidalog</a></small>
                 <small translate="no"><a id="versionNumber" href="https://github.com/taidalog/taidalab/releases">%s{version}</a></small>
                 <small><a class="home" href="https://odaibako.net/u/taidalog">お題箱</a></small>
                 <small translate="no"><a class="home" href="https://github.com/taidalog/taidalab">Repository on GitHub</a></small>
