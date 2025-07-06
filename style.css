@@ -215,31 +215,8 @@ aside summary::-webkit-details-marker {
 }
 
 /*
-    Colors for headers and check buttons.
-
-    Colors of buttons on home.
-    course-button-<identifier>
+        Default style for button.
 */
-header.home,
-aside a.home:hover,
-aside a.home.current-location {
-    background-color: var(--theme-color);
-}
-
-header.dec2bin,
-aside a.dec2bin:hover,
-aside a.dec2bin.current-location,
-.course-button-d2b1,
-.course-button-d2b2,
-span.help-close.dec2bin:hover {
-    background-color: var(--dec2bin-color);
-}
-
-header.home,
-header.dec2bin {
-    color: aliceblue;
-}
-
 button {
     appearance: none;
     border: none;
@@ -265,6 +242,31 @@ button {
 
 }
 
+/*
+    Colors for headers and check buttons.
+
+    Colors of buttons on home.
+    course-button-<identifier>
+*/
+header.home,
+aside a.home:hover,
+aside a.home.current-location {
+    background-color: var(--theme-color);
+}
+
+header.dec2bin,
+aside a.dec2bin:hover,
+aside a.dec2bin.current-location,
+.course-button-d2b1,
+.course-button-d2b2,
+span.help-close.dec2bin:hover {
+    background-color: var(--dec2bin-color);
+}
+
+header.home,
+header.dec2bin {
+    color: aliceblue;
+}
 button.dec2bin {
     background: hsl(188, 30%, 65%);
 }
