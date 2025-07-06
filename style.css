@@ -621,11 +621,6 @@ form.button-container button {
     height: 32px;
 }
 
-.binary-radix {
-    margin: 0 5px;
-    line-height: 40px;
-}
-
 form.endless-binary.input-area {
     width: 100%;
     padding: 5px 0;
