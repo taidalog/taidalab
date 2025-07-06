@@ -153,7 +153,7 @@ module EndlessBinary =
                 """<h1>減算 - <span translate="no">taidalab</span></h1>"""
 
             (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help "help-color subtraction"
-            (document.querySelector "#submitButton").className <- "submit-button display-order-3 subtraction"
+            (document.querySelector "#submitButton").className <- "submit-button subtraction"
             (document.querySelector "#questionArea").innerHTML <- Content.Common.columnAdditionFormat
 
             let sourceRadix = 2

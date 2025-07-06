@@ -81,7 +81,7 @@ module NotFound =
             """<h1>404: Page Not Found - <span translate="no">taidalab</span></h1>"""
 
         (document.querySelector "main").innerHTML <- EndlessBinary.Course.main404
-        (document.querySelector "#submitButton").className <- "submit-button display-order-3 not-found"
+        (document.querySelector "#submitButton").className <- "submit-button not-found"
         (document.querySelector "#questionArea").innerHTML <- Content.Common.question
 
         let initNumber = 404

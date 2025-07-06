@@ -646,6 +646,39 @@ button.submit-button {
     font-family: 'Noto Sans JP', sans-serif;
 }
 
+form.endless-binary.input-area {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 300px 40px 1fr;
+    grid-template-rows: 40px 40px 1fr;
+    grid-template-areas:
+        "i s b"
+        "e e e"
+        "h h h";
+    gap: 0px 5px;
+}
+
+form.endless-binary.input-area>input {
+    grid-area: i;
+}
+
+form.endless-binary.input-area>span {
+    grid-area: s;
+    line-height: 40px;
+    width: fit-content;
+}
+
+form.endless-binary.input-area>button {
+    grid-area: b;
+}
+
+form.endless-binary.input-area>div.error-area {
+    grid-area: e;
+}
+
+form.endless-binary.input-area>div.hint-area {
+    grid-area: h;
+}
 div.history-area>h2,
 div.hint-area h2 {
     color: var(--pale-color);
@@ -664,10 +697,6 @@ div.hint-area h3 {
 /*
     hint area
 */
-.hint-area {
-    width: 100%;
-}
-
 details summary:hover {
     cursor: pointer;
 }

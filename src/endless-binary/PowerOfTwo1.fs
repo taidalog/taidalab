@@ -63,7 +63,7 @@ module EndlessBinary =
                 """<h1>2のn乗 - <span translate="no">taidalab</span></h1>"""
 
             (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help "help-color power-of-two"
-            (document.querySelector "#submitButton").className <- "submit-button display-order-3 power-of-two"
+            (document.querySelector "#submitButton").className <- "submit-button power-of-two"
             (document.querySelector "#questionArea").innerHTML <- Content.Common.question
 
             Dec2Bin1.init' question hint additional 10 2 exec' EndlessBinary.keyboardshortcut

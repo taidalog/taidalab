@@ -339,7 +339,7 @@ module EndlessBinary =
                 """<h1>10進数→16進数 - <span translate="no">taidalab</span></h1>"""
 
             (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help "help-color dec2hex"
-            (document.querySelector "#submitButton").className <- "submit-button display-order-3 dec2hex"
+            (document.querySelector "#submitButton").className <- "submit-button dec2hex"
             (document.querySelector "#questionArea").innerHTML <- Content.Common.question
 
             init' question hint additional 10 16 EndlessBinary.keyboardshortcut
