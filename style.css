@@ -92,7 +92,6 @@ header {
     height: 50px;
     width: 100%;
     min-height: 50px;
-    display: flex;
     align-items: center;
     display: grid;
     grid-template-columns: min(20%, 260px) auto min(20%, 260px);
