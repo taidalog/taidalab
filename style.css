@@ -105,6 +105,7 @@ header {
 }
 header div.header-left {
     padding: 0 1rem;
+    display: inline-flex;
 }
 
 header div.header-center {
@@ -112,7 +113,6 @@ header div.header-center {
     justify-content: space-between;
 }
 
-header div.header-left,
 header div.header-center div.inline-flex-center {
     display: inline-flex;
     align-items: center;
