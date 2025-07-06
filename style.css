@@ -610,13 +610,6 @@ form.button-container button {
 /*
     input area
 */
-.input-area {
-    padding: 5px 0;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-}
-
 .number-input {
     color: var(--foreground-color);
     background-color: var(--background-color);
@@ -635,6 +628,7 @@ form.button-container button {
 
 form.endless-binary.input-area {
     width: 100%;
+    padding: 5px 0;
     display: grid;
     grid-template-columns: 300px 40px 1fr;
     grid-template-rows: 40px 40px 1fr;
@@ -877,13 +871,6 @@ div.color-div .white {
     color: #ffffff;
 }
 
-input.iro-iroiro.input-area,
-input.network-simulator.input-area {
-    padding: 5px 0;
-    display: flex;
-    flex-direction: row
-}
-
 form.network-simulator.input-area input {
     width: 17ch;
 }
@@ -891,6 +878,7 @@ form.network-simulator.input-area input {
 form.iro-iroiro.input-area,
 form.network-simulator.input-area {
     width: 100%;
+    padding: 5px 0;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
