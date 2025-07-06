@@ -39,7 +39,7 @@ module NetworkSimulator =
 
     let main =
         $"""
-        <form id="inputArea" class="network-simulator input-area" autocomplete="off">
+        <form id="inputArea" class="network-simulator" autocomplete="off">
             <label>
                 送信元 IPv4:
                 <input type="text" id="sourceInput" class="mono">

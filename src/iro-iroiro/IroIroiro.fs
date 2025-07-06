@@ -39,7 +39,7 @@ module IroIroiro =
 
     let main =
         $"""
-        <form id="inputArea" class="iro-iroiro input-area" autocomplete="off">
+        <form id="inputArea" class="iro-iroiro" autocomplete="off">
             <label>R:<input type="number" id="rInput" class="iro-iroiro mono" min="0" max="255"></label>
             <label>G:<input type="number" id="gInput" class="iro-iroiro mono" min="0" max="255"></label>
             <label>B:<input type="number" id="bInput" class="iro-iroiro mono" min="0" max="255"></label>
