@@ -114,27 +114,35 @@ module Content =
             """
             <div class="calculation-area" id="calculationArea">
                 <div class="first-row" id="">
-                    <span class="digit-area question-number" id="firstRowDigit8"></span>
-                    <span class="digit-area question-number" id="firstRowDigit7"></span>
-                    <span class="digit-area question-number" id="firstRowDigit6"></span>
-                    <span class="digit-area question-number" id="firstRowDigit5"></span>
-                    <span class="digit-area question-number" id="firstRowDigit4"></span>
-                    <span class="digit-area question-number" id="firstRowDigit3"></span>
-                    <span class="digit-area question-number" id="firstRowDigit2"></span>
-                    <span class="digit-area question-number" id="firstRowDigit1"></span>
-                    <span class=""><sub id="firstRowSrcRadix"></sub></span>
+                    <div>
+                        <span class="question-number" id="firstRowDigit8"></span>
+                        <span class="question-number" id="firstRowDigit7"></span>
+                        <span class="question-number" id="firstRowDigit6"></span>
+                        <span class="question-number" id="firstRowDigit5"></span>
+                        <span class="question-number" id="firstRowDigit4"></span>
+                        <span class="question-number" id="firstRowDigit3"></span>
+                        <span class="question-number" id="firstRowDigit2"></span>
+                        <span class="question-number" id="firstRowDigit1"></span>
+                    </div>
+                    <div>
+                        <span class=""><sub id="firstRowSrcRadix"></sub></span>
+                    </div>
                 </div>
                 <div class="second-row" id="secondRow">
-                    <span class="question-number" id="operator"></span>
-                    <span class="digit-area question-number" id="secondRowDigit8"></span>
-                    <span class="digit-area question-number" id="secondRowDigit7"></span>
-                    <span class="digit-area question-number" id="secondRowDigit6"></span>
-                    <span class="digit-area question-number" id="secondRowDigit5"></span>
-                    <span class="digit-area question-number" id="secondRowDigit4"></span>
-                    <span class="digit-area question-number" id="secondRowDigit3"></span>
-                    <span class="digit-area question-number" id="secondRowDigit2"></span>
-                    <span class="digit-area question-number" id="secondRowDigit1"></span>
-                    <span class=""><sub id="secondRowSrcRadix"></sub></span>
+                    <div>
+                        <span class="question-number" id="operator"></span>
+                        <span class="question-number" id="secondRowDigit8"></span>
+                        <span class="question-number" id="secondRowDigit7"></span>
+                        <span class="question-number" id="secondRowDigit6"></span>
+                        <span class="question-number" id="secondRowDigit5"></span>
+                        <span class="question-number" id="secondRowDigit4"></span>
+                        <span class="question-number" id="secondRowDigit3"></span>
+                        <span class="question-number" id="secondRowDigit2"></span>
+                        <span class="question-number" id="secondRowDigit1"></span>
+                    </div>
+                    <div>
+                        <span class=""><sub id="secondRowSrcRadix"></sub></span>
+                    </div>
                 </div>
                 <div class="under-line"></div>
             </div>"""
