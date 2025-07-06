@@ -322,7 +322,7 @@ module EndlessBinary =
                 """<h1>2進数→10進数 (1) - <span translate="no">taidalab</span></h1>"""
 
             (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help "help-color bin2dec"
-            (document.querySelector "#submitButton").className <- "submit-button bin2dec"
+            (document.querySelector "#submitButton").className <- "bin2dec"
             (document.querySelector "#questionArea").innerHTML <- Content.Common.question
 
             init' question' hint additional EndlessBinary.keyboardshortcut

@@ -48,34 +48,34 @@ module NetworkSimulator =
                 送信先 IPv4:
                 <input type="text" id="destinationInput" class="number-input mono">
             </label>
-            <button type="submit" id="submitButton" class="submit-button" translate="no">ping</button>
+            <button type="submit" id="submitButton" translate="no">ping</button>
         </form>
         <form>
-            <button type="button" id="addClientButton" class="submit-button gray">
+            <button type="button" id="addClientButton" class="gray">
                 <span class="icon-vertical-center">
                     <span class="material-symbols-outlined symbols18" translate="no">add_circle</span>
                     クライアント
                 </span>
             </button>
-            <button type="button" id="addRouterButton" class="submit-button gray">
+            <button type="button" id="addRouterButton" class="gray">
                 <span class="icon-vertical-center">
                     <span class="material-symbols-outlined symbols18" translate="no">add_circle</span>
                     ルータ
                 </span>
             </button>
-            <button type="button" id="addHubButton" class="submit-button gray">
+            <button type="button" id="addHubButton" class="gray">
                 <span class="icon-vertical-center">
                     <span class="material-symbols-outlined symbols18" translate="no">add_circle</span>
                     ハブ
                 </span>
             </button>
-            <button type="button" id="addLANCableButton" class="submit-button gray">
+            <button type="button" id="addLANCableButton" class="gray">
                 <span class="icon-vertical-center">
                     <span class="material-symbols-outlined symbols18" translate="no">add_circle</span>
                     LANケーブル
                 </span>
             </button>
-            <button type="button" id="deleteButton" class="submit-button gray">
+            <button type="button" id="deleteButton" class="gray">
                 <span class="icon-vertical-center">
                     <span class="material-symbols-outlined symbols18" translate="no">delete</span>
                     削除
@@ -245,7 +245,7 @@ module NetworkSimulator =
             """<h1>ネットワークシミュレータ - <span translate="no">taidalab</span></h1>"""
 
         (document.querySelector "main").innerHTML <- main
-        (document.querySelector "#submitButton").className <- "submit-button network-simulator"
+        (document.querySelector "#submitButton").className <- "network-simulator"
 
         (document.getElementById "helpButton").onclick <-
             (fun _ ->

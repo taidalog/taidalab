@@ -162,7 +162,7 @@ module EndlessBinary =
                 """<h1>補数 - <span translate="no">taidalab</span></h1>"""
 
             (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help "help-color complement"
-            (document.querySelector "#submitButton").className <- "submit-button complement"
+            (document.querySelector "#submitButton").className <- "complement"
             (document.querySelector "#questionArea").innerHTML <- question
 
             let sourceRadix = 2

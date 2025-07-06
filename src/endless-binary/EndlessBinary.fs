@@ -37,7 +37,7 @@ module EndlessBinary =
             <form id="inputArea" class="endless-binary input-area" autocomplete="off">
                 <input type="text" id="numberInput" class="number-input mono">
                 <span id="binaryRadix"></span>
-                <button type="button" id="submitButton" class="submit-button d2b-button">確認</button>
+                <button type="button" id="submitButton" class="d2b-button">確認</button>
                 <div id="errorArea" class="error-area"></div>
                 <div id="hintArea" class="hint-area"></div>
             </form>
@@ -62,7 +62,7 @@ module EndlessBinary =
             <form id="inputArea" class="endless-binary input-area" autocomplete="off">
                 <input type="text" id="numberInput" class="number-input mono">
                 <span id="binaryRadix" class="binary-radix"></span>
-                <button type="button" id="submitButton" class="submit-button d2b-button">確認</button>
+                <button type="button" id="submitButton" class="d2b-button">確認</button>
                 <div id="errorArea" class="error-area"></div>
                 <div id="hintArea" class="hint-area"></div>
             </form>

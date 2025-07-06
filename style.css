@@ -234,11 +234,36 @@ header.dec2bin {
     color: aliceblue;
 }
 
-button.submit-button.dec2bin {
+button {
+    appearance: none;
+    border: none;
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    font-size: 1rem;
+    border-radius: 4px;
+    width: 200px;
+    height: 40px;
+    margin-bottom: 20px;
+    position: relative;
+    cursor: pointer;
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
+@media (max-width: 599px) {
+
+    button {
+        width: 100%;
+        margin: 0;
+    }
+
+}
+
+button.dec2bin {
     background: hsl(188, 30%, 65%);
 }
 
-button.submit-button.dec2bin:hover {
+button.dec2bin:hover {
     /* color: var(--background-color); */
     background-color: hsl(188, 30%, 72%);
 }
@@ -257,12 +282,12 @@ span.help-close.bin2dec:hover {
     background-color: var(--bin2dec-color);
 }
 
-button.submit-button.bin2dec {
+button.bin2dec {
     color: #1e3328;
     background: #95fec6;
 }
 
-button.submit-button.bin2dec:hover {
+button.bin2dec:hover {
     background-color: #86e5b2;
 }
 
@@ -280,12 +305,12 @@ span.help-close.power-of-two:hover {
     background-color: var(--power-of-two-color);
 }
 
-button.submit-button.power-of-two {
+button.power-of-two {
     color: indigo;
     background: plum;
 }
 
-button.submit-button.power-of-two:hover {
+button.power-of-two:hover {
     background-color: #c690c6;
 }
 
@@ -307,14 +332,14 @@ span.help-close.subtraction:hover {
     background-color: var(--addition-color);
 }
 
-button.submit-button.addition,
-button.submit-button.subtraction {
+button.addition,
+button.subtraction {
     color: #1e2133;
     background: #95a2fe;
 }
 
-button.submit-button.addition:hover,
-button.submit-button.subtraction:hover {
+button.addition:hover,
+button.subtraction:hover {
     background-color: #8692e5;
 }
 
@@ -331,12 +356,12 @@ span.help-close.complement:hover {
     background-color: var(--complement-color);
 }
 
-button.submit-button.complement {
+button.complement {
     color: #1e2833;
     background: #95c9fe;
 }
 
-button.submit-button.complement:hover {
+button.complement:hover {
     background-color: #86b5e5;
 }
 
@@ -360,14 +385,14 @@ span.help-close.hex2dec:hover {
     background-color: var(--dec2hex-color);
 }
 
-button.submit-button.dec2hex,
-button.submit-button.hex2dec {
+button.dec2hex,
+button.hex2dec {
     color: #1e3330;
     background: #95feec;
 }
 
-button.submit-button.dec2hex:hover,
-button.submit-button.hex2dec:hover {
+button.dec2hex:hover,
+button.hex2dec:hover {
     background-color: #86e5d5;
 }
 
@@ -382,12 +407,12 @@ span.help-close.iro-iroiro:hover {
     background-color: var(--iro-iroiro-color);
 }
 
-button.submit-button.iro-iroiro {
+button.iro-iroiro {
     color: #331e25;
     background: #fe95b7;
 }
 
-button.submit-button.iro-iroiro:hover {
+button.iro-iroiro:hover {
     background-color: #e586a5;
 }
 
@@ -404,12 +429,12 @@ span.help-close.network-simulator:hover {
     background-color: var(--network-simulator-color);
 }
 
-button.submit-button.network-simulator {
+button.network-simulator {
     color: #251e33;
     background: #b795fe;
 }
 
-button.submit-button.network-simulator:hover {
+button.network-simulator:hover {
     background-color: #a586e5;
 }
 
@@ -417,22 +442,22 @@ header.not-found {
     background-color: var(--not-found-color);
 }
 
-button.submit-button.not-found {
+button.not-found {
     color: #262626;
     background: #bdbdbd;
 }
 
-button.submit-button.not-found:hover {
+button.not-found:hover {
     background-color: #aaaaaa;
 }
 
-button.submit-button.gray {
+button.gray {
     color: #333333;
     background-color: var(--gray-color);
     width: 160px;
 }
 
-button.submit-button.gray:hover {
+button.gray:hover {
     background-color: #d0d0d7;
 }
 
@@ -608,22 +633,6 @@ form.button-container button {
     line-height: 40px;
 }
 
-button.submit-button {
-    appearance: none;
-    border: none;
-    outline: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    font-size: 1rem;
-    border-radius: 4px;
-    width: 200px;
-    height: 40px;
-    margin-bottom: 20px;
-    position: relative;
-    cursor: pointer;
-    font-family: 'Noto Sans JP', sans-serif;
-}
-
 form.endless-binary.input-area {
     width: 100%;
     display: grid;
@@ -691,12 +700,6 @@ form.endless-binary.input-area:has(button.subtraction) {
             "e e"
             "h h";
         gap: 15px 5px;
-    }
-
-    button.submit-button,
-    button.submit-button.gray {
-        width: 100%;
-        margin: 0;
     }
 
 }
@@ -958,12 +961,19 @@ span.iro-iroiro.input-wrapper {
     justify-content: flex-end;
 }
 
-.under-line {
-    border-bottom: 2px solid var(--background-color);
+.first-row>div,
+.second-row>div {
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: flex-end;
 }
 
-.digit-area {
+.first-row span,
+.second-row span {
     width: 1rem;
+}
+.under-line {
+    border-bottom: 2px solid var(--background-color);
 }
 
 

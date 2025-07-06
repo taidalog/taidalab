@@ -125,7 +125,7 @@ module Content =
                         <span class="question-number" id="firstRowDigit1"></span>
                     </div>
                     <div>
-                        <span class=""><sub id="firstRowSrcRadix"></sub></span>
+                        <span><sub id="firstRowSrcRadix"></sub></span>
                     </div>
                 </div>
                 <div class="second-row" id="secondRow">
@@ -141,7 +141,7 @@ module Content =
                         <span class="question-number" id="secondRowDigit1"></span>
                     </div>
                     <div>
-                        <span class=""><sub id="secondRowSrcRadix"></sub></span>
+                        <span><sub id="secondRowSrcRadix"></sub></span>
                     </div>
                 </div>
                 <div class="under-line"></div>

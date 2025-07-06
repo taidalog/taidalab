@@ -286,7 +286,7 @@ module EndlessBinary =
                 """<h1>加算 - <span translate="no">taidalab</span></h1>"""
 
             (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help "help-color addition"
-            (document.querySelector "#submitButton").className <- "submit-button addition"
+            (document.querySelector "#submitButton").className <- "addition"
             (document.querySelector "#questionArea").innerHTML <- Content.Common.columnAdditionFormat
 
             init'

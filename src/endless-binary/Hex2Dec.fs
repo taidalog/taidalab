@@ -219,7 +219,7 @@ module EndlessBinary =
                 """<h1>16進数→10進数 - <span translate="no">taidalab</span></h1>"""
 
             (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help "help-color hex2dec"
-            (document.querySelector "#submitButton").className <- "submit-button hex2dec"
+            (document.querySelector "#submitButton").className <- "hex2dec"
             (document.querySelector "#questionArea").innerHTML <- Content.Common.question
 
             let initNumber = getRandomBetween 0 255
