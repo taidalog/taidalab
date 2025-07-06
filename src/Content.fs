@@ -42,8 +42,7 @@ module Content =
                     </span>
                 </div>
             </div>
-            <div class="header-right">
-            </div>
+            <div></div>
             """
 
         let headerNoHelp =
@@ -57,8 +56,7 @@ module Content =
                 <div id="headerTitle" class="header-title"></div>
                 <div class="inline-flex-center"></div>
             </div>
-            <div class="header-right">
-            </div>
+            <div></div>
             """
 
         let aside =
