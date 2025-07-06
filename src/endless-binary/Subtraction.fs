@@ -160,7 +160,7 @@ module EndlessBinary =
             let destinationRadix = 2
             let hint = newHintSub ()
 
-            (document.getElementById "numberInput").className <- "number-input question-number eight-digit"
+            (document.getElementById "numberInput").className <- "number-input question-number"
             (document.getElementById "operator").innerText <- "-)"
             (document.getElementById "firstRowSrcRadix").innerText <- sprintf "(%d)" sourceRadix
             (document.getElementById "secondRowSrcRadix").innerText <- sprintf "(%d)" sourceRadix
