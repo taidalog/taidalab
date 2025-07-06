@@ -17,17 +17,17 @@ module EndlessBinary =
         let main =
             """
             <form class="button-container">
-                <button type="button" id="buttonED2B1" class="btn course-button-d2b1">10進数→2進数 (1)</button>
-                <button type="button" id="buttonED2B2" class="btn course-button-d2b2">10進数→2進数 (2)</button>
-                <button type="button" id="buttonEB2D1" class="btn course-button-b2d1">2進数→10進数 (1)</button>
-                <button type="button" id="buttonEB2D2" class="btn course-button-b2d2">2進数→10進数 (2)</button>
-                <button type="button" id="buttonEPOT1" class="btn course-button-pot1">2のn乗</button>
-                <button type="button" id="buttonEPOT2" class="btn course-button-pot2">2のn乗-1</button>
-                <button type="button" id="buttonEBAD" class="btn course-button-add">加算</button>
-                <button type="button" id="buttonEBSB" class="btn course-button-sub">減算</button>
-                <button type="button" id="buttonECMP" class="btn course-button-cmp">補数</button>
-                <button type="button" id="buttonED2H" class="btn course-button-d2h">10進数→16進数</button>
-                <button type="button" id="buttonEH2D" class="btn course-button-d2h">16進数→10進数</button>
+                <button type="button" id="buttonED2B1" class="course-button-d2b1">10進数→2進数 (1)</button>
+                <button type="button" id="buttonED2B2" class="course-button-d2b2">10進数→2進数 (2)</button>
+                <button type="button" id="buttonEB2D1" class="course-button-b2d1">2進数→10進数 (1)</button>
+                <button type="button" id="buttonEB2D2" class="course-button-b2d2">2進数→10進数 (2)</button>
+                <button type="button" id="buttonEPOT1" class="course-button-pot1">2のn乗</button>
+                <button type="button" id="buttonEPOT2" class="course-button-pot2">2のn乗-1</button>
+                <button type="button" id="buttonEBAD" class="course-button-add">加算</button>
+                <button type="button" id="buttonEBSB" class="course-button-sub">減算</button>
+                <button type="button" id="buttonECMP" class="course-button-cmp">補数</button>
+                <button type="button" id="buttonED2H" class="course-button-d2h">10進数→16進数</button>
+                <button type="button" id="buttonEH2D" class="course-button-d2h">16進数→10進数</button>
             </form>"""
 
     module Course =

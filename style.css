@@ -536,7 +536,7 @@ a:visited {
     gap: 20px;
 }
 
-.btn {
+form.button-container button {
     appearance: none;
     border: none;
     outline: none;
@@ -549,6 +549,22 @@ a:visited {
     cursor: pointer;
 }
 
+@media (max-width: 799px) {
+
+    form.button-container button {
+        font-size: 1.25rem;
+    }
+}
+
+@media (max-width: 599px) {
+
+    form.button-container button {
+        font-size: 1.25rem;
+        height: 60px;
+        margin: 5px 0px;
+    }
+
+}
 .no-display {
     display: none;
 }
@@ -987,9 +1003,6 @@ span.iro-iroiro.input-wrapper {
         gap: 10px;
     }
 
-    .btn {
-        font-size: 1.25rem;
-    }
 }
 
 
@@ -1012,12 +1025,6 @@ span.iro-iroiro.input-wrapper {
         display: flex;
         flex-direction: column;
         gap: 0px;
-    }
-
-    .btn {
-        font-size: 1.25rem;
-        height: 60px;
-        margin: 5px 0px;
     }
 
 }
