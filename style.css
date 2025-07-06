@@ -658,6 +658,24 @@ form.endless-binary.input-area {
     gap: 0px 5px;
 }
 
+@media (max-width: 599px) {
+    form.endless-binary.input-area {
+        grid-template-columns: 80% 1fr;
+        grid-template-rows: 40px 40px 40px 1fr;
+        grid-template-areas:
+            "i s"
+            "b b"
+            "e e"
+            "h h";
+        gap: 15px 5px;
+    }
+
+    button.submit-button,
+    button.submit-button.gray {
+        width: 100%;
+        margin: 0;
+    }
+}
 form.endless-binary.input-area>input {
     grid-area: i;
 }
@@ -679,6 +697,7 @@ form.endless-binary.input-area>div.error-area {
 form.endless-binary.input-area>div.hint-area {
     grid-area: h;
 }
+
 div.history-area>h2,
 div.hint-area h2 {
     color: var(--pale-color);
@@ -1005,19 +1024,10 @@ span.network-simulator.input-wrapper {
         margin: 5px 0px;
     }
 
-    .number-input {
-        width: 80%;
-    }
-
     .eight-digit {
         width: 10.5rem;
     }
 
-    button.submit-button,
-    button.submit-button.gray {
-        width: 100%;
-        margin-top: 15px;
-    }
 }
 
 @media (max-width: 370px) {
