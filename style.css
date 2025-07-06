@@ -610,7 +610,7 @@ form.button-container button {
 /*
     input area
 */
-.number-input {
+input {
     color: var(--foreground-color);
     background-color: var(--background-color);
     font-size: 1.25rem;
@@ -899,7 +899,7 @@ form.network-simulator.input-area+form button {
     margin: 0px;
 }
 
-input.iro-iroiro.number-input {
+input.iro-iroiro {
     border: none;
     border-bottom: 2px solid;
     border-radius: 0px;
@@ -910,7 +910,7 @@ input.iro-iroiro.number-input {
     width: 4rem;
 }
 
-input.iro-iroiro.number-input:invalid {
+input.iro-iroiro:invalid {
     background-color: var(--history-wrong-color);
 }
 

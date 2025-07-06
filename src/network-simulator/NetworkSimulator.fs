@@ -42,11 +42,11 @@ module NetworkSimulator =
         <form id="inputArea" class="network-simulator input-area" autocomplete="off">
             <label>
                 送信元 IPv4:
-                <input type="text" id="sourceInput" class="number-input mono">
+                <input type="text" id="sourceInput" class="mono">
             </label>
             <label>
                 送信先 IPv4:
-                <input type="text" id="destinationInput" class="number-input mono">
+                <input type="text" id="destinationInput" class="mono">
             </label>
             <button type="submit" id="submitButton" translate="no">ping</button>
         </form>
