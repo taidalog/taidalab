@@ -113,7 +113,7 @@ header div.header-center {
     justify-content: space-between;
 }
 
-header div.header-center div.inline-flex-center {
+header div.header-center>div {
     display: inline-flex;
     align-items: center;
 }

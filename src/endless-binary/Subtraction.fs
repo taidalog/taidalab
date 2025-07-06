@@ -150,7 +150,7 @@ module EndlessBinary =
                     (document.querySelector "main").classList.remove "flagged" |> ignore)
 
             (document.querySelector "#headerTitle").innerHTML <-
-                """<h1>減算 - <span translate="no">taidalab</span></h1>"""
+                """<span>減算 - </span><span translate="no">taidalab</span>"""
 
             (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help "help-color subtraction"
             (document.querySelector "#submitButton").className <- "subtraction"

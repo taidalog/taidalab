@@ -283,7 +283,7 @@ module EndlessBinary =
                     (document.querySelector "main").classList.remove "flagged" |> ignore)
 
             (document.querySelector "#headerTitle").innerHTML <-
-                """<h1>加算 - <span translate="no">taidalab</span></h1>"""
+                """<span>加算 - </span><span translate="no">taidalab</span>"""
 
             (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help "help-color addition"
             (document.querySelector "#submitButton").className <- "addition"

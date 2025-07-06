@@ -288,7 +288,8 @@ module IroIroiro =
                 (document.getElementById "barrier").classList.remove "flagged" |> ignore
                 (document.querySelector "main").classList.remove "flagged" |> ignore)
 
-        (document.querySelector "#headerTitle").innerHTML <- """<h1>色いろいろ - <span translate="no">taidalab</span></h1>"""
+        (document.querySelector "#headerTitle").innerHTML <-
+            """<span>色いろいろ - </span><span translate="no">taidalab</span>"""
 
         (document.querySelector "main").innerHTML <- main
         (document.querySelector "#submitButton").className <- "iro-iroiro"

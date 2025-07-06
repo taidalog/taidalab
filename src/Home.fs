@@ -36,7 +36,7 @@ module Home =
                 (document.getElementById "barrier").classList.remove "flagged" |> ignore
                 (document.querySelector "main").classList.remove "flagged" |> ignore)
 
-        (document.querySelector "#headerTitle").innerHTML <- """<h1 translate="no">taidalab</h1>"""
+        (document.querySelector "#headerTitle").innerHTML <- """<span translate="no">taidalab</span>"""
         (document.querySelector "main").innerHTML <- main
 
         // Resets keyboard shortcuts.

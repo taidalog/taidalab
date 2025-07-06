@@ -69,7 +69,7 @@ module EndlessBinary =
                     (document.querySelector "main").classList.remove "flagged" |> ignore)
 
             (document.querySelector "#headerTitle").innerHTML <-
-                """<h1>2のn乗-1 - <span translate="no">taidalab</span></h1>"""
+                """<span>2のn乗-1 - </span><span translate="no">taidalab</span>"""
 
             (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help "help-color power-of-two"
             (document.querySelector "#submitButton").className <- "power-of-two"

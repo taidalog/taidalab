@@ -423,7 +423,7 @@ module EndlessBinary =
                     (document.querySelector "main").classList.remove "flagged" |> ignore)
 
             (document.querySelector "#headerTitle").innerHTML <-
-                """<h1>10進数→2進数 (1) - <span translate="no">taidalab</span></h1>"""
+                """<span>10進数→2進数 (1) - </span><span translate="no">taidalab</span>"""
 
             (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help "help-color dec2bin"
             (document.querySelector "#submitButton").className <- "dec2bin"

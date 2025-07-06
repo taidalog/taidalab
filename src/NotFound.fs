@@ -78,7 +78,7 @@ module NotFound =
                 (document.querySelector "main").classList.remove "flagged" |> ignore)
 
         (document.querySelector "#headerTitle").innerHTML <-
-            """<h1>404: Page Not Found - <span translate="no">taidalab</span></h1>"""
+            """<span>404: Page Not Found - </span><span translate="no">taidalab</span>"""
 
         (document.querySelector "main").innerHTML <- EndlessBinary.Course.main404
         (document.querySelector "#submitButton").className <- "not-found"

@@ -159,7 +159,7 @@ module EndlessBinary =
                     (document.querySelector "main").classList.remove "flagged" |> ignore)
 
             (document.querySelector "#headerTitle").innerHTML <-
-                """<h1>補数 - <span translate="no">taidalab</span></h1>"""
+                """<span>補数 - </span><span translate="no">taidalab</span>"""
 
             (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help "help-color complement"
             (document.querySelector "#submitButton").className <- "complement"

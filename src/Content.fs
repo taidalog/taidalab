@@ -35,8 +35,8 @@ module Content =
                 </span>
             </div>
             <div class="header-center">
-                <div id="headerTitle"></div>
-                <div class="inline-flex-center">
+                <h1 id="headerTitle"></h1>
+                <div>
                     <span id="helpButton" class="material-symbols-outlined help-button" translate="no">
                         help
                     </span>
@@ -53,8 +53,8 @@ module Content =
                 </span>
             </div>
             <div class="header-center">
-                <div id="headerTitle"></div>
-                <div class="inline-flex-center"></div>
+                <h1 id="headerTitle"></h1>
+                <div></div>
             </div>
             <div></div>
             """

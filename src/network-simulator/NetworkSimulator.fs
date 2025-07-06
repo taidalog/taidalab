@@ -242,7 +242,7 @@ module NetworkSimulator =
                 (document.querySelector "main").classList.remove "flagged" |> ignore)
 
         (document.querySelector "#headerTitle").innerHTML <-
-            """<h1>ネットワークシミュレータ - <span translate="no">taidalab</span></h1>"""
+            """<span>ネットワークシミュレータ - </span><span translate="no">taidalab</span>"""
 
         (document.querySelector "main").innerHTML <- main
         (document.querySelector "#submitButton").className <- "network-simulator"

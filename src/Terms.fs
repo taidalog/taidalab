@@ -36,7 +36,7 @@ module Terms =
                 (document.querySelector "main").classList.remove "flagged" |> ignore)
 
         (document.querySelector "#headerTitle").innerHTML <-
-            """<h1>ご利用について - <span translate="no">taidalab</span></h1>"""
+            """<span>ご利用について - </span><span translate="no">taidalab</span>"""
 
         (document.querySelector "main").innerHTML <- main
 

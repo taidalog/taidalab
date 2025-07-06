@@ -54,7 +54,7 @@ module InformationPolicy =
                 (document.querySelector "main").classList.remove "flagged" |> ignore)
 
         (document.querySelector "#headerTitle").innerHTML <-
-            """<h1>情報の外部送信について - <span translate="no">taidalab</span></h1>"""
+            """<span>情報の外部送信について - </span><span translate="no">taidalab</span>"""
 
         (document.querySelector "main").innerHTML <- main
 
