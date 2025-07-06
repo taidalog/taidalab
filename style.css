@@ -1,4 +1,4 @@
-/* 
+/*
     taidalab
     https://github.com/taidalog/taidalab
     Copyright (c) 2022-2025 taidalog
@@ -65,14 +65,6 @@
 
 .mono {
     font-family: 'Noto Sans Mono', monospace;
-}
-
-.light {
-    font-weight: 300;
-}
-
-.regular {
-    font-weight: 400;
 }
 
 .display-order-1 {

@@ -45,13 +45,13 @@ module NetworkSimulator =
                     <label for="sourceInput">
                         送信元 IPv4:
                     </label>
-                    <input type="text" id="sourceInput" class="number-input display-order-1 mono regular">
+                    <input type="text" id="sourceInput" class="number-input display-order-1 mono">
                 </span>
                 <span class="network-simulator input-wrapper">
                     <label for="destinationInput">
                         送信先 IPv4:
                     </label>
-                    <input type="text" id="destinationInput" class="number-input display-order-1 mono regular">
+                    <input type="text" id="destinationInput" class="number-input display-order-1 mono">
                 </span>
             </span>
             <span class="display-order-2">

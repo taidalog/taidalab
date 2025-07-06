@@ -134,7 +134,7 @@ module EndlessBinary =
                         2進法で表現した数を10進法で表現しなおすには、それぞれの桁の数と重みをかけ算し、それを合計します。<br>
                         %s{v}<sub>(2)</sub> の場合、以下のように計算します。
                     </p>
-                    <p class="history-indented hint-bgcolor-gray mono regular">
+                    <p class="history-indented hint-bgcolor-gray mono">
                         &nbsp;&nbsp;%s{formula}<br>
                         = %d{dec}<sub>(10)</sub>
                     </p>

@@ -189,7 +189,7 @@ module EndlessBinary =
             <p class="history-indented">
                 %d{number}<sub>(10)</sub> を 2<sup>n</sup> の数同士の足し算に変換すると
             </p>
-            <p class="history-indented hint-bgcolor-gray mono regular">
+            <p class="history-indented hint-bgcolor-gray mono">
                 &nbsp;&nbsp;%s{additionDec}<br>
                 = %s{additionIndex}
             </p>
@@ -201,13 +201,13 @@ module EndlessBinary =
                 2<sup>n</sup> の数を2進法で表すには、1 の後に 0 を n 個続けます。<br>
                 そのため、%s{additionIndex} は2進法で
             </p>
-            <p class="history-indented hint-bgcolor-gray mono regular">
+            <p class="history-indented hint-bgcolor-gray mono">
                 &nbsp;&nbsp;%s{additionBin}<br>
             </p>
             <p class="history-indented">
                 と表現できます。最後にこれを計算すると
             </p>
-            <p class="history-indented hint-bgcolor-gray mono regular">
+            <p class="history-indented hint-bgcolor-gray mono">
                 &nbsp;&nbsp;%s{additionBin}<br>
                 = %s{bin}<sub>(2)</sub>
             </p>

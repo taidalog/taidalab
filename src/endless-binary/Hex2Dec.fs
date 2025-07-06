@@ -118,7 +118,7 @@ module EndlessBinary =
                     %s{hex'}<sub>(16)</sub>の場合、以下のように計算します。<br>
                     ※ 16進数にA~Fのアルファベットがある場合は、それぞれ10<sub>(10)</sub>~15<sub>(10)</sub>を表しています。
                 </p>
-                <p class="history-indented hint-bgcolor-gray mono regular">
+                <p class="history-indented hint-bgcolor-gray mono">
                     &nbsp;&nbsp;%s{formula}<br>
                     = %d{dec}
                 </p>
