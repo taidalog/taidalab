@@ -898,8 +898,8 @@ form.network-simulator.input-area+form {
 form.network-simulator.input-area+form button {
     margin: 0px;
 }
+
 input.iro-iroiro.number-input {
-    font-size: 1.25rem;
     border: none;
     border-bottom: 2px solid;
     border-radius: 0px;
@@ -907,17 +907,11 @@ input.iro-iroiro.number-input {
     padding-bottom: 2px;
     padding-left: 10px;
     padding-right: 0;
-    height: 32px;
     width: 4rem;
 }
 
 input.iro-iroiro.number-input:invalid {
     background-color: var(--history-wrong-color);
-}
-
-span.iro-iroiro.input-wrapper {
-    margin: 0;
-    margin-right: 10px;
 }
 
 .rem6 {
@@ -1020,24 +1014,6 @@ span.iro-iroiro.input-wrapper {
         gap: 0px;
     }
 
-}
-
-@media (max-width: 370px) {
-
-    span.iro-iroiro.shorter,
-    span.network-simulator.shorter,
-    span.iro-iroiro.wider {
-        display: flex;
-        flex-direction: column;
-    }
-
-        span.iro-iroiro.shorter span.iro-iroiro.input-wrapper {
-        max-width: 7rem;
-    }
-
-    span.iro-iroiro.wider span.iro-iroiro.input-wrapper {
-        max-width: 10rem;
-    }
 }
 
 
