@@ -37,13 +37,13 @@ module Page =
         | _ -> NotFound.init ()
 
     let showLocation () : unit =
-        let asideLinks: HTMLAnchorElement array =
-            (document.querySelector "aside").querySelectorAll "a"
+        let navLinks: HTMLAnchorElement array =
+            (document.querySelector "nav").querySelectorAll "a"
             |> JS.Constructors.Array?from
 
-        asideLinks |> Array.iter _.classList.remove("current-location")
+        navLinks |> Array.iter _.classList.remove("current-location")
 
-        asideLinks
+        navLinks
         |> Array.filter (fun x -> x.pathname <> Url.home)
         |> Array.filter (fun x -> x.href <> "")
         |> Array.filter (fun x -> x.href = window.location.href)

@@ -21,7 +21,7 @@ module Content =
                 <div id="helpBarrier" class="help-barrier"></div>
                 <header></header>
                 <div class="main-container">
-                    <aside></aside>
+                    <nav></nav>
                     <main></main>
                 </div>
                 <footer></footer>
@@ -59,12 +59,12 @@ module Content =
             <div></div>
             """
 
-        let aside =
+        let nav =
             $"""
             <ul>
                 <details>
                     <summary>
-                        <a class="home" id="asideEndlessBinary">10進数↔︎2進数の反復練習</a>
+                        <a class="home" id="navEndlessBinary">10進数↔︎2進数の反復練習</a>
                     </summary>
                     <ul>
                         <li><a class="dec2bin" href="%s{Url.home}endless-binary/dec2bin-1/">10進数→2進数 (1)</a></li>
@@ -80,15 +80,15 @@ module Content =
                         <li><a class="hex2dec" href="%s{Url.home}endless-binary/hex2dec/">16進数→10進数</a></li>
                     </ul>
                 </details>
-                <li><a class="iro-iroiro" id="asideIroIroiro" href="%s{Url.home}iro-iroiro/">色いろいろ</a></li>
-                <li><a class="network-simulator" id="asideNetworkSimulator" href="%s{Url.home}network-simulator/">ネットワークシミュレータ</a></li>
-                <li><a class="ctc" id="asideSoon" href="#">Coming soon...</a></li>
+                <li><a class="iro-iroiro" id="navIroIroiro" href="%s{Url.home}iro-iroiro/">色いろいろ</a></li>
+                <li><a class="network-simulator" id="navNetworkSimulator" href="%s{Url.home}network-simulator/">ネットワークシミュレータ</a></li>
+                <li><a class="ctc" id="navSoon" href="#">Coming soon...</a></li>
             </ul>
             <ul>
-                <li><a class="home" id="asideAbout" href="%s{Url.home}">Home</a></li>
-                <li><a class="home" id="asideAbout" href="%s{Url.home}about/">About</a></li>
-                <li><a class="home" id="asideTerms" href="%s{Url.home}terms/">ご利用について</a></li>
-                <li><a class="home" id="asideTerms" href="%s{Url.home}information-policy/">情報の外部送信について</a></li>
+                <li><a class="home" id="navout" href="%s{Url.home}">Home</a></li>
+                <li><a class="home" id="navAbout" href="%s{Url.home}about/">About</a></li>
+                <li><a class="home" id="navTerms" href="%s{Url.home}terms/">ご利用について</a></li>
+                <li><a class="home" id="navTerms" href="%s{Url.home}information-policy/">情報の外部送信について</a></li>
             </ul>
             """
 

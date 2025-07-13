@@ -139,7 +139,7 @@ header h1 {
     flex: 1;
 }
 
-aside {
+nav {
     position: absolute;
     left: 0px;
     z-index: 1;
@@ -152,7 +152,7 @@ aside {
     transition: all 0.5s ease-in-out 0s;
 }
 
-aside.flagged {
+nav.flagged {
     /*left: calc(min(20%, 260px) * -1 + 50px);*/
     left: calc(max(20%, 260px) * -1);
     z-index: 2;
@@ -160,7 +160,7 @@ aside.flagged {
 }
 
 @media (max-width: 799px) {
-    aside {
+    nav {
         width: max(20%, 260px);
         left: calc(max(20%, 260px) * -1);
         z-index: 2;
@@ -168,22 +168,22 @@ aside.flagged {
         background-color: var(--background-color);
     }
 
-    aside.flagged {
+    nav.flagged {
         left: 0px;
         z-index: 1;
     }
 }
 
-aside::-webkit-scrollbar {
+nav::-webkit-scrollbar {
     display: none;
 }
 
-aside ul {
+nav ul {
     list-style: none;
     padding-left: 0;
 }
 
-aside a {
+nav a {
     color: var(--pale-color);
     padding: 5px;
     padding-left: 1rem;
@@ -192,26 +192,26 @@ aside a {
     text-decoration: none;
 }
 
-aside a:visited {
+nav a:visited {
     color: var(--pale-color);
 }
 
-aside ul details ul li a {
+nav ul details ul li a {
     padding-left: 2rem;
     padding-right: 3rem;
 }
 
-aside a:hover,
-aside a.current-location {
+nav a:hover,
+nav a.current-location {
     color: var(--background-color);
     border-radius: 4px;
 }
 
-aside summary {
+nav summary {
     list-style: none;
 }
 
-aside summary::-webkit-details-marker {
+nav summary::-webkit-details-marker {
     display: none;
 }
 
@@ -250,14 +250,14 @@ button {
     course-button-<identifier>
 */
 header.home,
-aside a.home:hover,
-aside a.home.current-location {
+nav a.home:hover,
+nav a.home.current-location {
     background-color: var(--theme-color);
 }
 
 header.dec2bin,
-aside a.dec2bin:hover,
-aside a.dec2bin.current-location,
+nav a.dec2bin:hover,
+nav a.dec2bin.current-location,
 .course-button-d2b1,
 .course-button-d2b2,
 span.help-close.dec2bin:hover {
@@ -284,8 +284,8 @@ button.dec2bin:hover {
 }
 
 header.bin2dec,
-aside a.bin2dec:hover,
-aside a.bin2dec.current-location,
+nav a.bin2dec:hover,
+nav a.bin2dec.current-location,
 .course-button-b2d1,
 .course-button-b2d2,
 span.help-close.bin2dec:hover {
@@ -307,8 +307,8 @@ button.bin2dec:hover {
 }
 
 header.power-of-two,
-aside a.power-of-two:hover,
-aside a.power-of-two.current-location,
+nav a.power-of-two:hover,
+nav a.power-of-two.current-location,
 .course-button-pot1,
 .course-button-pot2,
 span.help-close.power-of-two:hover {
@@ -331,10 +331,10 @@ button.power-of-two:hover {
 
 header.addition,
 header.subtraction,
-aside a.addition:hover,
-aside a.addition.current-location,
-aside a.subtraction:hover,
-aside a.subtraction.current-location,
+nav a.addition:hover,
+nav a.addition.current-location,
+nav a.subtraction:hover,
+nav a.subtraction.current-location,
 .course-button-add,
 .course-button-sub,
 span.help-close.addition:hover,
@@ -359,8 +359,8 @@ button.subtraction:hover {
 }
 
 header.complement,
-aside a.complement:hover,
-aside a.complement.current-location,
+nav a.complement:hover,
+nav a.complement.current-location,
 .course-button-cmp,
 span.help-close.complement:hover {
     background-color: var(--complement-color);
@@ -385,10 +385,10 @@ span.complement.marker {
 
 header.dec2hex,
 header.hex2dec,
-aside a.dec2hex:hover,
-aside a.dec2hex.current-location,
-aside a.hex2dec:hover,
-aside a.hex2dec.current-location,
+nav a.dec2hex:hover,
+nav a.dec2hex.current-location,
+nav a.hex2dec:hover,
+nav a.hex2dec.current-location,
 .course-button-d2h,
 span.help-close.dec2hex:hover,
 span.help-close.hex2dec:hover {
@@ -411,8 +411,8 @@ button.hex2dec:hover {
 }
 
 header.iro-iroiro,
-aside a.iro-iroiro:hover,
-aside a.iro-iroiro.current-location,
+nav a.iro-iroiro:hover,
+nav a.iro-iroiro.current-location,
 span.help-close.iro-iroiro:hover {
     background-color: var(--iro-iroiro-color);
 }
@@ -426,15 +426,15 @@ button.iro-iroiro:hover {
     background-color: #e586a5;
 }
 
-aside a.ctc:hover,
-aside a.ctc.current-location,
+nav a.ctc:hover,
+nav a.ctc.current-location,
 span.help-close.ctc:hover {
     background-color: var(--ctc-color);
 }
 
 header.network-simulator,
-aside a.network-simulator:hover,
-aside a.network-simulator.current-location,
+nav a.network-simulator:hover,
+nav a.network-simulator.current-location,
 span.help-close.network-simulator:hover {
     background-color: var(--network-simulator-color);
 }
