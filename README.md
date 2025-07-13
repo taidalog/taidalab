@@ -20,9 +20,9 @@ A Web application for learning Informatics &#8544;, one of the subjects taught i
 
 ## Recommended environment
 
-- Mozilla Firefox 133.0.3 (64 bit) or later.
-- Google Chrome 131.0.6778.205 (64 bit) or later.
-- Microsoft Edge 131.0.2903.112 (64 bit) or later.
+- Mozilla Firefox 140.0.4 (64 bit) or later.
+- Google Chrome 138.0.7204.101 (64 bit) or later.
+- Microsoft Edge 138.0.3351.83 (64 bit) or later.
 - Safari 16.6 (iOS 16.6) or later.
 
 ## Terms of Service
