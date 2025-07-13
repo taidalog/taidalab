@@ -30,7 +30,7 @@ module NotFound =
             // Converting the input in order to use in the history message.
             let binaryDigit = 9
             let destinationRadix = 2
-            let taggedBin = padWithZero binaryDigit v |> colorLeadingZero
+            let taggedBin = v |> Fermata.String.padLeft binaryDigit ' ' |> escapeSpace
 
             match Bin.toDec bin with
             | Dec.Invalid _ -> ()

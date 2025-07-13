@@ -150,7 +150,7 @@ module EndlessBinary =
                 | Hex.Invalid _ -> ()
                 | Hex.Valid hex ->
                     let hexDigit = 2
-                    let taggedHex = padWithZero hexDigit hex |> colorLeadingZero
+                    let taggedHex: string = hex |> Fermata.String.padLeft hexDigit ' ' |> escapeSpace
 
                     // Making a new history and updating the history with the new one.
                     let destinationRadix = 10

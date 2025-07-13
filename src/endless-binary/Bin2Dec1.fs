@@ -147,7 +147,7 @@ module EndlessBinary =
         let history (correct: bool) (question: Bin) (answer: Dec) : string =
             match question, answer with
             | (Bin.Valid b, Dec.Valid d) ->
-                let taggedBin = b |> padWithZero 8 |> colorLeadingZero
+                let taggedBin = b |> Fermata.String.padLeft 8 ' ' |> escapeSpace
 
                 let spacePaddedInputValue =
                     d |> string |> Fermata.String.padLeft 3 ' ' |> escapeSpace

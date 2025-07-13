@@ -247,7 +247,7 @@ module EndlessBinary =
             match input |> Bin.validate |> Bin.toDec with
             | Dec.Invalid _ -> ""
             | Dec.Valid v ->
-                let colored = input |> padWithZero 8 |> colorLeadingZero
+                let colored = input |> Fermata.String.padLeft 8 ' ' |> escapeSpace
                 let spacePadded = v |> string |> Fermata.String.padLeft 3 ' ' |> escapeSpace
                 newHistory correct colored 2 spacePadded 10
 

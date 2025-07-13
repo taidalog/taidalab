@@ -79,7 +79,7 @@ module EndlessBinary =
                 (document.getElementById "errorArea").innerHTML <- ""
                 // Converting the input in order to use in the history message.
                 let binaryDigit = 8
-                let taggedBin = v |> padWithZero binaryDigit |> colorLeadingZero
+                let taggedBin: string = v |> Fermata.String.padLeft binaryDigit ' ' |> escapeSpace
 
                 let decDigit = 3
                 let dec: Dec = Bin.Valid v |> Bin.toDec

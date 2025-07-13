@@ -83,7 +83,7 @@ module EndlessBinary =
 
                 // Converting the input in order to use in the history message.
                 let digit = 4
-                let taggedInputValue = v |> padWithZero digit
+                let taggedInputValue = v |> Fermata.String.padLeft digit '0'
                 let sourceRadix = 2
 
                 // Making a new history and updating the history with the new one.

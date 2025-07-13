@@ -143,7 +143,7 @@ module EndlessBinary =
             match input |> Hex.validate |> Hex.toDec with
             | Dec.Invalid _ -> ""
             | Dec.Valid v ->
-                let colored = input |> padWithZero 8 |> colorLeadingZero
+                let colored = input |> Fermata.String.padLeft 4 ' ' |> escapeSpace
                 let spacePadded = v |> string |> Fermata.String.padLeft 3 ' ' |> escapeSpace
                 newHistory correct colored 16 spacePadded 10
 
@@ -157,7 +157,7 @@ module EndlessBinary =
             (questionGenerator: int list -> int)
             (hintGenerator: int -> string)
             (errorGenerator: string -> string -> exn -> string)
-            tagger
+            (tagger: string -> 'a)
             (additional: int -> unit)
             sourceRadix
             destinationRadix
@@ -184,13 +184,6 @@ module EndlessBinary =
                 (document.getElementById "errorArea").innerHTML <- errorGenerator q input e
             | Hex.Valid (v: string) ->
                 (document.getElementById "errorArea").innerHTML <- ""
-
-                // Converting the input in order to use in the history message.
-                let colored = v |> tagger
-
-                let decimalDigit = 3
-
-                let spacePadded: string = v |> Fermata.String.padLeft decimalDigit ' ' |> escapeSpace
 
                 // Making a new history and updating the history with the new one.
                 let outputArea = document.getElementById "outputArea" :?> HTMLParagraphElement
@@ -259,12 +252,12 @@ module EndlessBinary =
                                 nextQuestion
                                 nextAnswer)
 
-        let exec' (lastNumbers: int list) (question': Dec) (answer: Hex) =
+        let exec' (lastNumbers: int list) (question': Dec) (answer: Hex) :unit =
             exec
                 question
                 hint
                 newErrorMessageHex
-                (padWithZero 8 >> colorLeadingZero)
+                (Fermata.String.padLeft 4 ' ' )
                 additional
                 10
                 16

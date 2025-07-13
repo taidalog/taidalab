@@ -292,7 +292,7 @@ module EndlessBinary =
             init'
                 (question 8)
                 newHintAdd
-                (padWithZero 8 >> colorLeadingZero)
+                (Fermata.String.padLeft 8 ' ' >> escapeSpace)
                 (fun n -> ())
                 2
                 2
@@ -304,7 +304,7 @@ module EndlessBinary =
             init'
                 (question 4)
                 newHintAdd
-                (padWithZero 4 >> colorLeadingZero)
+                (Fermata.String.padLeft 4 ' ' >> escapeSpace)
                 (fun n -> ())
                 2
                 2
