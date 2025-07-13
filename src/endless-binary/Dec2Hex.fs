@@ -168,8 +168,8 @@ module EndlessBinary =
             =
             // Getting the user input.
             let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
-            let input = numberInput.value |> escapeHtml
-            let hex: Hex = Hex.validate input
+            let input: string = numberInput.value |> escapeHtml
+            let hex: Hex = Hex.validate (input.ToLower())
 
             numberInput.focus ()
 
@@ -182,21 +182,21 @@ module EndlessBinary =
                     | Dec.Valid v -> string v
 
                 (document.getElementById "errorArea").innerHTML <- errorGenerator q input e
-            | Hex.Valid v ->
+            | Hex.Valid (v: string) ->
                 (document.getElementById "errorArea").innerHTML <- ""
 
                 // Converting the input in order to use in the history message.
-                let colored = v |> tagger //padWithZero binaryDigit |> colorLeadingZero
+                let colored = v |> tagger
 
                 let decimalDigit = 3
 
-                let spacePadded = v |> Fermata.String.padLeft decimalDigit ' ' |> escapeSpace
+                let spacePadded: string = v |> Fermata.String.padLeft decimalDigit ' ' |> escapeSpace
 
                 // Making a new history and updating the history with the new one.
                 let outputArea = document.getElementById "outputArea" :?> HTMLParagraphElement
 
                 let historyMessage =
-                    history (hex = answer) v //colored destinationRadix spacePadded sourceRadix
+                    history (hex = answer) input
                     |> (fun x -> concatinateStrings "<br>" [ x; outputArea.innerHTML ])
 
                 outputArea.innerHTML <- historyMessage
