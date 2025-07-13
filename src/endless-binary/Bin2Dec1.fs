@@ -155,6 +155,14 @@ module EndlessBinary =
                 newHistory correct spacePaddedInputValue 10 taggedBin 2
             | _ -> ""
 
+        let history' (correct: bool) (input: int) : string =
+            match input |> Dec.Valid |> Dec.toBin with
+            | Bin.Invalid _ -> ""
+            | Bin.Valid v ->
+                let leftSide = input |> string |> Fermata.String.padLeft 3 ' ' |> escapeSpace
+                let rightSide = v |> string |> Fermata.String.padLeft 8 ' ' |> escapeSpace
+                newHistory correct leftSide 10 rightSide 2
+
         let additional number : unit = ()
 
         let rec exec
@@ -185,27 +193,10 @@ module EndlessBinary =
             | Dec.Valid v ->
                 (document.getElementById "errorArea").innerHTML <- ""
 
-                // Converting the input in order to use in the history message.
-                // let digit = 3
-
-                // let spacePaddedInputValue =
-                //     v |> string |> Fermata.String.padLeft digit ' ' |> escapeSpace
-
-                // let sourceRadix = 2
-                // let bin: Bin = Bin.validate question
-                // let binaryDigit = 8
-
-                // let taggedBin =
-                //     match bin with
-                //     | Bin.Invalid _ -> ""
-                //     | Bin.Valid v -> v |> padWithZero binaryDigit |> colorLeadingZero
-
-                // Making a new history and updating the history with the new one.
-                // let destinationRadix = 10
                 let outputArea = document.getElementById "outputArea"
 
                 let historyMessage =
-                    history (dec = answer) question answer
+                    history' (dec = answer) v
                     |> (fun x -> concatinateStrings "<br>" [ x; outputArea.innerHTML ])
 
                 outputArea.innerHTML <- historyMessage
