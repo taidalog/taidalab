@@ -196,23 +196,10 @@ nav a:visited {
     color: var(--pale-color);
 }
 
-nav ul details ul li a {
-    padding-left: 2rem;
-    padding-right: 3rem;
-}
-
 nav a:hover,
 nav a.current-location {
     color: var(--background-color);
     border-radius: 4px;
-}
-
-nav summary {
-    list-style: none;
-}
-
-nav summary::-webkit-details-marker {
-    display: none;
 }
 
 /*
