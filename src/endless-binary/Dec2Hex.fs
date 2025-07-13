@@ -195,13 +195,18 @@ module EndlessBinary =
                 // Making a new history and updating the history with the new one.
                 let outputArea = document.getElementById "outputArea" :?> HTMLParagraphElement
 
+                let answer' =
+                    match answer with
+                    | Hex.Valid v -> v.ToLower()
+                    | Hex.Invalid e -> ""
+
                 let historyMessage =
-                    history (hex = answer) input
+                    history (v = answer') input
                     |> (fun x -> concatinateStrings "<br>" [ x; outputArea.innerHTML ])
 
                 outputArea.innerHTML <- historyMessage
 
-                if hex <> answer then
+                if v <> answer' then
                     ()
                 else
                     // Making the next question.
