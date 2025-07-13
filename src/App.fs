@@ -19,7 +19,7 @@ module Main =
         document.body.innerHTML <- ""
         document.body.innerHTML <- Content.Common.body
         (document.querySelector "footer").innerHTML <- Content.Common.footer
-        (document.querySelector "aside").innerHTML <- Content.Common.aside
+        (document.querySelector "nav").innerHTML <- Content.Common.nav
 
     window.addEventListener (
         "DOMContentLoaded",
@@ -53,7 +53,7 @@ module Main =
             // Debug.WriteLine mergedUrl
 
             let links: HTMLAnchorElement array =
-                (document.querySelector "aside").querySelectorAll "a"
+                (document.querySelector "nav").querySelectorAll "a"
                 |> JS.Constructors.Array?from
 
             links

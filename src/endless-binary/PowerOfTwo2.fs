@@ -29,7 +29,7 @@ module EndlessBinary =
                 <p class="history-indented">
                     %d{number}<sub>(10)</sub> という数は、以下のように表すことができます。
                 </p>
-                <p class="history-indented hint-bgcolor-gray mono regular">
+                <p class="history-indented hint-bgcolor-gray mono">
                     &nbsp;&nbsp;%d{number}<sub>(10)</sub><br>
                     = %d{number + 1}<sub>(10)</sub> - 1<sub>(10)</sub><br>
                     = 2<sup>%d{indexNumber}</sup><sub>(10)</sub> - 1<sub>(10)</sub>
@@ -58,21 +58,21 @@ module EndlessBinary =
 
             (document.getElementById "hamburgerButton").onclick <-
                 (fun _ ->
-                    (document.querySelector "aside").classList.toggle "flagged" |> ignore
+                    (document.querySelector "nav").classList.toggle "flagged" |> ignore
                     (document.getElementById "barrier").classList.toggle "flagged" |> ignore
                     (document.querySelector "main").classList.toggle "flagged" |> ignore)
 
             (document.getElementById "barrier").onclick <-
                 (fun _ ->
-                    (document.querySelector "aside").classList.remove "flagged" |> ignore
+                    (document.querySelector "nav").classList.remove "flagged" |> ignore
                     (document.getElementById "barrier").classList.remove "flagged" |> ignore
                     (document.querySelector "main").classList.remove "flagged" |> ignore)
 
             (document.querySelector "#headerTitle").innerHTML <-
-                """<h1>2のn乗-1 - <span translate="no">taidalab</span></h1>"""
+                """<span>2のn乗-1 - </span><span translate="no">taidalab</span>"""
 
             (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help "help-color power-of-two"
-            (document.querySelector "#submitButton").className <- "submit-button display-order-3 power-of-two"
+            (document.querySelector "#submitButton").className <- "power-of-two"
             (document.querySelector "#questionArea").innerHTML <- Content.Common.question
 
             Dec2Bin1.init' question hint additional 10 2 exec' EndlessBinary.keyboardshortcut

@@ -30,7 +30,7 @@ module NotFound =
             // Converting the input in order to use in the history message.
             let binaryDigit = 9
             let destinationRadix = 2
-            let taggedBin = padWithZero binaryDigit v |> colorLeadingZero
+            let taggedBin = v |> Fermata.String.padLeft binaryDigit ' ' |> escapeSpace
 
             match Bin.toDec bin with
             | Dec.Invalid _ -> ()
@@ -67,21 +67,21 @@ module NotFound =
 
         (document.getElementById "hamburgerButton").onclick <-
             (fun _ ->
-                (document.querySelector "aside").classList.toggle "flagged" |> ignore
+                (document.querySelector "nav").classList.toggle "flagged" |> ignore
                 (document.getElementById "barrier").classList.toggle "flagged" |> ignore
                 (document.querySelector "main").classList.toggle "flagged" |> ignore)
 
         (document.getElementById "barrier").onclick <-
             (fun _ ->
-                (document.querySelector "aside").classList.remove "flagged" |> ignore
+                (document.querySelector "nav").classList.remove "flagged" |> ignore
                 (document.getElementById "barrier").classList.remove "flagged" |> ignore
                 (document.querySelector "main").classList.remove "flagged" |> ignore)
 
         (document.querySelector "#headerTitle").innerHTML <-
-            """<h1>404: Page Not Found - <span translate="no">taidalab</span></h1>"""
+            """<span>404: Page Not Found - </span><span translate="no">taidalab</span>"""
 
         (document.querySelector "main").innerHTML <- EndlessBinary.Course.main404
-        (document.querySelector "#submitButton").className <- "submit-button display-order-3 not-found"
+        (document.querySelector "#submitButton").className <- "not-found"
         (document.querySelector "#questionArea").innerHTML <- Content.Common.question
 
         let initNumber = 404

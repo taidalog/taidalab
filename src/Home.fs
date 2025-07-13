@@ -26,17 +26,17 @@ module Home =
 
         (document.getElementById "hamburgerButton").onclick <-
             (fun _ ->
-                (document.querySelector "aside").classList.toggle "flagged" |> ignore
+                (document.querySelector "nav").classList.toggle "flagged" |> ignore
                 (document.getElementById "barrier").classList.toggle "flagged" |> ignore
                 (document.querySelector "main").classList.toggle "flagged" |> ignore)
 
         (document.getElementById "barrier").onclick <-
             (fun _ ->
-                (document.querySelector "aside").classList.remove "flagged" |> ignore
+                (document.querySelector "nav").classList.remove "flagged" |> ignore
                 (document.getElementById "barrier").classList.remove "flagged" |> ignore
                 (document.querySelector "main").classList.remove "flagged" |> ignore)
 
-        (document.querySelector "#headerTitle").innerHTML <- """<h1 translate="no">taidalab</h1>"""
+        (document.querySelector "#headerTitle").innerHTML <- """<span translate="no">taidalab</span>"""
         (document.querySelector "main").innerHTML <- main
 
         // Resets keyboard shortcuts.

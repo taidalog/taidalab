@@ -21,7 +21,7 @@ module Content =
                 <div id="helpBarrier" class="help-barrier"></div>
                 <header></header>
                 <div class="main-container">
-                    <aside></aside>
+                    <nav></nav>
                     <main></main>
                 </div>
                 <footer></footer>
@@ -35,15 +35,14 @@ module Content =
                 </span>
             </div>
             <div class="header-center">
-                <div id="headerTitle" class="header-title"></div>
-                <div class="inline-flex-center">
+                <h1 id="headerTitle"></h1>
+                <div>
                     <span id="helpButton" class="material-symbols-outlined help-button" translate="no">
                         help
                     </span>
                 </div>
             </div>
-            <div class="header-right">
-            </div>
+            <div></div>
             """
 
         let headerNoHelp =
@@ -54,50 +53,44 @@ module Content =
                 </span>
             </div>
             <div class="header-center">
-                <div id="headerTitle" class="header-title"></div>
-                <div class="inline-flex-center"></div>
+                <h1 id="headerTitle"></h1>
+                <div></div>
             </div>
-            <div class="header-right">
-            </div>
+            <div></div>
             """
 
-        let aside =
+        let nav =
             $"""
             <ul>
-                <details>
-                    <summary>
-                        <a class="home" id="asideEndlessBinary">10進数↔︎2進数の反復練習</a>
-                    </summary>
-                    <ul>
-                        <li><a class="dec2bin" href="%s{Url.home}endless-binary/dec2bin-1/">10進数→2進数 (1)</a></li>
-                        <li><a class="dec2bin" href="%s{Url.home}endless-binary/dec2bin-2/">10進数→2進数 (2)</a></li>
-                        <li><a class="bin2dec" href="%s{Url.home}endless-binary/bin2dec-1/">2進数→10進数 (1)</a></li>
-                        <li><a class="bin2dec" href="%s{Url.home}endless-binary/bin2dec-2/">2進数→10進数 (2)</a></li>
-                        <li><a class="power-of-two" href="%s{Url.home}endless-binary/power-of-two-1/">2のn乗</a></li>
-                        <li><a class="power-of-two" href="%s{Url.home}endless-binary/power-of-two-2/">2のn乗-1</a></li>
-                        <li><a class="addition" href="%s{Url.home}endless-binary/addition/">加算</a></li>
-                        <li><a class="subtraction" href="%s{Url.home}endless-binary/subtraction/">減算</a></li>
-                        <li><a class="complement" href="%s{Url.home}endless-binary/complement/">補数</a></li>
-                        <li><a class="dec2hex" href="%s{Url.home}endless-binary/dec2hex/">10進数→16進数</a></li>
-                        <li><a class="hex2dec" href="%s{Url.home}endless-binary/hex2dec/">16進数→10進数</a></li>
-                    </ul>
-                </details>
-                <li><a class="iro-iroiro" id="asideIroIroiro" href="%s{Url.home}iro-iroiro/">色いろいろ</a></li>
-                <li><a class="network-simulator" id="asideNetworkSimulator" href="%s{Url.home}network-simulator/">ネットワークシミュレータ</a></li>
-                <li><a class="ctc" id="asideSoon" href="#">Coming soon...</a></li>
+                <li><a class="dec2bin" href="%s{Url.home}endless-binary/dec2bin-1/">10進数→2進数 (1)</a></li>
+                <li><a class="dec2bin" href="%s{Url.home}endless-binary/dec2bin-2/">10進数→2進数 (2)</a></li>
+                <li><a class="bin2dec" href="%s{Url.home}endless-binary/bin2dec-1/">2進数→10進数 (1)</a></li>
+                <li><a class="bin2dec" href="%s{Url.home}endless-binary/bin2dec-2/">2進数→10進数 (2)</a></li>
+                <li><a class="power-of-two" href="%s{Url.home}endless-binary/power-of-two-1/">2のn乗</a></li>
+                <li><a class="power-of-two" href="%s{Url.home}endless-binary/power-of-two-2/">2のn乗-1</a></li>
+                <li><a class="addition" href="%s{Url.home}endless-binary/addition/">加算</a></li>
+                <li><a class="subtraction" href="%s{Url.home}endless-binary/subtraction/">減算</a></li>
+                <li><a class="complement" href="%s{Url.home}endless-binary/complement/">補数</a></li>
+                <li><a class="dec2hex" href="%s{Url.home}endless-binary/dec2hex/">10進数→16進数</a></li>
+                <li><a class="hex2dec" href="%s{Url.home}endless-binary/hex2dec/">16進数→10進数</a></li>
             </ul>
             <ul>
-                <li><a class="home" id="asideAbout" href="%s{Url.home}">Home</a></li>
-                <li><a class="home" id="asideAbout" href="%s{Url.home}about/">About</a></li>
-                <li><a class="home" id="asideTerms" href="%s{Url.home}terms/">ご利用について</a></li>
-                <li><a class="home" id="asideTerms" href="%s{Url.home}information-policy/">情報の外部送信について</a></li>
+                <li><a class="iro-iroiro" id="navIroIroiro" href="%s{Url.home}iro-iroiro/">色いろいろ</a></li>
+                <li><a class="network-simulator" id="navNetworkSimulator" href="%s{Url.home}network-simulator/">ネットワークシミュレータ</a></li>
+                <li><a class="ctc" id="navSoon" href="#">Coming soon...</a></li>
+            </ul>
+            <ul>
+                <li><a class="home" id="navout" href="%s{Url.home}">Home</a></li>
+                <li><a class="home" id="navAbout" href="%s{Url.home}about/">About</a></li>
+                <li><a class="home" id="navTerms" href="%s{Url.home}terms/">ご利用について</a></li>
+                <li><a class="home" id="navTerms" href="%s{Url.home}information-policy/">情報の外部送信について</a></li>
             </ul>
             """
 
         let question =
             """<span id="questionSpan" class="question-number"></span><sub id="srcRadix"></sub> を<span id="dstRadix"></span>進法で表すと？"""
 
-        let version = "Version 5.1.0"
+        let version = "Version 5.2.0"
 
         let footer =
             $"""
@@ -114,27 +107,35 @@ module Content =
             """
             <div class="calculation-area" id="calculationArea">
                 <div class="first-row" id="">
-                    <span class="digit-area question-number" id="firstRowDigit8"></span>
-                    <span class="digit-area question-number" id="firstRowDigit7"></span>
-                    <span class="digit-area question-number" id="firstRowDigit6"></span>
-                    <span class="digit-area question-number" id="firstRowDigit5"></span>
-                    <span class="digit-area question-number" id="firstRowDigit4"></span>
-                    <span class="digit-area question-number" id="firstRowDigit3"></span>
-                    <span class="digit-area question-number" id="firstRowDigit2"></span>
-                    <span class="digit-area question-number" id="firstRowDigit1"></span>
-                    <span class=""><sub id="firstRowSrcRadix"></sub></span>
+                    <div>
+                        <span class="question-number" id="firstRowDigit8"></span>
+                        <span class="question-number" id="firstRowDigit7"></span>
+                        <span class="question-number" id="firstRowDigit6"></span>
+                        <span class="question-number" id="firstRowDigit5"></span>
+                        <span class="question-number" id="firstRowDigit4"></span>
+                        <span class="question-number" id="firstRowDigit3"></span>
+                        <span class="question-number" id="firstRowDigit2"></span>
+                        <span class="question-number" id="firstRowDigit1"></span>
+                    </div>
+                    <div>
+                        <span><sub id="firstRowSrcRadix"></sub></span>
+                    </div>
                 </div>
                 <div class="second-row" id="secondRow">
-                    <span class="question-number" id="operator"></span>
-                    <span class="digit-area question-number" id="secondRowDigit8"></span>
-                    <span class="digit-area question-number" id="secondRowDigit7"></span>
-                    <span class="digit-area question-number" id="secondRowDigit6"></span>
-                    <span class="digit-area question-number" id="secondRowDigit5"></span>
-                    <span class="digit-area question-number" id="secondRowDigit4"></span>
-                    <span class="digit-area question-number" id="secondRowDigit3"></span>
-                    <span class="digit-area question-number" id="secondRowDigit2"></span>
-                    <span class="digit-area question-number" id="secondRowDigit1"></span>
-                    <span class=""><sub id="secondRowSrcRadix"></sub></span>
+                    <div>
+                        <span class="question-number" id="operator"></span>
+                        <span class="question-number" id="secondRowDigit8"></span>
+                        <span class="question-number" id="secondRowDigit7"></span>
+                        <span class="question-number" id="secondRowDigit6"></span>
+                        <span class="question-number" id="secondRowDigit5"></span>
+                        <span class="question-number" id="secondRowDigit4"></span>
+                        <span class="question-number" id="secondRowDigit3"></span>
+                        <span class="question-number" id="secondRowDigit2"></span>
+                        <span class="question-number" id="secondRowDigit1"></span>
+                    </div>
+                    <div>
+                        <span><sub id="secondRowSrcRadix"></sub></span>
+                    </div>
                 </div>
                 <div class="under-line"></div>
             </div>"""

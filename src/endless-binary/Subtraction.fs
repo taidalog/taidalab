@@ -79,7 +79,7 @@ module EndlessBinary =
                 (document.getElementById "errorArea").innerHTML <- ""
                 // Converting the input in order to use in the history message.
                 let binaryDigit = 8
-                let taggedBin = v |> padWithZero binaryDigit |> colorLeadingZero
+                let taggedBin: string = v |> Fermata.String.padLeft binaryDigit ' ' |> escapeSpace
 
                 let decDigit = 3
                 let dec: Dec = Bin.Valid v |> Bin.toDec
@@ -139,28 +139,28 @@ module EndlessBinary =
 
             (document.getElementById "hamburgerButton").onclick <-
                 (fun _ ->
-                    (document.querySelector "aside").classList.toggle "flagged" |> ignore
+                    (document.querySelector "nav").classList.toggle "flagged" |> ignore
                     (document.getElementById "barrier").classList.toggle "flagged" |> ignore
                     (document.querySelector "main").classList.toggle "flagged" |> ignore)
 
             (document.getElementById "barrier").onclick <-
                 (fun _ ->
-                    (document.querySelector "aside").classList.remove "flagged" |> ignore
+                    (document.querySelector "nav").classList.remove "flagged" |> ignore
                     (document.getElementById "barrier").classList.remove "flagged" |> ignore
                     (document.querySelector "main").classList.remove "flagged" |> ignore)
 
             (document.querySelector "#headerTitle").innerHTML <-
-                """<h1>減算 - <span translate="no">taidalab</span></h1>"""
+                """<span>減算 - </span><span translate="no">taidalab</span>"""
 
             (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help "help-color subtraction"
-            (document.querySelector "#submitButton").className <- "submit-button display-order-3 subtraction"
+            (document.querySelector "#submitButton").className <- "subtraction"
             (document.querySelector "#questionArea").innerHTML <- Content.Common.columnAdditionFormat
 
             let sourceRadix = 2
             let destinationRadix = 2
             let hint = newHintSub ()
 
-            (document.getElementById "numberInput").className <- "number-input question-number eight-digit"
+            (document.getElementById "numberInput").className <- "question-number"
             (document.getElementById "operator").innerText <- "-)"
             (document.getElementById "firstRowSrcRadix").innerText <- sprintf "(%d)" sourceRadix
             (document.getElementById "secondRowSrcRadix").innerText <- sprintf "(%d)" sourceRadix

@@ -34,21 +34,21 @@ module EndlessBinary =
 
             (document.getElementById "hamburgerButton").onclick <-
                 (fun _ ->
-                    (document.querySelector "aside").classList.toggle "flagged" |> ignore
+                    (document.querySelector "nav").classList.toggle "flagged" |> ignore
                     (document.getElementById "barrier").classList.toggle "flagged" |> ignore
                     (document.querySelector "main").classList.toggle "flagged" |> ignore)
 
             (document.getElementById "barrier").onclick <-
                 (fun _ ->
-                    (document.querySelector "aside").classList.remove "flagged" |> ignore
+                    (document.querySelector "nav").classList.remove "flagged" |> ignore
                     (document.getElementById "barrier").classList.remove "flagged" |> ignore
                     (document.querySelector "main").classList.remove "flagged" |> ignore)
 
             (document.querySelector "#headerTitle").innerHTML <-
-                """<h1>2進数→10進数 (2) - <span translate="no">taidalab</span></h1>"""
+                """<span>2進数→10進数 (2) - </span><span translate="no">taidalab</span>"""
 
             (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help "help-color bin2dec"
-            (document.querySelector "#submitButton").className <- "submit-button display-order-3 bin2dec"
+            (document.querySelector "#submitButton").className <- "bin2dec"
             (document.querySelector "#questionArea").innerHTML <- Content.Common.question
 
             Bin2Dec1.init' question hint additional EndlessBinary.keyboardshortcut

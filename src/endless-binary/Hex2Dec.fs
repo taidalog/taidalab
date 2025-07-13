@@ -118,7 +118,7 @@ module EndlessBinary =
                     %s{hex'}<sub>(16)</sub>の場合、以下のように計算します。<br>
                     ※ 16進数にA~Fのアルファベットがある場合は、それぞれ10<sub>(10)</sub>~15<sub>(10)</sub>を表しています。
                 </p>
-                <p class="history-indented hint-bgcolor-gray mono regular">
+                <p class="history-indented hint-bgcolor-gray mono">
                     &nbsp;&nbsp;%s{formula}<br>
                     = %d{dec}
                 </p>
@@ -150,7 +150,7 @@ module EndlessBinary =
                 | Hex.Invalid _ -> ()
                 | Hex.Valid hex ->
                     let hexDigit = 2
-                    let taggedHex = padWithZero hexDigit hex |> colorLeadingZero
+                    let taggedHex: string = hex |> Fermata.String.padLeft hexDigit ' ' |> escapeSpace
 
                     // Making a new history and updating the history with the new one.
                     let destinationRadix = 10
@@ -205,21 +205,21 @@ module EndlessBinary =
 
             (document.getElementById "hamburgerButton").onclick <-
                 (fun _ ->
-                    (document.querySelector "aside").classList.toggle "flagged" |> ignore
+                    (document.querySelector "nav").classList.toggle "flagged" |> ignore
                     (document.getElementById "barrier").classList.toggle "flagged" |> ignore
                     (document.querySelector "main").classList.toggle "flagged" |> ignore)
 
             (document.getElementById "barrier").onclick <-
                 (fun _ ->
-                    (document.querySelector "aside").classList.remove "flagged" |> ignore
+                    (document.querySelector "nav").classList.remove "flagged" |> ignore
                     (document.getElementById "barrier").classList.remove "flagged" |> ignore
                     (document.querySelector "main").classList.remove "flagged" |> ignore)
 
             (document.querySelector "#headerTitle").innerHTML <-
-                """<h1>16進数→10進数 - <span translate="no">taidalab</span></h1>"""
+                """<span>16進数→10進数 - </span><span translate="no">taidalab</span>"""
 
             (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help "help-color hex2dec"
-            (document.querySelector "#submitButton").className <- "submit-button display-order-3 hex2dec"
+            (document.querySelector "#submitButton").className <- "hex2dec"
             (document.querySelector "#questionArea").innerHTML <- Content.Common.question
 
             let initNumber = getRandomBetween 0 255

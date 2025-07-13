@@ -1,4 +1,4 @@
-/* 
+/*
     taidalab
     https://github.com/taidalog/taidalab
     Copyright (c) 2022-2025 taidalog
@@ -67,58 +67,6 @@
     font-family: 'Noto Sans Mono', monospace;
 }
 
-.light {
-    font-weight: 300;
-}
-
-.regular {
-    font-weight: 400;
-}
-
-.display-order-1 {
-    order: 1;
-}
-
-.display-order-2 {
-    order: 2;
-}
-
-.display-order-3 {
-    order: 3;
-}
-
-.display-order-4 {
-    order: 4;
-}
-
-.display-order-5 {
-    order: 5;
-}
-
-.display-order-6 {
-    order: 6;
-}
-
-.display-order-7 {
-    order: 7;
-}
-
-.display-order-8 {
-    order: 8;
-}
-
-.display-order-9 {
-    order: 9;
-}
-
-.display-order-10 {
-    order: 10;
-}
-
-.display-order-11 {
-    order: 11;
-}
-
 html {
     background-color: var(--background-color);
     color: var(--foreground-color);
@@ -144,14 +92,21 @@ header {
     height: 50px;
     width: 100%;
     min-height: 50px;
-    display: flex;
     align-items: center;
     display: grid;
     grid-template-columns: min(20%, 260px) auto min(20%, 260px);
 }
 
+@media (max-width: 1199px) {
+    header {
+        grid-template-columns: min(20%, 260px) auto 1rem;
+    }
+
+}
+
 header div.header-left {
     padding: 0 1rem;
+    display: inline-flex;
 }
 
 header div.header-center {
@@ -159,8 +114,7 @@ header div.header-center {
     justify-content: space-between;
 }
 
-header div.header-left,
-header div.header-center div.inline-flex-center {
+header div.header-center>div {
     display: inline-flex;
     align-items: center;
 }
@@ -173,12 +127,19 @@ header h1 {
     margin-bottom: 0;
 }
 
+@media (max-width: 599px) {
+    header h1 {
+        font-size: 1rem;
+    }
+
+}
+
 .main-container {
     display: flex;
     flex: 1;
 }
 
-aside {
+nav {
     position: absolute;
     left: 0px;
     z-index: 1;
@@ -191,7 +152,7 @@ aside {
     transition: all 0.5s ease-in-out 0s;
 }
 
-aside.flagged {
+nav.flagged {
     /*left: calc(min(20%, 260px) * -1 + 50px);*/
     left: calc(max(20%, 260px) * -1);
     z-index: 2;
@@ -199,7 +160,7 @@ aside.flagged {
 }
 
 @media (max-width: 799px) {
-    aside {
+    nav {
         width: max(20%, 260px);
         left: calc(max(20%, 260px) * -1);
         z-index: 2;
@@ -207,22 +168,22 @@ aside.flagged {
         background-color: var(--background-color);
     }
 
-    aside.flagged {
+    nav.flagged {
         left: 0px;
         z-index: 1;
     }
 }
 
-aside::-webkit-scrollbar {
+nav::-webkit-scrollbar {
     display: none;
 }
 
-aside ul {
+nav ul {
     list-style: none;
     padding-left: 0;
 }
 
-aside a {
+nav a {
     color: var(--pale-color);
     padding: 5px;
     padding-left: 1rem;
@@ -231,27 +192,42 @@ aside a {
     text-decoration: none;
 }
 
-aside a:visited {
+nav a:visited {
     color: var(--pale-color);
 }
 
-aside ul details ul li a {
-    padding-left: 2rem;
-    padding-right: 3rem;
-}
-
-aside a:hover,
-aside a.current-location {
+nav a:hover,
+nav a.current-location {
     color: var(--background-color);
     border-radius: 4px;
 }
 
-aside summary {
-    list-style: none;
+/*
+        Default style for button.
+*/
+button {
+    appearance: none;
+    border: none;
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    font-size: 1rem;
+    border-radius: 4px;
+    width: 200px;
+    height: 40px;
+    margin-bottom: 20px;
+    position: relative;
+    cursor: pointer;
+    font-family: 'Noto Sans JP', sans-serif;
 }
 
-aside summary::-webkit-details-marker {
-    display: none;
+@media (max-width: 599px) {
+
+    button {
+        width: 100%;
+        margin: 0;
+    }
+
 }
 
 /*
@@ -261,14 +237,14 @@ aside summary::-webkit-details-marker {
     course-button-<identifier>
 */
 header.home,
-aside a.home:hover,
-aside a.home.current-location {
+nav a.home:hover,
+nav a.home.current-location {
     background-color: var(--theme-color);
 }
 
 header.dec2bin,
-aside a.dec2bin:hover,
-aside a.dec2bin.current-location,
+nav a.dec2bin:hover,
+nav a.dec2bin.current-location,
 .course-button-d2b1,
 .course-button-d2b2,
 span.help-close.dec2bin:hover {
@@ -280,11 +256,11 @@ header.dec2bin {
     color: aliceblue;
 }
 
-button.submit-button.dec2bin {
+button.dec2bin {
     background: hsl(188, 30%, 65%);
 }
 
-button.submit-button.dec2bin:hover {
+button.dec2bin:hover {
     /* color: var(--background-color); */
     background-color: hsl(188, 30%, 72%);
 }
@@ -295,20 +271,20 @@ button.submit-button.dec2bin:hover {
 }
 
 header.bin2dec,
-aside a.bin2dec:hover,
-aside a.bin2dec.current-location,
+nav a.bin2dec:hover,
+nav a.bin2dec.current-location,
 .course-button-b2d1,
 .course-button-b2d2,
 span.help-close.bin2dec:hover {
     background-color: var(--bin2dec-color);
 }
 
-button.submit-button.bin2dec {
+button.bin2dec {
     color: #1e3328;
     background: #95fec6;
 }
 
-button.submit-button.bin2dec:hover {
+button.bin2dec:hover {
     background-color: #86e5b2;
 }
 
@@ -318,20 +294,20 @@ button.submit-button.bin2dec:hover {
 }
 
 header.power-of-two,
-aside a.power-of-two:hover,
-aside a.power-of-two.current-location,
+nav a.power-of-two:hover,
+nav a.power-of-two.current-location,
 .course-button-pot1,
 .course-button-pot2,
 span.help-close.power-of-two:hover {
     background-color: var(--power-of-two-color);
 }
 
-button.submit-button.power-of-two {
+button.power-of-two {
     color: indigo;
     background: plum;
 }
 
-button.submit-button.power-of-two:hover {
+button.power-of-two:hover {
     background-color: #c690c6;
 }
 
@@ -342,10 +318,10 @@ button.submit-button.power-of-two:hover {
 
 header.addition,
 header.subtraction,
-aside a.addition:hover,
-aside a.addition.current-location,
-aside a.subtraction:hover,
-aside a.subtraction.current-location,
+nav a.addition:hover,
+nav a.addition.current-location,
+nav a.subtraction:hover,
+nav a.subtraction.current-location,
 .course-button-add,
 .course-button-sub,
 span.help-close.addition:hover,
@@ -353,14 +329,14 @@ span.help-close.subtraction:hover {
     background-color: var(--addition-color);
 }
 
-button.submit-button.addition,
-button.submit-button.subtraction {
+button.addition,
+button.subtraction {
     color: #1e2133;
     background: #95a2fe;
 }
 
-button.submit-button.addition:hover,
-button.submit-button.subtraction:hover {
+button.addition:hover,
+button.subtraction:hover {
     background-color: #8692e5;
 }
 
@@ -370,19 +346,19 @@ button.submit-button.subtraction:hover {
 }
 
 header.complement,
-aside a.complement:hover,
-aside a.complement.current-location,
+nav a.complement:hover,
+nav a.complement.current-location,
 .course-button-cmp,
 span.help-close.complement:hover {
     background-color: var(--complement-color);
 }
 
-button.submit-button.complement {
+button.complement {
     color: #1e2833;
     background: #95c9fe;
 }
 
-button.submit-button.complement:hover {
+button.complement:hover {
     background-color: #86b5e5;
 }
 
@@ -396,24 +372,24 @@ span.complement.marker {
 
 header.dec2hex,
 header.hex2dec,
-aside a.dec2hex:hover,
-aside a.dec2hex.current-location,
-aside a.hex2dec:hover,
-aside a.hex2dec.current-location,
+nav a.dec2hex:hover,
+nav a.dec2hex.current-location,
+nav a.hex2dec:hover,
+nav a.hex2dec.current-location,
 .course-button-d2h,
 span.help-close.dec2hex:hover,
 span.help-close.hex2dec:hover {
     background-color: var(--dec2hex-color);
 }
 
-button.submit-button.dec2hex,
-button.submit-button.hex2dec {
+button.dec2hex,
+button.hex2dec {
     color: #1e3330;
     background: #95feec;
 }
 
-button.submit-button.dec2hex:hover,
-button.submit-button.hex2dec:hover {
+button.dec2hex:hover,
+button.hex2dec:hover {
     background-color: #86e5d5;
 }
 
@@ -422,40 +398,40 @@ button.submit-button.hex2dec:hover {
 }
 
 header.iro-iroiro,
-aside a.iro-iroiro:hover,
-aside a.iro-iroiro.current-location,
+nav a.iro-iroiro:hover,
+nav a.iro-iroiro.current-location,
 span.help-close.iro-iroiro:hover {
     background-color: var(--iro-iroiro-color);
 }
 
-button.submit-button.iro-iroiro {
+button.iro-iroiro {
     color: #331e25;
     background: #fe95b7;
 }
 
-button.submit-button.iro-iroiro:hover {
+button.iro-iroiro:hover {
     background-color: #e586a5;
 }
 
-aside a.ctc:hover,
-aside a.ctc.current-location,
+nav a.ctc:hover,
+nav a.ctc.current-location,
 span.help-close.ctc:hover {
     background-color: var(--ctc-color);
 }
 
 header.network-simulator,
-aside a.network-simulator:hover,
-aside a.network-simulator.current-location,
+nav a.network-simulator:hover,
+nav a.network-simulator.current-location,
 span.help-close.network-simulator:hover {
     background-color: var(--network-simulator-color);
 }
 
-button.submit-button.network-simulator {
+button.network-simulator {
     color: #251e33;
     background: #b795fe;
 }
 
-button.submit-button.network-simulator:hover {
+button.network-simulator:hover {
     background-color: #a586e5;
 }
 
@@ -463,22 +439,22 @@ header.not-found {
     background-color: var(--not-found-color);
 }
 
-button.submit-button.not-found {
+button.not-found {
     color: #262626;
     background: #bdbdbd;
 }
 
-button.submit-button.not-found:hover {
+button.not-found:hover {
     background-color: #aaaaaa;
 }
 
-button.submit-button.gray {
+button.gray {
     color: #333333;
     background-color: var(--gray-color);
     width: 160px;
 }
 
-button.submit-button.gray:hover {
+button.gray:hover {
     background-color: #d0d0d7;
 }
 
@@ -550,6 +526,16 @@ a:visited {
     margin: auto;
 }
 
+@media (max-width: 599px) {
+
+    .home-center {
+        text-align: center;
+        font-size: 1.5rem;
+        font-family: serif;
+    }
+
+}
+
 /*
  * "Oooh Baby" is lisenced under the SIL Open Font License 1.1
  * http://fonts.googleapis.com
@@ -559,6 +545,14 @@ a:visited {
 .home-title {
     font-size: 5rem;
     font-family: 'Oooh Baby', cursive;
+}
+
+@media (max-width: 599px) {
+
+    .home-title {
+        font-size: 4rem;
+    }
+
 }
 
 /*
@@ -582,7 +576,33 @@ a:visited {
     gap: 20px;
 }
 
-.btn {
+@media (max-width: 999px) {
+    .button-container {
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 200px 200px 200px;
+    }
+}
+
+@media (max-width: 799px) {
+    .button-container {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 5rem 5rem 5rem 5rem 5rem;
+        gap: 10px;
+    }
+
+}
+
+@media (max-width: 599px) {
+
+    .button-container {
+        display: flex;
+        flex-direction: column;
+        gap: 0px;
+    }
+
+}
+
+form.button-container button {
     appearance: none;
     border: none;
     outline: none;
@@ -593,6 +613,23 @@ a:visited {
     border-radius: 4px;
     position: relative;
     cursor: pointer;
+}
+
+@media (max-width: 799px) {
+
+    form.button-container button {
+        font-size: 1.25rem;
+    }
+}
+
+@media (max-width: 599px) {
+
+    form.button-container button {
+        font-size: 1.25rem;
+        height: 60px;
+        margin: 5px 0px;
+    }
+
 }
 
 .no-display {
@@ -615,14 +652,7 @@ a:visited {
 /*
     input area
 */
-.input-area {
-    padding: 5px 0;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-}
-
-.number-input {
+input {
     color: var(--foreground-color);
     background-color: var(--background-color);
     font-size: 1.25rem;
@@ -633,25 +663,83 @@ a:visited {
     height: 32px;
 }
 
-.binary-radix {
-    margin: 0 5px;
-    line-height: 40px;
+form.endless-binary {
+    width: 100%;
+    padding: 5px 0;
+    display: grid;
+    grid-template-columns: 300px 40px 1fr;
+    grid-template-rows: 40px 40px 1fr;
+    grid-template-areas:
+        "i s b"
+        "e e e"
+        "h h h";
+    gap: 0px 5px;
 }
 
-button.submit-button {
-    appearance: none;
-    border: none;
-    outline: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    font-size: 1rem;
-    border-radius: 4px;
-    width: 200px;
-    height: 40px;
-    margin-bottom: 20px;
-    position: relative;
-    cursor: pointer;
-    font-family: 'Noto Sans JP', sans-serif;
+form.endless-binary>input {
+    grid-area: i;
+}
+
+form.endless-binary>span {
+    grid-area: s;
+    line-height: 40px;
+    width: fit-content;
+}
+
+form.endless-binary>button {
+    grid-area: b;
+}
+
+form.endless-binary>div.error-area {
+    grid-area: e;
+}
+
+form.endless-binary>div.hint-area {
+    grid-area: h;
+}
+
+form.endless-binary:has(button.addition),
+form.endless-binary:has(button.subtraction) {
+    grid-template-columns: calc(13.5ch * 1.5) 40px 1fr;
+    grid-template-rows: 40px 40px 1fr;
+    grid-template-areas:
+        "i s b"
+        "e e e"
+        "h h h";
+}
+
+@media (max-width: 599px) {
+
+    form.endless-binary {
+        grid-template-columns: 80% 1fr;
+        grid-template-rows: 40px 40px 40px 1fr;
+        grid-template-areas:
+            "i s"
+            "b b"
+            "e e"
+            "h h";
+        gap: 15px 5px;
+    }
+
+                form.endless-binary:has(button.addition),
+                form.endless-binary:has(button.subtraction) {
+        grid-template-columns: calc(13.5ch * 1.5) 1fr;
+        grid-template-rows: 40px 40px 40px 1fr;
+        grid-template-areas:
+            "i s"
+            "b b"
+            "e e"
+            "h h";
+        gap: 15px 5px;
+    }
+
+}
+
+form.endless-binary:has(button.addition) input,
+form.endless-binary:has(button.subtraction) input {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: right;
 }
 
 div.history-area>h2,
@@ -672,10 +760,6 @@ div.hint-area h3 {
 /*
     hint area
 */
-.hint-area {
-    width: 100%;
-}
-
 details summary:hover {
     cursor: pointer;
 }
@@ -825,15 +909,40 @@ div.color-div .white {
     color: #ffffff;
 }
 
-input.iro-iroiro.input-area,
-input.network-simulator.input-area {
-    padding: 5px 0;
-    display: flex;
-    flex-direction: row
+form.network-simulator input {
+    width: 17ch;
 }
 
-input.iro-iroiro.number-input {
-    font-size: 1.25rem;
+form.iro-iroiro,
+form.network-simulator {
+    width: 100%;
+    padding: 5px 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px 15px;
+}
+
+@media (max-width: 1199px) {
+    form.network-simulator {
+        flex-direction: column;
+        gap: 10px 15px;
+    }
+}
+
+form.network-simulator+form {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px 10px;
+}
+
+form.network-simulator+form button {
+    margin: 0px;
+}
+
+input.iro-iroiro {
     border: none;
     border-bottom: 2px solid;
     border-radius: 0px;
@@ -841,18 +950,11 @@ input.iro-iroiro.number-input {
     padding-bottom: 2px;
     padding-left: 10px;
     padding-right: 0;
-    height: 32px;
     width: 4rem;
 }
 
-input.iro-iroiro.number-input:invalid {
+input.iro-iroiro:invalid {
     background-color: var(--history-wrong-color);
-}
-
-span.iro-iroiro.input-wrapper,
-span.network-simulator.input-wrapper {
-    margin: 0;
-    margin-right: 10px;
 }
 
 .rem6 {
@@ -879,19 +981,20 @@ span.network-simulator.input-wrapper {
     justify-content: flex-end;
 }
 
-.under-line {
-    border-bottom: 2px solid var(--background-color);
+.first-row>div,
+.second-row>div {
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: flex-end;
 }
 
-.digit-area {
+.first-row span,
+.second-row span {
     width: 1rem;
 }
 
-.eight-digit {
-    width: 10.5rem;
-    font-size: 1.5rem;
-    font-weight: bold;
-    text-align: right;
+.under-line {
+    border-bottom: 2px solid var(--background-color);
 }
 
 
@@ -913,111 +1016,6 @@ span.network-simulator.input-wrapper {
 .explanation p {
     margin-top: 0px;
 }
-
-/*
-    Settings for responsive design.
-*/
-@media (max-width: 1199px) {
-    header {
-        grid-template-columns: min(20%, 260px) auto 1rem;
-    }
-
-    form.iro-iroiro.input-area,
-    form.network-simulator.input-area {
-        flex-direction: column
-    }
-
-    form.iro-iroiro.input-area .display-order-2,
-    form.network-simulator.input-area .display-order-2 {
-        margin-top: 10px;
-    }
-
-    .submit-button-iro {
-        margin-top: 15px;
-    }
-}
-
-@media (max-width: 999px) {
-    .button-container {
-        grid-template-columns: 1fr 1fr 1fr;
-        grid-template-rows: 200px 200px 200px;
-    }
-}
-
-@media (max-width: 799px) {
-    .button-container {
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: 5rem 5rem 5rem 5rem 5rem;
-        gap: 10px;
-    }
-
-    .btn {
-        font-size: 1.25rem;
-    }
-}
-
-
-@media (max-width: 599px) {
-    header h1 {
-        font-size: 1rem;
-    }
-
-    .home-center {
-        text-align: center;
-        font-size: 1.5rem;
-        font-family: serif;
-    }
-
-    .home-title {
-        font-size: 4rem;
-    }
-
-    .button-container {
-        display: flex;
-        flex-direction: column;
-        gap: 0px;
-    }
-
-    .btn {
-        font-size: 1.25rem;
-        height: 60px;
-        margin: 5px 0px;
-    }
-
-    .number-input {
-        width: 80%;
-    }
-
-    .eight-digit {
-        width: 10.5rem;
-    }
-
-    button.submit-button,
-    button.submit-button.gray {
-        width: 100%;
-        margin-top: 15px;
-    }
-}
-
-@media (max-width: 370px) {
-
-    span.iro-iroiro.shorter,
-    span.network-simulator.shorter,
-    span.iro-iroiro.wider {
-        display: flex;
-        flex-direction: column;
-    }
-
-    span.iro-iroiro.shorter span.iro-iroiro.input-wrapper,
-    span.network-simulator.shorter span.network-simulator.input-wrapper {
-        max-width: 7rem;
-    }
-
-    span.iro-iroiro.wider span.iro-iroiro.input-wrapper {
-        max-width: 10rem;
-    }
-}
-
 
 /*
     Related to the hamburger button.
@@ -1292,47 +1290,6 @@ span.help-close:hover {
     overflow-y: auto;
     scrollbar-width: thin;
 }
-
-/* span.help-close.dec2bin:hover {
-    background-color: #65a2ac;
-}
-
-span.help-close.bin2dec:hover {
-    background-color: #65ac86;
-}
-
-span.help-close.power-of-two:hover {
-    background-color: #a665ac;
-}
-
-span.help-close.addition:hover {
-    background-color: #656eac;
-}
-
-span.help-close.subtraction:hover {
-    background-color: #656eac;
-}
-
-span.help-close.complement:hover {
-    background-color: #6588ac;
-}
-
-span.help-close.dec2hex:hover,
-span.help-close.hex2dec:hover {
-    background-color: #65aca0;
-}
-
-span.help-close.iro-iroiro:hover {
-    background-color: #ac657c;
-}
-
-span.help-close.network-simulator:hover {
-    background-color: #7c65ac;
-}
-
-span.help-close.ctc:hover {
-    background-color: #aaac65;
-} */
 
 .help-barrier {
     display: none;

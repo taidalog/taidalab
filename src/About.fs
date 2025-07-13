@@ -25,14 +25,14 @@ module About =
             <dd>
                 %s{EndlessBinary.Dec2Bin1.help}
             </dd>
-            
+
             <dt>
                 <h3><a href="%s{Url.home}endless-binary/dec2bin-2/">10進数→2進数 (2)</a></h3>
             </dt>
             <dd>
                 %s{EndlessBinary.Dec2Bin2.help}
             </dd>
-            
+
             <dt>
                 <h3><a href="%s{Url.home}endless-binary/bin2dec-1/">2進数→10進数 (1)</a></h3>
             </dt>
@@ -53,7 +53,7 @@ module About =
             <dd>
                 %s{EndlessBinary.PowerOfTwo1.help}
             </dd>
-            
+
             <dt>
                 <h3><a href="%s{Url.home}endless-binary/power-of-two-2/">2のn乗-1</a></h3>
             </dt>
@@ -74,7 +74,7 @@ module About =
             <dd>
                 %s{EndlessBinary.Subtraction.help}
             </dd>
-            
+
             <dt>
                 <h3><a href="%s{Url.home}endless-binary/complement/">補数</a></h3>
             </dt>
@@ -95,14 +95,14 @@ module About =
             <dd>
                 %s{EndlessBinary.Hex2Dec.help}
             </dd>
-            
+
             <dt>
                 <h3><a href="%s{Url.home}iro-iroiro/">色いろいろ</a></h3>
             </dt>
             <dd>
                 %s{IroIroiro.help}
             </dd>
-            
+
             <dt>
                 <h3><a href="%s{Url.home}network-simulator/">ネットワークシミュレータ</a></h3>
             </dt>
@@ -120,17 +120,17 @@ module About =
 
         (document.getElementById "hamburgerButton").onclick <-
             (fun _ ->
-                (document.querySelector "aside").classList.toggle "flagged" |> ignore
+                (document.querySelector "nav").classList.toggle "flagged" |> ignore
                 (document.getElementById "barrier").classList.toggle "flagged" |> ignore
                 (document.querySelector "main").classList.toggle "flagged" |> ignore)
 
         (document.getElementById "barrier").onclick <-
             (fun _ ->
-                (document.querySelector "aside").classList.remove "flagged" |> ignore
+                (document.querySelector "nav").classList.remove "flagged" |> ignore
                 (document.getElementById "barrier").classList.remove "flagged" |> ignore
                 (document.querySelector "main").classList.remove "flagged" |> ignore)
 
-        (document.querySelector "#headerTitle").innerHTML <- """<h1>about - <span translate="no">taidalab</span></h1>"""
+        (document.querySelector "#headerTitle").innerHTML <- """<span>about - </span><span translate="no">taidalab</span>"""
         (document.querySelector "main").innerHTML <- main
 
         // Resets keyboard shortcuts.

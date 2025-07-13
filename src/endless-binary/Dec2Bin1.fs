@@ -189,7 +189,7 @@ module EndlessBinary =
             <p class="history-indented">
                 %d{number}<sub>(10)</sub> を 2<sup>n</sup> の数同士の足し算に変換すると
             </p>
-            <p class="history-indented hint-bgcolor-gray mono regular">
+            <p class="history-indented hint-bgcolor-gray mono">
                 &nbsp;&nbsp;%s{additionDec}<br>
                 = %s{additionIndex}
             </p>
@@ -201,13 +201,13 @@ module EndlessBinary =
                 2<sup>n</sup> の数を2進法で表すには、1 の後に 0 を n 個続けます。<br>
                 そのため、%s{additionIndex} は2進法で
             </p>
-            <p class="history-indented hint-bgcolor-gray mono regular">
+            <p class="history-indented hint-bgcolor-gray mono">
                 &nbsp;&nbsp;%s{additionBin}<br>
             </p>
             <p class="history-indented">
                 と表現できます。最後にこれを計算すると
             </p>
-            <p class="history-indented hint-bgcolor-gray mono regular">
+            <p class="history-indented hint-bgcolor-gray mono">
                 &nbsp;&nbsp;%s{additionBin}<br>
                 = %s{bin}<sub>(2)</sub>
             </p>
@@ -247,7 +247,7 @@ module EndlessBinary =
             match input |> Bin.validate |> Bin.toDec with
             | Dec.Invalid _ -> ""
             | Dec.Valid v ->
-                let colored = input |> padWithZero 8 |> colorLeadingZero
+                let colored = input |> Fermata.String.padLeft 8 ' ' |> escapeSpace
                 let spacePadded = v |> string |> Fermata.String.padLeft 3 ' ' |> escapeSpace
                 newHistory correct colored 2 spacePadded 10
 
@@ -412,21 +412,21 @@ module EndlessBinary =
 
             (document.getElementById "hamburgerButton").onclick <-
                 (fun _ ->
-                    (document.querySelector "aside").classList.toggle "flagged" |> ignore
+                    (document.querySelector "nav").classList.toggle "flagged" |> ignore
                     (document.getElementById "barrier").classList.toggle "flagged" |> ignore
                     (document.querySelector "main").classList.toggle "flagged" |> ignore)
 
             (document.getElementById "barrier").onclick <-
                 (fun _ ->
-                    (document.querySelector "aside").classList.remove "flagged" |> ignore
+                    (document.querySelector "nav").classList.remove "flagged" |> ignore
                     (document.getElementById "barrier").classList.remove "flagged" |> ignore
                     (document.querySelector "main").classList.remove "flagged" |> ignore)
 
             (document.querySelector "#headerTitle").innerHTML <-
-                """<h1>10進数→2進数 (1) - <span translate="no">taidalab</span></h1>"""
+                """<span>10進数→2進数 (1) - </span><span translate="no">taidalab</span>"""
 
             (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help "help-color dec2bin"
-            (document.querySelector "#submitButton").className <- "submit-button display-order-3 dec2bin"
+            (document.querySelector "#submitButton").className <- "dec2bin"
             (document.querySelector "#questionArea").innerHTML <- Content.Common.question
 
             init' (question 8) hint additional 10 2 exec' EndlessBinary.keyboardshortcut

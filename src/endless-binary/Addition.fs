@@ -202,7 +202,7 @@ module EndlessBinary =
             checker
             : unit =
             // Initialization.
-            (document.getElementById "numberInput").className <- "number-input question-number eight-digit"
+            (document.getElementById "numberInput").className <- "question-number"
             (document.getElementById "operator").innerText <- "+)"
             (document.getElementById "firstRowSrcRadix").innerText <- sprintf "(%d)" sourceRadix
             (document.getElementById "secondRowSrcRadix").innerText <- sprintf "(%d)" sourceRadix
@@ -272,27 +272,27 @@ module EndlessBinary =
 
             (document.getElementById "hamburgerButton").onclick <-
                 (fun _ ->
-                    (document.querySelector "aside").classList.toggle "flagged" |> ignore
+                    (document.querySelector "nav").classList.toggle "flagged" |> ignore
                     (document.getElementById "barrier").classList.toggle "flagged" |> ignore
                     (document.querySelector "main").classList.toggle "flagged" |> ignore)
 
             (document.getElementById "barrier").onclick <-
                 (fun _ ->
-                    (document.querySelector "aside").classList.remove "flagged" |> ignore
+                    (document.querySelector "nav").classList.remove "flagged" |> ignore
                     (document.getElementById "barrier").classList.remove "flagged" |> ignore
                     (document.querySelector "main").classList.remove "flagged" |> ignore)
 
             (document.querySelector "#headerTitle").innerHTML <-
-                """<h1>加算 - <span translate="no">taidalab</span></h1>"""
+                """<span>加算 - </span><span translate="no">taidalab</span>"""
 
             (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help "help-color addition"
-            (document.querySelector "#submitButton").className <- "submit-button display-order-3 addition"
+            (document.querySelector "#submitButton").className <- "addition"
             (document.querySelector "#questionArea").innerHTML <- Content.Common.columnAdditionFormat
 
             init'
                 (question 8)
                 newHintAdd
-                (padWithZero 8 >> colorLeadingZero)
+                (Fermata.String.padLeft 8 ' ' >> escapeSpace)
                 (fun n -> ())
                 2
                 2
@@ -304,7 +304,7 @@ module EndlessBinary =
             init'
                 (question 4)
                 newHintAdd
-                (padWithZero 4 >> colorLeadingZero)
+                (Fermata.String.padLeft 4 ' ' >> escapeSpace)
                 (fun n -> ())
                 2
                 2

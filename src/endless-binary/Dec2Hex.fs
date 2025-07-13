@@ -143,7 +143,7 @@ module EndlessBinary =
             match input |> Hex.validate |> Hex.toDec with
             | Dec.Invalid _ -> ""
             | Dec.Valid v ->
-                let colored = input |> padWithZero 8 |> colorLeadingZero
+                let colored = input |> Fermata.String.padLeft 4 ' ' |> escapeSpace
                 let spacePadded = v |> string |> Fermata.String.padLeft 3 ' ' |> escapeSpace
                 newHistory correct colored 16 spacePadded 10
 
@@ -157,7 +157,7 @@ module EndlessBinary =
             (questionGenerator: int list -> int)
             (hintGenerator: int -> string)
             (errorGenerator: string -> string -> exn -> string)
-            tagger
+            (tagger: string -> 'a)
             (additional: int -> unit)
             sourceRadix
             destinationRadix
@@ -168,8 +168,8 @@ module EndlessBinary =
             =
             // Getting the user input.
             let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
-            let input = numberInput.value |> escapeHtml
-            let hex: Hex = Hex.validate input
+            let input: string = numberInput.value |> escapeHtml
+            let hex: Hex = Hex.validate (input.ToLower())
 
             numberInput.focus ()
 
@@ -182,26 +182,24 @@ module EndlessBinary =
                     | Dec.Valid v -> string v
 
                 (document.getElementById "errorArea").innerHTML <- errorGenerator q input e
-            | Hex.Valid v ->
+            | Hex.Valid (v: string) ->
                 (document.getElementById "errorArea").innerHTML <- ""
-
-                // Converting the input in order to use in the history message.
-                let colored = v |> tagger //padWithZero binaryDigit |> colorLeadingZero
-
-                let decimalDigit = 3
-
-                let spacePadded = v |> Fermata.String.padLeft decimalDigit ' ' |> escapeSpace
 
                 // Making a new history and updating the history with the new one.
                 let outputArea = document.getElementById "outputArea" :?> HTMLParagraphElement
 
+                let answer' =
+                    match answer with
+                    | Hex.Valid v -> v.ToLower()
+                    | Hex.Invalid e -> ""
+
                 let historyMessage =
-                    history (hex = answer) v //colored destinationRadix spacePadded sourceRadix
+                    history (v = answer') input
                     |> (fun x -> concatinateStrings "<br>" [ x; outputArea.innerHTML ])
 
                 outputArea.innerHTML <- historyMessage
 
-                if hex <> answer then
+                if v <> answer' then
                     ()
                 else
                     // Making the next question.
@@ -254,12 +252,12 @@ module EndlessBinary =
                                 nextQuestion
                                 nextAnswer)
 
-        let exec' (lastNumbers: int list) (question': Dec) (answer: Hex) =
+        let exec' (lastNumbers: int list) (question': Dec) (answer: Hex) :unit =
             exec
                 question
                 hint
                 newErrorMessageHex
-                (padWithZero 8 >> colorLeadingZero)
+                (Fermata.String.padLeft 4 ' ' )
                 additional
                 10
                 16
@@ -325,21 +323,21 @@ module EndlessBinary =
 
             (document.getElementById "hamburgerButton").onclick <-
                 (fun _ ->
-                    (document.querySelector "aside").classList.toggle "flagged" |> ignore
+                    (document.querySelector "nav").classList.toggle "flagged" |> ignore
                     (document.getElementById "barrier").classList.toggle "flagged" |> ignore
                     (document.querySelector "main").classList.toggle "flagged" |> ignore)
 
             (document.getElementById "barrier").onclick <-
                 (fun _ ->
-                    (document.querySelector "aside").classList.remove "flagged" |> ignore
+                    (document.querySelector "nav").classList.remove "flagged" |> ignore
                     (document.getElementById "barrier").classList.remove "flagged" |> ignore
                     (document.querySelector "main").classList.remove "flagged" |> ignore)
 
             (document.querySelector "#headerTitle").innerHTML <-
-                """<h1>10進数→16進数 - <span translate="no">taidalab</span></h1>"""
+                """<span>10進数→16進数 - </span><span translate="no">taidalab</span>"""
 
             (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help "help-color dec2hex"
-            (document.querySelector "#submitButton").className <- "submit-button display-order-3 dec2hex"
+            (document.querySelector "#submitButton").className <- "dec2hex"
             (document.querySelector "#questionArea").innerHTML <- Content.Common.question
 
             init' question hint additional 10 16 EndlessBinary.keyboardshortcut

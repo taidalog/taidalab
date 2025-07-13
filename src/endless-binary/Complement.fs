@@ -83,7 +83,7 @@ module EndlessBinary =
 
                 // Converting the input in order to use in the history message.
                 let digit = 4
-                let taggedInputValue = v |> padWithZero digit
+                let taggedInputValue = v |> Fermata.String.padLeft digit '0'
                 let sourceRadix = 2
 
                 // Making a new history and updating the history with the new one.
@@ -148,21 +148,21 @@ module EndlessBinary =
 
             (document.getElementById "hamburgerButton").onclick <-
                 (fun _ ->
-                    (document.querySelector "aside").classList.toggle "flagged" |> ignore
+                    (document.querySelector "nav").classList.toggle "flagged" |> ignore
                     (document.getElementById "barrier").classList.toggle "flagged" |> ignore
                     (document.querySelector "main").classList.toggle "flagged" |> ignore)
 
             (document.getElementById "barrier").onclick <-
                 (fun _ ->
-                    (document.querySelector "aside").classList.remove "flagged" |> ignore
+                    (document.querySelector "nav").classList.remove "flagged" |> ignore
                     (document.getElementById "barrier").classList.remove "flagged" |> ignore
                     (document.querySelector "main").classList.remove "flagged" |> ignore)
 
             (document.querySelector "#headerTitle").innerHTML <-
-                """<h1>補数 - <span translate="no">taidalab</span></h1>"""
+                """<span>補数 - </span><span translate="no">taidalab</span>"""
 
             (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help "help-color complement"
-            (document.querySelector "#submitButton").className <- "submit-button display-order-3 complement"
+            (document.querySelector "#submitButton").className <- "complement"
             (document.querySelector "#questionArea").innerHTML <- question
 
             let sourceRadix = 2

@@ -25,18 +25,18 @@ module Terms =
 
         (document.getElementById "hamburgerButton").onclick <-
             (fun _ ->
-                (document.querySelector "aside").classList.toggle "flagged" |> ignore
+                (document.querySelector "nav").classList.toggle "flagged" |> ignore
                 (document.getElementById "barrier").classList.toggle "flagged" |> ignore
                 (document.querySelector "main").classList.toggle "flagged" |> ignore)
 
         (document.getElementById "barrier").onclick <-
             (fun _ ->
-                (document.querySelector "aside").classList.remove "flagged" |> ignore
+                (document.querySelector "nav").classList.remove "flagged" |> ignore
                 (document.getElementById "barrier").classList.remove "flagged" |> ignore
                 (document.querySelector "main").classList.remove "flagged" |> ignore)
 
         (document.querySelector "#headerTitle").innerHTML <-
-            """<h1>ご利用について - <span translate="no">taidalab</span></h1>"""
+            """<span>ご利用について - </span><span translate="no">taidalab</span>"""
 
         (document.querySelector "main").innerHTML <- main
 

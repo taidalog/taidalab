@@ -134,7 +134,7 @@ module EndlessBinary =
                         2進法で表現した数を10進法で表現しなおすには、それぞれの桁の数と重みをかけ算し、それを合計します。<br>
                         %s{v}<sub>(2)</sub> の場合、以下のように計算します。
                     </p>
-                    <p class="history-indented hint-bgcolor-gray mono regular">
+                    <p class="history-indented hint-bgcolor-gray mono">
                         &nbsp;&nbsp;%s{formula}<br>
                         = %d{dec}<sub>(10)</sub>
                     </p>
@@ -147,13 +147,21 @@ module EndlessBinary =
         let history (correct: bool) (question: Bin) (answer: Dec) : string =
             match question, answer with
             | (Bin.Valid b, Dec.Valid d) ->
-                let taggedBin = b |> padWithZero 8 |> colorLeadingZero
+                let taggedBin = b |> Fermata.String.padLeft 8 ' ' |> escapeSpace
 
                 let spacePaddedInputValue =
                     d |> string |> Fermata.String.padLeft 3 ' ' |> escapeSpace
 
                 newHistory correct spacePaddedInputValue 10 taggedBin 2
             | _ -> ""
+
+        let history' (correct: bool) (input: int) : string =
+            match input |> Dec.Valid |> Dec.toBin with
+            | Bin.Invalid _ -> ""
+            | Bin.Valid v ->
+                let leftSide = input |> string |> Fermata.String.padLeft 3 ' ' |> escapeSpace
+                let rightSide = v |> string |> Fermata.String.padLeft 8 ' ' |> escapeSpace
+                newHistory correct leftSide 10 rightSide 2
 
         let additional number : unit = ()
 
@@ -185,27 +193,10 @@ module EndlessBinary =
             | Dec.Valid v ->
                 (document.getElementById "errorArea").innerHTML <- ""
 
-                // Converting the input in order to use in the history message.
-                // let digit = 3
-
-                // let spacePaddedInputValue =
-                //     v |> string |> Fermata.String.padLeft digit ' ' |> escapeSpace
-
-                // let sourceRadix = 2
-                // let bin: Bin = Bin.validate question
-                // let binaryDigit = 8
-
-                // let taggedBin =
-                //     match bin with
-                //     | Bin.Invalid _ -> ""
-                //     | Bin.Valid v -> v |> padWithZero binaryDigit |> colorLeadingZero
-
-                // Making a new history and updating the history with the new one.
-                // let destinationRadix = 10
                 let outputArea = document.getElementById "outputArea"
 
                 let historyMessage =
-                    history (dec = answer) question answer
+                    history' (dec = answer) v
                     |> (fun x -> concatinateStrings "<br>" [ x; outputArea.innerHTML ])
 
                 outputArea.innerHTML <- historyMessage
@@ -308,21 +299,21 @@ module EndlessBinary =
 
             (document.getElementById "hamburgerButton").onclick <-
                 (fun _ ->
-                    (document.querySelector "aside").classList.toggle "flagged" |> ignore
+                    (document.querySelector "nav").classList.toggle "flagged" |> ignore
                     (document.getElementById "barrier").classList.toggle "flagged" |> ignore
                     (document.querySelector "main").classList.toggle "flagged" |> ignore)
 
             (document.getElementById "barrier").onclick <-
                 (fun _ ->
-                    (document.querySelector "aside").classList.remove "flagged" |> ignore
+                    (document.querySelector "nav").classList.remove "flagged" |> ignore
                     (document.getElementById "barrier").classList.remove "flagged" |> ignore
                     (document.querySelector "main").classList.remove "flagged" |> ignore)
 
             (document.querySelector "#headerTitle").innerHTML <-
-                """<h1>2進数→10進数 (1) - <span translate="no">taidalab</span></h1>"""
+                """<span>2進数→10進数 (1) - </span><span translate="no">taidalab</span>"""
 
             (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help "help-color bin2dec"
-            (document.querySelector "#submitButton").className <- "submit-button display-order-3 bin2dec"
+            (document.querySelector "#submitButton").className <- "bin2dec"
             (document.querySelector "#questionArea").innerHTML <- Content.Common.question
 
             init' question' hint additional EndlessBinary.keyboardshortcut

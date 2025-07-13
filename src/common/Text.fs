@@ -27,13 +27,3 @@ module Text =
         replaceWithPairs replacements input
 
     let escapeSpace (input: string) = input.Replace(" ", "&nbsp;")
-
-    let padWithZero binaryDigit text =
-        Fermata.String.padLeft binaryDigit '0' text
-
-    let colorLeadingZero str =
-        str
-        |> (String.rev >> String.tail >> String.rev)
-        |> String.splitFind ((<>) '0')
-        |> fun (left, right) -> $"""<span class="zero-gray">%s{left}</span>%s{right}"""
-        |> fun x -> x + (str |> String.last)

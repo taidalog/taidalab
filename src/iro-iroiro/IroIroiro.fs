@@ -39,19 +39,13 @@ module IroIroiro =
 
     let main =
         $"""
-        <form id="inputArea" class="iro-iroiro input-area" autocomplete="off">
-            <span class="display-order-1 iro-iroiro shorter">
-                <span class="iro-iroiro input-wrapper"><label for="rInput">R:<input type="number" id="rInput" class="iro-iroiro number-input mono regular" min="0" max="255"></label></span>
-                <span class="iro-iroiro input-wrapper"><label for="gInput">G:<input type="number" id="gInput" class="iro-iroiro number-input mono regular" min="0" max="255"></label></span>
-                <span class="iro-iroiro input-wrapper"><label for="bInput">B:<input type="number" id="bInput" class="iro-iroiro number-input mono regular" min="0" max="255"></label></span>
-            </span>
-            <span class="display-order-2 iro-iroiro wider">
-                <span class="iro-iroiro input-wrapper"><label for="stepInput">変化量:<input type="number" id="stepInput" class="iro-iroiro number-input mono regular"></label></span>
-                <span class="iro-iroiro input-wrapper"><label for="limitInput">回数:<input type="number" id="limitInput" class="iro-iroiro number-input rem6 mono regular" value="10"></label></span>
-            </span>
-            <span class="display-order-3">
-                <button type="button" id="submitButton" class="submit-button d2b-button">確認</button>
-            </span>
+        <form id="inputArea" class="iro-iroiro" autocomplete="off">
+            <label>R:<input type="number" id="rInput" class="iro-iroiro mono" min="0" max="255"></label>
+            <label>G:<input type="number" id="gInput" class="iro-iroiro mono" min="0" max="255"></label>
+            <label>B:<input type="number" id="bInput" class="iro-iroiro mono" min="0" max="255"></label>
+            <label>変化量:<input type="number" id="stepInput" class="iro-iroiro mono"></label>
+            <label>回数:<input type="number" id="limitInput" class="iro-iroiro rem6 mono" value="10"></label>
+            <button type="button" id="submitButton" class="d2b-button">Enter</button>
         </form>
         <div id="errorArea" class="error-area"></div>
         <div id="outputArea" class="output-area iro-iroiro"></div>
@@ -284,20 +278,21 @@ module IroIroiro =
 
         (document.getElementById "hamburgerButton").onclick <-
             (fun _ ->
-                (document.querySelector "aside").classList.toggle "flagged" |> ignore
+                (document.querySelector "nav").classList.toggle "flagged" |> ignore
                 (document.getElementById "barrier").classList.toggle "flagged" |> ignore
                 (document.querySelector "main").classList.toggle "flagged" |> ignore)
 
         (document.getElementById "barrier").onclick <-
             (fun _ ->
-                (document.querySelector "aside").classList.remove "flagged" |> ignore
+                (document.querySelector "nav").classList.remove "flagged" |> ignore
                 (document.getElementById "barrier").classList.remove "flagged" |> ignore
                 (document.querySelector "main").classList.remove "flagged" |> ignore)
 
-        (document.querySelector "#headerTitle").innerHTML <- """<h1>色いろいろ - <span translate="no">taidalab</span></h1>"""
+        (document.querySelector "#headerTitle").innerHTML <-
+            """<span>色いろいろ - </span><span translate="no">taidalab</span>"""
 
         (document.querySelector "main").innerHTML <- main
-        (document.querySelector "#submitButton").className <- "submit-button iro-iroiro"
+        (document.querySelector "#submitButton").className <- "iro-iroiro"
 
         (document.getElementById "submitButton").onclick <- (fun _ -> start ())
 

@@ -39,51 +39,43 @@ module NetworkSimulator =
 
     let main =
         $"""
-        <form id="inputArea" class="network-simulator input-area" autocomplete="off">
-            <span class="display-order-1 network-simulator shorter">
-                <span class="network-simulator input-wrapper">
-                    <label for="sourceInput">
-                        送信元 IPv4:
-                    </label>
-                    <input type="text" id="sourceInput" class="number-input display-order-1 mono regular">
-                </span>
-                <span class="network-simulator input-wrapper">
-                    <label for="destinationInput">
-                        送信先 IPv4:
-                    </label>
-                    <input type="text" id="destinationInput" class="number-input display-order-1 mono regular">
-                </span>
-            </span>
-            <span class="display-order-2">
-                <button type="submit" id="submitButton" class="submit-button" translate="no">ping</button>
-            </span>
+        <form id="inputArea" class="network-simulator" autocomplete="off">
+            <label>
+                送信元 IPv4:
+                <input type="text" id="sourceInput" class="mono">
+            </label>
+            <label>
+                送信先 IPv4:
+                <input type="text" id="destinationInput" class="mono">
+            </label>
+            <button type="submit" id="submitButton" translate="no">ping</button>
         </form>
         <form>
-            <button type="button" id="addClientButton" class="submit-button gray display-order-3">
+            <button type="button" id="addClientButton" class="gray">
                 <span class="icon-vertical-center">
                     <span class="material-symbols-outlined symbols18" translate="no">add_circle</span>
                     クライアント
                 </span>
             </button>
-            <button type="button" id="addRouterButton" class="submit-button gray display-order-4">
+            <button type="button" id="addRouterButton" class="gray">
                 <span class="icon-vertical-center">
                     <span class="material-symbols-outlined symbols18" translate="no">add_circle</span>
                     ルータ
                 </span>
             </button>
-            <button type="button" id="addHubButton" class="submit-button gray display-order-5">
+            <button type="button" id="addHubButton" class="gray">
                 <span class="icon-vertical-center">
                     <span class="material-symbols-outlined symbols18" translate="no">add_circle</span>
                     ハブ
                 </span>
             </button>
-            <button type="button" id="addLANCableButton" class="submit-button gray display-order-6">
+            <button type="button" id="addLANCableButton" class="gray">
                 <span class="icon-vertical-center">
                     <span class="material-symbols-outlined symbols18" translate="no">add_circle</span>
                     LANケーブル
                 </span>
             </button>
-            <button type="button" id="deleteButton" class="submit-button gray display-order-7">
+            <button type="button" id="deleteButton" class="gray">
                 <span class="icon-vertical-center">
                     <span class="material-symbols-outlined symbols18" translate="no">delete</span>
                     削除
@@ -239,21 +231,21 @@ module NetworkSimulator =
 
         (document.getElementById "hamburgerButton").onclick <-
             (fun _ ->
-                (document.querySelector "aside").classList.toggle "flagged" |> ignore
+                (document.querySelector "nav").classList.toggle "flagged" |> ignore
                 (document.getElementById "barrier").classList.toggle "flagged" |> ignore
                 (document.querySelector "main").classList.toggle "flagged" |> ignore)
 
         (document.getElementById "barrier").onclick <-
             (fun _ ->
-                (document.querySelector "aside").classList.remove "flagged" |> ignore
+                (document.querySelector "nav").classList.remove "flagged" |> ignore
                 (document.getElementById "barrier").classList.remove "flagged" |> ignore
                 (document.querySelector "main").classList.remove "flagged" |> ignore)
 
         (document.querySelector "#headerTitle").innerHTML <-
-            """<h1>ネットワークシミュレータ - <span translate="no">taidalab</span></h1>"""
+            """<span>ネットワークシミュレータ - </span><span translate="no">taidalab</span>"""
 
         (document.querySelector "main").innerHTML <- main
-        (document.querySelector "#submitButton").className <- "submit-button network-simulator"
+        (document.querySelector "#submitButton").className <- "network-simulator"
 
         (document.getElementById "helpButton").onclick <-
             (fun _ ->
