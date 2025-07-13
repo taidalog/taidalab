@@ -90,7 +90,7 @@ module Content =
         let question =
             """<span id="questionSpan" class="question-number"></span><sub id="srcRadix"></sub> を<span id="dstRadix"></span>進法で表すと？"""
 
-        let version = "Version 5.1.0"
+        let version = "Version 5.2.0"
 
         let footer =
             $"""
