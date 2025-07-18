@@ -483,7 +483,7 @@ main.flagged {
     }
 }
 
-footer>div {
+footer {
     color: var(--pale-color);
     width: 90%;
     margin: 40px auto 20px;
@@ -498,7 +498,7 @@ footer a {
 }
 
 @media (max-width: 799px) {
-    footer>div {
+    footer {
         margin: 1rem auto 0.5rem;
         gap: 0.25rem 1.5rem;
     }
