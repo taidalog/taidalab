@@ -157,15 +157,11 @@ module EndlessBinary =
             (questionGenerator: int list -> int)
             (hintGenerator: int -> string)
             (errorGenerator: string -> string -> exn -> string)
-            (tagger: string -> 'a)
             (additional: int -> unit)
-            sourceRadix
-            destinationRadix
             (numbersToKeep: int)
             (lastNumbers: int list)
-            (question: Dec)
-            (answer: Hex)
-            =
+            (answer: int)
+            : unit =
             // Getting the user input.
             let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
             let input: string = numberInput.value |> escapeHtml
@@ -176,95 +172,56 @@ module EndlessBinary =
             match hex with
             | Hex.Invalid e ->
                 // Making an error message.
-                let q =
-                    match question with
-                    | Dec.Invalid _ -> ""
-                    | Dec.Valid v -> string v
-
-                (document.getElementById "errorArea").innerHTML <- errorGenerator q input e
-            | Hex.Valid (v: string) ->
+                (document.getElementById "errorArea").innerHTML <- errorGenerator (string answer) input e
+            | Hex.Valid _ ->
                 (document.getElementById "errorArea").innerHTML <- ""
 
                 // Making a new history and updating the history with the new one.
                 let outputArea = document.getElementById "outputArea" :?> HTMLParagraphElement
 
-                let answer' =
-                    match answer with
-                    | Hex.Valid v -> v.ToLower()
-                    | Hex.Invalid e -> ""
+                match hex |> Hex.toDec with
+                | Dec.Invalid _ -> ()
+                | Dec.Valid d ->
+                    let historyMessage =
+                        history (d = answer) input
+                        |> (fun x -> concatinateStrings "<br>" [ x; outputArea.innerHTML ])
 
-                let historyMessage =
-                    history (v = answer') input
-                    |> (fun x -> concatinateStrings "<br>" [ x; outputArea.innerHTML ])
+                    outputArea.innerHTML <- historyMessage
 
-                outputArea.innerHTML <- historyMessage
+                    if d <> answer then
+                        ()
+                    else
+                        // Making the next question.
+                        let nextNumber: int = questionGenerator lastNumbers
+                        (document.getElementById "questionSpan").innerText <- string nextNumber
+                        (document.getElementById "hintArea").innerHTML <- hintGenerator nextNumber
+                        additional nextNumber
 
-                if v <> answer' then
-                    ()
-                else
-                    // Making the next question.
-                    let nextNumber: int = questionGenerator lastNumbers
-                    (document.getElementById "questionSpan").innerText <- string nextNumber
-                    (document.getElementById "hintArea").innerHTML <- hintGenerator nextNumber
-                    additional nextNumber
+                        numberInput.value <- ""
 
-                    let nextQuestion = nextNumber |> Dec.Valid
-                    let nextAnswer = nextQuestion |> Dec.toHex
+                        // Updating `lastNumbers`.
+                        // These numbers will not be used for the next question.
+                        let lastNumbers' = (nextNumber :: lastNumbers) |> List.truncate numbersToKeep
 
-                    numberInput.value <- ""
+                        // Setting the next answer to the check button.
+                        let f =
+                            fun (e: Event) ->
+                                e.preventDefault ()
 
-                    // Updating `lastNumbers`.
-                    // These numbers will not be used for the next question.
-                    let lastNumbers' = (nextNumber :: lastNumbers) |> List.truncate numbersToKeep
+                                exec
+                                    questionGenerator
+                                    hintGenerator
+                                    errorGenerator
+                                    additional
+                                    nextNumber
+                                    lastNumbers'
+                                    nextNumber
 
-                    // Setting the next answer to the check button.
-                    (document.getElementById "submitButton").onclick <-
-                        (fun e ->
-                            e.preventDefault ()
+                        (document.getElementById "submitButton").onclick <- f
+                        (document.getElementById "inputArea").onsubmit <- f
 
-                            exec
-                                questionGenerator
-                                hintGenerator
-                                errorGenerator
-                                tagger
-                                additional
-                                sourceRadix
-                                destinationRadix
-                                numbersToKeep
-                                lastNumbers'
-                                nextQuestion
-                                nextAnswer)
-
-                    (document.getElementById "inputArea").onsubmit <-
-                        (fun e ->
-                            e.preventDefault ()
-
-                            exec
-                                questionGenerator
-                                hintGenerator
-                                errorGenerator
-                                tagger
-                                additional
-                                sourceRadix
-                                destinationRadix
-                                nextNumber
-                                lastNumbers'
-                                nextQuestion
-                                nextAnswer)
-
-        let exec' (lastNumbers: int list) (question': Dec) (answer: Hex) :unit =
-            exec
-                question
-                hint
-                newErrorMessageHex
-                (Fermata.String.padLeft 4 ' ' )
-                additional
-                10
-                16
-                10
-                lastNumbers
-                question'
-                answer
+        let exec' (lastNumbers: int list) (answer: int) : unit =
+            exec question hint newErrorMessageHex additional 10 lastNumbers answer
 
         let init'
             (questionGenerator: int list -> int)
@@ -282,18 +239,13 @@ module EndlessBinary =
             (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
             (document.getElementById "hintArea").innerHTML <- hintGenerator initNumber
 
-            let question: Dec = initNumber |> Dec.Valid
-            let answer: Hex = question |> Dec.toHex
-
-            (document.getElementById "submitButton").onclick <-
-                (fun e ->
+            let f =
+                fun (e: Event) ->
                     e.preventDefault ()
-                    exec' [ initNumber ] question answer)
+                    exec' [ initNumber ] initNumber
 
-            (document.getElementById "inputArea").onsubmit <-
-                (fun e ->
-                    e.preventDefault ()
-                    exec' [ initNumber ] question answer)
+            (document.getElementById "submitButton").onclick <- f
+            (document.getElementById "inputArea").onsubmit <- f
 
             additional initNumber
 
