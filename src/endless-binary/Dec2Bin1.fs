@@ -262,12 +262,9 @@ module EndlessBinary =
             (hintGenerator: int -> string)
             (errorGenerator: string -> string -> exn -> string)
             (additional: int -> unit)
-            sourceRadix
-            destinationRadix
             (numbersToKeep: int)
             (lastNumbers: int list)
-            (question: Dec)
-            (answer: Bin)
+            (answer: int)
             : unit =
             // Getting the user input.
             let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
@@ -279,77 +276,56 @@ module EndlessBinary =
             match bin with
             | Bin.Invalid e ->
                 // Making an error message.
-                let q =
-                    match question with
-                    | Dec.Invalid _ -> ""
-                    | Dec.Valid v -> string v
-
-                (document.getElementById "errorArea").innerHTML <- errorGenerator q input e
+                (document.getElementById "errorArea").innerHTML <- errorGenerator (string answer) input e
             | Bin.Valid v ->
                 (document.getElementById "errorArea").innerHTML <- ""
 
                 // Making a new history and updating the history with the new one.
                 let outputArea = document.getElementById "outputArea" :?> HTMLParagraphElement
 
-                let historyMessage =
-                    history (bin = answer) v
-                    |> (fun x -> concatinateStrings "<br>" [ x; outputArea.innerHTML ])
+                match bin |> Bin.toDec with
+                | Dec.Invalid _ -> ()
+                | Dec.Valid d ->
+                    let historyMessage =
+                        history (d = answer) v
+                        |> (fun x -> concatinateStrings "<br>" [ x; outputArea.innerHTML ])
 
-                outputArea.innerHTML <- historyMessage
+                    outputArea.innerHTML <- historyMessage
 
-                if bin <> answer then
-                    ()
-                else
-                    // Making the next question.
-                    let nextNumber: int = questionGenerator lastNumbers
-                    (document.getElementById "questionSpan").innerText <- string nextNumber
-                    (document.getElementById "hintArea").innerHTML <- hintGenerator nextNumber
-                    additional nextNumber
+                    if d <> answer then
+                        ()
+                    else
+                        // Making the next question.
+                        let nextNumber: int = questionGenerator lastNumbers
+                        (document.getElementById "questionSpan").innerText <- string nextNumber
+                        (document.getElementById "hintArea").innerHTML <- hintGenerator nextNumber
+                        additional nextNumber
 
-                    let nextQuestion = nextNumber |> Dec.Valid
-                    let nextAnswer = nextQuestion |> Dec.toBin
+                        numberInput.value <- ""
 
-                    numberInput.value <- ""
+                        // Updating `lastNumbers`.
+                        // These numbers will not be used for the next question.
+                        let lastNumbers' = (nextNumber :: lastNumbers) |> List.truncate numbersToKeep
 
-                    // Updating `lastNumbers`.
-                    // These numbers will not be used for the next question.
-                    let lastNumbers' = (nextNumber :: lastNumbers) |> List.truncate numbersToKeep
+                        // Setting the next answer to the check button.
+                        let f =
+                            fun (e: Event) ->
+                                e.preventDefault ()
 
-                    // Setting the next answer to the check button.
-                    (document.getElementById "submitButton").onclick <-
-                        (fun e ->
-                            e.preventDefault ()
+                                exec
+                                    questionGenerator
+                                    hintGenerator
+                                    errorGenerator
+                                    additional
+                                    numbersToKeep
+                                    lastNumbers'
+                                    nextNumber
 
-                            exec
-                                questionGenerator
-                                hintGenerator
-                                errorGenerator
-                                additional
-                                sourceRadix
-                                destinationRadix
-                                numbersToKeep
-                                lastNumbers'
-                                nextQuestion
-                                nextAnswer)
+                        (document.getElementById "submitButton").onclick <- f
+                        (document.getElementById "inputArea").onsubmit <- f
 
-                    (document.getElementById "inputArea").onsubmit <-
-                        (fun e ->
-                            e.preventDefault ()
-
-                            exec
-                                questionGenerator
-                                hintGenerator
-                                errorGenerator
-                                additional
-                                sourceRadix
-                                destinationRadix
-                                nextNumber
-                                lastNumbers'
-                                nextQuestion
-                                nextAnswer)
-
-        let exec' (lastNumbers: int list) (question': Dec) (answer: Bin) : unit =
-            exec (question 8) hint newErrorMessageBin additional 10 2 10 lastNumbers question' answer
+        let exec' (lastNumbers: int list) (answer: int) : unit =
+            exec (question 8) hint newErrorMessageBin additional 10 lastNumbers answer
 
         let init'
             (questionGenerator: int list -> int)
@@ -357,7 +333,7 @@ module EndlessBinary =
             (additional: int -> unit)
             (sourceRadix: int)
             (destinationRadix: int)
-            (executor: int list -> Dec -> Bin -> unit)
+            (executor: int list -> int -> unit)
             (keyboardshortcutSetter: KeyboardEvent -> unit)
             : unit =
             // Initialization.
@@ -368,18 +344,13 @@ module EndlessBinary =
             (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
             (document.getElementById "hintArea").innerHTML <- hintGenerator initNumber
 
-            let question = initNumber |> Dec.Valid
-            let answer = question |> Dec.toBin
-
-            (document.getElementById "submitButton").onclick <-
-                (fun e ->
+            let f =
+                fun (e: Event) ->
                     e.preventDefault ()
-                    executor [ initNumber ] question answer)
+                    executor [ initNumber ] initNumber
 
-            (document.getElementById "inputArea").onsubmit <-
-                (fun e ->
-                    e.preventDefault ()
-                    executor [ initNumber ] question answer)
+            (document.getElementById "submitButton").onclick <- f
+            (document.getElementById "inputArea").onsubmit <- f
 
             additional initNumber
 

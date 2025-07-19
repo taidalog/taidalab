@@ -26,8 +26,8 @@ module EndlessBinary =
 
         let additional _ : unit = ()
 
-        let exec' (lastNumbers: int list) (question': Dec) (answer: Bin) : unit =
-            Dec2Bin1.exec question hint newErrorMessageBin additional 10 2 10 lastNumbers question' answer
+        let exec' (lastNumbers: int list) (answer: int) : unit =
+            Dec2Bin1.exec question hint newErrorMessageBin additional 10 lastNumbers answer
 
         let init () =
             document.title <- "10進数→2進数 (2) - taidalab"
