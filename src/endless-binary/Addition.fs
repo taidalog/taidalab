@@ -82,13 +82,18 @@ module EndlessBinary =
                  else
                      (fun (x, y) -> List.contains x lastAnswers = false && List.contains y lastAnswers = false))
 
+        let history (correct: bool) (input: string) : string =
+            match input |> Bin.validate |> Bin.toDec with
+            | Dec.Invalid _ -> ""
+            | Dec.Valid v ->
+                let left = input |> Fermata.String.padLeft 8 ' ' |> escapeSpace
+                let right = v |> string |> Fermata.String.padLeft 4 ' ' |> escapeSpace
+                newHistory correct left 2 right 2
+
         let rec checkAnswer
             (questionGenerator: int list -> int * int)
             (hintGenerator: unit -> string)
-            tagger
             (additional: 'c -> unit)
-            sourceRadix
-            destinationRadix
             (answersToKeep: int)
             (answer: int)
             (num1: int)
@@ -97,11 +102,12 @@ module EndlessBinary =
             =
             // Getting the user input.
             let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
-            let input = numberInput.value |> escapeHtml
+            let input: string = numberInput.value |> escapeHtml
+            let bin: Bin = input |> Bin.validate
 
             numberInput.focus ()
 
-            match Bin.validate input with
+            match bin with
             | Bin.Invalid e ->
                 let intToBinExpr (x: int) =
                     x
@@ -111,30 +117,19 @@ module EndlessBinary =
                         | Bin.Valid v -> v
                         | Bin.Invalid _ -> ""
                 // Making an error message.
-                newErrorMessageBin
-                    $"%s{intToBinExpr num1}<sub>(%d{sourceRadix})</sub> + %s{intToBinExpr num2}<sub>(%d{sourceRadix})</sub>"
-                    input
-                    e
+                newErrorMessageBin $"%s{intToBinExpr num1}<sub>(2)</sub> + %s{intToBinExpr num2}<sub>(2)</sub>" input e
                 |> fun x -> (document.getElementById "errorArea").innerHTML <- x
             | Bin.Valid v ->
                 (document.getElementById "errorArea").innerHTML <- ""
-                // Converting the input in order to use in the history message.
-                let taggedBin = v |> tagger
 
-                let decDigit = 3
-
-                match Bin.Valid v |> Bin.toDec with
+                // Making a new history and updating the history with the new one.
+                match bin |> Bin.toDec with
                 | Dec.Invalid _ -> ()
                 | Dec.Valid dec ->
-
-                    let spacePaddedDec =
-                        dec |> string |> Fermata.String.padLeft decDigit ' ' |> escapeSpace
-
-                    // Making a new history and updating the history with the new one.
                     let outputArea = document.getElementById "outputArea"
 
                     let historyMessage =
-                        newHistory (dec = answer) taggedBin sourceRadix spacePaddedDec destinationRadix
+                        history (dec = answer) input
                         |> (fun x -> concatinateStrings "<br>" [ x; outputArea.innerHTML ])
 
                     outputArea.innerHTML <- historyMessage
@@ -155,45 +150,27 @@ module EndlessBinary =
                             ([ number1; number2 ] @ lastAnswers) |> List.truncate answersToKeep
 
                         // Setting the next answer to the check button.
-                        (document.getElementById "submitButton").onclick <-
-                            (fun e ->
+                        let f =
+                            fun (e: Event) ->
                                 e.preventDefault ()
 
                                 checkAnswer
                                     questionGenerator
                                     hintGenerator
-                                    tagger
                                     additional
-                                    sourceRadix
-                                    destinationRadix
                                     answersToKeep
                                     (number1 + number2)
                                     number1
                                     number2
-                                    lastAnswers')
+                                    lastAnswers'
 
-                        (document.getElementById "inputArea").onsubmit <-
-                            (fun e ->
-                                e.preventDefault ()
-
-                                checkAnswer
-                                    questionGenerator
-                                    hintGenerator
-                                    tagger
-                                    additional
-                                    sourceRadix
-                                    destinationRadix
-                                    answersToKeep
-                                    (number1 + number2)
-                                    number1
-                                    number2
-                                    lastAnswers')
+                        (document.getElementById "submitButton").onclick <- f
+                        (document.getElementById "inputArea").onsubmit <- f
 
 
         let init'
             (questionGenerator: int list -> int * int)
             (hintGenerator: unit -> string)
-            tagger
             (additional: 'c -> unit)
             sourceRadix
             destinationRadix
@@ -212,39 +189,22 @@ module EndlessBinary =
             let (number1, number2) = questionGenerator []
             setColumnAddition number1 number2
 
-            (document.getElementById "submitButton").onclick <-
-                (fun e ->
+            let f =
+                fun (e: Event) ->
                     e.preventDefault ()
 
                     checker
                         questionGenerator
                         hintGenerator
-                        tagger
                         additional
-                        sourceRadix
-                        destinationRadix
                         answersToKeep
                         (number1 + number2)
                         number1
                         number2
-                        [ number1; number2 ])
+                        [ number1; number2 ]
 
-            (document.getElementById "inputArea").onsubmit <-
-                (fun e ->
-                    e.preventDefault ()
-
-                    checker
-                        questionGenerator
-                        hintGenerator
-                        tagger
-                        additional
-                        sourceRadix
-                        destinationRadix
-                        answersToKeep
-                        (number1 + number2)
-                        number1
-                        number2
-                        [ number1; number2 ])
+            (document.getElementById "submitButton").onclick <- f
+            (document.getElementById "inputArea").onsubmit <- f
 
             (document.getElementById "helpButton").onclick <-
                 (fun _ ->
@@ -289,25 +249,7 @@ module EndlessBinary =
             (document.querySelector "#submitButton").className <- "addition"
             (document.querySelector "#questionArea").innerHTML <- Content.Common.columnAdditionFormat
 
-            init'
-                (question 8)
-                newHintAdd
-                (Fermata.String.padLeft 8 ' ' >> escapeSpace)
-                (fun n -> ())
-                2
-                2
-                10
-                EndlessBinary.keyboardshortcut
-                checkAnswer
+            init' (question 8) newHintAdd (fun n -> ()) 2 2 10 EndlessBinary.keyboardshortcut checkAnswer
 
         let init4 () =
-            init'
-                (question 4)
-                newHintAdd
-                (Fermata.String.padLeft 4 ' ' >> escapeSpace)
-                (fun n -> ())
-                2
-                2
-                5
-                EndlessBinary.keyboardshortcut
-                checkAnswer
+            init' (question 4) newHintAdd (fun n -> ()) 2 2 5 EndlessBinary.keyboardshortcut checkAnswer
