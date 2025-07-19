@@ -51,51 +51,34 @@ module EndlessBinary =
             hint
 
 
-        let rec checkAnswer (answer: int) (num1: int) (num2: int) (last_answers: int list) =
+        let rec checkAnswer (answer: int) (num1: int) (num2: int) (answersToKeep: int) (lastAnswers: int list) =
             // Getting the user input.
             let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
-            let input = numberInput.value |> escapeHtml
+            let input: string = numberInput.value |> escapeHtml
+            let bin: Bin = input |> Bin.validate
 
             numberInput.focus ()
 
-            let sourceRadix = 2
-
-            match Bin.validate input with
+            match bin with
             | Bin.Invalid e ->
                 let intToBinExpr (x: int) =
-                    x
-                    |> Dec.Valid
-                    |> Dec.toBin
-                    |> function
-                        | Bin.Valid v -> v
-                        | Bin.Invalid _ -> ""
+                    match Dec.Valid x |> Dec.toBin with
+                    | Bin.Valid v -> v
+                    | Bin.Invalid _ -> ""
                 // Making an error message.
-                newErrorMessageBin
-                    $"%s{intToBinExpr num1}<sub>(%d{sourceRadix})</sub> - %s{intToBinExpr num2}<sub>(%d{sourceRadix})</sub>"
-                    input
-                    e
+                newErrorMessageBin $"%s{intToBinExpr num1}<sub>(2)</sub> - %s{intToBinExpr num2}<sub>(2)</sub>" input e
                 |> fun x -> (document.getElementById "errorArea").innerHTML <- x
-            | Bin.Valid v ->
+            | Bin.Valid _ ->
                 (document.getElementById "errorArea").innerHTML <- ""
-                // Converting the input in order to use in the history message.
-                let binaryDigit = 8
-                let taggedBin: string = v |> Fermata.String.padLeft binaryDigit ' ' |> escapeSpace
 
-                let decDigit = 3
-                let dec: Dec = Bin.Valid v |> Bin.toDec
-
-                match dec with
+                // Making a new history and updating the history with the new one.
+                match bin |> Bin.toDec with
                 | Dec.Invalid _ -> ()
                 | Dec.Valid dec ->
-                    let spacePaddedDec =
-                        dec |> string |> Fermata.String.padLeft decDigit ' ' |> escapeSpace
-
-                    // Making a new history and updating the history with the new one.
-                    let destinationRadix = 10
                     let outputArea = document.getElementById "outputArea"
 
                     let historyMessage =
-                        newHistory (dec = answer) taggedBin sourceRadix spacePaddedDec destinationRadix
+                        Addition.history (dec = answer) input
                         |> (fun x -> concatinateStrings "<br>" [ x; outputArea.innerHTML ])
 
                     outputArea.innerHTML <- historyMessage
@@ -104,7 +87,7 @@ module EndlessBinary =
                         // Making the next question.
                         let (number1, number2) =
                             newNumber (fun _ -> newNumbersSub ()) (fun (n1, n2) ->
-                                List.contains n1 last_answers = false && List.contains n2 last_answers = false)
+                                List.contains n1 lastAnswers = false && List.contains n2 lastAnswers = false)
 
                         setColumnAddition number1 number2
 
@@ -115,19 +98,17 @@ module EndlessBinary =
 
                         // Updating `lastAnswers`.
                         // These numbers will not be used for the next question.
-                        let answersToKeep = Math.Min(20, List.length last_answers + 1)
-                        let lastAnswers = ([ number1; number2 ] @ last_answers).[0 .. (answersToKeep - 1)]
+                        let lastAnswers =
+                            ([ number1; number2 ] @ lastAnswers) |> List.truncate answersToKeep
 
                         // Setting the next answer to the check button.
-                        (document.getElementById "submitButton").onclick <-
-                            (fun e ->
+                        let f =
+                            fun (e: Event) ->
                                 e.preventDefault ()
-                                checkAnswer (number1 - number2) number1 number2 lastAnswers)
+                                checkAnswer (number1 - number2) number1 number2 answersToKeep lastAnswers
 
-                        (document.getElementById "inputArea").onsubmit <-
-                            (fun e ->
-                                e.preventDefault ()
-                                checkAnswer (number1 - number2) number1 number2 lastAnswers)
+                        (document.getElementById "submitButton").onclick <- f
+                        (document.getElementById "inputArea").onsubmit <- f
 
         let init () =
             // Initialization.
@@ -170,15 +151,13 @@ module EndlessBinary =
             let (number1, number2) = newNumbersSub ()
             setColumnAddition number1 number2
 
-            (document.getElementById "submitButton").onclick <-
-                (fun e ->
+            let f =
+                fun (e: Event) ->
                     e.preventDefault ()
-                    checkAnswer (number1 - number2) number1 number2 [ number1; number2 ])
+                    checkAnswer (number1 - number2) number1 number2 10 [ number1; number2 ]
 
-            (document.getElementById "inputArea").onsubmit <-
-                (fun e ->
-                    e.preventDefault ()
-                    checkAnswer (number1 - number2) number1 number2 [ number1; number2 ])
+            (document.getElementById "submitButton").onclick <- f
+            (document.getElementById "inputArea").onsubmit <- f
 
             (document.getElementById "helpButton").onclick <-
                 (fun _ ->
