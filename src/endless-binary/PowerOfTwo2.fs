@@ -47,7 +47,7 @@ module EndlessBinary =
         let additional _ : unit = ()
 
         let exec' (lastNumbers: int list) (answer: int) : unit =
-            Dec2Bin1.exec question hint newErrorMessageBin Dec2Bin1.history additional 4 lastNumbers answer
+            exec question hint newErrorMessageBin Dec2Bin1.history additional 4 lastNumbers answer
 
         let init () =
             document.title <- "2のn乗-1 - taidalab"

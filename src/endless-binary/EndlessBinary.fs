@@ -11,6 +11,7 @@ open Fable.Core
 open Fable.Core.JsInterop
 open Fermata
 open Fermata.RadixConversion
+open Taidalab.Text
 
 module EndlessBinary =
     module Home =
@@ -203,3 +204,72 @@ module EndlessBinary =
                     [ "helpWindow"; "helpBarrier" ]
                     |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore)
             | _ -> ()
+
+    let rec exec
+        (questionGenerator: int list -> int)
+        (hintGenerator: int -> string)
+        (errorGenerator: string -> string -> exn -> string)
+        (historyf: bool -> string -> string)
+        (additional: int -> unit)
+        (numbersToKeep: int)
+        (lastNumbers: int list)
+        (answer: int)
+        : unit =
+        // Getting the user input.
+        let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
+        let input: string = numberInput.value |> escapeHtml
+        let bin: Bin = input |> Bin.validate
+
+        numberInput.focus ()
+
+        match bin with
+        | Bin.Invalid e ->
+            // Making an error message.
+            (document.getElementById "errorArea").innerHTML <- errorGenerator (string answer) input e
+        | Bin.Valid v ->
+            (document.getElementById "errorArea").innerHTML <- ""
+
+            // Making a new history and updating the history with the new one.
+            let outputArea = document.getElementById "outputArea" :?> HTMLParagraphElement
+
+            match bin |> Bin.toDec with
+            | Dec.Invalid _ -> ()
+            | Dec.Valid d ->
+                let historyMessage =
+                    historyf (d = answer) v
+                    |> (fun x -> concatinateStrings "<br>" [ x; outputArea.innerHTML ])
+
+                outputArea.innerHTML <- historyMessage
+
+                if d <> answer then
+                    ()
+                else
+                    // Making the next question.
+                    let nextNumber: int = questionGenerator lastNumbers
+                    (document.getElementById "questionSpan").innerText <- string nextNumber
+                    (document.getElementById "hintArea").innerHTML <- hintGenerator nextNumber
+                    additional nextNumber
+
+                    numberInput.value <- ""
+
+                    // Updating `lastNumbers`.
+                    // These numbers will not be used for the next question.
+                    let lastNumbers' = (nextNumber :: lastNumbers) |> List.truncate numbersToKeep
+
+                    // Setting the next answer to the check button.
+                    let f =
+                        fun (e: Event) ->
+                            e.preventDefault ()
+
+                            exec
+                                questionGenerator
+                                hintGenerator
+                                errorGenerator
+                                historyf
+                                additional
+                                numbersToKeep
+                                lastNumbers'
+                                nextNumber
+
+                    (document.getElementById "submitButton").onclick <- f
+                    (document.getElementById "inputArea").onsubmit <- f
