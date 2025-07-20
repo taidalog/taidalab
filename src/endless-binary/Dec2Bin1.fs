@@ -261,6 +261,7 @@ module EndlessBinary =
             (questionGenerator: int list -> int)
             (hintGenerator: int -> string)
             (errorGenerator: string -> string -> exn -> string)
+            (historyf: bool -> string -> string)
             (additional: int -> unit)
             (numbersToKeep: int)
             (lastNumbers: int list)
@@ -287,7 +288,7 @@ module EndlessBinary =
                 | Dec.Invalid _ -> ()
                 | Dec.Valid d ->
                     let historyMessage =
-                        history (d = answer) v
+                        historyf (d = answer) v
                         |> (fun x -> concatinateStrings "<br>" [ x; outputArea.innerHTML ])
 
                     outputArea.innerHTML <- historyMessage
@@ -316,6 +317,7 @@ module EndlessBinary =
                                     questionGenerator
                                     hintGenerator
                                     errorGenerator
+                                    historyf
                                     additional
                                     numbersToKeep
                                     lastNumbers'
@@ -325,7 +327,7 @@ module EndlessBinary =
                         (document.getElementById "inputArea").onsubmit <- f
 
         let exec' (lastNumbers: int list) (answer: int) : unit =
-            exec (question 8) hint newErrorMessageBin additional 10 lastNumbers answer
+            exec (question 8) hint newErrorMessageBin history additional 10 lastNumbers answer
 
         let init'
             (questionGenerator: int list -> int)
