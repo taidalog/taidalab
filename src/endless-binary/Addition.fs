@@ -88,7 +88,7 @@ module EndlessBinary =
             | Dec.Valid v ->
                 let left = input |> Fermata.String.padLeft 8 ' ' |> escapeSpace
                 let right = v |> string |> Fermata.String.padLeft 4 ' ' |> escapeSpace
-                newHistory correct left 2 right 2
+                newHistory correct left 2 right 10
 
         let rec checkAnswer
             (questionGenerator: int list -> int * int)
