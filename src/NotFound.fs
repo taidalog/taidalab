@@ -16,8 +16,8 @@ module NotFound =
     let rec checkAnswer (answer: int) =
         // Getting the user input.
         let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
-        let input = numberInput.value |> escapeHtml
-        let bin = input |> Bin.validate
+        let input: string = numberInput.value |> escapeHtml
+        let bin: Bin = input |> Bin.validate
 
         numberInput.focus ()
 
@@ -27,25 +27,18 @@ module NotFound =
             (document.getElementById "errorArea").innerHTML <- newErrorMessageBin (string answer) input e
         | Bin.Valid v ->
             (document.getElementById "errorArea").innerHTML <- ""
-            // Converting the input in order to use in the history message.
-            let binaryDigit = 9
-            let destinationRadix = 2
-            let taggedBin = v |> Fermata.String.padLeft binaryDigit ' ' |> escapeSpace
 
             match Bin.toDec bin with
             | Dec.Invalid _ -> ()
             | Dec.Valid dec ->
-                let decimalDigit = 3
-
-                let spacePaddedDec =
-                    dec |> string |> Fermata.String.padLeft decimalDigit ' ' |> escapeSpace
-
                 // Making a new history and updating the history with the new one.
-                let sourceRadix = 10
                 let outputArea = document.getElementById "outputArea" :?> HTMLParagraphElement
 
                 let historyMessage =
-                    newHistory (dec = int answer) taggedBin destinationRadix spacePaddedDec sourceRadix
+                    let taggedBin = v |> Fermata.String.padLeft 9 ' ' |> escapeSpace
+                    let spacePaddedDec = dec |> string |> Fermata.String.padLeft 3 ' ' |> escapeSpace
+
+                    newHistory (dec = answer) taggedBin 2 spacePaddedDec 10
                     |> (fun x -> concatinateStrings "<br>" [ x; outputArea.innerHTML ])
 
                 outputArea.innerHTML <- historyMessage
