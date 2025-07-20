@@ -10,6 +10,7 @@ open Browser.Dom
 open Browser.Types
 open Taidalab.Number
 open Taidalab.Text
+open Taidalab.EndlessBinary
 open Fermata
 open Fermata.RadixConversion
 
@@ -61,82 +62,84 @@ module EndlessBinary =
                 </p>
             </details>"""
 
-        let rec checkAnswer (question: string) (answer: int) (last_answers: int list) =
+        let history (correct: bool) (input: string) : string =
+            let taggedInputValue = input |> Fermata.String.padLeft 4 '0'
+
+            let historyClassName =
+                if correct then
+                    "history history-correct"
+                else
+                    "history history-wrong"
+
+            $"""<span class ="%s{historyClassName}">%s{taggedInputValue}<sub>(2)</sub></span>"""
+
+        let rec checkAnswer (answer: int) (answersToKeep: int) (lastAnswers: int list) =
             // Getting the user input.
             let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
-            let input = numberInput.value |> escapeHtml
+            let input: string = numberInput.value |> escapeHtml
+            let bin: Bin = input |> Bin.validate
+
             numberInput.focus ()
 
-            match Bin.validate input with
+            match bin with
             | Bin.Invalid e ->
                 // Making an error message.
-                (document.getElementById "errorArea").innerHTML <- newErrorMessageComplement question input e
+                let q =
+                    match Dec.Valid(16 - answer) |> Dec.toBin with
+                    | Bin.Invalid _ -> ""
+                    | Bin.Valid v -> v |> string |> Fermata.String.padLeft 4 '0' |> escapeSpace
+
+                (document.getElementById "errorArea").innerHTML <- newErrorMessageComplement q input e
             | Bin.Valid v ->
                 (document.getElementById "errorArea").innerHTML <- ""
-                let dec: Dec = Bin.Valid v |> Bin.toDec
 
-                let historyClassName =
-                    if dec = Dec.Valid answer then
-                        "history history-correct"
-                    else
-                        "history history-wrong"
+                match bin |> Bin.toDec with
+                | Dec.Invalid _ -> ()
+                | Dec.Valid dec ->
+                    // Making a new history and updating the history with the new one.
+                    let outputArea = document.getElementById "outputArea"
 
-                // Converting the input in order to use in the history message.
-                let digit = 4
-                let taggedInputValue = v |> Fermata.String.padLeft digit '0'
-                let sourceRadix = 2
+                    let historyMessage =
+                        history (dec = answer) v
+                        |> (fun x -> concatinateStrings "<br>" [ x; outputArea.innerHTML ])
 
-                // Making a new history and updating the history with the new one.
-                let outputArea = document.getElementById "outputArea"
+                    outputArea.innerHTML <- historyMessage
 
-                let historyMessage =
-                    sprintf
-                        """<span class ="%s">%s<sub>(%d)</sub></span>"""
-                        historyClassName
-                        taggedInputValue
-                        sourceRadix
-                    |> (fun x -> concatinateStrings "<br>" [ x; outputArea.innerHTML ])
+                    if dec = answer then
+                        // Making the next question.
+                        let nextNumber =
+                            newNumber (fun _ -> getRandomBetween 1 15) (fun n -> List.contains n lastAnswers = false)
 
-                outputArea.innerHTML <- historyMessage
+                        let nextAnswer = 16 - nextNumber
 
-                if dec = Dec.Valid answer then
-                    // Making the next question.
-                    let nextNumber =
-                        newNumber (fun _ -> getRandomBetween 1 15) (fun n -> List.contains n last_answers = false)
+                        let nextBin =
+                            nextNumber
+                            |> Dec.Valid
+                            |> Dec.toBin
+                            |> function
+                                | Bin.Valid v -> v
+                                | Bin.Invalid _ -> ""
+                            |> Fermata.String.padLeft 4 '0'
 
-                    let nextAnswer = 16 - nextNumber
+                        (document.getElementById "questionSpan").innerText <- nextBin
 
-                    let nextBin =
-                        nextNumber
-                        |> Dec.Valid
-                        |> Dec.toBin
-                        |> function
-                            | Bin.Valid v -> v
-                            | Bin.Invalid _ -> ""
-                        |> Fermata.String.padLeft 4 '0'
+                        let reversedBin = nextBin |> String.collect (fun c -> if c = '1' then "0" else "1")
+                        (document.getElementById "hintArea").innerHTML <- hint nextBin reversedBin
 
-                    (document.getElementById "questionSpan").innerText <- nextBin
+                        numberInput.value <- ""
 
-                    let reversedBin = nextBin |> String.collect (fun c -> if c = '1' then "0" else "1")
-                    (document.getElementById "hintArea").innerHTML <- hint nextBin reversedBin
+                        // Updating `lastAnswers`.
+                        // These numbers will not be used for the next question.
+                        let lastAnswers = (nextNumber :: lastAnswers) |> List.truncate answersToKeep
 
-                    numberInput.value <- ""
+                        // Setting the next answer to the check button.
+                        let f =
+                            fun (e: Event) ->
+                                e.preventDefault ()
+                                checkAnswer nextAnswer answersToKeep lastAnswers
 
-                    // Updating `lastAnswers`.
-                    // These numbers will not be used for the next question.
-                    let answersToKeep = Math.Min(8, List.length last_answers + 1)
-                    let lastAnswers = (nextNumber :: last_answers).[0 .. (answersToKeep - 1)]
-
-                    // Setting the next answer to the check button.
-                    (document.getElementById "submitButton").onclick <-
-                        (fun e ->
-                            e.preventDefault ()
-                            checkAnswer nextBin nextAnswer lastAnswers)
-
-                    (document.getElementById "inputArea").onsubmit <-
-                        (fun e ->
-                            e.preventDefault ()
-                            checkAnswer nextBin nextAnswer lastAnswers)
+                        (document.getElementById "submitButton").onclick <- f
+                        (document.getElementById "inputArea").onsubmit <- f
 
         let init () =
             // Initialization.
@@ -186,15 +189,13 @@ module EndlessBinary =
             (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
             (document.getElementById "hintArea").innerHTML <- hint initBin reversedBin
 
-            (document.getElementById "submitButton").onclick <-
-                (fun e ->
+            let f =
+                fun (e: Event) ->
                     e.preventDefault ()
-                    checkAnswer initBin initAnswer [ initNumber ])
+                    checkAnswer initAnswer 10 [ initNumber ]
 
-            (document.getElementById "inputArea").onsubmit <-
-                (fun e ->
-                    e.preventDefault ()
-                    checkAnswer initBin initAnswer [ initNumber ])
+            (document.getElementById "submitButton").onclick <- f
+            (document.getElementById "inputArea").onsubmit <- f
 
             (document.getElementById "helpButton").onclick <-
                 (fun _ ->
