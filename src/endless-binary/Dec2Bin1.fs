@@ -258,7 +258,7 @@ module EndlessBinary =
                     (document.getElementById "hintDetails").setAttribute ("open", "true"))
 
         let exec' (lastNumbers: int list) (answer: int) : unit =
-            exec (question 8) hint newErrorMessageBin history additional 10 lastNumbers answer
+            exec newErrorMessageBin history (question 8) hint additional 10 lastNumbers answer
 
         let init'
             (questionGenerator: int list -> int)

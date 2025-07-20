@@ -206,10 +206,10 @@ module EndlessBinary =
             | _ -> ()
 
     let rec exec
-        (questionGenerator: int list -> int)
-        (hintGenerator: int -> string)
-        (errorGenerator: string -> string -> exn -> string)
+        (errorf: string -> string -> exn -> string)
         (historyf: bool -> string -> string)
+        (questionf: int list -> int)
+        (hintf: int -> string)
         (additional: int -> unit)
         (numbersToKeep: int)
         (lastNumbers: int list)
@@ -225,7 +225,7 @@ module EndlessBinary =
         match bin with
         | Bin.Invalid e ->
             // Making an error message.
-            (document.getElementById "errorArea").innerHTML <- errorGenerator (string answer) input e
+            (document.getElementById "errorArea").innerHTML <- errorf (string answer) input e
         | Bin.Valid v ->
             (document.getElementById "errorArea").innerHTML <- ""
 
@@ -245,9 +245,9 @@ module EndlessBinary =
                     ()
                 else
                     // Making the next question.
-                    let nextNumber: int = questionGenerator lastNumbers
+                    let nextNumber: int = questionf lastNumbers
                     (document.getElementById "questionSpan").innerText <- string nextNumber
-                    (document.getElementById "hintArea").innerHTML <- hintGenerator nextNumber
+                    (document.getElementById "hintArea").innerHTML <- hintf nextNumber
                     additional nextNumber
 
                     numberInput.value <- ""
@@ -261,15 +261,7 @@ module EndlessBinary =
                         fun (e: Event) ->
                             e.preventDefault ()
 
-                            exec
-                                questionGenerator
-                                hintGenerator
-                                errorGenerator
-                                historyf
-                                additional
-                                numbersToKeep
-                                lastNumbers'
-                                nextNumber
+                            exec errorf historyf questionf hintf additional numbersToKeep lastNumbers' nextNumber
 
                     (document.getElementById "submitButton").onclick <- f
                     (document.getElementById "inputArea").onsubmit <- f
