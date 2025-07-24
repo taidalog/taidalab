@@ -175,7 +175,7 @@ module EndlessBinary =
             // Getting the user input.
             let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
             let input: string = numberInput.value |> escapeHtml
-            let input': 'Radix = validator (input.ToLower())
+            let input': 'Radix = validator input
 
             numberInput.focus ()
 
