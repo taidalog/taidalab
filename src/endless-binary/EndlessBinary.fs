@@ -206,9 +206,12 @@ module EndlessBinary =
             | _ -> ()
 
     let rec exec
-        (errorf: string -> string -> exn -> string)
-        (historyf: bool -> string -> string)
+        (validator: string -> 'Radix)
+        (errorf: int -> string -> exn -> string)
+        (convertor: 'Radix -> Dec)
+        (historyf: bool -> 'T -> string)
         (questionf: int list -> int)
+        (questionSetter: int -> string)
         (hintf: int -> string)
         (additional: int -> unit)
         (numbersToKeep: int)
@@ -218,21 +221,21 @@ module EndlessBinary =
         // Getting the user input.
         let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
         let input: string = numberInput.value |> escapeHtml
-        let bin: Bin = input |> Bin.validate
+        let input': 'Radix = validator input
 
         numberInput.focus ()
 
-        match bin with
+        match input' with
         | Bin.Invalid e ->
             // Making an error message.
-            (document.getElementById "errorArea").innerHTML <- errorf (string answer) input e
+            (document.getElementById "errorArea").innerHTML <- errorf answer input e
         | Bin.Valid v ->
             (document.getElementById "errorArea").innerHTML <- ""
 
             // Making a new history and updating the history with the new one.
             let outputArea = document.getElementById "outputArea" :?> HTMLParagraphElement
 
-            match bin |> Bin.toDec with
+            match convertor input' with
             | Dec.Invalid _ -> ()
             | Dec.Valid d ->
                 let historyMessage =
@@ -246,8 +249,9 @@ module EndlessBinary =
                 else
                     // Making the next question.
                     let nextNumber: int = questionf lastNumbers
-                    (document.getElementById "questionSpan").innerText <- string nextNumber
+                    (document.getElementById "questionSpan").innerText <- questionSetter nextNumber
                     (document.getElementById "hintArea").innerHTML <- hintf nextNumber
+
                     additional nextNumber
 
                     numberInput.value <- ""
@@ -261,7 +265,18 @@ module EndlessBinary =
                         fun (e: Event) ->
                             e.preventDefault ()
 
-                            exec errorf historyf questionf hintf additional numbersToKeep lastNumbers' nextNumber
+                            exec
+                                validator
+                                errorf
+                                convertor
+                                historyf
+                                questionf
+                                questionSetter
+                                hintf
+                                additional
+                                numbersToKeep
+                                lastNumbers'
+                                nextNumber
 
                     (document.getElementById "submitButton").onclick <- f
                     (document.getElementById "inputArea").onsubmit <- f

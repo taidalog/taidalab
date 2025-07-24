@@ -177,7 +177,7 @@ module EndlessBinary =
 
         let rec exec
             (validator: string -> 'Radix)
-            (errorf: 'S -> string -> exn -> string)
+            (errorf: int -> string -> exn -> string)
             (convertor: 'Radix -> Dec)
             (historyf: bool -> 'T -> string)
             (questionGenerator: int list -> int)
@@ -205,7 +205,7 @@ module EndlessBinary =
                 // Making a new history and updating the history with the new one.
                 let outputArea = document.getElementById "outputArea"
 
-                match convertor input' with
+                match id input' with
                 | Dec.Invalid _ -> ()
                 | Dec.Valid d ->
                     let historyMessage =

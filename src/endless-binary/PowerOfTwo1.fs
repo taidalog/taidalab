@@ -38,7 +38,18 @@ module EndlessBinary =
         let additional _ : unit = ()
 
         let exec' (lastNumbers: int list) (answer: int) : unit =
-            exec newErrorMessageBin Dec2Bin1.history question hint additional 4 lastNumbers answer
+            exec
+                Bin.validate
+                Dec2Bin1.error
+                Bin.toDec
+                Dec2Bin1.history
+                question
+                string
+                hint
+                additional
+                4
+                lastNumbers
+                answer
 
         let init () =
             document.title <- "2のn乗 - taidalab"

@@ -139,6 +139,9 @@ module EndlessBinary =
         let question lastNumbers : int =
             newNumber (fun _ -> getRandomBetween 0 255) (fun n -> List.contains n lastNumbers = false)
 
+        let error (question: int) =
+            question |> string |> newErrorMessageHex
+
         let history (correct: bool) (input: string) : string =
             match input |> Hex.validate |> Hex.toDec with
             | Dec.Invalid _ -> ""
@@ -154,9 +157,16 @@ module EndlessBinary =
                     (document.getElementById "hintDetails").setAttribute ("open", "true"))
 
         let rec exec
-            (questionGenerator: int list -> int)
-            (hintGenerator: int -> string)
-            (errorGenerator: string -> string -> exn -> string)
+            // (questionGenerator: int list -> int)
+            // (hintGenerator: int -> string)
+            // (errorGenerator: string -> string -> exn -> string)
+            (validator: string -> 'Radix)
+            (errorf: int -> string -> exn -> string)
+            (convertor: 'Radix -> Dec)
+            (historyf: bool -> 'T -> string)
+            (questionf: int list -> int)
+            (questionSetter: int -> string)
+            (hintf: int -> string)
             (additional: int -> unit)
             (numbersToKeep: int)
             (lastNumbers: int list)
@@ -165,25 +175,25 @@ module EndlessBinary =
             // Getting the user input.
             let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
             let input: string = numberInput.value |> escapeHtml
-            let hex: Hex = Hex.validate (input.ToLower())
+            let input': 'Radix = validator (input.ToLower())
 
             numberInput.focus ()
 
-            match hex with
+            match input' with
             | Hex.Invalid e ->
                 // Making an error message.
-                (document.getElementById "errorArea").innerHTML <- errorGenerator (string answer) input e
+                (document.getElementById "errorArea").innerHTML <- errorf answer input e
             | Hex.Valid _ ->
                 (document.getElementById "errorArea").innerHTML <- ""
 
                 // Making a new history and updating the history with the new one.
                 let outputArea = document.getElementById "outputArea" :?> HTMLParagraphElement
 
-                match hex |> Hex.toDec with
+                match convertor input' with
                 | Dec.Invalid _ -> ()
                 | Dec.Valid d ->
                     let historyMessage =
-                        history (d = answer) input
+                        historyf (d = answer) input
                         |> (fun x -> concatinateStrings "<br>" [ x; outputArea.innerHTML ])
 
                     outputArea.innerHTML <- historyMessage
@@ -192,9 +202,9 @@ module EndlessBinary =
                         ()
                     else
                         // Making the next question.
-                        let nextNumber: int = questionGenerator lastNumbers
-                        (document.getElementById "questionSpan").innerText <- string nextNumber
-                        (document.getElementById "hintArea").innerHTML <- hintGenerator nextNumber
+                        let nextNumber: int = questionf lastNumbers
+                        (document.getElementById "questionSpan").innerText <- questionSetter nextNumber
+                        (document.getElementById "hintArea").innerHTML <- hintf nextNumber
                         additional nextNumber
 
                         numberInput.value <- ""
@@ -209,11 +219,15 @@ module EndlessBinary =
                                 e.preventDefault ()
 
                                 exec
-                                    questionGenerator
-                                    hintGenerator
-                                    errorGenerator
+                                    validator
+                                    errorf
+                                    convertor
+                                    historyf
+                                    questionf
+                                    questionSetter
+                                    hintf
                                     additional
-                                    nextNumber
+                                    numbersToKeep
                                     lastNumbers'
                                     nextNumber
 
@@ -221,7 +235,7 @@ module EndlessBinary =
                         (document.getElementById "inputArea").onsubmit <- f
 
         let exec' (lastNumbers: int list) (answer: int) : unit =
-            exec question hint newErrorMessageHex additional 10 lastNumbers answer
+            exec Hex.validate error Hex.toDec history question string hint additional 10 lastNumbers answer
 
         let init'
             (questionGenerator: int list -> int)

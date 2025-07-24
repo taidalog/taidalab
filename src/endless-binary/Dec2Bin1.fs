@@ -243,6 +243,9 @@ module EndlessBinary =
         let question (digit: int) (lastNumbers: int list) : int =
             newNumber (fun _ -> newNumberWithTwoOne 0 digit) (fun n -> List.contains n lastNumbers = false)
 
+        let error (question: int) =
+            question |> string |> newErrorMessageBin
+
         let history (correct: bool) (input: string) : string =
             match input |> Bin.validate |> Bin.toDec with
             | Dec.Invalid _ -> ""
@@ -258,7 +261,7 @@ module EndlessBinary =
                     (document.getElementById "hintDetails").setAttribute ("open", "true"))
 
         let exec' (lastNumbers: int list) (answer: int) : unit =
-            exec newErrorMessageBin history (question 8) hint additional 10 lastNumbers answer
+            exec Bin.validate error Bin.toDec history (question 8) string hint additional 10 lastNumbers answer
 
         let init'
             (questionGenerator: int list -> int)
