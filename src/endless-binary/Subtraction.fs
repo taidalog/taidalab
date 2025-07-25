@@ -55,60 +55,56 @@ module EndlessBinary =
             // Getting the user input.
             let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
             let input: string = numberInput.value |> escapeHtml
-            let bin: Bin = input |> Bin.validate
+            let input': Result<Bin, exn> = input |> Bin.validate
 
             numberInput.focus ()
 
-            match bin with
-            | Bin.Invalid e ->
-                let intToBinExpr (x: int) =
-                    match Dec.Valid x |> Dec.toBin with
-                    | Bin.Valid v -> v
-                    | Bin.Invalid _ -> ""
+            match input' with
+            | Error e ->
+                let intToBinExpr (x: int) = let (Bin v) = bin x in v
                 // Making an error message.
                 newErrorMessageBin $"%s{intToBinExpr num1}<sub>(2)</sub> - %s{intToBinExpr num2}<sub>(2)</sub>" input e
                 |> fun x -> (document.getElementById "errorArea").innerHTML <- x
-            | Bin.Valid _ ->
+            | Ok v ->
                 (document.getElementById "errorArea").innerHTML <- ""
 
+                let (Dec d) = Bin.toDec v
+
                 // Making a new history and updating the history with the new one.
-                match bin |> Bin.toDec with
-                | Dec.Invalid _ -> ()
-                | Dec.Valid dec ->
-                    let outputArea = document.getElementById "outputArea"
+                let outputArea = document.getElementById "outputArea"
 
-                    let historyMessage =
-                        Addition.history (dec = answer) input
-                        |> (fun x -> concatinateStrings "<br>" [ x; outputArea.innerHTML ])
+                let historyMessage =
+                    Addition.history (d = answer) input
+                    |> (fun x -> concatinateStrings "<br>" [ x; outputArea.innerHTML ])
 
-                    outputArea.innerHTML <- historyMessage
+                outputArea.innerHTML <- historyMessage
 
-                    if dec = answer then
-                        // Making the next question.
-                        let (number1, number2) =
-                            newNumber (fun _ -> newNumbersSub ()) (fun (n1, n2) ->
-                                List.contains n1 lastAnswers = false && List.contains n2 lastAnswers = false)
+                if d = answer then
+                    // Making the next question.
+                    let (number1, number2) =
+                        newNumber (fun _ -> newNumbersSub ()) (fun (n1, n2) ->
+                            List.contains n1 lastAnswers = false && List.contains n2 lastAnswers = false)
 
-                        setColumnAddition number1 number2
+                    setColumnAddition number1 number2
 
-                        let nextHint = newHintSub ()
-                        (document.getElementById "hintArea").innerHTML <- nextHint
+                    let nextHint = newHintSub ()
+                    (document.getElementById "hintArea").innerHTML <- nextHint
 
-                        numberInput.value <- ""
+                    numberInput.value <- ""
 
-                        // Updating `lastAnswers`.
-                        // These numbers will not be used for the next question.
-                        let lastAnswers =
-                            ([ number1; number2 ] @ lastAnswers) |> List.truncate answersToKeep
+                    // Updating `lastAnswers`.
+                    // These numbers will not be used for the next question.
+                    let lastAnswers =
+                        ([ number1; number2 ] @ lastAnswers) |> List.truncate answersToKeep
 
-                        // Setting the next answer to the check button.
-                        let f =
-                            fun (e: Event) ->
-                                e.preventDefault ()
-                                checkAnswer (number1 - number2) number1 number2 answersToKeep lastAnswers
+                    // Setting the next answer to the check button.
+                    let f =
+                        fun (e: Event) ->
+                            e.preventDefault ()
+                            checkAnswer (number1 - number2) number1 number2 answersToKeep lastAnswers
 
-                        (document.getElementById "submitButton").onclick <- f
-                        (document.getElementById "inputArea").onsubmit <- f
+                    (document.getElementById "submitButton").onclick <- f
+                    (document.getElementById "inputArea").onsubmit <- f
 
         let init () =
             // Initialization.

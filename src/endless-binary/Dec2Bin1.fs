@@ -141,7 +141,7 @@ module EndlessBinary =
             </div>
             """
 
-        let newHintRepeatAddition (dec: Dec) (power_of_twos: int list) : string =
+        let newHintRepeatAddition (dec': Dec) (power_of_twos: int list) : string =
             let additionDec = power_of_twos |> List.map string |> String.concat " + "
 
             let additionIndex =
@@ -152,25 +152,13 @@ module EndlessBinary =
 
             let additionBin =
                 power_of_twos
-                |> List.map (Dec.Valid >> Dec.toBin)
+                |> List.map bin
                 |> List.map (function
-                    | Bin.Valid v -> v
-                    | Bin.Invalid _ -> "")
-                |> List.map (fun x -> $"%s{x}<sub>(2)</sub>")
+                    | Bin v -> $"%s{v}<sub>(2)</sub>")
                 |> String.concat " + "
 
-            let bin: string =
-                dec
-                |> Dec.toBin
-                |> function
-                    | Bin.Valid v -> v
-                    | Bin.Invalid _ -> "-1"
-
-            let number: int =
-                dec
-                |> function
-                    | Dec.Valid v -> v
-                    | Dec.Invalid _ -> -1
+            let (Bin bin') = dec' |> Dec.toBin
+            let (Dec number) = dec'
 
             $"""
             <p class="history-indented">
@@ -209,7 +197,7 @@ module EndlessBinary =
             </p>
             <p class="history-indented hint-bgcolor-gray mono">
                 &nbsp;&nbsp;%s{additionBin}<br>
-                = %s{bin}<sub>(2)</sub>
+                = %s{bin'}<sub>(2)</sub>
             </p>
             <p class="history-indented">
                 になります。
@@ -223,7 +211,7 @@ module EndlessBinary =
                 <h3>考え方 1</h3>
                 %s{(newHintRepeatDivision 2 number)}
                 <h3>考え方 2</h3>
-                %s{(newHintRepeatAddition (Dec.Valid number) (devideIntoPowerOfTwo number))}
+                %s{(newHintRepeatAddition (Dec number) (devideIntoPowerOfTwo number))}
             </details>
             """
 
@@ -247,11 +235,12 @@ module EndlessBinary =
             question |> string |> newErrorMessageBin
 
         let history (correct: bool) (input: string) : string =
-            match input |> Bin.validate |> Bin.toDec with
-            | Dec.Invalid _ -> ""
-            | Dec.Valid v ->
+            match input |> Bin.validate with
+            | Error _ -> ""
+            | Ok v ->
+                let (Dec d) = Bin.toDec v
                 let colored = input |> Fermata.String.padLeft 8 ' ' |> escapeSpace
-                let spacePadded = v |> string |> Fermata.String.padLeft 3 ' ' |> escapeSpace
+                let spacePadded = d |> string |> Fermata.String.padLeft 3 ' ' |> escapeSpace
                 newHistory correct colored 2 spacePadded 10
 
         let additional number : unit =

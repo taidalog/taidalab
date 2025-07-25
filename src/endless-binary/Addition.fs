@@ -47,20 +47,16 @@ module EndlessBinary =
                     (fun _ -> getRandomBetween 1 max)
                     (if digit < 4 then
                          (fun n ->
-                             Dec.Valid n
-                             |> Dec.toBin
+                             n
+                             |> bin
                              |> function
-                                 | Bin.Valid v -> v
-                                 | Bin.Invalid _ -> ""
+                                 | Bin v -> v
                              |> String.length = digit)
                      else
                          (fun n ->
                              let pattern = "^1+0+$"
-                             let bin = Dec.Valid n |> Dec.toBin
-
-                             match bin with
-                             | Bin.Invalid _ -> false
-                             | Bin.Valid v -> (String.length v = digit) && (Regex.isMatch pattern v) = false))
+                             let (Bin v) = bin n
+                             (String.length v = digit) && (Regex.isMatch pattern v) = false))
 
             let number2 =
                 let max' = if digit < 4 then max else max - number1
@@ -83,11 +79,12 @@ module EndlessBinary =
                      (fun (x, y) -> List.contains x lastAnswers = false && List.contains y lastAnswers = false))
 
         let history (correct: bool) (input: string) : string =
-            match input |> Bin.validate |> Bin.toDec with
-            | Dec.Invalid _ -> ""
-            | Dec.Valid v ->
+            match input |> Bin.validate with
+            | Error _ -> ""
+            | Ok v ->
+                let (Dec d) = Bin.toDec v
                 let left = input |> Fermata.String.padLeft 8 ' ' |> escapeSpace
-                let right = v |> string |> Fermata.String.padLeft 4 ' ' |> escapeSpace
+                let right = d |> string |> Fermata.String.padLeft 4 ' ' |> escapeSpace
                 newHistory correct left 2 right 10
 
         let rec checkAnswer
@@ -103,69 +100,62 @@ module EndlessBinary =
             // Getting the user input.
             let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
             let input: string = numberInput.value |> escapeHtml
-            let bin: Bin = input |> Bin.validate
+            let input': Result<Bin, exn> = input |> Bin.validate
 
             numberInput.focus ()
 
-            match bin with
-            | Bin.Invalid e ->
-                let intToBinExpr (x: int) =
-                    x
-                    |> Dec.Valid
-                    |> Dec.toBin
-                    |> function
-                        | Bin.Valid v -> v
-                        | Bin.Invalid _ -> ""
+            match input' with
+            | Error e ->
+                let intToBinExpr (x: int) = let (Bin v) = bin x in v
                 // Making an error message.
                 newErrorMessageBin $"%s{intToBinExpr num1}<sub>(2)</sub> + %s{intToBinExpr num2}<sub>(2)</sub>" input e
                 |> fun x -> (document.getElementById "errorArea").innerHTML <- x
-            | Bin.Valid v ->
+            | Ok v ->
                 (document.getElementById "errorArea").innerHTML <- ""
 
+                let (Dec d) = Bin.toDec v
+
                 // Making a new history and updating the history with the new one.
-                match bin |> Bin.toDec with
-                | Dec.Invalid _ -> ()
-                | Dec.Valid dec ->
-                    let outputArea = document.getElementById "outputArea"
+                let outputArea = document.getElementById "outputArea"
 
-                    let historyMessage =
-                        history (dec = answer) input
-                        |> (fun x -> concatinateStrings "<br>" [ x; outputArea.innerHTML ])
+                let historyMessage =
+                    history (d = answer) input
+                    |> (fun x -> concatinateStrings "<br>" [ x; outputArea.innerHTML ])
 
-                    outputArea.innerHTML <- historyMessage
+                outputArea.innerHTML <- historyMessage
 
-                    if dec = answer then
-                        // Making the next question.
-                        let (number1, number2) = questionGenerator lastAnswers
+                if d = answer then
+                    // Making the next question.
+                    let (number1, number2) = questionGenerator lastAnswers
 
-                        setColumnAddition number1 number2
+                    setColumnAddition number1 number2
 
-                        (document.getElementById "hintArea").innerHTML <- hintGenerator ()
+                    (document.getElementById "hintArea").innerHTML <- hintGenerator ()
 
-                        numberInput.value <- ""
+                    numberInput.value <- ""
 
-                        // Updating `lastAnswers`.
-                        // These numbers will not be used for the next question.
-                        let lastAnswers' =
-                            ([ number1; number2 ] @ lastAnswers) |> List.truncate answersToKeep
+                    // Updating `lastAnswers`.
+                    // These numbers will not be used for the next question.
+                    let lastAnswers' =
+                        ([ number1; number2 ] @ lastAnswers) |> List.truncate answersToKeep
 
-                        // Setting the next answer to the check button.
-                        let f =
-                            fun (e: Event) ->
-                                e.preventDefault ()
+                    // Setting the next answer to the check button.
+                    let f =
+                        fun (e: Event) ->
+                            e.preventDefault ()
 
-                                checkAnswer
-                                    questionGenerator
-                                    hintGenerator
-                                    additional
-                                    answersToKeep
-                                    (number1 + number2)
-                                    number1
-                                    number2
-                                    lastAnswers'
+                            checkAnswer
+                                questionGenerator
+                                hintGenerator
+                                additional
+                                answersToKeep
+                                (number1 + number2)
+                                number1
+                                number2
+                                lastAnswers'
 
-                        (document.getElementById "submitButton").onclick <- f
-                        (document.getElementById "inputArea").onsubmit <- f
+                    (document.getElementById "submitButton").onclick <- f
+                    (document.getElementById "inputArea").onsubmit <- f
 
 
         let init'

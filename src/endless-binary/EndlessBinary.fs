@@ -126,31 +126,25 @@ module EndlessBinary =
         </div>
         """
 
-    let splitBinaryStringBy digit bin =
-        match bin with
-        | Bin.Invalid _ -> ""
-        | Bin.Valid v -> v |> String.chunkBySizeRight digit |> Seq.toList |> String.concat " "
+    let splitBinaryStringBy (digit: int) (Bin v) : string =
+        v |> String.chunkBySizeRight digit |> Seq.toList |> String.concat " "
 
     open Browser.Dom
 
-    let setColumnAddition (number1: int) (number2: int) =
+    let setColumnAddition (number1: int) (number2: int) : unit =
         let bin1 =
             number1
-            |> Dec.Valid
-            |> Dec.toBin
+            |> bin
             |> function
-                | Bin.Valid v -> v
-                | Bin.Invalid _ -> ""
+                | Bin v -> v
             |> Seq.map string
             |> Seq.padLeft 8 ""
 
         let bin2 =
             number2
-            |> Dec.Valid
-            |> Dec.toBin
+            |> bin
             |> function
-                | Bin.Valid v -> v
-                | Bin.Invalid _ -> ""
+                | Bin v -> v
             |> Seq.map string
             |> Seq.padLeft 8 ""
 
@@ -206,10 +200,10 @@ module EndlessBinary =
             | _ -> ()
 
     let rec exec
-        (validator: string -> 'Radix)
+        (validator: string -> Result<'Radix, exn>)
         (errorf: int -> string -> exn -> string)
         (convertor: 'Radix -> Dec)
-        (historyf: bool -> 'T -> string)
+        (historyf: bool -> string -> string)
         (questionf: int list -> int)
         (questionSetter: int -> string)
         (hintf: int -> string)
@@ -221,62 +215,61 @@ module EndlessBinary =
         // Getting the user input.
         let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
         let input: string = numberInput.value |> escapeHtml
-        let input': 'Radix = validator input
+        let input': Result<'Radix, exn> = validator input
 
         numberInput.focus ()
 
         match input' with
-        | Bin.Invalid e ->
+        | Error e ->
             // Making an error message.
             (document.getElementById "errorArea").innerHTML <- errorf answer input e
-        | Bin.Valid v ->
+        | Ok(v: 'Radix) ->
             (document.getElementById "errorArea").innerHTML <- ""
+
+            let (Dec d) = convertor v
 
             // Making a new history and updating the history with the new one.
             let outputArea = document.getElementById "outputArea" :?> HTMLParagraphElement
 
-            match convertor input' with
-            | Dec.Invalid _ -> ()
-            | Dec.Valid d ->
-                let historyMessage =
-                    historyf (d = answer) v
-                    |> (fun x -> concatinateStrings "<br>" [ x; outputArea.innerHTML ])
+            let historyMessage =
+                historyf (d = answer) input
+                |> (fun x -> concatinateStrings "<br>" [ x; outputArea.innerHTML ])
 
-                outputArea.innerHTML <- historyMessage
+            outputArea.innerHTML <- historyMessage
 
-                if d <> answer then
-                    ()
-                else
-                    // Making the next question.
-                    let nextNumber: int = questionf lastNumbers
-                    (document.getElementById "questionSpan").innerText <- questionSetter nextNumber
-                    (document.getElementById "hintArea").innerHTML <- hintf nextNumber
+            if d <> answer then
+                ()
+            else
+                // Making the next question.
+                let nextNumber: int = questionf lastNumbers
+                (document.getElementById "questionSpan").innerText <- questionSetter nextNumber
+                (document.getElementById "hintArea").innerHTML <- hintf nextNumber
 
-                    additional nextNumber
+                additional nextNumber
 
-                    numberInput.value <- ""
+                numberInput.value <- ""
 
-                    // Updating `lastNumbers`.
-                    // These numbers will not be used for the next question.
-                    let lastNumbers' = (nextNumber :: lastNumbers) |> List.truncate numbersToKeep
+                // Updating `lastNumbers`.
+                // These numbers will not be used for the next question.
+                let lastNumbers' = (nextNumber :: lastNumbers) |> List.truncate numbersToKeep
 
-                    // Setting the next answer to the check button.
-                    let f =
-                        fun (e: Event) ->
-                            e.preventDefault ()
+                // Setting the next answer to the check button.
+                let f =
+                    fun (e: Event) ->
+                        e.preventDefault ()
 
-                            exec
-                                validator
-                                errorf
-                                convertor
-                                historyf
-                                questionf
-                                questionSetter
-                                hintf
-                                additional
-                                numbersToKeep
-                                lastNumbers'
-                                nextNumber
+                        exec
+                            validator
+                            errorf
+                            convertor
+                            historyf
+                            questionf
+                            questionSetter
+                            hintf
+                            additional
+                            numbersToKeep
+                            lastNumbers'
+                            nextNumber
 
-                    (document.getElementById "submitButton").onclick <- f
-                    (document.getElementById "inputArea").onsubmit <- f
+                (document.getElementById "submitButton").onclick <- f
+                (document.getElementById "inputArea").onsubmit <- f

@@ -143,12 +143,17 @@ module EndlessBinary =
             question |> string |> newErrorMessageHex
 
         let history (correct: bool) (input: string) : string =
-            match input |> Hex.validate |> Hex.toDec with
-            | Dec.Invalid _ -> ""
-            | Dec.Valid v ->
-                let colored = input |> Fermata.String.padLeft 4 ' ' |> escapeSpace
-                let spacePadded = v |> string |> Fermata.String.padLeft 3 ' ' |> escapeSpace
-                newHistory correct colored 16 spacePadded 10
+            let v =
+                match input |> Hex.validate with
+                | Error _ -> -1
+                | Ok v ->
+                    Hex.toDec v
+                    |> function
+                        | Dec v -> v
+
+            let colored = input |> Fermata.String.padLeft 4 ' ' |> escapeSpace
+            let spacePadded = v |> string |> Fermata.String.padLeft 3 ' ' |> escapeSpace
+            newHistory correct colored 16 spacePadded 10
 
         let additional number : unit =
             (document.getElementById "hint1").onclick <-
@@ -160,10 +165,10 @@ module EndlessBinary =
             // (questionGenerator: int list -> int)
             // (hintGenerator: int -> string)
             // (errorGenerator: string -> string -> exn -> string)
-            (validator: string -> 'Radix)
+            (validator: string -> Result<'Radix, exn>)
             (errorf: int -> string -> exn -> string)
             (convertor: 'Radix -> Dec)
-            (historyf: bool -> 'T -> string)
+            (historyf: bool -> string -> string)
             (questionf: int list -> int)
             (questionSetter: int -> string)
             (hintf: int -> string)
@@ -175,64 +180,63 @@ module EndlessBinary =
             // Getting the user input.
             let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
             let input: string = numberInput.value |> escapeHtml
-            let input': 'Radix = validator input
+            let input': Result<'Radix, exn> = validator input
 
             numberInput.focus ()
 
             match input' with
-            | Hex.Invalid e ->
+            | Error e ->
                 // Making an error message.
                 (document.getElementById "errorArea").innerHTML <- errorf answer input e
-            | Hex.Valid _ ->
+            | Ok v ->
                 (document.getElementById "errorArea").innerHTML <- ""
+
+                let (Dec d) = convertor v
 
                 // Making a new history and updating the history with the new one.
                 let outputArea = document.getElementById "outputArea" :?> HTMLParagraphElement
 
-                match convertor input' with
-                | Dec.Invalid _ -> ()
-                | Dec.Valid d ->
-                    let historyMessage =
-                        historyf (d = answer) input
-                        |> (fun x -> concatinateStrings "<br>" [ x; outputArea.innerHTML ])
+                let historyMessage =
+                    historyf (d = answer) input
+                    |> (fun x -> concatinateStrings "<br>" [ x; outputArea.innerHTML ])
 
-                    outputArea.innerHTML <- historyMessage
+                outputArea.innerHTML <- historyMessage
 
-                    if d <> answer then
-                        ()
-                    else
-                        // Making the next question.
-                        let nextNumber: int = questionf lastNumbers
-                        (document.getElementById "questionSpan").innerText <- questionSetter nextNumber
-                        (document.getElementById "hintArea").innerHTML <- hintf nextNumber
-                        additional nextNumber
+                if d <> answer then
+                    ()
+                else
+                    // Making the next question.
+                    let nextNumber: int = questionf lastNumbers
+                    (document.getElementById "questionSpan").innerText <- questionSetter nextNumber
+                    (document.getElementById "hintArea").innerHTML <- hintf nextNumber
+                    additional nextNumber
 
-                        numberInput.value <- ""
+                    numberInput.value <- ""
 
-                        // Updating `lastNumbers`.
-                        // These numbers will not be used for the next question.
-                        let lastNumbers' = (nextNumber :: lastNumbers) |> List.truncate numbersToKeep
+                    // Updating `lastNumbers`.
+                    // These numbers will not be used for the next question.
+                    let lastNumbers' = (nextNumber :: lastNumbers) |> List.truncate numbersToKeep
 
-                        // Setting the next answer to the check button.
-                        let f =
-                            fun (e: Event) ->
-                                e.preventDefault ()
+                    // Setting the next answer to the check button.
+                    let f =
+                        fun (e: Event) ->
+                            e.preventDefault ()
 
-                                exec
-                                    validator
-                                    errorf
-                                    convertor
-                                    historyf
-                                    questionf
-                                    questionSetter
-                                    hintf
-                                    additional
-                                    numbersToKeep
-                                    lastNumbers'
-                                    nextNumber
+                            exec
+                                validator
+                                errorf
+                                convertor
+                                historyf
+                                questionf
+                                questionSetter
+                                hintf
+                                additional
+                                numbersToKeep
+                                lastNumbers'
+                                nextNumber
 
-                        (document.getElementById "submitButton").onclick <- f
-                        (document.getElementById "inputArea").onsubmit <- f
+                    (document.getElementById "submitButton").onclick <- f
+                    (document.getElementById "inputArea").onsubmit <- f
 
         let exec' (lastNumbers: int list) (answer: int) : unit =
             exec Hex.validate error Hex.toDec history question string hint additional 10 lastNumbers answer

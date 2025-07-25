@@ -17,37 +17,37 @@ module NotFound =
         // Getting the user input.
         let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
         let input: string = numberInput.value |> escapeHtml
-        let bin: Bin = input |> Bin.validate
+        let input': Result<Bin, exn> = input |> Bin.validate
 
         numberInput.focus ()
 
-        match bin with
-        | Bin.Invalid e ->
+        match input' with
+        | Error e ->
             // Making an error message.
             (document.getElementById "errorArea").innerHTML <- newErrorMessageBin (string answer) input e
-        | Bin.Valid v ->
+        | Ok v ->
             (document.getElementById "errorArea").innerHTML <- ""
 
-            match Bin.toDec bin with
-            | Dec.Invalid _ -> ()
-            | Dec.Valid dec ->
-                // Making a new history and updating the history with the new one.
-                let outputArea = document.getElementById "outputArea" :?> HTMLParagraphElement
+            let (Dec d) = Bin.toDec v
 
-                let historyMessage =
-                    let taggedBin = v |> Fermata.String.padLeft 9 ' ' |> escapeSpace
-                    let spacePaddedDec = dec |> string |> Fermata.String.padLeft 3 ' ' |> escapeSpace
+            // Making a new history and updating the history with the new one.
+            let outputArea = document.getElementById "outputArea" :?> HTMLParagraphElement
 
-                    newHistory (dec = answer) taggedBin 2 spacePaddedDec 10
-                    |> (fun x -> concatinateStrings "<br>" [ x; outputArea.innerHTML ])
+            let historyMessage =
+                let (Bin b) = v
+                let taggedBin = b |> Fermata.String.padLeft 9 ' ' |> escapeSpace
+                let spacePaddedDec = d |> string |> Fermata.String.padLeft 3 ' ' |> escapeSpace
 
-                outputArea.innerHTML <- historyMessage
+                newHistory (d = answer) taggedBin 2 spacePaddedDec 10
+                |> (fun x -> concatinateStrings "<br>" [ x; outputArea.innerHTML ])
 
-                if dec <> int answer then
-                    ()
-                else
-                    window.history.replaceState (null, "", "http://localhost:8080/taidalab/")
-                    Home.init ()
+            outputArea.innerHTML <- historyMessage
+
+            if d <> answer then
+                ()
+            else
+                window.history.replaceState (null, "", "http://localhost:8080/taidalab/")
+                Home.init ()
 
 
     let init () =

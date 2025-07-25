@@ -36,7 +36,7 @@ module EndlessBinary =
             else
                 """<span class="warning">不明なエラーです。</span>"""
 
-        let hint bin reversedBin =
+        let hint bin' reversedBin =
             $"""
             <details><summary><h2>ヒント:</h2></summary>
                 <p class="history-indented">
@@ -56,9 +56,9 @@ module EndlessBinary =
                     2の補数を求めるには、元の2進数の各ビットの<br>
                     <span class="complement marker">0 と 1 を反転させた数に 1 を足します。</span><br>
                     今回の問題で説明すると、<br>
-                    %s{bin}<sub>(2)</sub> の 0 と 1 を反転させると<br>
+                    %s{bin'}<sub>(2)</sub> の 0 と 1 を反転させると<br>
                     %s{reversedBin}<sub>(2)</sub> になります。これに 1 を足したものが<br>
-                    %s{bin}<sub>(2)</sub> の2の補数です。
+                    %s{bin'}<sub>(2)</sub> の2の補数です。
                 </p>
             </details>"""
 
@@ -77,69 +77,62 @@ module EndlessBinary =
             // Getting the user input.
             let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
             let input: string = numberInput.value |> escapeHtml
-            let bin: Bin = input |> Bin.validate
+            let input': Result<Bin, exn> = input |> Bin.validate
 
             numberInput.focus ()
 
-            match bin with
-            | Bin.Invalid e ->
+            match input' with
+            | Error e ->
                 // Making an error message.
                 let q =
-                    match Dec.Valid(16 - answer) |> Dec.toBin with
-                    | Bin.Invalid _ -> ""
-                    | Bin.Valid v -> v |> string |> Fermata.String.padLeft 4 '0' |> escapeSpace
+                    match bin (16 - answer) with
+                    | Bin v -> v |> string |> Fermata.String.padLeft 4 '0' |> escapeSpace
 
                 (document.getElementById "errorArea").innerHTML <- newErrorMessageComplement q input e
-            | Bin.Valid v ->
+            | Ok v ->
                 (document.getElementById "errorArea").innerHTML <- ""
 
-                match bin |> Bin.toDec with
-                | Dec.Invalid _ -> ()
-                | Dec.Valid dec ->
-                    // Making a new history and updating the history with the new one.
-                    let outputArea = document.getElementById "outputArea"
+                let (Dec d) = Bin.toDec v
 
-                    let historyMessage =
-                        history (dec = answer) v
-                        |> (fun x -> concatinateStrings "<br>" [ x; outputArea.innerHTML ])
+                // Making a new history and updating the history with the new one.
+                let outputArea = document.getElementById "outputArea"
 
-                    outputArea.innerHTML <- historyMessage
+                let historyMessage =
+                    history (d = answer) input
+                    |> (fun x -> concatinateStrings "<br>" [ x; outputArea.innerHTML ])
 
-                    if dec = answer then
-                        // Making the next question.
-                        let nextNumber =
-                            newNumber (fun _ -> getRandomBetween 1 15) (fun n -> List.contains n lastAnswers = false)
+                outputArea.innerHTML <- historyMessage
 
-                        let nextAnswer = 16 - nextNumber
+                if d = answer then
+                    // Making the next question.
+                    let nextNumber: int =
+                        newNumber (fun _ -> getRandomBetween 1 15) (fun n -> List.contains n lastAnswers = false)
 
-                        let nextBin =
-                            nextNumber
-                            |> Dec.Valid
-                            |> Dec.toBin
-                            |> function
-                                | Bin.Valid v -> v
-                                | Bin.Invalid _ -> ""
-                            |> Fermata.String.padLeft 4 '0'
+                    let nextAnswer: int = 16 - nextNumber
 
-                        (document.getElementById "questionSpan").innerText <- nextBin
+                    let nextBin: string =
+                        let (Bin v) = bin nextNumber
+                        Fermata.String.padLeft 4 '0' v
 
-                        let reversedBin = nextBin |> String.collect (fun c -> if c = '1' then "0" else "1")
-                        (document.getElementById "hintArea").innerHTML <- hint nextBin reversedBin
+                    (document.getElementById "questionSpan").innerText <- nextBin
 
-                        numberInput.value <- ""
+                    let reversedBin = nextBin |> String.collect (fun c -> if c = '1' then "0" else "1")
+                    (document.getElementById "hintArea").innerHTML <- hint nextBin reversedBin
 
-                        // Updating `lastAnswers`.
-                        // These numbers will not be used for the next question.
-                        let lastAnswers = (nextNumber :: lastAnswers) |> List.truncate answersToKeep
+                    numberInput.value <- ""
 
-                        // Setting the next answer to the check button.
-                        let f =
-                            fun (e: Event) ->
-                                e.preventDefault ()
-                                checkAnswer nextAnswer answersToKeep lastAnswers
+                    // Updating `lastAnswers`.
+                    // These numbers will not be used for the next question.
+                    let lastAnswers = (nextNumber :: lastAnswers) |> List.truncate answersToKeep
 
-                        (document.getElementById "submitButton").onclick <- f
-                        (document.getElementById "inputArea").onsubmit <- f
+                    // Setting the next answer to the check button.
+                    let f =
+                        fun (e: Event) ->
+                            e.preventDefault ()
+                            checkAnswer nextAnswer answersToKeep lastAnswers
+
+                    (document.getElementById "submitButton").onclick <- f
+                    (document.getElementById "inputArea").onsubmit <- f
 
         let init () =
             // Initialization.
@@ -175,13 +168,8 @@ module EndlessBinary =
             let initAnswer = 16 - initNumber
 
             let initBin =
-                initNumber
-                |> Dec.Valid
-                |> Dec.toBin
-                |> function
-                    | Bin.Valid v -> v
-                    | Bin.Invalid _ -> ""
-                |> Fermata.String.padLeft 4 '0'
+                let (Bin v) = bin initNumber
+                Fermata.String.padLeft 4 '0' v
 
             let reversedBin = initBin |> String.collect (fun c -> if c = '1' then "0" else "1")
             (document.getElementById "questionSpan").innerText <- initBin
