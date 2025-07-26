@@ -78,6 +78,10 @@ module EndlessBinary =
                  else
                      (fun (x, y) -> List.contains x lastAnswers = false && List.contains y lastAnswers = false))
 
+        let questionExpression (x: int, y: int) : string =
+            let intToBinExpr (x: int) = let (Bin v) = bin x in v
+            $"%s{intToBinExpr x}<sub>(2)</sub> + %s{intToBinExpr y}<sub>(2)</sub>"
+
         let history (correct: bool) (input: string) : string =
             match input |> Bin.validate with
             | Error _ -> ""
@@ -88,14 +92,16 @@ module EndlessBinary =
                 newHistory correct left 2 right 10
 
         let rec checkAnswer
-            (questionGenerator: int list -> int * int)
-            (hintGenerator: unit -> string)
-            (additional: 'c -> unit)
+            (questionf: int list -> int * int)
+            (questionExpressionf: int * int -> string)
+            (hintf: unit -> string)
+            (collumnf: int -> int -> unit)
+            (answerf: int -> int -> int)
             (answersToKeep: int)
-            (answer: int)
+            (lastAnswers: int list)
             (num1: int)
             (num2: int)
-            (lastAnswers: int list)
+            (answer: int)
             =
             // Getting the user input.
             let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
@@ -106,10 +112,9 @@ module EndlessBinary =
 
             match input' with
             | Error e ->
-                let intToBinExpr (x: int) = let (Bin v) = bin x in v
                 // Making an error message.
-                newErrorMessageBin $"%s{intToBinExpr num1}<sub>(2)</sub> + %s{intToBinExpr num2}<sub>(2)</sub>" input e
-                |> fun x -> (document.getElementById "errorArea").innerHTML <- x
+                (document.getElementById "errorArea").innerHTML <-
+                    newErrorMessageBin (questionExpressionf (num1, num2)) input e
             | Ok v ->
                 (document.getElementById "errorArea").innerHTML <- ""
 
@@ -126,11 +131,11 @@ module EndlessBinary =
 
                 if d = answer then
                     // Making the next question.
-                    let (number1, number2) = questionGenerator lastAnswers
+                    let (number1, number2) = questionf lastAnswers
 
-                    setColumnAddition number1 number2
+                    collumnf number1 number2
 
-                    (document.getElementById "hintArea").innerHTML <- hintGenerator ()
+                    (document.getElementById "hintArea").innerHTML <- hintf ()
 
                     numberInput.value <- ""
 
@@ -145,27 +150,29 @@ module EndlessBinary =
                             e.preventDefault ()
 
                             checkAnswer
-                                questionGenerator
-                                hintGenerator
-                                additional
+                                questionf
+                                questionExpressionf
+                                hintf
+                                collumnf
+                                answerf
                                 answersToKeep
-                                (number1 + number2)
+                                lastAnswers'
                                 number1
                                 number2
-                                lastAnswers'
+                                (answerf number1 number2)
 
                     (document.getElementById "submitButton").onclick <- f
                     (document.getElementById "inputArea").onsubmit <- f
 
 
         let init'
-            (questionGenerator: int list -> int * int)
-            (hintGenerator: unit -> string)
-            (additional: 'c -> unit)
+            (questionf: int list -> int * int)
+            (questionExpressionf: int * int -> string)
+            (hintf: unit -> string)
             sourceRadix
             destinationRadix
             (answersToKeep: int)
-            (keyboardshortcutSetter: KeyboardEvent -> unit)
+            (keyboardshortcut: KeyboardEvent -> unit)
             checker
             : unit =
             // Initialization.
@@ -174,9 +181,9 @@ module EndlessBinary =
             (document.getElementById "firstRowSrcRadix").innerText <- sprintf "(%d)" sourceRadix
             (document.getElementById "secondRowSrcRadix").innerText <- sprintf "(%d)" sourceRadix
             (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
-            (document.getElementById "hintArea").innerHTML <- hintGenerator ()
+            (document.getElementById "hintArea").innerHTML <- hintf ()
 
-            let (number1, number2) = questionGenerator []
+            let (number1, number2) = questionf []
             setColumnAddition number1 number2
 
             let f =
@@ -184,14 +191,16 @@ module EndlessBinary =
                     e.preventDefault ()
 
                     checker
-                        questionGenerator
-                        hintGenerator
-                        additional
+                        questionf
+                        questionExpressionf
+                        hintf
+                        setColumnAddition
+                        (+)
                         answersToKeep
-                        (number1 + number2)
+                        [ number1; number2 ]
                         number1
                         number2
-                        [ number1; number2 ]
+                        (number1 + number2)
 
             (document.getElementById "submitButton").onclick <- f
             (document.getElementById "inputArea").onsubmit <- f
@@ -211,7 +220,7 @@ module EndlessBinary =
                     [ "helpWindow"; "helpBarrier" ]
                     |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore))
 
-            document.onkeydown <- (fun (e: KeyboardEvent) -> keyboardshortcutSetter e)
+            document.onkeydown <- (fun (e: KeyboardEvent) -> keyboardshortcut e)
 
         let init () =
             document.title <- "加算 - taidalab"
@@ -239,7 +248,7 @@ module EndlessBinary =
             (document.querySelector "#submitButton").className <- "addition"
             (document.querySelector "#questionArea").innerHTML <- Content.Common.columnAdditionFormat
 
-            init' (question 8) newHintAdd (fun n -> ()) 2 2 10 EndlessBinary.keyboardshortcut checkAnswer
+            init' (question 8) questionExpression newHintAdd 2 2 10 EndlessBinary.keyboardshortcut checkAnswer
 
         let init4 () =
-            init' (question 4) newHintAdd (fun n -> ()) 2 2 5 EndlessBinary.keyboardshortcut checkAnswer
+            init' (question 4) questionExpression newHintAdd 2 2 5 EndlessBinary.keyboardshortcut checkAnswer
