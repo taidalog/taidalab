@@ -146,80 +146,6 @@ module EndlessBinary =
 
         let additional _ = ()
 
-        let rec checkAnswer
-            (validator: string -> Result<'Radix, exn>)
-            (errorf: int -> string -> exn -> string)
-            (convertor: 'Radix -> Dec)
-            (historyf: bool -> string -> string)
-            (questionf: int list -> int)
-            (questionSetter: int -> string)
-            (hintf: int -> string)
-            (additional: int -> unit)
-            (numbersToKeep: int)
-            (lastAnswers: int list)
-            (answer: int)
-            : unit =
-            // Getting the user input.
-            let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
-            let input: string = numberInput.value |> escapeHtml
-            let input': Result<'Radix, exn> = validator input
-
-            numberInput.focus ()
-
-            match input' with
-            | Error e ->
-                // Making an error message.
-                (document.getElementById "errorArea").innerHTML <- errorf answer input e
-            | Ok v ->
-                (document.getElementById "errorArea").innerHTML <- ""
-
-                let (Dec d) = convertor v
-
-                // Making a new history and updating the history with the new one.
-                let outputArea = document.getElementById "outputArea"
-
-                let historyMessage =
-                    historyf (d = answer) input
-                    |> (fun x -> concatinateStrings "<br>" [ x; outputArea.innerHTML ])
-
-                outputArea.innerHTML <- historyMessage
-
-                if d = answer then
-                    // Making the next question.
-                    let nextNumber: int = questionf lastAnswers
-                    // newNumber (fun _ -> getRandomBetween 0 255) (fun n -> List.contains n lastAnswers = false)
-                    (document.getElementById "questionSpan").innerText <- questionSetter nextNumber
-                    (document.getElementById "hintArea").innerHTML <- hintf nextNumber
-
-                    additional nextNumber
-
-                    numberInput.value <- ""
-
-                    // Updating `lastAnswers`.
-                    // These numbers will not be used for the next question.
-                    let lastNumbers = (nextNumber :: lastAnswers) |> List.truncate numbersToKeep
-
-                    // Setting the next answer to the check button.
-                    let f =
-                        fun (e: Event) ->
-                            e.preventDefault ()
-
-                            checkAnswer
-                                validator
-                                errorf
-                                convertor
-                                historyf
-                                questionf
-                                questionSetter
-                                hintf
-                                additional
-                                numbersToKeep
-                                lastAnswers
-                                nextNumber
-
-                    (document.getElementById "submitButton").onclick <- f
-                    (document.getElementById "inputArea").onsubmit <- f
-
         let init () =
             // Initialization.
             document.title <- "16進数→10進数 - taidalab"
@@ -267,7 +193,7 @@ module EndlessBinary =
                 fun (e: Event) ->
                     e.preventDefault ()
 
-                    checkAnswer
+                    exec
                         Dec.validate
                         error
                         id
