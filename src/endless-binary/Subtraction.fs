@@ -58,79 +58,6 @@ module EndlessBinary =
             let intToBinExpr (x: int) = let (Bin v) = bin x in v
             $"%s{intToBinExpr x}<sub>(2)</sub> - %s{intToBinExpr y}<sub>(2)</sub>"
 
-        let rec checkAnswer
-            (questionf: int list -> int * int)
-            (questionExpressionf: int * int -> string)
-            (hintf: unit -> string)
-            (collumnf: int -> int -> unit)
-            (answerf: int -> int -> int)
-            (answersToKeep: int)
-            (lastAnswers: int list)
-            (num1: int)
-            (num2: int)
-            (answer: int)
-            : unit =
-            // Getting the user input.
-            let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
-            let input: string = numberInput.value |> escapeHtml
-            let input': Result<Bin, exn> = input |> Bin.validate
-
-            numberInput.focus ()
-
-            match input' with
-            | Error e ->
-                // Making an error message.
-                (document.getElementById "errorArea").innerHTML <-
-                    newErrorMessageBin (questionExpressionf (num1, num2)) input e
-            | Ok v ->
-                (document.getElementById "errorArea").innerHTML <- ""
-
-                let (Dec d) = Bin.toDec v
-
-                // Making a new history and updating the history with the new one.
-                let outputArea = document.getElementById "outputArea"
-
-                let historyMessage =
-                    Addition.history (d = answer) input
-                    |> (fun x -> concatinateStrings "<br>" [ x; outputArea.innerHTML ])
-
-                outputArea.innerHTML <- historyMessage
-
-                if d = answer then
-                    // Making the next question.
-                    let (number1, number2) = questionf lastAnswers
-
-                    collumnf number1 number2
-
-                    (document.getElementById "hintArea").innerHTML <- hintf ()
-
-                    numberInput.value <- ""
-
-                    // Updating `lastAnswers`.
-                    // These numbers will not be used for the next question.
-                    let lastAnswers' =
-                        ([ number1; number2 ] @ lastAnswers) |> List.truncate answersToKeep
-
-                    // Setting the next answer to the check button.
-                    let f =
-                        fun (e: Event) ->
-                            e.preventDefault ()
-
-                            checkAnswer
-                                questionf
-                                questionExpressionf
-                                hintf
-                                collumnf
-                                answerf
-                                answersToKeep
-                                lastAnswers'
-                                number1
-                                number2
-                                (answerf number1 number2)
-
-                    (document.getElementById "submitButton").onclick <- f
-                    (document.getElementById "inputArea").onsubmit <- f
-
         let init () =
             // Initialization.
             document.title <- "減算 - taidalab"
@@ -176,7 +103,7 @@ module EndlessBinary =
                 fun (e: Event) ->
                     e.preventDefault ()
 
-                    checkAnswer
+                    Addition.checkAnswer
                         question
                         questionExpression
                         newHintSub
