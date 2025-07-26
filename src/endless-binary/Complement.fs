@@ -36,6 +36,10 @@ module EndlessBinary =
             else
                 """<span class="warning">不明なエラーです。</span>"""
 
+        let fourBitsBinString (x: int) : string =
+            let (Bin v) = bin x
+            Fermata.String.padLeft 4 '0' v
+
         let hint bin' reversedBin =
             $"""
             <details><summary><h2>ヒント:</h2></summary>
@@ -62,6 +66,21 @@ module EndlessBinary =
                 </p>
             </details>"""
 
+        let hint' x =
+            let b: string = fourBitsBinString x
+            let r = b |> String.collect (fun c -> if c = '1' then "0" else "1")
+            hint b r
+
+        let question' (lastAnswers: int list) : int =
+            newNumber (fun _ -> getRandomBetween 1 15) (fun n -> List.contains n lastAnswers = false)
+
+        let error (question: int) =
+            let q =
+                let (Bin v) = bin (16 - question)
+                v |> Fermata.String.padLeft 4 '0' |> escapeSpace
+
+            newErrorMessageComplement q
+
         let history (correct: bool) (input: string) : string =
             let taggedInputValue = input |> Fermata.String.padLeft 4 '0'
 
@@ -72,67 +91,6 @@ module EndlessBinary =
                     "history history-wrong"
 
             $"""<span class ="%s{historyClassName}">%s{taggedInputValue}<sub>(2)</sub></span>"""
-
-        let rec checkAnswer (answer: int) (answersToKeep: int) (lastAnswers: int list) =
-            // Getting the user input.
-            let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
-            let input: string = numberInput.value |> escapeHtml
-            let input': Result<Bin, exn> = input |> Bin.validate
-
-            numberInput.focus ()
-
-            match input' with
-            | Error e ->
-                // Making an error message.
-                let q =
-                    match bin (16 - answer) with
-                    | Bin v -> v |> string |> Fermata.String.padLeft 4 '0' |> escapeSpace
-
-                (document.getElementById "errorArea").innerHTML <- newErrorMessageComplement q input e
-            | Ok v ->
-                (document.getElementById "errorArea").innerHTML <- ""
-
-                let (Dec d) = Bin.toDec v
-
-                // Making a new history and updating the history with the new one.
-                let outputArea = document.getElementById "outputArea"
-
-                let historyMessage =
-                    history (d = answer) input
-                    |> (fun x -> concatinateStrings "<br>" [ x; outputArea.innerHTML ])
-
-                outputArea.innerHTML <- historyMessage
-
-                if d = answer then
-                    // Making the next question.
-                    let nextNumber: int =
-                        newNumber (fun _ -> getRandomBetween 1 15) (fun n -> List.contains n lastAnswers = false)
-
-                    let nextAnswer: int = 16 - nextNumber
-
-                    let nextBin: string =
-                        let (Bin v) = bin nextNumber
-                        Fermata.String.padLeft 4 '0' v
-
-                    (document.getElementById "questionSpan").innerText <- nextBin
-
-                    let reversedBin = nextBin |> String.collect (fun c -> if c = '1' then "0" else "1")
-                    (document.getElementById "hintArea").innerHTML <- hint nextBin reversedBin
-
-                    numberInput.value <- ""
-
-                    // Updating `lastAnswers`.
-                    // These numbers will not be used for the next question.
-                    let lastAnswers = (nextNumber :: lastAnswers) |> List.truncate answersToKeep
-
-                    // Setting the next answer to the check button.
-                    let f =
-                        fun (e: Event) ->
-                            e.preventDefault ()
-                            checkAnswer nextAnswer answersToKeep lastAnswers
-
-                    (document.getElementById "submitButton").onclick <- f
-                    (document.getElementById "inputArea").onsubmit <- f
 
         let init () =
             // Initialization.
@@ -165,7 +123,6 @@ module EndlessBinary =
             let destinationRadix = 2
 
             let initNumber = getRandomBetween 1 15
-            let initAnswer = 16 - initNumber
 
             let initBin =
                 let (Bin v) = bin initNumber
@@ -180,7 +137,19 @@ module EndlessBinary =
             let f =
                 fun (e: Event) ->
                     e.preventDefault ()
-                    checkAnswer initAnswer 10 [ initNumber ]
+                    // checkAnswer initAnswer 10 [ initNumber ]
+                    exec
+                        Bin.validate
+                        error
+                        Bin.toDec
+                        history
+                        question'
+                        (((-) 16) >> fourBitsBinString)
+                        hint'
+                        (fun _ -> ())
+                        10
+                        [ initNumber ]
+                        (16 - initNumber)
 
             (document.getElementById "submitButton").onclick <- f
             (document.getElementById "inputArea").onsubmit <- f
