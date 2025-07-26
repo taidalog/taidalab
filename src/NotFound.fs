@@ -13,7 +13,7 @@ open Fermata.RadixConversion
 
 module NotFound =
 
-    let rec checkAnswer (answer: int) =
+    let rec exec (answer: int) =
         // Getting the user input.
         let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
         let input: string = numberInput.value |> escapeHtml
@@ -89,9 +89,9 @@ module NotFound =
         (document.getElementById "submitButton").onclick <-
             (fun e ->
                 e.preventDefault ()
-                checkAnswer initNumber)
+                exec initNumber)
 
         (document.getElementById "inputArea").onsubmit <-
             (fun e ->
                 e.preventDefault ()
-                checkAnswer initNumber)
+                exec initNumber)
