@@ -102,7 +102,7 @@ module EndlessBinary =
             (num1: int)
             (num2: int)
             (answer: int)
-            =
+            : unit =
             // Getting the user input.
             let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
             let input: string = numberInput.value |> escapeHtml
