@@ -91,7 +91,7 @@ module EndlessBinary =
                 let right = d |> string |> Fermata.String.padLeft 4 ' ' |> escapeSpace
                 newHistory correct left 2 right 10
 
-        let rec checkAnswer
+        let rec exec
             (questionf: int list -> int * int)
             (questionExpressionf: int * int -> string)
             (hintf: unit -> string)
@@ -149,7 +149,7 @@ module EndlessBinary =
                         fun (e: Event) ->
                             e.preventDefault ()
 
-                            checkAnswer
+                            exec
                                 questionf
                                 questionExpressionf
                                 hintf
@@ -169,11 +169,11 @@ module EndlessBinary =
             (questionf: int list -> int * int)
             (questionExpressionf: int * int -> string)
             (hintf: unit -> string)
-            sourceRadix
-            destinationRadix
+            (sourceRadix: int)
+            (destinationRadix: int)
             (answersToKeep: int)
             (keyboardshortcut: KeyboardEvent -> unit)
-            checker
+            executor
             : unit =
             // Initialization.
             (document.getElementById "numberInput").className <- "question-number"
@@ -190,7 +190,7 @@ module EndlessBinary =
                 fun (e: Event) ->
                     e.preventDefault ()
 
-                    checker
+                    executor
                         questionf
                         questionExpressionf
                         hintf
@@ -248,7 +248,7 @@ module EndlessBinary =
             (document.querySelector "#submitButton").className <- "addition"
             (document.querySelector "#questionArea").innerHTML <- Content.Common.columnAdditionFormat
 
-            init' (question 8) questionExpression newHintAdd 2 2 10 EndlessBinary.keyboardshortcut checkAnswer
+            init' (question 8) questionExpression newHintAdd 2 2 10 EndlessBinary.keyboardshortcut exec
 
         let init4 () =
-            init' (question 4) questionExpression newHintAdd 2 2 5 EndlessBinary.keyboardshortcut checkAnswer
+            init' (question 4) questionExpression newHintAdd 2 2 5 EndlessBinary.keyboardshortcut exec

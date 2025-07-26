@@ -103,7 +103,7 @@ module EndlessBinary =
                 fun (e: Event) ->
                     e.preventDefault ()
 
-                    Addition.checkAnswer
+                    Addition.exec
                         question
                         questionExpression
                         newHintSub
