@@ -200,6 +200,7 @@ module EndlessBinary =
                         history
                         (question 8)
                         questionSetter
+                        id
                         hint'
                         additional
                         10

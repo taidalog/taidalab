@@ -164,6 +164,7 @@ module EndlessBinary =
                 history'
                 question'
                 (fun x -> splitBinaryStringBy 4 (Dec x |> Dec.toBin))
+                id
                 hint
                 additional
                 4

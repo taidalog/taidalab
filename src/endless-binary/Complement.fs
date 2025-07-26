@@ -40,7 +40,7 @@ module EndlessBinary =
             let (Bin v) = bin x
             Fermata.String.padLeft 4 '0' v
 
-        let hint bin' reversedBin =
+        let hint (bin': string) (reversedBin: string) : string =
             $"""
             <details><summary><h2>ヒント:</h2></summary>
                 <p class="history-indented">
@@ -66,9 +66,9 @@ module EndlessBinary =
                 </p>
             </details>"""
 
-        let hint' x =
+        let hint' (x: int) : string =
             let b: string = fourBitsBinString x
-            let r = b |> String.collect (fun c -> if c = '1' then "0" else "1")
+            let r: string = b |> String.collect (fun c -> if c = '1' then "0" else "1")
             hint b r
 
         let question' (lastAnswers: int list) : int =
@@ -123,12 +123,9 @@ module EndlessBinary =
             let destinationRadix = 2
 
             let initNumber = getRandomBetween 1 15
-
-            let initBin =
-                let (Bin v) = bin initNumber
-                Fermata.String.padLeft 4 '0' v
-
+            let initBin = fourBitsBinString initNumber
             let reversedBin = initBin |> String.collect (fun c -> if c = '1' then "0" else "1")
+
             (document.getElementById "questionSpan").innerText <- initBin
             (document.getElementById "srcRadix").innerText <- sprintf "(%d)" sourceRadix
             (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
@@ -144,7 +141,8 @@ module EndlessBinary =
                         Bin.toDec
                         history
                         question'
-                        (((-) 16) >> fourBitsBinString)
+                        fourBitsBinString
+                        ((-) 16)
                         hint'
                         (fun _ -> ())
                         10

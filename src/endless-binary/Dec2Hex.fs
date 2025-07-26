@@ -162,7 +162,7 @@ module EndlessBinary =
                     (document.getElementById "hintDetails").setAttribute ("open", "true"))
 
         let exec' (lastNumbers: int list) (answer: int) : unit =
-            exec Hex.validate error Hex.toDec history question string hint additional 10 lastNumbers answer
+            exec Hex.validate error Hex.toDec history question string id hint additional 10 lastNumbers answer
 
         let init'
             (questionGenerator: int list -> int)

@@ -206,6 +206,7 @@ module EndlessBinary =
         (historyf: bool -> string -> string)
         (questionf: int list -> int)
         (questionSetter: int -> string)
+        (answerf: int -> int)
         (hintf: int -> string)
         (additional: int -> unit)
         (numbersToKeep: int)
@@ -265,11 +266,12 @@ module EndlessBinary =
                             historyf
                             questionf
                             questionSetter
+                            answerf
                             hintf
                             additional
                             numbersToKeep
                             lastNumbers'
-                            nextNumber
+                            (answerf nextNumber)
 
                 (document.getElementById "submitButton").onclick <- f
                 (document.getElementById "inputArea").onsubmit <- f

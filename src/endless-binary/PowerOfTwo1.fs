@@ -45,6 +45,7 @@ module EndlessBinary =
                 Dec2Bin1.history
                 question
                 string
+                id
                 hint
                 additional
                 4
