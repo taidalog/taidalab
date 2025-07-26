@@ -137,7 +137,7 @@ module EndlessBinary =
             let f =
                 fun (e: Event) ->
                     e.preventDefault ()
-                    // checkAnswer initAnswer 10 [ initNumber ]
+
                     exec
                         Bin.validate
                         error
