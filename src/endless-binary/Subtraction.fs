@@ -50,8 +50,26 @@ module EndlessBinary =
 
             hint
 
+        let question (lastAnswers: int list) : int * int =
+            newNumber (fun _ -> newNumbersSub ()) (fun (n1, n2) ->
+                List.contains n1 lastAnswers = false && List.contains n2 lastAnswers = false)
 
-        let rec checkAnswer (answer: int) (num1: int) (num2: int) (answersToKeep: int) (lastAnswers: int list) =
+        let questionExpression (x: int, y: int) : string =
+            let intToBinExpr (x: int) = let (Bin v) = bin x in v
+            $"%s{intToBinExpr x}<sub>(2)</sub> - %s{intToBinExpr y}<sub>(2)</sub>"
+
+        let rec checkAnswer
+            (questionf: int list -> int * int)
+            (questionExpressionf: int * int -> string)
+            (hintf: unit -> string)
+            (collumnf: int -> int -> unit)
+            (answerf: int -> int -> int)
+            (answersToKeep: int)
+            (lastAnswers: int list)
+            (num1: int)
+            (num2: int)
+            (answer: int)
+            : unit =
             // Getting the user input.
             let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
             let input: string = numberInput.value |> escapeHtml
@@ -61,10 +79,9 @@ module EndlessBinary =
 
             match input' with
             | Error e ->
-                let intToBinExpr (x: int) = let (Bin v) = bin x in v
                 // Making an error message.
-                newErrorMessageBin $"%s{intToBinExpr num1}<sub>(2)</sub> - %s{intToBinExpr num2}<sub>(2)</sub>" input e
-                |> fun x -> (document.getElementById "errorArea").innerHTML <- x
+                (document.getElementById "errorArea").innerHTML <-
+                    newErrorMessageBin (questionExpressionf (num1, num2)) input e
             | Ok v ->
                 (document.getElementById "errorArea").innerHTML <- ""
 
@@ -81,27 +98,35 @@ module EndlessBinary =
 
                 if d = answer then
                     // Making the next question.
-                    let (number1, number2) =
-                        newNumber (fun _ -> newNumbersSub ()) (fun (n1, n2) ->
-                            List.contains n1 lastAnswers = false && List.contains n2 lastAnswers = false)
+                    let (number1, number2) = questionf lastAnswers
 
-                    setColumnAddition number1 number2
+                    collumnf number1 number2
 
-                    let nextHint = newHintSub ()
-                    (document.getElementById "hintArea").innerHTML <- nextHint
+                    (document.getElementById "hintArea").innerHTML <- hintf ()
 
                     numberInput.value <- ""
 
                     // Updating `lastAnswers`.
                     // These numbers will not be used for the next question.
-                    let lastAnswers =
+                    let lastAnswers' =
                         ([ number1; number2 ] @ lastAnswers) |> List.truncate answersToKeep
 
                     // Setting the next answer to the check button.
                     let f =
                         fun (e: Event) ->
                             e.preventDefault ()
-                            checkAnswer (number1 - number2) number1 number2 answersToKeep lastAnswers
+
+                            checkAnswer
+                                questionf
+                                questionExpressionf
+                                hintf
+                                collumnf
+                                answerf
+                                answersToKeep
+                                lastAnswers'
+                                number1
+                                number2
+                                (answerf number1 number2)
 
                     (document.getElementById "submitButton").onclick <- f
                     (document.getElementById "inputArea").onsubmit <- f
@@ -150,7 +175,18 @@ module EndlessBinary =
             let f =
                 fun (e: Event) ->
                     e.preventDefault ()
-                    checkAnswer (number1 - number2) number1 number2 10 [ number1; number2 ]
+
+                    checkAnswer
+                        question
+                        questionExpression
+                        newHintSub
+                        setColumnAddition
+                        (-)
+                        10
+                        [ number1; number2 ]
+                        number1
+                        number2
+                        (number1 - number2)
 
             (document.getElementById "submitButton").onclick <- f
             (document.getElementById "inputArea").onsubmit <- f
