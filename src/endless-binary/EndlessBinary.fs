@@ -3,7 +3,7 @@
 // Copyright (c) 2022-2025 taidalog
 // This software is licensed under the MIT License.
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
-namespace Taidalab
+namespace Taidalab.EndlessBinary
 
 open System
 open Browser.Types
@@ -13,66 +13,65 @@ open Fermata
 open Fermata.RadixConversion
 open Taidalab.Text
 
-module EndlessBinary =
-    module Home =
-        let main =
-            """
-            <form class="button-container">
-                <button type="button" id="buttonED2B1" class="course-button-d2b1">10進数→2進数 (1)</button>
-                <button type="button" id="buttonED2B2" class="course-button-d2b2">10進数→2進数 (2)</button>
-                <button type="button" id="buttonEB2D1" class="course-button-b2d1">2進数→10進数 (1)</button>
-                <button type="button" id="buttonEB2D2" class="course-button-b2d2">2進数→10進数 (2)</button>
-                <button type="button" id="buttonEPOT1" class="course-button-pot1">2のn乗</button>
-                <button type="button" id="buttonEPOT2" class="course-button-pot2">2のn乗-1</button>
-                <button type="button" id="buttonEBAD" class="course-button-add">加算</button>
-                <button type="button" id="buttonEBSB" class="course-button-sub">減算</button>
-                <button type="button" id="buttonECMP" class="course-button-cmp">補数</button>
-                <button type="button" id="buttonED2H" class="course-button-d2h">10進数→16進数</button>
-                <button type="button" id="buttonEH2D" class="course-button-d2h">16進数→10進数</button>
-            </form>"""
+module Home =
+    let main =
+        """
+        <form class="button-container">
+            <button type="button" id="buttonED2B1" class="course-button-d2b1">10進数→2進数 (1)</button>
+            <button type="button" id="buttonED2B2" class="course-button-d2b2">10進数→2進数 (2)</button>
+            <button type="button" id="buttonEB2D1" class="course-button-b2d1">2進数→10進数 (1)</button>
+            <button type="button" id="buttonEB2D2" class="course-button-b2d2">2進数→10進数 (2)</button>
+            <button type="button" id="buttonEPOT1" class="course-button-pot1">2のn乗</button>
+            <button type="button" id="buttonEPOT2" class="course-button-pot2">2のn乗-1</button>
+            <button type="button" id="buttonEBAD" class="course-button-add">加算</button>
+            <button type="button" id="buttonEBSB" class="course-button-sub">減算</button>
+            <button type="button" id="buttonECMP" class="course-button-cmp">補数</button>
+            <button type="button" id="buttonED2H" class="course-button-d2h">10進数→16進数</button>
+            <button type="button" id="buttonEH2D" class="course-button-d2h">16進数→10進数</button>
+        </form>"""
 
-    module Course =
-        let main help colorClass =
-            $"""
-            <span id="questionArea" class="question-area"></span>
-            <form id="inputArea" class="endless-binary" autocomplete="off">
-                <input type="text" id="numberInput" class="mono">
-                <span id="binaryRadix"></span>
-                <button type="button" id="submitButton" class="d2b-button">Enter</button>
-                <div id="errorArea" class="error-area"></div>
-                <div id="hintArea" class="hint-area"></div>
-            </form>
-            <div class="history-area">
-                <h2>結果:</h2>
-                <div class="history-indented mono">
-                    <span id="outputArea"></span>
-                </div>
+module Course =
+    let main help colorClass =
+        $"""
+        <span id="questionArea" class="question-area"></span>
+        <form id="inputArea" class="endless-binary" autocomplete="off">
+            <input type="text" id="numberInput" class="mono">
+            <span id="binaryRadix"></span>
+            <button type="button" id="submitButton" class="d2b-button">Enter</button>
+            <div id="errorArea" class="error-area"></div>
+            <div id="hintArea" class="hint-area"></div>
+        </form>
+        <div class="history-area">
+            <h2>結果:</h2>
+            <div class="history-indented mono">
+                <span id="outputArea"></span>
             </div>
-            <div id="helpWindow" class="help-window">
-                <div class="help-close-outer">
-                    <span id="helpClose" class="material-symbols-outlined help-close %s{colorClass}" translate="no">
-                        close
-                    </span>
-                </div>
-                %s{help}
-            </div>"""
+        </div>
+        <div id="helpWindow" class="help-window">
+            <div class="help-close-outer">
+                <span id="helpClose" class="material-symbols-outlined help-close %s{colorClass}" translate="no">
+                    close
+                </span>
+            </div>
+            %s{help}
+        </div>"""
 
-        let main404 =
-            """
-            <span id="questionArea" class="question-area"></span>
-            <form id="inputArea" class="endless-binary" autocomplete="off">
-                <input type="text" id="numberInput" class="mono">
-                <span id="binaryRadix"></span>
-                <button type="button" id="submitButton" class="d2b-button">Enter</button>
-                <div id="errorArea" class="error-area"></div>
-                <div id="hintArea" class="hint-area"></div>
-            </form>
-            <div class="history-area">
-                <h2>結果:</h2>
-                <div class="history-indented mono">
-                    <span id="outputArea"></span>
-                </div>
-            </div>"""
+    let main404 =
+        """
+        <span id="questionArea" class="question-area"></span>
+        <form id="inputArea" class="endless-binary" autocomplete="off">
+            <input type="text" id="numberInput" class="mono">
+            <span id="binaryRadix"></span>
+            <button type="button" id="submitButton" class="d2b-button">Enter</button>
+            <div id="errorArea" class="error-area"></div>
+            <div id="hintArea" class="hint-area"></div>
+        </form>
+        <div class="history-area">
+            <h2>結果:</h2>
+            <div class="history-indented mono">
+                <span id="outputArea"></span>
+            </div>
+        </div>"""
 
     let newErrorMessageBin (question: string) (input: string) (error: exn) =
         if String.IsNullOrWhiteSpace input then

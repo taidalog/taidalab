@@ -3,134 +3,134 @@
 // Copyright (c) 2022-2025 taidalog
 // This software is licensed under the MIT License.
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
-namespace Taidalab
+namespace Taidalab.EndlessBinary
 
 open System
 open Browser.Dom
 open Browser.Types
+open Taidalab
 open Taidalab.Number
 open Taidalab.Text
-open Taidalab.EndlessBinary
+open Taidalab.EndlessBinary.Course
 open Fermata.RadixConversion
 
-module EndlessBinary =
-    module Subtraction =
-        let help =
+module Subtraction =
+    let help =
+        """
+        2進数同士の引き算をエンドレスで練習できます。<br>
+        出題範囲は m, n (2 &le; m + n &le; 255) で、繰り下がりもあります。<br>
+        ヒント付きなので、考え方も身に付けられます。
+        """
+
+    let newNumbersSub () =
+        let number1 = getRandomBetween 1 255
+
+        let number2 =
+            newNumber (fun _ -> getRandomBetween 1 255) (fun n -> (n <> number1) && ((n &&& number1) <> 0))
+
+        if number1 > number2 then
+            (number1, number2)
+        else
+            (number2, number1)
+
+
+    let newHintSub () =
+        let hint =
             """
-            2進数同士の引き算をエンドレスで練習できます。<br>
-            出題範囲は m, n (2 &le; m + n &le; 255) で、繰り下がりもあります。<br>
-            ヒント付きなので、考え方も身に付けられます。
-            """
+            <details><summary><h2>ヒント:</h2></summary>
+                <p class="history-indented">
+                    10進数の筆算と同じように、右端から上下の数で引き算をします。<br><br>
+                    0<sub>(2)</sub> - 0<sub>(2)</sub> = 0<sub>(2)</sub><br>
+                    1<sub>(2)</sub> - 1<sub>(2)</sub> = 0<sub>(2)</sub><br>
+                    1<sub>(2)</sub> - 0<sub>(2)</sub> = 1<sub>(2)</sub><br><br>
+                    0<sub>(2)</sub> - 1<sub>(2)</sub> をする時は、<br>
+                    ひとつ左の桁から1を2つもらってきます。<br>
+                </p>
+            </details>"""
 
-        let newNumbersSub () =
-            let number1 = getRandomBetween 1 255
+        hint
 
-            let number2 =
-                newNumber (fun _ -> getRandomBetween 1 255) (fun n -> (n <> number1) && ((n &&& number1) <> 0))
+    let question (lastAnswers: int list) : int * int =
+        newNumber (fun _ -> newNumbersSub ()) (fun (n1, n2) ->
+            List.contains n1 lastAnswers = false && List.contains n2 lastAnswers = false)
 
-            if number1 > number2 then
-                (number1, number2)
-            else
-                (number2, number1)
+    let questionExpression (x: int, y: int) : string =
+        let intToBinExpr (x: int) = let (Bin v) = bin x in v
+        $"%s{intToBinExpr x}<sub>(2)</sub> - %s{intToBinExpr y}<sub>(2)</sub>"
 
+    let init () =
+        // Initialization.
+        document.title <- "減算 - taidalab"
 
-        let newHintSub () =
-            let hint =
-                """
-                <details><summary><h2>ヒント:</h2></summary>
-                    <p class="history-indented">
-                        10進数の筆算と同じように、右端から上下の数で引き算をします。<br><br>
-                        0<sub>(2)</sub> - 0<sub>(2)</sub> = 0<sub>(2)</sub><br>
-                        1<sub>(2)</sub> - 1<sub>(2)</sub> = 0<sub>(2)</sub><br>
-                        1<sub>(2)</sub> - 0<sub>(2)</sub> = 1<sub>(2)</sub><br><br>
-                        0<sub>(2)</sub> - 1<sub>(2)</sub> をする時は、<br>
-                        ひとつ左の桁から1を2つもらってきます。<br>
-                    </p>
-                </details>"""
+        let header = document.querySelector "header"
+        header.innerHTML <- Content.Common.header
+        header.className <- "subtraction"
 
-            hint
+        (document.getElementById "hamburgerButton").onclick <-
+            (fun _ ->
+                (document.querySelector "nav").classList.toggle "flagged" |> ignore
+                (document.getElementById "barrier").classList.toggle "flagged" |> ignore
+                (document.querySelector "main").classList.toggle "flagged" |> ignore)
 
-        let question (lastAnswers: int list) : int * int =
-            newNumber (fun _ -> newNumbersSub ()) (fun (n1, n2) ->
-                List.contains n1 lastAnswers = false && List.contains n2 lastAnswers = false)
+        (document.getElementById "barrier").onclick <-
+            (fun _ ->
+                (document.querySelector "nav").classList.remove "flagged" |> ignore
+                (document.getElementById "barrier").classList.remove "flagged" |> ignore
+                (document.querySelector "main").classList.remove "flagged" |> ignore)
 
-        let questionExpression (x: int, y: int) : string =
-            let intToBinExpr (x: int) = let (Bin v) = bin x in v
-            $"%s{intToBinExpr x}<sub>(2)</sub> - %s{intToBinExpr y}<sub>(2)</sub>"
+        (document.querySelector "#headerTitle").innerHTML <-
+            """<span>減算 - </span><span translate="no">taidalab</span>"""
 
-        let init () =
-            // Initialization.
-            document.title <- "減算 - taidalab"
+        (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help "help-color subtraction"
+        (document.querySelector "#submitButton").className <- "subtraction"
+        (document.querySelector "#questionArea").innerHTML <- Content.Common.columnAdditionFormat
 
-            let header = document.querySelector "header"
-            header.innerHTML <- Content.Common.header
-            header.className <- "subtraction"
+        let sourceRadix = 2
+        let destinationRadix = 2
+        let hint = newHintSub ()
 
-            (document.getElementById "hamburgerButton").onclick <-
-                (fun _ ->
-                    (document.querySelector "nav").classList.toggle "flagged" |> ignore
-                    (document.getElementById "barrier").classList.toggle "flagged" |> ignore
-                    (document.querySelector "main").classList.toggle "flagged" |> ignore)
+        (document.getElementById "numberInput").className <- "question-number"
+        (document.getElementById "operator").innerText <- "-)"
+        (document.getElementById "firstRowSrcRadix").innerText <- sprintf "(%d)" sourceRadix
+        (document.getElementById "secondRowSrcRadix").innerText <- sprintf "(%d)" sourceRadix
+        (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
+        (document.getElementById "hintArea").innerHTML <- hint
 
-            (document.getElementById "barrier").onclick <-
-                (fun _ ->
-                    (document.querySelector "nav").classList.remove "flagged" |> ignore
-                    (document.getElementById "barrier").classList.remove "flagged" |> ignore
-                    (document.querySelector "main").classList.remove "flagged" |> ignore)
+        let (number1, number2) = newNumbersSub ()
+        setColumnAddition number1 number2
 
-            (document.querySelector "#headerTitle").innerHTML <-
-                """<span>減算 - </span><span translate="no">taidalab</span>"""
+        let f =
+            fun (e: Event) ->
+                e.preventDefault ()
 
-            (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help "help-color subtraction"
-            (document.querySelector "#submitButton").className <- "subtraction"
-            (document.querySelector "#questionArea").innerHTML <- Content.Common.columnAdditionFormat
+                Addition.exec
+                    question
+                    questionExpression
+                    newHintSub
+                    setColumnAddition
+                    (-)
+                    10
+                    [ number1; number2 ]
+                    number1
+                    number2
+                    (number1 - number2)
 
-            let sourceRadix = 2
-            let destinationRadix = 2
-            let hint = newHintSub ()
+        (document.getElementById "submitButton").onclick <- f
+        (document.getElementById "inputArea").onsubmit <- f
 
-            (document.getElementById "numberInput").className <- "question-number"
-            (document.getElementById "operator").innerText <- "-)"
-            (document.getElementById "firstRowSrcRadix").innerText <- sprintf "(%d)" sourceRadix
-            (document.getElementById "secondRowSrcRadix").innerText <- sprintf "(%d)" sourceRadix
-            (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
-            (document.getElementById "hintArea").innerHTML <- hint
+        (document.getElementById "helpButton").onclick <-
+            (fun _ ->
+                [ "helpWindow"; "helpBarrier" ]
+                |> List.iter (fun x -> (document.getElementById x).classList.toggle "active" |> ignore))
 
-            let (number1, number2) = newNumbersSub ()
-            setColumnAddition number1 number2
+        (document.getElementById "helpBarrier").onclick <-
+            (fun _ ->
+                [ "helpWindow"; "helpBarrier" ]
+                |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore))
 
-            let f =
-                fun (e: Event) ->
-                    e.preventDefault ()
+        (document.getElementById "helpClose").onclick <-
+            (fun _ ->
+                [ "helpWindow"; "helpBarrier" ]
+                |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore))
 
-                    Addition.exec
-                        question
-                        questionExpression
-                        newHintSub
-                        setColumnAddition
-                        (-)
-                        10
-                        [ number1; number2 ]
-                        number1
-                        number2
-                        (number1 - number2)
-
-            (document.getElementById "submitButton").onclick <- f
-            (document.getElementById "inputArea").onsubmit <- f
-
-            (document.getElementById "helpButton").onclick <-
-                (fun _ ->
-                    [ "helpWindow"; "helpBarrier" ]
-                    |> List.iter (fun x -> (document.getElementById x).classList.toggle "active" |> ignore))
-
-            (document.getElementById "helpBarrier").onclick <-
-                (fun _ ->
-                    [ "helpWindow"; "helpBarrier" ]
-                    |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore))
-
-            (document.getElementById "helpClose").onclick <-
-                (fun _ ->
-                    [ "helpWindow"; "helpBarrier" ]
-                    |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore))
-
-            document.onkeydown <- (fun (e: KeyboardEvent) -> EndlessBinary.keyboardshortcut e)
+        document.onkeydown <- (fun (e: KeyboardEvent) -> Course.keyboardshortcut e)
