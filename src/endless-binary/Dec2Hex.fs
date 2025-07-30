@@ -22,7 +22,7 @@ module EndlessBinary =
             ヒント付きなので、考え方も身に付けられます。
             """
 
-        let newArrowHex fontSize lineCount stroke fill =
+        let newArrowHex (fontSize: int) (lineCount: int) (stroke: string) (fill: string) : string =
             Svg.newArrow
                 (fontSize |> double |> (fun x -> x / 2. * 4.))
                 (lineCount |> (fun x -> (fontSize * (x - 1)) + 6) |> double)
@@ -34,9 +34,8 @@ module EndlessBinary =
                 stroke
                 fill
 
-
-        let newHintAnimation divisor num fontSize =
-            let divRems =
+        let newHintAnimation (divisor: int) (num: int) (fontSize: int) : string =
+            let divRems: (int option * int option * int option * int option) list =
                 (numOpt divisor num)
                 :: (divRemOpt divisor (Dec2Bin1.repeatDivision num divisor))
 
@@ -103,8 +102,7 @@ module EndlessBinary =
                 (newArrowHex fontSize (List.length divRems) "#1e3330" "#95feec")
             |> (Svg.frame (fontSize / 2 * 11) (divRems |> List.length |> (fun x -> fontSize * (x + 1))))
 
-
-        let newHintRepeatDivision divisor number fontSize =
+        let newHintRepeatDivision (divisor: int) (number: int) (fontSize: int) : string =
             sprintf
                 """
                 <div class="history-indented">
@@ -123,8 +121,7 @@ module EndlessBinary =
                 """
                 (newHintAnimation divisor number fontSize)
 
-
-        let newHint divisor number fontSize =
+        let newHint (divisor: int) (number: int) (fontSize: int) : string =
             sprintf
                 """
                 <details id="hintDetails"><summary><h2>ヒント:</h2></summary>
@@ -134,9 +131,9 @@ module EndlessBinary =
                 """
                 (newHintRepeatDivision divisor number fontSize)
 
-        let hint number = newHint 16 number 20
+        let hint (number: int) : string = newHint 16 number 20
 
-        let question lastNumbers : int =
+        let question (lastNumbers: int list) : int =
             newNumber (fun _ -> getRandomBetween 0 255) (fun n -> List.contains n lastNumbers = false)
 
         let error (question: int) =
@@ -155,7 +152,7 @@ module EndlessBinary =
             let spacePadded = v |> string |> Fermata.String.padLeft 3 ' ' |> escapeSpace
             newHistory correct colored 16 spacePadded 10
 
-        let additional number : unit =
+        let additional (number: int) : unit =
             (document.getElementById "hint1").onclick <-
                 (fun _ ->
                     (document.getElementById "hint1").innerHTML <- newHintAnimation 16 number 20
@@ -207,7 +204,7 @@ module EndlessBinary =
 
             document.onkeydown <- (fun (e: KeyboardEvent) -> keyboardshortcutSetter e)
 
-        let init () =
+        let init () : unit =
             document.title <- "10進数→16進数 - taidalab"
 
             let header = document.querySelector "header"

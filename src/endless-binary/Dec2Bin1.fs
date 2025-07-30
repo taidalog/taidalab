@@ -23,7 +23,7 @@ module EndlessBinary =
             ヒント付きなので、考え方も身に付けられます。
             """
 
-        let devideIntoPowerOfTwo (number: int) =
+        let devideIntoPowerOfTwo (number: int) : int list =
             let getMaxPowerOfTwo (number: int) = number |> log2 |> int |> pown 2
 
             let rec loop acc number =
@@ -36,7 +36,6 @@ module EndlessBinary =
 
             loop [] number
 
-
         let rec repeatDivision (dividend: int) (divisor: int) : (int * int) list =
             let quotient, remainder = Math.DivRem(dividend, divisor)
 
@@ -45,7 +44,7 @@ module EndlessBinary =
             else
                 [ (quotient, remainder) ] @ repeatDivision quotient divisor
 
-        let newArrowBin fontSize lineCount stroke fill =
+        let newArrowBin (fontSize: int) (lineCount: int) (stroke: string) (fill: string) : string =
             Svg.newArrow
                 (fontSize |> double |> (fun x -> x / 2. * 4.))
                 (lineCount |> (fun x -> fontSize * (x - 1) + 6) |> double)
@@ -57,9 +56,8 @@ module EndlessBinary =
                 stroke
                 fill
 
-
-        let newHintAnimation divisor num fontSize =
-            let divRems =
+        let newHintAnimation (divisor: int) (num: int) (fontSize: int) : string =
+            let divRems: (int option * int option * int option * int option) list =
                 (numOpt divisor num) :: (divRemOpt divisor (repeatDivision num divisor))
 
             divRems
@@ -125,7 +123,7 @@ module EndlessBinary =
                 (newArrowBin fontSize (List.length divRems) "#191970" "#b0e0e6")
             |> (Svg.frame (fontSize / 2 * 10) (divRems |> List.length |> (fun x -> fontSize * (x + 1))))
 
-        let newHintRepeatDivision divisor number =
+        let newHintRepeatDivision (divisor: int) (number: int) : string =
             $"""
             <div class="history-indented">
                 <p>
@@ -215,7 +213,7 @@ module EndlessBinary =
             </details>
             """
 
-        let newNumberWithTwoOne min max =
+        let newNumberWithTwoOne (min: int) (max: int) : int =
             let rec newTwoRandomNumbers min max =
                 let rand = new Random()
                 let index1 = rand.Next(min, max)
@@ -243,7 +241,7 @@ module EndlessBinary =
                 let spacePadded = d |> string |> Fermata.String.padLeft 3 ' ' |> escapeSpace
                 newHistory correct colored 2 spacePadded 10
 
-        let additional number : unit =
+        let additional (number: int) : unit =
             (document.getElementById "hint1").onclick <-
                 (fun _ ->
                     (document.getElementById "hint1").innerHTML <- newHintAnimation 2 number 20
@@ -296,7 +294,7 @@ module EndlessBinary =
 
             document.onkeydown <- (fun (e: KeyboardEvent) -> keyboardshortcutSetter e)
 
-        let init4 () =
+        let init4 () : unit =
             init' (question 4) hint additional 10 2 exec' EndlessBinary.keyboardshortcut
 
         let init () : unit =
