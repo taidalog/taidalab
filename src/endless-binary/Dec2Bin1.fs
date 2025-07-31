@@ -46,13 +46,13 @@ module Dec2Bin1 =
 
     let newArrowBin (fontSize: int) (lineCount: int) (stroke: string) (fill: string) : string =
         Svg.newArrow
-            (fontSize |> double |> (fun x -> x / 2. * 4.))
-            (lineCount |> (fun x -> fontSize * (x - 1) + 6) |> double)
-            (fontSize |> double |> (fun x -> x / 2. * 3.))
-            (lineCount |> double |> (fun x -> 17.85 * x - 35.) |> (*) -1.)
+            (float fontSize / 2. * 4.)
+            (float (fontSize * (lineCount - 1) + 6))
+            (float fontSize / 2. * 3.)
+            ((17.85 * float lineCount - 35.) * -1.)
             -48.
-            (17.85 * (lineCount |> double) - 15.)
-            (lineCount - 1 |> delayMs |> (+) 1500)
+            (17.85 * float lineCount - 15.)
+            (delayMs (lineCount - 1) + 1500)
             stroke
             fill
 
