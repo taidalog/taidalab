@@ -39,55 +39,44 @@ module Dec2Hex =
             (numOpt divisor num)
             :: (divRemOpt divisor (Dec2Bin1.repeatDivision num divisor))
 
+        let divisor (i: int) (x: int) : string =
+            let anim =
+                Svg.animateOpacity (i |> delayMs |> (fun x -> x + if i = 0 then 1000 else 2000)) 500
+
+            Svg.text 0 (fontSize * (i + 1)) 0. (sprintf "%d%s" x anim)
+
+        let line (i: int) _ : string =
+            let d =
+                sprintf
+                    "M %d,%d q %d,%f 0,%f h %f"
+                    (fontSize / 2 * 2 + 4)
+                    ((fontSize * i) + 6)
+                    (fontSize / 2)
+                    (double fontSize * 0.4)
+                    (double fontSize * 0.8)
+                    (double fontSize / 2. * 4.8)
+
+            let anim =
+                Svg.animateOpacity (i |> delayMs |> (fun x -> x + if i = 0 then 500 else 1500)) 500
+
+            Svg.path d "#000000" 1 "none" 0. anim
+
+        let dividend (i: int) (x: int) : string =
+            let anim = Svg.animateOpacity (i |> delayMs) 500
+
+            Svg.text
+                (fontSize / 2 * 3)
+                (fontSize * (i + 1))
+                0.
+                (sprintf "%s%s" (x |> string |> (String.padLeft 3 ' ') |> escapeSpace) anim)
+
+        let remainder i x =
+            let anim = sprintf "…%d%s" x (Svg.animateOpacity (i |> delayMs |> (+) 500) 500)
+            Svg.text (fontSize / 2 * 7) (fontSize * (i + 1)) 0. anim
+
         divRems
         |> List.mapi (fun i (a, b, c, d) ->
-            Option.map // divisor
-                (fun x ->
-                    Svg.text
-                        0
-                        (fontSize * (i + 1))
-                        0.
-                        (sprintf
-                            "%d%s"
-                            x
-                            (Svg.animateOpacity (i |> delayMs |> (fun x -> if i = 0 then x + 1000 else x + 2000)) 500)))
-                a,
-            Option.map // line
-                (fun x ->
-                    Svg.path
-                        (sprintf
-                            "M %d,%d q %d,%f 0,%f h %f"
-                            (fontSize / 2 * 2 + 4)
-                            ((fontSize * i) + 6)
-                            (fontSize / 2)
-                            (double fontSize * 0.4)
-                            (double fontSize * 0.8)
-                            (double fontSize / 2. * 4.8))
-                        "#000000"
-                        1
-                        "none"
-                        0.
-                        (Svg.animateOpacity (i |> delayMs |> (fun x -> if i = 0 then x + 500 else x + 1500)) 500))
-                b,
-            Option.map // dividend
-                (fun x ->
-                    Svg.text
-                        (fontSize / 2 * 3)
-                        (fontSize * (i + 1))
-                        0.
-                        (sprintf
-                            "%s%s"
-                            (x |> string |> (String.padLeft 3 ' ') |> escapeSpace)
-                            (Svg.animateOpacity (i |> delayMs) 500)))
-                c,
-            Option.map // remainder
-                (fun x ->
-                    Svg.text
-                        (fontSize / 2 * 7)
-                        (fontSize * (i + 1))
-                        0.
-                        (sprintf "…%d%s" x (Svg.animateOpacity (i |> delayMs |> ((+) 500)) 500)))
-                d)
+            Option.map (divisor i) a, Option.map (line i) b, Option.map (dividend i) c, Option.map (remainder i) d)
         |> List.map (fun (a, b, c, d) ->
             sprintf
                 "%s%s%s%s"
@@ -96,7 +85,7 @@ module Dec2Hex =
                 (Option.defaultValue "" c)
                 (Option.defaultValue "" d))
         |> List.fold (fun x y -> sprintf "%s%s" x y) (newArrowHex fontSize (List.length divRems) "#1e3330" "#95feec")
-        |> (Svg.frame (fontSize / 2 * 11) (divRems |> List.length |> (fun x -> fontSize * (x + 1))))
+        |> Svg.frame (fontSize / 2 * 11) (divRems |> List.length |> (fun x -> fontSize * (x + 1)))
 
     let newHintRepeatDivision (divisor: int) (number: int) (fontSize: int) : string =
         sprintf
