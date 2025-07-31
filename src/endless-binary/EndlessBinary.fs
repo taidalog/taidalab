@@ -161,9 +161,10 @@ module Course =
 
     let delayMs index = index * 2500 - 500 |> abs
 
-    let numOpt radix num = (Some radix, Some 1, Some num, None)
+    let numOpt (radix: int) (num: int) : int option * int option * int option * int option =
+        (Some radix, Some 1, Some num, None)
 
-    let divRemOpt divisor divRem =
+    let divRemOpt (divisor: int) (divRem: (int * int) list) : (int option * int option * int option * int option) list =
         match divRem |> List.rev with
         | [] -> [ (None, None, None, None) ]
         | h :: t ->
