@@ -78,7 +78,7 @@ module Dec2Bin1 =
                     (float fontSize / 2. * 4.8)
 
             let anim =
-                Svg.animateOpacity (i |> delayMs |> (fun x -> if i = 0 then x + 500 else x + 1500)) 500
+                Svg.animateOpacity (i |> delayMs |> (fun x -> x + if i = 0 then 500 else 1500)) 500
 
             Svg.path d "#000000" 1 "none" 0. anim
 
