@@ -23,26 +23,25 @@ module Dec2Bin1 =
         ヒント付きなので、考え方も身に付けられます。
         """
 
-    let devideIntoPowerOfTwo (number: int) : int list =
-        let getMaxPowerOfTwo (number: int) = number |> log2 |> int |> pown 2
-
-        let rec loop acc number =
-            match number with
-            | 0 -> acc
-            | 1 -> acc @ [ 1 ]
+    let devideIntoPowerOfTwo (x: int) : int list =
+        let rec loop acc x =
+            match x with
+            | 0 -> acc |> List.rev
+            | 1 -> 1 :: acc |> List.rev
             | _ ->
-                let max = getMaxPowerOfTwo number
-                loop (acc @ [ max ]) (number - max)
+                let max = x |> Int32.Log2 |> pown 2
+                loop (max :: acc) (x - max)
 
-        loop [] number
+        loop [] x
 
+    [<TailCall>]
     let rec repeatDivision (dividend: int) (divisor: int) : (int * int) list =
         let quotient, remainder = Math.DivRem(dividend, divisor)
 
         if quotient < divisor then
             [ (quotient, remainder) ]
         else
-            [ (quotient, remainder) ] @ repeatDivision quotient divisor
+            (quotient, remainder) :: repeatDivision quotient divisor
 
     let newArrowBin (fontSize: int) (lineCount: int) (stroke: string) (fill: string) : string =
         Svg.newArrow
