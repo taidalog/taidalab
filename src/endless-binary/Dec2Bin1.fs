@@ -60,10 +60,8 @@ module Dec2Bin1 =
             (numOpt divisor num) :: (divRemOpt divisor (repeatDivision num divisor))
 
         let divisor (i: int) (x: int) : string =
-            let anim =
-                Svg.animateOpacity (i |> delayMs |> (fun x -> x + if i = 0 then 1000 else 2000)) 500
-
-            Svg.text 0 (fontSize * (i + 1)) 0. (sprintf "%d%s" x anim)
+            let anim = Svg.animateOpacity (delayMs i + if i = 0 then 1000 else 2000) 500
+            Svg.text 0 (fontSize * (i + 1)) 0. $"%d{x}%s{anim}"
 
         let line (i: int) _ : string =
             let d =
@@ -76,13 +74,11 @@ module Dec2Bin1 =
                     (float fontSize * 0.8)
                     (float fontSize / 2. * 4.8)
 
-            let anim =
-                Svg.animateOpacity (i |> delayMs |> (fun x -> x + if i = 0 then 500 else 1500)) 500
-
+            let anim = Svg.animateOpacity (delayMs i + if i = 0 then 500 else 1500) 500
             Svg.path d "#000000" 1 "none" 0. anim
 
         let dividend (i: int) (x: int) : string =
-            let anim = Svg.animateOpacity (i |> delayMs) 500
+            let anim = Svg.animateOpacity (delayMs i) 500
 
             Svg.text
                 (fontSize / 2 * 2)
@@ -91,7 +87,7 @@ module Dec2Bin1 =
                 (sprintf "%s%s" (x |> string |> Fermata.String.padLeft 3 ' ' |> escapeSpace) anim)
 
         let remainder i x =
-            let anim = sprintf "…%d%s" x (Svg.animateOpacity (i |> delayMs |> (+) 500) 500)
+            let anim = sprintf "…%d%s" x (Svg.animateOpacity (delayMs i + 500) 500)
             Svg.text (fontSize / 2 * 6) (fontSize * (i + 1)) 0. anim
 
         divRems
@@ -105,7 +101,7 @@ module Dec2Bin1 =
                 (Option.defaultValue "" c)
                 (Option.defaultValue "" d))
         |> List.fold (fun x y -> sprintf "%s%s" x y) (newArrowBin fontSize (List.length divRems) "#191970" "#b0e0e6")
-        |> Svg.frame (fontSize / 2 * 10) (divRems |> List.length |> (fun x -> fontSize * (x + 1)))
+        |> Svg.frame (fontSize / 2 * 10) (fontSize * (List.length divRems + 1))
 
     let newHintRepeatDivision (divisor: int) (number: int) : string =
         $"""
