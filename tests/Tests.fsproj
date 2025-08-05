@@ -9,8 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="Tests.fs" />
-    <Compile Include="Program.fs" />
+    <Compile Include="EndlessBinary.Tests.fs" />
+    <Compile Include="Dec2Bin1.Tests.fs" />
   </ItemGroup>
 
   <ItemGroup>
