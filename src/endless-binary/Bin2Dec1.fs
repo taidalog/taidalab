@@ -175,6 +175,7 @@ module Bin2Dec1 =
         (questionGenerator: int list -> int)
         (hintGenerator: int -> string)
         (additional: 'c -> unit)
+        (executor: int list -> int -> unit)
         (keyboardshortcutSetter: KeyboardEvent -> unit)
         : unit =
         // Initialization.
@@ -192,7 +193,7 @@ module Bin2Dec1 =
         let f =
             fun (e: Event) ->
                 e.preventDefault ()
-                exec' [ initNumber ] initNumber
+                executor [ initNumber ] initNumber
 
         (document.getElementById "submitButton").onclick <- f
         (document.getElementById "inputArea").onsubmit <- f
@@ -240,4 +241,4 @@ module Bin2Dec1 =
         (document.querySelector "#submitButton").className <- "bin2dec"
         (document.querySelector "#questionArea").innerHTML <- Content.Common.question
 
-        init' question' hint additional Course.keyboardshortcut
+        init' question' hint additional exec' Course.keyboardshortcut
