@@ -8,6 +8,8 @@ namespace Taidalab.EndlessBinary
 open Browser.Dom
 open Taidalab
 open Taidalab.Number
+open Taidalab.EndlessBinary.Course
+open Fermata.RadixConversion
 
 module Bin2Dec2 =
     let help =
@@ -17,14 +19,25 @@ module Bin2Dec2 =
         ヒントはありませんので、慣れてからどうぞ。
         """
 
-    let hint number = ""
-
-    let question lastAnswers : int =
+    let question (lastAnswers: int list) : int =
         newNumber (fun _ -> getRandomBetween 0 255) (fun n -> List.contains n lastAnswers = false)
 
-    let additional number : unit = ()
+    let exec' (lastNumbers: int list) (answer: int) : unit =
+        exec
+            Dec.validate
+            Bin2Dec1.error
+            id
+            Bin2Dec1.history'
+            question
+            (fun x -> splitBinaryStringBy 4 (Dec x |> Dec.toBin))
+            id
+            (fun _ -> "")
+            (fun _ -> ())
+            4
+            lastNumbers
+            answer
 
-    let init () =
+    let init () : unit =
         document.title <- "2進数→10進数 (2) - taidalab"
 
         let header = document.querySelector "header"
@@ -50,4 +63,4 @@ module Bin2Dec2 =
         (document.querySelector "#submitButton").className <- "bin2dec"
         (document.querySelector "#questionArea").innerHTML <- Content.Common.question
 
-        Bin2Dec1.init' question hint additional Course.keyboardshortcut
+        Bin2Dec1.init' question (fun _ -> "") (fun _ -> ()) exec' Course.keyboardshortcut
