@@ -281,7 +281,8 @@ module Dec2Bin1 =
         document.title <- "10進数→2進数 (1) - taidalab"
 
         let header = document.querySelector "header"
-        header.innerHTML <- Content.Common.header
+        header.innerHTML <- ""
+        Content.Common.header' |> List.iter (header.appendChild >> ignore)
         header.className <- "dec2bin"
 
         (document.getElementById "hamburgerButton").onclick <-
@@ -301,6 +302,8 @@ module Dec2Bin1 =
 
         (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help "help-color dec2bin"
         (document.querySelector "#submitButton").className <- "dec2bin"
-        (document.querySelector "#questionArea").innerHTML <- Content.Common.question
+
+        Content.Common.question'
+        |> List.iter ((document.querySelector "#questionArea").appendChild >> ignore)
 
         init' (question 8) hint additional 10 2 exec' Course.keyboardshortcut

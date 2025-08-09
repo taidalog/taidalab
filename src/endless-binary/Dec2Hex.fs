@@ -189,7 +189,8 @@ module Dec2Hex =
         document.title <- "10進数→16進数 - taidalab"
 
         let header = document.querySelector "header"
-        header.innerHTML <- Content.Common.header
+        header.innerHTML <- ""
+        Content.Common.header' |> List.iter (header.appendChild >> ignore)
         header.className <- "dec2hex"
 
         (document.getElementById "hamburgerButton").onclick <-
@@ -209,6 +210,8 @@ module Dec2Hex =
 
         (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help "help-color dec2hex"
         (document.querySelector "#submitButton").className <- "dec2hex"
-        (document.querySelector "#questionArea").innerHTML <- Content.Common.question
+
+        Content.Common.question'
+        |> List.iter ((document.querySelector "#questionArea").appendChild >> ignore)
 
         init' question hint additional 10 16 Course.keyboardshortcut

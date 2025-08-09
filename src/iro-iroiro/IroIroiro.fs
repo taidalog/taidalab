@@ -273,7 +273,8 @@ module IroIroiro =
         document.title <- "色いろいろ - taidalab"
 
         let header = document.querySelector "header"
-        header.innerHTML <- Content.Common.header
+        header.innerHTML <- ""
+        Content.Common.header' |> List.iter (header.appendChild >> ignore)
         header.className <- "iro-iroiro"
 
         (document.getElementById "hamburgerButton").onclick <-

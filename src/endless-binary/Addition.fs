@@ -226,7 +226,8 @@ module Addition =
         document.title <- "加算 - taidalab"
 
         let header = document.querySelector "header"
-        header.innerHTML <- Content.Common.header
+        header.innerHTML <- ""
+        Content.Common.header' |> List.iter (header.appendChild >> ignore)
         header.className <- "addition"
 
         (document.getElementById "hamburgerButton").onclick <-
@@ -246,7 +247,9 @@ module Addition =
 
         (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help "help-color addition"
         (document.querySelector "#submitButton").className <- "addition"
-        (document.querySelector "#questionArea").innerHTML <- Content.Common.columnAdditionFormat
+
+        (document.querySelector "#questionArea").appendChild Content.Common.columnAdditionFormat'
+        |> ignore
 
         init' (question 8) questionExpression newHintAdd 2 2 10 Course.keyboardshortcut exec
 

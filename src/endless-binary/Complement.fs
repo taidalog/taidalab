@@ -97,7 +97,8 @@ module Complement =
         document.title <- "補数 - taidalab"
 
         let header = document.querySelector "header"
-        header.innerHTML <- Content.Common.header
+        header.innerHTML <- ""
+        Content.Common.header' |> List.iter (header.appendChild >> ignore)
         header.className <- "complement"
 
         (document.getElementById "hamburgerButton").onclick <-

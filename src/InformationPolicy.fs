@@ -38,7 +38,8 @@ module InformationPolicy =
         document.title <- "情報の外部送信について - taidalab"
 
         let header = document.querySelector "header"
-        header.innerHTML <- Content.Common.headerNoHelp
+        header.innerHTML <- ""
+        Content.Common.headerNoHelp' |> List.iter (header.appendChild >> ignore)
         header.className <- "home"
 
         (document.getElementById "hamburgerButton").onclick <-

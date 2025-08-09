@@ -151,7 +151,8 @@ module Hex2Dec =
         document.title <- "16進数→10進数 - taidalab"
 
         let header = document.querySelector "header"
-        header.innerHTML <- Content.Common.header
+        header.innerHTML <- ""
+        Content.Common.header' |> List.iter (header.appendChild >> ignore)
         header.className <- "hex2dec"
 
         (document.getElementById "hamburgerButton").onclick <-
@@ -171,7 +172,9 @@ module Hex2Dec =
 
         (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help "help-color hex2dec"
         (document.querySelector "#submitButton").className <- "hex2dec"
-        (document.querySelector "#questionArea").innerHTML <- Content.Common.question
+
+        Content.Common.question'
+        |> List.iter ((document.querySelector "#questionArea").appendChild >> ignore)
 
         let initNumber: int = getRandomBetween 0 255
         let initHex: Hex = Dec initNumber |> Dec.toHex

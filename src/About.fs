@@ -115,7 +115,8 @@ module About =
         document.title <- "about - taidalab"
 
         let header = document.querySelector "header"
-        header.innerHTML <- Content.Common.headerNoHelp
+        header.innerHTML <- ""
+        Content.Common.headerNoHelp' |> List.iter (header.appendChild >> ignore)
         header.className <- "home"
 
         (document.getElementById "hamburgerButton").onclick <-
@@ -130,7 +131,9 @@ module About =
                 (document.getElementById "barrier").classList.remove "flagged" |> ignore
                 (document.querySelector "main").classList.remove "flagged" |> ignore)
 
-        (document.querySelector "#headerTitle").innerHTML <- """<span>about - </span><span translate="no">taidalab</span>"""
+        (document.querySelector "#headerTitle").innerHTML <-
+            """<span>about - </span><span translate="no">taidalab</span>"""
+
         (document.querySelector "main").innerHTML <- main
 
         // Resets keyboard shortcuts.

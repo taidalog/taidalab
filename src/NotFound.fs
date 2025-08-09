@@ -55,7 +55,8 @@ module NotFound =
         document.title <- "404: Page Not Found - taidalab"
 
         let header = document.querySelector "header"
-        header.innerHTML <- Content.Common.headerNoHelp
+        header.innerHTML <- ""
+        Content.Common.headerNoHelp' |> List.iter (header.appendChild >> ignore)
         header.className <- "not-found"
 
         (document.getElementById "hamburgerButton").onclick <-
@@ -75,7 +76,9 @@ module NotFound =
 
         (document.querySelector "main").innerHTML <- EndlessBinary.Course.main404
         (document.querySelector "#submitButton").className <- "not-found"
-        (document.querySelector "#questionArea").innerHTML <- Content.Common.question
+
+        Content.Common.question'
+        |> List.iter ((document.querySelector "#questionArea").appendChild >> ignore)
 
         let initNumber = 404
         let sourceRadix = 10

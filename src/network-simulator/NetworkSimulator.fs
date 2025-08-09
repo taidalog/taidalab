@@ -226,7 +226,8 @@ module NetworkSimulator =
         document.title <- "ネットワークシミュレータ - taidalab"
 
         let header = document.querySelector "header"
-        header.innerHTML <- Content.Common.header
+        header.innerHTML <- ""
+        Content.Common.header' |> List.iter (header.appendChild >> ignore)
         header.className <- "network-simulator"
 
         (document.getElementById "hamburgerButton").onclick <-
