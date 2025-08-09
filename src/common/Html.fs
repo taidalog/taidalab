@@ -214,6 +214,20 @@ module Html =
 
     let span: SpanBuilder = SpanBuilder()
 
+    type SubBuilder() =
+        inherit HTMLBuilder()
+        member _.Yield(_) : HTMLElement = document.createElement "sub"
+        member _.Zero() : HTMLElement = document.createElement "sub"
+
+    let sub: SubBuilder = SubBuilder()
+
+    type SupBuilder() =
+        inherit HTMLBuilder()
+        member _.Yield(_) : HTMLElement = document.createElement "sup"
+        member _.Zero() : HTMLElement = document.createElement "sup"
+
+    let sup: SupBuilder = SupBuilder()
+
     type TextAreaBuilder() =
         inherit HTMLBuilder()
 
