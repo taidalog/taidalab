@@ -57,7 +57,7 @@ module PowerOfTwo1 =
 
         let header = document.querySelector "header"
         header.innerHTML <- ""
-        Content.Common.header' |> List.iter (header.appendChild >> ignore)
+        Content.Common.header |> List.iter (header.appendChild >> ignore)
         header.className <- "power-of-two"
 
         (document.getElementById "hamburgerButton").onclick <-
@@ -78,7 +78,7 @@ module PowerOfTwo1 =
         (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help "help-color power-of-two"
         (document.querySelector "#submitButton").className <- "power-of-two"
 
-        Content.Common.question'
+        Content.Common.question
         |> List.iter ((document.querySelector "#questionArea").appendChild >> ignore)
 
         Dec2Bin1.init' question hint additional 10 2 exec' Course.keyboardshortcut

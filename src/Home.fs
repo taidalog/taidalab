@@ -20,7 +20,7 @@ module Home =
 
         let header = document.querySelector "header"
         header.innerHTML <- ""
-        Content.Common.headerNoHelp' |> List.iter (header.appendChild >> ignore)
+        Content.Common.headerNoHelp |> List.iter (header.appendChild >> ignore)
         header.className <- "home"
 
         (document.getElementById "hamburgerButton").onclick <-

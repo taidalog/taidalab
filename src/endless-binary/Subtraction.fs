@@ -64,7 +64,7 @@ module Subtraction =
 
         let header = document.querySelector "header"
         header.innerHTML <- ""
-        Content.Common.header' |> List.iter (header.appendChild >> ignore)
+        Content.Common.header |> List.iter (header.appendChild >> ignore)
         header.className <- "subtraction"
 
         (document.getElementById "hamburgerButton").onclick <-
@@ -85,7 +85,7 @@ module Subtraction =
         (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help "help-color subtraction"
         (document.querySelector "#submitButton").className <- "subtraction"
 
-        (document.querySelector "#questionArea").appendChild Content.Common.columnAdditionFormat'
+        (document.querySelector "#questionArea").appendChild Content.Common.columnAdditionFormat
         |> ignore
 
         let sourceRadix = 2

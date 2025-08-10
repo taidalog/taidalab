@@ -152,7 +152,7 @@ module Hex2Dec =
 
         let header = document.querySelector "header"
         header.innerHTML <- ""
-        Content.Common.header' |> List.iter (header.appendChild >> ignore)
+        Content.Common.header |> List.iter (header.appendChild >> ignore)
         header.className <- "hex2dec"
 
         (document.getElementById "hamburgerButton").onclick <-
@@ -173,7 +173,7 @@ module Hex2Dec =
         (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help "help-color hex2dec"
         (document.querySelector "#submitButton").className <- "hex2dec"
 
-        Content.Common.question'
+        Content.Common.question
         |> List.iter ((document.querySelector "#questionArea").appendChild >> ignore)
 
         let initNumber: int = getRandomBetween 0 255

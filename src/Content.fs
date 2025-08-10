@@ -10,7 +10,7 @@ open Html
 
 module Content =
     module Complement =
-        let question': Browser.Types.HTMLElement list =
+        let question: Browser.Types.HTMLElement list =
             [ span { innerText "4ビットの2進数 " }
               span {
                   id "questionSpan"
@@ -21,7 +21,7 @@ module Content =
 
 
     module Common =
-        let body': Browser.Types.HTMLDivElement =
+        let body: Browser.Types.HTMLDivElement =
             div {
                 className "body-container"
 
@@ -52,7 +52,7 @@ module Content =
                 appendChild (footer { () })
             }
 
-        let header': Browser.Types.HTMLDivElement list =
+        let header: Browser.Types.HTMLDivElement list =
             [ div {
                   className "header-left"
 
@@ -84,7 +84,7 @@ module Content =
               }
               div { () } ]
 
-        let headerNoHelp': Browser.Types.HTMLDivElement list =
+        let headerNoHelp: Browser.Types.HTMLDivElement list =
             [ div {
                   className "header-left"
 
@@ -104,7 +104,7 @@ module Content =
               }
               div { () } ]
 
-        let nav': Browser.Types.HTMLUListElement list =
+        let nav: Browser.Types.HTMLUListElement list =
             [ ul {
                   appendChild (
                       li {
@@ -332,7 +332,7 @@ module Content =
                   )
               } ]
 
-        let question': Browser.Types.Element list =
+        let question: Browser.Types.Element list =
             [ span {
                   id "questionSpan"
                   className "question-number"
@@ -344,7 +344,7 @@ module Content =
 
         let version = "Version 5.2.0"
 
-        let footer': Browser.Types.HTMLElement list =
+        let footer: Browser.Types.HTMLElement list =
             [ small {
                   translate false
                   innerText "&copy; 2022-2025 "
@@ -404,7 +404,7 @@ module Content =
                   appendChild (span { innerText ". Thank you!" })
               } ]
 
-        let columnAdditionFormat': Browser.Types.HTMLDivElement =
+        let columnAdditionFormat: Browser.Types.HTMLDivElement =
             let innerFirstRow = div { () }
 
             [ 8..-1..1 ]

@@ -190,7 +190,7 @@ module Dec2Hex =
 
         let header = document.querySelector "header"
         header.innerHTML <- ""
-        Content.Common.header' |> List.iter (header.appendChild >> ignore)
+        Content.Common.header |> List.iter (header.appendChild >> ignore)
         header.className <- "dec2hex"
 
         (document.getElementById "hamburgerButton").onclick <-
@@ -211,7 +211,7 @@ module Dec2Hex =
         (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help "help-color dec2hex"
         (document.querySelector "#submitButton").className <- "dec2hex"
 
-        Content.Common.question'
+        Content.Common.question
         |> List.iter ((document.querySelector "#questionArea").appendChild >> ignore)
 
         init' question hint additional 10 16 Course.keyboardshortcut

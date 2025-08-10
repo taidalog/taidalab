@@ -274,7 +274,7 @@ module IroIroiro =
 
         let header = document.querySelector "header"
         header.innerHTML <- ""
-        Content.Common.header' |> List.iter (header.appendChild >> ignore)
+        Content.Common.header |> List.iter (header.appendChild >> ignore)
         header.className <- "iro-iroiro"
 
         (document.getElementById "hamburgerButton").onclick <-
