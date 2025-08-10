@@ -82,7 +82,7 @@ module NetworkSimulator =
                 </span>
             </button>
         </form>
-        <div id="errorArea" class="error-area warning"></div>
+        <div id="errorArea" class="error-area"></div>
         <div id="outputArea" class="output-area"></div>
         <div id="playArea" class="play-area"></div>
         <div id="helpWindow" class="help-window">

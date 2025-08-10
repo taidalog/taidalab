@@ -78,7 +78,7 @@ module Course =
         //      $"'%s{input}' は入力できる数値の範囲を越えています。入力できるのは xxx ~ yyy の間です。"
         else
             "不明なエラーです。"
-        |> sprintf """<span class="warning">%s</span>"""
+        |> sprintf """<span>%s</span>"""
 
     let newErrorMessageDec (question: string) (input: string) (error: exn) =
         if String.IsNullOrWhiteSpace input then
@@ -89,7 +89,7 @@ module Course =
         //      $"'%s{input}' は入力できる数値の範囲を越えています。入力できるのは xxx ~ yyy の間です。"
         else
             "不明なエラーです。"
-        |> sprintf """<span class="warning">%s</span>"""
+        |> sprintf """<span>%s</span>"""
 
     let newErrorMessageHex (question: string) (input: string) (error: exn) =
         if String.IsNullOrWhiteSpace input then
@@ -100,7 +100,7 @@ module Course =
         //      $"'%s{input}' は入力できる数値の範囲を越えています。入力できるのは xxx ~ yyy の間です。"
         else
             "不明なエラーです。"
-        |> sprintf """<span class="warning">%s</span>"""
+        |> sprintf """<span>%s</span>"""
 
     let newHistory correct input destination_radix converted_input source_radix =
         let historyClassName = if correct then "history-correct" else "history-wrong"

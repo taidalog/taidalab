@@ -28,13 +28,13 @@ module Complement =
 
     let newErrorMessageComplement (question: string) (input: string) (error: exn) =
         if String.IsNullOrWhiteSpace input then
-            $"""<span class="warning">%s{question} の補数を、2進法表記で入力してください。</span>"""
+            $"""<span>%s{question} の補数を、2進法表記で入力してください。</span>"""
         else if Regex.isMatch "^[01]+$" input |> not then
-            $"""<span class="warning">'%s{input}' は2進数ではありません。使えるのは半角の 0 と 1 のみです。</span>"""
+            $"""<span>'%s{input}' は2進数ではありません。使えるのは半角の 0 と 1 のみです。</span>"""
         // else if false then
-        //      $"""<span class="warning">'%s{input}' は入力できる数値の範囲を越えています。入力できるのは xxx ~ yyy の間です。</span>"""
+        //      $"""<span>'%s{input}' は入力できる数値の範囲を越えています。入力できるのは xxx ~ yyy の間です。</span>"""
         else
-            """<span class="warning">不明なエラーです。</span>"""
+            """<span>不明なエラーです。</span>"""
 
     let fourBitsBinString (x: int) : string =
         let (Bin v) = bin x

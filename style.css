@@ -870,12 +870,8 @@ div.history-area>div>div.history-wrong>span.material-symbols-outlined {
 */
 .error-area {
     width: 100%;
-}
-
-.warning {
     color: var(--warning-red-color);
 }
-
 
 @keyframes fade-in {
     0% {

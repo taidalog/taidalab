@@ -152,7 +152,7 @@ module IroIroiro =
         match parseResult with
         | h :: t ->
             parseResult
-            |> List.map (fun (name, _, (_, _)) -> $"""<span class="warning">%s{name} の値が正しくありません。</span>""")
+            |> List.map (fun (name, _, (_, _)) -> $"""<span>%s{name} の値が正しくありません。</span>""")
             |> List.reduce (fun x y -> $"%s{x}<br>%s{y}")
             |> fun s -> errorArea.innerHTML <- s
 
