@@ -1129,6 +1129,29 @@ div.hint-table>div>div>span {
 /*
     network-simulator
 */
+form.network-simulator~form>button>span>span.material-symbols-outlined {
+    font-size: 18px;
+}
+
+form.network-simulator~div.output-area>div {
+    display: inline-flex;
+    align-items: center;
+    margin: 3px 0;
+    font-size: 18px;
+}
+
+form.network-simulator~div.output-area>div>span.material-symbols-outlined {
+    font-size: 18px;
+    line-height: 18px;
+    margin-right: .5rem;
+    font-variation-settings: "opsz" 20;
+}
+
+form.network-simulator~div.output-area>div.history-wrong>span.material-symbols-outlined {
+    font-variation-settings:
+        'FILL' 1
+}
+
 .device {
     position: absolute;
     z-index: 3;
@@ -1248,10 +1271,6 @@ div.lan-cable>span {
 
 div.lan-cable.selected>svg>g>polyline {
     filter: drop-shadow(0px 2px 4px var(--lan-cable-color));
-}
-
-.material-symbols-outlined.symbols18 {
-    font-size: 18px;
 }
 
 .icon-vertical-center {

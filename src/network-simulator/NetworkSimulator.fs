@@ -32,8 +32,8 @@ module NetworkSimulator =
             クライアントやルータの IP アドレスをクリックして設定しなおしたりしてください。
         </p>
         <p>
-            <span class="material-symbols-outlined symbols18" translate="no">add_circle</span>マークのボタンをクリックすると、デバイスやケーブルを追加できます。<br>
-            <span class="material-symbols-outlined symbols18" translate="no">delete</span>マークのボタンをクリックすると、選択中のデバイスやケーブルを削除できます。
+            <span class="material-symbols-outlined" translate="no">add_circle</span>マークのボタンをクリックすると、デバイスやケーブルを追加できます。<br>
+            <span class="material-symbols-outlined" translate="no">delete</span>マークのボタンをクリックすると、選択中のデバイスやケーブルを削除できます。
         </p>
     """
 
@@ -53,31 +53,31 @@ module NetworkSimulator =
         <form>
             <button type="button" id="addClientButton" class="gray">
                 <span class="icon-vertical-center">
-                    <span class="material-symbols-outlined symbols18" translate="no">add_circle</span>
+                    <span class="material-symbols-outlined" translate="no">add_circle</span>
                     クライアント
                 </span>
             </button>
             <button type="button" id="addRouterButton" class="gray">
                 <span class="icon-vertical-center">
-                    <span class="material-symbols-outlined symbols18" translate="no">add_circle</span>
+                    <span class="material-symbols-outlined" translate="no">add_circle</span>
                     ルータ
                 </span>
             </button>
             <button type="button" id="addHubButton" class="gray">
                 <span class="icon-vertical-center">
-                    <span class="material-symbols-outlined symbols18" translate="no">add_circle</span>
+                    <span class="material-symbols-outlined" translate="no">add_circle</span>
                     ハブ
                 </span>
             </button>
             <button type="button" id="addLANCableButton" class="gray">
                 <span class="icon-vertical-center">
-                    <span class="material-symbols-outlined symbols18" translate="no">add_circle</span>
+                    <span class="material-symbols-outlined" translate="no">add_circle</span>
                     LANケーブル
                 </span>
             </button>
             <button type="button" id="deleteButton" class="gray">
                 <span class="icon-vertical-center">
-                    <span class="material-symbols-outlined symbols18" translate="no">delete</span>
+                    <span class="material-symbols-outlined" translate="no">delete</span>
                     削除
                 </span>
             </button>
@@ -166,17 +166,15 @@ module NetworkSimulator =
     let newHistory source sourceIPv4 destinationIPv4 connected =
         let historyClassName, historyIcon, historyMessage =
             if connected then
-                "history history-correct",
-                """<span class="material-symbols-outlined history-correct" translate="no">check_circle</span>""",
+                "history-correct",
+                """<span class="material-symbols-outlined" translate="no">check_circle</span>""",
                 "通信成功！"
             else
-                "history history-wrong",
-                """<span class="material-symbols-outlined history-wrong" translate="no">error</span>""",
-                "通信失敗…"
+                "history-wrong", """<span class="material-symbols-outlined" translate="no">error</span>""", "通信失敗…"
 
         $"""
-        <div class="history-container %s{historyClassName}"">
-            %s{historyIcon}<span class ="%s{historyClassName}">%s{Device.name source} [%s{sourceIPv4.ToString()}] -> %s{destinationIPv4.ToString()} %s{historyMessage}</span>
+        <div class="%s{historyClassName}"">
+            %s{historyIcon}<span">%s{Device.name source} [%s{sourceIPv4.ToString()}] -> %s{destinationIPv4.ToString()} %s{historyMessage}</span>
         </div>
         """
 
