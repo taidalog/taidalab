@@ -106,223 +106,28 @@ module Content =
 
         let nav: Browser.Types.HTMLUListElement list =
             [ ul {
-                  appendChild (
-                      li {
-                          appendChild (
-                              a {
-                                  className "dec2bin"
-                                  href $"%s{Url.home}endless-binary/dec2bin-1/"
-                                  innerText "10進数→2進数 (1)"
-                              }
-                          )
-                      }
-                  )
-
-                  appendChild (
-                      li {
-                          appendChild (
-                              a {
-                                  className "dec2bin"
-                                  href $"%s{Url.home}endless-binary/dec2bin-2/"
-                                  innerText "10進数→2進数 (2)"
-                              }
-                          )
-                      }
-                  )
-
-                  appendChild (
-                      li {
-                          appendChild (
-                              a {
-                                  className "bin2dec"
-                                  href $"%s{Url.home}endless-binary/bin2dec-1/"
-                                  innerText "2進数→10進数 (1)"
-                              }
-                          )
-                      }
-                  )
-
-                  appendChild (
-                      li {
-                          appendChild (
-                              a {
-                                  className "bin2dec"
-                                  href $"%s{Url.home}endless-binary/bin2dec-2/"
-                                  innerText "2進数→10進数 (2)"
-                              }
-                          )
-                      }
-                  )
-
-                  appendChild (
-                      li {
-                          appendChild (
-                              a {
-                                  className "power-of-two"
-                                  href $"%s{Url.home}endless-binary/power-of-two-1/"
-                                  innerText "2のn乗"
-                              }
-                          )
-                      }
-                  )
-
-                  appendChild (
-                      li {
-                          appendChild (
-                              a {
-                                  className "power-of-two"
-                                  href $"%s{Url.home}endless-binary/power-of-two-2/"
-                                  innerText "2のn乗-1"
-                              }
-                          )
-                      }
-                  )
-
-                  appendChild (
-                      li {
-                          appendChild (
-                              a {
-                                  className "addition"
-                                  href $"%s{Url.home}endless-binary/addition/"
-                                  innerText "加算"
-                              }
-                          )
-                      }
-                  )
-
-                  appendChild (
-                      li {
-                          appendChild (
-                              a {
-                                  className "subtraction"
-                                  href $"%s{Url.home}endless-binary/subtraction/"
-                                  innerText "減算"
-                              }
-                          )
-                      }
-                  )
-
-                  appendChild (
-                      li {
-                          appendChild (
-                              a {
-                                  className "complement"
-                                  href $"%s{Url.home}endless-binary/complement/"
-                                  innerText "補数"
-                              }
-                          )
-                      }
-                  )
-
-                  appendChild (
-                      li {
-                          appendChild (
-                              a {
-                                  className "dec2hex"
-                                  href $"%s{Url.home}endless-binary/dec2hex/"
-                                  innerText "10進数→16進数"
-                              }
-                          )
-                      }
-                  )
-
-                  appendChild (
-                      li {
-                          appendChild (
-                              a {
-                                  className "hex2dec"
-                                  href $"%s{Url.home}endless-binary/hex2dec/"
-                                  innerText "16進数→10進数"
-                              }
-                          )
-                      }
-                  )
+                  appendChild (li { appendChild (a { set $"%s{Url.home}endless-binary/dec2bin-1/" "10進数→2進数 (1)" }) })
+                  appendChild (li { appendChild (a { set $"%s{Url.home}endless-binary/dec2bin-2/" "10進数→2進数 (2)" }) })
+                  appendChild (li { appendChild (a { set $"%s{Url.home}endless-binary/bin2dec-1/" "2進数→10進数 (1)" }) })
+                  appendChild (li { appendChild (a { set $"%s{Url.home}endless-binary/bin2dec-2/" "2進数→10進数 (2)" }) })
+                  appendChild (li { appendChild (a { set $"%s{Url.home}endless-binary/power-of-two-1/" "2のn乗" }) })
+                  appendChild (li { appendChild (a { set $"%s{Url.home}endless-binary/power-of-two-2/" "2のn乗-1" }) })
+                  appendChild (li { appendChild (a { set $"%s{Url.home}endless-binary/addition/" "加算" }) })
+                  appendChild (li { appendChild (a { set $"%s{Url.home}endless-binary/subtraction/" "減算" }) })
+                  appendChild (li { appendChild (a { set $"%s{Url.home}endless-binary/complement/" "補数" }) })
+                  appendChild (li { appendChild (a { set $"%s{Url.home}endless-binary/dec2hex/" "10進数→16進数" }) })
+                  appendChild (li { appendChild (a { set $"%s{Url.home}endless-binary/hex2dec/" "16進数→10進数" }) })
               }
               ul {
-                  appendChild (
-                      li {
-                          appendChild (
-                              a {
-                                  className "iro-iroiro"
-                                  href $"%s{Url.home}iro-iroiro/"
-                                  innerText "色いろいろ"
-                              }
-                          )
-                      }
-                  )
-
-                  appendChild (
-                      li {
-                          appendChild (
-                              a {
-                                  className "network-simulator"
-                                  href $"%s{Url.home}network-simulator/"
-                                  innerText "ネットワークシミュレータ"
-                              }
-                          )
-                      }
-                  )
-
-                  appendChild (
-                      li {
-                          appendChild (
-                              a {
-                                  className "ctc"
-                                  href "#"
-                                  innerText "Coming soon..."
-                              }
-                          )
-                      }
-                  )
+                  appendChild (li { appendChild (a { set $"%s{Url.home}iro-iroiro/" "色いろいろ" }) })
+                  appendChild (li { appendChild (a { set $"%s{Url.home}network-simulator/" "ネットワークシミュレータ" }) })
+                  appendChild (li { appendChild (a { set "#" "Coming soon..." }) })
               }
               ul {
-                  appendChild (
-                      li {
-                          appendChild (
-                              a {
-                                  className "home"
-                                  href $"%s{Url.home}"
-                                  innerText "Home"
-                              }
-                          )
-                      }
-                  )
-
-                  appendChild (
-                      li {
-                          appendChild (
-                              a {
-                                  className "home"
-                                  href $"%s{Url.home}about/"
-                                  innerText "About"
-                              }
-                          )
-                      }
-                  )
-
-                  appendChild (
-                      li {
-                          appendChild (
-                              a {
-                                  className "home"
-                                  href $"%s{Url.home}terms/"
-                                  innerText "ご利用について"
-                              }
-                          )
-                      }
-                  )
-
-                  appendChild (
-                      li {
-                          appendChild (
-                              a {
-                                  className "home"
-                                  href $"%s{Url.home}information-policy/"
-                                  innerText "情報の外部送信について"
-                              }
-                          )
-                      }
-                  )
+                  appendChild (li { appendChild (a { set $"%s{Url.home}" "Home" }) })
+                  appendChild (li { appendChild (a { set $"%s{Url.home}about/" "About" }) })
+                  appendChild (li { appendChild (a { set $"%s{Url.home}terms/" "ご利用について" }) })
+                  appendChild (li { appendChild (a { set $"%s{Url.home}information-policy/" "情報の外部送信について" }) })
               } ]
 
         let question: Browser.Types.Element list =

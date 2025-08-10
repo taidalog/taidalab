@@ -237,14 +237,22 @@ button {
     course-button-<identifier>
 */
 header.home,
-nav a.home:hover,
-nav a.home.current-location {
+nav a[href$="taidalab/"]:hover,
+nav a[href$="taidalab/"].current-location,
+nav a[href$="taidalab/about/"]:hover,
+nav a[href$="taidalab/about/"].current-location,
+nav a[href$="taidalab/terms/"]:hover,
+nav a[href$="taidalab/terms/"].current-location,
+nav a[href$="taidalab/information-policy/"]:hover,
+nav a[href$="taidalab/information-policy/"].current-location {
     background-color: var(--theme-color);
 }
 
 header.dec2bin,
-nav a.dec2bin:hover,
-nav a.dec2bin.current-location,
+nav a[href$="taidalab/endless-binary/dec2bin-1/"]:hover,
+nav a[href$="taidalab/endless-binary/dec2bin-1/"].current-location,
+nav a[href$="taidalab/endless-binary/dec2bin-2/"]:hover,
+nav a[href$="taidalab/endless-binary/dec2bin-2/"].current-location,
 .course-button-d2b1,
 .course-button-d2b2,
 span.help-close.dec2bin:hover {
@@ -271,8 +279,10 @@ button.dec2bin:hover {
 }
 
 header.bin2dec,
-nav a.bin2dec:hover,
-nav a.bin2dec.current-location,
+nav a[href$="taidalab/endless-binary/bin2dec-1/"]:hover,
+nav a[href$="taidalab/endless-binary/bin2dec-1/"].current-location,
+nav a[href$="taidalab/endless-binary/bin2dec-2/"]:hover,
+nav a[href$="taidalab/endless-binary/bin2dec-2/"].current-location,
 .course-button-b2d1,
 .course-button-b2d2,
 span.help-close.bin2dec:hover {
@@ -294,8 +304,10 @@ button.bin2dec:hover {
 }
 
 header.power-of-two,
-nav a.power-of-two:hover,
-nav a.power-of-two.current-location,
+nav a[href$="taidalab/endless-binary/power-of-two-1/"]:hover,
+nav a[href$="taidalab/endless-binary/power-of-two-1/"].current-location,
+nav a[href$="taidalab/endless-binary/power-of-two-2/"]:hover,
+nav a[href$="taidalab/endless-binary/power-of-two-2/"].current-location,
 .course-button-pot1,
 .course-button-pot2,
 span.help-close.power-of-two:hover {
@@ -318,10 +330,10 @@ button.power-of-two:hover {
 
 header.addition,
 header.subtraction,
-nav a.addition:hover,
-nav a.addition.current-location,
-nav a.subtraction:hover,
-nav a.subtraction.current-location,
+nav a[href$="taidalab/endless-binary/addition/"]:hover,
+nav a[href$="taidalab/endless-binary/addition/"].current-location,
+nav a[href$="taidalab/endless-binary/subtraction/"]:hover,
+nav a[href$="taidalab/endless-binary/subtraction/"].current-location,
 .course-button-add,
 .course-button-sub,
 span.help-close.addition:hover,
@@ -346,8 +358,8 @@ button.subtraction:hover {
 }
 
 header.complement,
-nav a.complement:hover,
-nav a.complement.current-location,
+nav a[href$="taidalab/endless-binary/complement/"]:hover,
+nav a[href$="taidalab/endless-binary/complement/"].current-location,
 .course-button-cmp,
 span.help-close.complement:hover {
     background-color: var(--complement-color);
@@ -372,10 +384,10 @@ span.complement.marker {
 
 header.dec2hex,
 header.hex2dec,
-nav a.dec2hex:hover,
-nav a.dec2hex.current-location,
-nav a.hex2dec:hover,
-nav a.hex2dec.current-location,
+nav a[href$="taidalab/endless-binary/dec2hex/"]:hover,
+nav a[href$="taidalab/endless-binary/dec2hex/"].current-location,
+nav a[href$="taidalab/endless-binary/hex2dec/"]:hover,
+nav a[href$="taidalab/endless-binary/hex2dec/"].current-location,
 .course-button-d2h,
 span.help-close.dec2hex:hover,
 span.help-close.hex2dec:hover {
@@ -398,8 +410,8 @@ button.hex2dec:hover {
 }
 
 header.iro-iroiro,
-nav a.iro-iroiro:hover,
-nav a.iro-iroiro.current-location,
+nav a[href$="taidalab/iro-iroiro/"]:hover,
+nav a[href$="taidalab/iro-iroiro/"].current-location,
 span.help-close.iro-iroiro:hover {
     background-color: var(--iro-iroiro-color);
 }
@@ -413,15 +425,15 @@ button.iro-iroiro:hover {
     background-color: #e586a5;
 }
 
-nav a.ctc:hover,
-nav a.ctc.current-location,
+nav a[href="#"]:hover,
+nav a[href="#"].current-location,
 span.help-close.ctc:hover {
     background-color: var(--ctc-color);
 }
 
 header.network-simulator,
-nav a.network-simulator:hover,
-nav a.network-simulator.current-location,
+nav a[href$="taidalab/network-simulator/"]:hover,
+nav a[href$="taidalab/network-simulator/"].current-location,
 span.help-close.network-simulator:hover {
     background-color: var(--network-simulator-color);
 }
@@ -722,8 +734,8 @@ form.endless-binary:has(button.subtraction) {
         gap: 15px 5px;
     }
 
-                form.endless-binary:has(button.addition),
-                form.endless-binary:has(button.subtraction) {
+    form.endless-binary:has(button.addition),
+    form.endless-binary:has(button.subtraction) {
         grid-template-columns: calc(13.5ch * 1.5) 1fr;
         grid-template-rows: 40px 40px 40px 1fr;
         grid-template-areas:
