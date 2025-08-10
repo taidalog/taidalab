@@ -43,9 +43,7 @@ module Course =
         </form>
         <div class="history-area">
             <h2>結果:</h2>
-            <div class="history-indented mono">
-                <span id="outputArea"></span>
-            </div>
+            <div id="outputArea"></div>
         </div>
         <div id="helpWindow" class="help-window">
             <div class="help-close-outer">
@@ -68,9 +66,7 @@ module Course =
         </form>
         <div class="history-area">
             <h2>結果:</h2>
-            <div class="history-indented mono">
-                <span id="outputArea"></span>
-            </div>
+            <div id="outputArea"></div>
         </div>"""
 
     let newErrorMessageBin (question: string) (input: string) (error: exn) =
@@ -107,21 +103,17 @@ module Course =
         |> sprintf """<span class="warning">%s</span>"""
 
     let newHistory correct input destination_radix converted_input source_radix =
-        let historyClassName =
-            if correct then
-                "history history-correct"
-            else
-                "history history-wrong"
+        let historyClassName = if correct then "history-correct" else "history-wrong"
 
         let historyIcon =
             if correct then
-                """<span class="material-symbols-outlined history-correct" translate="no">check_circle</span>"""
+                """<span class="material-symbols-outlined" translate="no">check_circle</span>"""
             else
-                """<span class="material-symbols-outlined history-wrong" translate="no">error</span>"""
+                """<span class="material-symbols-outlined" translate="no">error</span>"""
 
         $"""
-        <div class="history-container %s{historyClassName}"">
-            %s{historyIcon}<span class ="%s{historyClassName}">%s{input}<sub>(%d{destination_radix})</sub> = %s{converted_input}<sub>(%d{source_radix})</sub></span>
+        <div class="%s{historyClassName}"">
+            %s{historyIcon}<span>%s{input}<sub>(%d{destination_radix})</sub> = %s{converted_input}<sub>(%d{source_radix})</sub></span>
         </div>
         """
 

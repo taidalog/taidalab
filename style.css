@@ -794,29 +794,35 @@ details summary:hover {
 /*
     history area
 */
-.history {
+/* .history {
     font-size: 18px;
-}
+} */
 
 .history-area {
     margin-top: 10px;
 }
 
-div.history-container {
+div.history-area>div {
+    font-size: 18px;
+    margin-left: 2rem;
+    font-family: 'Noto Sans Mono', monospace;
+}
+
+div.history-area>div>div {
     display: inline-flex;
     align-items: center;
     margin: 3px 0;
 }
 
-div.history-container.history-correct {
+div.history-area>div>div.history-correct {
     background-color: var(--history-correct-color);
 }
 
-div.history-container.history-wrong {
+div.history-area>div>div.history-wrong {
     background-color: var(--history-wrong-color);
 }
 
-div.history-container>span.material-symbols-outlined {
+div.history-area>div>div>span.material-symbols-outlined {
     font-size: 18px;
     line-height: 18px;
     margin-right: 0.5rem;
@@ -824,7 +830,7 @@ div.history-container>span.material-symbols-outlined {
         'opsz' 20
 }
 
-div.history-container>span.material-symbols-outlined.history-wrong {
+div.history-area>div>div.history-wrong>span.material-symbols-outlined {
     font-variation-settings:
         'FILL' 1
 }
