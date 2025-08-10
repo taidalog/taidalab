@@ -1071,46 +1071,44 @@ span.hamburger-button:hover {
 /*
     hint table
 */
-.hint-table {
+div.hint-table {
     display: flex;
     flex-direction: column;
     padding-left: 2rem;
 }
 
-.hint-table-row {
+div.hint-table>div {
     display: flex;
 }
 
-.hint-table-digit {
+div.hint-table>div>span {
     width: 3rem;
     min-width: 3rem;
     text-align: center;
     margin: 1px 4px;
 }
 
-span.bin2dec.hint-table-digit.green {
+div.hint-table>div>span.bin2dec {
     background-color: #95fec6;
-}
-
-span.hex2dec.hint-table-digit.green {
-    background-color: #95feec;
-}
-
-span.hint-table-digit.gray {
-    background-color: #cccccc;
-}
-
-.large {
     font-size: 3rem;
 }
 
-.hint-table-container {
+div.hint-table>div>span.hex2dec {
+    background-color: #95feec;
+    font-size: 3rem;
+}
+
+div.hint-table>div>span.gray {
+    background-color: #cccccc;
+}
+
+div.hint-table>div>div {
     width: 3rem;
     min-width: 3rem;
     line-height: 100%;
 }
 
-.middle {
+div.hint-table>div>div>span {
     display: inline-block;
     vertical-align: middle;
     line-height: normal;

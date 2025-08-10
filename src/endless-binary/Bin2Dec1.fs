@@ -60,30 +60,30 @@ module Bin2Dec1 =
         binaryString
         |> Seq.toList
         |> List.mapi (fun i c ->
-            $"""<span class="bin2dec hint-table-digit">%d{(String.length binaryString) - i}</span>""",
-            $"""<span class="bin2dec hint-table-digit green large">%c{c}</span>""",
-            $"""<span class="bin2dec hint-table-digit gray">%d{2}<sup>%d{(String.length binaryString) - i - 1}</sup></span>""")
+            $"""<span>%d{(String.length binaryString) - i}</span>""",
+            $"""<span class="bin2dec">%c{c}</span>""",
+            $"""<span class="gray">%d{2}<sup>%d{(String.length binaryString) - i - 1}</sup></span>""")
 
     let newHintTable (a, b, c) =
         sprintf
             """
             <div class="hint-table">
-                <div class="hint-table-row">
+                <div>
                     %s
-                    <div class="hint-table-container">
-                        <span class="middle">桁目</span>
+                    <div>
+                        <span>桁目</span>
                     </div>
                 </div>
-                <div class="hint-table-row">
+                <div>
                     %s
-                    <div class="hint-table-container">
-                        <span class="middle">ビット</span>
+                    <div>
+                        <span>ビット</span>
                     </div>
                 </div>
-                <div class="hint-table-row">
+                <div>
                     %s
-                    <div class="hint-table-container">
-                        <span class="middle">重み</span>
+                    <div>
+                        <span>重み</span>
                     </div>
                 </div>
             </div>

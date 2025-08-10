@@ -44,30 +44,30 @@ module Hex2Dec =
         hex'
         |> Seq.toList
         |> List.mapi (fun i c ->
-            $"""<span class="hex2dec hint-table-digit">%d{(hex' |> String.length) - i}</span>""",
-            $"""<span class="hex2dec hint-table-digit green large">%c{c}</span>""",
-            $"""<span class="hex2dec hint-table-digit gray">%d{16}<sup>%d{(hex' |> String.length) - i - 1}</sup></span>""")
+            $"""<span>%d{(hex' |> String.length) - i}</span>""",
+            $"""<span class="hex2dec">%c{c}</span>""",
+            $"""<span class="gray">%d{16}<sup>%d{(hex' |> String.length) - i - 1}</sup></span>""")
 
     let newHintTable (a, b, c) =
         sprintf
             """
-            <div class="hint-table" style="padding-left: 2rem;">
-                <div class="hint-table-row">
+            <div class="hint-table">
+                <div>
                     %s
-                    <div class="hint-table-container">
-                        <span class="middle">桁目</span>
+                    <div>
+                        <span>桁目</span>
                     </div>
                 </div>
-                <div class="hint-table-row">
+                <div>
                     %s
-                    <div class="hint-table-container">
-                        <span class="middle">数</span>
+                    <div>
+                        <span>数</span>
                     </div>
                 </div>
-                <div class="hint-table-row">
+                <div>
                     %s
-                    <div class="hint-table-container">
-                        <span class="middle">重み</span>
+                    <div>
+                        <span>重み</span>
                     </div>
                 </div>
             </div>
