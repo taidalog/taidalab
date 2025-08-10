@@ -67,7 +67,7 @@ module Bin2Dec1 =
     let newHintTable (a, b, c) =
         sprintf
             """
-            <div class="hint-table" style="padding-left: 2rem;">
+            <div class="hint-table">
                 <div class="hint-table-row">
                     %s
                     <div class="hint-table-container">

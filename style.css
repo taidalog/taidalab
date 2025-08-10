@@ -1074,6 +1074,7 @@ span.hamburger-button:hover {
 .hint-table {
     display: flex;
     flex-direction: column;
+    padding-left: 2rem;
 }
 
 .hint-table-row {
