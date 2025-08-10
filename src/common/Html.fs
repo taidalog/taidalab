@@ -111,6 +111,13 @@ module Html =
 
     let div: DivBuilder = DivBuilder()
 
+    type DetailsBuilder() =
+        inherit HTMLBuilder()
+        member _.Yield(_) : HTMLElement = document.createElement "details"
+        member _.Zero() : HTMLElement = document.createElement "details"
+
+    let details: DetailsBuilder = DetailsBuilder()
+
     type FooterBuilder() =
         inherit HTMLBuilder()
         member _.Yield(_) : HTMLElement = document.createElement "footer"
@@ -124,6 +131,20 @@ module Html =
         member _.Zero() : HTMLElement = document.createElement "h1"
 
     let h1: H1Builder = H1Builder()
+
+    type H2Builder() =
+        inherit HTMLBuilder()
+        member _.Yield(_) : HTMLElement = document.createElement "h2"
+        member _.Zero() : HTMLElement = document.createElement "h2"
+
+    let h2: H2Builder = H2Builder()
+
+    type H3Builder() =
+        inherit HTMLBuilder()
+        member _.Yield(_) : HTMLElement = document.createElement "h3"
+        member _.Zero() : HTMLElement = document.createElement "h3"
+
+    let h3: H3Builder = H3Builder()
 
     type HeaderBuilder() =
         inherit HTMLBuilder()
@@ -220,6 +241,13 @@ module Html =
         member _.Zero() : HTMLElement = document.createElement "sub"
 
     let sub: SubBuilder = SubBuilder()
+
+    type SummaryBuilder() =
+        inherit HTMLBuilder()
+        member _.Yield(_) : HTMLElement = document.createElement "summary"
+        member _.Zero() : HTMLElement = document.createElement "summary"
+
+    let summary: SummaryBuilder = SummaryBuilder()
 
     type SupBuilder() =
         inherit HTMLBuilder()
