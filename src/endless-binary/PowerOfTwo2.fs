@@ -26,15 +26,15 @@ module PowerOfTwo2 =
         $"""
         <details>
             <summary><h2>ヒント:</h2></summary>
-            <p class="history-indented">
+            <p>
                 %d{number}<sub>(10)</sub> という数は、以下のように表すことができます。
             </p>
-            <p class="history-indented hint-bgcolor-gray mono">
+            <p class="hint-bgcolor-gray mono">
                 &nbsp;&nbsp;%d{number}<sub>(10)</sub><br>
                 = %d{number + 1}<sub>(10)</sub> - 1<sub>(10)</sub><br>
                 = 2<sup>%d{indexNumber}</sup><sub>(10)</sub> - 1<sub>(10)</sub>
             </p>
-            <p class="history-indented">
+            <p>
                 2<sup>n</sup> の数を2進法で表現するには、1 の後に 0 を n 個続けます。<br>
                 一方、2<sup>n</sup>-1 の数を2進法で表現するには、1 を n 個続けます。<br>
                 %d{number}<sub>(10)</sub> は 2<sup>%d{indexNumber}</sup> - 1 なので、1 を %d{indexNumber} 個続けます。

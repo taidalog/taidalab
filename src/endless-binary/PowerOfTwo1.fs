@@ -26,7 +26,7 @@ module PowerOfTwo1 =
         $"""
         <details>
             <summary><h2>ヒント:</h2></summary>
-            <p class="history-indented">
+            <p>
                 2<sup>n</sup> の数を2進法で表現するには、1 の後に 0 を n 個続けます。<br>
                 %d{answer}<sub>(10)</sub> は 2<sup>%d{indexNumber}</sup> なので、1 の後ろに 0 を %d{indexNumber} 個つけます。
             </p>

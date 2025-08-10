@@ -105,29 +105,29 @@ module Bin2Dec1 =
 
         $"""
         <details><summary><h2>ヒント:</h2></summary>
-            <p class="history-indented">
+            <p>
                 10進法で表現した数は、一番右の桁から<br>
                 1の位、10の位、100の位、1000の位...となっています。<br>
                 これを「10<sup>n</sup>の位」の形で表すと、<br>
                 10<sup>0</sup>の位、10<sup>1</sup>の位、10<sup>2</sup>の位、10<sup>3</sup>の位...となります。<br>
             </p>
-            <p class="history-indented">
+            <p>
                 同様に、2進法で表現した数は、一番右の桁から<br>
                 1の位、2の位、4の位、8の位...となっています。<br>
                 これを「2<sup>n</sup>の位」の形で表すと、<br>
                 2<sup>0</sup>の位、2<sup>1</sup>の位、2<sup>2</sup>の位、2<sup>3</sup>の位...となります。
             </p>
-            <p class="history-indented">
+            <p>
                 この 10<sup>0</sup>、10<sup>1</sup>、10<sup>2</sup>、10<sup>3</sup>...や 2<sup>0</sup>、2<sup>1</sup>、2<sup>2</sup>、2<sup>3</sup>...という数を、その桁の「重み」と呼びます。<br>
             </p>
-            <p class="history-indented">
+            <p>
                 %s{table}
             </p>
-            <p class="history-indented">
+            <p>
                 2進法で表現した数を10進法で表現しなおすには、それぞれの桁の数と重みをかけ算し、それを合計します。<br>
                 %s{v}<sub>(2)</sub> の場合、以下のように計算します。
             </p>
-            <p class="history-indented hint-bgcolor-gray mono">
+            <p class="hint-bgcolor-gray mono">
                 &nbsp;&nbsp;%s{formula}<br>
                 = %d{answer}<sub>(10)</sub>
             </p>

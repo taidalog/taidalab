@@ -773,6 +773,15 @@ div.hint-area h3 {
 /*
     hint area
 */
+div.hint-area details>p,
+div.hint-area details>div {
+    margin-left: 2rem;
+}
+
+div.hint-area details>ol {
+    margin-left: 1.5rem;
+}
+
 details summary:hover {
     cursor: pointer;
 }

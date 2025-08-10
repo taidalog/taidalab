@@ -26,7 +26,7 @@ module Addition =
         let hint =
             """
             <details><summary><h2>ヒント:</h2></summary>
-                <p class="history-indented">
+                <p>
                     10進数の筆算と同じように、右端から上下の数を足していきます。<br><br>
                     0<sub>(2)</sub> + 0<sub>(2)</sub> = 0<sub>(2)</sub><br>
                     0<sub>(2)</sub> + 1<sub>(2)</sub> = 1<sub>(2)</sub><br>

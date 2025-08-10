@@ -86,17 +86,15 @@ module Dec2Hex =
     let newHintRepeatDivision (divisor: int) (number: int) (fontSize: int) : string =
         sprintf
             """
-            <div class="history-indented">
-                <p>
-                    10進法で表現した数を2進法で表現しなおすには、<br>
-                    10進法の数を、商が 16 未満になるまで 16 で割り続けます。<br>
-                    この時、余りを商の右に書いておきます。<br>
-                    商と余りのうち、10~15 をそれぞれ A~F に変換し、<br>
-                    下から順に繋げると、16進法の数になります。<br>
-                    ※この下の筆算をクリックすると動きます。
-                </p>
-            </div>
-            <div id="hint1" class="history-indented mono">
+            <p>
+                10進法で表現した数を2進法で表現しなおすには、<br>
+                10進法の数を、商が 16 未満になるまで 16 で割り続けます。<br>
+                この時、余りを商の右に書いておきます。<br>
+                商と余りのうち、10~15 をそれぞれ A~F に変換し、<br>
+                下から順に繋げると、16進法の数になります。<br>
+                ※この下の筆算をクリックすると動きます。
+            </p>
+            <div id="hint1" class="mono">
                 %s
             </div>
             """

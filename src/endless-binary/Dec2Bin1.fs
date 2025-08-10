@@ -105,16 +105,14 @@ module Dec2Bin1 =
 
     let newHintRepeatDivision (divisor: int) (number: int) : string =
         $"""
-        <div class="history-indented">
-            <p>
-                10進法で表現した数を2進法で表現しなおすには、<br>
-                10進法の数を、商が 1 になるまで 2 で割り続けます。<br>
-                この時、余りを商の右に書いておきます。<br>
-                商と余りを下から順に繋げると、2進法の数になります。<br>
-                ※この下の筆算をクリックすると動きます。
-            </p>
-        </div>
-        <div id="hint1" class="history-indented mono">
+        <p>
+            10進法で表現した数を2進法で表現しなおすには、<br>
+            10進法の数を、商が 1 になるまで 2 で割り続けます。<br>
+            この時、余りを商の右に書いておきます。<br>
+            商と余りを下から順に繋げると、2進法の数になります。<br>
+            ※この下の筆算をクリックすると動きます。
+        </p>
+        <div id="hint1" class="mono">
             %s{(newHintAnimation divisor number 20)}
         </div>
         """
@@ -139,45 +137,45 @@ module Dec2Bin1 =
         let (Dec number) = dec'
 
         $"""
-        <p class="history-indented">
+        <p>
             10進法で表現した数を2進法で表現しなおすには、<br>
         </p>
-        <p class="history-indented">
-            <ol style="padding-left: 4rem;">
+        <p>
+            <ol>
                 <li>10進法の数を「2<sup>n</sup> の数同士の足し算」に変換して、</li>
                 <li>それぞれの 2<sup>n</sup> の数を2進法で表し、</li>
                 <li>足し合わせる</li>
             </ol>
         </p>
-        <p class="history-indented">
+        <p>
             という方法もあります。
         </p>
-        <p class="history-indented">
+        <p>
             %d{number}<sub>(10)</sub> を 2<sup>n</sup> の数同士の足し算に変換すると
         </p>
-        <p class="history-indented hint-bgcolor-gray mono">
+        <p class="hint-bgcolor-gray mono">
             &nbsp;&nbsp;%s{additionDec}<br>
             = %s{additionIndex}
         </p>
-        <p class="history-indented">
+        <p>
             になります。<br>
         </p>
-        <p class="history-indented">
+        <p>
             次に、それぞれの 2<sup>n</sup> の数を2進法で表します。<br>
             2<sup>n</sup> の数を2進法で表すには、1 の後に 0 を n 個続けます。<br>
             そのため、%s{additionIndex} は2進法で
         </p>
-        <p class="history-indented hint-bgcolor-gray mono">
+        <p class="hint-bgcolor-gray mono">
             &nbsp;&nbsp;%s{additionBin}<br>
         </p>
-        <p class="history-indented">
+        <p>
             と表現できます。最後にこれを計算すると
         </p>
-        <p class="history-indented hint-bgcolor-gray mono">
+        <p class="hint-bgcolor-gray mono">
             &nbsp;&nbsp;%s{additionBin}<br>
             = %s{bin'}<sub>(2)</sub>
         </p>
-        <p class="history-indented">
+        <p>
             になります。
         </p>
         """

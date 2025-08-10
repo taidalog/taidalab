@@ -87,30 +87,30 @@ module Hex2Dec =
 
         $"""<details>
             <summary><h2>ヒント:</h2></summary>
-            <p class="history-indented">
+            <p>
                 10進法で表現した数は、一番右の桁から<br>
                 1の位、10の位、100の位、1000の位...となっています。<br>
                 これを「10<sup>n</sup>の位」の形で表すと、<br>
                 10<sup>0</sup>の位、10<sup>1</sup>の位、10<sup>2</sup>の位、10<sup>3</sup>の位...となります。
             </p>
-            <p class="history-indented">
+            <p>
                 同様に、16進法で表現した数は、一番右の桁から<br>
                 1の位、16の位、256の位...となっています。<br>
                 これを「16<sup>n</sup>の位」の形で表すと、<br>
                 16<sup>0</sup>の位、16<sup>1</sup>の位、16<sup>2</sup>の位...となります。
             </p>
-            <p class="history-indented">
+            <p>
                 この 10<sup>0</sup>、10<sup>1</sup>、10<sup>2</sup>、10<sup>3</sup>...や 16<sup>0</sup>、16<sup>1</sup>、16<sup>2</sup>...という数を、その桁の「重み」と呼びます。
             </p>
-            <p class="history-indented">
+            <p>
                 %s{table}
             </p>
-            <p class="history-indented">
+            <p>
                 16進法で表現した数を10進法で表現しなおすには、それぞれの桁の数と重みをかけ算し、それを合計します。<br>
                 %s{h}<sub>(16)</sub>の場合、以下のように計算します。<br>
                 ※ 16進数にA~Fのアルファベットがある場合は、それぞれ10<sub>(10)</sub>~15<sub>(10)</sub>を表しています。
             </p>
-            <p class="history-indented hint-bgcolor-gray mono">
+            <p class="hint-bgcolor-gray mono">
                 &nbsp;&nbsp;%s{formula}<br>
                 = %d{d}
             </p>
