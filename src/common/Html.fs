@@ -125,6 +125,22 @@ module Html =
 
     let footer: FooterBuilder = FooterBuilder()
 
+    type FormBuilder() =
+        inherit HTMLBuilder()
+
+        member _.Yield(_) : HTMLFormElement =
+            document.createElement "form" :?> HTMLFormElement
+
+        member _.Zero() : HTMLFormElement =
+            document.createElement "form" :?> HTMLFormElement
+
+        [<CustomOperation("autocomplete")>]
+        member _.SetAutocomplete(acc: HTMLFormElement, x: bool) : HTMLFormElement =
+            acc.autocomplete <- if x then "yes" else "no"
+            acc
+
+    let form: FormBuilder = FormBuilder()
+
     type H1Builder() =
         inherit HTMLBuilder()
         member _.Yield(_) : HTMLElement = document.createElement "h1"
@@ -152,6 +168,22 @@ module Html =
         member _.Zero() : HTMLElement = document.createElement "header"
 
     let header: HeaderBuilder = HeaderBuilder()
+
+    type InputBuilder() =
+        inherit HTMLBuilder()
+
+        member _.Yield(_) : HTMLInputElement =
+            document.createElement "input" :?> HTMLInputElement
+
+        member _.Zero() : HTMLInputElement =
+            document.createElement "input" :?> HTMLInputElement
+
+        [<CustomOperation("type")>]
+        member _.SetType(acc: HTMLInputElement, x: string) : HTMLInputElement =
+            acc.``type`` <- x
+            acc
+
+    let input: InputBuilder = InputBuilder()
 
     type LIBuilder() =
         inherit HTMLBuilder()
