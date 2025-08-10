@@ -244,7 +244,6 @@ module Content =
                           appendChild (
                               a {
                                   className "iro-iroiro"
-                                  id "navIroIroiro"
                                   href $"%s{Url.home}iro-iroiro/"
                                   innerText "色いろいろ"
                               }
@@ -257,7 +256,6 @@ module Content =
                           appendChild (
                               a {
                                   className "network-simulator"
-                                  id "navNetworkSimulator"
                                   href $"%s{Url.home}network-simulator/"
                                   innerText "ネットワークシミュレータ"
                               }
@@ -270,7 +268,6 @@ module Content =
                           appendChild (
                               a {
                                   className "ctc"
-                                  id "navSoon"
                                   href "#"
                                   innerText "Coming soon..."
                               }
@@ -284,7 +281,6 @@ module Content =
                           appendChild (
                               a {
                                   className "home"
-                                  id "navout"
                                   href $"%s{Url.home}"
                                   innerText "Home"
                               }
@@ -297,7 +293,6 @@ module Content =
                           appendChild (
                               a {
                                   className "home"
-                                  id "navAbout"
                                   href $"%s{Url.home}about/"
                                   innerText "About"
                               }
@@ -310,7 +305,6 @@ module Content =
                           appendChild (
                               a {
                                   className "home"
-                                  id "navTerms"
                                   href $"%s{Url.home}terms/"
                                   innerText "ご利用について"
                               }
@@ -323,7 +317,6 @@ module Content =
                           appendChild (
                               a {
                                   className "home"
-                                  id "navTerms"
                                   href $"%s{Url.home}information-policy/"
                                   innerText "情報の外部送信について"
                               }
@@ -352,38 +345,18 @@ module Content =
               }
               small {
                   translate false
-
-                  appendChild (
-                      a {
-                          id "versionNumber"
-                          set "https://github.com/taidalog/taidalab/releases" $"%s{version}"
-                      }
-                  )
+                  appendChild (a { set "https://github.com/taidalog/taidalab/releases" $"%s{version}" })
               }
-              small {
-                  appendChild (
-                      a {
-                          className "home"
-                          set "https://odaibako.net/u/taidalog" "お題箱"
-                      }
-                  )
-              }
+              small { appendChild (a { set "https://odaibako.net/u/taidalog" "お題箱" }) }
               small {
                   translate false
-
-                  appendChild (
-                      a {
-                          className "home"
-                          set "https://github.com/taidalog/taidalab" "Repository on GitHub"
-                      }
-                  )
+                  appendChild (a { set "https://github.com/taidalog/taidalab" "Repository on GitHub" })
               }
               small {
                   appendChild (span { innerText "Powered by " })
 
                   appendChild (
                       a {
-                          id "footerFSharp"
                           href "https://fsharp.org/"
                           translate false
                           innerText "F#"
@@ -394,7 +367,6 @@ module Content =
 
                   appendChild (
                       a {
-                          id "footerFable"
                           href "https://fable.io"
                           translate false
                           innerText "Fable"
