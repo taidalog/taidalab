@@ -51,32 +51,32 @@ module NetworkSimulator =
             <button type="submit" id="submitButton" translate="no">ping</button>
         </form>
         <form>
-            <button type="button" id="addClientButton" class="gray">
-                <span class="icon-vertical-center">
+            <button type="button" id="addClientButton">
+                <span>
                     <span class="material-symbols-outlined" translate="no">add_circle</span>
                     クライアント
                 </span>
             </button>
-            <button type="button" id="addRouterButton" class="gray">
-                <span class="icon-vertical-center">
+            <button type="button" id="addRouterButton">
+                <span>
                     <span class="material-symbols-outlined" translate="no">add_circle</span>
                     ルータ
                 </span>
             </button>
-            <button type="button" id="addHubButton" class="gray">
-                <span class="icon-vertical-center">
+            <button type="button" id="addHubButton">
+                <span>
                     <span class="material-symbols-outlined" translate="no">add_circle</span>
                     ハブ
                 </span>
             </button>
-            <button type="button" id="addLANCableButton" class="gray">
-                <span class="icon-vertical-center">
+            <button type="button" id="addLANCableButton">
+                <span>
                     <span class="material-symbols-outlined" translate="no">add_circle</span>
                     LANケーブル
                 </span>
             </button>
-            <button type="button" id="deleteButton" class="gray">
-                <span class="icon-vertical-center">
+            <button type="button" id="deleteButton">
+                <span>
                     <span class="material-symbols-outlined" translate="no">delete</span>
                     削除
                 </span>

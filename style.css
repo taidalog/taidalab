@@ -1152,6 +1152,21 @@ form.network-simulator~div.output-area>div.history-wrong>span.material-symbols-o
         'FILL' 1
 }
 
+form.network-simulator~form>button {
+    color: #333333;
+    background-color: var(--gray-color);
+    width: 160px;
+}
+
+form.network-simulator~form>button:hover {
+    background-color: #d0d0d7;
+}
+
+form.network-simulator~form>button>span {
+    display: inline-flex;
+    align-items: center;
+}
+
 .device {
     position: absolute;
     z-index: 3;
