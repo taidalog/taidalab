@@ -37,7 +37,7 @@ module Course =
         <form id="inputArea" class="endless-binary" autocomplete="off">
             <input type="text" id="numberInput" class="mono">
             <span id="binaryRadix"></span>
-            <button type="button" id="submitButton" class="d2b-button">Enter</button>
+            <button type="button" id="submitButton">Enter</button>
             <div id="errorArea" class="error-area"></div>
             <div id="hintArea" class="hint-area"></div>
         </form>
@@ -60,7 +60,7 @@ module Course =
         <form id="inputArea" class="endless-binary" autocomplete="off">
             <input type="text" id="numberInput" class="mono">
             <span id="binaryRadix"></span>
-            <button type="button" id="submitButton" class="d2b-button">Enter</button>
+            <button type="button" id="submitButton">Enter</button>
             <div id="errorArea" class="error-area"></div>
             <div id="hintArea" class="hint-area"></div>
         </form>

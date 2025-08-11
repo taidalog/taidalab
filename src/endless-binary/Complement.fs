@@ -116,7 +116,7 @@ module Complement =
         (document.querySelector "#headerTitle").innerHTML <-
             """<span>補数 - </span><span translate="no">taidalab</span>"""
 
-        (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help "help-color complement"
+        (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help "complement"
         (document.querySelector "#submitButton").className <- "complement"
         (document.querySelector "#questionArea").innerHTML <- question
 

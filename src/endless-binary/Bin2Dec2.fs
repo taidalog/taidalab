@@ -60,7 +60,7 @@ module Bin2Dec2 =
         (document.querySelector "#headerTitle").innerHTML <-
             """<span>2進数→10進数 (2) - </span><span translate="no">taidalab</span>"""
 
-        (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help "help-color bin2dec"
+        (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help "bin2dec"
         (document.querySelector "#submitButton").className <- "bin2dec"
 
         Content.Common.question

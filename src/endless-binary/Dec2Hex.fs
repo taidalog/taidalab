@@ -206,7 +206,7 @@ module Dec2Hex =
         (document.querySelector "#headerTitle").innerHTML <-
             """<span>10進数→16進数 - </span><span translate="no">taidalab</span>"""
 
-        (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help "help-color dec2hex"
+        (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help "dec2hex"
         (document.querySelector "#submitButton").className <- "dec2hex"
 
         Content.Common.question
