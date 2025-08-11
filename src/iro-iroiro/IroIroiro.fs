@@ -50,8 +50,8 @@ module IroIroiro =
         <div id="errorArea" class="error-area"></div>
         <div id="outputArea" class="output-area iro-iroiro"></div>
         <div id="helpWindow" class="help-window">
-            <div class="help-close-outer">
-                <span id="helpClose" class="material-symbols-outlined help-close iro-iroiro" translate="no">
+            <div>
+                <span id="helpClose" class="material-symbols-outlined iro-iroiro" translate="no">
                     close
                 </span>
             </div>

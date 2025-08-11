@@ -46,8 +46,8 @@ module Course =
             <div id="outputArea"></div>
         </div>
         <div id="helpWindow" class="help-window">
-            <div class="help-close-outer">
-                <span id="helpClose" class="material-symbols-outlined help-close %s{colorClass}" translate="no">
+            <div>
+                <span id="helpClose" class="material-symbols-outlined %s{colorClass}" translate="no">
                     close
                 </span>
             </div>

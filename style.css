@@ -255,7 +255,7 @@ nav a[href$="taidalab/endless-binary/dec2bin-2/"]:hover,
 nav a[href$="taidalab/endless-binary/dec2bin-2/"].current-location,
 .course-button-d2b1,
 .course-button-d2b2,
-span.help-close.dec2bin:hover {
+div.help-window>div>span.dec2bin:hover {
     background-color: var(--dec2bin-color);
 }
 
@@ -285,7 +285,7 @@ nav a[href$="taidalab/endless-binary/bin2dec-2/"]:hover,
 nav a[href$="taidalab/endless-binary/bin2dec-2/"].current-location,
 .course-button-b2d1,
 .course-button-b2d2,
-span.help-close.bin2dec:hover {
+div.help-window>div>span.bin2dec:hover {
     background-color: var(--bin2dec-color);
 }
 
@@ -310,7 +310,7 @@ nav a[href$="taidalab/endless-binary/power-of-two-2/"]:hover,
 nav a[href$="taidalab/endless-binary/power-of-two-2/"].current-location,
 .course-button-pot1,
 .course-button-pot2,
-span.help-close.power-of-two:hover {
+div.help-window>div>span.power-of-two:hover {
     background-color: var(--power-of-two-color);
 }
 
@@ -336,8 +336,8 @@ nav a[href$="taidalab/endless-binary/subtraction/"]:hover,
 nav a[href$="taidalab/endless-binary/subtraction/"].current-location,
 .course-button-add,
 .course-button-sub,
-span.help-close.addition:hover,
-span.help-close.subtraction:hover {
+div.help-window>div>span.addition:hover,
+div.help-window>div>span.subtraction:hover {
     background-color: var(--addition-color);
 }
 
@@ -361,7 +361,7 @@ header.complement,
 nav a[href$="taidalab/endless-binary/complement/"]:hover,
 nav a[href$="taidalab/endless-binary/complement/"].current-location,
 .course-button-cmp,
-span.help-close.complement:hover {
+div.help-window>div>span.complement:hover {
     background-color: var(--complement-color);
 }
 
@@ -389,8 +389,8 @@ nav a[href$="taidalab/endless-binary/dec2hex/"].current-location,
 nav a[href$="taidalab/endless-binary/hex2dec/"]:hover,
 nav a[href$="taidalab/endless-binary/hex2dec/"].current-location,
 .course-button-d2h,
-span.help-close.dec2hex:hover,
-span.help-close.hex2dec:hover {
+div.help-window>div>span.dec2hex:hover,
+div.help-window>div>span.hex2dec:hover {
     background-color: var(--dec2hex-color);
 }
 
@@ -412,7 +412,7 @@ button.hex2dec:hover {
 header.iro-iroiro,
 nav a[href$="taidalab/iro-iroiro/"]:hover,
 nav a[href$="taidalab/iro-iroiro/"].current-location,
-span.help-close.iro-iroiro:hover {
+div.help-window>div>span.iro-iroiro:hover {
     background-color: var(--iro-iroiro-color);
 }
 
@@ -427,14 +427,14 @@ button.iro-iroiro:hover {
 
 nav a[href="#"]:hover,
 nav a[href="#"].current-location,
-span.help-close.ctc:hover {
+div.help-window>div>span.ctc:hover {
     background-color: var(--ctc-color);
 }
 
 header.network-simulator,
 nav a[href$="taidalab/network-simulator/"]:hover,
 nav a[href$="taidalab/network-simulator/"].current-location,
-span.help-close.network-simulator:hover {
+div.help-window>div>span.network-simulator:hover {
     background-color: var(--network-simulator-color);
 }
 
@@ -1297,7 +1297,7 @@ div.lan-cable.selected>svg>g>polyline {
     help window
 */
 span.help-button,
-span.help-close {
+div.help-window>div>span {
     font-size: 1.5rem;
     cursor: pointer;
 }
@@ -1307,12 +1307,12 @@ span.help-button:hover {
         'FILL' 1
 }
 
-div.help-close-outer {
+div.help-window>div {
     width: 100%;
     text-align: right;
 }
 
-span.help-close:hover {
+div.help-window>div>span:hover {
     color: var(--background-color);
 }
 
@@ -1322,11 +1322,11 @@ span.help-close:hover {
     }
 }
 
-.help-window {
+div.help-window {
     display: none;
 }
 
-.help-window.active {
+div.help-window.active {
     display: block;
     background-color: var(--background-color);
     opacity: 0.95;
