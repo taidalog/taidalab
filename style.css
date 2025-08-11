@@ -1316,6 +1316,10 @@ div.help-window>div>span:hover {
     color: var(--background-color);
 }
 
+div.help-window>p>span.material-symbols-outlined {
+    font-size: 18px;
+}
+
 @media (max-width: 599px) {
     span.help-button {
         font-size: 1rem;
