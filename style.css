@@ -255,7 +255,7 @@ nav a[href$="taidalab/endless-binary/dec2bin-2/"]:hover,
 nav a[href$="taidalab/endless-binary/dec2bin-2/"].current-location,
 .course-button-d2b1,
 .course-button-d2b2,
-div.help-window>div>span.dec2bin:hover {
+main.dec2bin>div.help-window>div>span:hover {
     background-color: var(--dec2bin-color);
 }
 
@@ -264,11 +264,11 @@ header.dec2bin {
     color: aliceblue;
 }
 
-button.dec2bin {
+main.dec2bin>form>button {
     background: hsl(188, 30%, 65%);
 }
 
-button.dec2bin:hover {
+main.dec2bin>form>button:hover {
     /* color: var(--background-color); */
     background-color: hsl(188, 30%, 72%);
 }
@@ -285,16 +285,16 @@ nav a[href$="taidalab/endless-binary/bin2dec-2/"]:hover,
 nav a[href$="taidalab/endless-binary/bin2dec-2/"].current-location,
 .course-button-b2d1,
 .course-button-b2d2,
-div.help-window>div>span.bin2dec:hover {
+main.bin2dec>div.help-window>div>span:hover {
     background-color: var(--bin2dec-color);
 }
 
-button.bin2dec {
+main.bin2dec>form>button {
     color: #1e3328;
     background: #95fec6;
 }
 
-button.bin2dec:hover {
+main.bin2dec>form>button:hover {
     background-color: #86e5b2;
 }
 
@@ -310,16 +310,16 @@ nav a[href$="taidalab/endless-binary/power-of-two-2/"]:hover,
 nav a[href$="taidalab/endless-binary/power-of-two-2/"].current-location,
 .course-button-pot1,
 .course-button-pot2,
-div.help-window>div>span.power-of-two:hover {
+main.power-of-two>div.help-window>div>span:hover {
     background-color: var(--power-of-two-color);
 }
 
-button.power-of-two {
+main.power-of-two>form>button {
     color: indigo;
     background: plum;
 }
 
-button.power-of-two:hover {
+main.power-of-two>form>button:hover {
     background-color: #c690c6;
 }
 
@@ -336,19 +336,19 @@ nav a[href$="taidalab/endless-binary/subtraction/"]:hover,
 nav a[href$="taidalab/endless-binary/subtraction/"].current-location,
 .course-button-add,
 .course-button-sub,
-div.help-window>div>span.addition:hover,
-div.help-window>div>span.subtraction:hover {
+main.addition>div.help-window>div>span:hover,
+main.subtraction>div.help-window>div>span:hover {
     background-color: var(--addition-color);
 }
 
-button.addition,
-button.subtraction {
+main.addition>form>button,
+main.subtraction>form>button {
     color: #1e2133;
     background: #95a2fe;
 }
 
-button.addition:hover,
-button.subtraction:hover {
+main.addition>form>button:hover,
+main.subtraction>form>button:hover {
     background-color: #8692e5;
 }
 
@@ -361,16 +361,16 @@ header.complement,
 nav a[href$="taidalab/endless-binary/complement/"]:hover,
 nav a[href$="taidalab/endless-binary/complement/"].current-location,
 .course-button-cmp,
-div.help-window>div>span.complement:hover {
+main.complement>div.help-window>div>span:hover {
     background-color: var(--complement-color);
 }
 
-button.complement {
+main.complement>form>button {
     color: #1e2833;
     background: #95c9fe;
 }
 
-button.complement:hover {
+main.complement>form>button:hover {
     background-color: #86b5e5;
 }
 
@@ -389,19 +389,19 @@ nav a[href$="taidalab/endless-binary/dec2hex/"].current-location,
 nav a[href$="taidalab/endless-binary/hex2dec/"]:hover,
 nav a[href$="taidalab/endless-binary/hex2dec/"].current-location,
 .course-button-d2h,
-div.help-window>div>span.dec2hex:hover,
-div.help-window>div>span.hex2dec:hover {
+main.dec2hex>div.help-window>div>span:hover,
+main.hex2dec>div.help-window>div>span:hover {
     background-color: var(--dec2hex-color);
 }
 
-button.dec2hex,
-button.hex2dec {
+main.dec2hex>form>button,
+main.hex2dec>form>button {
     color: #1e3330;
     background: #95feec;
 }
 
-button.dec2hex:hover,
-button.hex2dec:hover {
+main.dec2hex>form>button:hover,
+main.hex2dec>form>button:hover {
     background-color: #86e5d5;
 }
 
@@ -412,16 +412,16 @@ button.hex2dec:hover {
 header.iro-iroiro,
 nav a[href$="taidalab/iro-iroiro/"]:hover,
 nav a[href$="taidalab/iro-iroiro/"].current-location,
-div.help-window>div>span.iro-iroiro:hover {
+main.iro-iroiro>div.help-window>div>span:hover {
     background-color: var(--iro-iroiro-color);
 }
 
-button.iro-iroiro {
+main.iro-iroiro>form>button {
     color: #331e25;
     background: #fe95b7;
 }
 
-button.iro-iroiro:hover {
+main.iro-iroiro>form>button:hover {
     background-color: #e586a5;
 }
 
@@ -434,16 +434,16 @@ div.help-window>div>span.ctc:hover {
 header.network-simulator,
 nav a[href$="taidalab/network-simulator/"]:hover,
 nav a[href$="taidalab/network-simulator/"].current-location,
-div.help-window>div>span.network-simulator:hover {
+main.network-simulator>div.help-window>div>span:hover {
     background-color: var(--network-simulator-color);
 }
 
-button.network-simulator {
+main.network-simulator>form>button {
     color: #251e33;
     background: #b795fe;
 }
 
-button.network-simulator:hover {
+main.network-simulator>form>button:hover {
     background-color: #a586e5;
 }
 
@@ -451,12 +451,12 @@ header.not-found {
     background-color: var(--not-found-color);
 }
 
-button.not-found {
+main.not-found>form>button {
     color: #262626;
     background: #bdbdbd;
 }
 
-button.not-found:hover {
+main.not-found>form>button:hover {
     background-color: #aaaaaa;
 }
 
@@ -897,13 +897,13 @@ div.history-area>div>div.history-wrong>span.material-symbols-outlined {
 /*
     IroIroiro
 */
-div.output-area.iro-iroiro {
+main.iro-iroiro>div.output-area {
     overflow-x: scroll;
     overflow-y: hidden;
     scrollbar-width: none;
 }
 
-div.output-area.iro-iroiro::-webkit-scrollbar {
+main.iro-iroiro>div.output-area::-webkit-scrollbar {
     display: none;
 }
 
@@ -933,12 +933,12 @@ div.color-div .white {
     color: #ffffff;
 }
 
-form.network-simulator input {
+main.network-simulator>form input {
     width: 17ch;
 }
 
-form.iro-iroiro,
-form.network-simulator {
+main.iro-iroiro>form,
+main.network-simulator>form:first-of-type {
     width: 100%;
     padding: 5px 0;
     display: flex;
@@ -948,13 +948,13 @@ form.network-simulator {
 }
 
 @media (max-width: 1199px) {
-    form.network-simulator {
+    main.network-simulator>form {
         flex-direction: column;
         gap: 10px 15px;
     }
 }
 
-form.network-simulator+form {
+main.network-simulator>form+form {
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -962,11 +962,11 @@ form.network-simulator+form {
     gap: 10px 10px;
 }
 
-form.network-simulator+form button {
+main.network-simulator>form+form button {
     margin: 0px;
 }
 
-input.iro-iroiro {
+main.iro-iroiro>form>label>input {
     border: none;
     border-bottom: 2px solid;
     border-radius: 0px;
@@ -975,16 +975,12 @@ input.iro-iroiro {
     padding-left: 10px;
     padding-right: 0;
     width: 4rem;
+    font-family: 'Noto Sans Mono', monospace;
 }
 
-input.iro-iroiro:invalid {
+main.iro-iroiro>form>label>input:invalid {
     background-color: var(--history-wrong-color);
 }
-
-.rem6 {
-    width: 6rem;
-}
-
 
 /*
     <main> of Addition course and Subtraction course.
@@ -1099,17 +1095,17 @@ div.hint-table>div>span {
     margin: 1px 4px;
 }
 
-div.hint-table>div>span.bin2dec {
+main.bin2dec div.hint-table>div:nth-of-type(2)>span {
     background-color: #95fec6;
     font-size: 3rem;
 }
 
-div.hint-table>div>span.hex2dec {
+main.hex2dec div.hint-table>div:nth-of-type(2)>span {
     background-color: #95feec;
     font-size: 3rem;
 }
 
-div.hint-table>div>span.gray {
+div.hint-table>div:nth-of-type(3)>span {
     background-color: #cccccc;
 }
 
@@ -1129,40 +1125,40 @@ div.hint-table>div>div>span {
 /*
     network-simulator
 */
-form.network-simulator~form>button>span>span.material-symbols-outlined {
+main.network-simulator>form~form>button>span>span.material-symbols-outlined {
     font-size: 18px;
 }
 
-form.network-simulator~div.output-area>div {
+main.network-simulator>form~div.output-area>div {
     display: inline-flex;
     align-items: center;
     margin: 3px 0;
     font-size: 18px;
 }
 
-form.network-simulator~div.output-area>div>span.material-symbols-outlined {
+main.network-simulator>form~div.output-area>div>span.material-symbols-outlined {
     font-size: 18px;
     line-height: 18px;
     margin-right: .5rem;
     font-variation-settings: "opsz" 20;
 }
 
-form.network-simulator~div.output-area>div.history-wrong>span.material-symbols-outlined {
+main.network-simulator>form~div.output-area>div.history-wrong>span.material-symbols-outlined {
     font-variation-settings:
         'FILL' 1
 }
 
-form.network-simulator~form>button {
+main.network-simulator>form~form>button {
     color: #333333;
     background-color: var(--gray-color);
     width: 160px;
 }
 
-form.network-simulator~form>button:hover {
+main.network-simulator>form~form>button:hover {
     background-color: #d0d0d7;
 }
 
-form.network-simulator~form>button>span {
+main.network-simulator>form~form>button>span {
     display: inline-flex;
     align-items: center;
 }

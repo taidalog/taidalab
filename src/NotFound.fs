@@ -75,7 +75,7 @@ module NotFound =
             """<span>404: Page Not Found - </span><span translate="no">taidalab</span>"""
 
         (document.querySelector "main").innerHTML <- EndlessBinary.Course.main404
-        (document.querySelector "#submitButton").className <- "not-found"
+        (document.querySelector "main").className <- "not-found"
 
         Content.Common.question
         |> List.iter ((document.querySelector "#questionArea").appendChild >> ignore)

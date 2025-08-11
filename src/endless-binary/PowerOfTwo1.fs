@@ -75,8 +75,8 @@ module PowerOfTwo1 =
         (document.querySelector "#headerTitle").innerHTML <-
             """<span>2のn乗 - </span><span translate="no">taidalab</span>"""
 
-        (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help "power-of-two"
-        (document.querySelector "#submitButton").className <- "power-of-two"
+        (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help
+        (document.querySelector "main").className <- "power-of-two"
 
         Content.Common.question
         |> List.iter ((document.querySelector "#questionArea").appendChild >> ignore)

@@ -40,6 +40,7 @@ module Terms =
             """<span>ご利用について - </span><span translate="no">taidalab</span>"""
 
         (document.querySelector "main").innerHTML <- main
+        (document.querySelector "main").className <- "home"
 
         // Resets keyboard shortcuts.
         document.onkeydown <- fun _ -> ()

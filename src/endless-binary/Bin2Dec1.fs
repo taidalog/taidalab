@@ -61,8 +61,8 @@ module Bin2Dec1 =
         |> Seq.toList
         |> List.mapi (fun i c ->
             $"""<span>%d{(String.length binaryString) - i}</span>""",
-            $"""<span class="bin2dec">%c{c}</span>""",
-            $"""<span class="gray">%d{2}<sup>%d{(String.length binaryString) - i - 1}</sup></span>""")
+            $"""<span>%c{c}</span>""",
+            $"""<span>%d{2}<sup>%d{(String.length binaryString) - i - 1}</sup></span>""")
 
     let newHintTable (a, b, c) =
         sprintf
@@ -238,8 +238,8 @@ module Bin2Dec1 =
         (document.querySelector "#headerTitle").innerHTML <-
             """<span>2進数→10進数 (1) - </span><span translate="no">taidalab</span>"""
 
-        (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help "bin2dec"
-        (document.querySelector "#submitButton").className <- "bin2dec"
+        (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help
+        (document.querySelector "main").className <- "bin2dec"
 
         Content.Common.question
         |> List.iter ((document.querySelector "#questionArea").appendChild >> ignore)

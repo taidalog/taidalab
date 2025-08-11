@@ -31,7 +31,7 @@ module Home =
         </form>"""
 
 module Course =
-    let main help colorClass =
+    let main (help: string) : string =
         $"""
         <span id="questionArea" class="question-area"></span>
         <form id="inputArea" class="endless-binary" autocomplete="off">
@@ -47,7 +47,7 @@ module Course =
         </div>
         <div id="helpWindow" class="help-window">
             <div>
-                <span id="helpClose" class="material-symbols-outlined %s{colorClass}" translate="no">
+                <span id="helpClose" class="material-symbols-outlined" translate="no">
                     close
                 </span>
             </div>

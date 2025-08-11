@@ -58,6 +58,7 @@ module InformationPolicy =
             """<span>情報の外部送信について - </span><span translate="no">taidalab</span>"""
 
         (document.querySelector "main").innerHTML <- main
+        (document.querySelector "main").className <- "home"
 
         // Resets keyboard shortcuts.
         document.onkeydown <- fun _ -> ()

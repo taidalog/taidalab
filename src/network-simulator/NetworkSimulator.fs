@@ -39,7 +39,7 @@ module NetworkSimulator =
 
     let main =
         $"""
-        <form id="inputArea" class="network-simulator" autocomplete="off">
+        <form id="inputArea" autocomplete="off">
             <label>
                 送信元 IPv4:
                 <input type="text" id="sourceInput" class="mono">
@@ -87,7 +87,7 @@ module NetworkSimulator =
         <div id="playArea" class="play-area"></div>
         <div id="helpWindow" class="help-window">
             <div>
-                <span id="helpClose" class="material-symbols-outlined network-simulator" translate="no">
+                <span id="helpClose" class="material-symbols-outlined translate="no">
                     close
                 </span>
             </div>
@@ -244,7 +244,7 @@ module NetworkSimulator =
             """<span>ネットワークシミュレータ - </span><span translate="no">taidalab</span>"""
 
         (document.querySelector "main").innerHTML <- main
-        (document.querySelector "#submitButton").className <- "network-simulator"
+        (document.querySelector "main").className <- "network-simulator"
 
         (document.getElementById "helpButton").onclick <-
             (fun _ ->

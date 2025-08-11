@@ -82,8 +82,8 @@ module Subtraction =
         (document.querySelector "#headerTitle").innerHTML <-
             """<span>減算 - </span><span translate="no">taidalab</span>"""
 
-        (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help "subtraction"
-        (document.querySelector "#submitButton").className <- "subtraction"
+        (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help
+        (document.querySelector "main").className <- "subtraction"
 
         (document.querySelector "#questionArea").appendChild Content.Common.columnAdditionFormat
         |> ignore

@@ -245,8 +245,8 @@ module Addition =
         (document.querySelector "#headerTitle").innerHTML <-
             """<span>加算 - </span><span translate="no">taidalab</span>"""
 
-        (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help "addition"
-        (document.querySelector "#submitButton").className <- "addition"
+        (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help
+        (document.querySelector "main").className <- "addition"
 
         (document.querySelector "#questionArea").appendChild Content.Common.columnAdditionFormat
         |> ignore

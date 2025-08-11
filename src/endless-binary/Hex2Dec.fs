@@ -170,8 +170,8 @@ module Hex2Dec =
         (document.querySelector "#headerTitle").innerHTML <-
             """<span>16進数→10進数 - </span><span translate="no">taidalab</span>"""
 
-        (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help "hex2dec"
-        (document.querySelector "#submitButton").className <- "hex2dec"
+        (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help
+        (document.querySelector "main").className <- "hex2dec"
 
         Content.Common.question
         |> List.iter ((document.querySelector "#questionArea").appendChild >> ignore)

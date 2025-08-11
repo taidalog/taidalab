@@ -39,19 +39,19 @@ module IroIroiro =
 
     let main =
         $"""
-        <form id="inputArea" class="iro-iroiro" autocomplete="off">
-            <label>R:<input type="number" id="rInput" class="iro-iroiro mono" min="0" max="255"></label>
-            <label>G:<input type="number" id="gInput" class="iro-iroiro mono" min="0" max="255"></label>
-            <label>B:<input type="number" id="bInput" class="iro-iroiro mono" min="0" max="255"></label>
-            <label>変化量:<input type="number" id="stepInput" class="iro-iroiro mono"></label>
-            <label>回数:<input type="number" id="limitInput" class="iro-iroiro rem6 mono" value="10"></label>
+        <form id="inputArea" autocomplete="off">
+            <label>R:<input type="number" id="rInput" min="0" max="255"></label>
+            <label>G:<input type="number" id="gInput" min="0" max="255"></label>
+            <label>B:<input type="number" id="bInput" min="0" max="255"></label>
+            <label>変化量:<input type="number" id="stepInput"></label>
+            <label>回数:<input type="number" id="limitInput" value="10"></label>
             <button type="button" id="submitButton">Enter</button>
         </form>
         <div id="errorArea" class="error-area"></div>
-        <div id="outputArea" class="output-area iro-iroiro"></div>
+        <div id="outputArea" class="output-area"></div>
         <div id="helpWindow" class="help-window">
             <div>
-                <span id="helpClose" class="material-symbols-outlined iro-iroiro" translate="no">
+                <span id="helpClose" class="material-symbols-outlined" translate="no">
                     close
                 </span>
             </div>
@@ -293,7 +293,7 @@ module IroIroiro =
             """<span>色いろいろ - </span><span translate="no">taidalab</span>"""
 
         (document.querySelector "main").innerHTML <- main
-        (document.querySelector "#submitButton").className <- "iro-iroiro"
+        (document.querySelector "main").className <- "iro-iroiro"
 
         (document.getElementById "submitButton").onclick <- (fun _ -> start ())
 
