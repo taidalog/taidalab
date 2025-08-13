@@ -8,6 +8,7 @@ namespace Taidalab.EndlessBinary
 open System
 open Browser.Dom
 open Taidalab
+open Taidalab.Html
 open Taidalab.Number
 open Taidalab.EndlessBinary.Course
 open Fermata.RadixConversion
@@ -20,26 +21,34 @@ module PowerOfTwo2 =
         ヒント付きなので、考え方も身に付けられます。
         """
 
-    let hint number =
+    let hint (number: int) : Browser.Types.HTMLElement option =
         let indexNumber = Math.Log(double (number + 1), 2.) |> int
 
-        $"""
-        <details>
-            <summary><h2>ヒント:</h2></summary>
-            <p>
-                %d{number}<sub>(10)</sub> という数は、以下のように表すことができます。
-            </p>
-            <p class="hint-bgcolor-gray mono">
-                &nbsp;&nbsp;%d{number}<sub>(10)</sub><br>
-                = %d{number + 1}<sub>(10)</sub> - 1<sub>(10)</sub><br>
-                = 2<sup>%d{indexNumber}</sup><sub>(10)</sub> - 1<sub>(10)</sub>
-            </p>
-            <p>
-                2<sup>n</sup> の数を2進法で表現するには、1 の後に 0 を n 個続けます。<br>
-                一方、2<sup>n</sup>-1 の数を2進法で表現するには、1 を n 個続けます。<br>
-                %d{number}<sub>(10)</sub> は 2<sup>%d{indexNumber}</sup> - 1 なので、1 を %d{indexNumber} 個続けます。
-            </p>
-        </details>"""
+        Some
+        <| details {
+            appendChild (summary { appendChild (h2 { innerText "ヒント:" }) })
+            appendChild (p { innerHTML $"%d{number}<sub>(10)</sub> という数は、以下のように表すことができます。" })
+
+            appendChild (
+                p {
+                    className "hint-bgcolor-gray mono"
+
+                    innerHTML
+                        $"""&nbsp;&nbsp;%d{number}<sub>(10)</sub><br>
+                        = %d{number + 1}<sub>(10)</sub> - 1<sub>(10)</sub><br>
+                        = 2<sup>%d{indexNumber}</sup><sub>(10)</sub> - 1<sub>(10)</sub>"""
+                }
+            )
+
+            appendChild (
+                p {
+                    innerHTML
+                        $"2<sup>n</sup> の数を2進法で表現するには、1 の後に 0 を n 個続けます。<br>
+                        一方、2<sup>n</sup>-1 の数を2進法で表現するには、1 を n 個続けます。<br>
+                        %d{number}<sub>(10)</sub> は 2<sup>%d{indexNumber}</sup> - 1 なので、1 を %d{indexNumber} 個続けます。"
+                }
+            )
+        }
 
     let question lastAnswers : int =
         newNumber (fun _ -> getRandomBetween 0 8 |> pown 2 |> (+) -1) (fun n -> List.contains n lastAnswers = false)

@@ -790,6 +790,12 @@ details summary:hover {
     background-color: var(--hint-gray-color);
 }
 
+main.dec2bin div.hint-area svg>text,
+main.dec2hex div.hint-area svg>text {
+    white-space: pre;
+    font-family: "Courier New";
+    font-size: 1.25rem;
+}
 
 /*
     history area

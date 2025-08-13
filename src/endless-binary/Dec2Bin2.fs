@@ -19,7 +19,7 @@ module Dec2Bin2 =
         ヒントはありませんので、慣れてからどうぞ。
         """
 
-    let hint _ = ""
+    let hint _ = None
 
     let question lastAnswers : int =
         newNumber (fun _ -> getRandomBetween 0 255) (fun n -> List.contains n lastAnswers = false)

@@ -10,6 +10,7 @@ open Browser.Dom
 open Browser.Types
 open Taidalab
 open Taidalab.Number
+open Taidalab.Html
 open Taidalab.Text
 open Taidalab.Tuple
 open Taidalab.EndlessBinary.Course
@@ -50,89 +51,102 @@ module Bin2Dec1 =
         let tester (x, y) : bool = x <> y
         newNumber generator tester ||> (+)
 
-    let writeAdditionFormula binaryString =
+    let writeAdditionFormula (binaryString: string) : string =
         binaryString
         |> Seq.toList
         |> List.mapi (fun i c -> sprintf """(%c * 2<sup>%d</sup>)""" c (String.length binaryString - i - 1))
         |> String.concat " + "
 
-    let tableComponents binaryString =
+    let tableComponents (binaryString: string) : (HTMLElement * HTMLElement * HTMLElement) list =
         binaryString
         |> Seq.toList
         |> List.mapi (fun i c ->
-            $"""<span>%d{(String.length binaryString) - i}</span>""",
-            $"""<span>%c{c}</span>""",
-            $"""<span>%d{2}<sup>%d{(String.length binaryString) - i - 1}</sup></span>""")
+            span { innerText (string (String.length binaryString - i)) },
+            span { innerText (string c) },
+            span { innerHTML $"%d{2}<sup>%d{String.length binaryString - i - 1}</sup>" })
 
-    let newHintTable (a, b, c) =
-        sprintf
-            """
-            <div class="hint-table">
-                <div>
-                    %s
-                    <div>
-                        <span>桁目</span>
-                    </div>
-                </div>
-                <div>
-                    %s
-                    <div>
-                        <span>ビット</span>
-                    </div>
-                </div>
-                <div>
-                    %s
-                    <div>
-                        <span>重み</span>
-                    </div>
-                </div>
-            </div>
-            """
-            a
-            b
-            c
+    let tableLabels: HTMLElement * HTMLElement * HTMLElement =
+        div { appendChild (span { innerText "桁目" }) },
+        div { appendChild (span { innerText "ビット" }) },
+        div { appendChild (span { innerText "重み" }) }
 
-    let hintTable binaryString =
-        binaryString
-        |> tableComponents
-        |> List.fold (fun x y -> applyToTuples3 (fun a1 a2 -> sprintf "%s%s" a1 a2) x y) ("", "", "")
-        |> newHintTable
+    let tableComponents' (binaryString: string) : (HTMLElement * HTMLElement * HTMLElement) list =
+        tableComponents binaryString @ [ tableLabels ]
 
-    let hint (answer: int) : string =
+    let newHintTable (xs: (HTMLElement * HTMLElement * HTMLElement) list) : HTMLDivElement =
+        let first = div { () }
+        let second = div { () }
+        let third = div { () }
+
+        xs
+        |> List.iter (fun (x, y, z) ->
+            (first.appendChild >> ignore) x
+            (second.appendChild >> ignore) y
+            (third.appendChild >> ignore) z)
+
+        div {
+            className "hint-table"
+            appendChild first
+            appendChild second
+            appendChild third
+        }
+
+    let hintTable (binaryString: string) : HTMLDivElement =
+        binaryString |> tableComponents' |> newHintTable
+
+    let hint (answer: int) : HTMLElement option =
         let (Bin v) = Dec answer |> Dec.toBin
         let formula = writeAdditionFormula v
         let table = hintTable v
 
-        $"""
-        <details><summary><h2>ヒント:</h2></summary>
-            <p>
-                10進法で表現した数は、一番右の桁から<br>
+        Some
+        <| details {
+            appendChild (summary { appendChild (h2 { innerText "ヒント:" }) })
+
+            appendChild (
+                p {
+                    innerHTML
+                        $"""10進法で表現した数は、一番右の桁から<br>
                 1の位、10の位、100の位、1000の位...となっています。<br>
                 これを「10<sup>n</sup>の位」の形で表すと、<br>
-                10<sup>0</sup>の位、10<sup>1</sup>の位、10<sup>2</sup>の位、10<sup>3</sup>の位...となります。<br>
-            </p>
-            <p>
-                同様に、2進法で表現した数は、一番右の桁から<br>
+                10<sup>0</sup>の位、10<sup>1</sup>の位、10<sup>2</sup>の位、10<sup>3</sup>の位...となります。"""
+                }
+            )
+
+            appendChild (
+                p {
+                    innerHTML
+                        $"""同様に、2進法で表現した数は、一番右の桁から<br>
                 1の位、2の位、4の位、8の位...となっています。<br>
                 これを「2<sup>n</sup>の位」の形で表すと、<br>
-                2<sup>0</sup>の位、2<sup>1</sup>の位、2<sup>2</sup>の位、2<sup>3</sup>の位...となります。
-            </p>
-            <p>
-                この 10<sup>0</sup>、10<sup>1</sup>、10<sup>2</sup>、10<sup>3</sup>...や 2<sup>0</sup>、2<sup>1</sup>、2<sup>2</sup>、2<sup>3</sup>...という数を、その桁の「重み」と呼びます。<br>
-            </p>
-            <p>
-                %s{table}
-            </p>
-            <p>
-                2進法で表現した数を10進法で表現しなおすには、それぞれの桁の数と重みをかけ算し、それを合計します。<br>
-                %s{v}<sub>(2)</sub> の場合、以下のように計算します。
-            </p>
-            <p class="hint-bgcolor-gray mono">
-                &nbsp;&nbsp;%s{formula}<br>
-                = %d{answer}<sub>(10)</sub>
-            </p>
-        </details>
-        """
+                2<sup>0</sup>の位、2<sup>1</sup>の位、2<sup>2</sup>の位、2<sup>3</sup>の位...となります。"""
+                }
+            )
+
+            appendChild (
+                p {
+                    innerHTML
+                        $"""この 10<sup>0</sup>、10<sup>1</sup>、10<sup>2</sup>、10<sup>3</sup>...や 2<sup>0</sup>、2<sup>1</sup>、2<sup>2</sup>、2<sup>3</sup>...という数を、その桁の「重み」と呼びます。"""
+                }
+            )
+
+            appendChild (p { appendChild table })
+
+            appendChild (
+                p {
+                    innerHTML
+                        $"""2進法で表現した数を10進法で表現しなおすには、それぞれの桁の数と重みをかけ算し、それを合計します。<br>
+                %s{v}<sub>(2)</sub> の場合、以下のように計算します。"""
+                }
+            )
+
+            appendChild (
+                p {
+                    className "hint-bgcolor-gray mono"
+                    innerHTML $"""&nbsp;&nbsp;%s{formula}<br>= %d{answer}<sub>(10)</sub>"""
+                }
+            )
+        }
 
     let question' lastNumbers : int =
         newNumber newNumberWithOneOrTwoOne (fun n -> List.contains n lastNumbers = false)
@@ -154,7 +168,7 @@ module Bin2Dec1 =
         let rightSide = v |> Fermata.String.padLeft 8 ' ' |> escapeSpace
         newHistory correct leftSide 10 rightSide 2
 
-    let additional number : unit = ()
+    let additional _ : unit = ()
 
     let exec' (lastNumbers: int list) (answer: int) =
         exec
@@ -173,7 +187,7 @@ module Bin2Dec1 =
 
     let init'
         (questionGenerator: int list -> int)
-        (hintGenerator: int -> string)
+        (hintGenerator: int -> HTMLElement option)
         (additional: 'c -> unit)
         (executor: int list -> int -> unit)
         (keyboardshortcutSetter: KeyboardEvent -> unit)
@@ -188,7 +202,8 @@ module Bin2Dec1 =
         (document.getElementById "srcRadix").innerText <- sprintf "(%d)" sourceRadix
         (document.getElementById "dstRadix").innerText <- string destinationRadix
         (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
-        (document.getElementById "hintArea").innerHTML <- hintGenerator initNumber
+        (document.getElementById "hintArea").innerHTML <- ""
+        Option.iter ((document.getElementById "hintArea").appendChild >> ignore) (hintGenerator initNumber)
 
         let f =
             fun (e: Event) ->

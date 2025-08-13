@@ -9,6 +9,7 @@ open System
 open Browser.Dom
 open Browser.Types
 open Taidalab
+open Taidalab.Html
 open Taidalab.Number
 open Taidalab.Text
 open Taidalab.Tuple
@@ -40,86 +41,104 @@ module Hex2Dec =
         |> Seq.rev
         |> String.concat " + "
 
-    let tableComponentsHex hex' =
+    let tableComponents (hex': string) : (HTMLElement * HTMLElement * HTMLElement) list =
         hex'
         |> Seq.toList
         |> List.mapi (fun i c ->
-            $"""<span>%d{(hex' |> String.length) - i}</span>""",
-            $"""<span class="hex2dec">%c{c}</span>""",
-            $"""<span class="gray">%d{16}<sup>%d{(hex' |> String.length) - i - 1}</sup></span>""")
+            span { innerText (string (String.length hex' - i)) },
+            span {
+                innerText (string c)
+                className "hex2dec"
+            },
+            span {
+                innerHTML $"%d{16}<sup>%d{String.length hex' - i - 1}</sup>"
+                className "gray"
+            })
 
-    let newHintTable (a, b, c) =
-        sprintf
-            """
-            <div class="hint-table">
-                <div>
-                    %s
-                    <div>
-                        <span>桁目</span>
-                    </div>
-                </div>
-                <div>
-                    %s
-                    <div>
-                        <span>数</span>
-                    </div>
-                </div>
-                <div>
-                    %s
-                    <div>
-                        <span>重み</span>
-                    </div>
-                </div>
-            </div>
-            """
-            a
-            b
-            c
+    let tableLabels: HTMLElement * HTMLElement * HTMLElement =
+        div { appendChild (span { innerText "桁目" }) },
+        div { appendChild (span { innerText "数" }) },
+        div { appendChild (span { innerText "重み" }) }
 
-    let hintTable (hex': string) =
-        hex'
-        |> tableComponentsHex
-        |> List.fold (fun x y -> applyToTuples3 (fun a1 a2 -> sprintf "%s%s" a1 a2) x y) ("", "", "")
-        |> newHintTable
+    let tableComponents' (hex': string) : (HTMLElement * HTMLElement * HTMLElement) list =
+        tableComponents hex' @ [ tableLabels ]
 
-    let hintFormat (Hex h) formula table =
+    let newHintTable (xs: (HTMLElement * HTMLElement * HTMLElement) list) : HTMLDivElement =
+        let first = div { () }
+        let second = div { () }
+        let third = div { () }
+
+        xs
+        |> List.iter (fun (x, y, z) ->
+            (first.appendChild >> ignore) x
+            (second.appendChild >> ignore) y
+            (third.appendChild >> ignore) z)
+
+        div {
+            className "hint-table"
+            appendChild first
+            appendChild second
+            appendChild third
+        }
+
+    let hintTable (hex': string) : HTMLDivElement = hex' |> tableComponents |> newHintTable
+
+    let hintFormat (Hex h) (formula: string) (table: HTMLElement) : HTMLElement =
         let (Dec d) = (Hex h) |> Hex.toDec
 
-        $"""<details>
-            <summary><h2>ヒント:</h2></summary>
-            <p>
-                10進法で表現した数は、一番右の桁から<br>
+        details {
+            appendChild (summary { appendChild (h2 { innerText "ヒント:" }) })
+
+            appendChild (
+                p {
+                    innerHTML
+                        $"10進法で表現した数は、一番右の桁から<br>
                 1の位、10の位、100の位、1000の位...となっています。<br>
                 これを「10<sup>n</sup>の位」の形で表すと、<br>
-                10<sup>0</sup>の位、10<sup>1</sup>の位、10<sup>2</sup>の位、10<sup>3</sup>の位...となります。
-            </p>
-            <p>
-                同様に、16進法で表現した数は、一番右の桁から<br>
+                10<sup>0</sup>の位、10<sup>1</sup>の位、10<sup>2</sup>の位、10<sup>3</sup>の位...となります。"
+                }
+            )
+
+            appendChild (
+                p {
+                    innerHTML
+                        $"同様に、16進法で表現した数は、一番右の桁から<br>
                 1の位、16の位、256の位...となっています。<br>
                 これを「16<sup>n</sup>の位」の形で表すと、<br>
-                16<sup>0</sup>の位、16<sup>1</sup>の位、16<sup>2</sup>の位...となります。
-            </p>
-            <p>
-                この 10<sup>0</sup>、10<sup>1</sup>、10<sup>2</sup>、10<sup>3</sup>...や 16<sup>0</sup>、16<sup>1</sup>、16<sup>2</sup>...という数を、その桁の「重み」と呼びます。
-            </p>
-            <p>
-                %s{table}
-            </p>
-            <p>
-                16進法で表現した数を10進法で表現しなおすには、それぞれの桁の数と重みをかけ算し、それを合計します。<br>
-                %s{h}<sub>(16)</sub>の場合、以下のように計算します。<br>
-                ※ 16進数にA~Fのアルファベットがある場合は、それぞれ10<sub>(10)</sub>~15<sub>(10)</sub>を表しています。
-            </p>
-            <p class="hint-bgcolor-gray mono">
-                &nbsp;&nbsp;%s{formula}<br>
-                = %d{d}
-            </p>
-        </details>"""
+                16<sup>0</sup>の位、16<sup>1</sup>の位、16<sup>2</sup>の位...となります。"
+                }
+            )
 
-    let hint' (answer: int) : string =
+            appendChild (
+                p {
+                    innerHTML
+                        $"この 10<sup>0</sup>、10<sup>1</sup>、10<sup>2</sup>、10<sup>3</sup>...や 16<sup>0</sup>、16<sup>1</sup>、16<sup>2</sup>...という数を、その桁の「重み」と呼びます。"
+                }
+            )
+
+            appendChild table
+
+            appendChild (
+                p {
+                    innerHTML
+                        $"16進法で表現した数を10進法で表現しなおすには、それぞれの桁の数と重みをかけ算し、それを合計します。<br>
+                %s{h}<sub>(16)</sub>の場合、以下のように計算します。<br>
+                ※ 16進数にA~Fのアルファベットがある場合は、それぞれ10<sub>(10)</sub>~15<sub>(10)</sub>を表しています。"
+                }
+            )
+
+            appendChild (
+                p {
+                    className "hint-bgcolor-gray mono"
+                    innerHTML $"&nbsp;&nbsp;%s{formula}<br>= %d{d}"
+                }
+            )
+        }
+
+    let hint' (answer: int) : HTMLElement option =
         let nextHex: Hex = answer |> Dec |> Dec.toHex
         let (Hex v) = nextHex
-        hintFormat nextHex (writeAdditionFormulaHex v) (hintTable v)
+        hintFormat nextHex (writeAdditionFormulaHex v) (hintTable v) |> Some
 
     let question (digit: int) (lastAnswers: int list) : int =
         newNumber (fun _ -> getRandomBetween 0 (pown 2 digit - 1)) (fun n -> List.contains n lastAnswers = false)
@@ -180,9 +199,6 @@ module Hex2Dec =
         let initHex: Hex = Dec initNumber |> Dec.toHex
         let (Hex v) = initHex
 
-        let addtionFormula = writeAdditionFormulaHex v
-        let hint = hintFormat initHex addtionFormula (hintTable v)
-
         let sourceRadix = 16
         let destinationRadix = 10
 
@@ -190,7 +206,8 @@ module Hex2Dec =
         (document.getElementById "srcRadix").innerText <- sprintf "(%d)" sourceRadix
         (document.getElementById "dstRadix").innerText <- string destinationRadix
         (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
-        (document.getElementById "hintArea").innerHTML <- hint
+        (document.getElementById "hintArea").innerHTML <- ""
+        Option.iter ((document.getElementById "hintArea").appendChild >> ignore) (hint' initNumber)
 
         let f =
             fun (e: Event) ->

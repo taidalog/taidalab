@@ -11,6 +11,7 @@ open Browser.Types
 open Taidalab
 open Taidalab.Number
 open Taidalab.Text
+open Taidalab.Html
 open Taidalab.EndlessBinary.Course
 open Fermata
 open Fermata.RadixConversion
@@ -43,28 +44,48 @@ module Dec2Bin1 =
         else
             (quotient, remainder) :: repeatDivision quotient divisor
 
-    let newArrowBin (fontSize: int) (lineCount: int) (stroke: string) (fill: string) : string =
-        Svg.newArrow
-            (float fontSize / 2. * 4.)
-            (float (fontSize * (lineCount - 1) + 6))
-            (float fontSize / 2. * 3.)
-            ((17.85 * float lineCount - 35.) * -1.)
-            -48.
-            (17.85 * float lineCount - 15.)
-            (delayMs (lineCount - 1) + 1500)
-            stroke
-            fill
+    let newHintAnimation (divisor: int) (num: int) (fontSize: int) : SVGSVGElement =
+        let divisorf (i: int) (x: int) : SVGTextElement =
 
-    let newHintAnimation (divisor: int) (num: int) (fontSize: int) : string =
-        let divRems: (int option * int option * int option * int option) list =
-            (numOpt divisor num) :: (divRemOpt divisor (repeatDivision num divisor))
+            let anim =
+                let dur' = delayMs i + if i = 0 then 1000 else 2000
 
-        let divisor (i: int) (x: int) : string =
-            let anim = Svg.animateOpacity (delayMs i + if i = 0 then 1000 else 2000) 500
-            Svg.text 0 (fontSize * (i + 1)) 0. $"%d{x}%s{anim}"
+                Svg.animate' {
+                    attributeName "opacity"
+                    values [ 0.; 0.; 1. ]
+                    keyTimes [ 0.; float (1 - 500 / dur'); 1. ]
+                    begin' "anim0.begin"
+                    dur $"%d{dur'}ms"
+                    repeatCount 1
+                    fill "freeze"
+                }
 
-        let line (i: int) _ : string =
-            let d =
+            let x' = x
+
+            Svg.text' {
+                x 0
+                y (fontSize * (i + 1))
+                setAttribute "opacity" "0"
+                textContent (string x')
+                appendChild anim
+            }
+
+        let line (i: int) _ : SVGPathElement =
+
+            let anim =
+                let dur' = delayMs i + if i = 0 then 500 else 1500
+
+                Svg.animate' {
+                    attributeName "opacity"
+                    values [ 0.; 0.; 1. ]
+                    keyTimes [ 0.; float (1 - 500 / dur'); 1. ]
+                    begin' "anim0.begin"
+                    dur $"%d{dur'}ms"
+                    repeatCount 1
+                    fill "freeze"
+                }
+
+            let d' =
                 sprintf
                     "M %d,%d q %d,%f 0,%f h %f"
                     (fontSize / 2 + 2)
@@ -74,50 +95,129 @@ module Dec2Bin1 =
                     (float fontSize * 0.8)
                     (float fontSize / 2. * 4.8)
 
-            let anim = Svg.animateOpacity (delayMs i + if i = 0 then 500 else 1500) 500
-            Svg.path d "#000000" 1 "none" 0. anim
+            Svg.path' {
+                d d'
+                stroke "#000000"
+                strokeWidth 1
+                fill "none"
+                setAttribute "opacity" "0"
+                appendChild anim
+            }
 
-        let dividend (i: int) (x: int) : string =
-            let anim = Svg.animateOpacity (delayMs i) 500
+        let dividend (i: int) (x: int) : SVGTextElement =
+            let anim =
+                let dur' = delayMs i
 
-            Svg.text
-                (fontSize / 2 * 2)
-                (fontSize * (i + 1))
-                0.
-                (sprintf "%s%s" (x |> string |> Fermata.String.padLeft 3 ' ' |> escapeSpace) anim)
+                Svg.animate' {
+                    id (if i = 0 then "anim0" else "")
+                    attributeName "opacity"
+                    values [ 0.; 0.; 1. ]
+                    keyTimes [ 0.; float (1 - 500 / dur'); 1. ]
+                    begin' (if i = 0 then "0s;hintSvg.click" else "anim0.begin")
+                    dur $"%d{dur'}ms"
+                    repeatCount 1
+                    fill "freeze"
+                }
 
-        let remainder i x =
-            let anim = sprintf "…%d%s" x (Svg.animateOpacity (delayMs i + 500) 500)
-            Svg.text (fontSize / 2 * 6) (fontSize * (i + 1)) 0. anim
+            let x' = x
+
+            let f (x: string) =
+                String.collect (fun c -> if c = ' ' then "<tspan> </tspan>" else string c) x
+
+            Svg.text' {
+                x (fontSize / 2 * 2)
+                y (fontSize * (i + 1))
+                setAttribute "opacity" "0"
+                innerHTML (x' |> string |> Fermata.String.padLeft 3 ' ' |> f)
+                appendChild anim
+            }
+
+        let remainder (i: int) (x: int) : SVGTextElement =
+            let anim =
+                let dur' = delayMs i + 500
+
+                Svg.animate' {
+                    attributeName "opacity"
+                    values [ 0.; 0.; 1. ]
+                    keyTimes [ 0.; float (1 - 500 / dur'); 1. ]
+                    begin' "anim0.begin"
+                    dur $"%d{dur'}ms"
+                    repeatCount 1
+                    fill "freeze"
+                }
+
+            let x' = x
+
+            Svg.text' {
+                x (fontSize / 2 * 6)
+                y (fontSize * (i + 1))
+                setAttribute "opacity" "0"
+                textContent $"…%d{x'}"
+                appendChild anim
+            }
+
+        let divRems: (int option * int option * int option * int option) list =
+            (numOpt divisor num) :: (divRemOpt divisor (repeatDivision num divisor))
+
+        let arrowAnim: SVGPathElement =
+            let anim =
+                let dur' = delayMs (List.length divRems - 1) + 1500
+
+                Svg.animate' {
+                    attributeName "opacity"
+                    values [ 0.; 0.; 1. ]
+                    keyTimes [ 0.; float (1 - 500 / dur'); 1. ]
+                    begin' "anim0.begin"
+                    dur $"%d{dur'}ms"
+                    repeatCount 1
+                    fill "freeze"
+                }
+
+            let fsz = float fontSize
+            let len = List.length divRems
+
+            Svg.path' {
+                d
+                    $"M %f{fsz / 2. * 4.},%f{float (fontSize * (len - 1) + 6)} h %f{fsz / 2. * 3.} v %f{(17.85 * float len - 35.) * -1.} h -7 l 16,-20 16,20 h -7 v %f{17.85 * float len - 15.} h %f{-48.} Z"
+
+                stroke "#191970"
+                strokeWidth 1
+                fill "#b0e0e6"
+                setAttribute "opacity" "0"
+                appendChild anim
+            }
+
+        let s: SVGSVGElement =
+            Svg.svg {
+                id "hintSvg"
+                width (fontSize / 2 * 10)
+                height (fontSize * (List.length divRems + 1))
+                appendChild arrowAnim
+            }
 
         divRems
         |> List.mapi (fun i (a, b, c, d) ->
-            Option.map (divisor i) a, Option.map (line i) b, Option.map (dividend i) c, Option.map (remainder i) d)
-        |> List.map (fun (a, b, c, d) ->
-            sprintf
-                "%s%s%s%s"
-                (Option.defaultValue "" a)
-                (Option.defaultValue "" b)
-                (Option.defaultValue "" c)
-                (Option.defaultValue "" d))
-        |> List.fold (fun x y -> sprintf "%s%s" x y) (newArrowBin fontSize (List.length divRems) "#191970" "#b0e0e6")
-        |> Svg.frame (fontSize / 2 * 10) (fontSize * (List.length divRems + 1))
+            Option.map (divisorf i) a, Option.map (line i) b, Option.map (dividend i) c, Option.map (remainder i) d)
+        |> List.iter (fun (a, b, c, d) ->
+            (Option.iter (s.appendChild >> ignore) a)
+            (Option.iter (s.appendChild >> ignore) b)
+            (Option.iter (s.appendChild >> ignore) c)
+            (Option.iter (s.appendChild >> ignore) d))
 
-    let newHintRepeatDivision (divisor: int) (number: int) : string =
-        $"""
-        <p>
-            10進法で表現した数を2進法で表現しなおすには、<br>
-            10進法の数を、商が 1 になるまで 2 で割り続けます。<br>
-            この時、余りを商の右に書いておきます。<br>
-            商と余りを下から順に繋げると、2進法の数になります。<br>
-            ※この下の筆算をクリックすると動きます。
-        </p>
-        <div id="hint1" class="mono">
-            %s{(newHintAnimation divisor number 20)}
-        </div>
-        """
+        s
 
-    let newHintRepeatAddition (dec': Dec) (power_of_twos: int list) : string =
+    let newHintRepeatDivision (divisor: int) (number: int) : HTMLElement list =
+        [ Html.p {
+              innerText
+                  "10進法で表現した数を2進法で表現しなおすには、\n10進法の数を、商が 1 になるまで 2 で割り続けます。\nこの時、余りを商の右に書いておきます。\n商と余りを下から順に繋げると、2進法の数になります。\n※この下の筆算をクリックすると動きます。"
+          }
+          Html.div {
+              id "hint1"
+              className "mono"
+              appendChild (newHintAnimation divisor number 20)
+          } ]
+
+    let newHintRepeatAddition (dec': Dec) (power_of_twos: int list) : HTMLParagraphElement list =
         let additionDec = power_of_twos |> List.map string |> String.concat " + "
 
         let additionIndex =
@@ -136,60 +236,48 @@ module Dec2Bin1 =
         let (Bin bin') = dec' |> Dec.toBin
         let (Dec number) = dec'
 
-        $"""
-        <p>
-            10進法で表現した数を2進法で表現しなおすには、<br>
-        </p>
-        <p>
-            <ol>
-                <li>10進法の数を「2<sup>n</sup> の数同士の足し算」に変換して、</li>
-                <li>それぞれの 2<sup>n</sup> の数を2進法で表し、</li>
-                <li>足し合わせる</li>
-            </ol>
-        </p>
-        <p>
-            という方法もあります。
-        </p>
-        <p>
-            %d{number}<sub>(10)</sub> を 2<sup>n</sup> の数同士の足し算に変換すると
-        </p>
-        <p class="hint-bgcolor-gray mono">
-            &nbsp;&nbsp;%s{additionDec}<br>
-            = %s{additionIndex}
-        </p>
-        <p>
-            になります。<br>
-        </p>
-        <p>
-            次に、それぞれの 2<sup>n</sup> の数を2進法で表します。<br>
-            2<sup>n</sup> の数を2進法で表すには、1 の後に 0 を n 個続けます。<br>
-            そのため、%s{additionIndex} は2進法で
-        </p>
-        <p class="hint-bgcolor-gray mono">
-            &nbsp;&nbsp;%s{additionBin}<br>
-        </p>
-        <p>
-            と表現できます。最後にこれを計算すると
-        </p>
-        <p class="hint-bgcolor-gray mono">
-            &nbsp;&nbsp;%s{additionBin}<br>
-            = %s{bin'}<sub>(2)</sub>
-        </p>
-        <p>
-            になります。
-        </p>
-        """
+        [ p { innerText "10進法で表現した数を2進法で表現しなおすには、" }
+          p {
+              appendChild (
+                  ol {
+                      appendChild (li { innerText "10進法の数を「2<sup>n</sup> の数同士の足し算」に変換して、" })
+                      appendChild (li { innerText "それぞれの 2<sup>n</sup> の数を2進法で表し、" })
+                      appendChild (li { innerText "足し合わせる" })
+                  }
+              )
+          }
+          p { innerText "という方法もあります。" }
+          p { innerHTML $"%d{number}<sub>(10)</sub> を 2<sup>n</sup> の数同士の足し算に変換すると" }
+          p {
+              className "hint-bgcolor-gray mono"
+              innerHTML $"&nbsp;&nbsp;%s{additionDec}<br>= %s{additionIndex}"
+          }
+          p { innerText "になります。" }
+          p {
+              innerHTML
+                  $"次に、それぞれの 2<sup>n</sup> の数を2進法で表します。\n2<sup>n</sup> の数を2進法で表すには、1 の後に 0 を n 個続けます。\nそのため、%s{additionIndex} は2進法で"
+          }
+          p {
+              className "hint-bgcolor-gray mono"
+              innerHTML $"&nbsp;&nbsp;%s{additionBin}<br>"
+          }
+          p { innerText "と表現できます。最後にこれを計算すると" }
+          p {
+              className "hint-bgcolor-gray mono"
+              innerHTML $"&nbsp;&nbsp;%s{additionBin}<br>= %s{bin'}<sub>(2)</sub>"
+          }
+          p { innerText "になります。" } ]
 
-    let hint (number: int) : string =
-        $"""
-        <details id="hintDetails">
-            <summary><h2>ヒント:</h2></summary>
-            <h3>考え方 1</h3>
-            %s{(newHintRepeatDivision 2 number)}
-            <h3>考え方 2</h3>
-            %s{(newHintRepeatAddition (Dec number) (devideIntoPowerOfTwo number))}
-        </details>
-        """
+    let hint (number: int) : HTMLElement option =
+        let det = details { id "hintDetails" }
+        let d = newHintRepeatDivision 2 number
+        let a = newHintRepeatAddition (Dec number) (devideIntoPowerOfTwo number)
+        det.appendChild (summary { appendChild (h2 { innerText "ヒント:" }) }) |> ignore
+        det.appendChild (h3 { innerText "考え方 1" }) |> ignore
+        d |> List.iter (det.appendChild >> ignore)
+        det.appendChild (h3 { innerText "考え方 2" }) |> ignore
+        a |> List.iter (det.appendChild >> ignore)
+        Some det
 
     let newNumberWithTwoOne (min: int) (max: int) : int =
         let rec newTwoRandomNumbers min max =
@@ -219,18 +307,14 @@ module Dec2Bin1 =
             let spacePadded = d |> string |> Fermata.String.padLeft 3 ' ' |> escapeSpace
             newHistory correct colored 2 spacePadded 10
 
-    let additional (number: int) : unit =
-        (document.getElementById "hint1").onclick <-
-            (fun _ ->
-                (document.getElementById "hint1").innerHTML <- newHintAnimation 2 number 20
-                (document.getElementById "hintDetails").setAttribute ("open", "true"))
+    let additional _ : unit = ()
 
     let exec' (lastNumbers: int list) (answer: int) : unit =
         exec Bin.validate error Bin.toDec history (question 8) string id hint additional 10 lastNumbers answer
 
     let init'
         (questionGenerator: int list -> int)
-        (hintGenerator: int -> string)
+        (hintGenerator: int -> HTMLElement option)
         (additional: int -> unit)
         (sourceRadix: int)
         (destinationRadix: int)
@@ -243,7 +327,8 @@ module Dec2Bin1 =
         (document.getElementById "srcRadix").innerText <- sprintf "(%d)" sourceRadix
         (document.getElementById "dstRadix").innerText <- string destinationRadix
         (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
-        (document.getElementById "hintArea").innerHTML <- hintGenerator initNumber
+        (document.getElementById "hintArea").innerHTML <- ""
+        Option.iter ((document.getElementById "hintArea").appendChild >> ignore) (hintGenerator initNumber)
 
         let f =
             fun (e: Event) ->

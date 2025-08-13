@@ -9,6 +9,7 @@ open System
 open Browser.Dom
 open Browser.Types
 open Taidalab
+open Taidalab.Html
 open Taidalab.Number
 open Taidalab.Text
 open Taidalab.EndlessBinary.Course
@@ -40,33 +41,51 @@ module Complement =
         let (Bin v) = bin x
         Fermata.String.padLeft 4 '0' v
 
-    let hint (bin': string) (reversedBin: string) : string =
-        $"""
-        <details><summary><h2>ヒント:</h2></summary>
-            <p>
-                ある2進数に足すと桁が1つ上がる、最も小さい数のことを、<br>
-                元の2進数に対する<span class="complement marker">「2の補数」</span>と呼びます。
-            </p>
-            <p>
-                たとえば、4ビットの2進数 1010<sub>(2)</sub> に 0110<sub>(2)</sub></span> を足すと<br>
-                1桁上がって5ビットの2進数 10000<sub>(2)</sub> になります。<br>
-                この 0110<sub>(2)</sub> を、元の 1010<sub>(2)</sub> に対する2の補数と呼びます。<br>
-            </p>
-            <p>
-                2の補数は、<span class="complement marker">2進数の負の数を表すのに使われます。</sub></span><br>
-                1010<sub>(2)</sub> (=10<sub>(10)</sub>) の2の補数 0110<sub>(2)</sub> は-10<sub>(10)</sub> を表します。
-            </p>
-            <p>
-                2の補数を求めるには、元の2進数の各ビットの<br>
-                <span class="complement marker">0 と 1 を反転させた数に 1 を足します。</span><br>
-                今回の問題で説明すると、<br>
-                %s{bin'}<sub>(2)</sub> の 0 と 1 を反転させると<br>
-                %s{reversedBin}<sub>(2)</sub> になります。これに 1 を足したものが<br>
-                %s{bin'}<sub>(2)</sub> の2の補数です。
-            </p>
-        </details>"""
+    let hint (bin': string) (reversedBin: string) : HTMLElement option =
 
-    let hint' (x: int) : string =
+        Some
+        <| details {
+            appendChild (Html.summary { appendChild (Html.h2 { innerText "ヒント:" }) })
+
+            appendChild (
+                p {
+                    innerHTML
+                        $"""ある2進数に足すと桁が1つ上がる、最も小さい数のことを、<br>
+                元の2進数に対する<span class="complement marker">「2の補数」</span>と呼びます。"""
+                }
+            )
+
+            appendChild (
+                p {
+                    innerHTML
+                        $"""たとえば、4ビットの2進数 1010<sub>(2)</sub> に 0110<sub>(2)</sub></span> を足すと<br>
+                1桁上がって5ビットの2進数 10000<sub>(2)</sub> になります。<br>
+                この 0110<sub>(2)</sub> を、元の 1010<sub>(2)</sub> に対する2の補数と呼びます。"""
+                }
+            )
+
+            appendChild (
+                p {
+                    innerHTML
+                        $"""2の補数は、<span class="complement marker">2進数の負の数を表すのに使われます。</sub></span><br>
+                        1010<sub>(2)</sub> (=10<sub>(10)</sub>) の2の補数 0110<sub>(2)</sub> は-10<sub>(10)</sub> を表します。"""
+                }
+            )
+
+            appendChild (
+                p {
+                    innerHTML
+                        $"""2の補数を求めるには、元の2進数の各ビットの<br>
+                        <span class="complement marker">0 と 1 を反転させた数に 1 を足します。</span><br>
+                        今回の問題で説明すると、<br>
+                        %s{bin'}<sub>(2)</sub> の 0 と 1 を反転させると<br>
+                        %s{reversedBin}<sub>(2)</sub> になります。これに 1 を足したものが<br>
+                        %s{bin'}<sub>(2)</sub> の2の補数です。"""
+                }
+            )
+        }
+
+    let hint' (x: int) : HTMLElement option =
         let b: string = fourBitsBinString x
         let r: string = b |> String.collect (fun c -> if c = '1' then "0" else "1")
         hint b r
@@ -130,7 +149,8 @@ module Complement =
         (document.getElementById "questionSpan").innerText <- initBin
         (document.getElementById "srcRadix").innerText <- sprintf "(%d)" sourceRadix
         (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
-        (document.getElementById "hintArea").innerHTML <- hint initBin reversedBin
+        (document.getElementById "hintArea").innerHTML <- ""
+        Option.iter ((document.getElementById "hintArea").appendChild >> ignore) (hint initBin reversedBin)
 
         let f =
             fun (e: Event) ->

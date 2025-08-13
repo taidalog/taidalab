@@ -199,7 +199,7 @@ module Course =
         (questionf: int list -> int)
         (questionSetter: int -> string)
         (answerf: int -> int)
-        (hintf: int -> string)
+        (hintf: int -> HTMLElement option)
         (additional: int -> unit)
         (numbersToKeep: int)
         (lastNumbers: int list)
@@ -236,7 +236,8 @@ module Course =
                 // Making the next question.
                 let nextNumber: int = questionf lastNumbers
                 (document.getElementById "questionSpan").innerText <- questionSetter nextNumber
-                (document.getElementById "hintArea").innerHTML <- hintf nextNumber
+                (document.getElementById "hintArea").innerHTML <- ""
+                Option.iter ((document.getElementById "hintArea").appendChild >> ignore) (hintf nextNumber)
 
                 additional nextNumber
 

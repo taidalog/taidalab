@@ -31,7 +31,7 @@ module Bin2Dec2 =
             question
             (fun x -> splitBinaryStringBy 4 (Dec x |> Dec.toBin))
             id
-            (fun _ -> "")
+            (fun _ -> None)
             (fun _ -> ())
             4
             lastNumbers
@@ -66,4 +66,4 @@ module Bin2Dec2 =
         Content.Common.question
         |> List.iter ((document.querySelector "#questionArea").appendChild >> ignore)
 
-        Bin2Dec1.init' question (fun _ -> "") (fun _ -> ()) exec' Course.keyboardshortcut
+        Bin2Dec1.init' question (fun _ -> None) (fun _ -> ()) exec' Course.keyboardshortcut
