@@ -8,6 +8,7 @@ namespace Taidalab.EndlessBinary
 open Browser.Dom
 open Browser.Types
 open Taidalab
+open Taidalab.Html
 open Taidalab.Number
 open Taidalab.Text
 open Taidalab.EndlessBinary.Course
@@ -22,22 +23,24 @@ module Addition =
         ヒント付きなので、考え方も身に付けられます。
         """
 
-    let newHintAdd () =
-        let hint =
-            """
-            <details><summary><h2>ヒント:</h2></summary>
-                <p>
-                    10進数の筆算と同じように、右端から上下の数を足していきます。<br><br>
+    let newHintAdd _ : HTMLElement option =
+        Some
+        <| details {
+            appendChild (summary { appendChild (h2 { innerText "ヒント:" }) })
+
+            appendChild (
+                p {
+                    innerHTML
+                        $"10進数の筆算と同じように、右端から上下の数を足していきます。<br><br>
                     0<sub>(2)</sub> + 0<sub>(2)</sub> = 0<sub>(2)</sub><br>
                     0<sub>(2)</sub> + 1<sub>(2)</sub> = 1<sub>(2)</sub><br>
                     1<sub>(2)</sub> + 1<sub>(2)</sub> = 10<sub>(2)</sub><br>
                     1<sub>(2)</sub> + 1<sub>(2)</sub> + 1<sub>(2)</sub> = 11<sub>(2)</sub><br><br>
                     10<sub>(2)</sub> や 11<sub>(2)</sub>のように桁が繰り上がった時は、<br>
-                    繰り上がった桁 (=1) をひとつ左の桁に足します。<br>
-                </p>
-            </details>"""
-
-        hint
+                    繰り上がった桁 (=1) をひとつ左の桁に足します。"
+                }
+            )
+        }
 
     let newNumbersAdd (digit: int) : (int * int) =
         let max = digit |> pown 2 |> (+) -1
@@ -94,7 +97,7 @@ module Addition =
     let rec exec
         (questionf: int list -> int * int)
         (questionExpressionf: int * int -> string)
-        (hintf: unit -> string)
+        (hintf: unit -> HTMLElement option)
         (collumnf: int -> int -> unit)
         (answerf: int -> int -> int)
         (answersToKeep: int)
@@ -135,7 +138,8 @@ module Addition =
 
                 collumnf number1 number2
 
-                (document.getElementById "hintArea").innerHTML <- hintf ()
+                (document.getElementById "hintArea").innerHTML <- ""
+                Option.iter ((document.getElementById "hintArea").appendChild >> ignore) (hintf ())
 
                 numberInput.value <- ""
 
@@ -168,7 +172,7 @@ module Addition =
     let init'
         (questionf: int list -> int * int)
         (questionExpressionf: int * int -> string)
-        (hintf: unit -> string)
+        (hintf: unit -> HTMLElement option)
         (sourceRadix: int)
         (destinationRadix: int)
         (answersToKeep: int)
@@ -181,7 +185,8 @@ module Addition =
         (document.getElementById "firstRowSrcRadix").innerText <- sprintf "(%d)" sourceRadix
         (document.getElementById "secondRowSrcRadix").innerText <- sprintf "(%d)" sourceRadix
         (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
-        (document.getElementById "hintArea").innerHTML <- hintf ()
+        (document.getElementById "hintArea").innerHTML <- ""
+        Option.iter ((document.getElementById "hintArea").appendChild >> ignore) (hintf ())
 
         let (number1, number2) = questionf []
         setColumnAddition number1 number2

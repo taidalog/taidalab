@@ -9,6 +9,7 @@ open System
 open Browser.Dom
 open Browser.Types
 open Taidalab
+open Taidalab.Html
 open Taidalab.Number
 open Taidalab.Text
 open Taidalab.EndlessBinary.Course
@@ -33,22 +34,23 @@ module Subtraction =
         else
             (number2, number1)
 
+    let newHintSub _ : HTMLElement option =
+        Some
+        <| details {
+            appendChild (summary { appendChild (h2 { innerText "ヒント:" }) })
 
-    let newHintSub () =
-        let hint =
-            """
-            <details><summary><h2>ヒント:</h2></summary>
-                <p>
-                    10進数の筆算と同じように、右端から上下の数で引き算をします。<br><br>
+            appendChild (
+                p {
+                    innerHTML
+                        $"10進数の筆算と同じように、右端から上下の数で引き算をします。<br><br>
                     0<sub>(2)</sub> - 0<sub>(2)</sub> = 0<sub>(2)</sub><br>
                     1<sub>(2)</sub> - 1<sub>(2)</sub> = 0<sub>(2)</sub><br>
                     1<sub>(2)</sub> - 0<sub>(2)</sub> = 1<sub>(2)</sub><br><br>
                     0<sub>(2)</sub> - 1<sub>(2)</sub> をする時は、<br>
-                    ひとつ左の桁から1を2つもらってきます。<br>
-                </p>
-            </details>"""
-
-        hint
+                    ひとつ左の桁から1を2つもらってきます。"
+                }
+            )
+        }
 
     let question (lastAnswers: int list) : int * int =
         newNumber (fun _ -> newNumbersSub ()) (fun (n1, n2) ->
@@ -90,14 +92,14 @@ module Subtraction =
 
         let sourceRadix = 2
         let destinationRadix = 2
-        let hint = newHintSub ()
 
         (document.getElementById "numberInput").className <- "question-number"
         (document.getElementById "operator").innerText <- "-)"
         (document.getElementById "firstRowSrcRadix").innerText <- sprintf "(%d)" sourceRadix
         (document.getElementById "secondRowSrcRadix").innerText <- sprintf "(%d)" sourceRadix
         (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
-        (document.getElementById "hintArea").innerHTML <- hint
+        (document.getElementById "hintArea").innerHTML <- ""
+        Option.iter ((document.getElementById "hintArea").appendChild >> ignore) (newHintSub ())
 
         let (number1, number2) = newNumbersSub ()
         setColumnAddition number1 number2
