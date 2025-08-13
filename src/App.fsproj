@@ -50,6 +50,7 @@
 
   <ItemGroup>
     <PackageReference Include="Fable.Browser.Dom" Version="2.17.0" />
+    <PackageReference Include="Fable.Browser.Svg" Version="2.4.0" />
     <PackageReference Include="Fable.Browser.Url" Version="1.4.0" />
     <PackageReference Include="Fable.Core" Version="4.3.0" />
     <PackageReference Include="Fermata" Version="1.0.0" />
