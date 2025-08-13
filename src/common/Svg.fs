@@ -209,7 +209,7 @@ module Svg =
 
             acc
 
-    let animate': AnimateBuilder = AnimateBuilder()
+    let animate: AnimateBuilder = AnimateBuilder()
 
     type SVGGraphicsBuilder() =
         inherit SvgBuilder()
@@ -323,7 +323,7 @@ module Svg =
             acc.setAttribute ("d", x)
             acc
 
-    let path': PathBuilder = PathBuilder()
+    let path: PathBuilder = PathBuilder()
 
     type PolylineBuilder() =
         inherit SVGGeometryBuilder()
@@ -352,7 +352,7 @@ module Svg =
 
             acc
 
-    let polyline': PolylineBuilder = PolylineBuilder()
+    let polyline: PolylineBuilder = PolylineBuilder()
 
     type SVGTextContentBuilder() =
         inherit SVGGraphicsBuilder()
@@ -409,4 +409,4 @@ module Svg =
         member _.Zero() : SVGTextElement =
             document.createElementNS ("http://www.w3.org/2000/svg", "text") :?> SVGTextElement
 
-    let text': TextBuilder = TextBuilder()
+    let text: TextBuilder = TextBuilder()

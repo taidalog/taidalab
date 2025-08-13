@@ -50,7 +50,7 @@ module Dec2Bin1 =
             let anim =
                 let dur' = delayMs i + if i = 0 then 1000 else 2000
 
-                Svg.animate' {
+                Svg.animate {
                     attributeName "opacity"
                     values [ 0.; 0.; 1. ]
                     keyTimes [ 0.; float (1 - 500 / dur'); 1. ]
@@ -62,7 +62,7 @@ module Dec2Bin1 =
 
             let x' = x
 
-            Svg.text' {
+            Svg.text {
                 x 0
                 y (fontSize * (i + 1))
                 setAttribute "opacity" "0"
@@ -75,7 +75,7 @@ module Dec2Bin1 =
             let anim =
                 let dur' = delayMs i + if i = 0 then 500 else 1500
 
-                Svg.animate' {
+                Svg.animate {
                     attributeName "opacity"
                     values [ 0.; 0.; 1. ]
                     keyTimes [ 0.; float (1 - 500 / dur'); 1. ]
@@ -95,7 +95,7 @@ module Dec2Bin1 =
                     (float fontSize * 0.8)
                     (float fontSize / 2. * 4.8)
 
-            Svg.path' {
+            Svg.path {
                 d d'
                 stroke "#000000"
                 strokeWidth 1
@@ -108,7 +108,7 @@ module Dec2Bin1 =
             let anim =
                 let dur' = delayMs i
 
-                Svg.animate' {
+                Svg.animate {
                     id (if i = 0 then "anim0" else "")
                     attributeName "opacity"
                     values [ 0.; 0.; 1. ]
@@ -124,7 +124,7 @@ module Dec2Bin1 =
             let f (x: string) =
                 String.collect (fun c -> if c = ' ' then "<tspan> </tspan>" else string c) x
 
-            Svg.text' {
+            Svg.text {
                 x (fontSize / 2 * 2)
                 y (fontSize * (i + 1))
                 setAttribute "opacity" "0"
@@ -136,7 +136,7 @@ module Dec2Bin1 =
             let anim =
                 let dur' = delayMs i + 500
 
-                Svg.animate' {
+                Svg.animate {
                     attributeName "opacity"
                     values [ 0.; 0.; 1. ]
                     keyTimes [ 0.; float (1 - 500 / dur'); 1. ]
@@ -148,7 +148,7 @@ module Dec2Bin1 =
 
             let x' = x
 
-            Svg.text' {
+            Svg.text {
                 x (fontSize / 2 * 6)
                 y (fontSize * (i + 1))
                 setAttribute "opacity" "0"
@@ -163,7 +163,7 @@ module Dec2Bin1 =
             let anim =
                 let dur' = delayMs (List.length divRems - 1) + 1500
 
-                Svg.animate' {
+                Svg.animate {
                     attributeName "opacity"
                     values [ 0.; 0.; 1. ]
                     keyTimes [ 0.; float (1 - 500 / dur'); 1. ]
@@ -176,7 +176,7 @@ module Dec2Bin1 =
             let fsz = float fontSize
             let len = List.length divRems
 
-            Svg.path' {
+            Svg.path {
                 d
                     $"M %f{fsz / 2. * 4.},%f{float (fontSize * (len - 1) + 6)} h %f{fsz / 2. * 3.} v %f{(17.85 * float len - 35.) * -1.} h -7 l 16,-20 16,20 h -7 v %f{17.85 * float len - 15.} h %f{-48.} Z"
 
