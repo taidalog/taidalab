@@ -23,18 +23,6 @@ module Dec2Hex =
         ヒント付きなので、考え方も身に付けられます。
         """
 
-    let newArrowHex (fontSize: int) (lineCount: int) (stroke: string) (fill: string) : string =
-        Svg.newArrow
-            (float fontSize / 2. * 4.)
-            (float (fontSize * (lineCount - 1) + 6))
-            (float fontSize / 2. * 4.)
-            ((17.85 * float lineCount - 35.) * -1.)
-            -58.
-            (17.85 * float lineCount - 15.)
-            (delayMs (lineCount - 1) + 1500)
-            stroke
-            fill
-
     let newHintAnimation (divisor: int) (num: int) (fontSize: int) : SVGSVGElement =
         let divisorf (i: int) (x: int) : SVGTextElement =
             let anim =
