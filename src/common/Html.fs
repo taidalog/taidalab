@@ -13,6 +13,11 @@ module Html =
     type HTMLBuilder() =
         inherit ElementBuilder()
 
+        [<CustomOperation("contentEditable")>]
+        member _.SetContentEditable(acc: 'T :> HTMLElement, x: bool) : 'T =
+            acc.contentEditable <- if x then "yes" else "no"
+            acc
+
         [<CustomOperation("hidden")>]
         member _.SetHidden(acc: 'T :> HTMLElement, x: bool) : 'T =
             acc.hidden <- x
