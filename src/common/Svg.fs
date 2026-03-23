@@ -410,3 +410,14 @@ module Svg =
             document.createElementNS ("http://www.w3.org/2000/svg", "text") :?> SVGTextElement
 
     let text: TextBuilder = TextBuilder()
+
+    type TitleBuilder() =
+        inherit SVGTextPositioningBuilder()
+
+        member _.Yield(_) : SVGTitleElement =
+            document.createElementNS ("http://www.w3.org/2000/svg", "title") :?> SVGTitleElement
+
+        member _.Zero() : SVGTitleElement =
+            document.createElementNS ("http://www.w3.org/2000/svg", "title") :?> SVGTitleElement
+
+    let title: TitleBuilder = TitleBuilder()
