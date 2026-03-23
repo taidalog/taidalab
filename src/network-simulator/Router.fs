@@ -8,6 +8,8 @@ namespace Taidalab
 open Browser.Dom
 open Browser.Types
 open Fermata
+open Taidalab.Html
+open Taidalab.Svg
 
 [<StructuredFormatDisplay("{DisplayText}")>]
 type Router =
@@ -87,90 +89,80 @@ module Router =
         create id name ipv4 subnetMask area position
 
     let toHTMLElement (router: Router) : HTMLElement =
-        let container = document.createElement ("div")
-        container.id <- router.Id
-        container.className <- "device device-container device-note router"
-        container.setAttribute ("style", $"top: %f{router.Position.Y}px; left: %f{router.Position.X}px;")
+        let title' =
+            title {
+                id $"%s{router.Id}Title"
+                textContent router.Name
+            }
 
-        let svg = document.createElementNS ("http://www.w3.org/2000/svg", "svg")
-        svg.id <- $"%s{router.Id}Svg"
-        svg.classList.add ("device-image")
+        let path1 = path { d "m 60,10 h 50 V 45 H 10 V 10 Z" }
 
-        svg.setAttribute (
-            "viewBox",
-            $"%f{router.Area.X} %f{router.Area.Y} %f{router.Area.Width + 20.} %f{router.Area.Height + 20.}"
-        )
+        let path2 =
+            path {
+                d
+                    "M 28 22.5 L 28 25.5 L 25 25.5 L 25 32.5 L 35 32.5 L 35 25.5 L 32 25.5 L 32 22.5 L 28 22.5 z M 48 22.5 L 48 25.5 L 45 25.5 L 45 32.5 L 55 32.5 L 55 25.5 L 52 25.5 L 52 22.5 L 48 22.5 z M 68 22.5 L 68 25.5 L 65 25.5 L 65 32.5 L 75 32.5 L 75 25.5 L 72 25.5 L 72 22.5 L 68 22.5 z M 88 22.5 L 88 25.5 L 85 25.5 L 85 32.5 L 95 32.5 L 95 25.5 L 92 25.5 L 92 22.5 L 88 22.5 z"
 
-        svg.setAttribute ("width", $"%f{router.Area.Width + 20.}")
-        svg.setAttribute ("height", $"%f{router.Area.Height + 20.}")
+                className "inner"
+            }
 
-        let g = document.createElementNS ("http://www.w3.org/2000/svg", "g")
+        let g' =
+            g {
+                appendChild title'
+                appendChild path1
+                appendChild path2
+            }
 
-        let title = document.createElementNS ("http://www.w3.org/2000/svg", "title")
-        title.id <- $"%s{router.Id}Title"
-        title.textContent <- $"%s{router.Name}"
+        let svg' =
+            svg {
+                id $"%s{router.Id}Svg"
+                className "device-image"
+                viewBox router.Area.X router.Area.Y (router.Area.Width + 20.) (router.Area.Height + 20.)
+                width (router.Area.Width + 20.)
+                height (router.Area.Height + 20.)
+                appendChild g'
+            }
 
-        let path1 = document.createElementNS ("http://www.w3.org/2000/svg", "path")
-        path1.setAttribute ("d", "m 60,10 h 50 V 45 H 10 V 10 Z")
+        let spanName =
+            span {
+                id $"%s{router.Id}Name"
+                className "device-prop"
+                contentEditable true
+                textContent router.Name
+            }
 
-        let path2 = document.createElementNS ("http://www.w3.org/2000/svg", "path")
+        let spanIPv4 =
+            span {
+                id $"%s{router.Id}IPv4"
+                className "device-prop ipv4 mono"
+                contentEditable true
+                textContent (router.IPv4 |> List.map _.ToString() |> String.concat "; ")
+            }
 
-        path2.setAttribute (
-            "d",
-            "M 28 22.5 L 28 25.5 L 25 25.5 L 25 32.5 L 35 32.5 L 35 25.5 L 32 25.5 L 32 22.5 L 28 22.5 z M 48 22.5 L 48 25.5 L 45 25.5 L 45 32.5 L 55 32.5 L 55 25.5 L 52 25.5 L 52 22.5 L 48 22.5 z M 68 22.5 L 68 25.5 L 65 25.5 L 65 32.5 L 75 32.5 L 75 25.5 L 72 25.5 L 72 22.5 L 68 22.5 z M 88 22.5 L 88 25.5 L 85 25.5 L 85 32.5 L 95 32.5 L 95 25.5 L 92 25.5 L 92 22.5 L 88 22.5 z"
-        )
+        let spanSubnetMask =
+            span {
+                id $"%s{router.Id}SubnetMask"
+                className "device-prop subnetmask mono"
+                contentEditable true
+                textContent (router.SubnetMask |> List.map _.ToString() |> String.concat "; ")
+            }
 
-        path2.classList.add "inner"
+        let spanKind =
+            span {
+                id $"%s{router.Id}Kind"
+                className "no-display"
+                textContent "Router"
+            }
 
-        g.appendChild (title) |> ignore
-        g.appendChild (path1) |> ignore
-        g.appendChild (path2) |> ignore
-        svg.appendChild (g) |> ignore
-
-        let br1 = document.createElement ("br")
-
-        let spanName = document.createElement ("span")
-        spanName.id <- $"%s{router.Id}Name"
-        spanName.className <- "device-prop"
-        spanName.contentEditable <- "true"
-        spanName.textContent <- $"%s{router.Name}"
-
-        let br2 = document.createElement ("br")
-
-        let spanIPv4 = document.createElement ("span")
-        spanIPv4.id <- $"%s{router.Id}IPv4"
-        spanIPv4.className <- "device-prop ipv4 mono"
-        spanIPv4.contentEditable <- "true"
-
-        router.IPv4
-        |> List.map (fun x -> x.ToString())
-        |> String.concat "; "
-        |> fun x -> spanIPv4.textContent <- x
-
-        let br3 = document.createElement ("br")
-
-        let spanSubnetMask = document.createElement ("span")
-        spanSubnetMask.id <- $"%s{router.Id}SubnetMask"
-        spanSubnetMask.className <- "device-prop subnetmask mono"
-        spanSubnetMask.contentEditable <- "true"
-
-        router.SubnetMask
-        |> List.map (fun x -> x.ToString())
-        |> String.concat "; "
-        |> fun x -> spanSubnetMask.textContent <- x
-
-        let spanKind = document.createElement ("span")
-        spanKind.id <- $"%s{router.Id}Kind"
-        spanKind.className <- "no-display"
-        spanKind.textContent <- "Router"
-
-        container.appendChild (svg) |> ignore
-        container.appendChild (br1) |> ignore
-        container.appendChild (spanName) |> ignore
-        container.appendChild (br2) |> ignore
-        container.appendChild (spanIPv4) |> ignore
-        container.appendChild (br3) |> ignore
-        container.appendChild (spanSubnetMask) |> ignore
-        container.appendChild (spanKind) |> ignore
-
-        container
+        div {
+            id router.Id
+            className "device device-container device-note router"
+            setAttribute "style" $"top: %f{router.Position.Y}px; left: %f{router.Position.X}px;"
+            appendChild svg'
+            appendChild (br { () })
+            appendChild spanName
+            appendChild (br { () })
+            appendChild spanIPv4
+            appendChild (br { () })
+            appendChild spanSubnetMask
+            appendChild spanKind
+        }

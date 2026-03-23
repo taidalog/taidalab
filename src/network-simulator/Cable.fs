@@ -10,6 +10,8 @@ open System.Diagnostics
 open Browser.Dom
 open Browser.Types
 open Fermata
+open Taidalab.Html
+open Taidalab.Svg
 
 [<StructuredFormatDisplay("{DisplayText}")>]
 type Cable =
@@ -66,50 +68,54 @@ module Cable =
             Some(create id x name points area position)
 
     let toHTMLElement (cable: Cable) : HTMLElement =
-        let container = document.createElement ("div")
-        container.id <- cable.Id
-        container.className <- "lan-cable"
+        let title' =
+            title {
+                id $"%s{cable.Id}Title"
+                textContent $"%s{cable.Name}"
+            }
 
-        let svg = document.createElementNS ("http://www.w3.org/2000/svg", "svg")
-        svg.id <- $"%s{cable.Id}Svg"
-        svg.setAttribute ("viewBox", $"%f{cable.Area.X} %f{cable.Area.Y} %f{cable.Area.Width} %f{cable.Area.Height}")
-        svg.setAttribute ("width", $"%f{cable.Area.Width}px")
-        svg.setAttribute ("height", $"%f{cable.Area.Height}px")
+        let polyline' =
+            polyline {
+                id $"{cable.Id}Polyline"
+                setAttribute "points" (cable.Points |> List.map Point.toCoordinate |> String.concat " ")
+            }
 
-        let g = document.createElementNS ("http://www.w3.org/2000/svg", "g")
+        let svg' =
+            svg {
+                id $"%s{cable.Id}Svg"
+                viewBox cable.Area.X cable.Area.Y cable.Area.Width cable.Area.Height
+                width $"%f{cable.Area.Width}px"
+                height $"%f{cable.Area.Height}px"
 
-        let title = document.createElementNS ("http://www.w3.org/2000/svg", "title")
-        title.id <- $"%s{cable.Id}Title"
-        title.textContent <- $"%s{cable.Name}"
+                appendChild (
+                    g {
+                        appendChild title'
+                        appendChild polyline'
+                    }
+                )
+            }
 
-        let polyline = document.createElementNS ("http://www.w3.org/2000/svg", "polyline")
-        polyline.id <- $"{cable.Id}Polyline"
-        polyline.setAttribute ("points", $"""%s{cable.Points |> List.map Point.toCoordinate |> String.concat " "}""")
+        let spanName =
+            span {
+                id $"%s{cable.Id}Name"
+                textContent cable.Name
+            }
 
-        g.appendChild (title) |> ignore
-        g.appendChild (polyline) |> ignore
+        let spanKind =
+            span {
+                id $"%s{cable.Id}Kind"
+                textContent (string cable.Kind)
+            }
 
-        svg.appendChild (g) |> ignore
-
-        let br1 = document.createElement ("br")
-
-        let spanName = document.createElement ("span")
-        spanName.id <- $"%s{cable.Id}Name"
-        spanName.textContent <- $"%s{cable.Name}"
-
-        let br2 = document.createElement ("br")
-
-        let spanKind = document.createElement ("span")
-        spanKind.id <- $"%s{cable.Id}Kind"
-        spanKind.textContent <- $"%s{cable.Kind |> string}"
-
-        container.appendChild (svg) |> ignore
-        container.appendChild (br1) |> ignore
-        container.appendChild (spanName) |> ignore
-        container.appendChild (br2) |> ignore
-        container.appendChild (spanKind) |> ignore
-
-        container
+        div {
+            id cable.Id
+            className "lan-cable"
+            appendChild svg'
+            appendChild (br { () })
+            appendChild spanName
+            appendChild (br { () })
+            appendChild spanKind
+        }
 
     let connectedTo (device: Device) (cable: Cable) : bool =
         cable.Points
