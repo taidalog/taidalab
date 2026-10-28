@@ -140,7 +140,7 @@ module Content =
               span { id "dstRadix" }
               span { innerText "進法で表すと？" } ]
 
-        let version = "Version 5.2.0"
+        let version = "Version 5.2.1"
 
         let footer: Browser.Types.HTMLElement list =
             [ small {
