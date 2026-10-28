@@ -145,7 +145,7 @@ module Content =
         let footer: Browser.Types.HTMLElement list =
             [ small {
                   translate false
-                  innerText "© 2022-2025 "
+                  innerText "© 2022-2026 "
                   appendChild (a { set "https://taidalog.github.io/" "taidalog" })
               }
               small {
