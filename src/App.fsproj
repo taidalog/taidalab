@@ -2,11 +2,13 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Include="common/Number.fs" />
+    <Compile Include="common/Dom.fs" />
+    <Compile Include="common/Html.fs" />
     <Compile Include="common/Svg.fs" />
     <Compile Include="common/Text.fs" />
     <Compile Include="common/Tuple.fs" />
@@ -48,10 +50,11 @@
 
   <ItemGroup>
     <PackageReference Include="Fable.Browser.Dom" Version="2.17.0" />
+    <PackageReference Include="Fable.Browser.Svg" Version="2.4.0" />
     <PackageReference Include="Fable.Browser.Url" Version="1.4.0" />
     <PackageReference Include="Fable.Core" Version="4.3.0" />
     <PackageReference Include="Fermata" Version="1.0.0" />
-    <PackageReference Include="Fermata.RadixConversion" Version="1.1.0" />
+    <PackageReference Include="Fermata.RadixConversion" Version="2.0.0" />
   </ItemGroup>
 
 </Project>

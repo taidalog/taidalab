@@ -1,343 +1,315 @@
 // taidalab
 // https://github.com/taidalog/taidalab
-// Copyright (c) 2022-2025 taidalog
+// Copyright (c) 2022-2026 taidalog
 // This software is licensed under the MIT License.
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
-namespace Taidalab
+namespace Taidalab.EndlessBinary
 
 open Browser.Dom
 open Browser.Types
+open Taidalab
+open Taidalab.Html
 open Taidalab.Number
 open Taidalab.Text
-open Taidalab.EndlessBinary
+open Taidalab.EndlessBinary.Course
 open Fermata
 open Fermata.RadixConversion
 
-module EndlessBinary =
-    module Dec2Hex =
-        let help =
-            """
-            10進数から16進数への変換をエンドレスで練習できます。<br>
-            出題範囲は n (0&le;n&le;255) です。<br>
-            ヒント付きなので、考え方も身に付けられます。
-            """
+module Dec2Hex =
+    let help =
+        """
+        10進数から16進数への変換をエンドレスで練習できます。<br>
+        出題範囲は n (0&le;n&le;255) です。<br>
+        ヒント付きなので、考え方も身に付けられます。
+        """
 
-        let newArrowHex fontSize lineCount stroke fill =
-            Svg.newArrow
-                (fontSize |> double |> (fun x -> x / 2. * 4.))
-                (lineCount |> (fun x -> (fontSize * (x - 1)) + 6) |> double)
-                (fontSize |> double |> (fun x -> x / 2. * 4.))
-                (lineCount |> double |> (fun x -> 17.85 * x - 35.) |> ((*) -1.))
-                -58.
-                (17.85 * (lineCount |> double) - 15.)
-                (lineCount - 1 |> delayMs |> ((+) 1500))
-                stroke
-                fill
+    let newHintAnimation (divisor: int) (num: int) (fontSize: int) : SVGSVGElement =
+        let divisorf (i: int) (x: int) : SVGTextElement =
+            let anim =
+                let dur' = delayMs i + if i = 0 then 1000 else 2000
 
+                Svg.animate {
+                    attributeName "opacity"
+                    values [ 0.; 0.; 1. ]
+                    keyTimes [ 0.; float (1 - 500 / dur'); 1. ]
+                    begin' "anim0.begin"
+                    dur $"%d{dur'}ms"
+                    repeatCount 1
+                    fill "freeze"
+                }
 
-        let newHintAnimation divisor num fontSize =
-            let divRems =
-                (numOpt divisor num)
-                :: (divRemOpt divisor (Dec2Bin1.repeatDivision num divisor))
+            let x' = x
 
-            divRems
-            |> List.mapi (fun i (a, b, c, d) ->
-                Option.map // divisor
-                    (fun x ->
-                        Svg.text
-                            0
-                            (fontSize * (i + 1))
-                            0.
-                            (sprintf
-                                "%d%s"
-                                x
-                                (Svg.animateOpacity
-                                    (i |> delayMs |> (fun x -> if i = 0 then x + 1000 else x + 2000))
-                                    500)))
-                    a,
-                Option.map // line
-                    (fun x ->
-                        Svg.path
-                            (sprintf
-                                "M %d,%d q %d,%f 0,%f h %f"
-                                (fontSize / 2 * 2 + 4)
-                                ((fontSize * i) + 6)
-                                (fontSize / 2)
-                                (double fontSize * 0.4)
-                                (double fontSize * 0.8)
-                                (double fontSize / 2. * 4.8))
-                            "#000000"
-                            1
-                            "none"
-                            0.
-                            (Svg.animateOpacity (i |> delayMs |> (fun x -> if i = 0 then x + 500 else x + 1500)) 500))
-                    b,
-                Option.map // dividend
-                    (fun x ->
-                        Svg.text
-                            (fontSize / 2 * 3)
-                            (fontSize * (i + 1))
-                            0.
-                            (sprintf
-                                "%s%s"
-                                (x |> string |> (String.padLeft 3 ' ') |> escapeSpace)
-                                (Svg.animateOpacity (i |> delayMs) 500)))
-                    c,
-                Option.map // remainder
-                    (fun x ->
-                        Svg.text
-                            (fontSize / 2 * 7)
-                            (fontSize * (i + 1))
-                            0.
-                            (sprintf "…%d%s" x (Svg.animateOpacity (i |> delayMs |> ((+) 500)) 500)))
-                    d)
-            |> List.map (fun (a, b, c, d) ->
+            Svg.text {
+                x 0
+                y (fontSize * (i + 1))
+                setAttribute "opacity" "0"
+                textContent (string x')
+                appendChild anim
+            }
+
+        let line (i: int) _ : SVGPathElement =
+            let anim =
+                let dur' = delayMs i + if i = 0 then 500 else 1500
+
+                Svg.animate {
+                    attributeName "opacity"
+                    values [ 0.; 0.; 1. ]
+                    keyTimes [ 0.; float (1 - 500 / dur'); 1. ]
+                    begin' "anim0.begin"
+                    dur $"%d{dur'}ms"
+                    repeatCount 1
+                    fill "freeze"
+                }
+
+            let d' =
                 sprintf
-                    "%s%s%s%s"
-                    (Option.defaultValue "" a)
-                    (Option.defaultValue "" b)
-                    (Option.defaultValue "" c)
-                    (Option.defaultValue "" d))
-            |> List.fold
-                (fun x y -> sprintf "%s%s" x y)
-                (newArrowHex fontSize (List.length divRems) "#1e3330" "#95feec")
-            |> (Svg.frame (fontSize / 2 * 11) (divRems |> List.length |> (fun x -> fontSize * (x + 1))))
+                    "M %d,%d q %d,%f 0,%f h %f"
+                    (fontSize / 2 * 2 + 4)
+                    ((fontSize * i) + 6)
+                    (fontSize / 2)
+                    (double fontSize * 0.4)
+                    (double fontSize * 0.8)
+                    (double fontSize / 2. * 4.8)
 
+            Svg.path {
+                d d'
+                stroke "#000000"
+                strokeWidth 1
+                fill "none"
+                setAttribute "opacity" "0"
+                appendChild anim
+            }
 
-        let newHintRepeatDivision divisor number fontSize =
-            sprintf
-                """
-                <div class="history-indented">
-                    <p>
-                        10進法で表現した数を2進法で表現しなおすには、<br>
-                        10進法の数を、商が 16 未満になるまで 16 で割り続けます。<br>
-                        この時、余りを商の右に書いておきます。<br>
-                        商と余りのうち、10~15 をそれぞれ A~F に変換し、<br>
-                        下から順に繋げると、16進法の数になります。<br>
-                        ※この下の筆算をクリックすると動きます。
-                    </p>
-                </div>
-                <div id="hint1" class="history-indented mono">
-                    %s
-                </div>
-                """
-                (newHintAnimation divisor number fontSize)
+        let dividend (i: int) (x: int) : SVGTextElement =
+            let anim =
+                let dur' = delayMs i
 
+                Svg.animate {
+                    id (if i = 0 then "anim0" else "")
+                    attributeName "opacity"
+                    values [ 0.; 0.; 1. ]
+                    keyTimes [ 0.; float (1 - 500 / dur'); 1. ]
+                    begin' (if i = 0 then "0s;hintSvg.click" else "anim0.begin")
+                    dur $"%d{dur'}ms"
+                    repeatCount 1
+                    fill "freeze"
+                }
 
-        let newHint divisor number fontSize =
-            sprintf
-                """
-                <details id="hintDetails"><summary><h2>ヒント:</h2></summary>
-                    <h3>考え方 1</h3>
-                    %s
-                </details>
-                """
-                (newHintRepeatDivision divisor number fontSize)
+            let x' = x
 
-        let hint number = newHint 16 number 20
+            let f (x: string) =
+                String.collect (fun c -> if c = ' ' then "<tspan> </tspan>" else string c) x
 
-        let question lastNumbers : int =
-            newNumber (fun _ -> getRandomBetween 0 255) (fun n -> List.contains n lastNumbers = false)
+            Svg.text {
+                x (fontSize / 2 * 3)
+                y (fontSize * (i + 1))
+                setAttribute "opacity" "0"
+                innerHTML (x' |> string |> String.padLeft 3 ' ' |> f)
+                appendChild anim
+            }
 
-        let history (correct: bool) (input: string) : string =
-            match input |> Hex.validate |> Hex.toDec with
-            | Dec.Invalid _ -> ""
-            | Dec.Valid v ->
-                let colored = input |> Fermata.String.padLeft 4 ' ' |> escapeSpace
-                let spacePadded = v |> string |> Fermata.String.padLeft 3 ' ' |> escapeSpace
-                newHistory correct colored 16 spacePadded 10
+        let remainder (i: int) (x: int) : SVGTextElement =
+            let anim =
+                let dur' = delayMs i + 500
 
-        let additional number : unit =
-            (document.getElementById "hint1").onclick <-
-                (fun _ ->
-                    (document.getElementById "hint1").innerHTML <- newHintAnimation 16 number 20
-                    (document.getElementById "hintDetails").setAttribute ("open", "true"))
+                Svg.animate {
+                    attributeName "opacity"
+                    values [ 0.; 0.; 1. ]
+                    keyTimes [ 0.; float (1 - 500 / dur'); 1. ]
+                    begin' "anim0.begin"
+                    dur $"%d{dur'}ms"
+                    repeatCount 1
+                    fill "freeze"
+                }
 
-        let rec exec
-            (questionGenerator: int list -> int)
-            (hintGenerator: int -> string)
-            (errorGenerator: string -> string -> exn -> string)
-            (tagger: string -> 'a)
-            (additional: int -> unit)
-            sourceRadix
-            destinationRadix
-            (numbersToKeep: int)
-            (lastNumbers: int list)
-            (question: Dec)
-            (answer: Hex)
-            =
-            // Getting the user input.
-            let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
-            let input: string = numberInput.value |> escapeHtml
-            let hex: Hex = Hex.validate (input.ToLower())
+            let x' = x
 
-            numberInput.focus ()
+            Svg.text {
+                x (fontSize / 2 * 7)
+                y (fontSize * (i + 1))
+                setAttribute "opacity" "0"
+                textContent $"…%d{x'}"
+                appendChild anim
+            }
 
-            match hex with
-            | Hex.Invalid e ->
-                // Making an error message.
-                let q =
-                    match question with
-                    | Dec.Invalid _ -> ""
-                    | Dec.Valid v -> string v
+        let divRems: (int option * int option * int option * int option) list =
+            (numOpt divisor num)
+            :: (divRemOpt divisor (Dec2Bin1.repeatDivision num divisor))
 
-                (document.getElementById "errorArea").innerHTML <- errorGenerator q input e
-            | Hex.Valid (v: string) ->
-                (document.getElementById "errorArea").innerHTML <- ""
+        let arrowAnim: SVGPathElement =
+            let anim =
+                let dur' = delayMs ((List.length divRems) - 1) + 1500
 
-                // Making a new history and updating the history with the new one.
-                let outputArea = document.getElementById "outputArea" :?> HTMLParagraphElement
+                Svg.animate {
+                    attributeName "opacity"
+                    values [ 0.; 0.; 1. ]
+                    keyTimes [ 0.; float (1 - 500 / dur'); 1. ]
+                    begin' "anim0.begin"
+                    dur $"%d{dur'}ms"
+                    repeatCount 1
+                    fill "freeze"
+                }
 
-                let answer' =
-                    match answer with
-                    | Hex.Valid v -> v.ToLower()
-                    | Hex.Invalid e -> ""
+            let fsz = float fontSize
+            let len = List.length divRems
 
-                let historyMessage =
-                    history (v = answer') input
-                    |> (fun x -> concatinateStrings "<br>" [ x; outputArea.innerHTML ])
+            Svg.path {
+                d
+                    $"M %f{fsz / 2. * 4.},%f{float (fontSize * (len - 1) + 6)} h %f{fsz / 2. * 4.} v %f{(17.85 * float (len) - 35.) * -1.} h -7 l 16,-20 16,20 h -7 v %f{17.85 * float (len) - 15.} h %f{-58.} Z"
 
-                outputArea.innerHTML <- historyMessage
+                stroke "#1e3330"
+                strokeWidth 1
+                fill "#95feec"
+                setAttribute "opacity" "0"
+                appendChild anim
+            }
 
-                if v <> answer' then
-                    ()
-                else
-                    // Making the next question.
-                    let nextNumber: int = questionGenerator lastNumbers
-                    (document.getElementById "questionSpan").innerText <- string nextNumber
-                    (document.getElementById "hintArea").innerHTML <- hintGenerator nextNumber
-                    additional nextNumber
+        let s: SVGSVGElement =
+            Svg.svg {
+                id "hintSvg"
+                width (fontSize / 2 * 11)
+                height (fontSize * (List.length divRems + 1))
+                appendChild arrowAnim
+            }
 
-                    let nextQuestion = nextNumber |> Dec.Valid
-                    let nextAnswer = nextQuestion |> Dec.toHex
+        divRems
+        |> List.mapi (fun i (a, b, c, d) ->
+            Option.map (divisorf i) a, Option.map (line i) b, Option.map (dividend i) c, Option.map (remainder i) d)
+        |> List.iter (fun (a, b, c, d) ->
+            (Option.iter (s.appendChild >> ignore) a)
+            (Option.iter (s.appendChild >> ignore) b)
+            (Option.iter (s.appendChild >> ignore) c)
+            (Option.iter (s.appendChild >> ignore) d))
 
-                    numberInput.value <- ""
+        s
 
-                    // Updating `lastNumbers`.
-                    // These numbers will not be used for the next question.
-                    let lastNumbers' = (nextNumber :: lastNumbers) |> List.truncate numbersToKeep
+    let newHintRepeatDivision (divisor: int) (number: int) (fontSize: int) : HTMLElement list =
+        [ p {
+              innerText
+                  $"""10進法で表現した数を2進法で表現しなおすには、<br>
+                10進法の数を、商が 16 未満になるまで 16 で割り続けます。<br>
+                この時、余りを商の右に書いておきます。<br>
+                商と余りのうち、10~15 をそれぞれ A~F に変換し、<br>
+                下から順に繋げると、16進法の数になります。<br>
+                ※この下の筆算をクリックすると動きます。"""
+          }
+          div {
+              id "hint1"
+              className "mono"
+              appendChild (newHintAnimation divisor number fontSize)
+          } ]
 
-                    // Setting the next answer to the check button.
-                    (document.getElementById "submitButton").onclick <-
-                        (fun e ->
-                            e.preventDefault ()
+    let newHint (divisor: int) (number: int) (fontSize: int) : HTMLElement =
+        let det =
+            details {
+                id "hintDetails"
+                appendChild (summary { appendChild (h2 { innerText "ヒント:" }) })
+                appendChild (h3 { innerText "考え方 1" })
+            }
 
-                            exec
-                                questionGenerator
-                                hintGenerator
-                                errorGenerator
-                                tagger
-                                additional
-                                sourceRadix
-                                destinationRadix
-                                numbersToKeep
-                                lastNumbers'
-                                nextQuestion
-                                nextAnswer)
+        (newHintRepeatDivision divisor number fontSize)
+        |> List.iter (det.appendChild >> ignore)
 
-                    (document.getElementById "inputArea").onsubmit <-
-                        (fun e ->
-                            e.preventDefault ()
+        det
 
-                            exec
-                                questionGenerator
-                                hintGenerator
-                                errorGenerator
-                                tagger
-                                additional
-                                sourceRadix
-                                destinationRadix
-                                nextNumber
-                                lastNumbers'
-                                nextQuestion
-                                nextAnswer)
+    let hint (number: int) : HTMLElement option = newHint 16 number 20 |> Some
 
-        let exec' (lastNumbers: int list) (question': Dec) (answer: Hex) :unit =
-            exec
-                question
-                hint
-                newErrorMessageHex
-                (Fermata.String.padLeft 4 ' ' )
-                additional
-                10
-                16
-                10
-                lastNumbers
-                question'
-                answer
+    let question (lastNumbers: int list) : int =
+        newNumber (fun _ -> getRandomBetween 0 255) (fun n -> List.contains n lastNumbers = false)
 
-        let init'
-            (questionGenerator: int list -> int)
-            (hintGenerator: int -> string)
-            (additional: int -> unit)
-            sourceRadix
-            destinationRadix
-            (keyboardshortcutSetter: KeyboardEvent -> unit)
-            : unit =
-            // Initialization.
-            let initNumber: int = questionGenerator []
-            (document.getElementById "questionSpan").innerText <- string initNumber
-            (document.getElementById "srcRadix").innerText <- sprintf "(%d)" sourceRadix
-            (document.getElementById "dstRadix").innerText <- string destinationRadix
-            (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
-            (document.getElementById "hintArea").innerHTML <- hintGenerator initNumber
+    let error (question: int) =
+        question |> string |> newErrorMessageHex
 
-            let question: Dec = initNumber |> Dec.Valid
-            let answer: Hex = question |> Dec.toHex
+    let history (correct: bool) (input: string) : string =
+        let v =
+            match input |> Hex.validate with
+            | Error _ -> -1
+            | Ok v ->
+                Hex.toDec v
+                |> function
+                    | Dec v -> v
 
-            (document.getElementById "submitButton").onclick <-
-                (fun e ->
-                    e.preventDefault ()
-                    exec' [ initNumber ] question answer)
+        let colored = input |> Fermata.String.padLeft 4 ' ' |> escapeSpace
+        let spacePadded = v |> string |> Fermata.String.padLeft 3 ' ' |> escapeSpace
+        newHistory correct colored 16 spacePadded 10
 
-            (document.getElementById "inputArea").onsubmit <-
-                (fun e ->
-                    e.preventDefault ()
-                    exec' [ initNumber ] question answer)
+    let additional _ : unit = ()
 
-            additional initNumber
+    let exec' (lastNumbers: int list) (answer: int) : unit =
+        exec Hex.validate error Hex.toDec history question string id hint additional 10 lastNumbers answer
 
-            (document.getElementById "helpButton").onclick <-
-                (fun _ ->
-                    [ "helpWindow"; "helpBarrier" ]
-                    |> List.iter (fun x -> (document.getElementById x).classList.toggle "active" |> ignore))
+    let init'
+        (questionGenerator: int list -> int)
+        (hintGenerator: int -> HTMLElement option)
+        (additional: int -> unit)
+        sourceRadix
+        destinationRadix
+        (keyboardshortcutSetter: KeyboardEvent -> unit)
+        : unit =
+        // Initialization.
+        let initNumber: int = questionGenerator []
+        (document.getElementById "questionSpan").innerText <- string initNumber
+        (document.getElementById "srcRadix").innerText <- sprintf "(%d)" sourceRadix
+        (document.getElementById "dstRadix").innerText <- string destinationRadix
+        (document.getElementById "binaryRadix").innerHTML <- sprintf "<sub>(%d)</sub>" destinationRadix
+        (document.getElementById "hintArea").innerHTML <- ""
+        Option.iter ((document.getElementById "hintArea").appendChild >> ignore) (hintGenerator initNumber)
 
-            (document.getElementById "helpBarrier").onclick <-
-                (fun _ ->
-                    [ "helpWindow"; "helpBarrier" ]
-                    |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore))
+        let f =
+            fun (e: Event) ->
+                e.preventDefault ()
+                exec' [ initNumber ] initNumber
 
-            (document.getElementById "helpClose").onclick <-
-                (fun _ ->
-                    [ "helpWindow"; "helpBarrier" ]
-                    |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore))
+        (document.getElementById "submitButton").onclick <- f
+        (document.getElementById "inputArea").onsubmit <- f
 
-            document.onkeydown <- (fun (e: KeyboardEvent) -> keyboardshortcutSetter e)
+        additional initNumber
 
-        let init () =
-            document.title <- "10進数→16進数 - taidalab"
+        (document.getElementById "helpButton").onclick <-
+            (fun _ ->
+                [ "helpWindow"; "helpBarrier" ]
+                |> List.iter (fun x -> (document.getElementById x).classList.toggle "active" |> ignore))
 
-            let header = document.querySelector "header"
-            header.innerHTML <- Content.Common.header
-            header.className <- "dec2hex"
+        (document.getElementById "helpBarrier").onclick <-
+            (fun _ ->
+                [ "helpWindow"; "helpBarrier" ]
+                |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore))
 
-            (document.getElementById "hamburgerButton").onclick <-
-                (fun _ ->
-                    (document.querySelector "nav").classList.toggle "flagged" |> ignore
-                    (document.getElementById "barrier").classList.toggle "flagged" |> ignore
-                    (document.querySelector "main").classList.toggle "flagged" |> ignore)
+        (document.getElementById "helpClose").onclick <-
+            (fun _ ->
+                [ "helpWindow"; "helpBarrier" ]
+                |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore))
 
-            (document.getElementById "barrier").onclick <-
-                (fun _ ->
-                    (document.querySelector "nav").classList.remove "flagged" |> ignore
-                    (document.getElementById "barrier").classList.remove "flagged" |> ignore
-                    (document.querySelector "main").classList.remove "flagged" |> ignore)
+        document.onkeydown <- (fun (e: KeyboardEvent) -> keyboardshortcutSetter e)
 
-            (document.querySelector "#headerTitle").innerHTML <-
-                """<span>10進数→16進数 - </span><span translate="no">taidalab</span>"""
+    let init () : unit =
+        document.title <- "10進数→16進数 - taidalab"
 
-            (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help "help-color dec2hex"
-            (document.querySelector "#submitButton").className <- "dec2hex"
-            (document.querySelector "#questionArea").innerHTML <- Content.Common.question
+        let header = document.querySelector "header"
+        header.innerHTML <- ""
+        Content.Common.header |> List.iter (header.appendChild >> ignore)
+        header.className <- "dec2hex"
 
-            init' question hint additional 10 16 EndlessBinary.keyboardshortcut
+        (document.getElementById "hamburgerButton").onclick <-
+            (fun _ ->
+                (document.querySelector "nav").classList.toggle "flagged" |> ignore
+                (document.getElementById "barrier").classList.toggle "flagged" |> ignore
+                (document.querySelector "main").classList.toggle "flagged" |> ignore)
+
+        (document.getElementById "barrier").onclick <-
+            (fun _ ->
+                (document.querySelector "nav").classList.remove "flagged" |> ignore
+                (document.getElementById "barrier").classList.remove "flagged" |> ignore
+                (document.querySelector "main").classList.remove "flagged" |> ignore)
+
+        (document.querySelector "#headerTitle").innerHTML <-
+            """<span>10進数→16進数 - </span><span translate="no">taidalab</span>"""
+
+        (document.querySelector "main").innerHTML <- EndlessBinary.Course.main help
+        (document.querySelector "main").className <- "dec2hex"
+
+        Content.Common.question
+        |> List.iter ((document.querySelector "#questionArea").appendChild >> ignore)
+
+        init' question hint additional 10 16 Course.keyboardshortcut

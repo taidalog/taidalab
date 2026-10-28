@@ -1,6 +1,6 @@
 // taidalab
 // https://github.com/taidalog/taidalab
-// Copyright (c) 2022-2025 taidalog
+// Copyright (c) 2022-2026 taidalog
 // This software is licensed under the MIT License.
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
 namespace Taidalab
@@ -20,7 +20,8 @@ module Terms =
         document.title <- "ご利用について - taidalab"
 
         let header = document.querySelector "header"
-        header.innerHTML <- Content.Common.headerNoHelp
+        header.innerHTML <- ""
+        Content.Common.headerNoHelp |> List.iter (header.appendChild >> ignore)
         header.className <- "home"
 
         (document.getElementById "hamburgerButton").onclick <-
@@ -39,6 +40,7 @@ module Terms =
             """<span>ご利用について - </span><span translate="no">taidalab</span>"""
 
         (document.querySelector "main").innerHTML <- main
+        (document.querySelector "main").className <- "home"
 
         // Resets keyboard shortcuts.
         document.onkeydown <- fun _ -> ()

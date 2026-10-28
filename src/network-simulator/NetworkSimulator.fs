@@ -1,6 +1,6 @@
 // taidalab
 // https://github.com/taidalog/taidalab
-// Copyright (c) 2022-2025 taidalog
+// Copyright (c) 2022-2026 taidalog
 // This software is licensed under the MIT License.
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
 namespace Taidalab
@@ -32,14 +32,14 @@ module NetworkSimulator =
             クライアントやルータの IP アドレスをクリックして設定しなおしたりしてください。
         </p>
         <p>
-            <span class="material-symbols-outlined symbols18" translate="no">add_circle</span>マークのボタンをクリックすると、デバイスやケーブルを追加できます。<br>
-            <span class="material-symbols-outlined symbols18" translate="no">delete</span>マークのボタンをクリックすると、選択中のデバイスやケーブルを削除できます。
+            <span class="material-symbols-outlined" translate="no">add_circle</span>マークのボタンをクリックすると、デバイスやケーブルを追加できます。<br>
+            <span class="material-symbols-outlined" translate="no">delete</span>マークのボタンをクリックすると、選択中のデバイスやケーブルを削除できます。
         </p>
     """
 
     let main =
         $"""
-        <form id="inputArea" class="network-simulator" autocomplete="off">
+        <form id="inputArea" autocomplete="off">
             <label>
                 送信元 IPv4:
                 <input type="text" id="sourceInput" class="mono">
@@ -51,43 +51,43 @@ module NetworkSimulator =
             <button type="submit" id="submitButton" translate="no">ping</button>
         </form>
         <form>
-            <button type="button" id="addClientButton" class="gray">
-                <span class="icon-vertical-center">
-                    <span class="material-symbols-outlined symbols18" translate="no">add_circle</span>
+            <button type="button" id="addClientButton">
+                <span>
+                    <span class="material-symbols-outlined" translate="no">add_circle</span>
                     クライアント
                 </span>
             </button>
-            <button type="button" id="addRouterButton" class="gray">
-                <span class="icon-vertical-center">
-                    <span class="material-symbols-outlined symbols18" translate="no">add_circle</span>
+            <button type="button" id="addRouterButton">
+                <span>
+                    <span class="material-symbols-outlined" translate="no">add_circle</span>
                     ルータ
                 </span>
             </button>
-            <button type="button" id="addHubButton" class="gray">
-                <span class="icon-vertical-center">
-                    <span class="material-symbols-outlined symbols18" translate="no">add_circle</span>
+            <button type="button" id="addHubButton">
+                <span>
+                    <span class="material-symbols-outlined" translate="no">add_circle</span>
                     ハブ
                 </span>
             </button>
-            <button type="button" id="addLANCableButton" class="gray">
-                <span class="icon-vertical-center">
-                    <span class="material-symbols-outlined symbols18" translate="no">add_circle</span>
+            <button type="button" id="addLANCableButton">
+                <span>
+                    <span class="material-symbols-outlined" translate="no">add_circle</span>
                     LANケーブル
                 </span>
             </button>
-            <button type="button" id="deleteButton" class="gray">
-                <span class="icon-vertical-center">
-                    <span class="material-symbols-outlined symbols18" translate="no">delete</span>
+            <button type="button" id="deleteButton">
+                <span>
+                    <span class="material-symbols-outlined" translate="no">delete</span>
                     削除
                 </span>
             </button>
         </form>
-        <div id="errorArea" class="error-area warning"></div>
+        <div id="errorArea" class="error-area"></div>
         <div id="outputArea" class="output-area"></div>
         <div id="playArea" class="play-area"></div>
         <div id="helpWindow" class="help-window">
-            <div class="help-close-outer">
-                <span id="helpClose" class="material-symbols-outlined help-close network-simulator" translate="no">
+            <div>
+                <span id="helpClose" class="material-symbols-outlined translate="no">
                     close
                 </span>
             </div>
@@ -166,17 +166,15 @@ module NetworkSimulator =
     let newHistory source sourceIPv4 destinationIPv4 connected =
         let historyClassName, historyIcon, historyMessage =
             if connected then
-                "history history-correct",
-                """<span class="material-symbols-outlined history-correct" translate="no">check_circle</span>""",
+                "history-correct",
+                """<span class="material-symbols-outlined" translate="no">check_circle</span>""",
                 "通信成功！"
             else
-                "history history-wrong",
-                """<span class="material-symbols-outlined history-wrong" translate="no">error</span>""",
-                "通信失敗…"
+                "history-wrong", """<span class="material-symbols-outlined" translate="no">error</span>""", "通信失敗…"
 
         $"""
-        <div class="history-container %s{historyClassName}"">
-            %s{historyIcon}<span class ="%s{historyClassName}">%s{Device.name source} [%s{sourceIPv4.ToString()}] -> %s{destinationIPv4.ToString()} %s{historyMessage}</span>
+        <div class="%s{historyClassName}"">
+            %s{historyIcon}<span">%s{Device.name source} [%s{sourceIPv4.ToString()}] -> %s{destinationIPv4.ToString()} %s{historyMessage}</span>
         </div>
         """
 
@@ -226,7 +224,8 @@ module NetworkSimulator =
         document.title <- "ネットワークシミュレータ - taidalab"
 
         let header = document.querySelector "header"
-        header.innerHTML <- Content.Common.header
+        header.innerHTML <- ""
+        Content.Common.header |> List.iter (header.appendChild >> ignore)
         header.className <- "network-simulator"
 
         (document.getElementById "hamburgerButton").onclick <-
@@ -245,7 +244,7 @@ module NetworkSimulator =
             """<span>ネットワークシミュレータ - </span><span translate="no">taidalab</span>"""
 
         (document.querySelector "main").innerHTML <- main
-        (document.querySelector "#submitButton").className <- "network-simulator"
+        (document.querySelector "main").className <- "network-simulator"
 
         (document.getElementById "helpButton").onclick <-
             (fun _ ->

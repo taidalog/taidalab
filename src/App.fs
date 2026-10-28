@@ -1,6 +1,6 @@
 // taidalab
 // https://github.com/taidalog/taidalab
-// Copyright (c) 2022-2025 taidalog
+// Copyright (c) 2022-2026 taidalog
 // This software is licensed under the MIT License.
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
 namespace Taidalab
@@ -17,9 +17,15 @@ open Taidalab.Page
 module Main =
     let init () : unit =
         document.body.innerHTML <- ""
-        document.body.innerHTML <- Content.Common.body
-        (document.querySelector "footer").innerHTML <- Content.Common.footer
-        (document.querySelector "nav").innerHTML <- Content.Common.nav
+        document.body.appendChild Content.Common.body |> ignore
+
+        // (document.querySelector "footer").innerHTML <- Content.Common.footer
+        Content.Common.footer
+        |> List.iter ((document.querySelector "footer").appendChild >> ignore)
+
+        // (document.querySelector "nav").innerHTML <- Content.Common.nav
+        Content.Common.nav
+        |> List.iter ((document.querySelector "nav").appendChild >> ignore)
 
     window.addEventListener (
         "DOMContentLoaded",

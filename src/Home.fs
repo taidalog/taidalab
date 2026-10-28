@@ -1,6 +1,6 @@
 // taidalab
 // https://github.com/taidalog/taidalab
-// Copyright (c) 2022-2025 taidalog
+// Copyright (c) 2022-2026 taidalog
 // This software is licensed under the MIT License.
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
 namespace Taidalab
@@ -11,17 +11,16 @@ module Home =
     let main =
         """
         <div class="home-center">
-            <p>
-                <span class="home-title" translate="no">taidalab</span><br>
-                <span class="home-subtitle">「情報I」学習サイト</span>
-            </p>
+            <div class="home-title" translate="no">taidalab</div>
+            <div class="home-subtitle">「情報I」学習サイト</div>
         </div>"""
 
     let init () =
         document.title <- "taidalab"
 
         let header = document.querySelector "header"
-        header.innerHTML <- Content.Common.headerNoHelp
+        header.innerHTML <- ""
+        Content.Common.headerNoHelp |> List.iter (header.appendChild >> ignore)
         header.className <- "home"
 
         (document.getElementById "hamburgerButton").onclick <-
@@ -38,6 +37,7 @@ module Home =
 
         (document.querySelector "#headerTitle").innerHTML <- """<span translate="no">taidalab</span>"""
         (document.querySelector "main").innerHTML <- main
+        (document.querySelector "main").className <- "home"
 
         // Resets keyboard shortcuts.
         document.onkeydown <- fun _ -> ()

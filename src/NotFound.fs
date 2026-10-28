@@ -1,6 +1,6 @@
 // taidalab
 // https://github.com/taidalog/taidalab
-// Copyright (c) 2022-2025 taidalog
+// Copyright (c) 2022-2026 taidalog
 // This software is licensed under the MIT License.
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
 namespace Taidalab
@@ -8,53 +8,46 @@ namespace Taidalab
 open Browser.Dom
 open Browser.Types
 open Taidalab.Text
-open Taidalab.EndlessBinary
+open Taidalab.EndlessBinary.Course
 open Fermata.RadixConversion
 
 module NotFound =
 
-    let rec checkAnswer (answer: int) =
+    let rec exec (answer: int) =
         // Getting the user input.
         let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
-        let input = numberInput.value |> escapeHtml
-        let bin = input |> Bin.validate
+        let input: string = numberInput.value |> escapeHtml
+        let input': Result<Bin, exn> = input |> Bin.validate
 
         numberInput.focus ()
 
-        match bin with
-        | Bin.Invalid e ->
+        match input' with
+        | Error e ->
             // Making an error message.
             (document.getElementById "errorArea").innerHTML <- newErrorMessageBin (string answer) input e
-        | Bin.Valid v ->
+        | Ok v ->
             (document.getElementById "errorArea").innerHTML <- ""
-            // Converting the input in order to use in the history message.
-            let binaryDigit = 9
-            let destinationRadix = 2
-            let taggedBin = v |> Fermata.String.padLeft binaryDigit ' ' |> escapeSpace
 
-            match Bin.toDec bin with
-            | Dec.Invalid _ -> ()
-            | Dec.Valid dec ->
-                let decimalDigit = 3
+            let (Dec d) = Bin.toDec v
 
-                let spacePaddedDec =
-                    dec |> string |> Fermata.String.padLeft decimalDigit ' ' |> escapeSpace
+            // Making a new history and updating the history with the new one.
+            let outputArea = document.getElementById "outputArea" :?> HTMLParagraphElement
 
-                // Making a new history and updating the history with the new one.
-                let sourceRadix = 10
-                let outputArea = document.getElementById "outputArea" :?> HTMLParagraphElement
+            let historyMessage =
+                let (Bin b) = v
+                let taggedBin = b |> Fermata.String.padLeft 9 ' ' |> escapeSpace
+                let spacePaddedDec = d |> string |> Fermata.String.padLeft 3 ' ' |> escapeSpace
 
-                let historyMessage =
-                    newHistory (dec = int answer) taggedBin destinationRadix spacePaddedDec sourceRadix
-                    |> (fun x -> concatinateStrings "<br>" [ x; outputArea.innerHTML ])
+                newHistory (d = answer) taggedBin 2 spacePaddedDec 10
+                |> (fun x -> concatinateStrings "<br>" [ x; outputArea.innerHTML ])
 
-                outputArea.innerHTML <- historyMessage
+            outputArea.innerHTML <- historyMessage
 
-                if dec <> int answer then
-                    ()
-                else
-                    window.history.replaceState (null, "", "http://localhost:8080/taidalab/")
-                    Home.init ()
+            if d <> answer then
+                ()
+            else
+                window.history.replaceState (null, "", "http://localhost:8080/taidalab/")
+                Home.init ()
 
 
     let init () =
@@ -62,7 +55,8 @@ module NotFound =
         document.title <- "404: Page Not Found - taidalab"
 
         let header = document.querySelector "header"
-        header.innerHTML <- Content.Common.headerNoHelp
+        header.innerHTML <- ""
+        Content.Common.headerNoHelp |> List.iter (header.appendChild >> ignore)
         header.className <- "not-found"
 
         (document.getElementById "hamburgerButton").onclick <-
@@ -81,8 +75,10 @@ module NotFound =
             """<span>404: Page Not Found - </span><span translate="no">taidalab</span>"""
 
         (document.querySelector "main").innerHTML <- EndlessBinary.Course.main404
-        (document.querySelector "#submitButton").className <- "not-found"
-        (document.querySelector "#questionArea").innerHTML <- Content.Common.question
+        (document.querySelector "main").className <- "not-found"
+
+        Content.Common.question
+        |> List.iter ((document.querySelector "#questionArea").appendChild >> ignore)
 
         let initNumber = 404
         let sourceRadix = 10
@@ -96,9 +92,9 @@ module NotFound =
         (document.getElementById "submitButton").onclick <-
             (fun e ->
                 e.preventDefault ()
-                checkAnswer initNumber)
+                exec initNumber)
 
         (document.getElementById "inputArea").onsubmit <-
             (fun e ->
                 e.preventDefault ()
-                checkAnswer initNumber)
+                exec initNumber)

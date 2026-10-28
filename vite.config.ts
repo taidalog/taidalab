@@ -6,7 +6,7 @@ export default defineConfig({
     build: {
         outDir: 'docs',
         emptyOutDir: true,
-        rollupOptions: {
+        rolldownOptions: {
             input: {
                 main: 'index.html',
                 404: '404.html'

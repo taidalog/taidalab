@@ -1,9 +1,9 @@
 // taidalab
 // https://github.com/taidalog/taidalab
-// Copyright (c) 2022-2025 taidalog
+// Copyright (c) 2022-2026 taidalog
 // This software is licensed under the MIT License.
 // https://github.com/taidalog/taidalab/blob/main/LICENSE
-namespace Taidalab
+namespace Taidalab.EndlessBinary
 
 open System
 open Browser.Types
@@ -11,67 +11,63 @@ open Fable.Core
 open Fable.Core.JsInterop
 open Fermata
 open Fermata.RadixConversion
+open Taidalab.Text
 
-module EndlessBinary =
-    module Home =
-        let main =
-            """
-            <form class="button-container">
-                <button type="button" id="buttonED2B1" class="course-button-d2b1">10進数→2進数 (1)</button>
-                <button type="button" id="buttonED2B2" class="course-button-d2b2">10進数→2進数 (2)</button>
-                <button type="button" id="buttonEB2D1" class="course-button-b2d1">2進数→10進数 (1)</button>
-                <button type="button" id="buttonEB2D2" class="course-button-b2d2">2進数→10進数 (2)</button>
-                <button type="button" id="buttonEPOT1" class="course-button-pot1">2のn乗</button>
-                <button type="button" id="buttonEPOT2" class="course-button-pot2">2のn乗-1</button>
-                <button type="button" id="buttonEBAD" class="course-button-add">加算</button>
-                <button type="button" id="buttonEBSB" class="course-button-sub">減算</button>
-                <button type="button" id="buttonECMP" class="course-button-cmp">補数</button>
-                <button type="button" id="buttonED2H" class="course-button-d2h">10進数→16進数</button>
-                <button type="button" id="buttonEH2D" class="course-button-d2h">16進数→10進数</button>
-            </form>"""
+module Home =
+    let main =
+        """
+        <form class="button-container">
+            <button type="button" id="buttonED2B1" class="course-button-d2b1">10進数→2進数 (1)</button>
+            <button type="button" id="buttonED2B2" class="course-button-d2b2">10進数→2進数 (2)</button>
+            <button type="button" id="buttonEB2D1" class="course-button-b2d1">2進数→10進数 (1)</button>
+            <button type="button" id="buttonEB2D2" class="course-button-b2d2">2進数→10進数 (2)</button>
+            <button type="button" id="buttonEPOT1" class="course-button-pot1">2のn乗</button>
+            <button type="button" id="buttonEPOT2" class="course-button-pot2">2のn乗-1</button>
+            <button type="button" id="buttonEBAD" class="course-button-add">加算</button>
+            <button type="button" id="buttonEBSB" class="course-button-sub">減算</button>
+            <button type="button" id="buttonECMP" class="course-button-cmp">補数</button>
+            <button type="button" id="buttonED2H" class="course-button-d2h">10進数→16進数</button>
+            <button type="button" id="buttonEH2D" class="course-button-d2h">16進数→10進数</button>
+        </form>"""
 
-    module Course =
-        let main help colorClass =
-            $"""
-            <span id="questionArea" class="question-area"></span>
-            <form id="inputArea" class="endless-binary" autocomplete="off">
-                <input type="text" id="numberInput" class="mono">
-                <span id="binaryRadix"></span>
-                <button type="button" id="submitButton" class="d2b-button">Enter</button>
-                <div id="errorArea" class="error-area"></div>
-                <div id="hintArea" class="hint-area"></div>
-            </form>
-            <div class="history-area">
-                <h2>結果:</h2>
-                <div class="history-indented mono">
-                    <span id="outputArea"></span>
-                </div>
+module Course =
+    let main (help: string) : string =
+        $"""
+        <span id="questionArea" class="question-area"></span>
+        <form id="inputArea" class="endless-binary" autocomplete="off">
+            <input type="text" id="numberInput" class="mono">
+            <span id="binaryRadix"></span>
+            <button type="button" id="submitButton">Enter</button>
+            <div id="errorArea" class="error-area"></div>
+            <div id="hintArea" class="hint-area"></div>
+        </form>
+        <div class="history-area">
+            <h2>結果:</h2>
+            <div id="outputArea"></div>
+        </div>
+        <div id="helpWindow" class="help-window">
+            <div>
+                <span id="helpClose" class="material-symbols-outlined" translate="no">
+                    close
+                </span>
             </div>
-            <div id="helpWindow" class="help-window">
-                <div class="help-close-outer">
-                    <span id="helpClose" class="material-symbols-outlined help-close %s{colorClass}" translate="no">
-                        close
-                    </span>
-                </div>
-                %s{help}
-            </div>"""
+            %s{help}
+        </div>"""
 
-        let main404 =
-            """
-            <span id="questionArea" class="question-area"></span>
-            <form id="inputArea" class="endless-binary" autocomplete="off">
-                <input type="text" id="numberInput" class="mono">
-                <span id="binaryRadix"></span>
-                <button type="button" id="submitButton" class="d2b-button">Enter</button>
-                <div id="errorArea" class="error-area"></div>
-                <div id="hintArea" class="hint-area"></div>
-            </form>
-            <div class="history-area">
-                <h2>結果:</h2>
-                <div class="history-indented mono">
-                    <span id="outputArea"></span>
-                </div>
-            </div>"""
+    let main404 =
+        """
+        <span id="questionArea" class="question-area"></span>
+        <form id="inputArea" class="endless-binary" autocomplete="off">
+            <input type="text" id="numberInput" class="mono">
+            <span id="binaryRadix"></span>
+            <button type="button" id="submitButton">Enter</button>
+            <div id="errorArea" class="error-area"></div>
+            <div id="hintArea" class="hint-area"></div>
+        </form>
+        <div class="history-area">
+            <h2>結果:</h2>
+            <div id="outputArea"></div>
+        </div>"""
 
     let newErrorMessageBin (question: string) (input: string) (error: exn) =
         if String.IsNullOrWhiteSpace input then
@@ -82,7 +78,7 @@ module EndlessBinary =
         //      $"'%s{input}' は入力できる数値の範囲を越えています。入力できるのは xxx ~ yyy の間です。"
         else
             "不明なエラーです。"
-        |> sprintf """<span class="warning">%s</span>"""
+        |> sprintf """<span>%s</span>"""
 
     let newErrorMessageDec (question: string) (input: string) (error: exn) =
         if String.IsNullOrWhiteSpace input then
@@ -93,7 +89,7 @@ module EndlessBinary =
         //      $"'%s{input}' は入力できる数値の範囲を越えています。入力できるのは xxx ~ yyy の間です。"
         else
             "不明なエラーです。"
-        |> sprintf """<span class="warning">%s</span>"""
+        |> sprintf """<span>%s</span>"""
 
     let newErrorMessageHex (question: string) (input: string) (error: exn) =
         if String.IsNullOrWhiteSpace input then
@@ -104,52 +100,42 @@ module EndlessBinary =
         //      $"'%s{input}' は入力できる数値の範囲を越えています。入力できるのは xxx ~ yyy の間です。"
         else
             "不明なエラーです。"
-        |> sprintf """<span class="warning">%s</span>"""
+        |> sprintf """<span>%s</span>"""
 
     let newHistory correct input destination_radix converted_input source_radix =
-        let historyClassName =
-            if correct then
-                "history history-correct"
-            else
-                "history history-wrong"
+        let historyClassName = if correct then "history-correct" else "history-wrong"
 
         let historyIcon =
             if correct then
-                """<span class="material-symbols-outlined history-correct" translate="no">check_circle</span>"""
+                """<span class="material-symbols-outlined" translate="no">check_circle</span>"""
             else
-                """<span class="material-symbols-outlined history-wrong" translate="no">error</span>"""
+                """<span class="material-symbols-outlined" translate="no">error</span>"""
 
         $"""
-        <div class="history-container %s{historyClassName}"">
-            %s{historyIcon}<span class ="%s{historyClassName}">%s{input}<sub>(%d{destination_radix})</sub> = %s{converted_input}<sub>(%d{source_radix})</sub></span>
+        <div class="%s{historyClassName}"">
+            %s{historyIcon}<span>%s{input}<sub>(%d{destination_radix})</sub> = %s{converted_input}<sub>(%d{source_radix})</sub></span>
         </div>
         """
 
-    let splitBinaryStringBy digit bin =
-        match bin with
-        | Bin.Invalid _ -> ""
-        | Bin.Valid v -> v |> String.chunkBySizeRight digit |> Seq.toList |> String.concat " "
+    let splitBinaryStringBy (digit: int) (Bin v) : string =
+        v |> String.chunkBySizeRight digit |> Seq.toList |> String.concat " "
 
     open Browser.Dom
 
-    let setColumnAddition (number1: int) (number2: int) =
+    let setColumnAddition (number1: int) (number2: int) : unit =
         let bin1 =
             number1
-            |> Dec.Valid
-            |> Dec.toBin
+            |> bin
             |> function
-                | Bin.Valid v -> v
-                | Bin.Invalid _ -> ""
+                | Bin v -> v
             |> Seq.map string
             |> Seq.padLeft 8 ""
 
         let bin2 =
             number2
-            |> Dec.Valid
-            |> Dec.toBin
+            |> bin
             |> function
-                | Bin.Valid v -> v
-                | Bin.Invalid _ -> ""
+                | Bin v -> v
             |> Seq.map string
             |> Seq.padLeft 8 ""
 
@@ -167,9 +153,10 @@ module EndlessBinary =
 
     let delayMs index = index * 2500 - 500 |> abs
 
-    let numOpt radix num = (Some radix, Some 1, Some num, None)
+    let numOpt (radix: int) (num: int) : int option * int option * int option * int option =
+        (Some radix, Some 1, Some num, None)
 
-    let divRemOpt divisor divRem =
+    let divRemOpt (divisor: int) (divRem: (int * int) list) : (int option * int option * int option * int option) list =
         match divRem |> List.rev with
         | [] -> [ (None, None, None, None) ]
         | h :: t ->
@@ -203,3 +190,81 @@ module EndlessBinary =
                     [ "helpWindow"; "helpBarrier" ]
                     |> List.iter (fun x -> (document.getElementById x).classList.remove "active" |> ignore)
             | _ -> ()
+
+    let rec exec
+        (validator: string -> Result<'Radix, exn>)
+        (errorf: int -> string -> exn -> string)
+        (convertor: 'Radix -> Dec)
+        (historyf: bool -> string -> string)
+        (questionf: int list -> int)
+        (questionSetter: int -> string)
+        (answerf: int -> int)
+        (hintf: int -> HTMLElement option)
+        (additional: int -> unit)
+        (numbersToKeep: int)
+        (lastNumbers: int list)
+        (answer: int)
+        : unit =
+        // Getting the user input.
+        let numberInput = document.getElementById "numberInput" :?> HTMLInputElement
+        let input: string = numberInput.value |> escapeHtml
+        let input': Result<'Radix, exn> = validator input
+
+        numberInput.focus ()
+
+        match input' with
+        | Error e ->
+            // Making an error message.
+            (document.getElementById "errorArea").innerHTML <- errorf answer input e
+        | Ok(v: 'Radix) ->
+            (document.getElementById "errorArea").innerHTML <- ""
+
+            let (Dec d) = convertor v
+
+            // Making a new history and updating the history with the new one.
+            let outputArea = document.getElementById "outputArea" :?> HTMLParagraphElement
+
+            let historyMessage =
+                historyf (d = answer) input
+                |> (fun x -> concatinateStrings "<br>" [ x; outputArea.innerHTML ])
+
+            outputArea.innerHTML <- historyMessage
+
+            if d <> answer then
+                ()
+            else
+                // Making the next question.
+                let nextNumber: int = questionf lastNumbers
+                (document.getElementById "questionSpan").innerText <- questionSetter nextNumber
+                (document.getElementById "hintArea").innerHTML <- ""
+                Option.iter ((document.getElementById "hintArea").appendChild >> ignore) (hintf nextNumber)
+
+                additional nextNumber
+
+                numberInput.value <- ""
+
+                // Updating `lastNumbers`.
+                // These numbers will not be used for the next question.
+                let lastNumbers' = (nextNumber :: lastNumbers) |> List.truncate numbersToKeep
+
+                // Setting the next answer to the check button.
+                let f =
+                    fun (e: Event) ->
+                        e.preventDefault ()
+
+                        exec
+                            validator
+                            errorf
+                            convertor
+                            historyf
+                            questionf
+                            questionSetter
+                            answerf
+                            hintf
+                            additional
+                            numbersToKeep
+                            lastNumbers'
+                            (answerf nextNumber)
+
+                (document.getElementById "submitButton").onclick <- f
+                (document.getElementById "inputArea").onsubmit <- f
