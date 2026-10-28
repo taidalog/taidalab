@@ -30,7 +30,7 @@ module Dec2Bin1 =
             | 0 -> acc |> List.rev
             | 1 -> 1 :: acc |> List.rev
             | _ ->
-                let max = x |> Int32.Log2 |> pown 2
+                let max = x |> log2 |> int |> pown 2
                 loop (max :: acc) (x - max)
 
         loop [] x
